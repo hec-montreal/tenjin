@@ -1,26 +1,34 @@
-<jsp:directive.include file="/templates/includes.jsp" />
-<jsp:directive.include file="/templates/header.jsp" />
-
-
-
-<html xmlns:java="java">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>1-404-96.H2012 - Sociologie de l'entreprise</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link media="all" href="/library/skin/tool_base.css" rel="stylesheet"
+	type="text/css" />
+<link media="all" href="/library/skin/default/tool.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <link href="ressources/hec-public-portal.css" rel="stylesheet">
+	<link rel="stylesheet"
+		href="ressources/sidr/stylesheets/jquery.sidr.light.css">
+<title>1-404-96.H2012 - Sociologie de l'entreprise</title>
 </head>
 <body>
 	<div id="wrap" class="courseOutline">
 		<div id="main" class="container clear-top courseOutline-main">
 			<div class="row">
 				<div id="title">
-					<h2>1-404-96.H2012 - Sociologie de l'entreprise</h2>
+					<h2>Sociologie de l'entreprise</h2>
+				</div>
+				<a id="simple-menu" href="#sidr">Toggle menu</a>
+
+				<div id="sidr">
+					<!-- Your content -->
+					<ul>
+						<li><a href="#">List 1</a></li>
+						<li class="active"><a href="#">List 2</a></li>
+						<li><a href="#">List 3</a></li>
+					</ul>
 				</div>
 				<div id="" class="span6">
 					<ul class="menu">
@@ -82,10 +90,10 @@
 				</div>
 				<div id="" class="span9">
 					<div id="coursePresentation" class="content">
-						<h4>Description</h4>
 
+						<h4>Description</h4>
 						<div id="accordion">
-							<h3>Section 1</h3>
+							<h3>Sections A01, A02</h3>
 							<div class="ressource ">
 								<table class="ressource">
 									<tbody>
@@ -171,7 +179,7 @@
 									</tbody>
 								</table>
 							</div>
-							<h3>Section 2</h3>
+							<h3>Sections B01, B02</h3>
 							<div class="ressource ">
 								<table class="ressource">
 									<tbody>
@@ -218,8 +226,6 @@
 										</tr>
 									</tbody>
 								</table>
-							</div>
-							<div class="ressource ">
 								<table class="ressource">
 									<tbody>
 										<tr>
@@ -236,22 +242,20 @@
 										</tr>
 									</tbody>
 								</table>
-							</div>
-							<div class="important_header">Important</div>
-							<div class="ressource important_body">
-								<table class="ressource">
-									<tbody>
-										<tr>
-											<td style="vertical-align: top;"></td>
-											<td><a target="_blank"
-												href="http://osyldev.hec.ca:12345/sdata/c/attachment/1-404-96.H2012/OpenSyllabus/Test%20pdf.pdf">test
-													important</a> [Document]<br>(Test pdf.pdf)
-												<div class="comment"></div></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="ressource ">
+								<div class="important_header">Important</div>
+								<div class="ressource important_body">
+									<table class="ressource">
+										<tbody>
+											<tr>
+												<td style="vertical-align: top;"></td>
+												<td><a target="_blank"
+													href="http://osyldev.hec.ca:12345/sdata/c/attachment/1-404-96.H2012/OpenSyllabus/Test%20pdf.pdf">test
+														important</a> [Document]<br>(Test pdf.pdf)
+													<div class="comment"></div></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 								<table class="ressource">
 									<tbody>
 										<tr>
@@ -261,35 +265,79 @@
 									</tbody>
 								</table>
 							</div>
+							<h3>Section Z01</h3>
+							<div class="ressource "></div>
 						</div>
+
+						<br /> <br />
 						<h4>Objectifs</h4>
-						<div class="ressource ">
-							<table class="ressource">
-								<tbody>
-									<tr>
-										<td style="vertical-align: top;"></td>
-										<td><p>Le principal objectif de ce cours est de
-												développer chez le futur gestionnaire, comptable,
-												entrepreneur, spécialiste du marketing ou de la finance
-												l'habileté à analyser l'économie, le travail et l'entreprise
-												à partir d'une perspective sociologique.</p>
-											<p>
-												&nbsp;<br>D'une façon plus spécifique :
-											</p>
-											<ul>
-												<li>développer chez les étudiants l'habileté à
-													recueillir et organiser les données pertinentes à l'analyse
-													sociologique de situations reliées à l'économie et à
-													l'entreprise;</li>
-												<li>développer la capacité à situer le contexte social,
-													culturel et politique dans lequel évolue l'entreprise;</li>
-												<li>développer chez les étudiants l'habileté à analyser
-													les dynamiques sociales à l'¿uvre dans les entreprises.</li>
-											</ul></td>
-									</tr>
-								</tbody>
-							</table>
+						<div id="tabs">
+							<ul>
+								<li><a href="#tabs-1">Sections A01, A02</a></li>
+								<li><a href="#tabs-2">Section B01, B02</a></li>
+								<li><a href="#tabs-3">Section Z01</a></li>
+							</ul>
+							<div id="tabs-1">
+								<p>Le principal objectif de ce cours est de développer chez
+									le futur gestionnaire, comptable, entrepreneur, spécialiste du
+									marketing ou de la finance l'habileté à analyser l'économie, le
+									travail et l'entreprise à partir d'une perspective
+									sociologique.</p>
+								<p>
+									&nbsp;<br>D'une façon plus spécifique :
+								</p>
+								<ul>
+									<li>développer chez les étudiants l'habileté à recueillir
+										et organiser les données pertinentes à l'analyse sociologique
+										de situations reliées à l'économie et à l'entreprise;</li>
+									<li>développer la capacité à situer le contexte social,
+										culturel et politique dans lequel évolue l'entreprise;</li>
+									<li>développer chez les étudiants l'habileté à analyser
+										les dynamiques sociales à l'¿uvre dans les entreprises.</li>
+								</ul>
+							</div>
+							<div id="tabs-2">
+								<p>Le principal objectif de ce cours est de développer chez
+									le futur gestionnaire, comptable, entrepreneur, spécialiste du
+									marketing ou de la finance l'habileté à analyser l'économie, le
+									travail et l'entreprise à partir d'une perspective
+									sociologique.</p>
+								<p>
+									&nbsp;<br>D'une façon plus spécifique :
+								</p>
+								<ul>
+									<li>développer chez les étudiants l'habileté à recueillir
+										et organiser les données pertinentes à l'analyse sociologique
+										de situations reliées à l'économie et à l'entreprise;</li>
+									<li>développer la capacité à situer le contexte social,
+										culturel et politique dans lequel évolue l'entreprise;</li>
+									<li>développer chez les étudiants l'habileté à analyser
+										les dynamiques sociales à l'¿uvre dans les entreprises.</li>
+								</ul>
+							</div>
+							<div id="tabs-3">
+								<p>Le principal objectif de ce cours est de développer chez
+									le futur gestionnaire, comptable, entrepreneur, spécialiste du
+									marketing ou de la finance l'habileté à analyser l'économie, le
+									travail et l'entreprise à partir d'une perspective
+									sociologique.</p>
+								<p>
+									&nbsp;<br>D'une façon plus spécifique :
+								</p>
+								<ul>
+									<li>développer chez les étudiants l'habileté à recueillir
+										et organiser les données pertinentes à l'analyse sociologique
+										de situations reliées à l'économie et à l'entreprise;</li>
+									<li>développer la capacité à situer le contexte social,
+										culturel et politique dans lequel évolue l'entreprise;</li>
+									<li>développer chez les étudiants l'habileté à analyser
+										les dynamiques sociales à l'¿uvre dans les entreprises.</li>
+								</ul>
+							</div>
 						</div>
+
+						<br /> <br />
+						<h4>Approche pédagogique</h4>
 					</div>
 					<div id="courseCoordinates" class="content" style="display: none">
 						<h4>Coordonnateur</h4>
@@ -1867,24 +1915,23 @@
 			</div>
 		</div>
 	</div>
-	<script src="ressources/jquery-1.js"></script>
+	<script src="//code.jquery.com/jquery-1.9.1.js""></script>
 	<script src="ressources/html-view.js"></script>
 	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script src="ressources/sidr/jquery.sidr.min.js"></script>
 	<script>
 		$(function() {
 			$("#accordion").accordion();
 		});
-
-
-		/*****************************Initialisation of frame sizes  **********************************/
-		var iframeHeight = 1000;
-
+		$(function() {
+			$("#tabs").tabs();
+		});
+		$(function() {
+			$('#simple-menu').sidr();
+		});
 		var frame = parent.document.getElementById(window.name);
-		$(frame).css('height', iframeHeight);
-
-		/*****************************Initialisation of frame editor  **********************************/
+		$(frame).css('height', "2000px");
 	</script>
 </body>
 </html>
-<jsp:directive.include file="/templates/footer.jsp" />
 
