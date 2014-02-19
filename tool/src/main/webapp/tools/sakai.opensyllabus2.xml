@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <registration>
-	<tool id="sakai.opensyllabus2" 
-		title="My Sakai App opensyllabus2-tool" 
+	<tool id="sakai.opensyllabus2"
+		title="My Sakai App opensyllabus2-tool"
 		description="This description is set in the opensyllabus2-tool registration file, found in the webapp/tools directory">
 
 		<category name="course" />
       	<category name="project" />
 
-		<configuration name="functions.require" /> 
-		
+		<configuration name="functions.require" />
+		<configuration name="height" value="auto" />
+
     </tool>
 </registration>
 
