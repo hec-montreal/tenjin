@@ -87,6 +87,48 @@
 					<div id="coursePresentation" class="content">
 
 						<h4>Description</h4>
+								<table class="ressource">
+									<tbody>
+										<tr>
+											<td style="vertical-align: top;"></td>
+											<td><div class="divForToolbar ckeditable"><p><strong>Orientation générale</strong><p>Ce cours de sociologie met l'accent sur lesdimensions sociales et culturelles de l'entreprise.&nbsp; Ces dimensions sociales et culturelles sont tout aussi importantes que les dimensions économiques, financières et administratives dans la compréhension du fonctionnement de l'entreprise.&nbsp; L'entreprise n'est pas en effet qu'un lieu de production de biens et de services, elle est également un lieu où travaillent des hommes et des femmes, des jeunes et des vieux, des immigrants et des nationaux.&nbsp; Ces individus nouent des relations sociales et culturelles particulières qu'il faut comprendre pour bien saisir la dynamique de l'entreprise.&nbsp; Le seul examen des règles, des chiffres et des résultats ne permet pas de comprendre toute la richesse et la complexité de l'entreprise.&nbsp; Il faut aussi se pencher sur les personnes qui la font, et qui la défont parfois, sur les groupes qui naissent et disparaissent en son sein.</p> <p>Ces dimensions sociales et culturelles sont examinées tant du point de vue de la dynamique interne de l'entreprise que dans les rapports qu'elle entretient avec son milieu environnant, car l'entreprise est tout autant le résultat des actions des personnes qui y oeuvrent que le fruit des influences extérieures (celles&nbsp; des groupes de pression, des institutions et des mouvements sociaux par exemple).&nbsp; Une entreprise ne fonctionne en effet jamais en vase clos.&nbsp; Elle fait partie d'une société qui vit des transformations sociales et culturelles, mais aussi politiques et économiques, qui l'influencent fortement.&nbsp; Elle se transforme au contact des changements sociétaux, soit en s'adaptant, soit en innovant.&nbsp; Elle redéfinit en fait à sa façon un espace de vie.</p> </div></td>
+										</tr>
+									</tbody>
+								</table>
+								</br>
+								<table class="ressource">
+									<tbody>
+										<tr>
+											<td style="vertical-align: top;"></td>
+											<td><div class="divForToolbar ckeditable">
+													<p>
+														<strong>Déroulement des cours</strong>
+													</p>
+													<p>Le déroulement de chaque séance comprendra
+														normalement un retour sur les concepts et les lectures
+														théoriques et des analyses de cas et de questions
+														d'actualité faites par les étudiants et le professeur.</p>
+												</div></td>
+										</tr>
+									</tbody>
+								</table>
+								</br>								
+								<div class="important_header">Important</div>
+								<div class="ressource important_body">
+									<table class="ressource">
+										<tbody>
+											<tr>
+												<td style="vertical-align: top;"></td>
+												<td><a target="_blank"
+													href="http://osyldev.hec.ca:12345/sdata/c/attachment/1-404-96.H2012/OpenSyllabus/Test%20pdf.pdf">test
+														important</a> [Document]<br>(Test pdf.pdf)
+													<div class="comment"></div></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+						<!--
 						<div id="accordion">
 							<h3>Sections A01, A02</h3>
 							<div class="ressource ">
@@ -94,44 +136,7 @@
 									<tbody>
 										<tr>
 											<td style="vertical-align: top;"></td>
-											<td><div class="divForToolbar">
-													<p>
-														<strong>Orientation générale</strong>
-													</p>
-													<p>Ce cours de sociologie met l'accent sur les
-														dimensions sociales et culturelles de l'entreprise.&nbsp;
-														Ces dimensions sociales et culturelles sont tout aussi
-														importantes que les dimensions économiques, financières et
-														administratives dans la compréhension du fonctionnement de
-														l'entreprise.&nbsp; L'entreprise n'est pas en effet qu'un
-														lieu de production de biens et de services, elle est
-														également un lieu où travaillent des hommes et des femmes,
-														des jeunes et des vieux, des immigrants et des
-														nationaux.&nbsp; Ces individus nouent des relations
-														sociales et culturelles particulières qu'il faut
-														comprendre pour bien saisir la dynamique de
-														l'entreprise.&nbsp; Le seul examen des règles, des
-														chiffres et des résultats ne permet pas de comprendre
-														toute la richesse et la complexité de l'entreprise.&nbsp;
-														Il faut aussi se pencher sur les personnes qui la font, et
-														qui la défont parfois, sur les groupes qui naissent et
-														disparaissent en son sein.</p>
-													<p>Ces dimensions sociales et culturelles sont
-														examinées tant du point de vue de la dynamique interne de
-														l'entreprise que dans les rapports qu'elle entretient avec
-														son milieu environnant, car l'entreprise est tout autant
-														le résultat des actions des personnes qui y oeuvrent que
-														le fruit des influences extérieures (celles&nbsp; des
-														groupes de pression, des institutions et des mouvements
-														sociaux par exemple).&nbsp; Une entreprise ne fonctionne
-														en effet jamais en vase clos.&nbsp; Elle fait partie d'une
-														société qui vit des transformations sociales et
-														culturelles, mais aussi politiques et économiques, qui
-														l'influencent fortement.&nbsp; Elle se transforme au
-														contact des changements sociétaux, soit en s'adaptant,
-														soit en innovant.&nbsp; Elle redéfinit en fait à sa façon
-														un espace de vie.</p>
-												</div></td>
+											<td><div class="divForToolbar" contenteditable="true"><p><strong>Orientation générale</strong><p><p>Ce cours de sociologie met l'accent sur lesdimensions sociales et culturelles de l'entreprise.&nbsp; Ces dimensions sociales et culturelles sont tout aussi importantes que les dimensions économiques, financières et administratives dans la compréhension du fonctionnement de l'entreprise.&nbsp; L'entreprise n'est pas en effet qu'un lieu de production de biens et de services, elle est également un lieu où travaillent des hommes et des femmes, des jeunes et des vieux, des immigrants et des nationaux.&nbsp; Ces individus nouent des relations sociales et culturelles particulières qu'il faut comprendre pour bien saisir la dynamique de l'entreprise.&nbsp; Le seul examen des règles, des chiffres et des résultats ne permet pas de comprendre toute la richesse et la complexité de l'entreprise.&nbsp; Il faut aussi se pencher sur les personnes qui la font, et qui la défont parfois, sur les groupes qui naissent et disparaissent en son sein.</p> <p>Ces dimensions sociales et culturelles sont examinées tant du point de vue de la dynamique interne de l'entreprise que dans les rapports qu'elle entretient avec son milieu environnant, car l'entreprise est tout autant le résultat des actions des personnes qui y oeuvrent que le fruit des influences extérieures (celles&nbsp; des groupes de pression, des institutions et des mouvements sociaux par exemple).&nbsp; Une entreprise ne fonctionne en effet jamais en vase clos.&nbsp; Elle fait partie d'une société qui vit des transformations sociales et culturelles, mais aussi politiques et économiques, qui l'influencent fortement.&nbsp; Elle se transforme au contact des changements sociétaux, soit en s'adaptant, soit en innovant.&nbsp; Elle redéfinit en fait à sa façon un espace de vie.</p> </div></td>
 										</tr>
 									</tbody>
 								</table>
@@ -263,9 +268,30 @@
 							<h3>Section Z01</h3>
 							<div class="ressource "></div>
 						</div>
+-->
 
 						<br /> <br />
 						<h4>Objectifs</h4>
+						<div id="ckeditable">
+								<p>Le principal objectif de ce cours est de développer chez
+									le futur gestionnaire, comptable, entrepreneur, spécialiste du
+									marketing ou de la finance l'habileté à analyser l'économie, le
+									travail et l'entreprise à partir d'une perspective
+									sociologique.</p>
+								<p>
+									&nbsp;<br>D'une façon plus spécifique :
+								</p>
+								<ul>
+									<li>développer chez les étudiants l'habileté à recueillir
+										et organiser les données pertinentes à l'analyse sociologique
+										de situations reliées à l'économie et à l'entreprise;</li>
+									<li>développer la capacité à situer le contexte social,
+										culturel et politique dans lequel évolue l'entreprise;</li>
+									<li>développer chez les étudiants l'habileté à analyser
+										les dynamiques sociales à l'¿uvre dans les entreprises.</li>
+								</ul>
+						</div>
+						<!--
 						<div id="tabs">
 							<ul>
 								<li><a href="#tabs-1">Sections A01, A02</a></li>
@@ -330,6 +356,7 @@
 								</ul>
 							</div>
 						</div>
+						-->
 
 						<br /> <br />
 						<h4>Approche pédagogique</h4>
@@ -746,14 +773,16 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><p>L'examen final cherche à mesurer le
+										<td>
+										<div class="ckeditable">
+										<p>L'examen final cherche à mesurer le
 												raisonnement, l'articulation des idées, la capacité de
 												synthèse, etc. Il comprend deux questions demandant un
 												développement d'environ 3 pages.&nbsp;&nbsp;
 												Une&nbsp;questions&nbsp;pourrait porter&nbsp;sur les grands
 												dossiers discutés en classe.</p>
 											<p>L'évaluation des questions à développement porte
-												autant sur la forme que sur le fond.</p></td>
+												autant sur la forme que sur le fond.</p></div></td>
 									</tr>
 								</tbody>
 							</table>
@@ -764,7 +793,7 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><p>Voici les principaux critères retenus pour
+										<td><div class="ckeditable"><p>Voici les principaux critères retenus pour
 												l'évaluation :</p>
 											<p>
 												<strong>Le fond</strong>
@@ -784,7 +813,7 @@
 													arguments, fil conducteur, etc.</li>
 												<li>&nbsp;la qualité de la langue française (clarté,
 													concision, vocabulaire, orthographe, etc.)</li>
-											</ul></td>
+											</ul></div></td>
 									</tr>
 								</tbody>
 							</table>
@@ -801,7 +830,7 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><p>
+										<td><div class="ckeditable"><p>
 												Il y aura 4 quiz, un à la fin de chaque partie (cours 3, 6,
 												9, 12). Nous retiendrons les 3 meilleurs pour la compilation
 												de la note sur les quiz (10 points chacun). <br>Chaque
@@ -810,7 +839,7 @@
 												porteront sur les lectures et seront faites par le
 												coordonnateur du cours. La quatrième sera composée par votre
 												professeur et portera sur la matière vue en classe. <br>
-											</p></td>
+											</p></div></td>
 									</tr>
 								</tbody>
 							</table>
@@ -827,7 +856,7 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td>Vous devez faire, en équipe, une analyse sociologique
+										<td><div class="ckeditable">Vous devez faire, en équipe, une analyse sociologique
 											d'un thème d'actualité relié à la matière d'une des séances
 											du cours (séances 3 à 12).&nbsp;
 											<p>&nbsp;</p>
@@ -872,7 +901,7 @@
 												zéro. Pour préparer votre analyse n'oubliez pas de consulter
 												le <strong>guide d'analyse</strong> sur le site web du
 												cours.
-											</p>
+											</p></div>
 										</td>
 									</tr>
 								</tbody>
@@ -888,13 +917,13 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><ul>
+										<td><div class="ckeditable"><ul>
 												<li>Déroulement du cours</li>
 												<li>Genèse et objet de la sociologie&nbsp;</li>
 												<li>Sociologie de l'entreprise</li>
 												<li>Le capitalisme et ses différentes formes</li>
 												<li>Modèle d'analyse de cette société</li>
-											</ul></td>
+											</ul></div></td>
 									</tr>
 								</tbody>
 							</table>
@@ -1002,7 +1031,7 @@
 												<tbody>
 													<tr>
 														<td>
-															<div class="divForToolbar">
+															<div class="divForToolbar ckeditable">
 																<ul>
 																	<li>Les différents acteurs de l'entreprise</li>
 																	<li>Buts, ressources, stratégies et enjeux</li>
@@ -1061,10 +1090,10 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><ul>
+										<td><div class="ckeditable"><ul>
 												<li>Identités de groupes au travail et d'entreprises</li>
 												<li>Identités et changements</li>
-											</ul></td>
+											</ul></div></td>
 									</tr>
 								</tbody>
 							</table>
@@ -1113,7 +1142,7 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><div class="divForToolbar">
+										<td><div class="divForToolbar ckeditable">
 												<ul>
 													<li>Évolution de l'État et de ses modes d'intervention</li>
 													<li>Les enjeux actuels</li>
@@ -1208,10 +1237,10 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><ul>
+										<td><div class="ckeditable"><ul>
 												<li>Évolution des organisations supra étatiques</li>
 												<li>Les enjeux actuels</li>
-											</ul></td>
+											</ul></div></td>
 									</tr>
 								</tbody>
 							</table>
@@ -1260,10 +1289,10 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><ul>
+										<td><div class="ckeditable"><ul>
 												<li>Évolution des organisations syndicales</li>
 												<li>Les enjeux actuels</li>
-											</ul></td>
+											</ul></div></td>
 									</tr>
 								</tbody>
 							</table>
@@ -1312,11 +1341,11 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><ul>
+										<td><div class="ckeditable"><ul>
 												<li>État de la situation</li>
 												<li>Enjeux actuels</li>
 												<li>Analyse de cas</li>
-											</ul></td>
+											</ul></div></td>
 									</tr>
 								</tbody>
 							</table>
@@ -1365,11 +1394,11 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><ul>
+										<td><div class="ckeditable"><ul>
 												<li>État de la situation</li>
 												<li>Enjeux actuels</li>
 												<li>Analyse de cas</li>
-											</ul></td>
+											</ul></div></td>
 									</tr>
 								</tbody>
 							</table>
@@ -1431,7 +1460,7 @@
 												<tbody>
 													<tr>
 														<td>
-															<div class="divForToolbar">
+															<div class="divForToolbar ckeditable">
 																<ul>
 																	<li>Les valeurs des jeunes</li>
 																	<li>Insertion rofessionnelle des jeunes</li>
@@ -1490,7 +1519,7 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><div class="divForToolbar">
+										<td><div class="divForToolbar ckeditable">
 												<ul>
 													<li>L'Invention de la réalité économique</li>
 													<li>La rareté: un mythe fondateur</li>
@@ -1544,7 +1573,7 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><div class="divForToolbar">
+										<td><div class="divForToolbar ckeditable">
 												<ul>
 													<li>Rationalisme et bureaucratie</li>
 													<li>Propriété privée et salariat</li>
@@ -1600,7 +1629,7 @@
 								<tbody>
 									<tr>
 										<td style="vertical-align: top;"></td>
-										<td><ul>
+										<td><div class="ckeditable"><ul>
 												<li>Les deux visages de l'entreprise</li>
 												<li>Entreprise et société</li>
 												<li>Complexité de la question dans l'univers économique</li>
@@ -1914,6 +1943,14 @@
 	<script src="ressources/html-view.js"></script>
 	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script src="ressources/sidr/jquery.sidr.min.js"></script>
+	
+	<script src="ressources/ckeditor/ckeditor.js"></script>
+
+	<!--
+	<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css" rel="stylesheet"/>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js"></script>
+	-->
+	
 	<script>
 		$(function() {
 			$("#accordion").accordion();
@@ -1926,6 +1963,17 @@
 		});
 		var frame = parent.document.getElementById(window.name);
 		$(frame).css('height', "2000px");
+		
+		// inline edit
+		$(function(){
+//			$('.text-area-editable').editable({
+//				title: 'Enter comments',
+//				type: 'textarea'
+//				rows: 10
+//			});
+			$('.ckeditable').attr('contenteditable', 'true');
+		});
+		
 	</script>
 </body>
 </html>
