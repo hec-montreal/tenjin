@@ -624,13 +624,6 @@ background-color: transparent;
 	border-radius: 0;
 }
 
-/***** container of the header content (logo, etc...)***/
-.container {
-margin-left: auto;
-margin-right: auto;
-width: 960px;
-}
-
 
 
 /******************************************************************************************************************************************************/
@@ -646,12 +639,7 @@ width: 960px;
 }
 
 /***** style for the menu tabs (behaviour when clicked, mouseover, etc...) ***/
-#tabs {
-  list-style: none;
-  margin: 0;
-  background-color: black;
-  color: #FFFFFF;
-}
+
 #tabs > li {
   float: left;
 }
@@ -710,7 +698,7 @@ clear: both;
 	display: block;
 	color: rgb(255,255,255);
 	margin-left: 0px;
-	line-height: 23px;
+	line-height: 30px;
 	padding-left: 15px;
 	padding-right: 10px;
 	font-family: "Arial regular", sans-serif;
@@ -898,7 +886,6 @@ border-radius: 2px;
 .row {
 	overflow: visible;
 	*zoom: 1;
-	margin-left: -30px;
 }
 .row:before,
 .row:after {
@@ -1199,7 +1186,7 @@ width: 67%;
 }
 .span9{
 float:right;
-width: 65%;
+width: 100%;
 }
 .span12 {
 width: auto;
@@ -1215,13 +1202,6 @@ float: left;
 /*********************************************************** Conditional styles ***********************************************************/
 /******************************************************************************************************************************************************/
 
-/*when we have a big enought resolution*/
-@media (min-width: 1200px){
-	.container, .navbar-fixed-top .container, .navbar-fixed-bottom .container, #footer, .hCB  {
-	width: 1170px;
-	}
-
-}
 /*when we print page*/
 @media print {
   * { background: transparent !important; color: black !important; box-shadow:none !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } /* Black prints faster: h5bp.com/s */
@@ -1291,9 +1271,9 @@ content: "";
 
 /* course outline menu */
 .courseOutline .menu {
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F7F8F8,endColorstr=#F7F8F8)"; /* IE8 */
-	background: rgb(31, 93, 154);
-	background: rgba(31, 93, 154, 0.05);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f4f7fa,endColorstr=#f4f7fa)"; /* IE8 */
+	background: rgb(244, 247, 250);
+	background: rgba(244, 247, 250, 0.05);
 	min-height: 20px;
 	padding: 8px 0;
 	margin-bottom: 0px;
@@ -1306,6 +1286,8 @@ content: "";
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
      -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+
+	border-bottom: none;
 }
 .courseOutline .menu li a {
 	color: black;

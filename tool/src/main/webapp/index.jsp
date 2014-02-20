@@ -10,7 +10,7 @@
 	href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <link href="ressources/hec-public-portal.css" rel="stylesheet">
 	<link rel="stylesheet"
-		href="ressources/sidr/stylesheets/jquery.sidr.light.css">
+		href="ressources/sidr/stylesheets/jquery.sidr.osyl.css">
 <title>1-404-96.H2012 - Sociologie de l'entreprise</title>
 </head>
 <body>
@@ -18,19 +18,10 @@
 		<div id="main" class="container clear-top courseOutline-main">
 			<div class="row">
 				<div id="title">
+					<a id="simple-menu" href="#sidr">Toggle menu</a>
 					<h2>Sociologie de l'entreprise</h2>
 				</div>
-				<a id="simple-menu" href="#sidr">Toggle menu</a>
-
 				<div id="sidr">
-					<!-- Your content -->
-					<ul>
-						<li><a href="#">List 1</a></li>
-						<li class="active"><a href="#">List 2</a></li>
-						<li><a href="#">List 3</a></li>
-					</ul>
-				</div>
-				<div id="" class="span6">
 					<ul class="menu">
 						<li><a id="linkPresentation"
 							data-target="#coursePresentation" href="#" class="menu-link">Présentation
@@ -1927,7 +1918,7 @@
 			$("#tabs").tabs();
 		});
 		$(function() {
-			$('#simple-menu').sidr();
+			$('#simple-menu').sidr({'displace': true});
 		});
 		var frame = parent.document.getElementById(window.name);
 		$(frame).css('height', "2000px");
