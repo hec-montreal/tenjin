@@ -17,64 +17,68 @@
 	<div id="wrap" class="courseOutline">
 		<div id="main" class="container clear-top courseOutline-main">
 			<div class="row">
+				<div id="menu-icon">
+					<a id="simple-menu" href="#sidr" title="Montrer/Cacher le menu">
+						<img src="ressources/menu_icon.png" alt="Montrer/Cacher le menu" />
+					</a>
+				</div>
 				<div id="title">
-					<a id="simple-menu" href="#sidr">Toggle menu</a>
 					<h2>Sociologie de l'entreprise</h2>
 				</div>
 				<div id="sidr">
 					<ul class="menu">
 						<li><a id="linkPresentation"
-							data-target="#coursePresentation" href="#" class="menu-link">Présentation
+							data-target="#coursePresentation" href="#portalOuterContainer" class="menu-link">Présentation
 								du cours</a></li>
 						<li><a id="linkContact" data-target="#courseCoordinates"
-							href="#" class="menu-link">Coordonnées</a></li>
+							href="#portalOuterContainer" class="menu-link">Coordonnées</a></li>
 						<li><a id="linkMaterials" data-target="#courseMaterials"
-							href="#" class="menu-link">Matériel pédagogique</a></li>
+							href="#portalOuterContainer" class="menu-link">Matériel pédagogique</a></li>
 						<li><a>Évaluations</a>
 							<ul class="nav-sublist">
 								<li><a id="linkEvaluation1"
-									data-target="#courseEvaluation1" href="#" class="menu-link">1
+									data-target="#courseEvaluation1" href="#portalOuterContainer" class="menu-link">1
 										: Examen final</a></li>
 								<li><a id="linkEvaluation2"
-									data-target="#courseEvaluation2" href="#" class="menu-link">2
+									data-target="#courseEvaluation2" href="#portalOuterContainer" class="menu-link">2
 										: Quiz</a></li>
 								<li><a id="linkEvaluation3"
-									data-target="#courseEvaluation3" href="#" class="menu-link">3
+									data-target="#courseEvaluation3" href="#portalOuterContainer" class="menu-link">3
 										: Analyse d'équipe</a></li>
 							</ul></li>
 						<li><a>Organisation du cours</a>
 							<ul class="nav-sublist">
-								<li><a id="linkSeance-1" data-target="#seance-1" href="#"
+								<li><a id="linkSeance-1" data-target="#seance-1" href="#portalOuterContainer"
 									class="menu-link">1 : Présentation du cours et introduction
 										au système capitalisme</a></li>
-								<li><a id="linkSeance-2" data-target="#seance-2" href="#"
+								<li><a id="linkSeance-2" data-target="#seance-2" href="#portalOuterContainer"
 									class="menu-link">2 : La dynamique sociale de l'entreprise
 										I </a></li>
-								<li><a id="linkSeance-3" data-target="#seance-3" href="#"
+								<li><a id="linkSeance-3" data-target="#seance-3" href="#portalOuterContainer"
 									class="menu-link">3 : La dynamique sociale de l'entreprise
 										II </a></li>
-								<li><a id="linkSeance-4" data-target="#seance-4" href="#"
+								<li><a id="linkSeance-4" data-target="#seance-4" href="#portalOuterContainer"
 									class="menu-link">4 : L'État et la mondialisation </a></li>
-								<li><a id="linkSeance-5" data-target="#seance-5" href="#"
+								<li><a id="linkSeance-5" data-target="#seance-5" href="#portalOuterContainer"
 									class="menu-link">5 : Les organisations supra étatiques </a></li>
-								<li><a id="linkSeance-6" data-target="#seance-6" href="#"
+								<li><a id="linkSeance-6" data-target="#seance-6" href="#portalOuterContainer"
 									class="menu-link">6 : Les syndicats et la mondialisation </a></li>
-								<li><a id="linkSeance-7" data-target="#seance-7" href="#"
+								<li><a id="linkSeance-7" data-target="#seance-7" href="#portalOuterContainer"
 									class="menu-link">7 : Femmes, travail et gestion </a></li>
-								<li><a id="linkSeance-8" data-target="#seance-8" href="#"
+								<li><a id="linkSeance-8" data-target="#seance-8" href="#portalOuterContainer"
 									class="menu-link">8 : Immigrants, travail et gestion </a></li>
-								<li><a id="linkSeance-9" data-target="#seance-9" href="#"
+								<li><a id="linkSeance-9" data-target="#seance-9" href="#portalOuterContainer"
 									class="menu-link">9 : Jeunes, valeurs et entreprises </a></li>
-								<li><a id="linkSeance-10" data-target="#seance-10" href="#"
+								<li><a id="linkSeance-10" data-target="#seance-10" href="#portalOuterContainer"
 									class="menu-link">10 : L'entreprise est-elle nécessaire ? </a>
 								</li>
-								<li><a id="linkSeance-11" data-target="#seance-11" href="#"
+								<li><a id="linkSeance-11" data-target="#seance-11" href="#portalOuterContainer"
 									class="menu-link">11 : L'entreprise est-elle nécessaire ?
 										(suite) </a></li>
-								<li><a id="linkSeance-12" data-target="#seance-12" href="#"
+								<li><a id="linkSeance-12" data-target="#seance-12" href="#portalOuterContainer"
 									class="menu-link">12 : La question de la responsabilité
 										sociale des entreprises </a></li>
-								<li><a id="linkSeance-13" data-target="#seance-13" href="#"
+								<li><a id="linkSeance-13" data-target="#seance-13" href="#portalOuterContainer"
 									class="menu-link">13 : test rubrique ajout fichiers</a></li>
 							</ul></li>
 					</ul>
