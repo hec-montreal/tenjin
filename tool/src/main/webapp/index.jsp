@@ -17,14 +17,6 @@
 	<div id="wrap" class="courseOutline">
 		<div id="main" class="container clear-top courseOutline-main">
 			<div class="row">
-				<div id="menu-icon">
-					<a id="simple-menu" href="#sidr" title="Montrer/Cacher le menu">
-						<img src="ressources/menu_icon.png" alt="Montrer/Cacher le menu" />
-					</a>
-				</div>
-				<div id="title">
-					<h2>Sociologie de l'entreprise</h2>
-				</div>
 				<div id="sidr">
 					<ul class="menu">
 						<li><a id="linkPresentation"
@@ -83,7 +75,15 @@
 							</ul></li>
 					</ul>
 				</div>
-				<div id="" class="span9">
+				<div id="menu-icon">
+					<a id="simple-menu" href="#sidr" title="Montrer/Cacher le menu">
+						<img src="ressources/menu_icon.png" alt="Montrer/Cacher le menu" />
+					</a>
+				</div>
+				<div id="title">
+					<h2>Sociologie de l'entreprise</h2>
+				</div>
+				<div class="span9">
 					<div id="coursePresentation" class="content">
 
 						<h4>Description</h4>
@@ -112,7 +112,7 @@
 										</tr>
 									</tbody>
 								</table>
-								</br>								
+								</br>
 								<div class="important_header">Important</div>
 								<div class="ressource important_body">
 									<table class="ressource">
@@ -1943,14 +1943,15 @@
 	<script src="ressources/html-view.js"></script>
 	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script src="ressources/sidr/jquery.sidr.min.js"></script>
-	
+
 	<script src="ressources/ckeditor/ckeditor.js"></script>
+	<script src="ressources/jquery.ba-resize.min.js"></script>
 
 	<!--
 	<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css" rel="stylesheet"/>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js"></script>
 	-->
-	
+
 	<script>
 		$(function() {
 			$("#accordion").accordion();
@@ -1959,11 +1960,17 @@
 			$("#tabs").tabs();
 		});
 		$(function() {
-			$('#simple-menu').sidr({'displace': true});
+			$('#simple-menu').sidr({'displace': true, 'body': '#wrap'});
 		});
 		var frame = parent.document.getElementById(window.name);
-		$(frame).css('height', "2000px");
-		
+		$(frame).ready(function(){
+			$('#wrap').resize(function(){
+				$(frame).css('height', Math.max($('.menu').outerHeight(true), $(this).outerHeight(true)));
+			});
+			$('#wrap').resize();
+		});
+
+
 		// inline edit
 		$(function(){
 //			$('.text-area-editable').editable({
@@ -1973,7 +1980,7 @@
 //			});
 			$('.ckeditable').attr('contenteditable', 'true');
 		});
-		
+
 	</script>
 </body>
 </html>

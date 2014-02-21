@@ -13,7 +13,8 @@ background-color: white;
 
 html,body
 {
-height:100%;
+	height:100%;
+	overflow-y: hidden;
 }
 
 footer
@@ -63,6 +64,7 @@ header, nav, section, article, aside, footer {
 /***** Div that wrap of the web page ***/
 #wrap
 {
+	height: auto;
 }
 
 /***** Div that wrap the frame containing the content (everything but header and footer) ***/
