@@ -401,16 +401,60 @@
 
 						<br /> <br />
 						<h4>
-							Approche pédagogique <a id="edit-link" href="#" title="Éditer">
-								<img src="ressources/glyphicons_014_pencil.png" alt="Éditer" />
+							Approche pédagogique <a id="edit-link" href="#" title="Éditer"> <img
+								src="ressources/glyphicons_014_pencil.png" alt="Éditer" />
 							</a>
 						</h4>
-						<div id="dialog-form" title="Approche pédagogique">
+						<div id="dialog-form" title="Édition">
 							<form>
 								<fieldset>
-									<label for="content">Contenu</label>
-									<textarea name="content" id="content"
-										class="text ui-widget-content ui-corner-all"></textarea>
+									<p>
+										<label for="rubrique">Rubrique</label> <select name="rubrique"
+											id="rubrique" class="text ui-widget-content ui-corner-all">
+											<option>&lt;choisissez une rubrique&gt;</option>
+											<option>Description</option>
+											<option>Objectifs</option>
+											<option selected="selected">Approche Pédagogique</option>
+										</select>
+									</p>
+									<p>
+										<label for="level">Niveau de diffusion</label> <select
+											name="level" id="level"
+											class="text ui-widget-content ui-corner-all">
+											<option>Étudiants inscrits</option>
+											<option>Communauté HEC</option>
+											<option>Public</option>
+										</select>
+									</p>
+									<p>
+										<span>Options :</span> <input type="checkbox" name="hidden"
+											class="text ui-widget-content ui-corner-all" /> <label
+											for="hidden">Caché</label> <input type="checkbox"
+											name="important" class="text ui-widget-content ui-corner-all" />
+										<label for="important">Important</label>
+
+									</p>
+									<p>
+										<label for="exigence">Niveau d'exigence</label> <select
+											name="exigence" id="exigence"
+											class="text ui-widget-content ui-corner-all">
+											<option>Obligatoire</option>
+											<option>Recommandé</option>
+											<option>Complémentaire</option>
+										</select>
+									</p>
+									<p>
+										<textarea id="textarea"></textarea>
+									</p>
+									<p>
+										<label for="moveto">Déplacer vers</label> <select
+											name="moveto" id="moveto"
+											class="text ui-widget-content ui-corner-all">
+											<option></option>
+											<option>Présentation du cours et introduction au système capitalisme</option>
+											<option>La dynamique sociale de l'entreprise I</option>
+										</select>
+									</p>
 								</fieldset>
 							</form>
 						</div>
@@ -2019,8 +2063,8 @@
 		$(function() {
 			$("#dialog-form").dialog({
 				autoOpen : false,
-				height : 300,
-				width : 350,
+				height : 600,
+				width : 700,
 				modal : true,
 				buttons : {
 					"Mettre à jour" : function() {
@@ -2068,6 +2112,7 @@
 			//				rows: 10
 			//			});
 			$('.ckeditable').attr('contenteditable', 'true');
+			CKEDITOR.replace('textarea');
 		});
 	</script>
 </body>
