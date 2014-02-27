@@ -401,7 +401,8 @@
 
 						<br /> <br />
 						<h4>
-							Approche pédagogique <a id="edit-link" href="#" title="Éditer"> <img
+							Approche pédagogique <a id="edit-link"
+								href="#portalOuterContainer" title="Éditer"> <img
 								src="ressources/glyphicons_014_pencil.png" alt="Éditer" />
 							</a>
 						</h4>
@@ -451,7 +452,8 @@
 											name="moveto" id="moveto"
 											class="text ui-widget-content ui-corner-all">
 											<option></option>
-											<option>Présentation du cours et introduction au système capitalisme</option>
+											<option>Présentation du cours et introduction au
+												système capitalisme</option>
 											<option>La dynamique sociale de l'entreprise I</option>
 										</select>
 									</p>
@@ -2063,7 +2065,7 @@
 		$(function() {
 			$("#dialog-form").dialog({
 				autoOpen : false,
-				height : 600,
+				height : 650,
 				width : 700,
 				modal : true,
 				buttons : {
@@ -2093,16 +2095,17 @@
 		});
 		var frame = parent.document.getElementById(window.name);
 		$(frame).ready(
-				function() {
-					$('#wrap').resize(
-							function() {
-								$(frame).css(
-										'height',
-										Math.max($('.menu').outerHeight(true),
-												$(this).outerHeight(true)));
-							});
-					$('#wrap').resize();
-				});
+			function() {
+				$('#wrap').resize(
+					function() {
+						// calcul de la hauteur de zone d'affichage de l'outil
+						var toolHeight = $(parent).height() - parent.$('.portletMainWrap').offset().top - parent.$('#footer').outerHeight(true) - 10;
+						// calcul du max entre la hauteur de la zone d'affichage de l'outil, du menu et du contenu
+						var frameHeight =  Math.max(toolHeight, Math.max($('.menu').outerHeight(true), $('#wrap').outerHeight(true)));
+						$(frame).css('height', frameHeight);
+					});
+				$('#wrap').resize();
+			});
 
 		// inline edit
 		$(function() {
