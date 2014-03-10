@@ -135,7 +135,25 @@
 													innovant.&nbsp; Elle redéfinit en fait à sa façon un espace
 													de vie.</p>
 													
-										</div><span class="edit-icon"></span></div></td>
+										</div><span class="edit-icon"></span></div>
+										<div>
+										<a class="prefs-link">préférences</a>
+										<div class="prefs-div">
+											<form>
+												<fieldset>
+													<p>
+														<label>Visible du </label>
+														<a href="#" class="datepicker">15 mars 2014</a> à 
+														<a class="timepicker">12:45</a>
+														<label> au </label>
+														<a href="#" class="datepicker">17 mars 2014</a> à
+														<a class="timepicker">12:45</a>
+													</p>
+													<p><label>Aux sections:</label><a href="#" class="sections-checklist"></a></p>
+												</fieldset>
+											</form></div>
+										</div>
+										</td>
 								</tr>
 							</tbody>
 						</table>
@@ -144,7 +162,7 @@
 							<tbody>
 								<tr>
 									<td style="vertical-align: top;"></td>
-									<td><div class="divForToolbar ckeditable">
+									<td><div class="editable-element"><div class="divForToolbar ckeditable">
 											<p>
 												<strong>Déroulement des cours</strong>
 											</p>
@@ -152,7 +170,7 @@
 												un retour sur les concepts et les lectures théoriques et des
 												analyses de cas et de questions d'actualité faites par les
 												étudiants et le professeur.</p>
-										</div></td>
+										</div><span class="edit-icon"></span></div></td>
 								</tr>
 							</tbody>
 						</table>
@@ -316,7 +334,7 @@
 
 						<br /> <br />
 						<h4>Objectifs</h4>
-						<div id="ckeditable">
+						<div class="editable-element"><div class="ckeditable">
 							<p>Le principal objectif de ce cours est de développer chez
 								le futur gestionnaire, comptable, entrepreneur, spécialiste du
 								marketing ou de la finance l'habileté à analyser l'économie, le
@@ -333,7 +351,7 @@
 								<li>développer chez les étudiants l'habileté à analyser les
 									dynamiques sociales à l'¿uvre dans les entreprises.</li>
 							</ul>
-						</div>
+						</div><span class="edit-icon"></span></div>
 						<!--
 						<div id="tabs">
 							<ul>
@@ -2058,11 +2076,12 @@
 	<script src="ressources/ckeditor/ckeditor.js"></script>
 	<script src="ressources/jquery.ba-resize.min.js"></script>
 
-	<!--
 	<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/css/jqueryui-editable.css" rel="stylesheet"/>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jqueryui-editable/js/jqueryui-editable.min.js"></script>
-	-->
-
+	
+	<script src="ressources/moment.min.js"></script>
+	<script src="ressources/datepicker-fr-CA.js"></script>
+	
 	<script>
 		$(function() {
 			$("#dialog-form").dialog({
@@ -2083,12 +2102,14 @@
 				$("#dialog-form").dialog("open");
 			});
 		});
+/*		
 		$(function() {
 			$("#accordion").accordion();
 		});
 		$(function() {
 			$("#tabs").tabs();
 		});
+		*/
 		$(function() {
 			$('#simple-menu').sidr({
 				'displace' : true,
@@ -2111,25 +2132,66 @@
 
 		// inline edit
 		$(function() {
-			//			$('.text-area-editable').editable({
-			//				title: 'Enter comments',
-			//				type: 'textarea'
-			//				rows: 10
-			//			});
 			$('.ckeditable').attr('contenteditable', 'true');
-//			$().hover(
-//				function(){  },
-//				function(){  }
-//			)
 			$('.editable-element').hover(
 				function(){ $('.ckeditable', this).addClass('inline-edit'); $('.edit-icon', this).css('opacity', 100) },
 				function(){ $('.ckeditable', this).removeClass('inline-edit'); $('.edit-icon', this).css('opacity', 0) }
 			);
-			$('.edit-icon').click(
-				function() { editor = CKEDITOR.inline($(this).parent()) }
+
+//			$('.edit-icon').click(
+	//			function() { editor = CKEDITOR.inline($(this).parent()) }
+//			);
+			//preferences div
+			$('.prefs-link').click(
+				function() { $(this).parent().find('.prefs-div').toggle(); }
 			);
-				
 			
+			
+			//turn to inline mode	
+			$.fn.editable.defaults.mode = 'inline';
+			
+			//sections checklist
+			$('.sections-checklist').editable({
+				type: 'checklist',
+				value: [2, 3],
+				source: [
+					{ value: 1, text: 'A01' },
+					{ value: 2, text: 'A02' },
+					{ value: 3, text: 'B01' },
+					{ value: 4, text: 'B02' },
+					{ value: 5, text: 'C02' },
+					{ value: 6, text: 'DF1' }
+					],
+				display: function(value, sourceData) {
+					//display checklist as comma-separated values
+					var html = [],
+					checked = $.fn.editableutils.itemsByValue(value, sourceData);
+					if(checked.length) {
+						$.each(checked, function(i, v) { html.push($.fn.editableutils.escape(v.text)); });
+						$(this).html(html.join(', '));
+					} else {
+						$(this).empty();
+					}
+				}
+			});
+			
+			//datepicker
+			$('.datepicker').editable({
+				type: 'date',
+				regional: 'fr-CA',
+				format: 'yy-mm-dd',
+				viewformat: 'd MM yy'
+			});
+			
+			//time comboboxes
+			$('.timepicker').editable({
+				type: 'combodate',
+				format: 'HH:mm',
+				template: 'HH : mm'
+			});
+			
+
+			// for the popup form
 			CKEDITOR.replace('textarea');
 		});
 	</script>

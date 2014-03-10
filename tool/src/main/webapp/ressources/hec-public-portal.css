@@ -1382,3 +1382,25 @@ div.comment {
 	cursor: pointer;
 	opacity: 0;
 }
+
+.prefs-link {
+	cursor: pointer;
+}
+
+.prefs-div {
+	display: none;
+/*
+	background-color: #99CCFF;
+	padding: 1em;
+*/
+	border-radius: 5px;
+}
+
+.sections-checklist {
+	margin-left: 7px;
+}
+
+.editable-input div div{
+	display: inline;
+	margin-left: 7px;
+}
