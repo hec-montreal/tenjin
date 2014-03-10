@@ -1361,3 +1361,24 @@ div.comment {
 	line-height: 20px;
 	font-size: 18px;
 }
+
+.inline-edit {
+	box-shadow: 0 0 0 1px #cccccc;
+}
+
+.editable-element {
+	position: relative;
+}
+
+.editable-element .edit-icon {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 16px;
+	width: 16px;
+	background-image: url("/library/image/silk/pencil.png");
+	background-position: right center;
+    background-repeat: no-repeat;
+	cursor: pointer;
+	opacity: 0;
+}

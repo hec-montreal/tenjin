@@ -98,7 +98,8 @@
 							<tbody>
 								<tr>
 									<td style="vertical-align: top;"></td>
-									<td><div class="divForToolbar ckeditable">
+									<td><div class="editable-element">
+										<div class="divForToolbar ckeditable">
 											<p>
 												<strong>Orientation générale</strong>
 												<p>Ce cours de sociologie met l'accent sur lesdimensions
@@ -133,7 +134,8 @@
 													changements sociétaux, soit en s'adaptant, soit en
 													innovant.&nbsp; Elle redéfinit en fait à sa façon un espace
 													de vie.</p>
-										</div></td>
+													
+										</div><span class="edit-icon"></span></div></td>
 								</tr>
 							</tbody>
 						</table>
@@ -2115,6 +2117,19 @@
 			//				rows: 10
 			//			});
 			$('.ckeditable').attr('contenteditable', 'true');
+//			$().hover(
+//				function(){  },
+//				function(){  }
+//			)
+			$('.editable-element').hover(
+				function(){ $('.ckeditable', this).addClass('inline-edit'); $('.edit-icon', this).css('opacity', 100) },
+				function(){ $('.ckeditable', this).removeClass('inline-edit'); $('.edit-icon', this).css('opacity', 0) }
+			);
+			$('.edit-icon').click(
+				function() { editor = CKEDITOR.inline($(this).parent()) }
+			);
+				
+			
 			CKEDITOR.replace('textarea');
 		});
 	</script>
