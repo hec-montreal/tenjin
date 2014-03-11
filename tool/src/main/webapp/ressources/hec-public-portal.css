@@ -1383,6 +1383,21 @@ div.comment {
 	opacity: 0;
 }
 
+.sortable-element:hover {
+	background-image: url("handle.png");
+    background-repeat: no-repeat;
+}
+
+.handle {
+	cursor: move;
+}
+
+.droppable {
+	border-color: #cccccc;
+	border-style: dashed;
+}
+
+
 .prefs-link {
 	cursor: pointer;
 }
