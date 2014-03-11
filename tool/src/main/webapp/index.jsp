@@ -149,7 +149,7 @@
 														<a href="#" class="datepicker">17 mars 2014</a> à
 														<a class="timepicker">12:45</a>
 													</p>
-													<p><label>Aux sections:</label><a href="#" class="sections-checklist"></a></p>
+													<p><label>Sections:</label><a href="#" class="sections-checklist"></a></p>
 												</fieldset>
 											</form></div>
 										</div>
@@ -170,7 +170,25 @@
 												un retour sur les concepts et les lectures théoriques et des
 												analyses de cas et de questions d'actualité faites par les
 												étudiants et le professeur.</p>
-										</div><span class="edit-icon"></span></div></td>
+										</div><span class="edit-icon"></span></div>
+									    <div>
+										<a class="prefs-link">préférences</a>
+										<div class="prefs-div">
+											<form>
+												<fieldset>
+													<p>
+														<label>Visible du </label>
+														<a href="#" class="datepicker">15 mars 2014</a> à 
+														<a class="timepicker">12:45</a>
+														<label> au </label>
+														<a href="#" class="datepicker">17 mars 2014</a> à
+														<a class="timepicker">12:45</a>
+													</p>
+													<p><label>Sections:</label><a href="#" class="sections-checklist"></a></p>
+												</fieldset>
+											</form></div>
+										</div>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -189,6 +207,24 @@
 								</tbody>
 							</table>
 						</div>
+										<div>
+										<a class="prefs-link">préférences</a>
+										<div class="prefs-div">
+											<form>
+												<fieldset>
+													<p>
+														<label>Visible du </label>
+														<a href="#" class="datepicker">15 mars 2014</a> à 
+														<a class="timepicker">12:45</a>
+														<label> au </label>
+														<a href="#" class="datepicker">17 mars 2014</a> à
+														<a class="timepicker">12:45</a>
+													</p>
+													<p><label>Sections:</label><a href="#" class="sections-checklist"></a></p>
+												</fieldset>
+											</form></div>
+										</div>
+
 
 						<!--
 						<div id="accordion">
@@ -332,7 +368,7 @@
 						</div>
 -->
 
-						<br /> <br />
+						<br />
 						<h4>Objectifs</h4>
 						<div class="editable-element"><div class="ckeditable">
 							<p>Le principal objectif de ce cours est de développer chez
@@ -352,6 +388,24 @@
 									dynamiques sociales à l'¿uvre dans les entreprises.</li>
 							</ul>
 						</div><span class="edit-icon"></span></div>
+										<div>
+										<a class="prefs-link">préférences</a>
+										<div class="prefs-div">
+											<form>
+												<fieldset>
+													<p>
+														<label>Visible du </label>
+														<a href="#" class="datepicker">15 mars 2014</a> à 
+														<a class="timepicker">12:45</a>
+														<label> au </label>
+														<a href="#" class="datepicker">17 mars 2014</a> à
+														<a class="timepicker">12:45</a>
+													</p>
+													<p><label>Sections:</label><a href="#" class="sections-checklist"></a></p>
+												</fieldset>
+											</form></div>
+										</div>
+						
 						<!--
 						<div id="tabs">
 							<ul>
@@ -419,7 +473,7 @@
 						</div>
 						-->
 
-						<br /> <br />
+						<br />
 						<h4>
 							Approche pédagogique <a id="edit-link"
 								href="#portalOuterContainer" title="Éditer"> <img

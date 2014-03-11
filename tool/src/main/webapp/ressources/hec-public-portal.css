@@ -1389,11 +1389,17 @@ div.comment {
 
 .prefs-div {
 	display: none;
-/*
+}
+
+.prefs-div fieldset {
 	background-color: #99CCFF;
-	padding: 1em;
-*/
-	border-radius: 5px;
+	padding: 3px;
+	border-radius: 3px;
+
+}
+
+.timepicker {
+	cursor: pointer;
 }
 
 .sections-checklist {
