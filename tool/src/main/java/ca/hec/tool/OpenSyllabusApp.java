@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.Controller;
 
 import ca.hec.logic.SakaiProxy;
 
-public class HelloWorldController implements Controller {
+public class OpenSyllabusApp implements Controller {
 
 	/**
 	 * Hello World Controller
