@@ -19,8 +19,15 @@
 		<!-- Left menu -->
 		<div ng-controller="LeftMenuCtrl">
 		
-			<ul class="nav nav-pills nav-stacked">
-				<li ng-repeat="libelle in sections" ><a href='#{{libelle.id}}'>{{libelle.title}}</a></li>
+			<ul class="nav nav-pills nav-stacked navbar-left">
+				<li ng-repeat="section in sections" >
+					<a href='#{{section.id}}'>{{section.title}}</a>
+					<ul class="nav nav-pills nav-stacked" ng-show="{{section.ssections}}">
+	 				    <li ng-repeat="ssection in section.ssections" >
+							<a href='#{{ssection.id}}'>{{ssection.title}}</a>
+						</li>
+ 				    </ul>
+				</li>
 			</ul>
 		</div>
 	</body>
