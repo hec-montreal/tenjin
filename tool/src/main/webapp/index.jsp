@@ -10,20 +10,17 @@
 		<script src="/opensyllabus2-tool/lib/jquery/jquery-2.1.3.min.js"></script>
 		<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
 		<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.js"></script>
-		<script src="/opensyllabus2-tool/components/opensyllabus/opensyllabusCtrl.js"></script>
+		<script src="/opensyllabus2-tool/components/opensyllabus/opensyllabus.js"></script>
 		<script src="/opensyllabus2-tool/components/leftMenu/leftMenuCtrl.js"></script>
+		<script src="/opensyllabus2-tool/components/leftMenu/leftMenuServices.js"></script>
 	</head>
 	<body class="container">
 	
 		<!-- Left menu -->
 		<div ng-controller="LeftMenuCtrl">
 		
-			<ul ng-repeat="libelle in sections" class="nav nav-pills nav-stacked">
-				<li><a href='#{{libelle.id}}'>{{libelle.title}}</a></li>
-				<ul ng-repeat="section in {{libelle.ssections}}" class="nav nav-pills nav-stacked">
-				<li><a href='#{{section.id}}'>{{section.title}}</a></li>
-				
-			</ul>
+			<ul class="nav nav-pills nav-stacked">
+				<li ng-repeat="libelle in sections" ><a href='#{{libelle.id}}'>{{libelle.title}}</a></li>
 			</ul>
 		</div>
 	</body>
