@@ -7,28 +7,43 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>OpenSyllabus 2</title>
 		<link rel="stylesheet" href="/opensyllabus2-tool/lib/bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" href="/opensyllabus2-tool/css/opensyllabus.css"/>
 		<script src="/opensyllabus2-tool/lib/jquery/jquery-2.1.3.min.js"></script>
 		<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
 		<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.js"></script>
 		<script src="/opensyllabus2-tool/components/opensyllabus/opensyllabus.js"></script>
 		<script src="/opensyllabus2-tool/components/leftMenu/leftMenuCtrl.js"></script>
 		<script src="/opensyllabus2-tool/components/leftMenu/leftMenuServices.js"></script>
+		<script src="/opensyllabus2-tool/components/rightPanel/rightPanelCtrl.js"></script>
+		<script src="/opensyllabus2-tool/components/rightPanel/rightPanelServices.js"></script>
 	</head>
-	<body class="container">
+	<body class="container-fluid" ng-controller="OpensyllabusCtrl" style="min-height:594px">
 	
-		<!-- Left menu -->
-		<div ng-controller="LeftMenuCtrl">
-		
-			<ul class="nav nav-pills nav-stacked navbar-left">
-				<li ng-repeat="section in sections" >
-					<a href='#{{section.id}}'>{{section.title}}</a>
-					<ul class="nav nav-pills nav-stacked" ng-show="{{section.ssections}}">
-	 				    <li ng-repeat="ssection in section.ssections" >
-							<a href='#{{ssection.id}}'>{{ssection.title}}</a>
-						</li>
- 				    </ul>
-				</li>
-			</ul>
+		<div class="span5 fill">
+			<!-- Left menu -->
+			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" ng-controller="LeftMenuCtrl">
+			
+				<ul class="nav nav-stacked navbar-left ">
+					<li ng-repeat="section in sections" >
+						<a href='#{{section.id}}' ng-click="display(section.id)">{{section.title}}</a>
+						<ul class="nav nav-stacked"  >
+		 				    <li ng-repeat="ssection in section.ssections" >
+		 				    	<a href='#{{ssection.id}}' ng-click="display(ssection.id)">
+		 				    		<i class="glyphicon glyphicon-chevron-right"></i>
+		 				    		{{ssection.title}}
+		 				    	</a>
+							</li>
+	 				    </ul>
+					</li>
+				</ul>
+			</div>
+			
+			<!-- Right panel -->
+			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" ng-controller="RightPanelCtrl">
+				<span ng-repeat="element in elements">
+					<p ng-bind-html="element.data.text | unsafe"></p>
+				</span>
+			</div>
 		</div>
 	</body>
 </html>

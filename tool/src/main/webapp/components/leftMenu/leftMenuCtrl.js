@@ -1,6 +1,6 @@
-var leftMenuApp = angular.module('opensyllabus', []);
+//var leftMenuApp = angular.module('opensyllabus', []);
 
-leftMenuApp.controller('LeftMenuCtrl', function ($scope){
+opensyllabusApp.controller('LeftMenuCtrl', function ($scope){
 	$scope.title = 'Finance';
 	$scope.siteId = '2-200-96.A2015';
 	$scope.section = 'A01';
@@ -49,5 +49,7 @@ leftMenuApp.controller('LeftMenuCtrl', function ($scope){
   		}]}
 	];
 	
-	$scope.display = function (section){};
+	$scope.display = function (sectionId){
+		alert(sectionId);
+	};
 });
