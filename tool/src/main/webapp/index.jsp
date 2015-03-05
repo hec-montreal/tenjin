@@ -16,6 +16,13 @@
 		<script src="/opensyllabus2-tool/components/leftMenu/leftMenuServices.js"></script>
 		<script src="/opensyllabus2-tool/components/contentPanel/contentPanelCtrl.js"></script>
 		<script src="/opensyllabus2-tool/components/contentPanel/contentPanelServices.js"></script>
+
+		<!-- include sakai scripts (for resizing frame, etc). includes ckeditor -->
+		<%= request.getAttribute("sakai.html.head.js") %>
+		<!-- include skin/tool.css and tool_base.css -->
+		<!-- <%= request.getAttribute("sakai.html.head") %> -->
+		<!-- <%= request.getAttribute("sakai.html.head.css.skin") %> -->
+
 	</head>
 	<body class="portletBody " ng-controller="OpensyllabusCtrl" >
 	
@@ -23,14 +30,14 @@
 
 		<!-- Opensyllabus panel -->
 			<div  ng-controller="ContentPanelCtrl">
-			
+
 				<div class="row-fluid"  ng-controller="LeftMenuCtrl">
 				 	<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3 sidebar" >
-					
+	
 						 <button class="mini-submenu" >
 							<span class="glyphicon glyphicon-menu-hamburger"></span>
 						</button>	
-						 <!-- Left menu -->	
+			<!-- Left menu -->
 						 <div class="list-group">
 							<span href="#" class="list-group-item active">
 	            				A definir
@@ -43,8 +50,8 @@
 								<span class="list-group"  >
 				 				    <div ng-repeat="ssection in section.ssections" >
 				 				    	<a href='#{{ssection.id}}' class="list-group-item" ng-click="display(ssection.id)">
-				 				       		{{ssection.title}}
-				 				    	</a>
+		 				    		{{ssection.title}}
+		 				    	</a>
 									</div>
 			 				    </span>
 							</div>
@@ -53,14 +60,14 @@
 				 <!-- Navigation bar -->
 				
 				
-				</div>
+			</div>
 			
 				
 				<!-- Content -->
 				<div  id="content" class="col-xs-6 col-sm-6 col-md-7 col-lg-7" >
-					<span ng-repeat="element in elements">
-						<p ng-bind-html="element.data.text | unsafe"></p>
-					</span>
+				<span ng-repeat="element in elements">
+					<p ng-bind-html="element.data.text | unsafe"></p>
+				</span>
 				</div>
 			</div>
 		</div>
