@@ -14,35 +14,54 @@
 		<script src="/opensyllabus2-tool/components/opensyllabus/opensyllabus.js"></script>
 		<script src="/opensyllabus2-tool/components/leftMenu/leftMenuCtrl.js"></script>
 		<script src="/opensyllabus2-tool/components/leftMenu/leftMenuServices.js"></script>
-		<script src="/opensyllabus2-tool/components/rightPanel/rightPanelCtrl.js"></script>
-		<script src="/opensyllabus2-tool/components/rightPanel/rightPanelServices.js"></script>
+		<script src="/opensyllabus2-tool/components/contentPanel/contentPanelCtrl.js"></script>
+		<script src="/opensyllabus2-tool/components/contentPanel/contentPanelServices.js"></script>
 	</head>
-	<body class="container-fluid" ng-controller="OpensyllabusCtrl" style="min-height:594px">
+	<body class="portletBody " ng-controller="OpensyllabusCtrl" >
 	
-		<div class="span5 fill">
-			<!-- Left menu -->
-			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" ng-controller="LeftMenuCtrl">
+		<div class="container-fluid">
+
+		<!-- Opensyllabus panel -->
+			<div  ng-controller="ContentPanelCtrl">
 			
-				<ul class="nav nav-stacked navbar-left ">
-					<li ng-repeat="section in sections" >
-						<a href='#{{section.id}}' ng-click="display(section.id)">{{section.title}}</a>
-						<ul class="nav nav-stacked"  >
-		 				    <li ng-repeat="ssection in section.ssections" >
-		 				    	<a href='#{{ssection.id}}' ng-click="display(ssection.id)">
-		 				    		<i class="glyphicon glyphicon-chevron-right"></i>
-		 				    		{{ssection.title}}
-		 				    	</a>
-							</li>
-	 				    </ul>
-					</li>
-				</ul>
-			</div>
+				<div class="row-fluid"  ng-controller="LeftMenuCtrl">
+				 	<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3 sidebar" >
+					
+						 <button class="mini-submenu" >
+							<span class="glyphicon glyphicon-menu-hamburger"></span>
+						</button>	
+						 <!-- Left menu -->	
+						 <div class="list-group">
+							<span href="#" class="list-group-item active">
+	            				A definir
+	            				<span class="pull-right" id="slide-submenu">
+	                				<span class="glyphicon glyphicon-list"></span>
+					            </span>
+					        </span>
+							<div ng-repeat="section in sections" >
+								<a href='#{{section.id}}' class="list-group-item" ng-click="display(section.id)">{{section.title}}</a>
+								<span class="list-group"  >
+				 				    <div ng-repeat="ssection in section.ssections" >
+				 				    	<a href='#{{ssection.id}}' class="list-group-item" ng-click="display(ssection.id)">
+				 				       		{{ssection.title}}
+				 				    	</a>
+									</div>
+			 				    </span>
+							</div>
+						</div>
+					</div>
+				 <!-- Navigation bar -->
+				
+				
+				</div>
 			
-			<!-- Right panel -->
-			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" ng-controller="RightPanelCtrl">
-				<span ng-repeat="element in elements">
-					<p ng-bind-html="element.data.text | unsafe"></p>
-				</span>
+				
+				<!-- Content -->
+				<div  id="content" class="col-xs-6 col-sm-6 col-md-7 col-lg-7" >
+					<span ng-repeat="element in elements">
+						<p ng-bind-html="element.data.text | unsafe"></p>
+					</span>
+				</div>
 			</div>
 		</div>
 	</body>

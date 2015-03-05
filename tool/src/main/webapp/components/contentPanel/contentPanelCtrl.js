@@ -1,6 +1,6 @@
 //var rightPanelApp = angular.module('opensyllabus', []);
 
-opensyllabusApp.controller('RightPanelCtrl', function ($scope){
+opensyllabusApp.controller('ContentPanelCtrl', function ($scope){
 	
 	$scope.title= 'Presentation du cours',
 	$scope.id= '26af5f9b-074c-459d-830c-144bd1ab47e6',
