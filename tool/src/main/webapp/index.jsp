@@ -22,6 +22,7 @@
 		<!-- include skin/tool.css and tool_base.css -->
 		<!-- <%= request.getAttribute("sakai.html.head") %> -->
 		<!-- <%= request.getAttribute("sakai.html.head.css.skin") %> -->
+		<!-- a good example is bootstrap.jsp in roster2! -->
 
 	</head>
 	<body class="portletBody " ng-controller="OpensyllabusCtrl" >
@@ -66,7 +67,7 @@
 				<!-- Content -->
 				<div  id="content" class="col-xs-6 col-sm-6 col-md-7 col-lg-7" >
 				<span ng-repeat="element in elements">
-					<p ng-bind-html="element.data.text | unsafe"></p>
+					<p class="syllabus-element" ng-bind-html="element.data.text | unsafe"></p>
 				</span>
 				</div>
 			</div>
