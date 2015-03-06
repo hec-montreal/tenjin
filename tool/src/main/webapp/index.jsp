@@ -32,7 +32,7 @@
 			 <div class="list-group">
 				<span href="#" class="list-group-item active">
        				A definir
-       				<button class="btn btn-lg slide-submenu pull-right" onclick="hideMenu()"><!-- <button  > -->
+       				<button class="btn btn-lg slide-submenu" onclick="hideMenu()"><!-- <button  > -->
 						<span class="glyphicon glyphicon-list"></span>
 					</button>
        				<span class="pull-right" id="slide-submenu">
