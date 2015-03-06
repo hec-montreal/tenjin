@@ -6,6 +6,21 @@ opensyllabusApp.filter('unsafe', function($sce) {
 	    };
 	});
 
+function showMenu() {
+    $('#right').animate({ left: 250 }, 'slow', function() {
+    	$('.mini-submenu').hide();
+    	$('.slide-submenu').fadeIn();
+    });
+}
+
+function hideMenu() {
+    $('#right').animate({ left: 0 }, 'slow', function() {
+    	$('.mini-submenu').fadeIn();
+    });
+}
+
+
+
 opensyllabusApp.controller('OpensyllabusCtrl', function ($scope){
 });
 
@@ -15,3 +30,4 @@ $(document).ready(function() {
 		setMainFrameHeight(window.frameElement.id);
 	}
 });
+

@@ -25,53 +25,51 @@
 		<!-- a good example is bootstrap.jsp in roster2! -->
 
 	</head>
-	<body class="portletBody " ng-controller="OpensyllabusCtrl" >
-	
-		<div class="container-fluid">
-
-		<!-- Opensyllabus panel -->
-			<div  ng-controller="ContentPanelCtrl">
-
-				<div class="row-fluid"  ng-controller="LeftMenuCtrl">
-				 	<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3 sidebar" >
-	
-						 <button class="mini-submenu" >
-							<span class="glyphicon glyphicon-menu-hamburger"></span>
-						</button>	
-			<!-- Left menu -->
-						 <div class="list-group">
-							<span href="#" class="list-group-item active">
-	            				A definir
-	            				<span class="pull-right" id="slide-submenu">
-	                				<span class="glyphicon glyphicon-list"></span>
-					            </span>
-					        </span>
-							<div ng-repeat="section in sections" >
-								<a href='#{{section.id}}' class="list-group-item" ng-click="display(section.id)">{{section.title}}</a>
-								<span class="list-group"  >
-				 				    <div ng-repeat="ssection in section.ssections" >
-				 				    	<a href='#{{ssection.id}}' class="list-group-item" ng-click="display(ssection.id)">
-		 				    		{{ssection.title}}
-		 				    	</a>
-									</div>
-			 				    </span>
-							</div>
+	<body class="portletBody container-fluid" ng-controller="OpensyllabusCtrl" >
+		
+		<!-- Left menu -->
+	 	<div id="menu" ng-controller="LeftMenuCtrl">
+			 <div class="list-group">
+				<span href="#" class="list-group-item active">
+       				A definir
+       				<button class="btn btn-lg slide-submenu pull-right" onclick="hideMenu()"><!-- <button  > -->
+						<span class="glyphicon glyphicon-list"></span>
+					</button>
+       				<span class="pull-right" id="slide-submenu">
+           				<span class="glyphicon glyphicon-list"></span>
+		            </span>
+		        </span>
+				<div ng-repeat="section in sections" >
+					<a href='#{{section.id}}' class="list-group-item" ng-click="display(section.id)">{{section.title}}</a>
+					<span class="list-group" class="pull-right"  >
+	 				    <div ng-repeat="ssection in section.ssections" >
+	 				    	<a href='#{{ssection.id}}' class="list-group-item" ng-click="display(ssection.id)">
+				    			{{ssection.title}}
+				    		</a>
 						</div>
-					</div>
-				 <!-- Navigation bar -->
-				
-				
-			</div>
-			
-				
-				<!-- Content -->
-				<div  id="content" class="col-xs-6 col-sm-6 col-md-7 col-lg-7" >
-				<span ng-repeat="element in elements">
-					<p class="syllabus-element" ng-bind-html="element.data.text | unsafe"></p>
-				</span>
+					 </span>
 				</div>
 			</div>
 		</div>
+			
+				<!-- Opensyllabus panel -->
+		<div  id="right" ng-controller="ContentPanelCtrl" >
+			 <!-- Navigation bar -->
+			 
+			<div class="navbar navbar-default">
+	            <button class="btn btn-lg mini-submenu" onclick="showMenu()">
+					<span class="glyphicon glyphicon-menu-hamburger"></span>
+				</button>
+			</div>	
+			<!-- Content -->
+			<div  id="content"  >
+				<span ng-repeat="element in elements">
+					<p class="syllabus-element" ng-bind-html="element.data.text | unsafe"></p>
+				</span>
+			</div>
+		</div>
+		
+		
 	</body>
 </html>
 
