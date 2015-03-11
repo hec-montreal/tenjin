@@ -75,7 +75,7 @@
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" ng-controller="addElementCtrl as add">
-								<li role="presentation" ng-repeat="type in add.types"><a role="menuitem" tabindex="-1" href="#" ng.click="add.addElement(type)">{{type}}</a></li>
+								<li role="presentation" ng-repeat="type in add.types"><a role="menuitem" tabindex="-1" href="#" ng-click="add.addElement(type)">{{type}}</a></li>
 							</ul>
 						</div>
 					</div>
