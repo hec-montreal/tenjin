@@ -141,7 +141,7 @@
             			<phase>process-resources</phase>
 	    				<configuration>
 	      					<jrubyVersion>1.7.2</jrubyVersion>
-	      					<execArgs>${project.build.directory}/rubygems/bin/sass --update ${basedir}/src/main/webapp/css/*</execArgs>
+	      					<execArgs>${project.build.directory}/rubygems/bin/sass --update ${basedir}/src/main/webapp/css/opensyllabus.scss</execArgs>
 	    				</configuration>
 		  			</execution>
 				</executions>
