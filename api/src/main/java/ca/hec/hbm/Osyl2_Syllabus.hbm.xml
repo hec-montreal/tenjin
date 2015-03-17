@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="ca.hec.model.Syllabus" table="OSYL2_SYLLABUS">
+		<id name="id" type="long" column="SYLLABUS_ID">
+	    	<generator class="native">
+                 <param name="sequence">OSYL2_SYLLABUS_ID_SEQ</param>
+        	</generator>
+		</id>
+
+<!--
+		<property name="courseId" type="string" column="COURSE_ID" length="" not-null="true"/>
+		<property name="courseTitle" type="string" column="COURSE_TITLE" length="100" not-null="true"/>
+	-->
+<!--
+		<many-to-one name="metaSyllabusTemplateId" class="ca.hec.opensyllabus2.model.MetaSyllabusTemplateId" 
+			column="META_SYLLABUS_TEMPLATE_ID" lazy="true" not-null="true" />
+		-->
+<!--
+		<property name="locale" type="string" column="LOCALE" length="5"/>
+		<property name="createdBy" type="string" column="CREATED_BY" length="4" not-null="true"/>
+		<property name="createdDate" type="date" column="CREATED_DATE" not-null="true"/>
+	-->
+     </class>
+</hibernate-mapping>

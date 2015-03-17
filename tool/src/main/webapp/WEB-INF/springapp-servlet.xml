@@ -12,9 +12,4 @@
 		<property name="order" value="10" />
 	</bean>
 	
-	<bean name="/index.htm"
-		class="ca.hec.tool.OpenSyllabusApp">
-		<property name="sakaiProxy" ref="ca.hec.logic.SakaiProxy"/>
-	</bean>
-	
 </beans>
