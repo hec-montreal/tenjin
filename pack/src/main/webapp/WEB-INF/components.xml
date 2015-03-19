@@ -6,8 +6,8 @@
 	<import resource="spring-hibernate.xml" />
 
 	<!--  SakaiProxy -->
- 	<bean id="ca.hec.logic.SakaiProxy"
-    	class="ca.hec.logic.SakaiProxyImpl"
+ 	<bean id="ca.hec.opensyllabus2.api.logic.SakaiProxy"
+    	class="ca.hec.opensyllabus2.impl.logic.SakaiProxyImpl"
         init-method="init">
         <!-- API injection -->
         <property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
@@ -17,13 +17,13 @@
 		<property name="eventTrackingService" ref="org.sakaiproject.event.api.EventTrackingService" />
 		<property name="serverConfigurationService" ref="org.sakaiproject.component.api.ServerConfigurationService" />
 		<property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
-		
+
 	</bean>
-	
+
 	<!-- ProjectLogic -->
-	<bean id="ca.hec.logic.ProjectLogic"
-    	class="ca.hec.logic.ProjectLogicImpl"
+	<bean id="ca.hec.opensyllabus2.api.logic.ProjectLogic"
+    	class="ca.hec.opensyllabus2.impl.logic.ProjectLogicImpl"
     	init-method="init" />
-	
+
 
 </beans>
