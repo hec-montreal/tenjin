@@ -1,4 +1,4 @@
-package ca.hec.model;
+package ca.hec.opensyllabus2.api.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

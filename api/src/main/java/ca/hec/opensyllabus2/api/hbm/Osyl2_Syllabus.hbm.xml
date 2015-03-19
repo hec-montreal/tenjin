@@ -4,7 +4,7 @@
           "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="ca.hec.model.Syllabus" table="OSYL2_SYLLABUS">
+	<class name="ca.hec.opensyllabus2.api.model.Syllabus" table="OSYL2_SYLLABUS">
 		<id name="id" type="long" column="SYLLABUS_ID">
 	    	<generator class="native">
                  <param name="sequence">OSYL2_SYLLABUS_ID_SEQ</param>

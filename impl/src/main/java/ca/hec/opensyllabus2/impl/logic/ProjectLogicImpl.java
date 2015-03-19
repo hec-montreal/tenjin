@@ -1,11 +1,12 @@
-package ca.hec.logic;
+package ca.hec.opensyllabus2.impl.logic;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import ca.hec.model.Item;
+import ca.hec.opensyllabus2.api.logic.ProjectLogic;
+import ca.hec.opensyllabus2.api.model.Item;
 
 /**
  * Implementation of {@link ProjectLogic}

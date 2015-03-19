@@ -4,7 +4,7 @@
 
 <beans>
 	<!--  taken from example application tasklist at http://source.sakaiproject.org/contrib/programmerscafe/tags/sakai-2.2/tasklist/ -->
-	
+
 	<!-- Use the Sakai session factory, pre-configured, instead of a local one
 	we are adding our HBM files to the Sakai session factory instead of creating
 	our own copy of it -->
@@ -12,7 +12,7 @@
 		class="org.sakaiproject.springframework.orm.hibernate.impl.AdditionalHibernateMappingsImpl">
 		<property name="mappingResources">
 			<list>
-				<value>ca/hec/hbm/Osyl2_Syllabus.hbm.xml</value>
+				<value>ca/hec/opensyllabus2/api/hbm/Osyl2_Syllabus.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

@@ -1,4 +1,4 @@
-package ca.hec.logic;
+package ca.hec.opensyllabus2.api.logic;
 
 /**
  * An interface to abstract all Sakai related API calls in a central method that can be injected into our app.

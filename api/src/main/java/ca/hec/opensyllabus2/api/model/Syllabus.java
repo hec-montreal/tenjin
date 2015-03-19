@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ca.hec.model;
+package ca.hec.opensyllabus2.api.model;
 
 import java.util.Date;
 

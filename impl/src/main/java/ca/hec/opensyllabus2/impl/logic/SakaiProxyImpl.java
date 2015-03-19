@@ -1,4 +1,4 @@
-package ca.hec.logic;
+package ca.hec.opensyllabus2.impl.logic;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +12,8 @@ import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
+
+import ca.hec.opensyllabus2.api.logic.SakaiProxy;
 
 /**
  * Implementation of {@link SakaiProxy}

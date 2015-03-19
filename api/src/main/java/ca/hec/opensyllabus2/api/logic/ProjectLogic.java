@@ -1,8 +1,8 @@
-package ca.hec.logic;
+package ca.hec.opensyllabus2.api.logic;
 
 import java.util.List;
 
-import ca.hec.model.Item;
+import ca.hec.opensyllabus2.api.model.Item;
 
 /**
  * An example logic interface

@@ -1,4 +1,4 @@
-package ca.hec.tool;
+package ca.hec.opensyllabus2.tool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ import lombok.Setter;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
-import ca.hec.logic.SakaiProxy;
+import ca.hec.opensyllabus2.api.logic.SakaiProxy;
 
 public class OpenSyllabusApp implements Controller {
 
