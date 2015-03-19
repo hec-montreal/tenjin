@@ -13,6 +13,7 @@
 		<property name="mappingResources">
 			<list>
 				<value>ca/hec/opensyllabus2/api/hbm/Osyl2_Syllabus.hbm.xml</value>
+				<value>ca/hec/opensyllabus2/api/hbm/Osyl2_Template.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

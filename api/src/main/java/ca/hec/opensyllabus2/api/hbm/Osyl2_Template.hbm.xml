@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="ca.hec.opensyllabus2.api.model.Template" table="OSYL2_TEMPLATE">
+		<id name="id" type="long" column="OSYL2_TEMPLATE_ID">
+	    	<generator class="native">
+                 <param name="sequence">OSYL2_TEMPLATE_ID_SEQ</param>
+        	</generator>
+		</id>
+		<property name="title" type="string" column="TITLE" length="99" not-null="true"/>
+		<property name="description" type="text" column="DESCRIPTION" length="100"/>
+		<property name="active" type="boolean" column="ACTIVE"/>
+     </class>
+</hibernate-mapping>
