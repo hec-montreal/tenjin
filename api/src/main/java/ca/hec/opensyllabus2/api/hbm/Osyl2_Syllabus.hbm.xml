@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 	<class name="ca.hec.opensyllabus2.api.model.Syllabus" table="OSYL2_SYLLABUS">
-		<id name="id" type="long" column="SYLLABUS_ID">
+		<id name="id" type="long" column="OSYL2_SYLLABUS_ID">
 	    	<generator class="native">
                  <param name="sequence">OSYL2_SYLLABUS_ID_SEQ</param>
         	</generator>
@@ -16,7 +16,7 @@
 		<property name="courseTitle" type="string" column="COURSE_TITLE" length="100" not-null="true"/>
 	-->
 <!--
-		<many-to-one name="metaSyllabusTemplateId" class="ca.hec.opensyllabus2.model.MetaSyllabusTemplateId" 
+		<many-to-one name="metaSyllabusTemplateId" class="ca.hec.opensyllabus2.model.MetaSyllabusTemplateId"
 			column="META_SYLLABUS_TEMPLATE_ID" lazy="true" not-null="true" />
 		-->
 <!--

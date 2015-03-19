@@ -12,6 +12,6 @@
 		</id>
 		<property name="title" type="string" column="TITLE" length="99" not-null="true"/>
 		<property name="description" type="text" column="DESCRIPTION" length="100"/>
-		<property name="active" type="boolean" column="ACTIVE"/>
+		<property name="active" type="boolean" column="ACTIVE" not-null="true"/>
      </class>
 </hibernate-mapping>
