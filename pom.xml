@@ -5,8 +5,8 @@
 	<artifactId>opensyllabus2</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>sakai-spring-maven-archetype</name>
-	<description>Archetype to generate a project with sakai and spring</description>
+	<name>OpenSyllabus 2</name>
+	<description><description>
 
 	<parent>
 		<artifactId>base</artifactId>
