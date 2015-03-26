@@ -6,7 +6,7 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>OpenSyllabus 2</name>
-	<description><description>
+	<description></description>
 
 	<parent>
 		<artifactId>base</artifactId>
