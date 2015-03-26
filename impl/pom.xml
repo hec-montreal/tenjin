@@ -39,6 +39,18 @@
 			<artifactId>sakai-kernel-util</artifactId>
 		</dependency>
 
+		<!-- spring and hibernate -->
+		<dependency>
+			<groupId>${sakai.spring.groupId}</groupId>
+			<artifactId>${sakai.spring.artifactId}</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>${sakai.hibernate.groupId}</groupId>
+			<artifactId>${sakai.hibernate.artifactId}</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<!-- configure the build to use the standard maven structure -->

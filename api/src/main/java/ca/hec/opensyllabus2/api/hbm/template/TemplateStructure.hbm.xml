@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ca.hec.opensyllabus2.api.model.template.TemplateStructure" table="OSYL2_TEMPLATE_STRUCTURE">
+       <id name="templateStructure_id" type="java.lang.Long" >
+            <column name="TEMPLATE_STRUCTURE_ID" />
+            <generator class="native">
+                 <param name="sequence">OSYL2_TEMPLATE_STRUCTURE_ID_SEQ</param>
+        	</generator>
+        </id>
+        <property name="parent_id" type="java.lang.Long">
+            <column name="PARENT_ID" />
+        </property>
+         <property name="templateElement_id" type="java.lang.Long" >
+            <column name="TEMPLATE_ELEMENT_ID" />
+        </property>
+        <property name="template_id" type="java.lang.Long" >
+            <column name="TEMPLATE_ID" />
+        </property>
+        <property name="mandatory" type="java.lang.Boolean" >
+            <column name="MANDATORY" />
+        </property>
+        <property name="displayOrder" type="java.lang.Long" >
+            <column name="DISPLAY_ORDER" />
+        </property>
+    </class>
+</hibernate-mapping>

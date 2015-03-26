@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" table="OSYL2_SYLLABUSSTRUCTURE">
+        <id name="syllabusStructure_id" type="java.lang.Long" >
+            <column name="SYLLABUSSTRUCTURE_ID" />
+            <generator class="native">
+            	<param name="sequence">SYLLABUSSTRUCTURE_ID_SEQ</param>
+            </generator>
+        </id>
+        <property name="parent_id" type="java.lang.Long" >
+            <column name="PARENT_ID" />
+       </property>
+       <property name="rubric_id" type="java.lang.Long" >
+            <column name="RUBRIC_ID" />
+        </property>
+        <property name="templateStructure_id" type="java.lang.Long">
+            <column name="TEMPLATESTRUCTURE_ID" />
+        </property>
+        <property name="syllabus_id" type="java.lang.Long">
+            <column name="SYLLABUS_ID" />
+        </property>
+        <property name="shareable" type="java.lang.Boolean">
+            <column name="SHAREABLE" />
+        </property>
+       
+       <property name="lastModifiedDate" column="LASTMODIFIEDDATE" type="java.util.Date" />
+       
+       <property name="studentAvailability" column="STUDENTAVAILABILITY" type="java.util.Date" />
+        
+        
+        <property name="publicElement" type="java.lang.Boolean">
+            <column name="PUBLICELEMENT" />
+        </property>
+        <property name="lastModifiedBy" type="java.lang.String">
+            <column name="LASTMODIFIEDBY" />
+        </property>
+    </class>
+</hibernate-mapping>

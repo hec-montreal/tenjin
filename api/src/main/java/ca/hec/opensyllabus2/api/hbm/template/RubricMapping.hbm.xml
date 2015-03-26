@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ca.hec.opensyllabus2.api.model.template.RubricMapping" table="OSYL2_RUBRICMAPPING">
+        <composite-id>
+	    	<key-property name="rubric_id" column="RUBRIC_ID" />
+	    	<key-property name="template_id" column="TEMPLATE_ID"/>
+	    </composite-id>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ca.hec.opensyllabus2.api.model.template.TemplateElementI18nLabel" table="OSYL2_TEMPLATEELEMENTI18NLABEL">
+	    <composite-id>
+	    	<key-property name="templateElement_id" column="templateElement_id" />
+	    	<key-property name="locale" column="LOCALE"/>
+	    </composite-id>
+	    
+       <property name="label" type="java.lang.String">
+            <column name="LABEL" />
+        </property>
+    </class>
+</hibernate-mapping>

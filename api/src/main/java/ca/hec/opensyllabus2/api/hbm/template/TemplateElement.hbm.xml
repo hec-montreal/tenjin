@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ca.hec.opensyllabus2.api.model.template.TemplateElement" table="OSYL2_TEMPLATEELEMENT">
+        <id name="templateElement_id" type="java.lang.Long">
+            <column name="TEMPLATEELEMENT_ID" />
+            <generator class="native">
+                 <param name="sequence">TEMPLATEELEMENT_ID_SEQ</param>
+        	</generator>
+        </id>
+        <property name="elementType_id" type="java.lang.Long">
+            <column name="ELEMENTTYPE_ID" />
+        </property>
+        <property name="defaultLabel" type="java.lang.String">
+            <column name="DEFAULTLABEL" />
+        </property>
+    </class>
+</hibernate-mapping>
