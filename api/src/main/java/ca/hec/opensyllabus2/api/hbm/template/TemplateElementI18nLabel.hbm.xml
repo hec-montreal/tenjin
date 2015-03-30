@@ -9,7 +9,7 @@
 	    	<key-property name="locale" column="LOCALE"/>
 	    </composite-id>
 	    
-       <property name="label" type="java.lang.String">
+       <property name="label" type="string">
             <column name="LABEL" />
         </property>
     </class>

@@ -4,25 +4,25 @@
 
 <hibernate-mapping>
     <class name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" table="OSYL2_SYLLABUSSTRUCTURE">
-        <id name="syllabusStructure_id" type="java.lang.Long" >
+        <id name="syllabusStructure_id" type="long" >
             <column name="SYLLABUSSTRUCTURE_ID" />
             <generator class="native">
             	<param name="sequence">SYLLABUSSTRUCTURE_ID_SEQ</param>
             </generator>
         </id>
-        <property name="parent_id" type="java.lang.Long" >
+        <property name="parent_id" type="long" >
             <column name="PARENT_ID" />
        </property>
-       <property name="rubric_id" type="java.lang.Long" >
+       <property name="rubric_id" type="long" >
             <column name="RUBRIC_ID" />
         </property>
-        <property name="templateStructure_id" type="java.lang.Long">
+        <property name="templateStructure_id" type="long">
             <column name="TEMPLATESTRUCTURE_ID" />
         </property>
-        <property name="syllabus_id" type="java.lang.Long">
+        <property name="syllabus_id" type="long">
             <column name="SYLLABUS_ID" />
         </property>
-        <property name="shareable" type="java.lang.Boolean">
+        <property name="shareable" type="boolean">
             <column name="SHAREABLE" />
         </property>
        
@@ -31,10 +31,10 @@
        <property name="studentAvailability" column="STUDENTAVAILABILITY" type="java.util.Date" />
         
         
-        <property name="publicElement" type="java.lang.Boolean">
+        <property name="publicElement" type="boolean">
             <column name="PUBLICELEMENT" />
         </property>
-        <property name="lastModifiedBy" type="java.lang.String">
+        <property name="lastModifiedBy" type="string">
             <column name="LASTMODIFIEDBY" />
         </property>
     </class>

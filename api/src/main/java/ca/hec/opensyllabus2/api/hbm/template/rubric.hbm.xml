@@ -4,13 +4,13 @@
 
 <hibernate-mapping>
     <class name="ca.hec.opensyllabus2.api.model.template.Rubric" table="OSYL2_RUBRIC">
-        <id name="rubric_id" type="java.lang.Long">
+        <id name="rubric_id" type="long">
             <column name="RUBRIC_ID" />
             <generator class="native">
             	<param name="sequence">osyl2_RUBRIC_ID</param>
             </generator>
         </id>
-        <property name="label" type="java.lang.String">
+        <property name="label" type="string">
             <column name="LABEL" />
         </property>
     </class>
