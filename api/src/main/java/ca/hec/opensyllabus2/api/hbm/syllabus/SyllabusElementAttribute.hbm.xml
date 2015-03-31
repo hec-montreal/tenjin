@@ -15,11 +15,11 @@
         <property name="syllabusStructure_id" type="long" >
             <column name="SYLLABUSSTRUCTURE_ID" />           
         </property>
-        <property name="key" type="string" >
-            <column name="KEY" />
+        <property name="attributeKey" type="string" >
+            <column name="ATTRIBUTEKEY" />
         </property>
-        <property name="keyValue" type="text" length="100">
-            <column name="KEYVALUE" />
+        <property name="attributeValue" type="text" length="100">
+            <column name="ATTRIBUTEVALUE" />
         </property>
     </class>
 </hibernate-mapping>

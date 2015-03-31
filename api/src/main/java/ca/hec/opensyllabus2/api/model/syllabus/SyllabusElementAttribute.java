@@ -33,9 +33,9 @@ public class SyllabusElementAttribute {
     
     private Long syllabusStructure_id;
     
-    private String key;
+    private String attributeKey;
     
-    private String keyValue;
+    private String attributeValue;
 
 }
 

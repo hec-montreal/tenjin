@@ -34,6 +34,6 @@ import lombok.*;
 public class RubricMapping implements Serializable {
 
     private Long rubric_id;
-    private Long template_id;
+    private Long templateStructure_id;
 }
 
