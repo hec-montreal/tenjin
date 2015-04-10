@@ -21,6 +21,7 @@
 package ca.hec.opensyllabus2.api.model.syllabus;
 
 import lombok.*;
+
 import java.util.*;
 
 /**
@@ -52,5 +53,6 @@ public class SyllabusStructure {
     
     private String lastModifiedBy;
     
+    private Long displayOrder;
 }
 

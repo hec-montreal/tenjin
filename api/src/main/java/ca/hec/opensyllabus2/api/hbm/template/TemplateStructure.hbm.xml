@@ -25,5 +25,8 @@
         <property name="displayOrder" type="long" >
             <column name="DISPLAYORDER" />
         </property>
+        <property name="displayPage" type="boolean">
+            <column name="DISPLAYPAGE" />
+        </property>
     </class>
 </hibernate-mapping>

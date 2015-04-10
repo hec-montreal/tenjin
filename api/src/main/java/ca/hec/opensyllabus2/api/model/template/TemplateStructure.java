@@ -40,5 +40,7 @@ public class TemplateStructure {
     private Boolean mandatory;
     
     private Long displayOrder;
+    
+    private Boolean displayPage;
 }
 
