@@ -12,7 +12,7 @@
 	    <servlet-class>uk.ac.cam.caret.sakai.WebappToolServlet</servlet-class>
 	    <init-param>
 	      	<param-name>main-page</param-name>
-	      	<param-value>/index.htm</param-value>
+	      	<param-value>/index.jsp</param-value>
 	    </init-param>
 		<load-on-startup>0</load-on-startup>
   	</servlet>
