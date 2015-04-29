@@ -11,26 +11,25 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>rubygems-releases</id>
-      <url>http://rubygems-proxy.torquebox.org/releases</url>
-    </pluginRepository>
-  </pluginRepositories>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId> 
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${kernel.spring.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>${kernel.spring.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>${kernel.spring.version}</version>
+      </dependency>
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
@@ -128,32 +127,12 @@
 				</configuration>
 			</plugin>
 
-			<!-- compile scss files (sass) taken from https://gist.github.com/mkristian/1671207 -->
-      		<plugin>
-        		<groupId>de.saumya.mojo</groupId>
-        		<artifactId>gem-maven-plugin</artifactId>
-        		<version>0.29.4</version>
-        		<executions>
-	  				<execution>
-	    				<goals>
-	      					<goal>exec</goal>
-	    				</goals>
-            			<phase>process-resources</phase>
-	    				<configuration>
-	      					<jrubyVersion>1.7.2</jrubyVersion>
-	      					<execArgs>${project.build.directory}/rubygems/bin/sass --update ${basedir}/src/main/webapp/css/opensyllabus.scss</execArgs>
-	    				</configuration>
-		  			</execution>
-				</executions>
-        		<dependencies>
-          			<dependency>
-            			<groupId>rubygems</groupId>
-            			<artifactId>sass</artifactId>
-            			<version>3.2.5</version>
-            			<type>gem</type>
-          			</dependency>
-        		</dependencies>
-      		</plugin>
+			<plugin>
+        <groupId>nl.geodienstencentrum.maven</groupId>
+        <artifactId>sass-maven-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+		
 		</plugins>
 	</build>
 
