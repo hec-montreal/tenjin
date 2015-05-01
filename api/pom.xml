@@ -15,15 +15,32 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
+        <!-- To keep make it easy to update all tool versions -->
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${sakai.lombok.version}</version>
+        <scope>provided</scope><!-- Lombok only needed at build time -->
+      </dependency>
 
-		<!-- Sakai dependencies -->
+	<dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-commons-annotations</artifactId>
+        <version>${kernel.hibernate.annotations.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      
+       <dependency>
+        <groupId>org.hibernate.javax.persistence</groupId>
+        <artifactId>hibernate-jpa-2.0-api</artifactId>
+        <version>${kernel.hibernate.jpa.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      		<!-- Sakai dependencies -->
 		<dependency>
 			<groupId>org.sakaiproject.kernel</groupId>
 			<artifactId>sakai-kernel-api</artifactId>
 		</dependency>
+
 
 
 	</dependencies>

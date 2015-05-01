@@ -54,5 +54,7 @@ public class SyllabusStructure {
     private String lastModifiedBy;
     
     private Long displayOrder;
+    
+
 }
 

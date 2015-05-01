@@ -21,9 +21,12 @@
 			<artifactId>log4j</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
+        <!-- To keep make it easy to update all tool versions -->
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${sakai.lombok.version}</version>
+        <scope>provided</scope><!-- Lombok only needed at build time -->
+      </dependency>
 
 		<!-- Sakai dependencies -->
 		<dependency>

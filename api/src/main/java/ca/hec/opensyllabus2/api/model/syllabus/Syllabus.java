@@ -3,7 +3,7 @@
  */
 package ca.hec.opensyllabus2.api.model.syllabus;
 import java.util.Date;
-
+import javax.persistence.*;
 import lombok.Data;
 
 /**
@@ -16,6 +16,7 @@ import lombok.Data;
 
 
 @Data
+@Entity
 public class Syllabus {	
     
     private Long syllabus_id;
@@ -31,5 +32,7 @@ public class Syllabus {
     private String createdBy;
     
     private Date creationDate;
+    
+    
     
 }
