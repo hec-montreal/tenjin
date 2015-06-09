@@ -20,10 +20,10 @@
 
 	</bean>
 
-	<!-- ProjectLogic -->
+	<!-- ProjectLogic
 	<bean id="ca.hec.opensyllabus2.api.logic.ProjectLogic"
     	class="ca.hec.opensyllabus2.impl.logic.ProjectLogicImpl"
     	init-method="init" />
 
-
+ -->
 </beans>
