@@ -35,6 +35,13 @@ public class SyllabusElementSection {
     private Long syllabusStructure_id;
     
     private String section_id;
+    
+
+    public SyllabusElementSection (Long syllabusStructure_id, String section_id){
+    	this.syllabusStructure_id = syllabusStructure_id;
+    	this.section_id = section_id;
+    }
+
 
 }
 

@@ -31,11 +31,15 @@ public class SyllabusElementAttribute {
     
     private Long elementAttribute_id;
     
-    private Long syllabusStructure_id;
-    
     private String attributeKey;
     
     private String attributeValue;
+    
+    private Long syllabusStructure_id;
+    
+    public SyllabusElementAttribute (Long syllabusStructure_id){
+    	this.syllabusStructure_id = syllabusStructure_id;
+    }
 
 }
 

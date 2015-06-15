@@ -30,5 +30,14 @@
         <property name="creationDate" type="java.util.Date">
          	<column name="CREATIONDATE" />
         </property>
+        
+        <set name="syllabusStructures" table="OSYL2_SYLLABUSSTRUCTURE" 
+		inverse="true" lazy="true" fetch="select">
+          <key>
+              <column name="SYLLABUS_ID" not-null="true" />
+          </key>
+          <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" />
+      </set>
+      
     </class>
 </hibernate-mapping>

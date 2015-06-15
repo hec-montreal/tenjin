@@ -20,6 +20,9 @@
  ******************************************************************************/
 package ca.hec.opensyllabus2.api.model.template;
 
+import java.util.Set;
+
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure;
 import lombok.*;
 /**
  *
@@ -33,6 +36,7 @@ public class Rubric {
     @NonNull private Long rubric_id;
     
     @NonNull private String label;
-   
+    
+    private Set<SyllabusStructure> syllabusStructures;
 }
 

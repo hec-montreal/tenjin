@@ -3,7 +3,7 @@
  */
 package ca.hec.opensyllabus2.api.model.syllabus;
 import java.util.Date;
-import javax.persistence.*;
+import java.util.Set;
 import lombok.Data;
 
 /**
@@ -16,7 +16,6 @@ import lombok.Data;
 
 
 @Data
-@Entity
 public class Syllabus {	
     
     private Long syllabus_id;
@@ -33,6 +32,11 @@ public class Syllabus {
     
     private Date creationDate;
     
+    private Set<SyllabusStructure> syllabusStructures;
     
-    
+    public Syllabus (String course_id, String courseTitle, Long template_id){
+    	this.course_id = course_id;
+    	this.courseTitle = courseTitle;
+    	this.template_id = template_id;
+    }
 }

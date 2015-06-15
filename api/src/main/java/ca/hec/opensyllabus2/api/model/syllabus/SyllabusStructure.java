@@ -24,6 +24,9 @@ import lombok.*;
 
 import java.util.*;
 
+import ca.hec.opensyllabus2.api.model.template.Rubric;
+import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
+
 /**
  *
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
@@ -36,13 +39,7 @@ public class SyllabusStructure {
     private Long syllabusStructure_id;
     
     private Long parent_id;
-    
-    private Long rubric_id;
-    
-    private Long templateStructure_id;
-    
-    private Long syllabus_id;
-    
+      
     private Boolean shareable;
     
     private Boolean publicElement;
@@ -55,6 +52,22 @@ public class SyllabusStructure {
     
     private Long displayOrder;
     
-
+    private Set <SyllabusElementAttribute> elementAttributes;
+    
+    private Set <SyllabusElementSection> elementSections;
+    
+    private Long syllabus_id;
+    
+    private Long templateStructure_id;
+    
+    private Long rubric_id;
+    
+    public SyllabusStructure (Long parent_id, Long rubric_id, Long templateStructure_id, Long syllabus_id){
+    	 this.parent_id = parent_id;
+    	 this.rubric_id = rubric_id;
+    	 this.templateStructure_id = templateStructure_id;
+    	 this.syllabus_id = syllabus_id;
+    	
+    }
 }
 

@@ -13,7 +13,7 @@
 		<property name="mappingResources">
 			<list>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/Syllabus.hbm.xml</value>
-				<value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElementAttribute.hbm.xml</value>
+			    <value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElementAttribute.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElementSection.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusStructure.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/rubric.hbm.xml</value>
@@ -28,8 +28,9 @@
 		</property>
 	</bean>
 	
-		<!-- <bean id="ca.hec.opensyllabus2.api.dao.SyllabusDao"
+	<bean id="ca.hec.opensyllabus2.api.dao.SyllabusDao"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		
 		<property name="transactionManager"
 			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
@@ -41,7 +42,7 @@
 					<ref
 						bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
 				</property>
-				<property name="sqlService" ref="org.sakaiproject.db.api.SqlService"/>
+				 <property name="sqlService" ref="org.sakaiproject.db.api.SqlService"/> 
 			</bean>
 		</property>
 		<property name="transactionAttributes">
@@ -50,6 +51,6 @@
 			</props>
 		</property>
 
-	</bean> -->
-	
+	</bean>
+
 </beans>

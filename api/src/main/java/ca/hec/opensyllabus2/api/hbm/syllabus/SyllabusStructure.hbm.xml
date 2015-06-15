@@ -13,15 +13,7 @@
         <property name="parent_id" type="long" >
             <column name="PARENT_ID" />
        </property>
-       <property name="rubric_id" type="long" >
-            <column name="RUBRIC_ID" />
-        </property>
-        <property name="templateStructure_id" type="long">
-            <column name="TEMPLATESTRUCTURE_ID" />
-        </property>
-        <property name="syllabus_id" type="long">
-            <column name="SYLLABUS_ID" />
-        </property>
+ 
         <property name="shareable" type="boolean">
             <column name="SHAREABLE" />
         </property>
@@ -40,5 +32,34 @@
          <property name="displayOrder" type="long" >
             <column name="DISPLAYORDER" />
         </property>
+        
+        <set name="elementAttributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE" 
+				inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="SYLLABUSSTRUCTURE_ID" not-null="true" />
+            </key>
+            <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementAttribute" />
+        </set>
+        
+       <set name="elementSections" table="OSYL2_SYLLABUSELEMENTSECTION" 
+				inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="SYLLABUSSTRUCTURE_ID" not-null="true" />
+            </key>
+            <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementSection" />
+        </set>
+        
+        <many-to-one name="rubric_id" class="ca.hec.opensyllabus2.api.model.template.Rubric" fetch="select">
+            <column name="RUBRIC_ID" not-null="false" />
+        </many-to-one>
+
+        <many-to-one name="templateStructure_id" class="ca.hec.opensyllabus2.api.model.template.TemplateStructure" fetch="select">
+            <column name="TEMPLATESTRUCTURE_ID" not-null="true" />
+        </many-to-one>
+        
+        <many-to-one name="syllabus_id" class="ca.hec.opensyllabus2.api.model.syllabus.Syllabus" fetch="select">
+            <column name="SYLLABUS_ID" not-null="true" />
+        </many-to-one>
+
     </class>
 </hibernate-mapping>

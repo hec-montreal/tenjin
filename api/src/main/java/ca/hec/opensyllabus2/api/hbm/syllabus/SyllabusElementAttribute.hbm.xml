@@ -12,10 +12,11 @@
             </generator>
         </id>
         
-        <property name="syllabusStructure_id" type="long" >
-            <column name="SYLLABUSSTRUCTURE_ID" />           
-        </property>
-        <property name="attributeKey" type="string" >
+        <many-to-one name="syllabusStructure_id" class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" fetch="select">
+            <column name="SYLLABUSSTRUCTURE_ID" not-null="true" />
+        </many-to-one>
+        
+       <property name="attributeKey" type="string" >
             <column name="ATTRIBUTEKEY" />
         </property>
         <property name="attributeValue" type="text" length="100">

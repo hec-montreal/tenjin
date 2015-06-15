@@ -32,27 +32,27 @@ import ca.hec.opensyllabus2.api.model.template.Rubric;
  */
 public interface SyllabusDao {
 
-	public Syllabus getSyllabus (String courseId);
-	
-	public Syllabus getShareableSyllabus (String courseId);
-	
 	public boolean createSyllabus (String courseId);
 	
-	public boolean removeSyllabus (String courseId);
+	public Syllabus getSyllabus (String courseId);
 	
 	public boolean updateSyllabus (String courseId);
 
-	public List<Object> getElementsSection (String elementId);
+	public boolean removeSyllabus (String courseId);
 	
-	public List<Object> getElementsAttributes (String elementId);
-	
-	public List<Rubric> getAllRubrics();
-	
-	public String getElementsRubric (String elementId);
-	
-	public String getSyllabusRubric (String syllabusId);
-	
-	public String getSyllabusLocale (String syllabusId);
+//	public Syllabus getShareableSyllabus (String courseId);
+//	
+//	public List<Object> getElementsSection (String elementId);
+//	
+//	public List<Object> getElementsAttributes (String elementId);
+//	
+//	public List<Rubric> getAllRubrics();
+//	
+//	public String getElementsRubric (String elementId);
+//	
+//	public String getSyllabusRubric (String syllabusId);
+//	
+//	public String getSyllabusLocale (String syllabusId);
 	
 }
 

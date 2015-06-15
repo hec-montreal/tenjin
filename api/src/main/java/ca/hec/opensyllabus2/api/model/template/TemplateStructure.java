@@ -20,6 +20,9 @@
  ******************************************************************************/
 package ca.hec.opensyllabus2.api.model.template;
 
+import java.util.Set;
+
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure;
 import lombok.*;
 /**
  *
@@ -42,5 +45,7 @@ public class TemplateStructure {
     private Long displayOrder;
     
     private Boolean displayPage;
+    
+    private Set<SyllabusStructure> syllabusStructures;
 }
 
