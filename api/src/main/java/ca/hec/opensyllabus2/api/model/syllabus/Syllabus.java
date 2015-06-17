@@ -39,4 +39,36 @@ public class Syllabus {
     	this.courseTitle = courseTitle;
     	this.template_id = template_id;
     }
+    
+    public Syllabus (){
+    	
+    }
+    
+    public void setSyllabusStructures( Set<SyllabusStructure> syllabusStructures){
+    	this.syllabusStructures = syllabusStructures;
+    }
+    
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if ( !(other instanceof Syllabus) ) return false;
+        
+        final Syllabus syllabus = (Syllabus) other;
+        
+        if (this.syllabusStructures == syllabus.getSyllabusStructures())
+        	return true;
+        
+        return false;
+    }
+    
+    public int hashCode() {
+        int result;
+        result = this.syllabusStructures.hashCode();
+        result = 29 * result ;
+        return result;
+    }
+    
+    public String toString(){
+    	return getCourseTitle();
+    }
+
 }

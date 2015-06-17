@@ -38,5 +38,9 @@ public class Rubric {
     @NonNull private String label;
     
     private Set<SyllabusStructure> syllabusStructures;
+    
+    public Rubric(){
+    	
+    }
 }
 

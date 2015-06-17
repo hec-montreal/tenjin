@@ -1,17 +1,23 @@
 package ca.hec.opensyllabus2.impl.dao;
 
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.sakaiproject.db.api.SqlService;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ca.hec.opensyllabus2.api.dao.*;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
-import ca.hec.opensyllabus2.api.model.template.Rubric;
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure;
 
 public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao {
 
+	private Log log = LogFactory.getLog(SyllabusDaoImpl.class);
     private SqlService sqlService;
 
     public void setSqlService(SqlService sqlService) {
@@ -24,8 +30,40 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
     	
     }
     
-	public Syllabus getSyllabus(String courseId) {
-		return null;
+	public Syllabus getSyllabus(String courseId) throws Exception{
+		List<Syllabus> results = null;
+		Syllabus syllabus = null;
+		Set <SyllabusStructure> syllabusStructures = null;
+		
+		if (courseId == null)
+		    throw new IllegalArgumentException();
+		
+		try{
+			String hql = "from Syllabus where course_id = :courseId";
+			Query query = getSession().createQuery(hql);
+			query.setParameter("courseId", courseId);
+			results = query.list();
+		} catch (Exception e) {
+		    log.error("Unable to retrieve syllabus by its course id", e);
+		    throw e;
+	}
+	
+	if (results.size() >= 1) {
+	    syllabus = results.get(0);
+	    syllabusStructures = syllabus.getSyllabusStructures();
+	    System.out.println("???????????????????????????? we have "+ syllabusStructures.size() + " syllabusstructures");
+	    for (SyllabusStructure syllabusStructure: syllabusStructures){
+		    System.out.println("?????????????????????? we have "+ syllabusStructure.getElementAttributes().size() + " element attributes");
+		    System.out.println("?????????????????????? we have "+ syllabusStructure.getElementSections().size() + " element sections");
+	    }
+	    
+	    System.out.println("?????????????????????????????????????????????????????????????????????????????????????????????????????????"+syllabus.getSyllabusStructures());
+	    return syllabus;
+	} else{
+	    throw new Exception("No syllabus with course id= " + courseId);
+    }
+
+		
 	}
 
 
@@ -51,7 +89,13 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	public void init(){
 		singleRowHT = new HibernateTemplate(getSessionFactory());
 		singleRowHT.setFetchSize(1);
-		singleRowHT.setMaxResults(1);		
+		singleRowHT.setMaxResults(1);	
+		try {
+			getSyllabus("52-701-02A.A2013.P3");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

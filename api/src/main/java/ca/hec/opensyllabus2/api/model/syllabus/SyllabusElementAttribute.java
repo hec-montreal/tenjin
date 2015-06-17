@@ -35,11 +35,36 @@ public class SyllabusElementAttribute {
     
     private String attributeValue;
     
-    private Long syllabusStructure_id;
+    private SyllabusStructure syllabusStructure_id;
     
-    public SyllabusElementAttribute (Long syllabusStructure_id){
+    public SyllabusElementAttribute (SyllabusStructure syllabusStructure_id){
     	this.syllabusStructure_id = syllabusStructure_id;
     }
 
+    public SyllabusElementAttribute (){
+    	
+    }
+    
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if ( !(other instanceof SyllabusElementAttribute) ) return false;
+        
+         
+        return false;
+    }
+    
+    public int hashCode() {
+        int result;
+        result = elementAttribute_id.hashCode();
+        result = 29 * 1 ;
+        return result;
+    }
+    
+    public String toString(){
+    	return elementAttribute_id + "";
+    }
+
+
 }
+
 

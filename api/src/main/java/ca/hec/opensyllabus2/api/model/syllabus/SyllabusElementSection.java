@@ -32,15 +32,38 @@ public class SyllabusElementSection {
     
     private Long elementSection_id;
     
-    private Long syllabusStructure_id;
+    private SyllabusStructure syllabusStructure_id;
     
     private String section_id;
     
 
-    public SyllabusElementSection (Long syllabusStructure_id, String section_id){
+    public SyllabusElementSection (SyllabusStructure syllabusStructure_id, String section_id){
     	this.syllabusStructure_id = syllabusStructure_id;
     	this.section_id = section_id;
     }
+
+
+    public SyllabusElementSection (){
+     }
+    
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if ( !(other instanceof SyllabusElementSection) ) return false;
+        
+         
+        return false;
+    }
+    
+    public int hashCode() {
+        int result;
+        result = elementSection_id.hashCode();
+        return result;
+    }
+    
+    public String toString(){
+    	return elementSection_id + "";
+    }
+
 
 
 }

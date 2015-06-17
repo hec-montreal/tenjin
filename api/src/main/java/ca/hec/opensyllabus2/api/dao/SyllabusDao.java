@@ -34,7 +34,7 @@ public interface SyllabusDao {
 
 	public boolean createSyllabus (String courseId);
 	
-	public Syllabus getSyllabus (String courseId);
+	public Syllabus getSyllabus (String courseId) throws Exception;
 	
 	public boolean updateSyllabus (String courseId);
 

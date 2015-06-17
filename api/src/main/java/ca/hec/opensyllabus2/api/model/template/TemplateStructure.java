@@ -47,5 +47,9 @@ public class TemplateStructure {
     private Boolean displayPage;
     
     private Set<SyllabusStructure> syllabusStructures;
+    
+    public TemplateStructure(){
+    	
+    }
 }
 

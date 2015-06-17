@@ -56,18 +56,44 @@ public class SyllabusStructure {
     
     private Set <SyllabusElementSection> elementSections;
     
-    private Long syllabus_id;
+    private Syllabus syllabus_id;
     
-    private Long templateStructure_id;
+    private TemplateStructure templateStructure_id;
     
-    private Long rubric_id;
+    private Rubric rubric_id;
     
-    public SyllabusStructure (Long parent_id, Long rubric_id, Long templateStructure_id, Long syllabus_id){
+    public SyllabusStructure (Long parent_id, Rubric rubric_id, TemplateStructure templateStructure_id, Syllabus syllabus_id){
     	 this.parent_id = parent_id;
     	 this.rubric_id = rubric_id;
     	 this.templateStructure_id = templateStructure_id;
     	 this.syllabus_id = syllabus_id;
     	
     }
+
+    public SyllabusStructure (){
+   	
+   }
+
+    
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if ( !(other instanceof SyllabusStructure) ) return false;
+        
+         
+        return false;
+    }
+    
+    public int hashCode() {
+        int result;
+        result = this.elementAttributes.hashCode();
+        result = 29 * 1 ;
+        return result;
+    }
+    
+    public String toString(){
+    	return getSyllabusStructure_id() + "";
+    }
+
+
 }
 

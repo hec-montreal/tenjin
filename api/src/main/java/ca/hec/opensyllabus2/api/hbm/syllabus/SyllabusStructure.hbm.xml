@@ -33,21 +33,21 @@
             <column name="DISPLAYORDER" />
         </property>
         
-        <set name="elementAttributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE" 
-				inverse="true" lazy="true" fetch="select">
+         <set name="elementAttributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE"
+				cascade="all">
             <key>
                 <column name="SYLLABUSSTRUCTURE_ID" not-null="true" />
             </key>
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementAttribute" />
         </set>
-        
-       <set name="elementSections" table="OSYL2_SYLLABUSELEMENTSECTION" 
-				inverse="true" lazy="true" fetch="select">
+      
+        <set name="elementSections" table="OSYL2_SYLLABUSELEMENTSECTION" 
+				cascade="all">
             <key>
                 <column name="SYLLABUSSTRUCTURE_ID" not-null="true" />
             </key>
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementSection" />
-        </set>
+       </set> 
         
         <many-to-one name="rubric_id" class="ca.hec.opensyllabus2.api.model.template.Rubric" fetch="select">
             <column name="RUBRIC_ID" not-null="false" />

@@ -32,7 +32,7 @@
         </property>
         
         <set name="syllabusStructures" table="OSYL2_SYLLABUSSTRUCTURE" 
-		inverse="true" lazy="true" fetch="select">
+		cascade="all">
           <key>
               <column name="SYLLABUS_ID" not-null="true" />
           </key>
