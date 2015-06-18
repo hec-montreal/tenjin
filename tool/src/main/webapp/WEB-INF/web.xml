@@ -5,6 +5,12 @@
 	 version="2.4">
 
 	<display-name>sakai.opensyllabus2</display-name>
+	<description> The description of the tool will be added to a later date</description>
+
+	<context-param>
+		<param-name>resourceurlbase</param-name> 
+		<param-value>/opensyllabus2-tool/</param-value>
+	</context-param>
 
 	<!--  This application's servlet class -->
 	<servlet>

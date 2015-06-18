@@ -12,9 +12,9 @@ import lombok.Setter;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
-import ca.hec.opensyllabus2.api.logic.SakaiProxy;
+import ca.hec.opensyllabus2.api.OpenSyllabus2Service;
 
-public class OpenSyllabusApp implements Controller {
+public class OpenSyllabusAction implements Controller {
 
 	/**
 	 * Hello World Controller
@@ -24,14 +24,14 @@ public class OpenSyllabusApp implements Controller {
 	 */
 	@Setter
 	@Getter
-	private SakaiProxy sakaiProxy = null;
+	private OpenSyllabus2Service openSyllabus2Service = null;
 	
 	public ModelAndView handleRequest(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
 		
 		Map<String, Object> map = new HashMap<String,Object>();
-		map.put("currentSiteId", sakaiProxy.getCurrentSiteId());
-		map.put("userDisplayName", sakaiProxy.getCurrentUserDisplayName());
+		map.put("currentSiteId", openSyllabus2Service.getCurrentSiteId());
+		map.put("userDisplayName", openSyllabus2Service.getCurrentUserDisplayName());
 		
 		return new ModelAndView("index", map);
 	}

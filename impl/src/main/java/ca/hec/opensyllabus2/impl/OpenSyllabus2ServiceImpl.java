@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.impl.logic;
+package ca.hec.opensyllabus2.impl;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,17 +13,17 @@ import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
-import ca.hec.opensyllabus2.api.logic.SakaiProxy;
+import ca.hec.opensyllabus2.api.OpenSyllabus2Service;
 
 /**
- * Implementation of {@link SakaiProxy}
+ * Implementation of {@link OpenSyllabus2Service}
  * 
  * @author Steve Swinsburg (steve.swinsburg@anu.edu.au)
  *
  */
-public class SakaiProxyImpl implements SakaiProxy {
+public class OpenSyllabus2ServiceImpl implements OpenSyllabus2Service {
 
-	private static final Logger log = Logger.getLogger(SakaiProxyImpl.class);
+	private static final Logger log = Logger.getLogger(OpenSyllabus2ServiceImpl.class);
     
 	/**
  	* {@inheritDoc}

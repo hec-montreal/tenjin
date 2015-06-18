@@ -50,6 +50,9 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	
 	if (results.size() >= 1) {
 	    syllabus = results.get(0);
+	    
+//	    test by printing on console
+	    
 //	    syllabusStructures = syllabus.getSyllabusStructures();
 //	    System.out.println("???????????????????????????? we have "+ syllabusStructures.size() + " syllabusstructures");
 //	    for (SyllabusStructure syllabusStructure: syllabusStructures){

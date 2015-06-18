@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.api.logic;
+package ca.hec.opensyllabus2.api;
 
 /**
  * An interface to abstract all Sakai related API calls in a central method that can be injected into our app.
@@ -6,7 +6,7 @@ package ca.hec.opensyllabus2.api.logic;
  * @author Mike Jennings (mike_jennings@unc.edu)
  *
  */
-public interface SakaiProxy {
+public interface OpenSyllabus2Service {
 
 	/**
 	 * Get current siteid

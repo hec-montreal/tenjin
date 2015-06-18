@@ -5,9 +5,8 @@
 	<!-- import the hibernate related beans -->
 	<import resource="spring-hibernate.xml" />
 
-	<!--  SakaiProxy -->
- 	<bean id="ca.hec.opensyllabus2.api.logic.SakaiProxy"
-    	class="ca.hec.opensyllabus2.impl.logic.SakaiProxyImpl"
+ 	<bean id="ca.hec.opensyllabus2.api.logic.OpenSyllabus2Service"
+    	class="ca.hec.opensyllabus2.impl.logic.OpenSyllabus2ServiceImpl"
         init-method="init">
         <!-- API injection -->
         <property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
