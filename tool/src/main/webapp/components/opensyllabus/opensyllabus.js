@@ -1,4 +1,4 @@
-var opensyllabusApp = angular.module('opensyllabus', []);
+var opensyllabusApp = angular.module('opensyllabus', ["ngResource"]);
 
 opensyllabusApp.filter('unsafe', function($sce) {
 	    return function(val) {
@@ -19,9 +19,10 @@ function hideMenu() {
     });
 }
 
-
-
-opensyllabusApp.controller('OpensyllabusCtrl', function ($scope){
+// loader les donnees du plan de cours
+opensyllabusApp.controller('OpensyllabusCtrl', function ($scope, $resource){
+	$scope.syllabus = $resource()
+	
 });
 
 // resize frame (should be done also whenever we change content)

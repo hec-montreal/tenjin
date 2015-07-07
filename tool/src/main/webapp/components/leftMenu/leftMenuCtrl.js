@@ -1,6 +1,8 @@
 //var leftMenuApp = angular.module('opensyllabus', []);
 
 opensyllabusApp.controller('LeftMenuCtrl', function ($scope){
+	//Boucle pour extraire les titres du json recu
+	
 	$scope.title = 'Finance';
 	$scope.siteId = '2-200-96.A2015';
 	$scope.section = 'A01';

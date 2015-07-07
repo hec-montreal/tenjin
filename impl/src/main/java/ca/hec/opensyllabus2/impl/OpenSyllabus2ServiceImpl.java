@@ -14,12 +14,13 @@ import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
 import ca.hec.opensyllabus2.api.OpenSyllabus2Service;
+import ca.hec.opensyllabus2.api.dao.SyllabusDao;
+import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 
 /**
  * Implementation of {@link OpenSyllabus2Service}
  * 
- * @author Steve Swinsburg (steve.swinsburg@anu.edu.au)
- *
+ * 
  */
 public class OpenSyllabus2ServiceImpl implements OpenSyllabus2Service {
 
@@ -88,24 +89,44 @@ public class OpenSyllabus2ServiceImpl implements OpenSyllabus2Service {
 		log.info("init");
 	}
 	
-	@Getter @Setter
+    @Setter
+	private SyllabusDao syllabusDao;
+	
+	@Setter
 	private ToolManager toolManager;
 	
-	@Getter @Setter
+    @Setter
 	private SessionManager sessionManager;
 	
-	@Getter @Setter
+    @Setter
 	private UserDirectoryService userDirectoryService;
 	
-	@Getter @Setter
+    @Setter
 	private SecurityService securityService;
 	
-	@Getter @Setter
+    @Setter
 	private EventTrackingService eventTrackingService;
 	
-	@Getter @Setter
+    @Setter
 	private ServerConfigurationService serverConfigurationService;
 	
-	@Getter @Setter
+    @Setter
 	private SiteService siteService;
+
+	
+	public Syllabus getSyllabus(String courseId) {
+		// TODO check if the user is allowed to get the syllabus before 
+
+		Syllabus syllabus;
+		
+		try {
+			syllabus = syllabusDao.getSyllabus(courseId);
+			return syllabus;
+		} catch (Exception e) {
+			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
+			return null;
+		}
+		
+		
+	}
 }

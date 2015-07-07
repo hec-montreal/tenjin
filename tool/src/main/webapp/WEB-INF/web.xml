@@ -7,10 +7,10 @@
 	<display-name>sakai.opensyllabus2</display-name>
 	<description> The description of the tool will be added to a later date</description>
 
-	<context-param>
+<!--	<context-param>
 		<param-name>resourceurlbase</param-name> 
 		<param-value>/opensyllabus2-tool/</param-value>
-	</context-param>
+	</context-param> -->
 
 	<!--  This application's servlet class -->
 	<servlet>
@@ -52,15 +52,23 @@
 		<listener-class>org.sakaiproject.util.ContextLoaderListener</listener-class>
 	</listener>
 	
-	  <servlet>
-    <servlet-name>springapp</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <load-on-startup>2</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>springapp</servlet-name>
-    <url-pattern>*.htm</url-pattern>
-  </servlet-mapping>
-	
+	<servlet>
+		<servlet-name>ViewRendererServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.ViewRendererServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>osyl2springapp</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>osyl2springapp</servlet-name>
+		<url-pattern>*.htm</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>osyl2springapp</servlet-name>
+		<url-pattern>*.json</url-pattern>
+	</servlet-mapping>
 
 </web-app>

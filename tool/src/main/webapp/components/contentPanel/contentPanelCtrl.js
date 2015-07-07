@@ -1,7 +1,7 @@
 //var rightPanelApp = angular.module('opensyllabus', []);
 
 opensyllabusApp.controller('ContentPanelCtrl', function ($scope){
-	
+	//boucle pour extraire les données à afficher du json reçu
 	$scope.title= 'Presentation du cours',
 	$scope.id= '26af5f9b-074c-459d-830c-144bd1ab47e6',
 	$scope.elementCount= '5',

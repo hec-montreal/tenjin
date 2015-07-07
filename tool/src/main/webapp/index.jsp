@@ -11,6 +11,7 @@
 		<script src="/opensyllabus2-tool/lib/jquery/jquery-2.1.3.min.js"></script>
 		<script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script>
 		<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
+		<script src="/opensyllabus2-tool/lib/angular/angular-resource.js"></script>
 		<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.js"></script>
 		<script src="/opensyllabus2-tool/components/opensyllabus/opensyllabus.js"></script>
 		<script src="/opensyllabus2-tool/components/leftMenu/leftMenuCtrl.js"></script>

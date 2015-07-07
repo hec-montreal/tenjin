@@ -1,5 +1,7 @@
 package ca.hec.opensyllabus2.api;
 
+import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
+
 /**
  * An interface to abstract all Sakai related API calls in a central method that can be injected into our app.
  * 
@@ -54,4 +56,11 @@ public interface OpenSyllabus2Service {
 	 * @return
 	 */
 	public String getToolSkinCSS(String skinRepo);
+	
+	/**
+	 * Retrieves the first selected syllabus associated to the given course id
+	 * @param courseId
+	 * @return
+	 */
+	public Syllabus getSyllabus (String courseId);
 }
