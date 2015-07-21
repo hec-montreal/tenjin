@@ -19,5 +19,14 @@
 		<property name="syllabusDao" ref="ca.hec.opensyllabus2.api.dao.SyllabusDao" />
 
 	</bean>
+	
+	<bean id="ca.hec.opensyllabus2.api.OpenSyllabus2SecurityService"
+		class="ca.hec.opensyllabus2.impl.OpenSyllabus2SecurityServiceImpl"
+		init-method="init">
+	<!-- <property name=""></property> -->	
+		
+		
+		
+	</bean>
 
 </beans>

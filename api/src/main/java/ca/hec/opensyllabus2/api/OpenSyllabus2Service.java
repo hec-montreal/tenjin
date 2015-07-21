@@ -1,5 +1,7 @@
 package ca.hec.opensyllabus2.api;
 
+import java.util.List;
+
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 
 /**
@@ -57,10 +59,26 @@ public interface OpenSyllabus2Service {
 	 */
 	public String getToolSkinCSS(String skinRepo);
 	
+
 	/**
-	 * Retrieves the first selected syllabus associated to the given course id
+	 * Retrieves the syllabus associated to a specific section and sectionId.
+	 * @param courseId
+	 * @param sectionId
+	 * @return
+	 */
+	public Syllabus getSyllabus (String courseId, String sectionId );
+	
+	/**
+	 * Retrieves the syllabus at the top of the hierarchy associated to the courseId.
 	 * @param courseId
 	 * @return
 	 */
-	public Syllabus getSyllabus (String courseId);
+	public Syllabus getShareableSyllabus (String courseId);
+	
+	/**
+	 * Retrieves the syllabus content shared by the list of sectionIds.
+	 * @param sectionIds
+	 * @return
+	 */
+	public Syllabus getCommonSyllabus (List<String> sectionIds);
 }

@@ -70,5 +70,5 @@
 		<servlet-name>osyl2springapp</servlet-name>
 		<url-pattern>*.json</url-pattern>
 	</servlet-mapping>
-
+	
 </web-app>

@@ -26,10 +26,9 @@
 		<!-- <%= request.getAttribute("sakai.html.head") %> -->
 		<!-- <%= request.getAttribute("sakai.html.head.css.skin") %> -->
 		<!-- a good example is bootstrap.jsp in roster2! -->
-
+		
 	</head>
 	<body class="portletBody container-fluid" ng-controller="OpensyllabusCtrl" >
-		
 		<!-- Left menu -->
 	 	<div id="menu" ng-controller="LeftMenuCtrl">
 			 <div class="list-group">
@@ -87,6 +86,8 @@
 				</span>
 			</div>
 		</div>
+	<a href="syllabus.jsp">Syllabus</a>
+		
 	</body>
 </html>
 

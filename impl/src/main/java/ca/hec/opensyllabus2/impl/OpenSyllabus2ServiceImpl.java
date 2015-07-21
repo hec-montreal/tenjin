@@ -1,5 +1,7 @@
 package ca.hec.opensyllabus2.impl;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,6 +42,7 @@ public class OpenSyllabus2ServiceImpl implements OpenSyllabus2Service {
 		return sessionManager.getCurrentSessionUserId();
 	}
 	
+
 	/**
  	* {@inheritDoc}
  	*/
@@ -114,9 +117,9 @@ public class OpenSyllabus2ServiceImpl implements OpenSyllabus2Service {
 	private SiteService siteService;
 
 	
-	public Syllabus getSyllabus(String courseId) {
+    public Syllabus getShareableSyllabus(String courseId) {
 		// TODO check if the user is allowed to get the syllabus before 
-
+		
 		Syllabus syllabus;
 		
 		try {
@@ -128,5 +131,18 @@ public class OpenSyllabus2ServiceImpl implements OpenSyllabus2Service {
 		}
 		
 		
+	}
+
+	@Override
+	public Syllabus getSyllabus(String courseId, String sectionId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	@Override
+	public Syllabus getCommonSyllabus(List<String> sectionIds) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
