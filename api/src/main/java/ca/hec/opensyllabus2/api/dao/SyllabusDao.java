@@ -34,13 +34,15 @@ public interface SyllabusDao {
 
 	public boolean createSyllabus (String courseId);
 	
-	public Syllabus getSyllabus (String courseId) throws Exception;
+	public Syllabus getSyllabus (String courseId, String sectionId) throws Exception;
 	
 	public boolean updateSyllabus (String courseId);
 
 	public boolean removeSyllabus (String courseId);
 	
-//	public Syllabus getShareableSyllabus (String courseId);
+	public Syllabus getShareableSyllabus (String courseId )throws Exception;
+	
+	public Syllabus getCommonSyllabus (List<String> sectionIds)throws Exception;
 //	
 //	public List<Object> getElementsSection (String elementId);
 //	

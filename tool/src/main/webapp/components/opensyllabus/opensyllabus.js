@@ -20,8 +20,14 @@ function hideMenu() {
 }
 
 // loader les donnees du plan de cours
-opensyllabusApp.controller('OpensyllabusCtrl', function ($scope, $resource){
-	$scope.syllabus = $resource()
+opensyllabusApp.controller('OpensyllabusCtrl', function ($scope, $http){
+	$http.get('v1/syllabus/30300.json').
+    success(function(data) {
+      $scope.syllabusTitle = data;
+    }).
+    error(function(data) {
+      // log error
+    });
 	
 });
 

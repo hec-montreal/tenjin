@@ -30,10 +30,9 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
     	
     }
     
-	public Syllabus getSyllabus(String courseId) throws Exception{
+	public Syllabus getShareableSyllabus(String courseId) throws Exception{
 		List<Syllabus> results = null;
 		Syllabus syllabus = null;
-		Set <SyllabusStructure> syllabusStructures = null;
 		
 		if (courseId == null)
 		    throw new IllegalArgumentException();
@@ -51,16 +50,6 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	if (results.size() >= 1) {
 	    syllabus = results.get(0);
 	    
-//	    test by printing on console
-	    
-//	    syllabusStructures = syllabus.getSyllabusStructures();
-//	    System.out.println("???????????????????????????? we have "+ syllabusStructures.size() + " syllabusstructures");
-//	    for (SyllabusStructure syllabusStructure: syllabusStructures){
-//		    System.out.println("?????????????????????? we have "+ syllabusStructure.getElementAttributes().size() + " element attributes");
-//		    System.out.println("?????????????????????? we have "+ syllabusStructure.getElementSections().size() + " element sections");
-//	    }
-//	    
-//	    System.out.println("?????????????????????????????????????????????????????????????????????????????????????????????????????????"+syllabus.getSyllabusStructures());
 	    return syllabus;
 	} else{
 	    throw new Exception("No syllabus with course id= " + courseId);
@@ -93,13 +82,47 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		singleRowHT = new HibernateTemplate(getSessionFactory());
 		singleRowHT.setFetchSize(1);
 		singleRowHT.setMaxResults(1);	
-		try {
-			getSyllabus("52-701-02A.A2013.P3");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
+
+	@Override
+	public Syllabus getSyllabus(String courseId, String sectionId) throws Exception {
+		List<Syllabus> results = null;
+		Syllabus syllabus = null;
+		Set <SyllabusStructure> syllabusStructures = null;
+		
+		if (courseId == null)
+		    throw new IllegalArgumentException();
+		
+		try{
+			String hql = "from Syllabus where course_id = :courseId";
+			Query query = getSession().createQuery(hql);
+			query.setParameter("courseId", courseId);
+			results = query.list();
+		} catch (Exception e) {
+		    log.error("Unable to retrieve syllabus by its course id", e);
+		    throw e;
+	}
+	
+	if (results.size() >= 1) {
+	    syllabus = results.get(0);
+	    
+	    return syllabus;
+	} else{
+	    throw new Exception("No syllabus with course id= " + courseId);
+    }
+
+		
+	}
+
+	@Override
+	public Syllabus getCommonSyllabus(List<String> sectionIds) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	
 	
 	
 //	@Override

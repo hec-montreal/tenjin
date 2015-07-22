@@ -33,7 +33,7 @@
 	 	<div id="menu" ng-controller="LeftMenuCtrl">
 			 <div class="list-group">
 				<span href="#" class="list-group-item active">
-       				A definir
+       				<div>{{syllabusTitle}}</div>
        				<button class="btn btn-lg slide-submenu" onclick="hideMenu()"><!-- <button  > -->
 						<span class="glyphicon glyphicon-list"></span>
 					</button>
@@ -66,7 +66,7 @@
 			<!-- Content -->
 			<div  id="content"  >
 				<div class="row">
-					<div class="col-sm-10"><h1>Page Title</h1></div>
+					<div class="col-sm-10"><h1>{{syllabusTitle}}</h1></div>
 					<div class="col-sm-2 pull-right">
 						<div class="dropdown">
 							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
@@ -86,8 +86,6 @@
 				</span>
 			</div>
 		</div>
-	<a href="syllabus.jsp">Syllabus</a>
-		
 	</body>
 </html>
 

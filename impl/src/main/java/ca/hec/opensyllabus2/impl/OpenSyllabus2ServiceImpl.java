@@ -123,7 +123,7 @@ public class OpenSyllabus2ServiceImpl implements OpenSyllabus2Service {
 		Syllabus syllabus;
 		
 		try {
-			syllabus = syllabusDao.getSyllabus(courseId);
+			syllabus = syllabusDao.getShareableSyllabus(courseId);
 			return syllabus;
 		} catch (Exception e) {
 			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
