@@ -80,5 +80,5 @@ public interface OpenSyllabus2Service {
 	 * @param sectionIds
 	 * @return
 	 */
-	public Syllabus getCommonSyllabus (List<String> sectionIds);
+	public Syllabus getCommonSyllabus (String courseId, String[] sectionIds);
 }

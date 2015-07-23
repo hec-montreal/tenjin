@@ -115,7 +115,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	}
 
 	@Override
-	public Syllabus getCommonSyllabus(List<String> sectionIds) throws Exception {
+	public Syllabus getCommonSyllabus(String courseId, String[] sectionIds) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

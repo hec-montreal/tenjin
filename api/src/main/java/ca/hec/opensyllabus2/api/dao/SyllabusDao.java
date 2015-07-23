@@ -42,7 +42,7 @@ public interface SyllabusDao {
 	
 	public Syllabus getShareableSyllabus (String courseId )throws Exception;
 	
-	public Syllabus getCommonSyllabus (List<String> sectionIds)throws Exception;
+	public Syllabus getCommonSyllabus (String courseId, String[] sectionIds)throws Exception;
 //	
 //	public List<Object> getElementsSection (String elementId);
 //	

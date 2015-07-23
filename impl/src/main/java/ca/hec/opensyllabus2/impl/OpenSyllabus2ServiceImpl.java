@@ -135,14 +135,30 @@ public class OpenSyllabus2ServiceImpl implements OpenSyllabus2Service {
 
 	@Override
 	public Syllabus getSyllabus(String courseId, String sectionId) {
-		// TODO Auto-generated method stub
-		return null;
+Syllabus syllabus;
+		
+		try {
+			syllabus = syllabusDao.getSyllabus(courseId, sectionId);
+			return syllabus;
+		} catch (Exception e) {
+			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
+			return null;
+		}
+		
 	}
 
 	
 	@Override
-	public Syllabus getCommonSyllabus(List<String> sectionIds) {
-		// TODO Auto-generated method stub
-		return null;
+	public Syllabus getCommonSyllabus(String courseId, String[]  sectionIds) {
+Syllabus syllabus;
+		
+		try {
+			syllabus = syllabusDao.getCommonSyllabus(courseId, sectionIds);
+			return syllabus;
+		} catch (Exception e) {
+			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
+			return null;
+		}
+		
 	}
 }
