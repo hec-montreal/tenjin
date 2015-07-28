@@ -116,8 +116,32 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
 	@Override
 	public Syllabus getCommonSyllabus(String courseId, String[] sectionIds) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<Syllabus> results = null;
+		Syllabus syllabus = null;
+		Set <SyllabusStructure> syllabusStructures = null;
+		
+		if (courseId == null)
+		    throw new IllegalArgumentException();
+		
+		try{
+			String hql = "from Syllabus where course_id = :courseId";
+			Query query = getSession().createQuery(hql);
+			query.setParameter("courseId", courseId);
+			results = query.list();
+		} catch (Exception e) {
+		    log.error("Unable to retrieve syllabus by its course id", e);
+		    throw e;
+	}
+	
+	if (results.size() >= 1) {
+	    syllabus = results.get(0);
+	    
+	    return syllabus;
+	} else{
+	    throw new Exception("No syllabus with course id= " + courseId);
+    }
+
+		
 	}
 
 

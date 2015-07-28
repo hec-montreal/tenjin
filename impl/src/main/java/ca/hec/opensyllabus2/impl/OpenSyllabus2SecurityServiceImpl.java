@@ -1,13 +1,22 @@
 package ca.hec.opensyllabus2.impl;
 
+import org.sakaiproject.authz.api.SecurityService;
+
 import ca.hec.opensyllabus2.api.OpenSyllabus2SecurityService;
 
 public class OpenSyllabus2SecurityServiceImpl implements OpenSyllabus2SecurityService {
 
+	
+	private SecurityService securityService;
+	
+	private void setSecurityService (SecurityService securityService){
+		this.securityService = securityService;
+	
+	}
+	
 	@Override
 	public boolean isSuperUser(String userId) {
-		// TODO Auto-generated method stub
-		return false;
+		return securityService.isSuperUser();
 	}
 
 	@Override
@@ -19,5 +28,10 @@ public class OpenSyllabus2SecurityServiceImpl implements OpenSyllabus2SecuritySe
 	
 	public void init(){
 		
+	}
+
+	@Override
+	public boolean isAllowed(String userId, String permission, String entityRef) {
+		return securityService.unlock(userId, permission, entityRef);
 	}
 }
