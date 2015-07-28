@@ -16,21 +16,17 @@
 			    <value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElementAttribute.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElementSection.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusStructure.hbm.xml</value>
-				<value>ca/hec/opensyllabus2/api/hbm/template/rubric.hbm.xml</value>
-				<value>ca/hec/opensyllabus2/api/hbm/template/RubricI18nLabel.hbm.xml</value>
-				<value>ca/hec/opensyllabus2/api/hbm/template/RubricMapping.hbm.xml</value>
+				<value>ca/hec/opensyllabus2/api/hbm/template/Rubric.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/Template.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/TemplateElement.hbm.xml</value>
-				<value>ca/hec/opensyllabus2/api/hbm/template/TemplateElementI18nLabel.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/TemplateElementType.hbm.xml</value>
-				<value>ca/hec/opensyllabus2/api/hbm/template/TemplateStructure.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="ca.hec.opensyllabus2.api.dao.SyllabusDao"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		
+
 		<property name="transactionManager"
 			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
@@ -42,7 +38,7 @@
 					<ref
 						bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
 				</property>
-				 <property name="sqlService" ref="org.sakaiproject.db.api.SqlService"/> 
+				 <property name="sqlService" ref="org.sakaiproject.db.api.SqlService"/>
 			</bean>
 		</property>
 		<property name="transactionAttributes">

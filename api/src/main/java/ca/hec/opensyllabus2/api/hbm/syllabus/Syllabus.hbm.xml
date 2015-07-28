@@ -18,9 +18,6 @@
         <property name="courseTitle" type="string">
             <column name="COURSETITLE" />
         </property>
-        <property name="template_id" type="long">
-            <column name="TEMPLATE_ID" />
-        </property>
         <property name="locale" type="string">
             <column name="LOCALE" />
         </property>
@@ -30,14 +27,17 @@
         <property name="creationDate" type="java.util.Date">
          	<column name="CREATIONDATE" />
         </property>
-        
-        <set name="syllabusStructures" table="OSYL2_SYLLABUSSTRUCTURE" 
+
+        <many-to-one name="template" column="TEMPLATE_ID"
+        	class="ca.hec.opensyllabus2.api.model.template.Template" not-null="true"/>
+
+        <set name="syllabusStructures" table="OSYL2_SYLLABUSSTRUCTURE"
 		cascade="all">
           <key>
               <column name="SYLLABUS_ID" not-null="true" />
           </key>
           <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" />
       </set>
-      
+
     </class>
 </hibernate-mapping>
