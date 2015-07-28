@@ -25,7 +25,7 @@ import lombok.*;
 import java.util.*;
 
 import ca.hec.opensyllabus2.api.model.template.Rubric;
-import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
+import ca.hec.opensyllabus2.api.model.template.TemplateElement;
 
 /**
  *
@@ -35,61 +35,61 @@ import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
 
 @Data
 public class SyllabusStructure {
-    
+
     private Long syllabusStructure_id;
-    
+
     private Long parent_id;
-      
+
     private Boolean shareable;
-    
+
     private Boolean publicElement;
-    
+
     private Date studentAvailability;
-    
+
     private Date lastModifiedDate;
-    
+
     private String lastModifiedBy;
-    
+
     private Long displayOrder;
-    
+
     private Set <SyllabusElementAttribute> elementAttributes;
-    
+
     private Set <SyllabusElementSection> elementSections;
-    
+
     private Syllabus syllabus_id;
-    
-    private TemplateStructure templateStructure_id;
-    
-    private Rubric rubric_id;
-    
-    public SyllabusStructure (Long parent_id, Rubric rubric_id, TemplateStructure templateStructure_id, Syllabus syllabus_id){
+
+    private TemplateElement templateElement;
+
+    private Rubric rubric;
+
+    public SyllabusStructure (Long parent_id, Rubric rubric_id, TemplateElement templateElement, Syllabus syllabus_id) {
     	 this.parent_id = parent_id;
-    	 this.rubric_id = rubric_id;
-    	 this.templateStructure_id = templateStructure_id;
+    	 this.rubric = rubric;
+    	 this.templateElement = templateElement;
     	 this.syllabus_id = syllabus_id;
-    	
+
     }
 
     public SyllabusStructure (){
-   	
+
    }
 
-    
+
     public boolean equals(Object other) {
         if (this == other) return true;
         if ( !(other instanceof SyllabusStructure) ) return false;
-        
-         
+
+
         return false;
     }
-    
+
     public int hashCode() {
         int result;
         result = this.elementAttributes.hashCode();
         result = 29 * 1 ;
         return result;
     }
-    
+
     public String toString(){
     	return getSyllabusStructure_id() + "";
     }
