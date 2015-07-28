@@ -20,19 +20,34 @@
  ******************************************************************************/
 package ca.hec.opensyllabus2.api.model.template;
 
+import java.util.Set;
+
 import lombok.*;
+
 /**
  *
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
+ * @author <a href="mailto:curtis.van-osch@hec.ca">Curtis van Osch</a>
  * @version $Id: $
  */
 @Data
 public class TemplateElement {
 
     private Long templateElement_id;
-    
-    private Long elementType_id;
-    
-    private String defaultLabel;
+
+    private String label;
+
+    private boolean mandatory;
+
+    private int displayOrder;
+
+    // Does this template element require it's own page in the Syllabus?
+    private Boolean displayAsPage;
+
+    private TemplateElementType type;
+
+    private Set<TemplateElement> childElements;
+
+    private Set<Rubric> rubrics;
 }
 

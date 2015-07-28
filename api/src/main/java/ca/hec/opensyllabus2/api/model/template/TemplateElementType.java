@@ -26,16 +26,16 @@ import lombok.*;
 /**
  *
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
+ * @author <a href="mailto:curtis.van-osch@hec.ca">Curtis van Osch</a>
  * @version $Id: $
  */
-
 @Data
 public class TemplateElementType {
 
     private Long elementType_id;
-    
-    private String title;
-    
+
+    @NonNull private String title;
+
     private String description;
 }
 

@@ -24,23 +24,18 @@ import java.util.Set;
 
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure;
 import lombok.*;
+
 /**
- *
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
+ * @author <a href="mailto:curtis.van-osch@hec.ca">Curtis van Osch</a>
  * @version $Id: $
  */
-
 @Data
 public class Rubric {
 
     @NonNull private Long rubric_id;
-    
+
     @NonNull private String label;
-    
-    private Set<SyllabusStructure> syllabusStructures;
-    
-    public Rubric(){
-    	
-    }
+
 }
 
