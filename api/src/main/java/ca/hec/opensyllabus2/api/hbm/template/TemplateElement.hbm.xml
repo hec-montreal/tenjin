@@ -10,11 +10,17 @@
                  <param name="sequence">TEMPLATEELEMENT_ID_SEQ</param>
         	</generator>
         </id>
-        <property name="elementType_id" type="long">
-            <column name="ELEMENTTYPE_ID" />
+        <many-to-one name="type" column="ELEMENTTYPE_ID"
+            class="ca.hec.opensyllabus2.api.model.template.TemplateElementType"/>
+        <property name="mandatory" type="boolean" not-null="true">
+            <column name="MANDATORY" />
         </property>
-        <property name="defaultLabel" type="string">
-            <column name="DEFAULTLABEL" />
+        <property name="displayOrder" type="int" not-null="true">
+            <column name="DISPLAY_ORDER" />
         </property>
+        <set name="childElements">
+            <key column="PARENT_ID"/>
+            <one-to-many class="ca.hec.opensyllabus2.api.model.template.TemplateElement"/>
+        </set>
     </class>
 </hibernate-mapping>

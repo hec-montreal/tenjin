@@ -13,14 +13,5 @@
         <property name="label" type="string">
             <column name="LABEL" />
         </property>
-        
-       <set name="syllabusStructures" table="OSYL2_SYLLABUSSTRUCTURE" 
-		inverse="true" lazy="true" fetch="select">
-          <key>
-              <column name="RUBRIC_ID" not-null="true" />
-          </key>
-          <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" />
-      </set>
-        
     </class>
 </hibernate-mapping>
