@@ -15,18 +15,18 @@ import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
-import ca.hec.opensyllabus2.api.OpenSyllabus2Service;
-import ca.hec.opensyllabus2.api.dao.SyllabusDao;
+import ca.hec.opensyllabus2.api.Syllabus2Service;
+import ca.hec.opensyllabus2.api.dao.Syllabus2Dao;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 
 /**
- * Implementation of {@link OpenSyllabus2Service}
+ * Implementation of {@link Syllabus2Service}
  * 
  * 
  */
-public class OpenSyllabus2ServiceImpl implements OpenSyllabus2Service {
+public class Syllabus2ServiceImpl implements Syllabus2Service {
 
-	private static final Logger log = Logger.getLogger(OpenSyllabus2ServiceImpl.class);
+	private static final Logger log = Logger.getLogger(Syllabus2ServiceImpl.class);
     
 	/**
  	* {@inheritDoc}
@@ -93,7 +93,7 @@ public class OpenSyllabus2ServiceImpl implements OpenSyllabus2Service {
 	}
 	
     @Setter
-	private SyllabusDao syllabusDao;
+	private Syllabus2Dao syllabusDao;
 	
 	@Setter
 	private ToolManager toolManager;

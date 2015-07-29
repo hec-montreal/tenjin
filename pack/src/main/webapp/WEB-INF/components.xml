@@ -5,8 +5,8 @@
 	<!-- import the hibernate related beans -->
 	<import resource="spring-hibernate.xml" />
 
- 	<bean id="ca.hec.opensyllabus2.api.OpenSyllabus2Service"
-    	class="ca.hec.opensyllabus2.impl.OpenSyllabus2ServiceImpl"
+ 	<bean id="ca.hec.opensyllabus2.api.Syllabus2Service"
+    	class="ca.hec.opensyllabus2.impl.Syllabus2ServiceImpl"
         init-method="init">
         <!-- API injection -->
         <property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
@@ -16,12 +16,12 @@
 		<property name="eventTrackingService" ref="org.sakaiproject.event.api.EventTrackingService" />
 		<property name="serverConfigurationService" ref="org.sakaiproject.component.api.ServerConfigurationService" />
 		<property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
-		<property name="syllabusDao" ref="ca.hec.opensyllabus2.api.dao.SyllabusDao" />
+		<property name="syllabusDao" ref="ca.hec.opensyllabus2.api.dao.Syllabus2Dao" />
 
 	</bean>
 	
-	<bean id="ca.hec.opensyllabus2.api.OpenSyllabus2SecurityService"
-		class="ca.hec.opensyllabus2.impl.OpenSyllabus2SecurityServiceImpl"
+	<bean id="ca.hec.opensyllabus2.api.Syllabus2SecurityService"
+		class="ca.hec.opensyllabus2.impl.Syllabus2SecurityServiceImpl"
 		init-method="init">
 		
 		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService"/>

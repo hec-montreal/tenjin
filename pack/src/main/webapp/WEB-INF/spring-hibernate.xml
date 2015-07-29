@@ -24,14 +24,14 @@
 		</property>
 	</bean>
 
-	<bean id="ca.hec.opensyllabus2.api.dao.SyllabusDao"
+	<bean id="ca.hec.opensyllabus2.api.dao.Syllabus2Dao"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 
 		<property name="transactionManager"
 			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
 			<bean
-				class="ca.hec.opensyllabus2.impl.dao.SyllabusDaoImpl"
+				class="ca.hec.opensyllabus2.impl.dao.Syllabus2DaoImpl"
 				singleton="true" init-method="init">
 
 				<property name="sessionFactory">

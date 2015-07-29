@@ -15,9 +15,9 @@ import ca.hec.opensyllabus2.api.dao.*;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure;
 
-public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao {
+public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Dao {
 
-	private Log log = LogFactory.getLog(SyllabusDaoImpl.class);
+	private Log log = LogFactory.getLog(Syllabus2DaoImpl.class);
     private SqlService sqlService;
 
     public void setSqlService(SqlService sqlService) {
@@ -26,7 +26,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
     private HibernateTemplate singleRowHT;
 
-    public SyllabusDaoImpl (){
+    public Syllabus2DaoImpl (){
     	
     }
     

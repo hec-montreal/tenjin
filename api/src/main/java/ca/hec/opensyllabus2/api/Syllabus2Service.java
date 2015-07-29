@@ -10,7 +10,7 @@ import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
  * @author Mike Jennings (mike_jennings@unc.edu)
  *
  */
-public interface OpenSyllabus2Service {
+public interface Syllabus2Service {
 
 	/**
 	 * Get current siteid

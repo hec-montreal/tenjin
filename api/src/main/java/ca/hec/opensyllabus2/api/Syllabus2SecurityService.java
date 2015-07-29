@@ -1,6 +1,6 @@
 package ca.hec.opensyllabus2.api;
 
-public interface OpenSyllabus2SecurityService {
+public interface Syllabus2SecurityService {
 
 	public static final String OSYL2_EDIT_PERMISSION = "osyl2.edit";
 	

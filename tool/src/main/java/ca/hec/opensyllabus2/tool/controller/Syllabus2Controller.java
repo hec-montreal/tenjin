@@ -18,24 +18,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import ca.hec.opensyllabus2.api.OpenSyllabus2Service;
+import ca.hec.opensyllabus2.api.Syllabus2Service;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 
 @Controller
 @RequestMapping(value ="v1/syllabus")
-public class OpenSyllabus2Controller {
+public class Syllabus2Controller {
 
 	@Setter
 	@Getter
 	@Autowired
-	private OpenSyllabus2Service osyl2Service = null;
+	private Syllabus2Service osyl2Service = null;
 
 	private ResourceLoader msgs = null;
 
-	private static Log log = LogFactory.getLog(OpenSyllabus2Controller.class);
+	private static Log log = LogFactory.getLog(Syllabus2Controller.class);
 
 	@PostConstruct
 	public void init() {
@@ -43,10 +44,9 @@ public class OpenSyllabus2Controller {
 		msgs = new ResourceLoader("openSyllabus2");
 	}
 
-	// * is supposed to be a courseId
-	@ResponseBody
+	//TODO: put correct courseId
 	@RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
-	public String getShareableSyllabus(
+	public ModelAndView getSyllabus(
 			@PathVariable String courseId,
 			@RequestParam(value = "sectionId", required = false) String sectionId)
 			throws JSONException {
@@ -57,33 +57,19 @@ public class OpenSyllabus2Controller {
 			int nbParams = countParams(sectionId);
 			if (nbParams <= 1){
 				//We get the syllabus of the specified section
-				//syllabus = osyl2Service.getSyllabus(courseId, sectionId);
-				return new String("\"" + "Bienvenu dans le plan de cours spécifique"/*
-						 * syllabus.
-						 * getCourseTitle
-						 * ()
-						 */+ "\"");
+				syllabus = osyl2Service.getSyllabus("52-701-02A.A2013.P3", sectionId);
 			}
 			else{
 				//We get the common syllabus of the specified sections
-				//syllabus = osyl2Service.getCommonSyllabus(courseId, getParams(sectionId));
-				return new String("\"" + "Bienvenu dans le plan de cours commun"/*
-						 * syllabus.
-						 * getCourseTitle
-						 * ()
-						 */+ "\"");
+				syllabus = osyl2Service.getCommonSyllabus("52-701-02A.A2013.P3", getParams(sectionId));
 			}
 		}else{
-			//syllabus =  osyl2Service
-				//.getShareableSyllabus("52-701-02A.A2013.P3");
-			return new String("\"" + "Bienvenu dans le plan de cours partageable"/*
-					 * syllabus.
-					 * getCourseTitle
-					 * ()
-					 */+ "\"");
+			syllabus =  osyl2Service.getShareableSyllabus("52-701-02A.A2013.P3");
+			
 		}
 		
 		
+		return new ModelAndView("jsonView", syllabus.getModel());
 	}
 
 private int countParams (String parameters){

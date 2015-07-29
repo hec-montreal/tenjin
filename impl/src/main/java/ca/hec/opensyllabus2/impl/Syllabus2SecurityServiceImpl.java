@@ -2,14 +2,14 @@ package ca.hec.opensyllabus2.impl;
 
 import org.sakaiproject.authz.api.SecurityService;
 
-import ca.hec.opensyllabus2.api.OpenSyllabus2SecurityService;
+import ca.hec.opensyllabus2.api.Syllabus2SecurityService;
 
-public class OpenSyllabus2SecurityServiceImpl implements OpenSyllabus2SecurityService {
+public class Syllabus2SecurityServiceImpl implements Syllabus2SecurityService {
 
 	
 	private SecurityService securityService;
 	
-	private void setSecurityService (SecurityService securityService){
+	public void setSecurityService (SecurityService securityService){
 		this.securityService = securityService;
 	
 	}

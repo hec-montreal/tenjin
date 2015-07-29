@@ -25,19 +25,19 @@ import org.sakaiproject.entitybroker.entityprovider.extension.Formats;
 import org.sakaiproject.entitybroker.entityprovider.search.Search;
 import org.sakaiproject.entitybroker.util.AbstractEntityProvider;
 
-import ca.hec.opensyllabus2.api.OpenSyllabus2Service;
+import ca.hec.opensyllabus2.api.Syllabus2Service;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 
-public class OpenSyllabus2EntityProviderImpl extends
+public class Syllabus2EntityProviderImpl extends
 AbstractEntityProvider implements CoreEntityProvider, AutoRegisterEntityProvider, RESTful{
 
-	private Log log = LogFactory.getLog(OpenSyllabus2EntityProviderImpl.class);
+	private Log log = LogFactory.getLog(Syllabus2EntityProviderImpl.class);
 	
 	public final static String ENTITY_PREFIX = "openSyllabus2";
 	
-	private OpenSyllabus2Service osyl2Service;
+	private Syllabus2Service osyl2Service;
 	
-	public void setOsyl2Service(OpenSyllabus2Service osyl2Service) {
+	public void setOsyl2Service(Syllabus2Service osyl2Service) {
 		this.osyl2Service = osyl2Service;
 	}
 

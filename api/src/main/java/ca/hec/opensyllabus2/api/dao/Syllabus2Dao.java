@@ -30,7 +30,7 @@ import ca.hec.opensyllabus2.api.model.template.Rubric;
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
  */
-public interface SyllabusDao {
+public interface Syllabus2Dao {
 
 	public boolean createSyllabus (String courseId);
 	
