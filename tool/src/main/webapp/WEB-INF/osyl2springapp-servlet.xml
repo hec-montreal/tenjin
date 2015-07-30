@@ -32,8 +32,10 @@
 			<value>0</value>
 		</property>
 	</bean>
-
+<!--
+	do we need this?
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+-->
 </beans>
