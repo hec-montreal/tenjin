@@ -48,5 +48,30 @@
 		</property>
 
 	</bean>
+<!--
+	<bean id="ca.hec.opensyllabus2.api.dao.TemplateDao"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 
+		<property name="transactionManager"
+			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
+		<property name="target">
+			<bean
+				class="ca.hec.opensyllabus2.impl.dao.TemplateDaoImpl"
+				singleton="true" init-method="init">
+
+				<property name="sessionFactory">
+					<ref
+						bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
+				</property>
+				 <property name="sqlService" ref="org.sakaiproject.db.api.SqlService"/>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+
+	</bean>
+ -->
 </beans>

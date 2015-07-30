@@ -51,7 +51,7 @@
 			<groupId>ca.hec</groupId>
 			<artifactId>opensyllabus2-api</artifactId>
 		</dependency>
-		
+
         <!-- we are running a webapp in a servlet container so we need the servlet API -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -113,7 +113,7 @@
           			<groupId>org.springframework</groupId>
           			<artifactId>spring</artifactId>
         		</exclusion>
-      		</exclusions>    
+      		</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
@@ -122,7 +122,7 @@
 		</dependency>
 
 
-		
+
 
 	</dependencies>
 
@@ -170,7 +170,7 @@
         <artifactId>sass-maven-plugin</artifactId>
         <version>2.5</version>
       </plugin>
-		
+
 		</plugins>
 	</build>
 
