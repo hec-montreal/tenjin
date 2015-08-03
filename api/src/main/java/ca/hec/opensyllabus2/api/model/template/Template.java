@@ -13,6 +13,7 @@ import lombok.*;
  * @version $Id: $
  */
 @Data
+@NoArgsConstructor
 public class Template {
 
     @NonNull private Long template_id;
