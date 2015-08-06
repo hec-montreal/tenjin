@@ -28,16 +28,16 @@
          	<column name="CREATIONDATE" />
         </property>
 
-        <many-to-one name="template" column="TEMPLATE_ID"
+       <!--  <many-to-one name="template" column="TEMPLATE_ID"
         	class="ca.hec.opensyllabus2.api.model.template.Template" not-null="true"/>
-
+ -->
         <set name="syllabusStructures" table="OSYL2_SYLLABUSSTRUCTURE"
-		cascade="all">
-          <key>
-              <column name="SYLLABUS_ID" not-null="true" />
-          </key>
-          <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" />
-      </set>
+			cascade="all"  lazy="false"  >
+	          <key>
+	              <column name="SYLLABUS_ID" not-null="true" />
+	          </key>
+	          <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" />
+	      </set>
 
     </class>
 </hibernate-mapping>

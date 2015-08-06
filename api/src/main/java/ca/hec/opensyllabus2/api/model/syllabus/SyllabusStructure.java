@@ -61,6 +61,8 @@ public class SyllabusStructure {
     private TemplateElement templateElement;
 
     private Rubric rubric;
+    
+    private Set <SyllabusStructure> childElements; 
 
     public SyllabusStructure (Long parent_id, Rubric rubric_id, TemplateElement templateElement, Syllabus syllabus_id) {
     	 this.parent_id = parent_id;
@@ -83,7 +85,7 @@ public class SyllabusStructure {
         return false;
     }
 
-    public int hashCode() {
+   /* public int hashCode() {
         int result;
         result = this.elementAttributes.hashCode();
         result = 29 * 1 ;
@@ -93,7 +95,7 @@ public class SyllabusStructure {
     public String toString(){
     	return getSyllabusStructure_id() + "";
     }
-
-
+*/
+   
 }
 

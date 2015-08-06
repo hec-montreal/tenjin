@@ -1,5 +1,6 @@
 package ca.hec.opensyllabus2.impl.dao;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -33,6 +34,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	public Syllabus getShareableSyllabus(String courseId) throws Exception{
 		List<Syllabus> results = null;
 		Syllabus syllabus = null;
+		Set <SyllabusStructure> syllabusStructures = null;
 		
 		if (courseId == null)
 		    throw new IllegalArgumentException();
@@ -50,6 +52,12 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	if (results.size() >= 1) {
 	    syllabus = results.get(0);
 	    
+	    syllabusStructures = syllabus.getSyllabusStructures();
+	    Iterator it = syllabusStructures.iterator();
+	    SyllabusStructure sstructure = null;
+	    while (it.hasNext()){
+	    	sstructure = ((SyllabusStructure)it.next());
+	    }
 	    return syllabus;
 	} else{
 	    throw new Exception("No syllabus with course id= " + courseId);
@@ -106,7 +114,14 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	if (results.size() >= 1) {
 	    syllabus = results.get(0);
 	    
-	    return syllabus;
+	    syllabusStructures = syllabus.getSyllabusStructures();
+	    Iterator it = syllabusStructures.iterator();
+	    SyllabusStructure sstructure = null;
+	    while (it.hasNext()){
+	    	sstructure = ((SyllabusStructure)it.next());
+	    }
+	    
+	    return syllabus;	    
 	} else{
 	    throw new Exception("No syllabus with course id= " + courseId);
     }
@@ -135,7 +150,6 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	
 	if (results.size() >= 1) {
 	    syllabus = results.get(0);
-	    
 	    return syllabus;
 	} else{
 	    throw new Exception("No syllabus with course id= " + courseId);

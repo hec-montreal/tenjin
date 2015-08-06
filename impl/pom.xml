@@ -57,6 +57,8 @@
       </dependency>
 
 	</dependencies>
+	
+	
 	<build>
 		<!-- configure the build to use the standard maven structure -->
 		<sourceDirectory>src/main/java</sourceDirectory>

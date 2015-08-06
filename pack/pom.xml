@@ -23,7 +23,9 @@
 			<artifactId>opensyllabus2-impl</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		
 	</dependencies>
+
 	<build>
 		<!-- configure the build to use the standard maven structure -->
 		<sourceDirectory>src/main/java</sourceDirectory>

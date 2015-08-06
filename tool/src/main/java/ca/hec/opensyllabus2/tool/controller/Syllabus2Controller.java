@@ -7,9 +7,11 @@ import javax.annotation.PostConstruct;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.sf.json.JSONSerializer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.sakaiproject.util.ResourceLoader;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,8 +69,10 @@ public class Syllabus2Controller {
 			
 		}
 		
+		return new ModelAndView("jsonView", syllabus.getMap());
 		
-		return new ModelAndView("jsonView", syllabus.getModel());
+//		JSONObject jsonObject = (JSONObject) JSONSerializer.toJSON( syllabus ); 
+//		return new ModelAndView("jsonView", "syllabus",jsonObject);
 	}
 
 private int countParams (String parameters){
