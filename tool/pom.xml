@@ -120,10 +120,22 @@
 			<artifactId>json-lib-ext-spring</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-
-
-
-
+		<!-- Jackson JSON Mapper -->
+		<dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+          <version>${sakai.jackson.version}</version>
+		</dependency>
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-annotations</artifactId>
+          <version>${sakai.jackson.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>${sakai.jackson.version}</version>
+        </dependency>
 	</dependencies>
 
 	<repositories>
