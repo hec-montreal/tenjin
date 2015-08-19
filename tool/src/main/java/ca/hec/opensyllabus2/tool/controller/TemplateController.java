@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,15 +31,9 @@ public class TemplateController {
 	private Syllabus2Service osyl2Service = null;
 
 	@RequestMapping(value = "/{templateId}", method = RequestMethod.GET)
-	public ModelAndView getTemplate(@PathVariable Long templateId) {
+	public @ResponseBody Template getTemplate(@PathVariable Long templateId) {
 
-		Template t = osyl2Service.getTemplate(templateId);
-
-		Map test = new HashMap<String, String>();
-		test.put("id", t.getTemplate_id());
-		test.put("title", t.getTitle());
-		test.put("active", t.getActive());
-
-		return new ModelAndView("jsonView", test);
+		Template template = osyl2Service.getTemplate(templateId);
+		return template;
 	}
 }
