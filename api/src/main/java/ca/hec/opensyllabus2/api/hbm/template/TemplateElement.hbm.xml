@@ -10,7 +10,7 @@
                  <param name="sequence">TEMPLATEELEMENT_ID_SEQ</param>
         	</generator>
         </id>
-        <many-to-one name="type" column="ELEMENTTYPE_ID"
+        <many-to-one name="type" column="ELEMENTTYPE_ID" lazy="false"
             class="ca.hec.opensyllabus2.api.model.template.TemplateElementType"/>
         <property name="mandatory" type="boolean" not-null="true">
             <column name="MANDATORY" />
@@ -18,7 +18,7 @@
         <property name="displayOrder" type="int" not-null="true">
             <column name="DISPLAY_ORDER" />
         </property>
-        <set name="childElements">
+        <set name="childElements" lazy="false">
             <key column="PARENT_ID"/>
             <one-to-many class="ca.hec.opensyllabus2.api.model.template.TemplateElement"/>
         </set>

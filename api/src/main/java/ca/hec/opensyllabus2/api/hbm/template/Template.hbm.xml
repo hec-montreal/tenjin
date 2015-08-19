@@ -13,7 +13,7 @@
 		<property name="title" type="string" column="TITLE" length="99" not-null="true"/>
 		<property name="description" type="text" column="DESCRIPTION" length="100"/>
 		<property name="active" type="boolean" column="ACTIVE" not-null="true"/>
-		<set name="elements">
+		<set name="elements" lazy="false">
 			<key column="TEMPLATE_ID"/>
 			<one-to-many class="ca.hec.opensyllabus2.api.model.template.TemplateElement"/>
 		</set>
