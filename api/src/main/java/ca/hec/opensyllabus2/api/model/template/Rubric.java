@@ -31,6 +31,7 @@ import lombok.*;
  * @version $Id: $
  */
 @Data
+@NoArgsConstructor
 public class Rubric {
 
     @NonNull private Long rubric_id;

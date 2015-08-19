@@ -31,15 +31,16 @@ import lombok.*;
  * @version $Id: $
  */
 @Data
+@NoArgsConstructor
 public class TemplateElement {
 
     private Long templateElement_id;
 
     private String label;
 
-    private boolean mandatory;
+    private Boolean mandatory;
 
-    private int displayOrder;
+    private Integer displayOrder;
 
     // Does this template element require it's own page in the Syllabus?
     private Boolean displayAsPage;

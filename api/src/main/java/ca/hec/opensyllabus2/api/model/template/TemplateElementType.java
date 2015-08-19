@@ -30,6 +30,7 @@ import lombok.*;
  * @version $Id: $
  */
 @Data
+@NoArgsConstructor
 public class TemplateElementType {
 
     private Long elementType_id;
