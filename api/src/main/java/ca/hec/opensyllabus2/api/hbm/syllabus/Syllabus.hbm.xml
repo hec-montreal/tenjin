@@ -32,7 +32,7 @@
         	class="ca.hec.opensyllabus2.api.model.template.Template" not-null="true"/>
  -->
         <set name="syllabusStructures" table="OSYL2_SYLLABUSSTRUCTURE"
-			cascade="all"  lazy="false"  >
+			cascade="all"  lazy="false" fetch="join">
 	          <key>
 	              <column name="SYLLABUS_ID" not-null="true" />
 	          </key>

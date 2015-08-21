@@ -1,25 +1,19 @@
 package ca.hec.opensyllabus2.tool.controller;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.sf.json.JSONSerializer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 import org.sakaiproject.util.ResourceLoader;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -38,7 +32,7 @@ public class Syllabus2Controller {
 	private ResourceLoader msgs = null;
 
 	private static Log log = LogFactory.getLog(Syllabus2Controller.class);
-
+	
 	@PostConstruct
 	public void init() {
 		// retrieve ui and co messages
@@ -47,10 +41,9 @@ public class Syllabus2Controller {
 
 	//TODO: put correct courseId
 	@RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
-	public ModelAndView getSyllabus(
+	public @ResponseBody Syllabus getSyllabus(
 			@PathVariable String courseId,
-			@RequestParam(value = "sectionId", required = false) String sectionId)
-			throws JSONException {
+			@RequestParam(value = "sectionId", required = false) String sectionId) {
 		
 		Syllabus syllabus = null;
 		
@@ -69,10 +62,8 @@ public class Syllabus2Controller {
 			
 		}
 		
-		return new ModelAndView("jsonView", syllabus.getMap());
+		return syllabus;
 		
-//		JSONObject jsonObject = (JSONObject) JSONSerializer.toJSON( syllabus ); 
-//		return new ModelAndView("jsonView", "syllabus",jsonObject);
 	}
 
 private int countParams (String parameters){

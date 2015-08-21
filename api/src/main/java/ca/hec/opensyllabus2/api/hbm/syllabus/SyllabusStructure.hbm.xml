@@ -32,9 +32,9 @@
          <property name="displayOrder" type="long" >
             <column name="DISPLAYORDER" />
         </property>
-
-         <set name="elementAttributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE"
-				cascade="all" lazy="false">
+ 
+       <set name="elementAttributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE"
+				cascade="all"   lazy="false" fetch="join">
             <key>
                 <column name="SYLLABUSSTRUCTURE_ID" not-null="true" />
             </key>
@@ -42,15 +42,15 @@
         </set>
 
           <set name="childElements" table="OSYL2_SYLLABUSSTRUCTURE"
-				cascade="all" lazy="false">
+				cascade="all"   lazy="false" fetch="join">
             <key>
                 <column name="PARENT_ID" not-null="true" />
             </key>
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" />
         </set>
- 
+
         <set name="elementSections" table="OSYL2_SYLLABUSELEMENTSECTION"
-				cascade="all" lazy="false">
+				cascade="all"   lazy="false" fetch="join">
             <key>
                 <column name="SYLLABUSSTRUCTURE_ID" not-null="true" />
             </key>
@@ -65,7 +65,7 @@
             <column name="TEMPLATEELEMENT_ID" not-null="true" />
         </many-to-one> -->
 
-        <many-to-one name="syllabus_id" class="ca.hec.opensyllabus2.api.model.syllabus.Syllabus" fetch="select">
+        <many-to-one name="syllabus_id" class="ca.hec.opensyllabus2.api.model.syllabus.Syllabus" >
             <column name="SYLLABUS_ID" not-null="true" />
         </many-to-one>
 

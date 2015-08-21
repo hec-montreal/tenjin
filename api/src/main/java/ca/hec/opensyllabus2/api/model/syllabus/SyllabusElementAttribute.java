@@ -20,6 +20,8 @@
  ******************************************************************************/
 package ca.hec.opensyllabus2.api.model.syllabus;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.*;
 /**
  *
@@ -33,7 +35,8 @@ public class SyllabusElementAttribute {
     
     private String attributeKey;
     
-    private String attributeValue;
+    private String attributeValue;   
+    
     
     private SyllabusStructure syllabusStructure_id;
     
@@ -44,27 +47,13 @@ public class SyllabusElementAttribute {
     public SyllabusElementAttribute (){
     	
     }
-    
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        if ( !(other instanceof SyllabusElementAttribute) ) return false;
-        
-         
-        return false;
-    }
-    
-    public int hashCode() {
-        int result;
-        result = elementAttribute_id.hashCode();
-        result = 29 * 1 ;
-        return result;
-    }
-    
-    public String toString(){
-    	return elementAttribute_id + "";
-    }
 
-
+    @JsonBackReference("syllabus_structure")
+    public SyllabusStructure getSyllabusStructure_id() {
+		return syllabusStructure_id;
+	}
+    
+    
 }
 
 

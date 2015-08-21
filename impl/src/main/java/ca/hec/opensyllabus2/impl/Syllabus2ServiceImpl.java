@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.impl;
+	package ca.hec.opensyllabus2.impl;
 
 import java.util.List;
 

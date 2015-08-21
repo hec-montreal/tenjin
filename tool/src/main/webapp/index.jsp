@@ -36,6 +36,7 @@
 		
 	</head>
 	<body class="portletBody container-fluid" ng-controller="OpensyllabusCtrl" >
+	<div><h1>{{syllabus.courseTitle}}</h1></div>
 		<!-- Left menu -->
 	 	<div id="menu" ng-controller="LeftMenuCtrl">
 			 <div class="list-group">
@@ -53,29 +54,29 @@
 				  </div>	
 			<!-- jquery-js-tree -->
 		<div id="container"></div>
-<script>
-$(function() {
-  $('#container').jstree({
-    'core' : {
-      'data' : {
-        "url" : "https://www.jstree.com/fiddle/?lazy",
-        "data" : function (node) {
-          return { "id" : node.id };
-        }
-      },
-      "check_callback" : function (operation, node, parent, position, more) {
-          if(operation === "copy_node" || operation === "move_node") {
-            if(parent.id === "#") {
-              return false; // prevent moving a child above or below the root
-            }
-          }
-          return true; // allow everything else
-        }
-    },
-    "plugins" : ["dnd","contextmenu"]
-  });
-});
-</script>
+<!-- <script> 
+// $(function() {
+//   $('#container').jstree({
+//     'core' : {
+//       'data' : {
+//         "url" : "https://www.jstree.com/fiddle/?lazy",
+//         "data" : function (node) {
+//           return { "id" : node.id };
+//         }
+//       },
+//       "check_callback" : function (operation, node, parent, position, more) {
+//           if(operation === "copy_node" || operation === "move_node") {
+//             if(parent.id === "#") {
+//               return false; // prevent moving a child above or below the root
+//             }
+//           }
+//           return true; // allow everything else
+//         }
+//     },
+//     "plugins" : ["dnd","contextmenu"]
+//   });
+// });
+ </script> -->
 				
 									 <!-- angular-ui-tree -->
 					<div ui-tree>
@@ -121,7 +122,7 @@ $(function() {
 			<!-- Content -->
 			<div  id="content"  >
 				<div class="row">
-					<div class="col-sm-10"><h1>{{syllabus.coursetitle}}</h1></div>
+					<div class="col-sm-10"></div>
 					<div class="col-sm-2 pull-right">
 						<div class="dropdown">
 							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">

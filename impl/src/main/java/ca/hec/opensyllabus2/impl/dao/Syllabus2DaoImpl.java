@@ -19,53 +19,18 @@ import ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure;
 public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Dao {
 
 	private Log log = LogFactory.getLog(Syllabus2DaoImpl.class);
-    private SqlService sqlService;
+    
 
-    public void setSqlService(SqlService sqlService) {
-	this.sqlService = sqlService;
-    }
-
-    private HibernateTemplate singleRowHT;
-
-    public Syllabus2DaoImpl (){
+     public Syllabus2DaoImpl (){
     	
     }
     
 	public Syllabus getShareableSyllabus(String courseId) throws Exception{
-		List<Syllabus> results = null;
-		Syllabus syllabus = null;
-		Set <SyllabusStructure> syllabusStructures = null;
-		
-		if (courseId == null)
-		    throw new IllegalArgumentException();
-		
-		try{
-			String hql = "from Syllabus where course_id = :courseId";
-			Query query = getSession().createQuery(hql);
-			query.setParameter("courseId", courseId);
-			results = query.list();
-		} catch (Exception e) {
-		    log.error("Unable to retrieve syllabus by its course id", e);
-		    throw e;
+		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where course_id = ?", courseId);
+		return syllabi.get(0);
 	}
 	
-	if (results.size() >= 1) {
-	    syllabus = results.get(0);
-	    
-	    syllabusStructures = syllabus.getSyllabusStructures();
-	    Iterator it = syllabusStructures.iterator();
-	    SyllabusStructure sstructure = null;
-	    while (it.hasNext()){
-	    	sstructure = ((SyllabusStructure)it.next());
-	    }
-	    return syllabus;
-	} else{
-	    throw new Exception("No syllabus with course id= " + courseId);
-    }
-
-		
-	}
-
+	
 
 	@Override
 	public boolean createSyllabus(String courseId) {
@@ -86,23 +51,24 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	}
 
 	
-	public void init(){
-		singleRowHT = new HibernateTemplate(getSessionFactory());
-		singleRowHT.setFetchSize(1);
-		singleRowHT.setMaxResults(1);	
-	}
 
 	@Override
 	public Syllabus getSyllabus(String courseId, String sectionId) throws Exception {
+		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where course_id = ?", courseId);
+		return syllabi.get(0);
+		
+	}
+
+	@Override
+	public Syllabus getCommonSyllabus(String courseId, String[] sectionIds) {
 		List<Syllabus> results = null;
 		Syllabus syllabus = null;
-		Set <SyllabusStructure> syllabusStructures = null;
-		
+		/*
 		if (courseId == null)
 		    throw new IllegalArgumentException();
 		
 		try{
-			String hql = "from Syllabus where course_id = :courseId";
+			String hql = "from Syllabus syll LEFT JOIN FETCH syll.syllabusStructures where course_id = :courseId";
 			Query query = getSession().createQuery(hql);
 			query.setParameter("courseId", courseId);
 			results = query.list();
@@ -113,49 +79,20 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	
 	if (results.size() >= 1) {
 	    syllabus = results.get(0);
-	    
-	    syllabusStructures = syllabus.getSyllabusStructures();
-	    Iterator it = syllabusStructures.iterator();
+	  //syllabusStructures = syllabus.getSyllabusStructures();
+	    Iterator it = syllabus.getSyllabusStructures().iterator();
 	    SyllabusStructure sstructure = null;
 	    while (it.hasNext()){
 	    	sstructure = ((SyllabusStructure)it.next());
 	    }
-	    
-	    return syllabus;	    
-	} else{
-	    throw new Exception("No syllabus with course id= " + courseId);
-    }
-
-		
-	}
-
-	@Override
-	public Syllabus getCommonSyllabus(String courseId, String[] sectionIds) throws Exception {
-		List<Syllabus> results = null;
-		Syllabus syllabus = null;
-		Set <SyllabusStructure> syllabusStructures = null;
-		
-		if (courseId == null)
-		    throw new IllegalArgumentException();
-		
-		try{
-			String hql = "from Syllabus where course_id = :courseId";
-			Query query = getSession().createQuery(hql);
-			query.setParameter("courseId", courseId);
-			results = query.list();
-		} catch (Exception e) {
-		    log.error("Unable to retrieve syllabus by its course id", e);
-		    throw e;
-	}
-	
-	if (results.size() >= 1) {
-	    syllabus = results.get(0);
+	    System.out.println(syllabus);
 	    return syllabus;
 	} else{
 	    throw new Exception("No syllabus with course id= " + courseId);
     }
-
-		
+*/	
+		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where course_id = ?", courseId);
+		return syllabi.get(0);
 	}
 
 

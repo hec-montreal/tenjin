@@ -22,7 +22,12 @@ package ca.hec.opensyllabus2.api.model.syllabus;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ca.hec.opensyllabus2.api.model.template.Rubric;
 import ca.hec.opensyllabus2.api.model.template.TemplateElement;
@@ -34,10 +39,12 @@ import ca.hec.opensyllabus2.api.model.template.TemplateElement;
  */
 
 @Data
-public class SyllabusStructure {
+public class SyllabusStructure implements Serializable{
 
-    private Long syllabusStructure_id;
+	@JsonBackReference
+	private Long syllabusStructure_id;
 
+    
     private Long parent_id;
 
     private Boolean shareable;
@@ -48,23 +55,29 @@ public class SyllabusStructure {
 
     private Date lastModifiedDate;
 
+    
     private String lastModifiedBy;
 
     private Long displayOrder;
-
+   
+    @JsonManagedReference
     private Set <SyllabusElementAttribute> elementAttributes;
-
+   
+    @JsonManagedReference
     private Set <SyllabusElementSection> elementSections;
 
+    
+    @JsonBackReference
     private Syllabus syllabus_id;
 
     private TemplateElement templateElement;
 
     private Rubric rubric;
     
+    @JsonManagedReference
     private Set <SyllabusStructure> childElements; 
 
-    public SyllabusStructure (Long parent_id, Rubric rubric_id, TemplateElement templateElement, Syllabus syllabus_id) {
+    public SyllabusStructure (Long parent_id, Rubric rubric, TemplateElement templateElement, Syllabus syllabus_id) {
     	 this.parent_id = parent_id;
     	 this.rubric = rubric;
     	 this.templateElement = templateElement;
@@ -76,7 +89,8 @@ public class SyllabusStructure {
 
    }
 
-
+  
+    
     public boolean equals(Object other) {
         if (this == other) return true;
         if ( !(other instanceof SyllabusStructure) ) return false;
@@ -91,11 +105,11 @@ public class SyllabusStructure {
         result = 29 * 1 ;
         return result;
     }
-
+*/
     public String toString(){
     	return getSyllabusStructure_id() + "";
     }
-*/
+
    
 }
 

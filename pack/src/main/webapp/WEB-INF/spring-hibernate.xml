@@ -32,13 +32,13 @@
 		<property name="target">
 			<bean
 				class="ca.hec.opensyllabus2.impl.dao.Syllabus2DaoImpl"
-				singleton="true" init-method="init">
+				singleton="true" >
 
 				<property name="sessionFactory">
 					<ref
 						bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
 				</property>
-				 <property name="sqlService" ref="org.sakaiproject.db.api.SqlService"/>
+				 
 			</bean>
 		</property>
 		<property name="transactionAttributes">

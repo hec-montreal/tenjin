@@ -40,6 +40,13 @@
 			<groupId>org.sakaiproject.kernel</groupId>
 			<artifactId>sakai-kernel-api</artifactId>
 		</dependency>
+		
+		       <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-annotations</artifactId>
+          <version>${sakai.jackson.version}</version>
+        </dependency>
+ 
 
 		<dependency>
 			<groupId>net.sf.spring-json</groupId>

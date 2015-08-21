@@ -20,6 +20,10 @@
  ******************************************************************************/
 package ca.hec.opensyllabus2.api.model.syllabus;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.*;
 /**
  *
@@ -27,11 +31,13 @@ import lombok.*;
  * @version $Id: $
  */
 
+
 @Data
 public class SyllabusElementSection {
     
     private Long elementSection_id;
     
+    @JsonBackReference
     private SyllabusStructure syllabusStructure_id;
     
     private String section_id;
@@ -45,26 +51,6 @@ public class SyllabusElementSection {
 
     public SyllabusElementSection (){
      }
-    
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        if ( !(other instanceof SyllabusElementSection) ) return false;
-        
-         
-        return false;
-    }
-    
-    public int hashCode() {
-        int result;
-        result = elementSection_id.hashCode();
-        return result;
-    }
-    
-    public String toString(){
-    	return elementSection_id + "";
-    }
-
-
 
 }
 

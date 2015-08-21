@@ -14,7 +14,7 @@
             <column name="SECTION_ID" />
         </property>
 
-        <many-to-one name="syllabusStructure_id" class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" fetch="select">
+        <many-to-one name="syllabusStructure_id" class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" >
             <column name="SYLLABUSSTRUCTURE_ID" not-null="true" />
         </many-to-one>
   
