@@ -4,8 +4,8 @@
 
 <hibernate-mapping>
     <class name="ca.hec.opensyllabus2.api.model.template.TemplateElementType" table="OSYL2_TEMPLATEELEMENTTYPE">
-    
-        <id name="elementType_id" type="long">
+
+        <id name="id" type="long">
             <column name="ELEMENTTYPE_ID" />
             <generator class="native">
                  <param name="sequence">ELEMENTTYPE_ID_SEQ</param>

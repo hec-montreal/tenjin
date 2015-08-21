@@ -33,7 +33,7 @@ import lombok.*;
 @NoArgsConstructor
 public class TemplateElementType {
 
-    private Long elementType_id;
+    private Long id;
 
     @NonNull private String title;
 

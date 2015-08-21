@@ -4,7 +4,7 @@
 
 <hibernate-mapping>
     <class name="ca.hec.opensyllabus2.api.model.template.TemplateElement" table="OSYL2_TEMPLATEELEMENT">
-        <id name="templateElement_id" type="long">
+        <id name="id" type="long">
             <column name="TEMPLATEELEMENT_ID" />
             <generator class="native">
                  <param name="sequence">TEMPLATEELEMENT_ID_SEQ</param>
@@ -21,6 +21,12 @@
         <set name="childElements" lazy="false">
             <key column="PARENT_ID"/>
             <one-to-many class="ca.hec.opensyllabus2.api.model.template.TemplateElement"/>
+        </set>
+        <set name="rubrics" table="OSYL2_TEMPLATEELEMENT_RUBRIC" lazy="false">
+            <key column="TEMPLATEELEMENT_ID"/>
+            <many-to-many class="ca.hec.opensyllabus2.api.model.template.Rubric">
+            	<column name="RUBRIC_ID"/>
+            </many-to-many>
         </set>
     </class>
 </hibernate-mapping>

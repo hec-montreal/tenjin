@@ -16,7 +16,7 @@ import lombok.*;
 @NoArgsConstructor
 public class Template {
 
-    @NonNull private Long template_id;
+    @NonNull private Long id;
 
     @NonNull private String title;
 

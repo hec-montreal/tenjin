@@ -34,7 +34,7 @@ import lombok.*;
 @NoArgsConstructor
 public class TemplateElement {
 
-    private Long templateElement_id;
+    private Long id;
 
     private String label;
 
