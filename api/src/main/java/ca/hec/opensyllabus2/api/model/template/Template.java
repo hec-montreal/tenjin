@@ -5,6 +5,8 @@ package ca.hec.opensyllabus2.api.model.template;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.*;
 
 /**
@@ -16,6 +18,7 @@ import lombok.*;
 @NoArgsConstructor
 public class Template {
 
+	
     @NonNull private Long id;
 
     @NonNull private String title;

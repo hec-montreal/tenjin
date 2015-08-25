@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -37,6 +38,7 @@ public class Syllabus implements Serializable{
     
     private String courseTitle;
    
+    @JsonBackReference
     private Template template;
     
     private String locale;

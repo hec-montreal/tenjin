@@ -13,5 +13,18 @@
         <property name="label" type="string">
             <column name="LABEL" />
         </property>
+        
+          <set name="syllabusStructures" table="OSYL2_SYLLABUSSTRUCTURE"
+			cascade="all"  lazy="false" fetch="join">
+	          <key>
+	              <column name="SYLLABUS_ID" not-null="true" />
+	          </key>
+	          <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" />
+	      </set>
+        <set name="templateElements" lazy="false">
+			<key column="TEMPLATE_ID"/>
+			<one-to-many class="ca.hec.opensyllabus2.api.model.template.TemplateElement"/>
+		</set>
+		
     </class>
 </hibernate-mapping>

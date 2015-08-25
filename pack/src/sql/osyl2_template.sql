@@ -21,11 +21,11 @@ INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEME
 INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (4,1,null,4);--'Hyperlien'
 INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (5,null,1,1);--'Coordonnees'
 INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (6,5,null,6);--'Coordonnee'
-INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (7,null,1,1);--'Matï¿½riel pï¿½dagogique'
+INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (7,null,1,1);--'Matériel pédagogique'
 INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (8,7,null,2);--Texte
 INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (9,7,null,3);--Document
 INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (10,7,null,4);--Hyperlien
-INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (11,7,null,5);--'Rï¿½fï¿½rence bibliograpgique'
+INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (11,7,null,5);--'Référence bibliograpgique'
 INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (12,null,1,1);--,'Evaluations'
 INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (13,12,null,8);--,'Evaluations'
 INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (14,null,1,1);--,'Organisation du cours'
@@ -33,37 +33,37 @@ INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEME
 INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (16,14,null,10);--,'Seance de cours'
 INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEMENTTYPE_ID) VALUES (17,14,null,1);--,'Regroupement'
 
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('1','Non dï¿½fini');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('2','Description');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('3','Objectifs');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('4','Approche pï¿½dagogique');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('5','Coordinateur');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('6','Enseignant(s)');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('7','Stagiaire(s) d''enseignement');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('8','Confï¿½rencier(s)');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('9','Secrï¿½taire(s)');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('10','Ressources bibliographiques');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('11','Ressources bibliographiques complï¿½mentaires');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('12','Ressources gï¿½nï¿½rales');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('13','Cas');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('14','Outils');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('15','Anciens examens');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('16','Critï¿½res d''ï¿½valuation');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('17','Prï¿½paration ï¿½ l''ï¿½valuation');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('18','Modalitï¿½s de remise et pï¿½nalitï¿½s');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('19','Ressources gï¿½nï¿½rales');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('20','Activitï¿½s/Ressources avant la sï¿½ance');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('21','Activitï¿½s/Ressources pendant la sï¿½ance');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('22','Activitï¿½s/Ressources aprï¿½s la sï¿½ance');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('23','Examen final');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('24','Examen intra');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('25','Participation');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('26','Travail');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('27','Test/Quizz');
---INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('28','Autre');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('1','Non défini');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('2','Description');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('3','Objectifs');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('4','Approche pédagogique');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('5','Coordinateur');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('6','Enseignant(s)');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('7','Stagiaire(s) d''enseignement');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('8','Conférencier(s)');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('9','Secrétaire(s)');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('10','Ressources bibliographiques');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('11','Ressources bibliographiques complémentaires');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('12','Ressources générales');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('13','Cas');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('14','Outils');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('15','Anciens examens');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('16','Critéres d''évaluation');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('17','Préparation à  l''évaluation');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('18','Modalités de remise et pénalités');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('19','Ressources générales');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('20','Activités/Ressources avant la séance');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('21','Activités/Ressources pendant la séance');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('22','Activités/Ressources après la séance');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('23','Examen final');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('24','Examen intra');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('25','Participation');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('26','Travail');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('27','Test/Quizz');
+INSERT INTO osyl2_rubric(RUBRIC_ID,LABEL)VALUES('28','Autre');
 
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('1','en_us','Presentation');
---INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('1','fr_ca','Prï¿½sentation du cours');
+--INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('1','fr_ca','Présentation du cours');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('2','en_us','Text');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('2','fr_ca','Texte');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('3','en_us','Document');
@@ -71,36 +71,36 @@ INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEME
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('4','en_us','Url');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('4','fr_ca','Url');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('5','en_us','Contact informations');
---INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('5','fr_ca','Coordonnï¿½es');
+--INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('5','fr_ca','Coordonnées');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('6','en_us','Contact information');
---INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('6','fr_ca','Coordonnï¿½e');
+--INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('6','fr_ca','Coordonnée');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('7','en_us','Learning material');
---INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('7','fr_ca','Matï¿½riel pï¿½dagogique');
+--INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('7','fr_ca','Matériel pédagogique');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('8','en_us','Citation');
---INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('8','fr_ca','Rï¿½fï¿½rence bibliographique');
+--INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('8','fr_ca','Référence bibliographique');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('9','en_us','Evaluations');
---INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('9','fr_ca','ï¿½valuations');
+--INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('9','fr_ca','évaluations');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('10','en_us','Evaluation');
---INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('10','fr_ca','ï¿½valuation');
+--INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('10','fr_ca','évaluation');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('11','en_us','Entity');
---INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('11','fr_ca','Entitï¿½');
+--INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('11','fr_ca','Entité');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('12','en_us','Course Organisation');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('12','fr_ca','Organisation du cours');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('13','en_us','Lecture');
---INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('13','fr_ca','Sï¿½ance du cours');
+--INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('13','fr_ca','Séance du cours');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('14','en_us','Tutorial');
---INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('14','fr_ca','Sï¿½ance de travaux pratiques');
+--INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('14','fr_ca','Séance de travaux pratiques');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('15','en_us','Cluster');
 --INSERT INTO osyl2_templateelementi18nlabel(TEMPLATEELEMENT_ID,LOCALE,LABEL) VALUES ('15','fr_ca','Regroupement');
 
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('1','en_us','Undefined');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('1','fr_ca','Non dï¿½fini');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('1','fr_ca','Non défini');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('2','en_us','Description');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('2','fr_ca','Description');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('3','en_us','Objectives');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('3','fr_ca','Objectifs');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('4','en_us','Learning strategy');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('4','fr_ca','Approche pï¿½dagogique');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('4','fr_ca','Approche pédagogique');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('5','en_us','Coordinator');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('5','fr_ca','Coordinateur');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('6','en_us','Lecturer(s)');
@@ -108,15 +108,15 @@ INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEME
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('7','en_us','Teaching assistant(s)');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('7','fr_ca','Stagiaire(s) d''enseignement');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('8','en_us','Speaker(s)');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('8','fr_ca','Confï¿½rencier(s)');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('8','fr_ca','Conférencier(s)');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('9','en_us','Secretary(ies)');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('9','fr_ca','Secrï¿½taire(s)');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('9','fr_ca','Secrétaire(s)');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('10','en_us','Bibliographic resources');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('10','fr_ca','Ressources bibliographiques');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('11','en_us','Complementary Bibliographical Resources');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('11','fr_ca','Ressources bibliographiques complï¿½mentaires');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('11','fr_ca','Ressources bibliographiques complémentaires');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('12','en_us','Miscellaneous Resources');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('12','fr_ca','Ressources gï¿½nï¿½rales');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('12','fr_ca','Ressources générales');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('13','en_us','Case');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('13','fr_ca','Cas');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('14','en_us','Tools');
@@ -124,19 +124,19 @@ INSERT INTO osyl2_templateelement(TEMPLATEELEMENT_ID,PARENT_ID,TEMPLATE_ID,ELEME
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('15','en_us','Past Exams');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('15','fr_ca','Anciens examens');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('16','en_us','Evaluation Criteria');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('16','fr_ca','Critï¿½res d''ï¿½valuation');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('16','fr_ca','Critéres d''évaluation');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('17','en_us','Preparation to Evaluation');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('17','fr_ca','Prï¿½paration ï¿½ l''ï¿½valuation');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('17','fr_ca','Préparation é l''évaluation');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('18','en_us','Submission Procedures and Penalties');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('18','fr_ca','Modalitï¿½s de remise et pï¿½nalitï¿½s');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('18','fr_ca','Modalités de remise et pénalités');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('19','en_us','Miscellaneous Resources');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('19','fr_ca','Ressources gï¿½nï¿½rales');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('19','fr_ca','Ressources générales');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('20','en_us','Activities/Resources before session');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('20','fr_ca','Activitï¿½s/Ressources avant la sï¿½ance');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('20','fr_ca','Activités/Ressources avant la séance');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('21','en_us','Activities/Resources during session');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('21','fr_ca','Activitï¿½s/Ressources pendant la sï¿½ance');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('21','fr_ca','Activités/Ressources pendant la séance');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('22','en_us','Activities/Resources after session');
---INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('22','fr_ca','Activitï¿½s/Ressources aprï¿½s la sï¿½ance');
+--INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('22','fr_ca','Activités/Ressources aprés la séance');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('23','en_us','Final exam');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('23','fr_ca','Examen final');
 --INSERT INTO osyl2_rubrici18nlabel(RUBRIC_ID,LOCALE,LABEL) VALUES ('24','en_us','Midterm exam');

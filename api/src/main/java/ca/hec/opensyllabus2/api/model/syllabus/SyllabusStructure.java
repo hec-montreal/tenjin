@@ -41,7 +41,7 @@ import ca.hec.opensyllabus2.api.model.template.TemplateElement;
 @Data
 public class SyllabusStructure implements Serializable{
 
-	@JsonBackReference
+	
 	private Long syllabusStructure_id;
 
     
@@ -55,6 +55,7 @@ public class SyllabusStructure implements Serializable{
 
     private Date lastModifiedDate;
 
+    private Boolean displayPage;
     
     private String lastModifiedBy;
 
@@ -68,10 +69,12 @@ public class SyllabusStructure implements Serializable{
 
     
     @JsonBackReference
-    private Syllabus syllabus_id;
+    private Syllabus syllabus;
 
+    @JsonBackReference
     private TemplateElement templateElement;
 
+    @JsonBackReference
     private Rubric rubric;
     
     @JsonManagedReference
@@ -81,7 +84,7 @@ public class SyllabusStructure implements Serializable{
     	 this.parent_id = parent_id;
     	 this.rubric = rubric;
     	 this.templateElement = templateElement;
-    	 this.syllabus_id = syllabus_id;
+    	 this.syllabus = syllabus_id;
 
     }
 
@@ -99,13 +102,6 @@ public class SyllabusStructure implements Serializable{
         return false;
     }
 
-   /* public int hashCode() {
-        int result;
-        result = this.elementAttributes.hashCode();
-        result = 29 * 1 ;
-        return result;
-    }
-*/
     public String toString(){
     	return getSyllabusStructure_id() + "";
     }

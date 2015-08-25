@@ -27,6 +27,11 @@ $(document).ready(function() {
 	}
 });
 
+$(document).ready(function() {
+	$.slidebars();
+});
+
+
 function showMenu() {
     $('#right').animate({ left: 250 }, 'slow', function() {
     	$('.mini-submenu').hide();

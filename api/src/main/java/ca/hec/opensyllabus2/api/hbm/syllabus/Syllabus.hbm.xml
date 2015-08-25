@@ -28,11 +28,12 @@
          	<column name="CREATIONDATE" />
         </property>
 
-       <!--  <many-to-one name="template" column="TEMPLATE_ID"
-        	class="ca.hec.opensyllabus2.api.model.template.Template" not-null="true"/>
- -->
+		<many-to-one name="template" class="ca.hec.opensyllabus2.api.model.template.Template" >
+            <column name="TEMPLATE_ID" not-null="true" />
+        </many-to-one> 
+
         <set name="syllabusStructures" table="OSYL2_SYLLABUSSTRUCTURE"
-			cascade="all"  lazy="false" fetch="join">
+			cascade="all"  lazy="false">
 	          <key>
 	              <column name="SYLLABUS_ID" not-null="true" />
 	          </key>

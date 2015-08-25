@@ -6,6 +6,11 @@
 	height:100%;
 }
 
+.portletBody{
+	height: 400px
+}
+
+
 .mini-submenu:hover{
 	cursor:pointer
 }
@@ -57,4 +62,14 @@
 
 p.syllabus-element:hover {
   border: 1px dashed blue;
+}
+
+.panel {
+    position: fixed;
+    left: -15.625em; /*left or right and the width of your navigation panel*/
+    width: 15.625em; /*should match the above value*/
+}
+
+.wrap {
+    position: relative;
 }
