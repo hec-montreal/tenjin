@@ -16,6 +16,54 @@ opensyllabusApp.controller('OpensyllabusCtrl', function ($scope, $resource){
 	
 	syllabusProvider.getSyllabus({courseId:'30300'}, function(data) {
 		$scope.syllabus =  data;
+		var menuTree =new Array($scope.syllabus.syllabusStructures.length);
+		var iterMenu=0;
+		
+		for ( iterStruct = 0;iterStruct < data.syllabusStructures.length;iterStruct++){
+			if (data.syllabusStructures[iterStruct].displayPage ){
+				children = data.syllabusStructures[iterStruct].childElements;
+				subMenu = new Array(children.length);
+					
+				menuItem = new Object();
+				iterSubMenu=0;
+				menuItem["id"]= data.syllabusStructures[iterStruct].syllabusStructure_id;
+				menuItem["text"]=data.syllabusStructures[iterStruct].syllabusStructure_id;
+				
+				for ( iterChildren = 0; iterChildren < children.length; iterChildren++){
+					subMenuItem = new Object();
+					child = children[iterChildren];
+				if (child.displayPage){
+						subMenuItem["id"]= child.syllabusStructure_id;
+						subMenuItem["text"]=child.syllabusStructure_id;
+						subMenu[iterSubMenu] = subMenuItem;
+						iterSubMenu = iterSubMenu + 1;
+					}
+				}
+				if (iterSubMenu > 0)
+					menuItem["children"] = subMenu;
+				menuTree[iterMenu] =menuItem;
+				iterMenu = iterMenu+1;
+			}
+			
+		}		
+
+		$('#menuTree').jstree({
+			"core": {
+		        "themes": {
+		            "responsive": true
+		        },
+		        "check_callback": true,
+		        'data': menuTree
+		    },
+		    "types": {
+		        "default": {
+		            "icon": "fa fa-folder icon-state-warning icon-lg"
+		        },
+		        
+		    },
+		    "state": { "key": "syllabusTree" },
+		    "plugins": ["contextmenu", "dnd", "search", "state", "types", "wholerow"]
+		});
 	});
 	
 });
@@ -27,9 +75,6 @@ $(document).ready(function() {
 	}
 });
 
-$(document).ready(function() {
-	$.slidebars();
-});
 
 
 function showMenu() {

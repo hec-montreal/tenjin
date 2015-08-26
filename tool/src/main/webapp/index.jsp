@@ -56,26 +56,12 @@
 		</div>
 		<div class="row">
 			<div ng-controller="LeftMenuCtrl" class="col-md-3 pull-left" id="menu">
-							
-				<div ui-tree>Menu du cours
-  <div ui-tree-nodes="menuTree" ng-model="syllabus.syllabusStructures">
-    <div ng-repeat="syllabusStructure in syllabus.syllabusStructures" ui-tree-node>
-      <li ng-show="syllabusStructure.displayPage" ui-tree-handle>
-       <a>{{syllabusStructure.syllabusStructure_id}}</a>
-      </li>
-      <div ui-tree-nodes="" ng-model="syllabusStructure.childElements">
-        <div ng-repeat="subSyllabusStructure in syllabusStructure.childElements" ui-tree-node>
-          <li ng-show="subSyllabusStructure.displayPage" ui-tree-handle>
-            <a>{{subSyllabusStructure.syllabusStructure_id}}</a>
-          </li>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+				
+		 <div >Menu du cours
+				  <div id="menuTree"></div>
+				</div>
 			</div>
-		
-	   		<div ng-controller="ContentPanelCtrl" class="col-md-9" id="content">9</div>
+	   		<div ng-controller="ContentPanelCtrl" class="col-md-9" id="content"></div>
 	    </div>
             
 
