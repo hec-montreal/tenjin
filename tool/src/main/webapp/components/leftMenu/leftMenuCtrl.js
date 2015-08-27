@@ -1,8 +1,11 @@
-//var leftMenuApp = angular.module('opensyllabus', []);
 
-opensyllabusApp.controller('LeftMenuCtrl', function ($scope){
 	
-});
+opensyllabusApp.controller('LeftMenuCtrl', function ($scope){
+		
+	});
+
+
+
 
 function loadMenu (syllabusStructures){
 	alert("loaded");
@@ -11,7 +14,7 @@ function loadMenu (syllabusStructures){
 	document.getElementById("menu").innerHTML ="	  <ol ui-tree-nodes=\"\" ng-model=\"syllabusStructures\">";
 	document.getElementById("menu").innerHTML ="	    <li ng-repeat=\"syllabusStructure in syllabusStructures\" ui-tree-node>";
 	document.getElementById("menu").innerHTML ="			<div ui-tree-handle>";
-	document.getElementById("menu").innerHTML ="  				{{syllabusStructure.parent_id}}";
+	document.getElementById("menu").innerHTML ="  				{{syllabusStructure.parent}}";
 	document.getElementById("menu").innerHTML ="  			</div>  ";
 	document.getElementById("menu").innerHTML ="		</li>";
 	document.getElementById("menu").innerHTML ="	  </ol>";

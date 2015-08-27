@@ -4,14 +4,14 @@
 
 <hibernate-mapping>
     <class name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" table="OSYL2_SYLLABUSSTRUCTURE">
-        <id name="syllabusStructure_id" type="long" >
-            <column name="SYLLABUSSTRUCTURE_ID" />
+        <id name="id" type="long" >
+            <column name="ID" />
             <generator class="native">
             	<param name="sequence">SYLLABUSSTRUCTURE_ID_SEQ</param>
             </generator>
         </id>
-        <property name="parent_id" type="long" >
-            <column name="PARENT_ID" />
+        <property name="parent" type="long" >
+            <column name="parent" />
        </property>
 
         <property name="shareable" type="boolean">
@@ -34,6 +34,11 @@
         <property name="lastModifiedBy" type="string">
             <column name="LASTMODIFIEDBY" />
         </property>
+ 
+        <property name="text" type="string">
+            <column name="text" />
+        </property>
+ 
          <property name="displayOrder" type="long" >
             <column name="DISPLAYORDER" />
         </property>
@@ -46,13 +51,13 @@
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementAttribute" />
         </set>
 
-          <set name="childElements" table="OSYL2_SYLLABUSSTRUCTURE"
+         <!--  <set name="childElements" table="OSYL2_SYLLABUSSTRUCTURE"
 				cascade="all"   lazy="false" >
             <key>
-                <column name="PARENT_ID" not-null="true" />
+                <column name="parent" not-null="true" />
             </key>
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" />
-        </set>
+        </set> -->
 
         <set name="elementSections" table="OSYL2_SYLLABUSELEMENTSECTION"
 				cascade="all"   lazy="false" >

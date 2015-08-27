@@ -19,9 +19,6 @@
 		<script src="/opensyllabus2-tool/components/contentPanel/contentPanelCtrl.js"></script>
 		<script src="/opensyllabus2-tool/components/contentPanel/contentPanelServices.js"></script>
 		<script src="/opensyllabus2-tool/components/addElementButton/addElementCtrl.js"></script>
-		<!-- angular-ui-tree -->
-		<link rel="stylesheet" href="/opensyllabus2-tool/lib/angular/angular-ui-tree.min.css">
-		<script type="text/javascript" src="/opensyllabus2-tool/lib/angular/angular-ui-tree.min.js"></script>
 		<!-- jquery-js-tree -->
 		<link rel="stylesheet" href="/opensyllabus2-tool/lib/angular/js-tree/themes/default/style.min.css">
 		<script type="text/javascript" src="/opensyllabus2-tool/lib/angular/js-tree/jstree.min.js"></script>

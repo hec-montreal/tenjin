@@ -41,13 +41,6 @@ public class Rubric {
 
     @NonNull private String label;
     
-    @JsonManagedReference
-    private Set <SyllabusStructure> syllabusStructures; 
-    
-    @JsonManagedReference
-    private Set <TemplateElement> templateElements; 
-
-
-
+  
 }
 
