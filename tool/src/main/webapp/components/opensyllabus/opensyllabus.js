@@ -19,7 +19,8 @@
 		syllabusProvider.getSyllabus({courseId:'30300'}, function(data) {
 			$scope.syllabus =  data;
 			var menuTree =new Array();
-			var contentTree = new Object();
+			var contentAttributes= new Object();
+			var contentTree = new Array();
 			var iterMenu=0;
 			
 			for ( iterStruct = 0;iterStruct < data.syllabusStructures.length;iterStruct++){
@@ -27,9 +28,17 @@
 					menuItem = data.syllabusStructures[iterStruct];
 					if (menuItem.parent == null)
 						menuItem.parent = "#";
+					menuItem.a_attr = "{\"ngclick\": \"loadElementAttributes("+ iterStruct+")\"}";
+					
+					contentAttributes.id = menuItem.id;
+					contentAttributes.elementAttributes = menuItem.elementAttributes;
+					console.log(menuItem.elementAttributes);
+					contentTree[iterMenu] = contentAttributes;
 					
 					menuTree[iterMenu] =menuItem;
 					iterMenu = iterMenu+1;
+					contentAttributes = new Object();
+					
 				}
 				
 			}		
@@ -53,7 +62,22 @@
 			});
 			
 			$('#menuTree').on("changed.jstree", function (e, data) {
-			      console.log(data.selected);
+			    var select = data.selected[0]; 
+			    document.getElementById("content").innerHTML = "";
+			    console.log(select);
+			    var contentAtt = new Object();
+			    for ( iterMenu = 0;iterMenu < contentTree.length;iterMenu++){
+			    	contentAtt = contentTree[iterMenu];
+					if (contentAtt.id == select ){
+						console.log(contentAtt.elementAttributes);
+						 for ( iterAtt = 0;iterAtt < contentAtt.elementAttributes.length;iterAtt++){
+							 document.getElementById("content").innerHTML += "<p>" + contentAtt.elementAttributes[iterAtt].attributeKey +"</p>";
+						 }
+						
+						break;
+					}
+					
+				}	
 			    });
 		});
 		

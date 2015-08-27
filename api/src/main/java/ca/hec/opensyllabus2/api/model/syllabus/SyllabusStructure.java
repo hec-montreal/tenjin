@@ -76,7 +76,7 @@ public class SyllabusStructure implements Serializable{
     @JsonBackReference
     private TemplateElement templateElement;
 
-    @JsonBackReference
+   
     private Rubric rubric;
     
     //@JsonManagedReference

@@ -58,7 +58,8 @@
 				  <div id="menuTree"></div>
 				</div>
 			</div>
-	   		<div ng-controller="ContentPanelCtrl" class="col-md-9" id="content"></div>
+	   		<div ng-controller="ContentPanelCtrl" class="col-md-9" id="content">
+	   			</div>
 	    </div>
             
 
