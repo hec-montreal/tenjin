@@ -20,6 +20,8 @@
  ******************************************************************************/
 package ca.hec.opensyllabus2.api.dao;
 
+import org.sakaiproject.exception.IdUnusedException;
+
 import ca.hec.opensyllabus2.api.model.template.Template;
 
 /**
@@ -29,6 +31,6 @@ import ca.hec.opensyllabus2.api.model.template.Template;
  */
 public interface TemplateDao {
 
-	public Template getTemplate(Long templateId);
+	public Template getTemplate(Long templateId) throws IdUnusedException;
 }
 

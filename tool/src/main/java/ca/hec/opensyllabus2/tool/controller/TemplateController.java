@@ -1,19 +1,19 @@
 package ca.hec.opensyllabus2.tool.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import lombok.Getter;
 import lombok.Setter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.exception.IdUnusedException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
 import ca.hec.opensyllabus2.api.Syllabus2Service;
@@ -31,9 +31,14 @@ public class TemplateController {
 	private Syllabus2Service osyl2Service = null;
 
 	@RequestMapping(value = "/{templateId}", method = RequestMethod.GET)
-	public @ResponseBody Template getTemplate(@PathVariable Long templateId) {
+	public @ResponseBody Template getTemplate(@PathVariable Long templateId) throws IdUnusedException {
+		return osyl2Service.getTemplate(templateId);
+	}
 
-		Template template = osyl2Service.getTemplate(templateId);
-		return template;
+	@ExceptionHandler(IdUnusedException.class)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public void handleResourceNotFoundException(IdUnusedException ex)
+	{
+	    log.warn("user requested a resource which didn't exist", ex);
 	}
 }

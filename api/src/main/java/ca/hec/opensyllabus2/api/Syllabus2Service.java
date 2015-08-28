@@ -2,6 +2,8 @@ package ca.hec.opensyllabus2.api;
 
 import java.util.List;
 
+import org.sakaiproject.exception.IdUnusedException;
+
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.template.Template;
 
@@ -88,5 +90,5 @@ public interface Syllabus2Service {
 	 * @param templateId
 	 * @return
 	 */
-	public Template getTemplate(Long templateId);
+	public Template getTemplate(Long templateId) throws IdUnusedException;
 }

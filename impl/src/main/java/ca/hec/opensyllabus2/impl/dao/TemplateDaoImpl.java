@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.sakaiproject.db.api.SqlService;
+import org.sakaiproject.exception.IdUnusedException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -23,7 +24,11 @@ public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao 
 	private Log log = LogFactory.getLog(TemplateDaoImpl.class);
 
 	@Override
-	public Template getTemplate(Long templateId) {
-		return getHibernateTemplate().get(Template.class, templateId);
+	public Template getTemplate(Long templateId) throws IdUnusedException {
+		Template t = getHibernateTemplate().get(Template.class, templateId);
+		if (t == null) {
+			throw new IdUnusedException(templateId.toString());
+		}
+		return t;
 	}
 }
