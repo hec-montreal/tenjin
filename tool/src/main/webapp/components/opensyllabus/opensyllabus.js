@@ -71,7 +71,8 @@
 					if (contentAtt.id == select ){
 						console.log(contentAtt.elementAttributes);
 						 for ( iterAtt = 0;iterAtt < contentAtt.elementAttributes.length;iterAtt++){
-							 document.getElementById("content").innerHTML += "<p>" + contentAtt.elementAttributes[iterAtt].attributeKey +"</p>";
+							 document.getElementById("content").innerHTML += "<p>" + contentAtt.elementAttributes[iterAtt].attributeKey 
+							 + ": " + contentAtt.elementAttributes[iterAtt].attributeValue +"</p>";
 						 }
 						
 						break;
