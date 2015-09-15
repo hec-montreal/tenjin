@@ -22,6 +22,7 @@
 		<!-- jquery-js-tree -->
 		<link rel="stylesheet" href="/opensyllabus2-tool/lib/angular/js-tree/themes/default/style.min.css">
 		<script type="text/javascript" src="/opensyllabus2-tool/lib/angular/js-tree/jstree.min.js"></script>
+		<script src="/opensyllabus2-tool/lib/packery/packery.pkgd.js"></script>
 			
 		<!-- include sakai scripts (for resizing frame, etc). includes ckeditor -->
 		<%= request.getAttribute("sakai.html.head.js") %>
@@ -52,6 +53,7 @@
 			</div>
 		</div>
 		<div class="row">
+		
 			<div ng-controller="LeftMenuCtrl" class="col-md-3 pull-left" id="menu">
 				
 		 <div >Menu du cours
@@ -59,6 +61,12 @@
 				</div>
 			</div>
 	   		<div ng-controller="ContentPanelCtrl" class="col-md-9" id="content">
+	   		<div id="container">
+  <div class="item">...</div>
+  <div class="item w2">...</div>
+  <div class="item">...</div>
+  ...
+</div>
 	   			</div>
 	    </div>
             
