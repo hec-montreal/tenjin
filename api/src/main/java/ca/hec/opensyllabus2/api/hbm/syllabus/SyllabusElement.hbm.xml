@@ -3,11 +3,11 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" table="OSYL2_SYLLABUSSTRUCTURE">
-        <id name="id" type="long" >
-            <column name="ID" />
+    <class name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElement" table="OSYL2_SYLLABUSELEMENT">
+        <id name="syllabusElement_id" type="long" >
+            <column name="SYLLABUSELEMENT_ID" />
             <generator class="native">
-            	<param name="sequence">SYLLABUSSTRUCTURE_ID_SEQ</param>
+            	<param name="sequence">SYLLABUSELEMENT_ID_SEQ</param>
             </generator>
         </id>
         <property name="parent" type="long" >
@@ -46,23 +46,23 @@
        <set name="elementAttributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE"
 				cascade="all"   lazy="false" >
             <key>
-                <column name="SYLLABUSSTRUCTURE_ID" not-null="true" />
+                <column name="ID" not-null="true" />
             </key>
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementAttribute" />
         </set>
 
-         <!--  <set name="childElements" table="OSYL2_SYLLABUSSTRUCTURE"
+           <set name="children" table="OSYL2_SYLLABUSELEMENT"
 				cascade="all"   lazy="false" >
             <key>
                 <column name="parent" not-null="true" />
             </key>
-            <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" />
-        </set> -->
+            <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElement" />
+        </set> 
 
         <set name="elementSections" table="OSYL2_SYLLABUSELEMENTSECTION"
 				cascade="all"   lazy="false" >
             <key>
-                <column name="SYLLABUSSTRUCTURE_ID" not-null="true" />
+                <column name="ID" not-null="true" />
             </key>
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementSection" />
        </set>
