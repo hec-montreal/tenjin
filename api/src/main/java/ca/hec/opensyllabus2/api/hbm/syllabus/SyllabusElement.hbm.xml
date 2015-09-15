@@ -46,7 +46,7 @@
        <set name="elementAttributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE"
 				cascade="all"   lazy="false" >
             <key>
-                <column name="ID" not-null="true" />
+                <column name="ELEMENTATTRIBUTE_ID" not-null="true" />
             </key>
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementAttribute" />
         </set>
@@ -62,7 +62,7 @@
         <set name="elementSections" table="OSYL2_SYLLABUSELEMENTSECTION"
 				cascade="all"   lazy="false" >
             <key>
-                <column name="ID" not-null="true" />
+                <column name="ELEMENTSECTION_ID" not-null="true" />
             </key>
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementSection" />
        </set>

@@ -15,7 +15,7 @@
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/Syllabus.hbm.xml</value>
 			    <value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElementAttribute.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElementSection.hbm.xml</value>
-				<value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusStructure.hbm.xml</value>
+				<value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElement.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/Rubric.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/Template.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/TemplateElement.hbm.xml</value>

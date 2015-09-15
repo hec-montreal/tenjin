@@ -16,7 +16,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ca.hec.opensyllabus2.api.dao.*;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure;
 import ca.hec.opensyllabus2.api.model.template.Template;
 
 public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao {

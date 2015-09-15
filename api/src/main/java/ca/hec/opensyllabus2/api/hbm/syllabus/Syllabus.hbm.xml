@@ -12,8 +12,8 @@
             	<param name="sequence">SYLLABUS_ID_SEQ</param>
             </generator>
         </id>
-        <property name="course_id" type="string">
-            <column name="COURSE_ID" />
+        <property name="site_id" type="string">
+            <column name="SITE_ID" />
         </property>
         <property name="courseTitle" type="string">
             <column name="COURSETITLE" />
