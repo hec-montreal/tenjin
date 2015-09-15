@@ -34,7 +34,7 @@ public class Syllabus implements Serializable{
 
     private Long syllabus_id;
     
-    private String course_id;
+    private String site_id;
     
     private String courseTitle;
    
@@ -49,10 +49,10 @@ public class Syllabus implements Serializable{
     private Date creationDate;
     
     @JsonManagedReference
-    private Set<SyllabusStructure> syllabusStructures;
+    private Set<SyllabusElement> syllabusElements;
     
     public Syllabus (String course_id, String courseTitle, Template template){
-    	this.course_id = course_id;
+    	this.site_id = course_id;
     	this.courseTitle = courseTitle;
     	this.template = template;
     }

@@ -38,13 +38,13 @@ public class SyllabusElementSection {
     private Long elementSection_id;
     
     @JsonBackReference
-    private SyllabusStructure syllabusStructure_id;
+    private SyllabusElement syllabusElement_id;
     
     private String section_id;
     
 
-    public SyllabusElementSection (SyllabusStructure syllabusStructure_id, String section_id){
-    	this.syllabusStructure_id = syllabusStructure_id;
+    public SyllabusElementSection (SyllabusElement syllabusElement_id, String section_id){
+    	this.syllabusElement_id = syllabusElement_id;
     	this.section_id = section_id;
     }
 

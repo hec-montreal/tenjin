@@ -39,10 +39,10 @@ import ca.hec.opensyllabus2.api.model.template.TemplateElement;
  */
 
 @Data
-public class SyllabusStructure implements Serializable{
+public class SyllabusElement {
 
 	
-	private Long id;
+	private Long syllabusElement_id;
 
     
     private Long parent;
@@ -80,9 +80,9 @@ public class SyllabusStructure implements Serializable{
     private Rubric rubric;
     
     //@JsonManagedReference
-    //private Set <SyllabusStructure> children; 
+    private Set <SyllabusElement> children; 
 
-    public SyllabusStructure (Long parent, Rubric rubric, TemplateElement templateElement, Syllabus syllabus_id) {
+    public SyllabusElement (Long parent, Rubric rubric, TemplateElement templateElement, Syllabus syllabus_id) {
     	 this.parent = parent;
     	 this.rubric = rubric;
     	 this.templateElement = templateElement;
@@ -90,24 +90,10 @@ public class SyllabusStructure implements Serializable{
 
     }
 
-    public SyllabusStructure (){
+    public SyllabusElement (){
 
    }
 
   
-    
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        if ( !(other instanceof SyllabusStructure) ) return false;
-
-
-        return false;
-    }
-
-    public String toString(){
-    	return getId() + "";
-    }
-
-   
 }
 

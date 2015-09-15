@@ -38,19 +38,19 @@ public class SyllabusElementAttribute {
     private String attributeValue;   
     
     
-    private SyllabusStructure syllabusStructure_id;
+    private SyllabusElement syllabusElement_id;
     
-    public SyllabusElementAttribute (SyllabusStructure syllabusStructure_id){
-    	this.syllabusStructure_id = syllabusStructure_id;
+    public SyllabusElementAttribute (SyllabusElement syllabusElement_id){
+    	this.syllabusElement_id = syllabusElement_id;
     }
 
     public SyllabusElementAttribute (){
     	
     }
 
-    @JsonBackReference("syllabus_structure")
-    public SyllabusStructure getSyllabusStructure_id() {
-		return syllabusStructure_id;
+    @JsonBackReference("syllabus_element")
+    public SyllabusElement getSyllabusElement_id() {
+		return syllabusElement_id;
 	}
     
     
