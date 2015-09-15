@@ -13,17 +13,13 @@
 		<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
 		<script src="/opensyllabus2-tool/lib/angular/angular-resource.js"></script>
 		<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.js"></script>
-		<script src="/opensyllabus2-tool/components/opensyllabus/opensyllabus.js"></script>
-		<script src="/opensyllabus2-tool/components/leftMenu/leftMenuCtrl.js"></script>
-		<script src="/opensyllabus2-tool/components/leftMenu/leftMenuServices.js"></script>
-		<script src="/opensyllabus2-tool/components/contentPanel/contentPanelCtrl.js"></script>
-		<script src="/opensyllabus2-tool/components/contentPanel/contentPanelServices.js"></script>
-		<script src="/opensyllabus2-tool/components/addElementButton/addElementCtrl.js"></script>
-		<!-- jquery-js-tree -->
-		<link rel="stylesheet" href="/opensyllabus2-tool/lib/angular/js-tree/themes/default/style.min.css">
-		<script type="text/javascript" src="/opensyllabus2-tool/lib/angular/js-tree/jstree.min.js"></script>
-		<script src="/opensyllabus2-tool/lib/packery/packery.pkgd.js"></script>
-			
+		<script src="/opensyllabus2-tool/js/controllers/opensyllabus/opensyllabus.js"></script>
+		<script src="/opensyllabus2-tool/js/controllers/leftMenu/leftMenuCtrl.js"></script>
+		<script src="/opensyllabus2-tool/js/controllers/leftMenu/leftMenuServices.js"></script>
+		<script src="/opensyllabus2-tool/js/controllers/contentPanel/contentPanelCtrl.js"></script>
+		<script src="/opensyllabus2-tool/js/controllers/contentPanel/contentPanelServices.js"></script>
+		<script src="/opensyllabus2-tool/js/controllers/addElementButton/addElementCtrl.js"></script>
+		
 		<!-- include sakai scripts (for resizing frame, etc). includes ckeditor -->
 		<%= request.getAttribute("sakai.html.head.js") %>
 		<!-- include skin/tool.css and tool_base.css -->
