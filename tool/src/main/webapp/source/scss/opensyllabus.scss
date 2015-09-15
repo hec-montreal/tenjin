@@ -1,9 +1,15 @@
+$bleuhec: #000;
+
 .mini-submenu{
 	display:block;
 	border-radius:4px;
 	padding:9px;
 	width:42px;
 	height:100%;
+
+    &:hover {
+        cursor:pointer;
+    }
 }
 
 .portletBody{
@@ -34,7 +40,7 @@
 
 #right {
     width:100%;
-    background-color: #fff;
+    background-color: $bleuhec;
     z-index: 5;
     position: fixed;
     left: 0px;
@@ -56,8 +62,13 @@
 }
 
 // pour la demo
-.list-group .list-group .list-group-item {
-  margin-left: 15px;  
+.list-group {
+    .list-group {
+        .list-group-item{
+            margin-left: 15px; 
+        }
+    }
+ 
 }
 
 p.syllabus-element:hover {
