@@ -1,8 +1,11 @@
+'use strict';
+
 var gulp         = require('gulp'),
     // connect    = require('gulp-connect'),
     gutil        = require('gulp-util'),
     sass         = require('gulp-ruby-sass'),
     autoprefixer = require('gulp-autoprefixer'),
+    concat       = require('gulp-concat'),
     sourcemaps   = require('gulp-sourcemaps');
 
 // Html task
@@ -13,8 +16,9 @@ gulp.task('html', function() {
  
 //Js task
 gulp.task('js', function() {
-  gulp.src('./source/js/**/*.js');
-  // .pipe(connect.reload());
+    return gulp.src(['./source/js/**/*.js'])
+    .pipe(concat('opensyllabus.js'))
+    .pipe(gulp.dest('./dest/js'));
 });
 
 // gulp.task('sass', function () {
@@ -25,7 +29,7 @@ gulp.task('js', function() {
 // });
 
 gulp.task('sass', function () {
-  return sass('./source/scss/syllabus.scss', { sourcemap: true })
+  return sass('./source/scss/opensyllabus.scss', { sourcemap: true })
     .on('error', sass.logError)
     .pipe(autoprefixer({
             browsers: ['last 2 versions']
@@ -39,12 +43,11 @@ gulp.task('sass', function () {
 gulp.task('watch', function(){
   //html
   // gulp.watch(['*.html'], ['html']);
-  // gulp.watch(['./source/js/**/*.js'], ['js']);
+  gulp.watch(['./source/js/**/*.js'], ['js']);
   gulp.watch(['./source/scss/**/*.scss'], ['sass']);
 
 });
 
-;
  
 // gulp.task('connect', function() {
 //   connect.server({

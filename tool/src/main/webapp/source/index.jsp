@@ -7,20 +7,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>OpenSyllabus 2</title>
 	<link rel="stylesheet" href="/opensyllabus2-tool/lib/bootstrap/css/bootstrap.css"/>
-	<link rel="stylesheet" href="/opensyllabus2-tool/css/opensyllabus.css"/>
+
 	<link rel="stylesheet" href="/opensyllabus2-tool/dest/css/opensyllabus.css"/>
-	
-	<script src="/opensyllabus2-tool/lib/jquery/jquery-2.1.3.min.js"></script>
-	<script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script>
-	<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
-	<script src="/opensyllabus2-tool/lib/angular/angular-resource.js"></script>
-	<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.js"></script>
-	<script src="/opensyllabus2-tool/js/controllers/opensyllabus/opensyllabus.js"></script>
-	<script src="/opensyllabus2-tool/js/controllers/leftMenu/leftMenuCtrl.js"></script>
-	<script src="/opensyllabus2-tool/js/controllers/leftMenu/leftMenuServices.js"></script>
-	<script src="/opensyllabus2-tool/js/controllers/contentPanel/contentPanelCtrl.js"></script>
-	<script src="/opensyllabus2-tool/js/controllers/contentPanel/contentPanelServices.js"></script>
-	<script src="/opensyllabus2-tool/js/controllers/addElementButton/addElementCtrl.js"></script>
+
+	<!--<script src="/opensyllabus2-tool/lib/jquery/jquery-2.1.3.min.js"></script> -->
+
 
 	<!-- include sakai scripts (for resizing frame, etc). includes ckeditor -->
 	<%= request.getAttribute("sakai.html.head.js") %>
@@ -69,6 +60,19 @@
 		</div>
 	</div>
 
+	<!-- <script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script> -->
+	<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
+	<script src="/opensyllabus2-tool/lib/angular/angular-resource.js"></script>
+	<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.js"></script>
+
+<!-- 	// <script src="/opensyllabus2-tool/js/controllers/opensyllabus/opensyllabus.js"></script>
+	// <script src="/opensyllabus2-tool/js/controllers/leftMenu/leftMenuCtrl.js"></script>
+	// <script src="/opensyllabus2-tool/js/controllers/leftMenu/leftMenuServices.js"></script>
+	// <script src="/opensyllabus2-tool/js/controllers/contentPanel/contentPanelCtrl.js"></script>
+	// <script src="/opensyllabus2-tool/js/controllers/contentPanel/contentPanelServices.js"></script>
+	// <script src="/opensyllabus2-tool/js/controllers/addElementButton/addElementCtrl.js"></script> -->
+
+	<script src="/opensyllabus2-tool/dest/js/opensyllabus.js"></script>
 
 </body>
 </html>

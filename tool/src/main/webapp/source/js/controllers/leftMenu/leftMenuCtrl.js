@@ -1,16 +1,19 @@
 
 	
-opensyllabusApp.controller('LeftMenuCtrl', function ($scope, syllabus){
-	var menuTree =new Array();
-	var contentAttributes= new Object();
-	var contentTree = new Array();
-	var iterMenu=0;
+opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', 'syllabus' , function ($scope, syllabus){
+	'use strict';
+
+	var menuTree = [];
+	var contentAttributes = {};
+	var contentTree = [];
+	var iterMenu = 0;
 	
-	for ( iterStruct = 0;iterStruct < data.syllabusElements.length;iterStruct++){
-		if (data.syllabusElements[iterStruct].displayPage ){
-			menuItem = data.syllabusElements[iterStruct];
-			if (menuItem.parent == null)
+	for ( var iterStruct = 0; iterStruct < data.syllabusStructures.length; iterStruct++){
+		if (data.syllabusStructures[iterStruct].displayPage ){
+			var menuItem = data.syllabusStructures[iterStruct];
+			if (menuItem.parent === null) {
 				menuItem.parent = "#";
+			}
 			menuItem.a_attr = "{\"ngclick\": \"loadElementAttributes("+ iterStruct+")\"}";
 			
 			contentAttributes.id = menuItem.id;
@@ -63,8 +66,7 @@ opensyllabusApp.controller('LeftMenuCtrl', function ($scope, syllabus){
 			
 		}	
 	    });
-
-	});
+}]);
 
 
 
