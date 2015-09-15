@@ -32,12 +32,12 @@
             <column name="TEMPLATE_ID" not-null="true" />
         </many-to-one> 
 
-        <set name="syllabusStructures" table="OSYL2_SYLLABUSSTRUCTURE"
+        <set name="syllabusElements" table="OSYL2_SYLLABUSELEMENT"
 			cascade="all"  lazy="false">
 	          <key>
 	              <column name="SYLLABUS_ID" not-null="true" />
 	          </key>
-	          <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" />
+	          <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElement" />
 	      </set>
 
     </class>
