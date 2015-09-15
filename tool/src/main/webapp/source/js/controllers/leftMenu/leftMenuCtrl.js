@@ -6,9 +6,9 @@ opensyllabusApp.controller('LeftMenuCtrl', function ($scope, syllabus){
 	var contentTree = new Array();
 	var iterMenu=0;
 	
-	for ( iterStruct = 0;iterStruct < data.syllabusStructures.length;iterStruct++){
-		if (data.syllabusStructures[iterStruct].displayPage ){
-			menuItem = data.syllabusStructures[iterStruct];
+	for ( iterStruct = 0;iterStruct < data.syllabusElements.length;iterStruct++){
+		if (data.syllabusElements[iterStruct].displayPage ){
+			menuItem = data.syllabusElements[iterStruct];
 			if (menuItem.parent == null)
 				menuItem.parent = "#";
 			menuItem.a_attr = "{\"ngclick\": \"loadElementAttributes("+ iterStruct+")\"}";
