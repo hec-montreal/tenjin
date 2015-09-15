@@ -12,8 +12,8 @@
             </generator>
         </id>
         
-        <many-to-one name="syllabusStructure_id" class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusStructure" >
-            <column name="SYLLABUSSTRUCTURE_ID" not-null="true" />
+        <many-to-one name="syllabusElement_id" class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElement" >
+            <column name="SYLLABUSELEMENT_ID" not-null="true" />
         </many-to-one>
         
        <property name="attributeKey" type="string" >
