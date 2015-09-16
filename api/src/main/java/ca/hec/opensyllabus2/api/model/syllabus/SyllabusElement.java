@@ -63,10 +63,10 @@ public class SyllabusElement {
     
     private Long displayOrder;
    
-    @JsonManagedReference
+    
     private Set <SyllabusElementAttribute> elementAttributes;
    
-    @JsonManagedReference
+    
     private Set <SyllabusElementSection> elementSections;
 
     
@@ -79,7 +79,7 @@ public class SyllabusElement {
     @JsonBackReference
     private Rubric rubric;
     
-    //@JsonManagedReference
+    
     private Set <SyllabusElement> children; 
 
     public SyllabusElement (Long parent, Rubric rubric, TemplateElement templateElement, Syllabus syllabus_id) {

@@ -25,7 +25,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
     }
     
 	public Syllabus getShareableSyllabus(String courseId) throws Exception{
-		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where course_id = ?", courseId);
+		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where site_id = ?", courseId);
 		return syllabi.get(0);
 	}
 	
@@ -53,7 +53,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 
 	@Override
 	public Syllabus getSyllabus(String courseId, String sectionId) throws Exception {
-		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where course_id = ?", courseId);
+		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where site_id = ?", courseId);
 		return syllabi.get(0);
 		
 	}
@@ -67,7 +67,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		    throw new IllegalArgumentException();
 		
 		try{
-			String hql = "from Syllabus syll LEFT JOIN FETCH syll.syllabusStructures where course_id = :courseId";
+			String hql = "from Syllabus syll LEFT JOIN FETCH syll.syllabusStructures where site_id = :courseId";
 			Query query = getSession().createQuery(hql);
 			query.setParameter("courseId", courseId);
 			results = query.list();
@@ -90,7 +90,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	    throw new Exception("No syllabus with course id= " + courseId);
     }
 */	
-		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where course_id = ?", courseId);
+		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where site_id = ?", courseId);
 		return syllabi.get(0);
 	}
 

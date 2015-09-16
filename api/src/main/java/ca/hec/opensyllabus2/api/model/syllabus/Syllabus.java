@@ -28,7 +28,7 @@ import lombok.Data;
 
 
 @Data
-public class Syllabus implements Serializable{	
+public class Syllabus {	
 	
 
 

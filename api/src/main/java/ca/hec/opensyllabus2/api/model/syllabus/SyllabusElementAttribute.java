@@ -48,7 +48,7 @@ public class SyllabusElementAttribute {
     	
     }
 
-    @JsonBackReference("syllabus_element")
+   
     public SyllabusElement getSyllabusElement_id() {
 		return syllabusElement_id;
 	}

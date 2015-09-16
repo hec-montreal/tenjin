@@ -37,7 +37,7 @@ public class SyllabusElementSection {
     
     private Long elementSection_id;
     
-    @JsonBackReference
+   
     private SyllabusElement syllabusElement_id;
     
     private String section_id;
