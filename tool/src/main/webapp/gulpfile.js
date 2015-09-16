@@ -6,6 +6,7 @@ var gulp         = require('gulp'),
     sass         = require('gulp-ruby-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     concat       = require('gulp-concat'),
+    config       = require('./config.json'),
     sourcemaps   = require('gulp-sourcemaps');
 
 // Html task
@@ -18,7 +19,7 @@ gulp.task('html', function() {
 gulp.task('js', function() {
     return gulp.src(['./source/js/**/*.js'])
     .pipe(concat('opensyllabus.js'))
-    .pipe(gulp.dest('./dest/js'));
+    .pipe(gulp.dest(config.tomcat + '/dest/js'));
 });
 
 // gulp.task('sass', function () {
@@ -35,7 +36,7 @@ gulp.task('sass', function () {
             browsers: ['last 2 versions']
         }))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dest/css'));
+    .pipe(gulp.dest(config.tomcat + '/dest/css'));
 });
 
 

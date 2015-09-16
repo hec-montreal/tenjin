@@ -23,7 +23,7 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', 'syllabus' , function ($s
 			
 			menuTree[iterMenu] =menuItem;
 			iterMenu = iterMenu+1;
-			contentAttributes = new Object();
+			contentAttributes = {};
 			
 		}
 		
@@ -51,7 +51,7 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', 'syllabus' , function ($s
 	    var select = data.selected[0]; 
 	    document.getElementById("content").innerHTML = "";
 	    console.log(select);
-	    var contentAtt = new Object();
+	    var contentAtt = {};
 	    for ( iterMenu = 0;iterMenu < contentTree.length;iterMenu++){
 	    	contentAtt = contentTree[iterMenu];
 			if (contentAtt.id == select ){
