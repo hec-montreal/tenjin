@@ -21,7 +21,7 @@
 	<!-- a good example is bootstrap.jsp in roster2! -->
 
 </head>
-<body style="height: 400px;" class="portletBody container-fluid" ng-controller="OpensyllabusCtrl" >
+<body style="height: 400px;" class="portletBody container-fluid" data-ng-controller="OpensyllabusCtrl" >
 	<div class="row">
 		<h1>{{syllabus.courseTitle}}</h1>
 	</div>
@@ -35,8 +35,8 @@
 					Ajouter
 					<span class="caret"></span>
 				</button>
-				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" ng-controller="addElementCtrl as add">
-					<li role="presentation" ng-repeat="type in add.types"><a role="menuitem" tabindex="-1" href="#" ng-click="add.addElement(type)">{{type}}</a></li>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" data-ng-controller="addElementCtrl as add">
+					<li role="presentation" data-ng-repeat="type in add.types"><a role="menuitem" tabindex="-1" href="#" data-ng-click="add.addElement(type)">{{type}}</a></li>
 				</ul>
 			</div>
 		</div>
