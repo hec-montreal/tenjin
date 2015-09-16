@@ -42,22 +42,11 @@
 		</div>
 	</div>
 	<div class="row">
-		
-		<div ng-controller="LeftMenuCtrl" class="col-md-3 pull-left left-menu" id="menu">
 
-			<div class='titre'>Menu du cours
-				<div id="menuTree"></div>
-			</div>
+		<div data-ng-include="'/opensyllabus2-tool/dest/views/leftMenu.html'"   class="col-md-3 pull-left left-menu" id="menu" ></div>
 
-		</div>
-		<div ng-controller="ContentPanelCtrl" class="col-md-9" id="content">
-			<div id="container">
-				<div class="item">...</div>
-				<div class="item w2">...</div>
-				<div class="item">...</div>
-				...
-			</div>
-		</div>
+		<div data-ng-include="'/opensyllabus2-tool/dest/views/contentPanel.html'"  class="col-md-9" id="content"></div>
+
 	</div>
 
 	<!-- <script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script> -->

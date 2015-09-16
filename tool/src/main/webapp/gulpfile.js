@@ -9,10 +9,16 @@ var gulp         = require('gulp'),
     config       = require('./config.json'),
     sourcemaps   = require('gulp-sourcemaps');
 
-// Html task
-gulp.task('html', function() {
-  gulp.src('*.html');
-  // .pipe(connect.reload());
+// Jsp task
+gulp.task('jsp', function() {
+  return gulp.src('./source/index.jsp')
+  .pipe(gulp.dest(config.tomcat + '/'));
+});
+
+// Views task
+gulp.task('views', function() {
+  return gulp.src('./source/views/**/*.html')
+  .pipe(gulp.dest(config.tomcat + '/dest/views'));
 });
  
 //Js task
@@ -46,7 +52,8 @@ gulp.task('watch', function(){
   // gulp.watch(['*.html'], ['html']);
   gulp.watch(['./source/js/**/*.js'], ['js']);
   gulp.watch(['./source/scss/**/*.scss'], ['sass']);
-
+  gulp.watch(['./source/index.jsp'], ['jsp']);
+  gulp.watch(['./source/views/**/*.html'], ['views']);
 });
 
  
