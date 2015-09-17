@@ -1,21 +1,13 @@
 
 // loader les donnees du plan de cours
-opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$resource', function($scope, $resource) {
+opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', 'SyllabusService', function($scope, SyllabusService) {
 	'use strict';
 
-	//TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
-	var syllabusProvider = $resource('v1/syllabus/:courseId.json', {
-		courseId : "@courseId",	sectionId : "A01,B03"}, {
-		getSyllabus : {
-			method : 'GET',
-			isArray : false
-		}
-	});
-
-	syllabusProvider.getSyllabus({
-		courseId : '30300'
-	}, function(data) {
-		$scope.syllabus = data;
+	var results = SyllabusService.getSyllabus('30300');
+	results.$promise.then( function(data) {
+		console.log(data);
+	}, function(error) {
+		console.log('erreur get syllabus');
 	});
 
 }]);

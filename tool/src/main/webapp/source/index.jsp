@@ -43,8 +43,10 @@
 	</div>
 	<div class="row">
 
+		<!-- Menu de gauche -->
 		<div data-ng-include="'/opensyllabus2-tool/dest/views/leftMenu.html'"   class="col-md-3 pull-left left-menu" id="menu" ></div>
-
+		
+		<!-- Container de droite -->
 		<div data-ng-include="'/opensyllabus2-tool/dest/views/contentPanel.html'"  class="col-md-9" id="content"></div>
 
 	</div>
@@ -62,7 +64,7 @@
 	// <script src="/opensyllabus2-tool/js/controllers/addElementButton/addElementCtrl.js"></script> -->
 
 	<script src="/opensyllabus2-tool/dest/js/opensyllabus.js"></script>
-
+	
 </body>
 </html>
 
