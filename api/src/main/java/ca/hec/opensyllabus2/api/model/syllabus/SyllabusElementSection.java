@@ -20,9 +20,7 @@
  ******************************************************************************/
 package ca.hec.opensyllabus2.api.model.syllabus;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.*;
 /**
@@ -36,8 +34,8 @@ import lombok.*;
 public class SyllabusElementSection {
     
     private Long elementSection_id;
-    
    
+    @JsonBackReference
     private SyllabusElement syllabusElement_id;
     
     private String section_id;

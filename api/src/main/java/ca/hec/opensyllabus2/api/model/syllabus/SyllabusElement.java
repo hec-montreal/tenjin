@@ -22,11 +22,9 @@ package ca.hec.opensyllabus2.api.model.syllabus;
 
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ca.hec.opensyllabus2.api.model.template.Rubric;
@@ -63,20 +61,18 @@ public class SyllabusElement {
     
     private Long displayOrder;
    
-    
+    @JsonManagedReference
     private Set <SyllabusElementAttribute> elementAttributes;
    
-    
-    private Set <SyllabusElementSection> elementSections;
+   @JsonManagedReference
+   private Set <SyllabusElementSection> elementSections;
 
-    
     @JsonBackReference
     private Syllabus syllabus;
 
-    @JsonBackReference
     private TemplateElement templateElement;
 
-    @JsonBackReference
+    
     private Rubric rubric;
     
     
@@ -94,6 +90,14 @@ public class SyllabusElement {
 
    }
 
+  
+	public boolean equals(Object other) {
+        if (this == other) return true;
+        if ( !(other instanceof SyllabusElement) ) return false;
+
+
+        return false;
+    }
   
 }
 

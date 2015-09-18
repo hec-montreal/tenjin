@@ -32,7 +32,7 @@
             <column name="TEMPLATE_ID" not-null="true" />
         </many-to-one> 
 
-        <set name="syllabusElements" table="OSYL2_SYLLABUSELEMENT" lazy="false">
+        <set name="syllabusElements" table="OSYL2_SYLLABUSELEMENT" cascade="all" lazy="false">
 	          <key>
 	              <column name="SYLLABUS_ID" not-null="true" />
 	          </key>

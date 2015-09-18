@@ -1,31 +1,19 @@
-/**
- * 
- */
 package ca.hec.opensyllabus2.api.model.syllabus;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
+
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ca.hec.opensyllabus2.api.model.template.Template;
 import lombok.Data;
 
 /**
- * <p>
- * CatalogDescription is the object for catalog descriptions for use with the Catalog Description Manager tool.
- * 
- * Does not implement org.sakaiproject.entity.api.Entity, though it could (but be careful with getId() as it exists there too but returns int)
- * </p>
- */
-
+*
+* @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
+* @version $Id: $
+*/
 
 @Data
 public class Syllabus {	
@@ -48,7 +36,6 @@ public class Syllabus {
     
     private Date creationDate;
     
-    @JsonManagedReference
     private Set<SyllabusElement> syllabusElements;
     
     public Syllabus (String course_id, String courseTitle, Template template){
