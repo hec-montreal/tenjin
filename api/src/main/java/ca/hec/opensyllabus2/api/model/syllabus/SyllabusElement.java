@@ -57,8 +57,6 @@ public class SyllabusElement {
     
     private String lastModifiedBy;
     
-    private String text;
-    
     private Long displayOrder;
    
     @JsonManagedReference
@@ -70,9 +68,11 @@ public class SyllabusElement {
     @JsonBackReference
     private Syllabus syllabus;
 
+    @JsonBackReference
     private TemplateElement templateElement;
 
     
+    @JsonBackReference
     private Rubric rubric;
     
     

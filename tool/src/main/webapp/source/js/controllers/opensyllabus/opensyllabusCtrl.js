@@ -64,7 +64,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', 'SyllabusService', fun
 
 }]);
 
-// opensyllabusApp.filter('unsafe', function($sce) {
+//opensyllabusApp.filter('unsafe', function($sce) {
 // 	return function(val) {
 // 		return $sce.trustAsHtml(val);
 // 	};

@@ -35,24 +35,20 @@
             <column name="LASTMODIFIEDBY" />
         </property>
  
-        <property name="text" type="string">
-            <column name="text" />
-        </property>
- 
-         <property name="displayOrder" type="long" >
+        <property name="displayOrder" type="long" >
             <column name="DISPLAYORDER" />
         </property>
  
        <set name="elementAttributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE" cascade="all" lazy="false" >
             <key>
-                <column name="SYLLABUSELEMENT_ID" not-null="true" />
+                <column name="SYLLABUSELEMENT_ID"  />
             </key>
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementAttribute" />
         </set>
 
            <set name="children" table="OSYL2_SYLLABUSELEMENT" lazy="false" >
             <key>
-                <column name="parent" not-null="true" />
+                <column name="parent"  />
             </key>
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElement" />
         </set> 
@@ -64,8 +60,16 @@
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementSection" />
        </set>
        
+       <many-to-one name="rubric" class="ca.hec.opensyllabus2.api.model.template.Rubric" >
+            <column name="RUBRIC_ID" not-null="false" />
+        </many-to-one>
+        
+        <many-to-one name="templateElement" class="ca.hec.opensyllabus2.api.model.template.TemplateElement" >
+            <column name="TEMPLATEELEMENT_ID" not-null="true" />
+        </many-to-one> 
+       
        <many-to-one name="syllabus" class="ca.hec.opensyllabus2.api.model.syllabus.Syllabus" >
-            <column name="SYLLABUS_ID" not-null="true" />
+            <column name="SYLLABUS_ID"  />
         </many-to-one>
     </class>
 </hibernate-mapping>
