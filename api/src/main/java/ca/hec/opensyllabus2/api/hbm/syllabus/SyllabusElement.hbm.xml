@@ -46,7 +46,7 @@
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementAttribute" />
         </set>
 
-           <set name="children" table="OSYL2_SYLLABUSELEMENT" lazy="false" >
+           <set name="children" table="OSYL2_SYLLABUSELEMENT" lazy="false" order-by="displayOrder">
             <key>
                 <column name="parent"  />
             </key>
