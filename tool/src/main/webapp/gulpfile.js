@@ -9,6 +9,12 @@ var gulp         = require('gulp'),
     config       = require('./config.json'),
     sourcemaps   = require('gulp-sourcemaps');
 
+// Lib task
+gulp.task('lib', function() {
+  return gulp.src('./source/lib/**/*')
+  .pipe(gulp.dest(config.tomcat + '/lib'));
+});
+
 // Jsp task
 gulp.task('jsp', function() {
   return gulp.src('./source/index.jsp')

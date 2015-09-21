@@ -31,6 +31,119 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', function ($scope){
 		
 	}		
 
+    $scope.montoggle = function (scope) {
+		scope.toggle();
+	};
+	$scope.collapseAll = function () {
+		$scope.$broadcast('collapseAll');
+	};
+
+	$scope.expandAll = function () {
+		$scope.$broadcast('expandAll');
+	};
+
+	$scope.remove = function (scope) {
+		scope.remove();
+	};
+
+ 	$scope.moveLastToTheBeginning = function () {
+        var a = $scope.data.pop();
+        $scope.data.splice(0, 0, a);
+    };
+
+	$scope.newSubItem = function (scope) {
+		var nodeData = scope.$modelValue;
+		nodeData.nodes.push({
+			id: nodeData.id * 10 + nodeData.nodes.length,
+			title: nodeData.title + '.' + (nodeData.nodes.length + 1),
+			nodes: []
+		});
+	};
+
+	$scope.loadContentPanel = function($item){
+		console.log($item.title);
+		// debugger;
+	};
+
+	$scope.list = [{
+        'id': 1,
+        'title': 'Présentation',
+        'nodrag': true,
+        'items': []
+      }, 
+		{
+        'id': 2,
+        'title': 'Coordonnées',
+        'nodrag': true,
+        'items': []
+      },
+      {
+        'id': 3,
+        'title': 'Matériel pédagogique',
+        'nodrag': true,
+        'nodrop': true, // An arbitrary property to check in custom template for nodrop-enabled
+        'items': []
+      }, 
+      {
+        'id': 4,
+        'title': 'Evaluations',
+        'nodrag': true,
+        'items': [
+          {
+            'id': 41,
+            'title': 'Evaluation',
+            'items': []
+          },
+          {
+            'id': 42,
+            'title': 'Examen intra',
+            'items': []
+          }
+        ]
+      },
+      {
+        'id': 5,
+        'title': 'Organisation du cours',
+        'nodrag': true,
+        'items': [
+          {
+            'id': 51,
+            'title': 'Chapitre 1',
+            'items': [
+              {
+	            'id': 511,
+	            'title': 'Séance de cours',
+	            'items': []
+	          },
+	          {
+	            'id': 512,
+	            'title': 'Séance de travaux pratique',
+	            'items': []
+	          }   	
+            ]
+          },
+          {
+            'id': 52,
+            'title': 'Chapitre 2',
+            'items': [
+			{
+				'id': 521,
+				'title': 'Séance de cours 1',
+				'items': []
+			},
+			{
+				'id': 522,
+				'title': 'Séance de cours 2',
+				'items': []
+			}  
+            ]
+          }
+        ]
+      }
+      ];
+
+	$scope.collapseAll();
+
 	// $('#menuTree').jstree({
 	// 	"core": {
 	//         "themes": {

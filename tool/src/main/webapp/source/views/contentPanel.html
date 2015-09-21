@@ -1,10 +1,16 @@
-<div data-ng-controller='ContentPanelCtrl'>
+﻿<div data-ng-controller='ContentPanelCtrl'>
 
     <div id="container">
-        <div class="item">...</div>
+<!--         <div class="item">...</div>
         <div class="item w2">...</div>
         <div class="item">...</div>
-        ......
+        ...... -->
+
+        <ul>
+            <li data-ng-repeat="(key, value) in tab">
+                {{key}}
+            </li>
+        </ul>
     </div>
 
 </div>

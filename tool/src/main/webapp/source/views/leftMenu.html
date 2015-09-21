@@ -1,8 +1,49 @@
-
+﻿
 <div data-ng-controller='LeftMenuCtrl'>
 
     <div class='titre'>Menu du cours
-        <div id="menuTree"></div>
+
+        <div ui-tree data-drag-enabled="false">
+          <ol ui-tree-nodes="" ng-model="list" >
+            <li ng-repeat="item in list" ui-tree-node>
+              <div ui-tree-handle data-nodrag="{{item.nodrag ? true : false}}"  >
+              <a class="btn btn-success btn-xs" ng-if="item.items && item.items.length > 0" data-nodrag ng-click="montoggle(this)"><span
+              class="glyphicon"
+              ng-class="{
+                'glyphicon-chevron-right': collapsed,
+                'glyphicon-chevron-down': !collapsed
+              }"></span></a>
+
+                <span data-ng-click="loadContentPanel(item)">{{item.title}}</span>
+
+              </div>
+              <ol ui-tree-nodes="" ng-model="item.items" ng-class="{hidden: collapsed}">
+                <li ng-repeat="subItem in item.items" ui-tree-node>
+                  <div ui-tree-handle>
+                  <a class="btn btn-success btn-xs" ng-if="subItem.items && subItem.items.length > 0" data-nodrag ng-click="montoggle(this)"><span
+                  class="glyphicon"
+                  ng-class="{
+                    'glyphicon-chevron-right': collapsed,
+                    'glyphicon-chevron-down': !collapsed
+                  }"></span></a>
+
+                  <span data-ng-click="loadContentPanel(subItem)">{{subItem.title}}</span>
+                   <!--  {{subItem.title}} -->
+                  </div>
+                  <ol ui-tree-nodes="" ng-model="subItem.items" ng-class="{hidden: collapsed}">
+                    <li ng-repeat="subSubItem in subItem.items" ui-tree-node>
+                        <div ui-tree-handle>
+                          <span data-ng-click="loadContentPanel(subSubItem)">{{subSubItem.title}}</span>
+                          <!-- {{subSubItem.title}} -->
+                        </div>
+                    </li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </div>
+        
     </div>
     
 </div>
