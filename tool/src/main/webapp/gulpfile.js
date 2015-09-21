@@ -62,6 +62,12 @@ gulp.task('watch', function(){
   gulp.watch(['./source/views/**/*.html'], ['views']);
 });
 
+
+// Watch our changes
+gulp.task('deploy',['lib', 'js', 'views', 'sass'] , function(){
+  gutil.log('Source déployée sur tomcat!');
+});
+
  
 // gulp.task('connect', function() {
 //   connect.server({
