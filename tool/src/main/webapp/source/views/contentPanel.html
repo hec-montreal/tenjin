@@ -1,16 +1,31 @@
-﻿<div data-ng-controller='ContentPanelCtrl'>
+﻿<script type="text/ng-template" id="nodes_renderer_content.html">
 
-    <div id="container">
-<!--         <div class="item">...</div>
-        <div class="item w2">...</div>
-        <div class="item">...</div>
-        ...... -->
-
-        <ul>
-            <li data-ng-repeat="(key, value) in tab">
-                {{key}}
-            </li>
-        </ul>
+    <div ui-tree-handle class="tree-node tree-node-content" data-ng-if="item.displayPage">
+        Item : {{item.syllabusElement_id}}
+    </div>
+    <div ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.displayPage">
+        élément : {{item.syllabusElement_id}}
     </div>
 
+    <ol ui-tree-nodes="" data-ng-model="item.children" data-ng-class="{hidden: collapsed}" data-ng-if="item.children && item.children.length > 0 && item.children[0].displayPage">
+        <li data-ng-repeat="item in item.children" ui-tree-node data-ng-include="'nodes_renderer_content.html'">
+        </li>
+    </ol>
+
+</script>
+
+<div data-ng-controller='ContentPanelCtrl'>
+
+    <div class='titre'>Contenu du cours
+
+        <div ui-tree data-drag-enabled="false">
+
+          <ol ui-tree-nodes="" ng-model="selectedItem.children" >
+            <li ng-repeat="item in selectedItem.children" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          
+          </ol>
+
+        </div>
+        
+    </div>
+    
 </div>

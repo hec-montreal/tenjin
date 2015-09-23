@@ -8,4 +8,8 @@
     .angular-ui-tree-handle {
         cursor: pointer;
     }
+
+    .item-selected {
+        background-color: $item-selected;
+    }
 }
