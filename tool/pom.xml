@@ -167,21 +167,76 @@
 			</resource>
 		</resources>
 		<plugins>
+		<!-- frontend maven plugin -->
+		
+	 <plugin>
+       <groupId>com.github.eirslett</groupId>
+       <artifactId>frontend-maven-plugin</artifactId>
+       <version>0.0.25</version>
+       <configuration>
+       		<workingDirectory>src/main/webapp</workingDirectory>
+       </configuration>
+    
+	    <executions>
+		   <execution>
+			    <id>install node and npm</id>
+			    <goals>
+			        <goal>install-node-and-npm</goal>
+			    </goals>
+			    <configuration>
+			        <nodeVersion>v0.12.7</nodeVersion>
+			        <npmVersion>2.11.3</npmVersion>
+			    </configuration>
+			</execution>
+	    
+			<execution>
+			    <id>npm install</id>
+			    <goals>
+			        <goal>npm</goal>
+			    </goals>
+			
+			    <configuration>
+			        <arguments>install</arguments>
+			    </configuration>
+			</execution>
+			
+		     <execution>
+			    <id>gulp build </id>
+			    <goals>
+			        <goal>gulp </goal>
+			    </goals>
+			    <configuration>
+			        <arguments>deploy-maven</arguments>
+			    </configuration>
+			</execution>
+
+		   </executions>	    
+	     </plugin>
+
 			<!-- configure the war plugin to correctly use the standard maven structure -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<warSourceDirectory>${basedir}/src/main/webapp/source</warSourceDirectory>
-					<ouputDirectory>${project.build.directory}</ouputDirectory>
+					<warSourceDirectory>${basedir}/src/main/webapp/dest</warSourceDirectory>
 				</configuration>
 			</plugin>
 
-			<plugin>
-        <groupId>nl.geodienstencentrum.maven</groupId>
-        <artifactId>sass-maven-plugin</artifactId>
-        <version>2.5</version>
-      </plugin>
+		<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-clean-plugin</artifactId>
+            <configuration>
+                <filesets>
+                    <fileset>
+                        <directory>>${basedir}/src/main/webapp/dest</directory>
+                        <includes>
+                            <include>**/*</include>
+                        </includes>
+                        <followSymlinks>false</followSymlinks>
+                    </fileset>
+                </filesets>
+            </configuration>
+        </plugin>
 
 		</plugins>
 	</build>

@@ -12,26 +12,38 @@ var gulp         = require('gulp'),
 // Lib task
 gulp.task('lib', function() {
   return gulp.src('./source/lib/**/*')
-  .pipe(gulp.dest(config.tomcat + '/lib'));
+  .pipe(gulp.dest( './dest/lib'));
 });
 
 // Jsp task
 gulp.task('jsp', function() {
   return gulp.src('./source/index.jsp')
-  .pipe(gulp.dest(config.tomcat + '/'));
+  .pipe(gulp.dest( './dest'));
 });
 
 // Views task
 gulp.task('views', function() {
   return gulp.src('./source/views/**/*.html')
-  .pipe(gulp.dest(config.tomcat + '/dest/views'));
+  .pipe(gulp.dest('./dest/views'));
 });
  
 //Js task
 gulp.task('js', function() {
     return gulp.src(['./source/js/**/*.js'])
     .pipe(concat('opensyllabus.js'))
-    .pipe(gulp.dest(config.tomcat + '/dest/js'));
+    .pipe(gulp.dest('./dest/js'));
+});
+
+//web-inf task
+gulp.task('web-inf', function() {
+    return gulp.src(['./source/WEB-INF/*'])
+    .pipe(gulp.dest('./dest/WEB-INF'));
+});
+
+//tool task
+gulp.task('tools', function() {
+    return gulp.src(['./source/tools/*'])
+    .pipe(gulp.dest('./dest/tools'));
 });
 
 // gulp.task('sass', function () {
@@ -48,25 +60,35 @@ gulp.task('sass', function () {
             browsers: ['last 2 versions']
         }))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(config.tomcat + '/dest/css'));
+    .pipe(gulp.dest( './dest/css'));
 });
 
 
 // Watch our changes
-gulp.task('watch', function(){
+//gulp.task('watch', function(){
   //html
   // gulp.watch(['*.html'], ['html']);
-  gulp.watch(['./source/js/**/*.js'], ['js']);
-  gulp.watch(['./source/scss/**/*.scss'], ['sass']);
-  gulp.watch(['./source/index.jsp'], ['jsp']);
-  gulp.watch(['./source/views/**/*.html'], ['views']);
+  //gulp.watch(['./source/js/**/*.js'], ['js']);
+  //gulp.watch(['./source/scss/**/*.scss'], ['sass']);
+  //gulp.watch(['./source/index.jsp'], ['jsp']);
+  //gulp.watch(['./source/views/**/*.html'], ['views']);
+//});
+
+
+
+gulp.task('deploy',['lib', 'js', 'views', 'web-inf', 'tools','jsp'] , function(){
+	 return gulp.src(['./dest/**/*'])
+	 .pipe(gulp.dest(config.tomcat));
+	 gutil.log('Source déployée sur tomcat!');
 });
 
 
-// Watch our changes
-gulp.task('deploy',['lib', 'js', 'views', 'sass'] , function(){
-  gutil.log('Source déployée sur tomcat!');
+
+
+gulp.task('deploy-maven',['lib', 'js', 'views', 'web-inf', 'tools','jsp'] , function(){
+	  gutil.log('Source déployée sur tomcat avec maven!');
 });
+
 
  
 // gulp.task('connect', function() {
@@ -78,5 +100,5 @@ gulp.task('deploy',['lib', 'js', 'views', 'sass'] , function(){
 // });
  
 // Start the tasks
-gulp.task('default', ['watch']);
+gulp.task('default');
 //gulp.task('default', ['connect', 'watch']);

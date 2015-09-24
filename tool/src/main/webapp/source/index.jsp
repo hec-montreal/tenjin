@@ -8,7 +8,7 @@
 	<title>OpenSyllabus 2</title>
 	<link rel="stylesheet" href="/opensyllabus2-tool/lib/bootstrap/css/bootstrap.css"/>
 
-	<link rel="stylesheet" href="/opensyllabus2-tool/dest/css/opensyllabus.css"/>
+	<link rel="stylesheet" href="/opensyllabus2-tool/css/opensyllabus.css"/>
 	<link rel="stylesheet" href="/opensyllabus2-tool/lib/angular-ui-tree/angular-ui-tree.min.css">
 
 	<!--<script src="/opensyllabus2-tool/lib/jquery/jquery-2.1.3.min.js"></script> -->
@@ -24,7 +24,7 @@
 </head>
 <body style="height: 400px;" class="portletBody container-fluid" data-ng-controller="OpensyllabusCtrl" >
 	<div class="row">
-		<h1>{{syllabus.courseTitle}}</h1>
+		<h1>{{syllabus.courseTitle}}</h1><h2> bienvenue !!!</h2>
 	</div>
 	<div class="row">	
 		<div class="col-sm-10">
@@ -45,10 +45,10 @@
 	<div class="row">
 
 		<!-- Menu de gauche -->
-		<div data-ng-include="'/opensyllabus2-tool/dest/views/leftMenu.html'"   class="col-md-3 hide-tablet pull-left left-menu" id="menu" ></div>
+		<div data-ng-include="'/opensyllabus2-tool/views/leftMenu.html'"   class="col-md-3 hide-tablet pull-left left-menu" id="menu" ></div>
 		
 		<!-- Container de droite -->
-		<div data-ng-include="'/opensyllabus2-tool/dest/views/contentPanel.html'"  class="col-md-9 col-sm-12 content-panel" id="content"></div>
+		<div data-ng-include="'/opensyllabus2-tool/views/contentPanel.html'"  class="col-md-9 col-sm-12 content-panel" id="content"></div>
 
 	</div>
 
@@ -65,7 +65,7 @@
 	// <script src="/opensyllabus2-tool/js/controllers/contentPanel/contentPanelServices.js"></script>
 	// <script src="/opensyllabus2-tool/js/controllers/addElementButton/addElementCtrl.js"></script> -->
 
-	<script src="/opensyllabus2-tool/dest/js/opensyllabus.js"></script>
+	<script src="/opensyllabus2-tool/js/opensyllabus.js"></script>
 	
 </body>
 </html>
