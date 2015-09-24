@@ -39,10 +39,10 @@ import ca.hec.opensyllabus2.api.model.template.TemplateElement;
 @Data
 public class SyllabusElement {
 
-	
+
 	private Long syllabusElement_id;
 
-    
+
     private Long parent;
 
     private Boolean shareable;
@@ -61,8 +61,7 @@ public class SyllabusElement {
 
     private Long displayOrder;
 
-    @JsonManagedReference
-    private Set <SyllabusElementAttribute> elementAttributes;
+    private Map<String, String> attributes;
 
     @JsonManagedReference
     private Set <SyllabusElementSection> elementSections;
@@ -73,11 +72,11 @@ public class SyllabusElement {
     @JsonBackReference
     private TemplateElement templateElement;
 
-    
+
     @JsonBackReference
     private Rubric rubric;
 
-    
+
     private Set <SyllabusElement> children;
 
     public SyllabusElement (Long parent, Rubric rubric, TemplateElement templateElement, Syllabus syllabus_id) {
@@ -92,7 +91,7 @@ public class SyllabusElement {
 
    }
 
-  
+
 	public boolean equals(Object other) {
         if (this == other) return true;
         if ( !(other instanceof SyllabusElement) ) return false;
@@ -100,6 +99,6 @@ public class SyllabusElement {
 
         return false;
     }
-  
+
 }
 

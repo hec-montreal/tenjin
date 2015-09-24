@@ -13,7 +13,6 @@
 		<property name="mappingResources">
 			<list>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/Syllabus.hbm.xml</value>
-			    <value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElementAttribute.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElementSection.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElement.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/Rubric.hbm.xml</value>
@@ -38,7 +37,7 @@
 					<ref
 						bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
 				</property>
-				 
+
 			</bean>
 		</property>
 		<property name="transactionAttributes">
