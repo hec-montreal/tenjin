@@ -43,10 +43,10 @@
             <column name="DISPLAYORDER" />
         </property>
 
-       <map name="attributes" table="osyl2_syllabus_element_attribute" lazy="false" cascade="all">
+       <map name="attributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE" lazy="false" cascade="all">
             <key column="element_id"/>
             <map-key column="name" type="string"/>
-            <element column="value" type="string"/>
+            <element column="value" type="text"/>
         </map>
 
         <set name="children" table="OSYL2_SYLLABUSELEMENT" lazy="false" order-by="displayOrder">
