@@ -54,16 +54,18 @@ public class SyllabusElement {
     private Date lastModifiedDate;
 
     private Boolean displayPage;
-    
+
+	private String pageTitle;
+
     private String lastModifiedBy;
-    
+
     private Long displayOrder;
-   
+
     @JsonManagedReference
     private Set <SyllabusElementAttribute> elementAttributes;
-   
-   @JsonManagedReference
-   private Set <SyllabusElementSection> elementSections;
+
+    @JsonManagedReference
+    private Set <SyllabusElementSection> elementSections;
 
     @JsonBackReference
     private Syllabus syllabus;
@@ -74,9 +76,9 @@ public class SyllabusElement {
     
     @JsonBackReference
     private Rubric rubric;
+
     
-    
-    private Set <SyllabusElement> children; 
+    private Set <SyllabusElement> children;
 
     public SyllabusElement (Long parent, Rubric rubric, TemplateElement templateElement, Syllabus syllabus_id) {
     	 this.parent = parent;
