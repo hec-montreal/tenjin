@@ -10,7 +10,7 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope', function ($scope){
         if ($scope.syllabus) {
 
             $scope.selectedItem = parcoursTree($scope.syllabus, newValue);       
-            console.dir($scope.selectedItem);
+            // console.dir($scope.selectedItem);
 
         }
         
@@ -42,7 +42,7 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope', function ($scope){
      * @param {Object} $rootTree racine du sous-arbre
      */
     var parcoursTreeChildren = function($rootTree, $currentItemId) {
-        console.log('element => ' + $rootTree.syllabusElement_id);
+        // console.log('element => ' + $rootTree.syllabusElement_id);
 
         // condition d'arrêt
         if ($rootTree.syllabusElement_id === $currentItemId) {

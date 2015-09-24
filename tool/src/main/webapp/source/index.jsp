@@ -48,7 +48,7 @@
 		<div data-ng-include="'/opensyllabus2-tool/dest/views/leftMenu.html'"   class="col-md-3 hide-tablet pull-left left-menu" id="menu" ></div>
 		
 		<!-- Container de droite -->
-		<div data-ng-include="'/opensyllabus2-tool/dest/views/contentPanel.html'"  class="col-md-9 col-sm-12" id="content"></div>
+		<div data-ng-include="'/opensyllabus2-tool/dest/views/contentPanel.html'"  class="col-md-9 col-sm-12 content-panel" id="content"></div>
 
 	</div>
 

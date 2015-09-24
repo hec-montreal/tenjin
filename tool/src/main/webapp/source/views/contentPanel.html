@@ -4,14 +4,14 @@
         Item : {{item.syllabusElement_id}}
     </div>
     <div ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.displayPage">
-        élément : {{item.syllabusElement_id}}
+        <div data-text-element data-element="item"></div
     </div>
 
     <ol ui-tree-nodes="" data-ng-model="item.children" data-ng-class="{hidden: collapsed}" data-ng-if="item.children && item.children.length > 0 && item.children[0].displayPage">
         <li data-ng-repeat="item in item.children" ui-tree-node data-ng-include="'nodes_renderer_content.html'">
         </li>
     </ol>
-
+ 
 </script>
 
 <div data-ng-controller='ContentPanelCtrl'>
