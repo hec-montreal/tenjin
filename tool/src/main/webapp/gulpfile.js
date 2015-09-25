@@ -65,18 +65,19 @@ gulp.task('sass', function () {
 
 
 // Watch our changes
-//gulp.task('watch', function(){
-  //html
-  // gulp.watch(['*.html'], ['html']);
-  //gulp.watch(['./source/js/**/*.js'], ['js']);
-  //gulp.watch(['./source/scss/**/*.scss'], ['sass']);
-  //gulp.watch(['./source/index.jsp'], ['jsp']);
-  //gulp.watch(['./source/views/**/*.html'], ['views']);
-//});
+gulp.task('watch', function(){
+
+  gulp.watch(['*.html'], ['html']);
+  gulp.watch(['./source/js/**/*.js'], ['js']);
+  gulp.watch(['./source/scss/**/*.scss'], ['sass']);
+  gulp.watch(['./source/index.jsp'], ['jsp']);
+  gulp.watch(['./source/views/**/*.html'], ['views']);
+
+});
 
 
 
-gulp.task('deploy',['lib', 'js', 'views', 'web-inf', 'tools','jsp'] , function(){
+gulp.task('deploy',['lib', 'sass', 'js', 'views', 'web-inf', 'tools','jsp'] , function(){
 	 return gulp.src(['./dest/**/*'])
 	 .pipe(gulp.dest(config.tomcat));
 	 gutil.log('Source déployée sur tomcat!');

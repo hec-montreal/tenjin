@@ -23,7 +23,7 @@
 </head>
 <body class="portletBody container-fluid" data-ng-controller="OpensyllabusCtrl" >
 	<div class="row">
-		<h1>{{syllabus.courseTitle}}</h1><h2> bienvenue !!!</h2>
+		<h1>{{syllabus.courseTitle}}</h1>
 	</div>
 	<div class="row">	
 		<div class="col-sm-10">
