@@ -29,7 +29,7 @@
 		<div class="col-sm-10">
 		</div>
 		<div class="col-sm-2 pull-right">
-			<div class="dropdown">
+<!-- 			<div class="dropdown">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 					<span class="glyphicon glyphicon-plus-sign"></span>
 					Ajouter
@@ -38,10 +38,10 @@
 				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" data-ng-controller="addElementCtrl as add">
 					<li role="presentation" data-ng-repeat="type in add.types"><a role="menuitem" tabindex="-1" href="#" data-ng-click="add.addElement(type)">{{type}}</a></li>
 				</ul>
-			</div>
+			</div> -->
 		</div>
 	</div>
-	<div class="row">
+	<div class="row row-content">
 
 		<!-- Menu de gauche -->
 		<div data-ng-include="'/opensyllabus2-tool/views/leftMenu.html'"   class="col-md-3 hide-tablet pull-left left-menu" id="menu" ></div>
