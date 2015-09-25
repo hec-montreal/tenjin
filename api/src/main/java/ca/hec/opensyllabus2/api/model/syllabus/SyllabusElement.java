@@ -43,7 +43,9 @@ public class SyllabusElement {
 	private Long syllabusElement_id;
 
 
-    private Long parent;
+	private Long parent;
+
+	private String type;
 
     private Boolean shareable;
 

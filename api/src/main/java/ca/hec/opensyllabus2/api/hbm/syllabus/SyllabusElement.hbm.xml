@@ -11,7 +11,11 @@
             </generator>
         </id>
         <property name="parent" type="long" >
-            <column name="parent" />
+            <column name="parent" unique-key="unique_parent_and_displayorder"/>
+       </property>
+
+        <property name="type" type="string" >
+            <column name="type"/>
        </property>
 
         <property name="shareable" type="boolean">
@@ -40,7 +44,7 @@
         </property>
 
         <property name="displayOrder" type="long" >
-            <column name="DISPLAYORDER" />
+            <column name="DISPLAYORDER"  unique-key="unique_parent_and_displayorder"/>
         </property>
 
        <map name="attributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE" lazy="false" cascade="all">
