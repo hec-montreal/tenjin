@@ -63,30 +63,34 @@ gulp.task('sass', function () {
     .pipe(gulp.dest( './dest/css'));
 });
 
+gulp.task('copy', function () {
+	  return gulp.src(['./dest/**/*'])
+		 .pipe(gulp.dest(config.tomcat));
+});
 
 // Watch our changes
 gulp.task('watch', function(){
-
+  //html
   gulp.watch(['*.html'], ['html']);
   gulp.watch(['./source/js/**/*.js'], ['js']);
   gulp.watch(['./source/scss/**/*.scss'], ['sass']);
   gulp.watch(['./source/index.jsp'], ['jsp']);
   gulp.watch(['./source/views/**/*.html'], ['views']);
-
+  gulp.watch(['./source/tools/*'], ['tools']);
+  gulp.watch(['./source/WEB-INF/*'], ['web-inf']);
+  gulp.watch(['./dest/**/*'], ['copy']);
 });
 
 
 
-gulp.task('deploy',['lib', 'sass', 'js', 'views', 'web-inf', 'tools','jsp'] , function(){
-	 return gulp.src(['./dest/**/*'])
-	 .pipe(gulp.dest(config.tomcat));
-	 gutil.log('Source déployée sur tomcat!');
+gulp.task('deploy',['lib', 'js', 'views', 'web-inf', 'sass', 'tools','jsp', 'copy'] , function(){
+	gutil.log('Source déployée sur tomcat!');
 });
 
 
 
 
-gulp.task('deploy-maven',['lib', 'js', 'views', 'web-inf', 'tools','jsp'] , function(){
+gulp.task('deploy-maven',['lib', 'js', 'views', 'web-inf', 'sass', 'tools','jsp'] , function(){
 	  gutil.log('Source déployée sur tomcat avec maven!');
 });
 
