@@ -13,7 +13,6 @@
 
 	<!--<script src="/opensyllabus2-tool/lib/jquery/jquery-2.1.3.min.js"></script> -->
 
-
 	<!-- include sakai scripts (for resizing frame, etc). includes ckeditor -->
 	<%= request.getAttribute("sakai.html.head.js") %>
 	<!-- include skin/tool.css and tool_base.css -->
@@ -22,7 +21,7 @@
 	<!-- a good example is bootstrap.jsp in roster2! -->
 
 </head>
-<body style="height: 400px;" class="portletBody container-fluid" data-ng-controller="OpensyllabusCtrl" >
+<body class="portletBody container-fluid" data-ng-controller="OpensyllabusCtrl" >
 	<div class="row">
 		<h1>{{syllabus.courseTitle}}</h1><h2> bienvenue !!!</h2>
 	</div>

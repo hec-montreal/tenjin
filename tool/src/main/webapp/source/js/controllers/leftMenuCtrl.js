@@ -1,5 +1,5 @@
 	
-opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', function ($scope){
+opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService' , function ($scope, $timeout, TreeService){
 	'use strict';
 
     $scope.toggleTree = function (scope) {
@@ -32,42 +32,27 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', function ($scope){
 	};
 
 	$scope.select = function($item){
-		
-		if ($item.syllabusElement_id !== $scope.infos.currentItemId) {
-			console.time('select');
-			parcoursTree($scope.syllabus);
-			$item.selected = true;
-			$scope.infos.currentItemId = $item.syllabusElement_id;
-			console.timeEnd('select');
-		}
+
+        if ($scope.infos.selectedItem && $item.syllabusElement_id !== $scope.infos.selectedItem.syllabusElement_id ) {         
+            // permet de déselectionner l'élément précédemment sélectionné
+            TreeService.unselectTree($scope.syllabus);
+            $item.selected = true;
+            $scope.infos.selectedItem = $item;
+
+            $timeout(function() {
+                // anything you want can go here and will safely be run on the next digest.
+                // resize frame (should be done also whenever we change content)
+                if (window.frameElement) {
+                    setMainFrameHeight(window.frameElement.id);
+                }
+            });
+        }
+
+
 
 	};
 
-    /**
-     * Parcours de l'arbre
-     * @param {Object} $rootTree racine de l'arbre
-     */
-	var parcoursTree = function($rootTree) {
-		if ($rootTree.syllabusElements) {
-			for (var i = 0; i < $rootTree.syllabusElements.length; i++){
-				$rootTree.syllabusElements[i].selected = false;
-				parcoursTreeChildren($rootTree.syllabusElements[i]);
-			}
-		}
-	};
-
-    /**
-     * Parcours de manière récursive les enfants de l'arbre
-     * @param {Object} $rootTree racine du sous-arbre
-     */
-	var parcoursTreeChildren = function($rootTree) {
-		if ($rootTree.children) {
-			for (var i = 0; i < $rootTree.children.length; i++){
-				$rootTree.children[i].selected = false;
-				parcoursTreeChildren($rootTree.children[i]);
-			}
-		}
-	};
+    
 
 }]);
 

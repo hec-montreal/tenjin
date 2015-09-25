@@ -4,11 +4,11 @@
         Item : {{item.syllabusElement_id}}
     </div>
     <div ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.displayPage">
-        <div data-text-element data-element="item"></div
+        <div data-text-element data-element="item"></div>
     </div>
 
-    <ol ui-tree-nodes="" data-ng-model="item.children" data-ng-class="{hidden: collapsed}" data-ng-if="item.children && item.children.length > 0 && item.children[0].displayPage">
-        <li data-ng-repeat="item in item.children" ui-tree-node data-ng-include="'nodes_renderer_content.html'">
+    <ol ui-tree-nodes="" data-ng-model="item.children" data-ng-class="{hidden: collapsed, 'liste-element': true}" data-ng-if="item.children && item.children.length > 0 && item.children[0].displayPage" >
+        <li data-ng-repeat="item in item.children" ui-tree-node data-ng-include="'nodes_renderer_content.html'" >
         </li>
     </ol>
  
@@ -16,16 +16,17 @@
 
 <div data-ng-controller='ContentPanelCtrl'>
 
-    <div class='titre'>Contenu du cours
-
-        <div ui-tree data-drag-enabled="false">
-
-          <ol ui-tree-nodes="" ng-model="selectedItem.children" >
-            <li ng-repeat="item in selectedItem.children" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          
-          </ol>
-
-        </div>
-        
+    <div class='titre'>
+        {{infos.selectedItem.pageTitle}}
     </div>
+
+    <div ui-tree data-drag-enabled="false">
+
+      <ol ui-tree-nodes="" ng-model="infos.selectedItem.children" class="liste-element">
+        <li ng-repeat="item in infos.selectedItem.children" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          
+      </ol>
+
+    </div>
+
     
 </div>

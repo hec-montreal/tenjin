@@ -1,7 +1,18 @@
 .content-panel {
+    border-left: 2px solid #ccc;
 
     .angular-ui-tree-empty {
         display: none;
     }
-    
+
+
+    .liste-element {
+        > li {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-top: 2px solid #ccc;
+            // border-radius:  5px;
+        }
+    }
+
 }

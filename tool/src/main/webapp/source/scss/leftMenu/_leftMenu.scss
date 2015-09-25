@@ -1,13 +1,10 @@
 .left-menu {
-    color: $bleu-hec;
+    // color: $bleu-hec;
 
     .glyphicon {
         top: 0;
     }
 
-    .angular-ui-tree-handle {
-        cursor: pointer;
-    }
 
     .item-selected {
         background-color: $item-selected;

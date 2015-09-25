@@ -7,7 +7,7 @@
           'glyphicon-chevron-right': collapsed,
           'glyphicon-chevron-down': !collapsed
         }"></span></a>
-    <span data-ng-click="select(item)" data-ng-class="{'item-selected': item.selected}" >{{item.syllabusElement_id}}</span>
+    <span data-ng-click="select(item)" data-ng-class="{'item-selected': item.selected}" >{{item.pageTitle}}</span>
   </div>
   <ol ui-tree-nodes="" data-ng-model="item.children" data-ng-class="{hidden: collapsed}" data-ng-if="item.children && item.children.length > 0 && item.children[0].displayPage">
     <li data-ng-repeat="item in item.children" ui-tree-node data-ng-include="'nodes_renderer.html'">
@@ -19,16 +19,15 @@
 
 <div data-ng-controller='LeftMenuCtrl'>
 
-    <div class='titre'>Menu du cours
+    <div class='titre'>Menu du cours</div>
 
-        <div ui-tree data-drag-enabled="false">
+    <div ui-tree data-drag-enabled="false">
 
-          <ol ui-tree-nodes="" ng-model="syllabus.syllabusElements" >
-            <li ng-repeat="item in syllabus.syllabusElements" ui-tree-node ng-include="'nodes_renderer.html'"></li>          
-          </ol>
+      <ol ui-tree-nodes="" ng-model="syllabus.syllabusElements" >
+        <li ng-repeat="item in syllabus.syllabusElements" ui-tree-node ng-include="'nodes_renderer.html'"></li>          
+      </ol>
 
-        </div>
-        
     </div>
+
     
 </div>
