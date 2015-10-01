@@ -1,0 +1,24 @@
+<div class="document">
+
+    <div class="titre-element">
+        <a href="">
+
+            picto-important {{ element.attributes.title }} 
+        </a>
+        <span class="resource-type">
+            [{{ element.attributes.docResourceType }}]
+        </span> 
+    </div>
+    <div class="titre-fichier">
+        ({{ element.attributes.docResourceName }})
+    </div>
+    <div class="comment">
+        <!-- dynamic content -->
+    </div>
+    <div class="infos">
+        <span data-ng-class="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
+        <span data-ng-class="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
+        <span data-ng-class="{ 'picto-visible' : ( element.attributes.docHidden === 'false'), 'picto-hidden' : ( element.attributes.docHidden === 'true') }" title="Visible"></span>     
+    </div>
+
+</div>

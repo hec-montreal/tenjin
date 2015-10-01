@@ -1,13 +1,21 @@
 'use strict';
 
 var gulp         = require('gulp'),
-    // connect    = require('gulp-connect'),
+    connect      = require('gulp-connect'),
     gutil        = require('gulp-util'),
     sass         = require('gulp-ruby-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     concat       = require('gulp-concat'),
     config       = require('./config.json'),
     sourcemaps   = require('gulp-sourcemaps');
+
+
+
+// Img task
+gulp.task('img', function() {
+  return gulp.src('./source/img/**/*')
+  .pipe(gulp.dest( './dest/img'));
+});
 
 // Lib task
 gulp.task('lib', function() {
@@ -72,6 +80,7 @@ gulp.task('copy', function () {
 gulp.task('watch', function(){
   //html
   gulp.watch(['*.html'], ['html']);
+  gulp.watch(['./source/img/**/*'], ['img']);
   gulp.watch(['./source/js/**/*.js'], ['js']);
   gulp.watch(['./source/scss/**/*.scss'], ['sass']);
   gulp.watch(['./source/index.jsp'], ['jsp']);
@@ -83,27 +92,26 @@ gulp.task('watch', function(){
 
 
 
-gulp.task('deploy',['lib', 'js', 'views', 'web-inf', 'sass', 'tools','jsp', 'copy'] , function(){
+gulp.task('deploy',['lib', 'img', 'js', 'views', 'web-inf', 'sass', 'tools','jsp', 'copy'] , function(){
 	gutil.log('Source déployée sur tomcat!');
 });
 
 
 
 
-gulp.task('deploy-maven',['lib', 'js', 'views', 'web-inf', 'sass', 'tools','jsp'] , function(){
+gulp.task('deploy-maven',['lib', 'img', 'js', 'views', 'web-inf', 'sass', 'tools','jsp'] , function(){
 	  gutil.log('Source déployée sur tomcat avec maven!');
 });
 
 
- 
-// gulp.task('connect', function() {
-//   connect.server({
-//     root: '.',
-//     port: 8888,
-//     livereload: true
-//   });
-// });
+gulp.task('connect', function() {
+  connect.server({
+    root: ["."],
+    port: 8888,
+    livereload: true
+  });
+});
  
 // Start the tasks
-gulp.task('default');
-//gulp.task('default', ['connect', 'watch']);
+// gulp.task('default');
+gulp.task('default', ['connect', 'watch']);

@@ -1,23 +1,35 @@
 ﻿<script type="text/ng-template" id="nodes_renderer_content.html">
-
+    <!-- Page -->
     <div ui-tree-handle class="tree-node tree-node-content" data-ng-if="item.displayPage">
-        <div class="titre-element">{{item.pageTitle}}</div>
+        <div class="titre-element">{{item.pageTitle}} 30%</div>
     </div>
+    <!-- Feuille -->
     <div ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.displayPage">
-        <div data-text-element="item"></div>
-        <!-- <div data-dyn-attr="data-text-element" data-element="item"></div> -->
+        <div data-ng-switch="item.type">
+            <!-- élément de type texte -->
+            <div data-ng-switch-when="text" data-text-element="item"></div>
+            <!-- <div data-dyn-attr="data-text-element" data-element="item"></div> -->
+            <!-- élément de type document -->
+            <div data-ng-switch-when="document" data-document-element="item"></div>
 
-        <!-- Affichage attributs -->
-        <div class="attributs" data-ng-switch="item.type">
-            <div data-ng-switch-when="text">
+            
+            <div ng-switch-default>
+                <!-- Affichage attributs -->
+                <div class="attributs" data-ng-switch="item.type">
+                    <div data-ng-switch-when="text">
+                    </div>
+                    <ul ng-switch-default>
+                       <li data-ng-repeat="(key, value) in item.attributes">
+                           {{key}} : {{value}}
+                       </li>
+                    </ul>
+                </div>
+
             </div>
-            <ul ng-switch-default>
-               <li data-ng-repeat="(key, value) in item.attributes">
-                   {{key}} : {{value}}
-               </li>
-            </ul>
+
         </div>
     </div>
+
 
     <ol ui-tree-nodes="" data-ng-model="item.children" data-ng-class="{hidden: collapsed, 'liste-element': true}" data-ng-if="item.children && item.children.length > 0 && item.children[0].displayPage" >
         <li data-ng-repeat="item in item.children" ui-tree-node data-ng-include="'nodes_renderer_content.html'" >
@@ -26,12 +38,12 @@
  
 </script>
 
-<div data-ng-controller='ContentPanelCtrl'>
+<section data-ng-controller='ContentPanelCtrl'>
 
     <div class='titre'>
         {{infos.selectedItem.pageTitle}}
     </div>
-
+    
     <div ui-tree data-drag-enabled="false">
 
       <ol ui-tree-nodes="" ng-model="infos.selectedItem.children" class="liste-element">
@@ -41,4 +53,4 @@
     </div>
 
     
-</div>
+</section>

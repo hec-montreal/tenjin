@@ -13,4 +13,25 @@
     .item-selected {
         background-color: $item-selected;
     }
+
+    .angular-ui-tree-nodes {
+        transition: all 0.25s ease-in;
+        display: block;
+        position: relative;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        height: auto;
+        opacity: 1;
+        max-height: 200px;
+    }
+
+    .hidden {
+        transition: all 0s ease-in;
+        display: block !important;
+        height: 0;
+        opacity: 0;
+        max-height: 0;
+        visibility: hidden !important;
+    }
 }

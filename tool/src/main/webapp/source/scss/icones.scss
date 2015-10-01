@@ -1,0 +1,37 @@
+.picto-visible {
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/visible30x16.png') no-repeat;
+    height: 16px;
+    width: 30px;
+
+}
+
+.picto-hidden {
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/hidden30x20.png') no-repeat;
+    height: 20px;
+    width: 30px;
+}
+
+
+.picto-important {
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/important.jpg') no-repeat;
+    height: 16px;
+    width: 5px;
+    margin-right: 5px;
+}
+
+.picto-hec {
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/hec.png') no-repeat;
+    height: 16px;
+    width: 16px;
+}
+
+.picto-public {
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/public.png') no-repeat;
+    height: 16px;
+    width: 19px;
+}
