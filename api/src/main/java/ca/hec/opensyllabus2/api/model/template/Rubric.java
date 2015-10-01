@@ -37,7 +37,7 @@ import lombok.*;
 @NoArgsConstructor
 public class Rubric {
 
-	@JsonManagedReference
+	
     @NonNull private Long id;
 
     @NonNull private String label;

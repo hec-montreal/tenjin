@@ -67,7 +67,7 @@
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementSection" />
        </set>
 
-       <many-to-one name="rubric" class="ca.hec.opensyllabus2.api.model.template.Rubric" >
+       <many-to-one name="rubric" class="ca.hec.opensyllabus2.api.model.template.Rubric" lazy="false" >
             <column name="RUBRIC_ID" not-null="false" />
         </many-to-one>
 

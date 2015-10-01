@@ -75,7 +75,7 @@ public class SyllabusElement {
     private TemplateElement templateElement;
 
 
-    @JsonBackReference
+    
     private Rubric rubric;
 
 
