@@ -234,7 +234,7 @@ INSERT INTO osyl2_syllabuselementattribute(ELEMENT_ID, VALUE, NAME) VALUES ('200
 INSERT INTO osyl2_syllabuselementattribute(ELEMENT_ID, VALUE, NAME) VALUES ('20032', 'monppt.pptx', 'docResourceName');
 INSERT INTO osyl2_syllabuselementattribute(ELEMENT_ID, VALUE, NAME) VALUES ('20032', 'Copyright', 'docResourceRights');
 INSERT INTO osyl2_syllabuselementattribute(ELEMENT_ID, VALUE, NAME) VALUES ('20032', 'Diapositives / Présentation', 'docResourceType');
-
+INSERT INTO osyl2_syllabuselementattribute(ELEMENT_ID, VALUE, NAME) VALUES ('20032', 'http://localhost:8080/access/content/group/b61dbb7a-3371-4927-b643-0a6ecc127970/Chrysanthemum.jpg', 'docResourceUrl')
 
 INSERT INTO osyl2_syllabuselementsection(ELEMENTSECTION_ID,SYLLABUSELEMENT_ID,SECTION_ID) VALUES ('4001', '2001', 'C03');
 INSERT INTO osyl2_syllabuselementsection(ELEMENTSECTION_ID,SYLLABUSELEMENT_ID,SECTION_ID) VALUES ('4002', '2001', 'D04');
