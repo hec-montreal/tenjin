@@ -1,0 +1,23 @@
+<div class="element hyperlink">
+
+    <div class="titre-element">
+        <a href="{{element.attributes.hyperlinkUrl}}" target="_blank">
+            {{ element.attributes.title }} 
+        </a>
+        <span class="link-type">
+            [{{ element.attributes.hyperlinkType }}] 
+        </span> 
+    </div>
+    <div class="url-lien">
+        ({{ element.attributes.hyperlinkUrl }}) 
+    </div>
+    <div class="comment">
+        <!-- dynamic content -->
+    </div>
+    <div class="infos">
+        <span data-ng-class="{ 'picto-important' : ( element.attributes.hyperlinkImportant === 'true') }" title="Important"></span>
+        <span data-ng-class="{ 'picto-hec' : ( element.attributes.hyperlinkDiffusion === 'hec' ), 'picto-public' : ( element.attributes.hyperlinkDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
+        <span data-ng-class="{ 'picto-hidden' : ( element.attributes.hyperlinkHidden === 'true') }" title="Visible"></span>     
+    </div>
+
+</div>
