@@ -6,12 +6,14 @@
     <!-- Feuille -->
     <div ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.displayPage">
         <div data-ng-switch="item.type">
+
             <!-- élément de type texte -->
             <div data-ng-switch-when="text" data-text-element="item"></div>
             <!-- <div data-dyn-attr="data-text-element" data-element="item"></div> -->
             <!-- élément de type document -->
             <div data-ng-switch-when="document" data-document-element="item"></div>
-
+            <!-- élément de type hyperlien -->
+            <div data-ng-switch-when="hyperlink" data-hyperlink-element="item"></div>
             
             <div ng-switch-default>
                 <!-- Affichage attributs -->

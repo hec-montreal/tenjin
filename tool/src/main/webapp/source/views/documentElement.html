@@ -1,4 +1,4 @@
-<div class="document">
+<div class="element document">
 
     <div class="titre-element">
         <a href="{{element.attributes.docResourceUrl}}" target="_blank">
@@ -17,7 +17,7 @@
     <div class="infos">
         <span data-ng-class="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
         <span data-ng-class="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
-        <span data-ng-class="{ 'picto-visible' : ( element.attributes.docHidden === 'false'), 'picto-hidden' : ( element.attributes.docHidden === 'true') }" title="Visible"></span>     
+        <span data-ng-class="{ 'picto-hidden' : ( element.attributes.docHidden === 'true') }" title="Visible"></span>     
     </div>
 
 </div>
