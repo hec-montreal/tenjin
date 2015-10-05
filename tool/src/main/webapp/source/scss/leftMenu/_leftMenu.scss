@@ -14,6 +14,11 @@
         background-color: $item-selected;
     }
 
+    .select-item {
+        display: inline-block;
+        padding: 0 5px;
+    }
+
     .angular-ui-tree-nodes {
         transition: all 0.25s ease-in;
         display: block;

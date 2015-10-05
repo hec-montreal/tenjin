@@ -8,9 +8,9 @@
 
 .picto-hidden {
     display: inline-block;
-    background: url('/opensyllabus2-tool/img/desktop/hidden30x20.png') no-repeat;
-    height: 20px;
-    width: 30px;
+    background: url('/opensyllabus2-tool/img/desktop/hidden24x16.png') no-repeat;
+    height: 16px;
+    width: 24px;
 }
 
 
@@ -34,4 +34,20 @@
     background: url('/opensyllabus2-tool/img/desktop/public.png') no-repeat;
     height: 16px;
     width: 19px;
+}
+
+.picto-edit {
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/edit.png') no-repeat;
+    height: 25px;
+    width: 25px; 
+    cursor: pointer;   
+}
+
+.picto-delete {
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/delete.png') no-repeat;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
 }
