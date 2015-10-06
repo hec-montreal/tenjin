@@ -31,6 +31,10 @@
             <column name="PUBLICELEMENT" />
         </property>
 
+         <property name="important" type="boolean">
+            <column name="IMPORTANT" />
+        </property>
+
         <property name="displayPage" type="boolean">
             <column name="DISPLAYPAGE" />
         </property>

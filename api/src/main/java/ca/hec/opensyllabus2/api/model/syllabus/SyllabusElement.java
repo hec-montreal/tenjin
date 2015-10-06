@@ -51,6 +51,8 @@ public class SyllabusElement {
 
     private Boolean publicElement;
 
+    private Boolean important;
+
     private Date studentAvailability;
 
     private Date lastModifiedDate;
