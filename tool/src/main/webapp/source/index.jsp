@@ -19,7 +19,7 @@
 	<!-- <%= request.getAttribute("sakai.html.head") %> -->
 	<!-- <%= request.getAttribute("sakai.html.head.css.skin") %> -->
 	<!-- a good example is bootstrap.jsp in roster2! -->
-
+<!--  -->
 </head>
 <body class="portletBody container-fluid" data-ng-controller="OpensyllabusCtrl" >
 	<div class="row">
@@ -49,6 +49,10 @@
 		<!-- Container de droite -->
 		<div data-ng-include="'/opensyllabus2-tool/views/contentPanel.html'"  class="col-md-9 col-sm-12 content-panel" id="content"></div>
 
+		<!-- Modales templates -->
+		<div data-ng-include="'/opensyllabus2-tool/views/confirmModalTemplate.html'"></div>
+
+
 	</div>
 
 	<!-- <script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script> -->
@@ -56,6 +60,8 @@
 	<script src="/opensyllabus2-tool/lib/angular/angular-resource.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-ui-tree/angular-ui-tree.js"></script>
+	<script src="/opensyllabus2-tool/lib/angular-ui/ui-bootstrap-custom-tpls-0.13.4.min.js"></script>
+	
 
 <!-- 	// <script src="/opensyllabus2-tool/js/controllers/opensyllabus/opensyllabus.js"></script>
 	// <script src="/opensyllabus2-tool/js/controllers/leftMenu/leftMenuCtrl.js"></script>

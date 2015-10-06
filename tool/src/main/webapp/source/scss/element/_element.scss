@@ -12,7 +12,13 @@
     img {
         max-height: 100px;
     }
+    
 
+    .video {
+        width: 300px;
+    }
+
+    // Boutons edition et suppression
     .buttons-elements {
         float: right;
         
@@ -24,5 +30,7 @@
 
         }
     }
+
+
 
 }

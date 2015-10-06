@@ -1,7 +1,6 @@
 
-opensyllabusApp.controller('ContentPanelCtrl', ['$scope', function ($scope){
+opensyllabusApp.controller('ContentPanelCtrl', ['$scope', function ($scope, $modal){
     'use strict';
-
 
 }]);
 
