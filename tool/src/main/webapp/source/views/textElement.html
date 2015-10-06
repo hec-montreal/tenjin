@@ -4,8 +4,6 @@
     <div data-buttons-element="element" class="buttons-elements"></div>
 
     <div class="titre-element">Elément "{{element.type}}" ({{element.syllabusElement_id}})</div>
-    <div class="content">
-        <!-- dynamic content -->
-    </div>
+    <div ng-bind-html="element.attributes.text" class="comment"></div>
 
 </div>

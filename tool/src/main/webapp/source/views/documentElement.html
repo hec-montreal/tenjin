@@ -13,9 +13,9 @@
     <div class="titre-fichier">
         ({{ element.attributes.docResourceName }})
     </div>
-    <div class="comment">
-        <!-- dynamic content -->
-    </div>
+
+    <div data-ng-bind-html="element.attributes.docComment" class="comment"></div>
+
     <div class="infos">
         <span data-ng-class="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
         <span data-ng-class="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 

@@ -8,13 +8,11 @@
         <!-- </a> -->
     </div>
     <div class="video">
-    {{element.attributes.videoUrl}}
         <iframe width="300" height="220" data-ng-src="{{videoUrl}}" frameborder="0" allowfullscreen></iframe>
-        <!-- <iframe width="420" height="315" src="https://www.youtube.com/embed/5KzSyGfFLz4" frameborder="0" allowfullscreen></iframe> -->
     </div>
-    <div class="comment">
-        <!-- dynamic content -->
-    </div>
+
+    <div data-ng-bind-html="element.attributes.videoComment" class="comment"></div>
+
     <div class="infos">
         <span data-ng-class="{ 'picto-important' : ( element.attributes.videoImportant === 'true') }" title="Important"></span>
         <span data-ng-class="{ 'picto-hec' : ( element.attributes.videoDiffusion === 'hec' ), 'picto-public' : ( element.attributes.videoDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 

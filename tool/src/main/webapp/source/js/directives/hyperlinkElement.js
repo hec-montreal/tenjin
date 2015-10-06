@@ -12,11 +12,6 @@ opensyllabusApp.directive('hyperlinkElement', function (){
 
         },
         link: function ($scope, $element) {
-            if ($scope.element.attributes.hyperlinkComment){
-                var elem = angular.element( $element[0].querySelector('.comment') );
-                // console.log("text element : " + $scope.element.attributes.text);
-                elem.html($scope.element.attributes.hyperlinkComment);
-            }
         }
 
     };

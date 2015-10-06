@@ -12,11 +12,6 @@ opensyllabusApp.directive('textElement', function (){
 
         },
         link: function ($scope, $element) {
-            if ($scope.element.attributes.text) {
-                var elem = angular.element( $element[0].querySelector('.content') );
-                // console.log("text element : " + $scope.element.attributes.text);
-                elem.html($scope.element.attributes.text);
-            }
         }
 
     };

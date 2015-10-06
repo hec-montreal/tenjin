@@ -13,9 +13,9 @@
     <div class="url-lien">
         ({{ element.attributes.hyperlinkUrl }}) 
     </div>
-    <div class="comment">
-        <!-- dynamic content -->
-    </div>
+
+    <div data-ng-bind-html="element.attributes.hyperlinkComment" class="comment"></div>
+
     <div class="infos">
         <span data-ng-class="{ 'picto-important' : ( element.attributes.hyperlinkImportant === 'true') }" title="Important"></span>
         <span data-ng-class="{ 'picto-hec' : ( element.attributes.hyperlinkDiffusion === 'hec' ), 'picto-public' : ( element.attributes.hyperlinkDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
