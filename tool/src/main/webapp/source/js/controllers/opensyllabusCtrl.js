@@ -6,6 +6,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
     $scope.infos = {};
     $scope.infos.currentItemId = -1;
     $scope.infos.selectedItem = null;
+    $scope.infos.working = true;
 
     // mockup
     if (config.mockUp) {
@@ -42,7 +43,10 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
        
     	}, function(error) {
     		console.log('erreur get syllabus');
-    	});
+
+    	}).finally(function() {
+            $scope.infos.working = false;
+        });
         
     } 
 

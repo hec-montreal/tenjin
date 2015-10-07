@@ -22,7 +22,12 @@
 <!--  -->
 </head>
 <body class="portletBody container-fluid" data-ng-controller="OpensyllabusCtrl" >
-	<div class="row">
+
+	<div class="loader-container" data-ng-show="infos.working">
+		<div class="loader"></div>
+	</div>
+
+	<div class="row row-title" ng-cloak>
 		<h1>{{syllabus.courseTitle}}</h1>
 	</div>
 	<div class="row">	
@@ -54,6 +59,8 @@
 
 
 	</div>
+
+
 
 	<!-- <script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script> -->
 	<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
