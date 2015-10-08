@@ -1,7 +1,10 @@
 <script type="text/ng-template" id="nodes_renderer_content.html">
     <!-- Page -->
     <div ui-tree-handle class="tree-node tree-node-content" data-ng-if="item.displayPage">
-        <div class="titre-element">{{item.pageTitle}} 30%</div>
+        <div class="titre-element">
+            {{item.pageTitle}}
+            <span data-ng-if="item.type == 'evaluation'"> {{item.attributes.weight}} %</span>
+        </div>
     </div>
     <!-- Feuille -->
     <div ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.displayPage">
@@ -49,6 +52,7 @@
 
     <div class='titre'>
         {{infos.selectedItem.pageTitle}}
+        <span data-ng-if="item.type == 'evaluation'"> {{item.attributes.weight}} %</span>
     </div>
     
     <div ui-tree data-drag-enabled="false">

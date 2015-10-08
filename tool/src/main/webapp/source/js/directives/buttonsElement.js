@@ -1,5 +1,5 @@
 
-opensyllabusApp.directive('buttonsElement', ['ModalService', function (ModalService){
+opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'ModalService', function ($anchorScroll, $location, ModalService){
     'use strict';
 
     return {
@@ -10,9 +10,14 @@ opensyllabusApp.directive('buttonsElement', ['ModalService', function (ModalServ
         templateUrl: '/opensyllabus2-tool/views/buttonsElement.html',
         controller: function ($scope) {
 
-            $scope.confirmDelete = function(element) {
+            $scope.confirmDelete = function($event, $element) {
+                // scroll to the top
+                // $location.hash('body');
+                // $anchorScroll();
+                // window.scrollTo(0,0);
+
                 // Création modale
-                var modal = ModalService.confirmDelete(element);
+                var modal = ModalService.confirmDelete($event, $element);
                 // Traitement du résultat
                 modal.result.then(function (selectedItem) {
                     console.debug('élément supprimé');

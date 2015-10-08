@@ -21,7 +21,7 @@
 	<!-- a good example is bootstrap.jsp in roster2! -->
 <!--  -->
 </head>
-<body class="portletBody container-fluid" data-ng-controller="OpensyllabusCtrl" >
+<body id="body" class="portletBody container-fluid" data-ng-controller="OpensyllabusCtrl" >
 
 	<div class="loader-container" data-ng-show="infos.working">
 		<div class="loader"></div>
@@ -68,7 +68,7 @@
 	<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-ui-tree/angular-ui-tree.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-ui/ui-bootstrap-custom-tpls-0.13.4.min.js"></script>
-	
+	<script src="/opensyllabus2-tool/lib/xeditable/xeditable.min.js"></script>
 
 <!-- 	// <script src="/opensyllabus2-tool/js/controllers/opensyllabus/opensyllabus.js"></script>
 	// <script src="/opensyllabus2-tool/js/controllers/leftMenu/leftMenuCtrl.js"></script>

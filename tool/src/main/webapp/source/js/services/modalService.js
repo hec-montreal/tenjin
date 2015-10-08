@@ -3,7 +3,11 @@ opensyllabusApp.service('ModalService', ['$modal', function ($modal){
     'use strict';
 
 
-    this.confirmDelete = function($element) {
+    this.confirmDelete = function($event, $element) {
+
+        // var offset = angular.element($event.target).prop('offsetLeft');
+        // var modal = angular.element(document.querySelector('.modal'));
+        // modal.css('top', offset);
 
         var modalInstance = $modal.open({
           animation: true,

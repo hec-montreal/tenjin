@@ -6,7 +6,6 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
     $scope.infos = {};
     $scope.infos.currentItemId = -1;
     $scope.infos.selectedItem = null;
-    $scope.infos.working = true;
 
     // mockup
     if (config.mockUp) {
@@ -20,7 +19,8 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
 
     }else {
         // MODE CONNECTE
-        // TODO : afficher loader pdt chargement
+        // show loader
+        $scope.infos.working = true;
     	var results = SyllabusService.getSyllabus('30300');
     	results.$promise.then( function(data) {
     		console.log(data);
@@ -44,7 +44,8 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
     	}, function(error) {
     		console.log('erreur get syllabus');
 
-    	}).finally(function() {
+    	}).finally(function() { 
+            // hide loader
             $scope.infos.working = false;
         });
         
