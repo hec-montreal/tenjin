@@ -1,4 +1,4 @@
-var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize",  "ui.tree", "ui.bootstrap" , "xeditable"]);
+var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize",  "ui.tree", "ui.bootstrap" , "xeditable", "pascalprecht.translate"]);
 
 
 opensyllabusApp.config(['$compileProvider', function ($compileProvider) {
@@ -9,11 +9,12 @@ opensyllabusApp.config(['$compileProvider', function ($compileProvider) {
 }]);
 
 
-opensyllabusApp.run(function(editableOptions) {
+
+opensyllabusApp.run( ['editableOptions', function(editableOptions) { 
     'use strict';
     
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-});
+}]);
 
 // resize frame (should be done also whenever we change content)
 if (window.frameElement) {
