@@ -7,7 +7,7 @@ opensyllabusApp.directive('hyperlinkElement', function (){
             element: '=hyperlinkElement'
         },
         restrict: 'A',
-        templateUrl: '/opensyllabus2-tool/views/hyperlinkElement.html',
+        templateUrl: 'hyperlinkElement.html',
         controller: function ($scope) {
 
         },

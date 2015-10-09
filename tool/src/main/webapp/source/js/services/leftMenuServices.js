@@ -5,4 +5,4 @@ function ($resource){
 	return $resource ('opensyllabus2-tool/:syllabus_structure.json', {}, {
 		query: {method:'GET', params:{}, isArray:true}
 	});
-}                                      ]);
+}]);

@@ -7,7 +7,7 @@ opensyllabusApp.directive('documentElement', function (){
             element: '=documentElement'
         },
         restrict: 'A',
-        templateUrl: '/opensyllabus2-tool/views/documentElement.html',
+        templateUrl: 'documentElement.html',
         controller: function ($scope) {
 
         },

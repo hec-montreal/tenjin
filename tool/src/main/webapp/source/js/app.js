@@ -1,4 +1,4 @@
-var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize",  "ui.tree", "ui.bootstrap" , "xeditable", "pascalprecht.translate"]);
+var opensyllabusApp = angular.module('opensyllabus', [ "templateModule", "ngResource" , "ngSanitize",  "ui.tree", "ui.bootstrap" , "xeditable", "pascalprecht.translate"]);
 
 
 opensyllabusApp.config(['$compileProvider', function ($compileProvider) {

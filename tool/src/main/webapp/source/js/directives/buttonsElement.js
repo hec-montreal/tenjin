@@ -7,7 +7,7 @@ opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'Moda
             element: '=buttonsElement'
         },
         restrict: 'A',
-        templateUrl: '/opensyllabus2-tool/views/buttonsElement.html',
+        templateUrl: 'buttonsElement.html',
         controller: function ($scope) {
 
             $scope.confirmDelete = function($event, $element) {

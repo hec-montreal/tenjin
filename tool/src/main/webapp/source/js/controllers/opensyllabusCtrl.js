@@ -20,6 +20,8 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
     }else {
         // MODE CONNECTE
         // show loader
+        console.log('start');
+        console.time('xhr');
         $scope.infos.working = true;
     	var results = SyllabusService.getSyllabus('30300');
     	results.$promise.then( function(data) {
@@ -46,6 +48,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
 
     	}).finally(function() { 
             // hide loader
+            console.timeEnd('xhr');
             $scope.infos.working = false;
         });
         

@@ -48,9 +48,20 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService'
             });
         }
 
-
-
 	};
+
+    $scope.treeOptions = {
+
+        accept: function(sourceNodeScope, destNodesScope, destIndex) {
+
+            // On peut déplacer un node dans le groupe parent
+            if ( destNodesScope.isParent(sourceNodeScope) === true) {
+                return true;
+            }
+
+            return false;
+        },
+    };
 
     
 

@@ -2,6 +2,8 @@
 opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
     'use strict';
 
+    $translateProvider.useSanitizeValueStrategy('sanitize');
+
     $translateProvider.translations('en', {
         MENU_LABEL: 'Course menu',
         MODALE_DELETE_CONFIRM_TITLE: 'Delete element',

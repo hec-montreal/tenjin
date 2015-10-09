@@ -14,7 +14,9 @@ body {
 
     .angular-ui-tree-handle {
         font-weight: normal;
-        cursor: pointer;
+        cursor: move;   
+        min-height: auto;
+        line-height: normal; 
     }
 
     .row-title {

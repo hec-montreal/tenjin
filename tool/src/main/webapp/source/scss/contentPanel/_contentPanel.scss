@@ -1,12 +1,12 @@
 .content-panel {
     border-left: 2px solid #ccc;
 
-    .angular-ui-tree-empty {
-        display: none;
+    .content-panel-section {
+        padding: 0 20px;     
     }
 
-    .angular-ui-tree-handle {
-        cursor: default;
+    .angular-ui-tree-empty {
+        display: none;
     }
 
     .liste-element {
@@ -16,28 +16,6 @@
             border-top: 2px solid #ccc;
             // border-radius:  5px;
         }
-    }
-
-    .contact-firstname,
-    .contact-lastname {
-        color: #444;
-        font-size: 14px;
-        font-weight: bold;
-        padding: 1px 0 0;
-    }
-
-    .contact-lastname {
-        margin-left: 5px;
-        text-transform: uppercase;
-    }
-
-    .contact-title,
-    .contact-email,
-    .contact-tel,
-    .contact-officeroom {
-        font-size: 11px;
-        margin-left: 5px;
-        padding: 0 0 2px;
     }
 
 

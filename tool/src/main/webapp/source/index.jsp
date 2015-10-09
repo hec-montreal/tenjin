@@ -49,13 +49,13 @@
 	<div class="row row-content">
 
 		<!-- Menu de gauche -->
-		<div data-ng-include="'/opensyllabus2-tool/views/leftMenu.html'"   class="col-md-3 hide-tablet pull-left left-menu" id="menu" ></div>
+		<div data-ng-include="'leftMenu.html'"   class="col-md-3 hide-tablet pull-left left-menu" id="menu" ></div>
 		
 		<!-- Container de droite -->
-		<div data-ng-include="'/opensyllabus2-tool/views/contentPanel.html'"  class="col-md-9 col-sm-12 content-panel" id="content"></div>
+		<div data-ng-include="'contentPanel.html'" class="col-md-9 col-sm-12 content-panel" id="content"></div>
 
 		<!-- Modales templates -->
-		<div data-ng-include="'/opensyllabus2-tool/views/confirmModalTemplate.html'"></div>
+		<div data-ng-include="'confirmModalTemplate.html'"></div>
 
 
 	</div>
@@ -63,10 +63,10 @@
 
 
 	<!-- <script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script> -->
-	<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
-	<script src="/opensyllabus2-tool/lib/angular/angular-resource.js"></script>
-	<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.js"></script>
-	<script src="/opensyllabus2-tool/lib/angular-ui-tree/angular-ui-tree.js"></script>
+	<script src="/opensyllabus2-tool/lib/angular/angular.min.js"></script>
+	<script src="/opensyllabus2-tool/lib/angular/angular-resource.min.js"></script>
+	<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.min.js"></script>
+	<script src="/opensyllabus2-tool/lib/angular-ui-tree/angular-ui-tree.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-ui/ui-bootstrap-custom-tpls-0.13.4.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/xeditable/xeditable.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-translate/angular-translate.min.js"></script>

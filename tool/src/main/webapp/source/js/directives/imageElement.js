@@ -7,7 +7,7 @@ opensyllabusApp.directive('imageElement', function (){
             element: '=imageElement'
         },
         restrict: 'A',
-        templateUrl: '/opensyllabus2-tool/views/imageElement.html',
+        templateUrl: 'imageElement.html',
         controller: function ($scope) {
 
         },

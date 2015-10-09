@@ -7,7 +7,8 @@
         </div>
     </div>
     <!-- Feuille -->
-    <div ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.displayPage">
+    <div class="tree-node tree-node-content" data-ng-if="!item.displayPage">
+
         <div data-ng-switch="item.type">
 
             <!-- élément de type texte -->
@@ -38,6 +39,10 @@
             </div>
 
         </div>
+
+
+        
+
     </div>
 
 
@@ -48,14 +53,14 @@
  
 </script>
 
-<section data-ng-controller='ContentPanelCtrl'>
+<section class="content-panel-section" data-ng-controller='ContentPanelCtrl'>
 
     <div class='titre'>
         {{infos.selectedItem.pageTitle}}
         <span data-ng-if="infos.selectedItem.type == 'evaluation'"> ({{infos.selectedItem.attributes.weight}}%)</span>
     </div>
     
-    <div ui-tree data-drag-enabled="false">
+    <div ui-tree data-drag-enabled="true">
 
       <ol ui-tree-nodes="" ng-model="infos.selectedItem.children" class="liste-element">
         <li ng-repeat="item in infos.selectedItem.children" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          

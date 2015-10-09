@@ -6,7 +6,7 @@ opensyllabusApp.directive('contactElement', function (){
             element: '=contactElement'
         },
         restrict: 'A',
-        templateUrl: '/opensyllabus2-tool/views/contactElement.html',
+        templateUrl: 'contactElement.html',
         controller: function ($scope) {
          
         }        

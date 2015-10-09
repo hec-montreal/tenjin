@@ -7,7 +7,8 @@ var gulp         = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     concat       = require('gulp-concat'),
     config       = require('./config.json'),
-    sourcemaps   = require('gulp-sourcemaps');
+    sourcemaps   = require('gulp-sourcemaps'),
+    templateCache = require('gulp-angular-templatecache');
 
 
 
@@ -27,6 +28,14 @@ gulp.task('lib', function() {
 gulp.task('jsp', function() {
   return gulp.src('./source/index.jsp')
   .pipe(gulp.dest( './dest'));
+});
+
+// Template cache task
+gulp.task('viewscache', function () {
+  return gulp.src('./source/views/**/*.html')
+    // .pipe(templateCache())
+    .pipe(templateCache({ module: 'templateModule', standalone: true }))
+    .pipe(gulp.dest('./source/js'));
 });
 
 // Views task
@@ -81,10 +90,10 @@ gulp.task('watch', function(){
   //html
   gulp.watch(['*.html'], ['html']);
   gulp.watch(['./source/img/**/*'], ['img']);
-  gulp.watch(['./source/js/**/*.js'], ['js']);
+  gulp.watch(['./source/js/**/*.js'], ['viewscache','js']);
   gulp.watch(['./source/scss/**/*.scss'], ['sass']);
   gulp.watch(['./source/index.jsp'], ['jsp']);
-  gulp.watch(['./source/views/**/*.html'], ['views']);
+  gulp.watch(['./source/views/**/*.html'], ['viewscache', 'js']);
   gulp.watch(['./source/tools/*'], ['tools']);
   gulp.watch(['./source/WEB-INF/*'], ['web-inf']);
   gulp.watch(['./dest/**/*'], ['copy']);
