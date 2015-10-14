@@ -59,7 +59,9 @@ public class SyllabusElement {
 
     private Boolean displayPage;
 
-	private String pageTitle;
+	private String title;
+
+	private String description;
 
     private String lastModifiedBy;
 
@@ -76,10 +78,7 @@ public class SyllabusElement {
     @JsonBackReference
     private TemplateElement templateElement;
 
-
-    
     private Rubric rubric;
-
 
     private Set <SyllabusElement> children;
 

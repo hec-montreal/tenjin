@@ -26,7 +26,6 @@
 
        <property name="studentAvailability" column="STUDENTAVAILABILITY" type="java.util.Date" />
 
-
         <property name="publicElement" type="boolean">
             <column name="PUBLICELEMENT" />
         </property>
@@ -39,8 +38,12 @@
             <column name="DISPLAYPAGE" />
         </property>
 
-        <property name="pageTitle" type="string">
-            <column name="PAGE_TITLE" />
+        <property name="title" type="string">
+            <column name="TITLE" />
+        </property>
+
+        <property name="description" type="text">
+            <column name="DESCRIPTION" />
         </property>
 
         <property name="lastModifiedBy" type="string">
@@ -59,7 +62,7 @@
 
         <set name="children" table="OSYL2_SYLLABUSELEMENT" lazy="false" order-by="displayOrder">
             <key>
-                <column name="parent"  />
+                <column name="parent"/>
             </key>
             <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElement" />
         </set>
