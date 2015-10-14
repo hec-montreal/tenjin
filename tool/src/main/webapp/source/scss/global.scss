@@ -9,14 +9,7 @@ body {
     .titre {
         margin: 10px 0;
         font: bold 18px Arial, Verdana, sans-serif;
-        margin-bottom: 20px;
-    }
-
-    .angular-ui-tree-handle {
-        font-weight: normal;
-        cursor: move;   
-        min-height: auto;
-        line-height: normal; 
+        margin-bottom: 20px; 
     }
 
     .row-title {
@@ -27,7 +20,23 @@ body {
         margin-top: 20px;
     }
 
-    // surcharge bootstrap
+    // ANGULAR UI TREE
+    .angular-ui-tree-placeholder  {
+        border: 1px dashed $bleu-hec;
+    }
+
+    .angular-ui-tree-node {
+        min-height: auto;
+    }
+
+    .angular-ui-tree-handle {
+        font-weight: normal;
+        cursor: move;   
+        min-height: auto;
+        line-height: normal; 
+    }
+
+    // BOOTSTRAP
     .container-fluid {
         padding-left: 15px;
         padding-right: 15px;
@@ -43,7 +52,7 @@ body {
         height: 5000px;
     }
 
-    // surcharge xeditable
+    // XEDITABLE
     .editable-click {
         border-bottom: none;
 

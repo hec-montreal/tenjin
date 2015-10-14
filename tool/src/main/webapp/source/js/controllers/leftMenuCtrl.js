@@ -5,31 +5,6 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService'
     $scope.toggleTree = function (scope) {
 		scope.toggle();
 	};
-	$scope.collapseAll = function () {
-		$scope.$broadcast('collapseAll');
-	};
-
-	$scope.expandAll = function () {
-		$scope.$broadcast('expandAll');
-	};
-
-	$scope.remove = function (scope) {
-		scope.remove();
-	};
-
- 	$scope.moveLastToTheBeginning = function () {
-        var a = $scope.data.pop();
-        $scope.data.splice(0, 0, a);
-    };
-
-	$scope.newSubItem = function (scope) {
-		var nodeData = scope.$modelValue;
-		nodeData.nodes.push({
-			id: nodeData.id * 10 + nodeData.nodes.length,
-			title: nodeData.title + '.' + (nodeData.nodes.length + 1),
-			nodes: []
-		});
-	};
 
 	$scope.select = function($item){
 
@@ -50,13 +25,31 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService'
 
 	};
 
+    $scope.getAncestor = function($node){
+        if ($node.$parentNodeScope) {
+            return $scope.getAncestor($node.$parentNodeScope);
+        } else {
+            return $node;
+        }
+    };
+
     $scope.treeOptions = {
 
         accept: function(sourceNodeScope, destNodesScope, destIndex) {
+ 
+            // Le noeud destination doit être un noeud de type composite
+            if (destNodesScope.item && destNodesScope.item.type === 'composite') {
 
-            // On peut déplacer un node dans le groupe parent
-            if ( destNodesScope.isParent(sourceNodeScope) === true) {
-                return true;
+                var ancetreSrc = $scope.getAncestor(sourceNodeScope);
+                // console.log("ancetre src => " + ancetreSrc.item.syllabusElement_id);
+                var ancetreDest = $scope.getAncestor(destNodesScope);
+                // console.log("ancetre dest => " +ancetreDest.item.syllabusElement_id);
+
+                // Le noeud source et destination doivent avoir un ancêtre commun
+                if (ancetreSrc && ancetreSrc.item && ancetreDest && ancetreDest.item && ancetreSrc.item.syllabusElement_id === ancetreDest.item.syllabusElement_id) {
+                    return true;
+                } 
+
             }
 
             return false;
