@@ -1,6 +1,8 @@
 package ca.hec.opensyllabus2.tool.controller;
 
 
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 
 import lombok.Getter;
@@ -65,17 +67,24 @@ public class Syllabus2Controller {
 		return syllabus;
 		
 	}
+	
+	@RequestMapping(value = "/map/{courseId}", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> getSyllabusMap (
+			@PathVariable String courseId,
+			@RequestParam(value = "sectionId", required = false) String sectionId){
+		return osyl2Service.getSyllabusMap("52-701-02A.A2013.P3", sectionId);
+	}
 
-private int countParams (String parameters){
-	int nb =  parameters.split(",").length;
+	private int countParams (String parameters){
+		int nb =  parameters.split(",").length;
+		
+			return nb;
+		
+	}
 	
-		return nb;
-	
-}
-
-private String [] getParams (String parameters){
-	
-	return parameters.split(",");
-}
+	private String [] getParams (String parameters){
+		
+		return parameters.split(",");
+	}
 
 }

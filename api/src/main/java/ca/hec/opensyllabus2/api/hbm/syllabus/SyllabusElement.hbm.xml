@@ -60,7 +60,7 @@
             <element column="value" type="text"/>
         </map>
 
-        <set name="children" table="OSYL2_SYLLABUSELEMENT" lazy="false" order-by="displayOrder">
+        <set name="elements" table="OSYL2_SYLLABUSELEMENT" lazy="false" order-by="displayOrder">
             <key>
                 <column name="parent"/>
             </key>

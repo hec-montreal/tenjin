@@ -1,6 +1,7 @@
 package ca.hec.opensyllabus2.api;
 
 import java.util.List;
+import java.util.Map;
 
 import org.sakaiproject.exception.IdUnusedException;
 
@@ -91,4 +92,13 @@ public interface Syllabus2Service {
 	 * @return
 	 */
 	public Template getTemplate(Long templateId) throws IdUnusedException;
+	
+	/**
+	 * Retrieve a map representing a the values used in the syllabus to be viewed.
+	 * 
+	 * @param courseId
+	 * @param sectionId
+	 * @return
+	 */
+	public Map<String,Object> getSyllabusMap(String courseId, String sectionId);
 }

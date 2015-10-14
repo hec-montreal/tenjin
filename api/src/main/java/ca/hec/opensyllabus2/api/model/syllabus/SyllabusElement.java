@@ -37,7 +37,7 @@ import ca.hec.opensyllabus2.api.model.template.TemplateElement;
  */
 
 @Data
-public class SyllabusElement {
+public class SyllabusElement{
 
 
 	private Long syllabusElement_id;
@@ -80,7 +80,7 @@ public class SyllabusElement {
 
     private Rubric rubric;
 
-    private Set <SyllabusElement> children;
+    private Set <SyllabusElement> elements;
 
     public SyllabusElement (Long parent, Rubric rubric, TemplateElement templateElement, Syllabus syllabus_id) {
     	 this.parent = parent;
