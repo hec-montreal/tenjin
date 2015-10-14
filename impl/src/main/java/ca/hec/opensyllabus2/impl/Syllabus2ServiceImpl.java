@@ -212,7 +212,6 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			int position = 0;
 			Map<String, Object> syllElmInList = null;
 			
-			//System.out.println ("dans rubric " + syllElm.getSyllabusElement_id() + " elms " + syllElmList);
 			ArrayList<Map<String, Object>> elements = new ArrayList<Map<String, Object>>();
 			if (!syllElmList.isEmpty()){
 				//Chercher si la rubrique est dans la liste
@@ -254,7 +253,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			orderedSyllElm.put("public", syllElm.getPublicElement());
 			orderedSyllElm.put("important", syllElm.getImportant());
 			orderedSyllElm.put("displayPage", syllElm.getDisplayPage());
-			orderedSyllElm.put("title", syllElm.getPageTitle());
+			orderedSyllElm.put("title", syllElm.getTitle());
 			orderedSyllElm.put("displayOrder", syllElm.getDisplayOrder());
 			orderedSyllElm.put("attributes", syllElm.getAttributes());
 			orderedSyllElm.put("sections", syllElm.getElementSections());
@@ -272,7 +271,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 					}
 				}
 			}
-			System.out.println("element " + syllElm.getSyllabusElement_id() + "    " + orderedSyllElm);
+			//System.out.println("element " + syllElm.getSyllabusElement_id() + "    " + orderedSyllElm);
 			return orderedSyllElm;
 		}
 
