@@ -24,7 +24,9 @@
 
        <property name="lastModifiedDate" column="LASTMODIFIEDDATE" type="java.util.Date" />
 
-       <property name="studentAvailability" column="STUDENTAVAILABILITY" type="java.util.Date" />
+       <property name="availabilityStartDate" column="AVAILABILITY_START_DATE" type="java.util.Date" not-null="true" />
+
+       <property name="availabilityEndDate" column="AVAILABILITY_END_DATE" type="java.util.Date" />
 
         <property name="publicElement" type="boolean">
             <column name="PUBLICELEMENT" />

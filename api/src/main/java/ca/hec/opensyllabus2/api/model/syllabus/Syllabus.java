@@ -16,40 +16,33 @@ import lombok.Data;
 */
 
 @Data
-public class Syllabus {	
-	
+public class Syllabus {
 
+	private Long syllabus_id;
 
-    private Long syllabus_id;
-    
     private String site_id;
-    
+
     private String courseTitle;
-   
+
     @JsonBackReference
     private Template template;
-    
+
     private String locale;
-    
-    
+
+
     private String createdBy;
-    
+
     private Date creationDate;
-    
+
     private Set<SyllabusElement> syllabusElements;
-    
+
     public Syllabus (String course_id, String courseTitle, Template template){
     	this.site_id = course_id;
     	this.courseTitle = courseTitle;
     	this.template = template;
     }
-    
+
     public Syllabus (){
-    	
+
     }
- 
-
-    
-  
-
-}
+ }

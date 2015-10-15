@@ -39,9 +39,7 @@ import ca.hec.opensyllabus2.api.model.template.TemplateElement;
 @Data
 public class SyllabusElement{
 
-
 	private Long syllabusElement_id;
-
 
 	private Long parent;
 
@@ -53,7 +51,9 @@ public class SyllabusElement{
 
     private Boolean important;
 
-    private Date studentAvailability;
+    private Date availabilityStartDate;
+
+    private Date availabilityEndDate;
 
     private Date lastModifiedDate;
 
