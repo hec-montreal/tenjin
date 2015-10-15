@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ca.hec.opensyllabus2.api.model.template.Rubric;
-import ca.hec.opensyllabus2.api.model.template.TemplateElement;
+import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
 
 /**
  *
@@ -76,16 +76,16 @@ public class SyllabusElement{
     private Syllabus syllabus;
 
     @JsonBackReference
-    private TemplateElement templateElement;
+    private TemplateStructure templateStructure;
 
     private Rubric rubric;
 
     private Set <SyllabusElement> elements;
 
-    public SyllabusElement (Long parent, Rubric rubric, TemplateElement templateElement, Syllabus syllabus_id) {
+    public SyllabusElement (Long parent, Rubric rubric, TemplateStructure templateStructure, Syllabus syllabus_id) {
     	 this.parent = parent;
     	 this.rubric = rubric;
-    	 this.templateElement = templateElement;
+    	 this.templateStructure = templateStructure;
     	 this.syllabus = syllabus_id;
 
     }

@@ -80,8 +80,8 @@
             <column name="RUBRIC_ID" not-null="false" />
         </many-to-one>
 
-        <many-to-one name="templateElement" class="ca.hec.opensyllabus2.api.model.template.TemplateElement" >
-            <column name="TEMPLATEELEMENT_ID" not-null="true" />
+        <many-to-one name="templateStructure" class="ca.hec.opensyllabus2.api.model.template.TemplateStructure" >
+            <column name="TEMPLATESTRUCTURE_ID" not-null="true" />
         </many-to-one>
 
        <many-to-one name="syllabus" class="ca.hec.opensyllabus2.api.model.syllabus.Syllabus" >
