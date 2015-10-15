@@ -50,5 +50,8 @@ public class SyllabusElementSection {
     public SyllabusElementSection (){
      }
 
+    public String toString (){
+    	return section_id;
+    }
 }
 
