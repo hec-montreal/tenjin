@@ -20,6 +20,8 @@
  ******************************************************************************/
 package ca.hec.opensyllabus2.api.model.template;
 
+import java.util.Set;
+
 import lombok.*;
 
 /**
@@ -30,12 +32,18 @@ import lombok.*;
  */
 @Data
 @NoArgsConstructor
-public class TemplateElement {
+public class TemplateStructure {
 
     private Long id;
 
-    private TemplateElementType type;
+    private Boolean mandatory;
 
-    private String defaultLabel;
+    private Integer displayOrder;
+
+    private TemplateElement templateElement;
+
+    private Set<Rubric> rubrics;
+
+    private Set<TemplateStructure> childElements;
 }
 

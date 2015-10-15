@@ -18,7 +18,7 @@ import lombok.*;
 @NoArgsConstructor
 public class Template {
 
-	
+
     @NonNull private Long id;
 
     @NonNull private String title;
@@ -27,7 +27,7 @@ public class Template {
 
     @NonNull private Boolean active;
 
-    private Set<TemplateElement> elements;
+    private Set<TemplateStructure> elements;
 
     /*
     private String createdBy;

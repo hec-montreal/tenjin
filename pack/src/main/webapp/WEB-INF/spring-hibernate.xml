@@ -18,6 +18,7 @@
 				<value>ca/hec/opensyllabus2/api/hbm/template/Rubric.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/Template.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/TemplateElement.hbm.xml</value>
+				<value>ca/hec/opensyllabus2/api/hbm/template/TemplateStructure.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/TemplateElementType.hbm.xml</value>
 			</list>
 		</property>
