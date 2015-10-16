@@ -45,7 +45,7 @@ gulp.task('views', function() {
 });
  
 //Js task
-gulp.task('js', function() {
+gulp.task('js', ['viewscache'], function() {
     return gulp.src(['./source/js/**/*.js'])
     .pipe(concat('opensyllabus.js'))
     .pipe(gulp.dest('./dest/js'));
@@ -90,10 +90,10 @@ gulp.task('watch', function(){
   //html
   gulp.watch(['*.html'], ['html']);
   gulp.watch(['./source/img/**/*'], ['img']);
-  gulp.watch(['./source/js/**/*.js'], ['viewscache','js']);
+  gulp.watch(['./source/js/**/*.js'], ['js']);
   gulp.watch(['./source/scss/**/*.scss'], ['sass']);
   gulp.watch(['./source/index.jsp'], ['jsp']);
-  gulp.watch(['./source/views/**/*.html'], ['viewscache', 'js']); // on met les views dans un fichier js puis on lance js pour concatener le tout
+  gulp.watch(['./source/views/**/*.html'], ['js']); // on met les views dans un fichier js puis on lance js pour concatener le tout
   gulp.watch(['./source/tools/*'], ['tools']);
   gulp.watch(['./source/WEB-INF/*'], ['web-inf']);
   gulp.watch(['./dest/**/*'], ['copy']);
@@ -101,14 +101,14 @@ gulp.task('watch', function(){
 
 
 
-gulp.task('deploy',['lib', 'img', 'viewscache', 'js', 'web-inf', 'sass', 'tools','jsp', 'copy'] , function(){
+gulp.task('deploy',['lib', 'img', 'js', 'web-inf', 'sass', 'tools','jsp', 'copy'] , function(){
 	gutil.log('Source déployée sur tomcat!');
 });
 
 
 
 
-gulp.task('deploy-maven',['lib', 'img', 'viewscache', 'js', 'web-inf', 'sass', 'tools','jsp'] , function(){
+gulp.task('deploy-maven',['lib', 'img', 'js', 'web-inf', 'sass', 'tools','jsp'] , function(){
 	  gutil.log('Source déployée sur tomcat avec maven!');
 });
 
