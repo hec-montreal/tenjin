@@ -19,7 +19,7 @@
             <column name="DISPLAY_ORDER" />
         </property>
 
-        <many-to-one name="templateElement" column="TEMPLATE_ELEMENT_ID" lazy="false"
+        <many-to-one name="templateElement" column="TEMPLATEELEMENT_ID" lazy="false"
             class="ca.hec.opensyllabus2.api.model.template.TemplateElement"/>
 
         <set name="childElements" lazy="false">
