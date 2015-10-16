@@ -34,7 +34,7 @@ public class Syllabus {
 
     private Date creationDate;
 
-    private Set<SyllabusElement> syllabusElements;
+    private Set<SyllabusElement> elements;
 
     public Syllabus (String course_id, String courseTitle, Template template){
     	this.site_id = course_id;
