@@ -171,7 +171,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		Map <String, Object> mapped = new HashMap<String, Object>();
 		Syllabus syllabus = getSyllabus(courseId, sectionId);
 		
-		int size = syllabus.getSyllabusElements().size();
+		int size = syllabus.getElements().size();
 		int position = 0;
 		ArrayList<Map<String, Object>> sortedElements = new ArrayList<Map<String, Object>>(
 				size);
@@ -179,7 +179,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		// add the syllabus meta properties to the syllabus map
 		mapped.putAll(getSyllabusMetaProperties(syllabus));
 
-		for (SyllabusElement syllElm : syllabus.getSyllabusElements()) {
+		for (SyllabusElement syllElm : syllabus.getElements()) {
 			position = syllElm.getDisplayOrder().intValue() - 1;
 			sortedElements.add(position,
 					getSyllabusElementMetaProperties(syllElm,new ArrayList<Map<String, Object>>()));
