@@ -22,7 +22,7 @@
         <many-to-one name="templateElement" column="TEMPLATEELEMENT_ID" lazy="false"
             class="ca.hec.opensyllabus2.api.model.template.TemplateElement"/>
 
-        <set name="childElements" lazy="false">
+        <set name="elements" lazy="false">
             <key column="PARENT_ID"/>
             <one-to-many class="ca.hec.opensyllabus2.api.model.template.TemplateStructure"/>
         </set>

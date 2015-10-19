@@ -44,6 +44,6 @@ public class TemplateStructure {
 
     private Set<Rubric> rubrics;
 
-    private Set<TemplateStructure> childElements;
+    private Set<TemplateStructure> elements;
 }
 
