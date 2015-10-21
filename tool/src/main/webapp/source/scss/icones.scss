@@ -61,14 +61,23 @@
 //     vertical-align: bottom;
 // }
 
+// .picto-move {
+//     display: inline-block; 
+//     height: 18px;
+//     width: 18px;
+//     cursor: move;
+//     vertical-align: bottom;
+//     border: 1px solid $bleu-hec;
+//     border-radius: 9px;
+// }
+
 .picto-move {
-    display: inline-block; 
-    height: 18px;
-    width: 18px;
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/drag.png') no-repeat;
+    height: 16px;
+    width: 15px;
     cursor: move;
     vertical-align: bottom;
-    border: 1px solid $bleu-hec;
-    border-radius: 9px;
 }
 
 .picto-move-content {

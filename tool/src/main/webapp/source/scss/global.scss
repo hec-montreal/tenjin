@@ -36,6 +36,16 @@ body {
         line-height: normal; 
     }
 
+    .btn-success {
+        background-color: $bleu-hec;
+        border-color: $bleu-hec;
+
+        &:hover {
+            background-color: $bleu-hec;
+            border-color: $bleu-hec;    
+        }
+    }
+
     // BOOTSTRAP
     .container-fluid {
         padding-left: 15px;

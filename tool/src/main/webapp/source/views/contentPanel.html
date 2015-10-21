@@ -1,11 +1,13 @@
 <script type="text/ng-template" id="nodes_renderer_content.html">
     <!-- Page -->
-    <div ui-tree-handle class="tree-node tree-node-content" data-ng-class="{'item-panel-composite': item.type ==='composite'}" data-ng-if="item.displayPage">
-        <div class="titre-element">
-            {{item.pageTitle}}
+    <!-- <div ui-tree-handle class="tree-node tree-node-content" data-ng-class="{'item-panel-composite': item.type ==='composite'}" data-ng-if="item.displayPage"> -->
+        <div class="titre-element" data-ng-class="{'item-panel-composite': item.type ==='composite'}" data-ng-if="item.displayPage">
+            <span class="picto-edit" data-ng-click="edit(element);"></span> 
+            {{item.title}}
             <span data-ng-if="item.type == 'evaluation'"> ({{item.attributes.weight}}%)</span>
+            <span data-buttons-element="element" noedit="true" class="buttons-elements"></span>
         </div>
-    </div>
+    <!-- </div>-->
     <!-- Feuille -->
     <div class="tree-node tree-node-content" data-ng-if="!item.displayPage">
 
@@ -36,31 +38,31 @@
                     </ul>
                 </div>
 
-            </div>
+            </div> 
 
         </div>
 
     </div>
 
 
-    <ol ui-tree-nodes="" data-ng-model="item.children" data-ng-class="{hidden: collapsed, 'liste-element': true}" data-ng-if="item.children && item.children.length > 0 && item.children[0].displayPage" >
-        <li data-ng-repeat="item in item.children" ui-tree-node data-ng-include="'nodes_renderer_content.html'" >
+    <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-class="{hidden: collapsed, 'liste-element': true}" data-ng-if="item.type === 'composite'" >
+        <li data-ng-repeat="item in item.elements" ui-tree-node data-ng-include="'nodes_renderer_content.html'" >
         </li>
     </ol>
  
 </script>
-
+ 
 <section class="content-panel-section" data-ng-controller='ContentPanelCtrl'>
 
-    <div class='titre'>
-        {{infos.selectedItem.pageTitle}}
+    <div class='titre' data-ng-model="infos.selectedItem"> 
+        {{infos.selectedItem.title}}
         <span data-ng-if="infos.selectedItem.type == 'evaluation'"> ({{infos.selectedItem.attributes.weight}}%)</span>
-    </div>
+    </div> 
     
-    <div ui-tree data-drag-enabled="true">
-
-      <ol ui-tree-nodes="" ng-model="infos.selectedItem.children" class="liste-element">
-        <li ng-repeat="item in infos.selectedItem.children" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          
+    <!-- <div ui-tree data-drag-enabled="true"> -->
+    <div ui-tree="treeOptions" data-drag-enabled="true">
+      <ol ui-tree-nodes="" ng-model="infos.selectedItem.elements" class="liste-element">
+        <li ng-repeat="item in infos.selectedItem.elements" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          
       </ol>
 
     </div> 

@@ -41,21 +41,20 @@
         margin-left: 5px;
         padding: 0 0 2px;
     }
+ 
+}
 
-    // Boutons edition et suppression
-    .buttons-elements {
-        float: right;
-        margin-left: 10px;
-        
-        .picto-edit {
-            margin-right: 10px;
-        }
 
-        .picto-delete {
-
-        }
+// Boutons edition et suppression
+.buttons-elements {
+    float: right;
+    margin-left: 10px;
+    
+    .picto-edit {
+        margin-right: 10px;
     }
 
+    .picto-delete {
 
-
+    }
 }

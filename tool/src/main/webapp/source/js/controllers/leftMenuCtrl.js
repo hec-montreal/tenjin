@@ -38,17 +38,27 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService'
         accept: function(sourceNodeScope, destNodesScope, destIndex) {
  
             // Le noeud destination doit être un noeud de type composite
-            if (destNodesScope.item && destNodesScope.item.type === 'composite') {
-
+            if (destNodesScope.item && destNodesScope.item.type === 'composite' ) {
+                // get ancestor for the source node
                 var ancetreSrc = $scope.getAncestor(sourceNodeScope);
                 // console.log("ancetre src => " + ancetreSrc.item.syllabusElement_id);
+                // get ancestor for the destination node
                 var ancetreDest = $scope.getAncestor(destNodesScope);
                 // console.log("ancetre dest => " +ancetreDest.item.syllabusElement_id);
 
-                // Le noeud source et destination doivent avoir un ancêtre commun
-                if (ancetreSrc && ancetreSrc.item && ancetreDest && ancetreDest.item && ancetreSrc.item.syllabusElement_id === ancetreDest.item.syllabusElement_id) {
-                    return true;
-                } 
+                if (sourceNodeScope.item && sourceNodeScope.item.type === 'composite') {
+                    // On peut déplacer un composite uniquement dans l'élément parent racine ( qui lui n'a pas de parent )
+                    if (!destNodesScope.$parentNodeScope) {
+                        return true;
+                    }else {
+                        return false;
+                    }
+                } else {
+                    // Le noeud source et destination doivent avoir un ancêtre commun
+                    if (ancetreSrc && ancetreSrc.item && ancetreDest && ancetreDest.item && ancetreSrc.item.syllabusElement_id === ancetreDest.item.syllabusElement_id) {
+                        return true;
+                    } 
+                }
 
             }
 

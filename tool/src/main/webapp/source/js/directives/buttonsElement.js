@@ -4,7 +4,8 @@ opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'Moda
 
     return {
         scope: {
-            element: '=buttonsElement'
+            element: '=buttonsElement',
+            noedit: '='
         },
         restrict: 'A',
         templateUrl: 'buttonsElement.html',

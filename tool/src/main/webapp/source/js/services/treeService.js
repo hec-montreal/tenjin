@@ -5,11 +5,11 @@ opensyllabusApp.service('TreeService', function (){
      * Parcours de manière récursive les enfants de l'arbre
      * @param {Object} $rootTree racine du sous-arbre
      */
-    var unselectTreeChildren = function($rootTree) {
-        if ($rootTree.children) {
-            for (var i = 0; i < $rootTree.children.length; i++){
-                $rootTree.children[i].selected = false;
-                unselectTreeChildren($rootTree.children[i]);
+    var unselectTreeElements = function($rootTree) {
+        if ($rootTree.elements) {
+            for (var i = 0; i < $rootTree.elements.length; i++){
+                $rootTree.elements[i].selected = false;
+                unselectTreeElements($rootTree.elements[i]);
             }
         }
     };
@@ -20,10 +20,26 @@ opensyllabusApp.service('TreeService', function (){
      */
     this.unselectTree = function($rootTree) {
         console.time('select');
-        if ($rootTree.syllabusElements) {
-            for (var i = 0; i < $rootTree.syllabusElements.length; i++){
-                $rootTree.syllabusElements[i].selected = false;
-                unselectTreeChildren($rootTree.syllabusElements[i]);
+        if ($rootTree.elements) {
+            for (var i = 0; i < $rootTree.elements.length; i++){
+                $rootTree.elements[i].selected = false;
+                unselectTreeElements($rootTree.elements[i]);
+            }
+        }
+        console.timeEnd('select');
+    };
+
+
+    /**
+     * Parcours de l'arbre
+     * @param {Object} $rootTree racine de l'arbre
+     */
+    this.numerotationTree = function($rootTree) {
+        console.time('select');
+        if ($rootTree.elements) {
+            for (var i = 0; i < $rootTree.elements.length; i++){
+                $rootTree.elements[i].selected = false;
+                unselectTreeElements($rootTree.elements[i]);
             }
         }
         console.timeEnd('select');
