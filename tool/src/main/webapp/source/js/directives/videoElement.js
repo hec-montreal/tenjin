@@ -1,4 +1,4 @@
-
+﻿
 opensyllabusApp.directive('videoElement', ['$sce', function ($sce){
     'use strict';
 

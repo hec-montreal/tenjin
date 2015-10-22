@@ -1,4 +1,4 @@
-opensyllabusApp.service('TreeService', function (){
+﻿opensyllabusApp.service('TreeService', function (){
     'use strict';
 
     /**
@@ -20,12 +20,7 @@ opensyllabusApp.service('TreeService', function (){
      */
     this.unselectTree = function($rootTree) {
         console.time('select');
-        if ($rootTree.elements) {
-            for (var i = 0; i < $rootTree.elements.length; i++){
-                $rootTree.elements[i].selected = false;
-                unselectTreeElements($rootTree.elements[i]);
-            }
-        }
+        unselectTreeElements($rootTree);
         console.timeEnd('select');
     };
 
@@ -35,14 +30,14 @@ opensyllabusApp.service('TreeService', function (){
      * @param {Object} $rootTree racine de l'arbre
      */
     this.numerotationTree = function($rootTree) {
-        console.time('select');
-        if ($rootTree.elements) {
-            for (var i = 0; i < $rootTree.elements.length; i++){
-                $rootTree.elements[i].selected = false;
-                unselectTreeElements($rootTree.elements[i]);
-            }
-        }
-        console.timeEnd('select');
+        // console.time('select');
+        // if ($rootTree.elements) {
+        //     for (var i = 0; i < $rootTree.elements.length; i++){
+        //         $rootTree.elements[i].selected = false;
+        //         unselectTreeElements($rootTree.elements[i]);
+        //     }
+        // }
+        // console.timeEnd('select');
     };
 
 

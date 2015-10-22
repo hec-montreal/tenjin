@@ -1,4 +1,4 @@
-/*
+﻿/*
 $.ajax({
 				url : 'v1/syllabus/courseId/30300.json',
 				datatype : 'json',

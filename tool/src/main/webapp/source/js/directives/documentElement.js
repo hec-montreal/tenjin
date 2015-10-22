@@ -1,4 +1,4 @@
-
+﻿
 opensyllabusApp.directive('documentElement', function (){
     'use strict';
 

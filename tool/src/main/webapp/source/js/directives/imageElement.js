@@ -1,4 +1,4 @@
-
+﻿
 opensyllabusApp.directive('imageElement', function (){
     'use strict';
 

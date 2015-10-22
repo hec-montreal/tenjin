@@ -15,5 +15,5 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         MODALE_DELETE_CONFIRM_MESSAGE: "Êtes-vous sûr de vouloir supprimer l'élément"
     });
 
-     $translateProvider.preferredLanguage('fr'); 
+     $translateProvider.preferredLanguage('en'); 
 }]);

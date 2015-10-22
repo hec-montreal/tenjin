@@ -2,7 +2,8 @@
     padding: 10px;
     
     .titre-element {
-        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 10px;
     }
 
 
@@ -24,8 +25,8 @@
     .contact-firstname,
     .contact-lastname {
         color: #444;
-        font-size: 14px;
-        font-weight: bold;
+        font-size: 16px;
+        // font-weight: bold;
         padding: 1px 0 0;
     }
 
@@ -38,8 +39,8 @@
     .contact-email,
     .contact-tel,
     .contact-officeroom {
-        font-size: 11px;
-        margin-left: 5px;
+        // font-size: 11px;
+        // margin-left: 5px;
         padding: 0 0 2px;
     }
  

@@ -1,4 +1,4 @@
-opensyllabusApp.controller('addElementCtrl', function (){
+﻿opensyllabusApp.controller('addElementCtrl', function (){
     'use strict';
 
 	this.types = ["Texte", "Document", "Hyperlien"];

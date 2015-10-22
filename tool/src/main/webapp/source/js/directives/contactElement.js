@@ -1,4 +1,4 @@
-opensyllabusApp.directive('contactElement', function (){
+﻿opensyllabusApp.directive('contactElement', function (){
     'use strict';
 
     return {

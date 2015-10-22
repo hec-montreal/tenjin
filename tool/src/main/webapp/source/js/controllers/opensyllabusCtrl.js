@@ -1,4 +1,4 @@
-
+﻿
 // loader les donnees du plan de cours
 opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusService', 'config' , function($scope, $timeout, SyllabusService, config) {
 	'use strict';

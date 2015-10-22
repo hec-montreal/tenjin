@@ -1,4 +1,4 @@
-opensyllabusApp.service('SyllabusService', ['$resource', function ($resource){
+﻿opensyllabusApp.service('SyllabusService', ['$resource', function ($resource){
     'use strict';
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client

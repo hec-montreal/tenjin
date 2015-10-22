@@ -1,4 +1,4 @@
-var leftMenuServices = angular.module('leftMenuServices', ['ngResource']);
+﻿var leftMenuServices = angular.module('leftMenuServices', ['ngResource']);
 
 leftMenuServices.factory('LeftMenu', ['$resource',
 function ($resource){

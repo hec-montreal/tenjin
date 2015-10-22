@@ -1,4 +1,4 @@
-
+﻿
 opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'ModalService', function ($anchorScroll, $location, ModalService){
     'use strict';
 
