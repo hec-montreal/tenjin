@@ -52,41 +52,31 @@
     cursor: pointer;
 }
 
-// .picto-move {
-//     display: inline-block;
-//     background: url('/opensyllabus2-tool/img/desktop/move.png') no-repeat;
-//     height: 20px;
-//     width: 20px;
-//     cursor: move;
-//     vertical-align: bottom;
-// }
-
-// .picto-move {
-//     display: inline-block; 
-//     height: 18px;
-//     width: 18px;
-//     cursor: move;
-//     vertical-align: bottom;
-//     border: 1px solid $bleu-hec;
-//     border-radius: 9px;
-// }
-
 .picto-move {
     display: inline-block;
     background: url('/opensyllabus2-tool/img/desktop/drag.png') no-repeat;
     height: 16px;
-    width: 15px;
+    width: 16px;
     cursor: move;
     vertical-align: bottom;
 }
 
 .picto-move-content {
-    cursor: move;
-    display: inline-block;             
-    border: 1px solid $bleu-hec;
-    margin-right: 10px;
-    vertical-align: top;
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/drag-content.png') no-repeat;
     height: 20px;
     width: 20px;
-    border-radius: 10px;
+    cursor: move;
+    margin-right: 8px;
+    vertical-align: top;
+}
+
+.picto-edit-inline {
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/edit-inline.png') no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    margin-right: 5px;
+    // vertical-align: top;
 }

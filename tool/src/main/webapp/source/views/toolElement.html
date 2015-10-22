@@ -1,0 +1,23 @@
+<div class="element tool">
+    
+    <div data-buttons-element="element" class="buttons-elements"></div>
+
+    <div class="titre-element">
+        <a href="{{element.attributes.toolUrl}}" target="_blank">
+            {{ element.title }} 
+        </a>
+        <span class="url-lien">
+            ({{ element.attributes.toolUrl }}) 
+        </span> 
+    </div>
+
+
+    <div data-ng-bind-html="element.attributes.toolComment" class="comment"></div>
+
+    <div class="infos">
+        <span data-ng-class="{ 'picto-important' : ( element.attributes.toolImportant === 'true') }" title="Important"></span>
+        <span data-ng-class="{ 'picto-hec' : ( element.attributes.toolDiffusion === 'hec' ), 'picto-public' : ( element.attributes.toolDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
+        <span data-ng-class="{ 'picto-hidden' : ( element.attributes.toolHidden === 'true') }" title="Visible"></span>     
+    </div>
+
+</div>

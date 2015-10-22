@@ -1,5 +1,6 @@
 .element {
-
+    padding: 10px;
+    
     .titre-element {
         font-weight: bold;
     }
@@ -42,6 +43,10 @@
         padding: 0 0 2px;
     }
  
+    .url-lien {
+        font-weight: normal;
+        color: #777;
+    }
 }
 
 
