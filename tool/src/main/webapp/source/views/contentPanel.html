@@ -2,10 +2,10 @@
     <!-- Page -->
     <!-- <div ui-tree-handle class="tree-node tree-node-content" data-ng-class="{'item-panel-composite': item.type ==='composite'}" data-ng-if="item.displayPage"> -->
         <div class="titre-element element-page" data-ng-class="{'item-panel-composite': item.type ==='composite'}" data-ng-if="item.displayPage">
-            <span class="picto-edit-inline" data-ng-click="edit(element);"></span> 
+            <span class="picto-edit-inline" data-ng-click="edit(item);"></span> 
             {{item.title}}
             <span data-ng-if="item.type == 'evaluation'"> ({{item.attributes.weight}}%)</span>
-            <span data-buttons-element="element" noedit="true" class="buttons-elements"></span>
+            <span data-buttons-element="item" noedit="true" class="buttons-elements"></span>
         </div>
     <!-- </div>-->
     <!-- Feuille -->
