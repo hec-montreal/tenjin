@@ -62,7 +62,6 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
 
             }
 
-
             return false;
         },
     };

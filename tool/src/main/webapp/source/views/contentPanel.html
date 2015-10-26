@@ -1,17 +1,16 @@
 <script type="text/ng-template" id="nodes_renderer_content.html">
-    <!-- Page -->
-    <!-- <div ui-tree-handle class="tree-node tree-node-content" data-ng-class="{'item-panel-composite': item.type ==='composite'}" data-ng-if="item.displayPage"> -->
-        <div class="titre-element element-page" data-ng-class="{'item-panel-composite': item.type ==='composite'}" data-ng-if="item.displayPage">
-            <span class="picto-edit-inline" data-ng-click="edit(item);"></span> 
-            {{item.title}}
-            <span data-ng-if="item.type == 'evaluation'"> ({{item.attributes.weight}}%)</span>
-            <span data-buttons-element="item" noedit="true" class="buttons-elements"></span>
-        </div>
-    <!-- </div>-->
-    <!-- Feuille -->
-    <div class="tree-node tree-node-content" data-ng-if="!item.displayPage">
+
+    <!-- Page et Feuille -->
+    <div class="tree-node tree-node-content">
 
         <div data-ng-switch="item.type">
+
+            <!-- élément de type composite -->
+            <div data-ng-switch-when="composite" data-regroupement-element="item"></div>
+            <!-- élément de type course_lecture -->
+            <div data-ng-switch-when="course_lecture" data-cours-element="item"></div>
+            <!-- élément de type evaluation -->
+            <div data-ng-switch-when="evaluation" data-evaluation-element="item"></div>
 
             <!-- élément de type texte -->
             <div data-ng-switch-when="text" data-text-element="item"></div>
@@ -26,6 +25,36 @@
             <div data-ng-switch-when="video" data-video-element="item"></div>
 			<!-- élément de type contactInfo -->
             <div data-ng-switch-when="contact_info" data-contact-element="item"></div>
+            
+            <!-- <div data-ng-switch-when="contact_info">
+                <div data-contact-element="item"></div>
+            </div> -->
+            <!--<div data-ng-switch-when="contact_info" class="element contact-info">
+
+
+                <div data-buttons-element="item" class="buttons-elements"></div> 
+
+                    <div class="titre-element"> 
+                        <span class="contact-firstname">{{item.attributes.contactFirstname}}</span> 
+                        <span class="contact-lastname">{{item.attributes.contactSurname}}</span>
+                    </div>
+                    <div class="contact-title">{{item.attributes.title}}</div>
+                    <div class="contact-email">{{item.attributes.contactEmail}}</div>
+
+                    <div class="contact-tel">{{item.attributes.contactTel}}</div>
+
+                    <div class="contact-officeroom">Bureau: {{item.attributes.contactOfficeroom}}</div> 
+                    
+                 <div class="infos">
+                    <span data-ng-class="{ 'picto-important' : ( item.attributes.contactImportant === 'true') }" title="Important"></span>
+                    <span data-ng-class="{ 'picto-hec' : ( item.attributes.contactDiffusion === 'hec' ), 'picto-public' : ( item.attributes.contactDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
+                    <span data-ng-class="{ 'picto-hidden' : ( item.attributes.contactHidden === 'true') }" title="Visible"></span>     
+                </div>
+
+            </div>-->
+
+
+
             <!-- élément de type lien vers outil -->
             <div data-ng-switch-when="tool" data-tool-element="item"></div>
 
@@ -62,8 +91,8 @@
         <span data-ng-if="infos.selectedItem.type == 'evaluation'"> ({{infos.selectedItem.attributes.weight}}%)</span>
     </div> 
     
-    <!-- <div ui-tree data-drag-enabled="true"> -->
-    <div ui-tree="treeOptions" data-drag-enabled="true">
+    <div ui-tree data-drag-enabled="true">
+    <!-- <div ui-tree="treeOptions" data-drag-enabled="true"> -->
       <ol ui-tree-nodes="" ng-model="infos.selectedItem.elements" class="liste-element">
         <li ng-repeat="item in infos.selectedItem.elements" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          
       </ol>

@@ -1,4 +1,4 @@
-﻿	
+﻿
 opensyllabusApp.controller('DeleteModalCtrl',  [ '$scope', '$modalInstance', 'element', function ($scope, $modalInstance, element) {
     'use strict';
 
