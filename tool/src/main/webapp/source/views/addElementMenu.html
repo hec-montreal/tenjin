@@ -1,0 +1,12 @@
+<div class="dropdown" data-ng-class="{ 'open' : showMenuAjouter}">
+    <button class="btn btn-default dropdown-toggle" type="button" data-ng-click="toggleMenu();">
+        <span class="glyphicon glyphicon-plus-sign"></span>
+        Ajouter
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" data-ng-show="showMenuAjouter">
+        <li role="presentation" data-ng-repeat="type in types">
+            <a role="menuitem" tabindex="-1" href="#" data-ng-click="addElement(type)">{{type}}</a>
+        </li>
+    </ul>
+</div>

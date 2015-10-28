@@ -86,11 +86,32 @@
  
 <section class="content-panel-section" data-ng-controller='ContentPanelCtrl'>
 
+
+    <!-- Menu ajout -->
+    <div data-add-element-menu="infos.selectedItem"  class="container-menu-ajout"></div>
+    
+    <!-- Titre -->
     <div class='titre' data-ng-model="infos.selectedItem"> 
         {{infos.selectedItem.title}}
         <span data-ng-if="infos.selectedItem.type == 'evaluation'"> ({{infos.selectedItem.attributes.weight}}%)</span>
     </div> 
-    
+
+
+
+<!--     <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" data-ng-click="toggleMenu();">
+            <span class="glyphicon glyphicon-plus-sign"></span>
+            Ajouter
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" data-ng-show="showMenuAjouter">
+            <li role="presentation" data-ng-repeat="type in types">
+                <a role="menuitem" tabindex="-1" href="#" data-ng-click="add.addElement(type)">{{type}}</a>
+            </li>
+        </ul>
+    </div> -->
+
+
     <div ui-tree data-drag-enabled="true">
     <!-- <div ui-tree="treeOptions" data-drag-enabled="true"> -->
       <ol ui-tree-nodes="" ng-model="infos.selectedItem.elements" class="liste-element">

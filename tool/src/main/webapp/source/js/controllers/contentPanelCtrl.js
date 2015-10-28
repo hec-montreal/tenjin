@@ -3,6 +3,7 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
     'use strict';
 
 
+
     $scope.getAncestor = function($node){
         if ($node.$parentNodeScope) {
             return $scope.getAncestor($node.$parentNodeScope);
