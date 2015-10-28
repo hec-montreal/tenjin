@@ -17,18 +17,6 @@ import ca.hec.opensyllabus2.api.model.template.Template;
 public interface Syllabus2Service {
 
 	/**
-	 * Get current siteid
-	 * @return
-	 */
-	public String getCurrentSiteId();
-
-	/**
-	 * Get current user id
-	 * @return
-	 */
-	public String getCurrentUserId();
-
-	/**
 	 * Get current user display name
 	 * @return
 	 */
@@ -65,6 +53,14 @@ public interface Syllabus2Service {
 
 
 	/**
+	 * Retrieve the syllabus for the current user in the active site
+	 * 
+	 * @return json representation of the syllabus
+	 */
+	public Syllabus getSiteSyllabus ();
+	
+	
+	/**
 	 * Retrieves the syllabus associated to a specific section and sectionId.
 	 * @param courseId
 	 * @param sectionId
@@ -93,12 +89,4 @@ public interface Syllabus2Service {
 	 */
 	public Template getTemplate(Long templateId) throws IdUnusedException;
 	
-	/**
-	 * Retrieve a map representing a the values used in the syllabus to be viewed.
-	 * 
-	 * @param courseId
-	 * @param sectionId
-	 * @return
-	 */
-	public Map<String,Object> getSyllabusMap(String courseId, String sectionId);
 }
