@@ -173,12 +173,9 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		} catch (Exception e) {
 			// TODO DEFINE ERROR TO BE RETURNED TO CLIENT
 		}
-				
-		String val2 = chs.getSiteCollection(siteId);
-		String refString = chs.getReference(val2);
-		
+
 		//TODO: retreive user allowed access
-		Syllabus syllabus = getShareableSyllabus(refString);
+		Syllabus syllabus = getShareableSyllabus(siteId);
 		
 		
 		

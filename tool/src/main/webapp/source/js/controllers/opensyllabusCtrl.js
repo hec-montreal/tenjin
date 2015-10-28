@@ -23,7 +23,9 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
         console.log('start');
         console.time('xhr');
         $scope.infos.working = true;
-    	var results = SyllabusService.getSyllabus();
+    	//var results = SyllabusService.getSyllabus();
+        var results = SyllabusService.initSyllabus();
+        console.log(results);
     	results.$promise.then( function(data) {
     		console.log(data);
             $scope.syllabus = data;

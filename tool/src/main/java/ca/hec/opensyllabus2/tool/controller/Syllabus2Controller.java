@@ -71,7 +71,7 @@ public class Syllabus2Controller {
 	}
 
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/init", method = RequestMethod.GET)
 	public @ResponseBody Syllabus getSyllabus() {
 
 
