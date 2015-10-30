@@ -2,7 +2,7 @@
 opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
     'use strict';
 
-    $translateProvider.useSanitizeValueStrategy('sanitize');
+    $translateProvider.useSanitizeValueStrategy('escape');
 
     $translateProvider.translations('en', {
         MENU_LABEL: 'Course menu',
@@ -15,5 +15,5 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         MODALE_DELETE_CONFIRM_MESSAGE: "Êtes-vous sûr de vouloir supprimer l'élément"
     });
 
-     $translateProvider.preferredLanguage('en'); 
+     $translateProvider.preferredLanguage('fr');
 }]);

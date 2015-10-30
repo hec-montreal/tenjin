@@ -16,7 +16,7 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', '$document',  funct
             $scope.showMenuAjouter = false;
 
             // TODO : définir la liste des éléments que l'on peut ajouter en fonction du template
-            $scope.types = ["Texte", "Document", "Hyperlien"];
+            $scope.types = ["Texte", "Document", "Hyperlien", " Référence biblio"];
 
             $scope.toggleMenu = function(){
                 $scope.showMenuAjouter = $scope.showMenuAjouter === false ? true : false;
@@ -31,18 +31,21 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', '$document',  funct
                 
             };
 
-            $element.on('click', function(e) {
-              e.stopPropagation();
-            });
-
-            var onClick = function() {
-                // hide menu
-                if ($scope.showMenuAjouter) {
-                    $scope.$apply($scope.showMenuAjouter = false);
+            var onClick = function($event) {
+                // hide menu sauf si clic sur "bouton-ajout"    
+                var element = document.querySelector('#bouton-ajout');
+                // element.querySelector
+                // 
+                if (angular.element($event.target).prop('id') === "bouton-ajout" || angular.element($event.target).parent().prop('id') === "bouton-ajout") {
+                    // rien
+                } else {
+                    if ($scope.showMenuAjouter) {
+                        $scope.$apply($scope.showMenuAjouter = false);
+                    }
                 }
             };
 
-            $document.on('click', onClick);
+            $document.on('click', onClick );
 
             $scope.$on('$destroy', function() {
                 $document.off('click', onClick);

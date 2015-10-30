@@ -12,13 +12,28 @@ opensyllabusApp.directive('videoElement', ['$sce', function ($sce){
 
         },
         link: function ($scope, $element) {
+
+            $scope.isIframe = true;
+
+
             // Vérification sur l'url obligatoire avant insertion dans le src de l'iframe
             if ($scope.element.attributes.videoUrl) {
                 var videoEmbedUrl;
 
                 // look for the source (youtube, vimeo, dailymotion)
+                // Melies
+                if ($scope.element.attributes.videoUrl.indexOf('<object') > -1) { 
+                    $scope.isIframe = false;
+
+                    var elem = angular.element( $element[0].querySelector('.embed-object') );
+   
+                    // Set default height and width to 300*220
+                    var res = $scope.element.attributes.videoUrl.replace(/height="[0-9]*"/g, "height=220");
+                    var res2 = res.replace(/width="[0-9]*"/g, "width=300");
+                    elem.html(res2);
+                }
                 // YOUTUBE
-                if ($scope.element.attributes.videoUrl.indexOf('youtube') > -1) {
+                else if ($scope.element.attributes.videoUrl.indexOf('youtube') > -1) {
                     videoEmbedUrl = $scope.element.attributes.videoUrl.replace("watch?v=", "embed/");
                 
                 } // VIMEO 

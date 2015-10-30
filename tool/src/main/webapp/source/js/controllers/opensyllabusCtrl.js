@@ -24,7 +24,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
         console.time('xhr');
         $scope.infos.working = true;
     	//var results = SyllabusService.getSyllabus();
-        var results = SyllabusService.initSyllabus();
+        var results = SyllabusService.getSyllabus();
         console.log(results);
     	results.$promise.then( function(data) {
     		console.log(data);
@@ -54,6 +54,16 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
             $scope.infos.working = false;
         });
         
+
+        // Get template
+        var resultsTemplate = SyllabusService.getTemplate();
+        resultsTemplate.$promise.then( function(data) {
+            console.log('ok template');
+        }, function(error) {
+            console.log('erreur get syllabus');
+
+        });
+
     } 
 
 

@@ -2,17 +2,22 @@
     'use strict';
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
-    var syllabusProvider = $resource('v1/syllabus/site.json');
+    var syllabusProvider = $resource('v1/syllabus/init.json');
+
+    //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
+    var templateProvider = $resource('v1/template/1.json');
 
     this.getSyllabus =  function() {  
         // return syllabusProvider.getSyllabus({sectionId : "A01,B03"});   
         return syllabusProvider.get();
     };
 
+    this.getTemplate = function() {
+        return templateProvider.get();
+    };
 
-    
-    
-    this.initSyllabus = function(){
-    	return $http.get('v1/syllabus/init.json');
-    }
+    // this.initSyllabus = function(){
+    // 	return $http.get('v1/syllabus/init.json');
+    // };
+
 }]);
