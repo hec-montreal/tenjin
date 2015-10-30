@@ -1,4 +1,4 @@
-<div class="element video">
+﻿<div class="element video">
         
     <div data-buttons-element="element" class="buttons-elements"></div>
 
@@ -8,8 +8,9 @@
         <!-- </a> -->
     </div>
     <div class="video">
-        <iframe width="300" height="220" data-ng-src="{{videoUrl}}" frameborder="0" allowfullscreen></iframe>
-    </div>
+        <div class="embed-object"></div> 
+        <iframe width="300" height="220" data-ng-src="{{videoUrl}}" frameborder="0" allowfullscreen data-ng-if="isIframe"></iframe>
+    </div> 
 
     <div data-ng-bind-html="element.attributes.videoComment" class="comment"></div>
 
