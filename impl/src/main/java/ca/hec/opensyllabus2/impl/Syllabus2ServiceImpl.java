@@ -13,11 +13,14 @@ import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.event.api.EventTrackingService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.SiteService;
+import org.sakaiproject.tool.api.Placement;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.UserDirectoryService;
 
 import ca.hec.opensyllabus2.api.Syllabus2Service;
+import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
+import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.dao.Syllabus2Dao;
 import ca.hec.opensyllabus2.api.dao.TemplateDao;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
@@ -115,7 +118,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	private ContentHostingService chs;
     
     
-    public Syllabus getShareableSyllabus(String courseId) {
+    public Syllabus getShareableSyllabus(String courseId) throws NoSyllabusException {
 		// TODO check if the user is allowed to get the syllabus before
 
 		Syllabus syllabus;
@@ -125,14 +128,14 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			return syllabus;
 		} catch (Exception e) {
 			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
-			return null;
+			throw new NoSyllabusException();
 		}
 
 
 	}
 
 	@Override
-	public Syllabus getSyllabus(String courseId, String sectionId) {
+	public Syllabus getSyllabus(String courseId, String sectionId) throws NoSyllabusException {
 		Syllabus syllabus;
 
 		try {
@@ -140,13 +143,13 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			return syllabus;
 		} catch (Exception e) {
 			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
-			return null;
+			throw new NoSyllabusException();
 		}
 
 	}
 
 	@Override
-	public Syllabus getCommonSyllabus(String courseId, String[]  sectionIds) {
+	public Syllabus getCommonSyllabus(String courseId, String[]  sectionIds) throws NoSyllabusException {
 		Syllabus syllabus;
 
 		try {
@@ -154,7 +157,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			return syllabus;
 		} catch (Exception e) {
 			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
-			return null;
+			throw new NoSyllabusException();
 		}
 
 	}
@@ -166,33 +169,33 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	
 	
 	@Override
-	public Syllabus getSiteSyllabus() {
+	public Object loadSyllabus() throws NoSyllabusException, NoSiteException {
 		String siteId = "";
 		try {
 		    siteId = getCurrentSiteContext();
-		} catch (Exception e) {
-			// TODO DEFINE ERROR TO BE RETURNED TO CLIENT
+		} catch (IdUnusedException e) {
+		    e.printStackTrace();
+		    throw new NoSiteException();
 		}
 
 		//TODO: retreive user allowed access
 		Syllabus syllabus = getShareableSyllabus(siteId);
 		
-		
-		
 		return syllabus;
 		
 	}
 	
-	private String getCurrentSiteContext (){
+	private String getCurrentSiteContext () throws IdUnusedException, NoSiteException{
 		String siteRef = null;
-		String context = toolManager.getCurrentPlacement().getContext();
+		Placement placement = toolManager.getCurrentPlacement();
+		String context = null;
 		
-		try {
-			siteRef = siteService.getSite(context).getId();
-		} catch (IdUnusedException e) {
-			// TODO DEFINE ERROR TO BE RETURNED TO CLIENT
-			e.printStackTrace();
-		}
+		if (placement == null)
+		    throw new NoSiteException();
+		else 
+		    context = placement.getContext();
+		
+		siteRef = siteService.getSite(context).getId();
 		
 		return siteRef;
 	}

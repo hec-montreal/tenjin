@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.sakaiproject.exception.IdUnusedException;
 
+import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
+import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.template.Template;
 
@@ -55,9 +57,11 @@ public interface Syllabus2Service {
 	/**
 	 * Retrieve the syllabus for the current user in the active site
 	 * 
-	 * @return json representation of the syllabus
+	 * @return the syllabus of the site or an error message
+	 * @throws NoSyllabusException 
+	 * @throws NoSiteException 
 	 */
-	public Syllabus getSiteSyllabus ();
+	public Object loadSyllabus () throws NoSyllabusException, NoSiteException;
 	
 	
 	/**
@@ -65,22 +69,25 @@ public interface Syllabus2Service {
 	 * @param courseId
 	 * @param sectionId
 	 * @return
+	 * @throws NoSyllabusException 
 	 */
-	public Syllabus getSyllabus (String courseId, String sectionId );
+	public Syllabus getSyllabus (String courseId, String sectionId ) throws NoSyllabusException;
 
 	/**
 	 * Retrieves the syllabus at the top of the hierarchy associated to the courseId.
 	 * @param courseId
 	 * @return
+	 * @throws NoSyllabusException 
 	 */
-	public Syllabus getShareableSyllabus (String courseId);
+	public Syllabus getShareableSyllabus (String courseId) throws NoSyllabusException;
 
 	/**
 	 * Retrieves the syllabus content shared by the list of sectionIds.
 	 * @param sectionIds
 	 * @return
+	 * @throws NoSyllabusException 
 	 */
-	public Syllabus getCommonSyllabus (String courseId, String[] sectionIds);
+	public Syllabus getCommonSyllabus (String courseId, String[] sectionIds) throws NoSyllabusException;
 
 	/**
 	 * Retrieves the template

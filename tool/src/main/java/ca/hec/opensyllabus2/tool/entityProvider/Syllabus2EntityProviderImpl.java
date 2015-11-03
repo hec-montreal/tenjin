@@ -26,6 +26,7 @@ import org.sakaiproject.entitybroker.entityprovider.search.Search;
 import org.sakaiproject.entitybroker.util.AbstractEntityProvider;
 
 import ca.hec.opensyllabus2.api.Syllabus2Service;
+import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 
 public class Syllabus2EntityProviderImpl extends
@@ -124,7 +125,12 @@ AbstractEntityProvider implements CoreEntityProvider, AutoRegisterEntityProvider
 	@Override
 	public Object getEntity(EntityReference ref) {
 		final String refId = ref.getId();
-		Syllabus syllabus = osyl2Service.getShareableSyllabus(refId);
+		Syllabus syllabus = null;
+		try {
+		    syllabus = osyl2Service.getShareableSyllabus(refId);
+		} catch (NoSyllabusException e) {
+		    e.printStackTrace();
+		}
 		
 		System.out.println(refId);
 		return syllabus;
