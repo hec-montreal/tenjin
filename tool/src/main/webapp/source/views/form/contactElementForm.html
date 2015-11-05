@@ -1,0 +1,23 @@
+﻿<div class="element contact-info">
+
+    TEST
+
+    <!-- <div class="titre-element">Elément ({{element.syllabusElement_id}})</div> -->
+    	<div class="titre-element"> 
+            <span class="contact-firstname">{{element.attributes.contactFirstname}}</span> 
+            <span class="contact-lastname">{{element.attributes.contactSurname}}</span>
+        </div>
+    	<div class="contact-title">{{element.attributes.title}}</div>
+    	<div class="contact-email">{{element.attributes.contactEmail}}</div>
+    	<!-- TODO: voir si nécessaire de formatter le numéro de  -->
+		<div class="contact-tel">{{element.attributes.contactTel}}</div>
+		<!-- TODO: internationaliser la valeur bureau -->
+    	<div class="contact-officeroom">Bureau: {{element.attributes.contactOfficeroom}}</div> 
+    	
+     <div class="infos">
+        <span data-ng-class="{ 'picto-important' : ( element.attributes.contactImportant === 'true') }" title="Important"></span>
+        <span data-ng-class="{ 'picto-hec' : ( element.attributes.contactDiffusion === 'hec' ), 'picto-public' : ( element.attributes.contactDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
+        <span data-ng-class="{ 'picto-hidden' : ( element.attributes.contactHidden === 'true') }" title="Visible"></span>     
+    </div>
+
+</div>

@@ -1,0 +1,26 @@
+﻿<!-- <div data-ng-attr-id="{{ 'attribut-' + element.syllabusElement_id }}"> -->
+<div class="buttons-form"> 
+
+    <!-- Important -->
+    <div>
+        <input type="checkbox" name="important" id="importantCheckbox" />
+        <label for="importantCheckbox">{{ 'FORM_IMPORTANT' | translate }} important (ajoute une entête)</label>
+    </div>
+    <!-- Visibilité -->
+    <div>
+        <input type="checkbox" name="visibility" id="visibilityCheckbox" />
+        <label for="visibilityCheckbox">{{ 'FORM_VISIBILITE' | translate }}</label> 
+    </div>
+    <!-- Date d'affichage -->
+    <div>
+        <span>{{ 'FORM_DATE_AFFICHAGE_DEBUT' | translate }}</span>
+        <!-- TODO : calendrier -->
+    </div>
+    <!-- Date de retrait -->
+    <div>
+        <input type="checkbox" name="displayEnd" id="displayEndCheckbox" />
+        <label for="displayEndCheckbox">{{ 'FORM_DATE_AFFICHAGE_FIN' | translate }}</label>
+        <!-- TODO : calendrier -->
+    </div>
+
+</div>

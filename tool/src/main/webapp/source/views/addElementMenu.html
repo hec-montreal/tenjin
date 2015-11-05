@@ -2,11 +2,11 @@
     <button id="bouton-ajout" class="btn btn-default dropdown-toggle" type="button" data-ng-click="toggleMenu();">
         <span class="glyphicon glyphicon-plus-sign"></span>
         Ajouter
-        <span class="caret"></span>
+        <span class="caret"></span> 
     </button>
     <ul class="dropdown-menu" role="menu" data-ng-show="showMenuAjouter">
         <li role="presentation" data-ng-repeat="type in types">
-            <a role="menuitem" tabindex="-1" href="#" data-ng-click="addElement(type)">{{type}}</a>
+            <a role="menuitem" tabindex="-1" href="#" data-ng-click="addElement(type)">{{ type.libelle | translate }}</a>
         </li>
     </ul>
 </div>
