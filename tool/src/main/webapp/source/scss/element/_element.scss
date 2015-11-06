@@ -1,3 +1,4 @@
+@charset "utf-8";
 .element {
     padding: 10px;
     
@@ -68,3 +69,14 @@
 .link-description {
     text-decoration: underline;
 }
+
+//Élément référence bibliographique
+
+
+	.biblio-boldTitle{
+		font-weight: bold;
+		font-style: italic;
+	}
+	.biblio-italicTitle{
+		font-style: italic;
+	}

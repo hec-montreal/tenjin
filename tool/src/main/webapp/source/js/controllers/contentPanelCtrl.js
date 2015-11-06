@@ -1,5 +1,5 @@
 
-opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeService', function ($scope, $timeout, TreeService){
+opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeService','config' , function ($scope, $timeout, TreeService, config){
     'use strict';
 
 

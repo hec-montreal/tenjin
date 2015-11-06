@@ -1,0 +1,76 @@
+<div class="element biblio">
+
+    <div data-buttons-element="element" class="buttons-elements"></div>
+ 
+ 	     <div data-ng-switch="element.attributes.type">
+ 			<div data-ng-switch-when="article">
+				<span data-ng-if="element.attributes.author">{{element.attributes.author}}</span>
+				<span data-ng-if="element.attributes.year">{{openParenthesis}}{{element.attributes.year}}{{closeParenthesis}}</span>			
+				<span data-ng-if="element.attributes.title">{{dot}} {{leftAngleQuote}}{{element.attributes.title}}{{rightAngleQuote}}</span>	
+				<span data-ng-if="element.attributes.journal" class="biblio-italicTitle">{{comma}}{{element.attributes.journal}}</span>			
+				<span data-ng-if="element.attributes.volume">{{comma}} {{volume}}{{element.attributes.volume}}</span>
+				<span data-ng-if="element.attributes.issue">{{comma}} {{issue}} {{element.attributes.issue}}</span>				
+				<span data-ng-if="element.attributes.section">{{comma}} {{element.attributes.section}}</span>
+				<span data-ng-if="element.attributes.pages">{{comma}} {{pages}} {{element.attributes.pages}}</span>				
+				<div data-ng-if="element.attributes.issn">{{'REF_BIBLIO_ISSN' | translate}} {{element.attributes.issn}}</div>				
+				<div data-ng-if="element.attributes.library"><a href={{element.attributes.library}}>{{'REF_BIBLIO_DISPONIBILITE' | translate}}</a></div>				
+			</div>
+ 			<div data-ng-switch-when="book">
+				<span data-ng-if="element.attributes.author">{{element.attributes.author}}</span> 
+				<span data-ng-if="element.attributes.year">{{openParenthesis}}{{element.attributes.year}}{{closeParenthesis}}</span>			
+				<span data-ng-if="element.attributes.title" class="biblio-boldTitle">{{dot}} {{element.attributes.title}}</span>	
+				<span data-ng-if="element.attributes.edition">{{comma}} {{element.attributes.edition}} {{edition}}</span>
+				<span data-ng-if="element.attributes.publication">{{comma}} {{element.attributes.publication}}</span>
+				<span data-ng-if="element.attributes.editor">{{comma}} {{element.attributes.editor}}</span>				
+				<span data-ng-if="element.attributes.pages">{{element.attributes.pages}} {{pages}}</span>				
+ 			</div>
+ 			<div data-ng-switch-when="bookSection">
+ 				<span data-ng-if="element.attributes.author">{{element.attributes.author}}</span> 
+				<span data-ng-if="element.attributes.year">{{openParenthesis}}{{element.attributes.year}}{{closeParenthesis}}</span>			
+				<span data-ng-if="element.attributes.sectionTitle">{{dot}} {{leftAngleQuote}} {{element.attributes.sectionTitle}}{{rightAngleQuote}}</span>	
+				<span data-ng-if="element.attributes.title" class="biblio-boldTitle">{{comma}} {{element.attributes.title}}</span>	
+				<span data-ng-if="element.attributes.volume">{{comma}} {{volume}}{{element.attributes.volume}}</span>
+				<span data-ng-if="element.attributes.editor">{{comma}} {{element.attributes.editor}}</span>				
+				<span data-ng-if="element.attributes.pages">{{comma}} {{pages}} {{element.attributes.pages}}</span>										
+				<div data-ng-if="element.attributes.isbn">{{'REF_BIBLIO_ISBN' | translate}} {{element.attributes.isbn}}</div>				
+				<div data-ng-if="element.attributes.url"><a href={{element.attributes.url}}>{{element.attributes.url}}</a></div>				
+ 			</div>
+ 			<div data-ng-switch-when="webPage">
+ 				<span data-ng-if="element.attributes.author">{{element.attributes.author}}</span> 
+				<span data-ng-if="element.attributes.year">{{openParenthesis}}{{element.attributes.year}}{{closeParenthesis}}</span>			
+				<span data-ng-if="element.attributes.title" class="biblio-boldTitle">{{dot}} {{element.attributes.title}}</span>			
+				<span data-ng-if="element.attributes.siteTitle">{{comma}} {{element.attributes.siteTitle}}</span>	
+				<span data-ng-if="element.attributes.date" >{{dot}} {{'REF_BIBLIO_RECUPERE' | translate}} {{element.attributes.date}}</span>
+				<span data-ng-if="element.attributes.url">{{'REF_BIBLIO_DE' | translate}}  {{element.attributes.url}}</span>
+ 			</div>
+ 			<div data-ng-switch-when="proceed">
+ 				<span data-ng-if="element.attributes.author">{{element.attributes.author}}</span> 
+				<span data-ng-if="element.attributes.year">{{dot}} {{leftAngleQuote}}{{element.attributes.year}}{{rightAngleQuote}}</span>			
+				<span data-ng-if="element.attributes.sectionTitle">{{dot}} {{leftAngleQuote}}{{element.attributes.title}}{{rightAngleQuote}}</span>
+				<span data-ng-if="element.attributes.proceedTitle"  class="biblio-boldTitle">{{comma}} {{element.attributes.proceedTitle}}</span>				
+ 			</div>
+ 			<div data-ng-switch-when="report">
+ 				<span data-ng-if="element.attributes.author">{{element.attributes.author}}</span> 
+				<span data-ng-if="element.attributes.year"> {{openParenthesis}}{{element.attributes.year}}{{closeParenthesis}}</span>			
+				<span data-ng-if="element.attributes.title" class="biblio-boldTitle">{{dot}} {{element.attributes.title}}</span>
+				<span data-ng-if="element.attributes.publication">{{comma}} {{element.attributes.publication}}</span>				
+				<span data-ng-if="element.attributes.institution">{{comma}} {{element.attributes.institution}}</span>				
+				<span data-ng-if="element.attributes.pages">{{element.attributes.pages}} {{pages}}</span>			
+				<div data-ng-if="element.attributes.isbn">{{'REF_BIBLIO_ISBN' | translate}} {{element.attributes.isbn}}</div>				
+				<div data-ng-if="element.attributes.url"><a href={{element.attributes.url}}>{{element.attributes.url}}</a></div>				
+					
+ 			</div>
+ 			<div data-ng-switch-default>
+ 				<div  data-ng-if="element.attributes.label">{{element.attributes.label}}</div>		
+				<div  data-ng-if="element.attributes.uri"><a href={{element.attributes.uri}>{{element.attributes.uri}}</a></div>		
+ 			</div>		
+ 	     </div>
+ 
+ 
+    <div class="infos">
+        <span data-ng-class="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
+        <span data-ng-class="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
+        <span data-ng-class="{ 'picto-hidden' : ( element.attributes.docHidden === 'true') }" title="Visible"></span>     
+    </div>
+
+</div>

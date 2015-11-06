@@ -22,7 +22,13 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         FORM_IMPORTANT: "Important (add a header)",
         FORM_VISIBILITE: "Visibility limited to students of this course",
         FORM_DATE_AFFICHAGE_DEBUT: "Diffusion date",
-        FORM_DATE_AFFICHAGE_FIN: "Ending date"
+        FORM_DATE_AFFICHAGE_FIN: "Ending date",
+        REF_BIBLIO_RECUPERE: "",
+        REF_BIBLIO_DISPONIBILITE:"",
+        REF_BIBLIO_DE: "FROM",
+        REF_BIBLIO_ISSN: "ISSN:",
+        REF_BIBLIO_ISBN: "ISBN:"
+
 
     })
     .translations('fr', {
@@ -43,7 +49,12 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         FORM_IMPORTANT: "Important (ajoute une entête)",
         FORM_VISIBILITE: "Visibilité limitée aux étudiants inscrits au cours",
         FORM_DATE_AFFICHAGE_DEBUT: "Date d'affichage",
-        FORM_DATE_AFFICHAGE_FIN: "Date de retrait"
+        FORM_DATE_AFFICHAGE_FIN: "Date de retrait",
+        REF_BIBLIO_RECUPERE: "Récupéré de ",
+        REF_BIBLIO_DISPONIBILITE:"Disponible à la bibliothèque",
+        REF_BIBLIO_DE: "DE",
+        REF_BIBLIO_ISSN: "ISSN:",
+        REF_BIBLIO_ISBN: "ISBN:"
     });
 
      $translateProvider.preferredLanguage('fr');
