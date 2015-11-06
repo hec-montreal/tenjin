@@ -1,6 +1,9 @@
 .element-form {
     padding: 0 10px;
 
+    label {
+        font-weight: normal;
+    }
 
     .buttons-form {
         margin-top: 20px;
@@ -47,7 +50,19 @@
     }
 
     .input-group {
-        width: 200px;
+        width: 250px;
         margin-bottom: 0;
+    }
+
+    input {
+        cursor: pointer;
+    }
+
+    .datetime-picker-dropdown {
+        min-width: 220px;
+    }
+
+    .date-debut {
+        margin-bottom: 10px;
     }
 }

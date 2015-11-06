@@ -12,27 +12,45 @@
         <label for="visibilityCheckbox">{{ 'FORM_VISIBILITE' | translate }}</label> 
     </div>
     <!-- Date d'affichage -->
-    <div>
+    <div class="date-debut">
         <span class="libelle-date-debut">{{ 'FORM_DATE_AFFICHAGE_DEBUT' | translate }} : </span>
         <!-- TODO : calendrier -->
         <span class="container-date-debut">
 
             <p class="input-group">
 
-                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+<!--                 <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span> -->
+
+                <input type="text" class="form-control" datetime-picker="$scope.format" data-ng-model="dtDebut" is-open="status.opened"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" data-ng-click="open($event)">
+                        <i class="glyphicon glyphicon-calendar" ></i>
+                    </button>
                 </span>
-          
             </p>
       
         </span>
     </div>
     <!-- Date de retrait -->
-    <div>
-        <input type="checkbox" name="displayEnd" id="displayEndCheckbox" />
-        <label for="displayEndCheckbox">{{ 'FORM_DATE_AFFICHAGE_FIN' | translate }}</label>
+    <div data-ng-init=>
+        <input type="checkbox" name="displayEnd" id="displayEndCheckbox" data-ng-model="isDateRetrait"/>
+        <label for="displayEndCheckbox">{{ 'FORM_DATE_AFFICHAGE_FIN' | translate }} : </label> 
         <!-- TODO : calendrier -->
+        <span class="container-date-debut">
+
+            <p class="input-group">
+                <input type="text" class="form-control" datetime-picker="$scope.format" data-ng-model="dtRetrait" is-open="statusRetrait.opened" data-ng-disabled="!isDateRetrait"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" data-ng-click="openRetrait($event)" data-ng-disabled="!isDateRetrait">
+                        <i class="glyphicon glyphicon-calendar" ></i>
+                    </button>
+                </span>
+            </p>
+
+        </span>
     </div>
 
 </div>

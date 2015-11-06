@@ -74,6 +74,8 @@
 	<script src="/opensyllabus2-tool/lib/xeditable/xeditable.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-translate/angular-translate.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/ng-ckeditor-master/ng-ckeditor.js"></script>
+	<script src="/opensyllabus2-tool/lib/bootstrap-ui-datetime-picker-master/dist/datetime-picker.min.js"></script>
+	
 
 <!-- 	// <script src="/opensyllabus2-tool/js/controllers/opensyllabus/opensyllabus.js"></script>
 	// <script src="/opensyllabus2-tool/js/controllers/leftMenu/leftMenuCtrl.js"></script>

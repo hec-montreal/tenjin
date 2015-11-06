@@ -35,7 +35,7 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
                 return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
             };
 
-            $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+            $scope.formats = ['dd-MMMM-yyyy HH:mm']; 
             $scope.format = $scope.formats[0];
 
             $scope.status = {
@@ -45,6 +45,15 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
             $scope.dateOptions = {
                 formatYear: 'yy',
                 startingDay: 1
+            };
+
+            // calendrier date retrait
+            $scope.statusRetrait = {
+                opened: false
+            };
+
+            $scope.openRetrait = function($event) {
+                $scope.statusRetrait.opened = true;
             };
         },
         link: function ($scope, $element) {
