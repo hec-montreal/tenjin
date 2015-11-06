@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.service('ModalService', ['$modal', function ($modal){
+opensyllabusApp.service('ModalService', ['$uibModal', function ($uibModal){
     'use strict';
 
 
@@ -9,7 +9,7 @@ opensyllabusApp.service('ModalService', ['$modal', function ($modal){
         // var modal = angular.element(document.querySelector('.modal'));
         // modal.css('top', offset);
 
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
           animation: true,
           templateUrl: 'deleteModalContent.html',
           controller: 'DeleteModalCtrl',
@@ -32,7 +32,7 @@ opensyllabusApp.service('ModalService', ['$modal', function ($modal){
         // var modal = angular.element(document.querySelector('.modal'));
         // modal.css('top', offset);
 
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
           animation: true,
           templateUrl: 'createElementModal.html',
           controller: 'CreateModalCtrl',

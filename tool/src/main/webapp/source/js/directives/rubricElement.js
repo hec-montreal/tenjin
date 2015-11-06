@@ -1,13 +1,13 @@
 ﻿
-opensyllabusApp.directive('hyperlinkElementForm', function (){
+opensyllabusApp.directive('rubricElement', function (){
     'use strict';
 
     return {
         scope: {
-            element: '=hyperlinkElementForm'
+            element: '=rubricElement'
         },
         restrict: 'A',
-        templateUrl: 'form/hyperlinkElementForm.html',
+        templateUrl: 'rubricElement.html',
         controller: function ($scope) {
 
         },

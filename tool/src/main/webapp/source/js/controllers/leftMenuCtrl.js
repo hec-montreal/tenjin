@@ -8,7 +8,7 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService'
 
 	$scope.select = function($item){
 
-        if ($scope.infos.selectedItem && $item.syllabusElement_id !== $scope.infos.selectedItem.syllabusElement_id ) {         
+        if ($scope.infos.selectedItem && $item.id !== $scope.infos.selectedItem.id ) {         
             // permet de déselectionner l'élément précédemment sélectionné
             TreeService.unselectTree($scope.syllabus);
             $item.selected = true;
@@ -46,10 +46,10 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService'
                 if (destNodesScope.item && destNodesScope.item.type === 'composite' ) {
                     // get ancestor for the source node
                     var ancetreSrc = $scope.getAncestor(sourceNodeScope);
-                    // console.log("ancetre src => " + ancetreSrc.item.syllabusElement_id);
+                    // console.log("ancetre src => " + ancetreSrc.item.id);
                     // get ancestor for the destination node
                     var ancetreDest = $scope.getAncestor(destNodesScope);
-                    // console.log("ancetre dest => " +ancetreDest.item.syllabusElement_id);
+                    // console.log("ancetre dest => " +ancetreDest.item.id);
 
                     if (sourceNodeScope.item && sourceNodeScope.item.type === 'composite') {
                         // On peut déplacer un composite uniquement dans l'élément parent racine ( qui lui n'a pas de parent )
@@ -60,7 +60,7 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService'
                         }
                     } else {
                         // Le noeud source et destination doivent avoir un ancêtre commun
-                        if (ancetreSrc && ancetreSrc.item && ancetreDest && ancetreDest.item && ancetreSrc.item.syllabusElement_id === ancetreDest.item.syllabusElement_id) {
+                        if (ancetreSrc && ancetreSrc.item && ancetreDest && ancetreDest.item && ancetreSrc.item.id === ancetreDest.item.id) {
                             return true;
                         } 
                     }

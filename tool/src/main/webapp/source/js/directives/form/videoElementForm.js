@@ -7,7 +7,7 @@ opensyllabusApp.directive('videoElementForm', ['$sce', function ($sce){
             element: '=videoElementForm' 
         },
         restrict: 'A',
-        templateUrl: 'videoElementForm.html',
+        templateUrl: 'form/videoElementForm.html',
         controller: function ($scope) {
 
         },

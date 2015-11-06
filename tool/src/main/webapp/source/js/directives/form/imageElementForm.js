@@ -7,7 +7,7 @@ opensyllabusApp.directive('imageElementForm', function (){
             element: '=imageElementForm'
         },
         restrict: 'A',
-        templateUrl: 'imageElementForm.html',
+        templateUrl: 'form/imageElementForm.html',
         controller: function ($scope) {
 
         },

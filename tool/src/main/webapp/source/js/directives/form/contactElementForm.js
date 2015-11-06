@@ -7,7 +7,7 @@
         // },
         scope: true,
         restrict: 'A',
-        templateUrl: 'contactElementForm.html', 
+        templateUrl: 'form/contactElementForm.html', 
         controller: function ($scope) {
          
         }        

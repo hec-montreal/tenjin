@@ -5,12 +5,14 @@
 
         <div data-ng-switch="item.type">
 
-            <!-- élément de type composite -->
+            <!-- élément de type composite --> 
             <div data-ng-switch-when="composite" data-regroupement-element="item"></div>
             <!-- élément de type course_lecture -->
             <div data-ng-switch-when="course_lecture" data-cours-element="item"></div>
             <!-- élément de type evaluation -->
             <div data-ng-switch-when="evaluation" data-evaluation-element="item"></div>
+            <!-- élément de type rubric -->
+            <div data-ng-switch-when="rubric" data-rubric-element="item"></div>
 
             <!-- élément de type texte -->
             <div data-ng-switch-when="text" data-text-element="item"></div>
@@ -25,10 +27,7 @@
             <div data-ng-switch-when="video" data-video-element="item"></div>
 			<!-- élément de type contactInfo -->
             <div data-ng-switch-when="contact_info" data-contact-element="item"></div>
-            
-            <!-- <div data-ng-switch-when="contact_info">
-                <div data-contact-element="item"></div>
-            </div> -->
+
             <!--<div data-ng-switch-when="contact_info" class="element contact-info">
 
 
@@ -38,7 +37,7 @@
                         <span class="contact-firstname">{{item.attributes.contactFirstname}}</span> 
                         <span class="contact-lastname">{{item.attributes.contactSurname}}</span>
                     </div>
-                    <div class="contact-title">{{item.attributes.title}}</div>
+                    <div class="contact-title">{{item.title}}</div>
                     <div class="contact-email">{{item.attributes.contactEmail}}</div>
 
                     <div class="contact-tel">{{item.attributes.contactTel}}</div>
@@ -77,7 +76,7 @@
     </div>
 
 
-    <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-class="{hidden: collapsed, 'liste-element': true}" data-ng-if="item.type === 'composite'" >
+    <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-class="{hidden: collapsed, 'liste-element': true}" data-ng-if="item.type === 'composite' || item.type === 'rubric'" >
         <li data-ng-repeat="item in item.elements" ui-tree-node data-ng-include="'nodes_renderer_content.html'" >
         </li>
     </ol>

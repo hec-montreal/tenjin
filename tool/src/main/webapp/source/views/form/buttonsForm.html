@@ -1,0 +1,38 @@
+﻿<!-- <div data-ng-attr-id="{{ 'attribut-' + element.syllabusElement_id }}"> -->
+<div class="buttons-form"> 
+
+    <!-- Important -->
+    <div> 
+        <input type="checkbox" name="important" id="importantCheckbox" />
+        <label for="importantCheckbox">{{ 'FORM_IMPORTANT' | translate }} important (ajoute une entête)</label> 
+    </div> 
+    <!-- Visibilité -->
+    <div>
+        <input type="checkbox" name="visibility" id="visibilityCheckbox" />
+        <label for="visibilityCheckbox">{{ 'FORM_VISIBILITE' | translate }}</label> 
+    </div>
+    <!-- Date d'affichage -->
+    <div>
+        <span class="libelle-date-debut">{{ 'FORM_DATE_AFFICHAGE_DEBUT' | translate }} : </span>
+        <!-- TODO : calendrier -->
+        <span class="container-date-debut">
+
+            <p class="input-group">
+
+                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+          
+            </p>
+      
+        </span>
+    </div>
+    <!-- Date de retrait -->
+    <div>
+        <input type="checkbox" name="displayEnd" id="displayEndCheckbox" />
+        <label for="displayEndCheckbox">{{ 'FORM_DATE_AFFICHAGE_FIN' | translate }}</label>
+        <!-- TODO : calendrier -->
+    </div>
+
+</div>

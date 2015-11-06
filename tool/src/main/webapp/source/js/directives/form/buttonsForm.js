@@ -7,7 +7,7 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
             noedit: '='
         },
         restrict: 'A',
-        templateUrl: 'buttonsForm.html',
+        templateUrl: 'form/buttonsForm.html',
         controller: function ($scope) {
 
             $scope.confirmDelete = function($event, $element) {
@@ -26,7 +26,26 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
                 });
             };
 
+            $scope.open = function($event) {
+                $scope.status.opened = true;
+            };
 
+            // Disable weekend selection
+            $scope.disabled = function(date, mode) {
+                return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+            };
+
+            $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+            $scope.format = $scope.formats[0];
+
+            $scope.status = {
+                opened: false
+            };
+
+            $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+            };
         },
         link: function ($scope, $element) {
 

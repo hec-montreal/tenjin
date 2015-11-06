@@ -70,7 +70,7 @@
 	<script src="/opensyllabus2-tool/lib/angular/angular-resource.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-ui-tree/angular-ui-tree.js"></script>
-	<script src="/opensyllabus2-tool/lib/angular-ui/ui-bootstrap-custom-tpls-0.13.4.min.js"></script>
+	<script src="/opensyllabus2-tool/lib/angular-ui/ui-bootstrap-custom-tpls-0.14.3.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/xeditable/xeditable.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-translate/angular-translate.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/ng-ckeditor-master/ng-ckeditor.js"></script>

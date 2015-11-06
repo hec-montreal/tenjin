@@ -1,15 +1,15 @@
 ﻿
-opensyllabusApp.controller('DeleteModalCtrl',  [ '$scope', '$modalInstance', 'element', function ($scope, $modalInstance, element) {
+opensyllabusApp.controller('DeleteModalCtrl',  [ '$scope', '$uibModalInstance', 'element', function ($scope, $uibModalInstance, element) {
     'use strict';
 
     $scope.element = element;
 
     $scope.ok = function () {
-        $modalInstance.close('');
+        $uibModalInstance.close('');
     };
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
     };
 
 }]);

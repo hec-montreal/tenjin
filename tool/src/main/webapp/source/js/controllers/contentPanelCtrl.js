@@ -15,7 +15,7 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
 
     $scope.select = function($item){
 
-        if ($scope.infos.selectedItem && $item.syllabusElement_id !== $scope.infos.selectedItem.syllabusElement_id ) {         
+        if ($scope.infos.selectedItem && $item.id !== $scope.infos.selectedItem.id ) {         
             // permet de déselectionner l'élément précédemment sélectionné
             TreeService.unselectTree($scope.syllabus);
             $item.selected = true;
