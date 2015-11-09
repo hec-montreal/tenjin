@@ -22,8 +22,6 @@ package ca.hec.opensyllabus2.api.model.template;
 
 import java.util.Set;
 
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElement;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.*;
@@ -37,11 +35,11 @@ import lombok.*;
 @NoArgsConstructor
 public class Rubric {
 
-	
+
     @NonNull private Long id;
 
     @NonNull private String label;
-    
-  
+
+
 }
 
