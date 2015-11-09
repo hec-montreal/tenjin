@@ -37,7 +37,7 @@
 		</property>
 
 		<property name="publicElement" type="boolean">
-			<column name="PUBLIC" />
+			<column name="PUBLIC_ELEMENT" />
 		</property>
 
 		<property name="shareable" type="boolean">
@@ -65,7 +65,7 @@
 		<property name="lastModifiedBy" column="LAST_MODIFIED_BY" type="string" />
 
 		<map name="attributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE" cascade="all">
-			<key column="ELEMENT_ID" />
+			<key column="SYLLABUSELEMENT_ID" />
 			<map-key column="name" type="string" />
 			<element column="value" type="text" />
 		</map>
