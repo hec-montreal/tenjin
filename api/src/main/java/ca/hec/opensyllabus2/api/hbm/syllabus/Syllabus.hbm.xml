@@ -1,43 +1,43 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
+<hibernate-mapping default-lazy="false">
+	<class name="ca.hec.opensyllabus2.api.model.syllabus.Syllabus"
+		table="OSYL2_SYLLABUS">
+		<id name="id" type="long">
+			<column name="SYLLABUS_ID" />
+			<generator class="native">
+				<param name="sequence">SYLLABUS_ID_SEQ</param>
+			</generator>
+		</id>
+		<property name="siteId" type="string">
+			<column name="SITE_ID" />
+		</property>
+		<property name="templateId" type="long">
+			<column name="TEMPLATE_ID" />
+		</property>
+		<property name="locale" type="string">
+			<column name="LOCALE" />
+		</property>
+		<property name="createdBy" type="string">
+			<column name="CREATED_BY" />
+		</property>
+		<property name="createdDate" type="java.util.Date">
+			<column name="CREATED_DATE" />
+		</property>
+		<property name="lastModifiedBy" type="string">
+			<column name="LAST_MODIFIED_BY" />
+		</property>
+		<property name="lastModifiedDate" type="java.util.Date">
+			<column name="LAST_MODIFIED_DATE" />
+		</property>
 
-
-<hibernate-mapping>
-    <class name="ca.hec.opensyllabus2.api.model.syllabus.Syllabus" table="OSYL2_SYLLABUS">
-        <id name="syllabus_id" type="long">
-            <column name="SYLLABUS_ID" />
-            <generator class="native">
-            	<param name="sequence">SYLLABUS_ID_SEQ</param>
-            </generator>
-        </id>
-        <property name="site_id" type="string">
-            <column name="SITE_ID" />
-        </property>
-        <property name="courseTitle" type="string">
-            <column name="COURSETITLE" />
-        </property>
-        <property name="locale" type="string">
-            <column name="LOCALE" />
-        </property>
-        <property name="createdBy" type="string">
-            <column name="CREATEDBY" />
-        </property>
-         <property name="creationDate" type="java.util.Date">
-         	<column name="CREATIONDATE" />
-        </property>
-
-		 <many-to-one name="template" class="ca.hec.opensyllabus2.api.model.template.Template" >
-            <column name="TEMPLATE_ID" not-null="true" />
-        </many-to-one>
-
-        <set name="elements" table="OSYL2_SYLLABUSELEMENT"  lazy="false" order-by="displayOrder">
-	          <key>
-	              <column name="SYLLABUS_ID" not-null="true" />
-	          </key>
-	          <one-to-many class="ca.hec.opensyllabus2.api.model.syllabus.SyllabusElement" />
-	      </set>
-
-    </class>
+		<list name="elements" table="OSYL2_SYLLABUSELEMENT">
+			<key column="SYLLABUS_ID" not-null="true" />
+			<list-index column="DISPLAY_ORDER"/>
+			<one-to-many
+				class="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement" />
+		</list>
+	</class>
 </hibernate-mapping>

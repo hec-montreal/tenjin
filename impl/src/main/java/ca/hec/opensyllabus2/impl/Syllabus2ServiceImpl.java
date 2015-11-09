@@ -1,8 +1,4 @@
-	package ca.hec.opensyllabus2.impl;
-
-
-import java.util.Comparator;
-import java.util.Map;
+package ca.hec.opensyllabus2.impl;
 
 import lombok.Setter;
 
@@ -24,8 +20,6 @@ import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.dao.Syllabus2Dao;
 import ca.hec.opensyllabus2.api.dao.TemplateDao;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElement;
-import ca.hec.opensyllabus2.api.model.template.Rubric;
 import ca.hec.opensyllabus2.api.model.template.Template;
 
 /**
@@ -37,7 +31,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 	private static final Logger log = Logger.getLogger(Syllabus2ServiceImpl.class);
 
-	
+
 	/**
  	* {@inheritDoc}
  	*/
@@ -116,8 +110,8 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
     @Setter
 	private ContentHostingService chs;
-    
-    
+
+
     public Syllabus getShareableSyllabus(String courseId) throws NoSyllabusException {
 		// TODO check if the user is allowed to get the syllabus before
 
@@ -166,8 +160,8 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	public Template getTemplate(Long templateId) throws IdUnusedException {
 		return templateDao.getTemplate(templateId);
 	}
-	
-	
+
+
 	@Override
 	public Object loadSyllabus() throws NoSyllabusException, NoSiteException {
 		String siteId = "";
@@ -180,23 +174,23 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 		//TODO: retreive user allowed access
 		Syllabus syllabus = getShareableSyllabus(siteId);
-		
+
 		return syllabus;
-		
+
 	}
-	
+
 	private String getCurrentSiteContext () throws IdUnusedException, NoSiteException{
 		String siteRef = null;
 		Placement placement = toolManager.getCurrentPlacement();
 		String context = null;
-		
+
 		if (placement == null)
 		    throw new NoSiteException();
-		else 
+		else
 		    context = placement.getContext();
-		
+
 		siteRef = siteService.getSite(context).getId();
-		
+
 		return siteRef;
 	}
 

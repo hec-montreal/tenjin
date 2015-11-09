@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ca.hec.opensyllabus2.api.hbm.syllabus" default-lazy="false" default-cascade="none">
+	<subclass
+		name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement"
+		extends="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement">
+
+		<list name="elements" table="OSYL2_SYLLABUSELEMENT">
+			<key column="PARENT_ID" />
+			<list-index column="DISPLAY_ORDER"/>
+			<one-to-many
+				class="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement" />
+		</list>
+	</subclass>
+
+	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement"
+			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
+	</subclass>
+	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusEvaluationElement"
+			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
+	</subclass>
+	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusLectureElement"
+			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
+	</subclass>
+	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusTutorialElement"
+			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
+	</subclass>
+</hibernate-mapping>
