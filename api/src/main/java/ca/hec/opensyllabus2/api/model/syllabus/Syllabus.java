@@ -1,48 +1,29 @@
 package ca.hec.opensyllabus2.api.model.syllabus;
+
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
-
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import ca.hec.opensyllabus2.api.model.template.Template;
+import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import lombok.Data;
 
 /**
 *
 * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
+* @author <a href="mailto:curtis.van-osch@hec.ca">Curtis van Osch</a>
 * @version $Id: $
 */
 
 @Data
 public class Syllabus {
 
-	private Long syllabus_id;
-
-    private String site_id;
-
+	private Long id;
+    private String siteId;
     private String courseTitle;
-
-    @JsonBackReference
-    private Template template;
-
+    private Long templateId;
     private String locale;
-
-
     private String createdBy;
-
-    private Date creationDate;
-
-    private Set<SyllabusElement> elements;
-
-    public Syllabus (String course_id, String courseTitle, Template template){
-    	this.site_id = course_id;
-    	this.courseTitle = courseTitle;
-    	this.template = template;
-    }
-
-    public Syllabus (){
-
-    }
+    private Date createdDate;
+    private String lastModifiedBy;
+    private Date lastModifiedDate;
+    private List<AbstractSyllabusElement> elements;
  }
