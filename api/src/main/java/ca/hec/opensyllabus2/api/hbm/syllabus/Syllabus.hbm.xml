@@ -34,7 +34,7 @@
 		</property>
 
 		<list name="elements" table="OSYL2_SYLLABUSELEMENT">
-			<key column="SYLLABUS_ID" not-null="true" />
+			<key column="SYLLABUS_ID" />
 			<list-index column="DISPLAY_ORDER"/>
 			<one-to-many
 				class="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement" />
