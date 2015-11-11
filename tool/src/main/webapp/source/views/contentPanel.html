@@ -32,30 +32,6 @@
 			<!-- élément de type contactInfo -->
             <div data-ng-switch-when="contact_info" data-contact-element="item"></div>
 
-            <!--<div data-ng-switch-when="contact_info" class="element contact-info">
-
-
-                <div data-buttons-element="item" class="buttons-elements"></div> 
-
-                    <div class="titre-element"> 
-                        <span class="contact-firstname">{{item.attributes.contactFirstname}}</span> 
-                        <span class="contact-lastname">{{item.attributes.contactSurname}}</span>
-                    </div>
-                    <div class="contact-title">{{item.title}}</div>
-                    <div class="contact-email">{{item.attributes.contactEmail}}</div>
-
-                    <div class="contact-tel">{{item.attributes.contactTel}}</div>
-
-                    <div class="contact-officeroom">Bureau: {{item.attributes.contactOfficeroom}}</div> 
-                    
-                 <div class="infos">
-                    <span data-ng-class="{ 'picto-important' : ( item.attributes.contactImportant === 'true') }" title="Important"></span>
-                    <span data-ng-class="{ 'picto-hec' : ( item.attributes.contactDiffusion === 'hec' ), 'picto-public' : ( item.attributes.contactDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
-                    <span data-ng-class="{ 'picto-hidden' : ( item.attributes.contactHidden === 'true') }" title="Visible"></span>     
-                </div>
-
-            </div>-->
-
 
 
             <!-- élément de type lien vers outil -->
@@ -91,13 +67,14 @@
 
 
     <!-- Menu ajout -->
-    <div id="menu-ajout" data-add-element-menu="infos.selectedItem"  class="container-menu-ajout"></div>
+    <div id="menu-ajout" data-add-element-menu="treeService.getSelectedItem()"  class="container-menu-ajout"></div>
     
     <!-- Titre -->
-    <div class='titre' data-ng-model="infos.selectedItem"> 
-        {{infos.selectedItem.title}}
-        <span data-ng-if="infos.selectedItem.type == 'evaluation'"> ({{infos.selectedItem.attributes.weight}}%)</span>
+    <div class='titre' > 
+        {{treeService.getSelectedItem().title}}
+        <span data-ng-if="treeService.getSelectedItem().type == 'evaluation'"> ({{treeService.getSelectedItem().attributes.weight}}%)</span>
     </div> 
+    <div data-ng-if="treeService.getSelectedItem().type == 'evaluation'"> <div data-evaluationattr-element="treeService.getSelectedItem()"></div></div>
 
 
 
@@ -117,8 +94,8 @@
 
     <div ui-tree data-drag-enabled="true">
     <!-- <div ui-tree="treeOptions" data-drag-enabled="true"> -->
-      <ol ui-tree-nodes="" ng-model="infos.selectedItem.elements" class="liste-element">
-        <li ng-repeat="item in infos.selectedItem.elements" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          
+      <ol ui-tree-nodes="" ng-model="treeService.getSelectedItem().elements" class="liste-element">
+        <li ng-repeat="item in treeService.getSelectedItem().elements" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          
       </ol>
 
     </div> 

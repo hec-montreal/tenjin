@@ -73,10 +73,28 @@
 //Élément référence bibliographique
 
 
-	.biblio-boldTitle{
+.biblio-boldTitle{
 		font-weight: bold;
 		font-style: italic;
-	}
-	.biblio-italicTitle{
+}
+.biblio-italicTitle{
 		font-style: italic;
-	}
+}
+
+table.eval{
+	font-weight:bold;
+	margin-top: 5px;
+	width:100%;
+}
+td.eval{
+	text-align:left;
+	width:60%;
+}
+.eval-date{
+	padding-right: 15em;
+	float: right;
+}
+.eval-type{
+	margin-top: 10px;
+	color: #999;
+}

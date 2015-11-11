@@ -2,34 +2,15 @@
 opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeService', 'SyllabusService', 'config' , function ($scope, $timeout, TreeService, SyllabusService, config){
     'use strict';
 
-
-
+    $scope.syllabusService = SyllabusService;
+    $scope.treeService = TreeService;
+    
     $scope.getAncestor = function($node){
         if ($node.$parentNodeScope) {
             return $scope.getAncestor($node.$parentNodeScope);
         } else {
             return $node;
         }
-    };
-
-
-    $scope.select = function($item){
-
-        if ($scope.infos.selectedItem && $item.id !== $scope.infos.selectedItem.id ) {
-            // permet de déselectionner l'élément précédemment sélectionné
-            TreeService.unselectTree(SyllabusService.getSyllabus());
-            $item.selected = true;
-            $scope.infos.selectedItem = $item;
-
-            $timeout(function() {
-                // anything you want can go here and will safely be run on the next digest.
-                // resize frame (should be done also whenever we change content)
-                if (window.frameElement) {
-                    setMainFrameHeight(window.frameElement.id);
-                }
-            });
-        }
-
     };
 
     $scope.treeOptions = {

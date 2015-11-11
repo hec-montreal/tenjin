@@ -1,0 +1,12 @@
+
+ <div data-ng-if="element.attributes.assessmentType" class="eval-type">{{element.attributes.assessmentType}}</div>	
+ <table class="eval">
+  <tr>
+    <td data-ng-if="element.attributes.location" >{{'EVALUATION_LOCALISATION' | translate}} {{element.attributes.location}}</td>
+    <td  data-ng-if="element.attributes.submission_type" class="eval">{{'EVALUATION_SUBMISSION_TYPE' | translate}} {{element.attributes.submission_type}}</td>
+  </tr>
+  <tr>
+    <td data-ng-if="element.attributes.modality">{{'EVALUATION_TERMS' | translate}} {{element.attributes.modality}}</td>
+    <td data-ng-if="element.attributes.mode" class="eval">{{'EVALUATION_ASSESSMENT_TYPE' | translate}} {{element.attributes.mode}}</td>
+   </tr>
+</table>

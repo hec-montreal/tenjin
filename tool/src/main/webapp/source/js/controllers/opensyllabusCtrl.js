@@ -1,12 +1,10 @@
 ﻿
 // loader les donnees du plan de cours
-opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusService', 'config', '$translate', 'AlertService' , function($scope, $timeout, SyllabusService, config, $translate, AlertService) {
+opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusService', 'TreeService', 'config', '$translate', 'AlertService' , function($scope, $timeout, SyllabusService, TreeService, config, $translate, AlertService) {
 	'use strict';
 
     $scope.infos = {};
-    $scope.infos.currentItemId = -1;
-    $scope.infos.selectedItem = null;
-
+ 
     $scope.alertService = AlertService;
 
 
@@ -21,7 +19,8 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
 
         if (syllabus.elements.length > 0 ) {
             syllabus.elements[0].selected = true;
-            $scope.infos.selectedItem = syllabus.elements[0]; 
+            TreeService.setSelectedItem(syllabus.elements[0]);
+            
         }
 
     }else {
@@ -41,7 +40,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
             // sélection du premier élément par défaut
             if (data.elements.length > 0 ) {
                 data.elements[0].selected = true;
-                $scope.infos.selectedItem = data.elements[0]; 
+                TreeService.setSelectedItem(data.elements[0]);
             }
 
             $timeout(function() {
