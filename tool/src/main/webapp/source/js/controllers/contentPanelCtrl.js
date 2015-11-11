@@ -15,7 +15,7 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
 
     $scope.select = function($item){
 
-        if ($scope.infos.selectedItem && $item.id !== $scope.infos.selectedItem.id ) {         
+        if ($scope.infos.selectedItem && $item.id !== $scope.infos.selectedItem.id ) {
             // permet de déselectionner l'élément précédemment sélectionné
             TreeService.unselectTree($scope.syllabus);
             $item.selected = true;
@@ -32,7 +32,7 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
 
     };
 
-    $scope.treeOptions = {  
+    $scope.treeOptions = {
 
         name: "contentPanelTree",
 
@@ -43,18 +43,18 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
 
                 if (destNodesScope.item) {
 
-                    if ( destNodesScope.item.type === 'composite' || destNodesScope.item.type === 'course_lecture' || destNodesScope.item.type === 'evaluation' ) {
-                        
+                    if ( destNodesScope.item.type === 'composite' || destNodesScope.item.type === 'lecture' || destNodesScope.item.type === 'tutorial' || destNodesScope.item.type === 'evaluation' ) {
+
                         // on ne peut pas déplacer un composite dans un composite
                         if (sourceNodeScope.item.type === 'composite' && destNodesScope.item.type === 'composite')                                 {
                             return false;
                         } else {
-                            return true; 
+                            return true;
                         }
 
                     } else {
                         return true;
-                    }  
+                    }
 
                 } else {
                     // on est à la racine

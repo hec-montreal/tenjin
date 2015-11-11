@@ -8,39 +8,39 @@
       'glyphicon-chevron-down': !collapsed
     }"></span></a>
 
-  <!-- Display items composite, evaluation and course_lecture -->
-  <span data-ng-if="item.type === 'composite' || item.type === 'evaluation' || item.type === 'course_lecture'">  
+  <!-- Display items composite, evaluation, lecture and tutorial -->
+  <span data-ng-if="item.type === 'composite' || item.type === 'evaluation' || item.type === 'lecture' || item.type === 'tutorial'">
     <span data-ng-click="select(item)" class="select-item" data-ng-class="{'item-selected': item.selected, 'item-composite': item.type === 'composite' }" >
       {{item.title}}
-      <span ui-tree-handle class="tree-node tree-node-content picto-move" data-ng-if="item.parent"></span> 
+      <span ui-tree-handle class="tree-node tree-node-content picto-move" data-ng-if="item.parent"></span>
     </span>
-    
+
      <!-- Pas de drag and drop pour les éléments de premier niveau -->
     <span ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.parent"></span>
-  </span> 
+  </span>
 
   <!-- <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-class="{hidden: collapsed}" data-ng-if="item.elements && item.elements.length > 0 && item.elements[0].displayPage"> -->
   <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite'">
     <li data-ng-repeat="item in item.elements" ui-tree-node data-ng-include="'nodes_renderer.html'">
-    </li>  
-  </ol>  
- 
-</script>    
+    </li>
+  </ol>
 
- 
-<section data-ng-controller='LeftMenuCtrl'>    
+</script>
 
-    <div class='titre'> 
+
+<section data-ng-controller='LeftMenuCtrl'>
+
+    <div class='titre'>
       {{ 'MENU_LABEL' | translate }}
     </div>
 
     <!-- <div ui-tree data-drag-enabled="true"> -->
     <div ui-tree="treeOptions" data-drag-enabled="true">
       <ol ui-tree-nodes="" ng-model="syllabus.elements">
-        <li ng-repeat="item in syllabus.elements" ui-tree-node ng-include="'nodes_renderer.html'"></li>          
+        <li ng-repeat="item in syllabus.elements" ui-tree-node ng-include="'nodes_renderer.html'"></li>
       </ol>
 
     </div>
- 
-    
+
+
 </section>
