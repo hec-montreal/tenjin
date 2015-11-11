@@ -4,7 +4,7 @@
 		{
 			"path": ".",
             "folder_exclude_patterns": ["dest", "node_modules", ".sass-cache"],
-            "file_exclude_patterns": ["opensyllabus.js", "templates.js", "*~"]
+            "file_exclude_patterns": ["opensyllabus.js", "templates.js", "*.bak", "*~"]
 		}
 	]
 }
