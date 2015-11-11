@@ -1,6 +1,8 @@
 ﻿	
-opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService' , function ($scope, $timeout, TreeService){
+opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService', 'SyllabusService', function ($scope, $timeout, TreeService, SyllabusService){
 	'use strict';
+
+    $scope.syllabusService = SyllabusService;
 
     $scope.toggleTree = function (scope) {
 		scope.toggle();
@@ -10,7 +12,7 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService'
 
         if ($scope.infos.selectedItem && $item.id !== $scope.infos.selectedItem.id ) {         
             // permet de déselectionner l'élément précédemment sélectionné
-            TreeService.unselectTree($scope.syllabus);
+            TreeService.unselectTree(SyllabusService.getSyllabus());
             $item.selected = true;
             $scope.infos.selectedItem = $item;
 

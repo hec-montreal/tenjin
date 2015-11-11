@@ -20,19 +20,8 @@ opensyllabusApp.directive('textElementForm', function (){
 
         },
         link: function ($scope, $element) {
-            $scope.element = {};
-
-            // CKEDITOR.replace( 'cke_mytextarea',
-            // {
-            //     extraPlugins : 'uicolor',
-            //     height: '200px',
-            // } );
-                        
-            // CKEDITOR.editorConfig = function( config )
-            // {
-            //    // misc options
-            //    config.height = '200px';
-            // };
+            // Date actuelle par défaut
+            $scope.element.availabilityStartDate = Date.now();
         }
 
     };

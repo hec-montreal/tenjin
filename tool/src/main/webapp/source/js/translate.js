@@ -27,8 +27,12 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         REF_BIBLIO_DISPONIBILITE:"",
         REF_BIBLIO_DE: "FROM",
         REF_BIBLIO_ISSN: "ISSN:",
-        REF_BIBLIO_ISBN: "ISBN:"
-
+        REF_BIBLIO_ISBN: "ISBN:",
+        ERROR_FORMAT_DATE_DEBUT: 'The format of the diffusion date is invalid',
+        ERROR_FORMAT_DATE_RETRAIT: 'The format of the ending date is invalid',
+        ALERT_ERROR: 'An error has occured. Please try later.',
+        ALERT_SUCCESS: 'The operation succeeded.',
+        ALERT_SUCCESS_ADD_ELEMENT: 'The element has been added.'
 
     })
     .translations('fr', {
@@ -54,7 +58,13 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         REF_BIBLIO_DISPONIBILITE:"Disponible à la bibliothèque",
         REF_BIBLIO_DE: "DE",
         REF_BIBLIO_ISSN: "ISSN:",
-        REF_BIBLIO_ISBN: "ISBN:"
+        REF_BIBLIO_ISBN: "ISBN:",
+        ERROR_FORMAT_DATE_DEBUT: 'Le format de la date d\'affichage est incorrect',
+        ERROR_FORMAT_DATE_RETRAIT: 'Le format de la date de retrait est incorrect',
+        ALERT_ERROR: 'Une erreur s\'est produite. Veuillez réessayer ultérieurement.',
+        ALERT_SUCCESS: 'L\' opération a réussi.',
+        ALERT_SUCCESS_ADD_ELEMENT: 'L\' élément a été ajouté.'
+
     });
 
      $translateProvider.preferredLanguage('fr');

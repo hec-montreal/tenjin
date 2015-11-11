@@ -36,8 +36,9 @@
 
     <!-- <div ui-tree data-drag-enabled="true"> -->
     <div ui-tree="treeOptions" data-drag-enabled="true">
-      <ol ui-tree-nodes="" ng-model="syllabus.elements">
-        <li ng-repeat="item in syllabus.elements" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+
+      <ol ui-tree-nodes="" ng-model="syllabusService.syllabus.elements">
+        <li ng-repeat="item in syllabusService.syllabus.elements" ui-tree-node ng-include="'nodes_renderer.html'"></li>          
       </ol>
 
     </div>

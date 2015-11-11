@@ -12,6 +12,7 @@ opensyllabusApp.directive('textElement', function (){
 
         },
         link: function ($scope, $element) {
+            
         }
 
     };

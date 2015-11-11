@@ -1,5 +1,5 @@
 
-opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeService','config' , function ($scope, $timeout, TreeService, config){
+opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeService', 'SyllabusService', 'config' , function ($scope, $timeout, TreeService, SyllabusService, config){
     'use strict';
 
 
@@ -17,7 +17,7 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
 
         if ($scope.infos.selectedItem && $item.id !== $scope.infos.selectedItem.id ) {
             // permet de déselectionner l'élément précédemment sélectionné
-            TreeService.unselectTree($scope.syllabus);
+            TreeService.unselectTree(SyllabusService.getSyllabus());
             $item.selected = true;
             $scope.infos.selectedItem = $item;
 

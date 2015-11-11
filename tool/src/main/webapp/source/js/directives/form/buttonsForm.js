@@ -10,30 +10,7 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
         templateUrl: 'form/buttonsForm.html',
         controller: function ($scope) {
 
-            $scope.confirmDelete = function($event, $element) {
-                // scroll to the top
-                // $location.hash('body');
-                // $anchorScroll();
-                // window.scrollTo(0,0);
 
-                // Création modale
-                var modal = ModalService.confirmDelete($event, $element);
-                // Traitement du résultat
-                modal.result.then(function (selectedItem) {
-                    console.debug('élément supprimé');
-                }, function () {
-                    console.debug('élément toujours là');
-                });
-            };
-
-            $scope.open = function($event) {
-                $scope.status.opened = true;
-            };
-
-            // Disable weekend selection
-            $scope.disabled = function(date, mode) {
-                return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-            };
 
             $scope.formats = ['dd-MMMM-yyyy HH:mm']; 
             $scope.format = $scope.formats[0];
@@ -50,6 +27,25 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
             // calendrier date retrait
             $scope.statusRetrait = {
                 opened: false
+            };
+
+            $scope.$watch('isDateRetrait', function() {
+                 if (!$scope.isDateRetrait) {
+                    $scope.element.dtRetrait = null;
+                 }
+
+                 var inputRetrait = angular.element(document.getElementById('input-date-retrait'));
+                 inputRetrait.prop('required');
+
+            });
+
+            $scope.open = function($event) {
+                $scope.status.opened = true;
+            };
+
+            // Disable weekend selection
+            $scope.disabled = function(date, mode) {
+                return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
             };
 
             $scope.openRetrait = function($event) {

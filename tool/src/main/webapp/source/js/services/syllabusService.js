@@ -1,20 +1,55 @@
 ﻿opensyllabusApp.service('SyllabusService', ['$resource', '$http', function ($resource, $http){
     'use strict';
 
+    this.syllabus = null;
+    this.template = null;
+
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusProvider = $resource('v1/syllabus/init.json');
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var templateProvider = $resource('v1/template/1.json');
 
-    this.getSyllabus =  function() {  
+    //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
+    var syllabusElementProvider = $resource('v1/syllabus/');
+
+    this.loadSyllabus =  function() {  
         // return syllabusProvider.getSyllabus({sectionId : "A01,B03"});   
         return syllabusProvider.get();
     };
 
-    this.getTemplate = function() {
+    this.loadTemplate = function() {
         return templateProvider.get();
     };
+
+    this.saveElement = function($element, $parent) {
+        return syllabusElementProvider.save($element, $parent);
+    };
+
+    this.getSyllabus = function() {
+        return this.syllabus;
+    };
+
+    this.setSyllabus = function($syllabus) {
+        this.syllabus = $syllabus;
+    };
+
+    this.getTemplate = function() {
+        return this.template;
+    };
+
+    this.setTemplate = function($template) {
+        this.template = $template;
+    };
+
+    this.addElement = function($element, $parent) {
+        
+    };
+
+    this.deleteElement = function($element, $parent) {
+        
+    };
+
 
     // this.initSyllabus = function(){
     // 	return $http.get('v1/syllabus/init.json');

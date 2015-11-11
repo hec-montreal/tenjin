@@ -1,29 +1,38 @@
 ﻿<!-- modal confirm delete -->
 <script type="text/ng-template" id="createElementModal.html">
 
-    <form>
+    <form data-ng-submit="ok()">
         <div class="modal-header">
             <h3 class="modal-title">{{'MODALE_CREATE_ELEMENT_TITLE' | translate}} "{{ type.libelle | translate }}"</h3>
         </div>
         <div class="modal-body">
+
+            <div class="errors">
+                <ul>
+                    <li data-ng-show="errors.isErrorDateDebut">{{ 'ERROR_FORMAT_DATE_DEBUT' | translate}}</li>
+                    <li data-ng-show="errors.isErrorDateRetrait">{{ 'ERROR_FORMAT_DATE_RETRAIT' | translate}}</li>
+                </ul>
+            </div>
+
+
             <div data-ng-switch="type.type">
                  <!-- élément de type texte -->
-                <div data-ng-switch-when="text" data-text-element-form="item"></div>
-                <!-- <div data-dyn-attr="data-text-element" data-element="item"></div> -->
+                <div data-ng-switch-when="text" data-text-element-form="element"></div>
+                <!-- <div data-dyn-attr="data-text-element" data-element="element"></div> -->
                 <!-- élément de type document -->
-                <div data-ng-switch-when="document" data-document-element-form="item"></div>
+                <div data-ng-switch-when="document" data-document-element-form="element"></div>
                 <!-- élément de type hyperlien -->
-                <div data-ng-switch-when="hyperlink" data-hyperlink-element-form="item"></div>
+                <div data-ng-switch-when="hyperlink" data-hyperlink-element-form="element"></div>
                 <!-- élément de type image -->
-                <div data-ng-switch-when="image" data-image-element-form="item"></div>
+                <div data-ng-switch-when="image" data-image-element-form="element"></div>
                   <!-- élément de type video -->
-                <div data-ng-switch-when="video" data-video-element-form="item"></div>
+                <div data-ng-switch-when="video" data-video-element-form="element"></div>
                 <!-- élément de type contactInfo -->
-                <div data-ng-switch-when="contact_info" data-contact-element-form="item"></div>
+                <div data-ng-switch-when="contact_info" data-contact-element-form="element"></div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <input class="btn btn-primary" type="submit" value="OK"/> 
             <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
         </div> 
     </form>

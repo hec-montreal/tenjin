@@ -49,6 +49,10 @@
 
 		</div>
 	</div> -->
+
+ 	<uib-alert data-ng-if="alertService.isVisible('danger')" class="myalert" type="danger" close="alertService.closeAlert('danger')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('danger')}}</uib-alert>
+ 	<uib-alert data-ng-if="alertService.isVisible('success')" class="myalert" type="success" close="alertService.closeAlert('success')">{{alertService.getAlertMsg('success')}}</uib-alert>
+
 	<div class="row row-content">
 
 		<!-- Menu de gauche -->
@@ -63,12 +67,11 @@
 
 	</div>
 
-
-
 	<!-- <script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script> -->
 	<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular/angular-resource.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.min.js"></script>
+	<script src="/opensyllabus2-tool/lib/angular/angular-animate.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-ui-tree/angular-ui-tree.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-ui/ui-bootstrap-custom-tpls-0.14.3.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/xeditable/xeditable.min.js"></script>
