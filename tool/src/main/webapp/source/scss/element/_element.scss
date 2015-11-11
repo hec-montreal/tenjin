@@ -64,7 +64,33 @@
     .picto-delete {
 
     }
+
+
+    .container-menu-ajout-rubric {
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: top;
+
+        .btn {
+            border: none;
+            background-color: initial;
+            padding: 0 2px;
+        }
+
+        .ajouter-libelle {
+            display: none;
+        }
+
+        .glyphicon-plus-sign {
+            font-size: 20px;
+        }
+
+        .caret {
+            display: none;
+        }
+    }
 }
+
 
 .link-description {
     text-decoration: underline;
@@ -73,7 +99,7 @@
 //Élément référence bibliographique
 
 
-.biblio-boldTitle{
+.biblio-boldTitle {
 		font-weight: bold;
 		font-style: italic;
 }
@@ -81,20 +107,20 @@
 		font-style: italic;
 }
 
-table.eval{
+table.eval {
 	font-weight:bold;
 	margin-top: 5px;
 	width:100%;
 }
-td.eval{
+td.eval {
 	text-align:left;
 	width:60%;
 }
-.eval-date{
+.eval-date {
 	padding-right: 15em;
 	float: right;
 }
-.eval-type{
+.eval-type {
 	margin-top: 10px;
 	color: #999;
 }

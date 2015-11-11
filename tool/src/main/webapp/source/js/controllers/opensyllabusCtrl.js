@@ -23,7 +23,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
             
         }
 
-    }else {
+    } else {
         // MODE CONNECTE
         // show loader
         console.log('start');

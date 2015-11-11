@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', '$translate','type', 'parent', 'SyllabusService', 'AlertService', function ($scope, $uibModalInstance, $translate, type, parent, SyllabusService, AlertService) {
+opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', '$translate','type', 'parent', 'SyllabusService', 'TreeService', 'AlertService', function ($scope, $uibModalInstance, $translate, type, parent, SyllabusService, TreeService, AlertService) {
     'use strict';
 
     $scope.parent = parent;
@@ -10,8 +10,6 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
     $scope.element.type = $scope.type;
 
     
-
-    
     $scope.ok = function () {
 
         // CHECK ELEMENT
@@ -19,18 +17,19 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
 
         // RESULT
         if (result > 0) {
-
+            var selectedItem = TreeService.getSelectedItem();
             var savePromise = SyllabusService.saveElement($scope.element);
+            
             savePromise.$promise.then(function($data) {
                 // alert ajout ok
                 AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_ELEMENT'));
                 // ajout de l'élément au plan de cours
-                
+                SyllabusService.addElement($scope.element, selectedItem);
             }, function ($error){
                 // alert ajout ko
                 AlertService.display('danger');
                 // TEST : ajout de l'élément au plan de cours
-                // SyllabusService.addElement($scope.element);
+                SyllabusService.addElement($scope.element, selectedItem);
             });
 
             // on ferme la modale dans tous les cas

@@ -19,7 +19,11 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', '$document',  funct
             // $scope.types = ["Texte", "Document", "Contact", "Hyperlien", "Référence biblio", "Image", "Vidéo", "Lien outil Sakai"];
             // $scope.types = [{type: "text", libelle: "", "document", "contact_info", "hyperlink", "citation", "image", "video", "tool"];
 
-            $scope.types = [ { type: "text", libelle: "TYPE_ELEMENT_TEXTE" } , { type: "document", libelle: "TYPE_ELEMENT_DOCUMENT"} ];
+            $scope.types = [ 
+                { type: "text", libelle: "TYPE_ELEMENT_TEXTE" } , 
+                { type: "document", libelle: "TYPE_ELEMENT_DOCUMENT"},
+                
+            ];
 
             $scope.toggleMenu = function(){
                 $scope.showMenuAjouter = $scope.showMenuAjouter === false ? true : false;

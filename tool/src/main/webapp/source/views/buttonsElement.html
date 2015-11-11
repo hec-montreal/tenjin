@@ -1,7 +1,11 @@
 ﻿<div class="buttons">
 
-    <span ui-tree-handle class="tree-node tree-node-content picto-move-content"></span> 
-    <span class="picto-edit" data-ng-click="edit(element);" data-ng-if="!(noedit)"></span>   
+    <!-- Menu ajout -->
+    <span data-ng-if="element.type === 'rubric'" id="menu-ajout" data-add-element-menu="treeService.getSelectedItem()"  class="container-menu-ajout-rubric" ></span>
+    
+
+    <span class="picto-edit" data-ng-click="edit(element);" data-ng-if="!(noedit)"></span>  
+    <span ui-tree-handle class="tree-node tree-node-content picto-move-content"></span>  
     <span class="picto-delete" data-ng-click="confirmDelete($event, element);"></span> 
 
 </div> 

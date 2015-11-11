@@ -2,9 +2,11 @@
 <script type="text/ng-template" id="createElementModal.html">
 
     <form data-ng-submit="ok()">
+
         <div class="modal-header">
             <h3 class="modal-title">{{'MODALE_CREATE_ELEMENT_TITLE' | translate}} "{{ type.libelle | translate }}"</h3>
         </div>
+
         <div class="modal-body">
 
             <div class="errors">
@@ -13,7 +15,6 @@
                     <li data-ng-show="errors.isErrorDateRetrait">{{ 'ERROR_FORMAT_DATE_RETRAIT' | translate}}</li>
                 </ul>
             </div>
-
 
             <div data-ng-switch="type.type">
                  <!-- élément de type texte -->
@@ -31,10 +32,12 @@
                 <div data-ng-switch-when="contact_info" data-contact-element-form="element"></div>
             </div>
         </div>
+
         <div class="modal-footer">
             <input class="btn btn-primary" type="submit" value="OK"/> 
             <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
         </div> 
+        
     </form>
     
 </script>

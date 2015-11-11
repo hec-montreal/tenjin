@@ -52,6 +52,14 @@
     cursor: pointer;
 }
 
+.picto-add {
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/plus.png') no-repeat;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
 .picto-move {
     display: inline-block;
     background: url('/opensyllabus2-tool/img/desktop/drag.png') no-repeat;
