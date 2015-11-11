@@ -17,7 +17,7 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', '$document',  funct
 
             // TODO : définir la liste des éléments que l'on peut ajouter en fonction du template
             // $scope.types = ["Texte", "Document", "Contact", "Hyperlien", "Référence biblio", "Image", "Vidéo", "Lien outil Sakai"];
-            // $scope.types = [{type: "text", libelle: "", "document", "contact_info", "hyperlink", "ref_biblio", "image", "video", "tool"];
+            // $scope.types = [{type: "text", libelle: "", "document", "contact_info", "hyperlink", "citation", "image", "video", "tool"];
             $scope.types = [ { type: "text", libelle: "TYPE_ELEMENT_TEXTE" } , { type: "document", libelle: "TYPE_ELEMENT_DOCUMENT"} ];
 
             $scope.toggleMenu = function(){
