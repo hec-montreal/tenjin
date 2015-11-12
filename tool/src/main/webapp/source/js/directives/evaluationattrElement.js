@@ -12,6 +12,9 @@ opensyllabusApp.directive('evaluationattrElement', function (){
 
         },
         link: function ($scope, $element) {
+        	$scope.slash = '/';
+        	$scope.team = 'team';
+        	$scope.individual = 'individual';
         }
 
     };

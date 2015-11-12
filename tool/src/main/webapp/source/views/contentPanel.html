@@ -72,7 +72,7 @@
     <!-- Titre -->
     <div class='titre' > 
         {{treeService.getSelectedItem().title}}
-        <span data-ng-if="treeService.getSelectedItem().type == 'evaluation'"> ({{treeService.getSelectedItem().attributes.weight}}%)</span>
+        <span data-ng-if="treeService.getSelectedItem().type == 'evaluation'"> ({{treeService.getSelectedItem().attributes.evalWeight}}%)</span>
     </div> 
     <div data-ng-if="treeService.getSelectedItem().type == 'evaluation'"> <div data-evaluationattr-element="treeService.getSelectedItem()"></div></div>
 

@@ -1,12 +1,31 @@
 
- <div data-ng-if="element.attributes.assessmentType" class="eval-type">{{element.attributes.assessmentType}}</div>	
+ <div data-ng-if="element.attributes.evalType" class="eval-type">{{element.attributes.evalType}}</div>	
  <table class="eval">
   <tr>
-    <td data-ng-if="element.attributes.location" >{{'EVALUATION_LOCALISATION' | translate}} {{element.attributes.location}}</td>
-    <td  data-ng-if="element.attributes.submission_type" class="eval">{{'EVALUATION_SUBMISSION_TYPE' | translate}} {{element.attributes.submission_type}}</td>
+    <td>
+    	<span  data-ng-if="element.attributes.evalInClass == 'true' || element.attributes.evalAtHome == 'true'" >{{'EVALUATION_LOCALISATION' | translate}} </span>
+    	<span  data-ng-if="element.attributes.evalInClass == 'true' " >{{'EVALUATION_INCLASS' | translate}} </span>
+    	<span  data-ng-if="element.attributes.evalInClass == 'true' && element.attributes.evalAtHome == 'true'" >{{slash}}</span>
+    	<span  data-ng-if="element.attributes.evalAtHome == 'true'" >{{'EVALUATION_ATHOME' | translate}} </span>
+    </td>
+    <td class="eval">
+    	<span  data-ng-if="element.attributes.evalPaper == 'true' || element.attributes.evalElectronic == 'true'" >{{'EVALUATION_SUBMISSION_TYPE' | translate}} </span>
+    	<span  data-ng-if="element.attributes.evalPaper == 'true' " >{{'EVALUATION_PAPER' | translate}} </span>
+    	<span  data-ng-if="element.attributes.evalPaper == 'true' && element.attributes.evalElectronic == 'true'" >{{slash}}</span>
+    	<span  data-ng-if="element.attributes.evalElectronic == 'true'" >{{'EVALUATION_ELECTRONIC' | translate}} </span>
+	</td>
   </tr>
   <tr>
-    <td data-ng-if="element.attributes.modality">{{'EVALUATION_TERMS' | translate}} {{element.attributes.modality}}</td>
-    <td data-ng-if="element.attributes.mode" class="eval">{{'EVALUATION_ASSESSMENT_TYPE' | translate}} {{element.attributes.mode}}</td>
+    <td>
+    	<span  data-ng-if="element.attributes.evalOral == 'true' || element.attributes.evalWritten == 'true'" >{{'EVALUATION_TERMS' | translate}} </span>
+    	<span  data-ng-if="element.attributes.evalOral == 'true' " >{{'EVALUATION_ORAL' | translate}} </span>
+    	<span  data-ng-if="element.attributes.evalOral == 'true' && element.attributes.evalWritten == 'true'" >{{slash}}</span>
+    	<span  data-ng-if="element.attributes.evalWritten == 'true'" >{{'EVALUATION_WRITTEN' | translate}} </span>
+	</td>
+    <td class="eval">
+      	<span  data-ng-if="element.attributes.evalMode" >{{'EVALUATION_ASSESSMENT_TYPE' | translate}} </span>
+    	<span  data-ng-if="element.attributes.evalMode == team " >{{'EVALUATION_TEAM' | translate}} </span>
+    	<span  data-ng-if="element.attributes.evalMode == individual" >{{'EVALUATION_INDIVIDUAL' | translate}} </span>
+    </td>
    </tr>
 </table>
