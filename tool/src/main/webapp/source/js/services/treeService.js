@@ -55,7 +55,6 @@
     
     
     this.setSelectedItem = function($item){
-		console.log($item.id + " and " + selectedItem.id);
     	
     	if (!selectedItem)
     		selectedItem = $item;

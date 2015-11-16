@@ -1,7 +1,7 @@
 <div>
     <div class="titre-element element-page">
         <span class="picto-edit-inline" data-ng-click="edit(element);"></span> 
-        <span  >{{element.title}}</span>
+        <a href="" data-ng-click="treeService.setSelectedItem(element);">{{element.title}}</a>
         <span data-ng-if="element.attributes.evalWeight"> ({{element.attributes.evalWeight}}%)</span>
 		<span  data-ng-if="element.attributes.evalDate" class="eval-date">{{'EVALUATION_DATE' | translate}} {{element.attributes.evalDate}}</span>
         
