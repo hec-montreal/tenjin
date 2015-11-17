@@ -1,23 +1,17 @@
-﻿<div class="element document">
+﻿<div class="element-form"> 
 
-    <div class="titre-element">
-        <a href="{{element.attributes.docResourceUrl}}" target="_blank">
-            {{ element.title }} 
-        </a>
-        <span class="resource-type">
-            [{{ element.attributes.docResourceType }}]
-        </span> 
-    </div>
-    <div class="titre-fichier">
-        ({{ element.attributes.docResourceName }})
-    </div>
+    <!-- Fichier -->
+    <input class="file-upload" type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="1MB" required>
 
-    <div data-ng-bind-html="element.attributes.docComment" class="comment"></div>
+    <!-- Titre -->
+    <label for="male" class="label-text-title">{{ 'FORM_TITRE' | translate }}</label>
+    <input type="text" name="title" data-ng-model="element.title" class="input-text-title" />
 
-    <div class="infos">
-        <span data-ng-class="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
-        <span data-ng-class="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
-        <span data-ng-class="{ 'picto-hidden' : ( element.attributes.docHidden === 'true') }" title="Visible"></span>     
-    </div>
+    <!-- Description --> 
+    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
+    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
+
+    <!-- Buttons form --> 
+    <div data-buttons-form="element"></div>
 
 </div>

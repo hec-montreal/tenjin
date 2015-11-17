@@ -1,23 +1,91 @@
-﻿<div class="element contact-info">
+﻿<div class="element-form"> 
+    
+    <div class="container-contact">
+        <div class="row row-content">
+            <!-- Prénom -->
+            <div class="col-md-2">
+                <label for="prenom">
+                    {{ 'FORM_DOCUMENT_PRENOM' | translate }} <span class="mandatory"></span> 
+                </label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="prenom" id="prenom" data-ng-model="element.attributes.contactFirstName" required />
+            </div>
 
-    TEST
-
-    <!-- <div class="titre-element">Elément ({{element.syllabusElement_id}})</div> -->
-    	<div class="titre-element"> 
-            <span class="contact-firstname">{{element.attributes.contactFirstname}}</span> 
-            <span class="contact-lastname">{{element.attributes.contactSurname}}</span>
+            <!-- Nom -->
+             <div class="col-md-2">
+                <label for="nom">
+                    {{ 'FORM_DOCUMENT_NOM' | translate }} <span class="mandatory"></span> 
+                </label>
+            </div>
+            <div class="col-md-4">       
+                <input type="text" name="nom" id="nom" data-ng-model="element.attributes.contactLastName" required />
+            </div>
         </div>
-    	<div class="contact-title">{{element.title}}</div>
-    	<div class="contact-email">{{element.attributes.contactEmail}}</div>
-    	<!-- TODO: voir si nécessaire de formatter le numéro de  -->
-		<div class="contact-tel">{{element.attributes.contactTel}}</div>
-		<!-- TODO: internationaliser la valeur bureau -->
-    	<div class="contact-officeroom">Bureau: {{element.attributes.contactOfficeroom}}</div> 
-    	
-     <div class="infos">
-        <span data-ng-class="{ 'picto-important' : ( element.attributes.contactImportant === 'true') }" title="Important"></span>
-        <span data-ng-class="{ 'picto-hec' : ( element.attributes.contactDiffusion === 'hec' ), 'picto-public' : ( element.attributes.contactDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
-        <span data-ng-class="{ 'picto-hidden' : ( element.attributes.contactHidden === 'true') }" title="Visible"></span>     
+
+        
+        <div class="row row-content">
+            <!-- Titre -->
+            <div class="col-md-2">
+                <label for="select-titre">
+                    {{ 'FORM_DOCUMENT_TITRE' | translate }}
+                </label>
+            </div>
+            <div class="col-md-4">
+                <!-- <input type="select" name="titre" data-ng-model="" /> -->
+<!--                 <select>
+                    <option data-ng-repeat=""></option>
+                </select> -->
+                <select name="select-titre" id="select-titre" class="select-titre"
+                  ng-options="option.name for option in data.availableOptions track by option.id"
+                  ng-model="data.selectedOption"></select>
+            </div>
+        </div>
+
+        <div class="row row-content">
+            <!-- Courriel -->
+            <div class="col-md-2">
+                <label for="courriel">
+                    {{ 'FORM_DOCUMENT_COURRIEL' | translate }}
+                </label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="courriel" id="courriel" data-ng-model="element.attributes.contactEmail" />
+            </div>
+        </div>
+
+        <div class="row row-content">
+            <!-- Téléphone -->
+            <div class="col-md-2">
+                <label for="telephone">
+                    {{ 'FORM_DOCUMENT_TELEPHONE' | translate }}
+                </label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="telephone" id="telephone" data-ng-model="element.attributes.contactTelephone" />
+            </div>
+        </div>
+
+        <div class="row row-content">
+            <!-- Bureau -->
+            <div class="col-md-2">
+                <label for="bureau">
+                    {{ 'FORM_DOCUMENT_BUREAU' | translate }}
+                </label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="bureau" id="bureau" data-ng-model="element.attributes.contactBureau" />
+            </div>
+        </div>
     </div>
+
+    <!-- Disponibilités -->
+    <div class="label-text-description">{{ 'FORM_DOCUMENT_DISPONIBILITES' | translate }}</div>
+    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptionsDisponibilite" data-ng-model="element.attributes.disponibilites" required></textarea>
+
+    <!-- Description --> 
+    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
+    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptionsCommentaire" data-ng-model="element.description" required></textarea>
+
 
 </div>

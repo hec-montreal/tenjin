@@ -65,4 +65,35 @@
     .date-debut {
         margin-bottom: 10px;
     }
+
+
+    .file-upload {
+        margin-bottom: 10px;
+        // color: gray;
+        // background-color: #fff;
+        // border: 1px solid gray;
+        // padding: 5px;
+        // border-radius: 5px;
+        // cursor: pointer;
+
+        // &:focus {
+        //    border: 1px solid gray;
+        // }
+    }
+
+    // CONTACT
+    .container-contact {
+        margin-bottom: 15px;
+    }
+
+    .select-titre {
+        height: 28px;
+        min-width: 153px;
+    }
+
+    // CKEDITOR
+    .cke_toolbar_break {
+        clear: none;
+        float: none;
+    }
 }

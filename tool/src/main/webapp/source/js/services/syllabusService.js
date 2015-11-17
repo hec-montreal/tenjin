@@ -1,4 +1,4 @@
-﻿opensyllabusApp.service('SyllabusService', ['$resource', '$http', function ($resource, $http){
+﻿opensyllabusApp.service('SyllabusService', ['$rootScope', '$resource', '$http',  function ($rootScope, $resource, $http){
     'use strict';
 
     this.syllabus = null;
@@ -43,11 +43,16 @@
     };
 
     this.addElement = function($element, $parent) {
-        
+        // Ajout de l'élément au plan de cours
+        $parent.elements.push($element); 
     };
 
     this.deleteElement = function($element, $parent) {
-        
+
+    };
+
+    this.broadcastTemplateLoaded = function($template) {
+        $rootScope.$broadcast('templateLoaded');
     };
 
 

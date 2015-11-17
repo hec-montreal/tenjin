@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('addElementMenu', ['ModalService', '$document',  function (ModalService, $document){
+opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeService' ,'$document', '$timeout',  function (ModalService, SyllabusService, TreeService, $document, $timeout){
     'use strict';
 
     return {
@@ -10,20 +10,50 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', '$document',  funct
         templateUrl: 'addElementMenu.html',
         controller: function ($scope) {
 
+            // $scope.$on("templateLoaded", $scope.update);
+
+
         },
         link: function ($scope, $element) {
 
             $scope.showMenuAjouter = false;
+            $scope.isDisabled = true;
 
-            // TODO : définir la liste des éléments que l'on peut ajouter en fonction du template
-            // $scope.types = ["Texte", "Document", "Contact", "Hyperlien", "Référence biblio", "Image", "Vidéo", "Lien outil Sakai"];
-            // $scope.types = [{type: "text", libelle: "", "document", "contact_info", "hyperlink", "citation", "image", "video", "tool"];
+            // $scope.types = [ 
+            //     { type: "text", libelle: "TYPE_ELEMENT_TEXTE" } , 
+            //     { type: "document", libelle: "TYPE_ELEMENT_DOCUMENT"},
+            //     { type: "contact", libelle: "TYPE_ELEMENT_CONTACT"},
+            //     { type: "hyperlink", libelle: "TYPE_ELEMENT_HYPERLINK"},
+            //     { type: "citation", libelle: "TYPE_ELEMENT_CITATION"},
+            //     { type: "image", libelle: "TYPE_ELEMENT_IMAGE"},
+            //     { type: "video", libelle: "TYPE_ELEMENT_VIDEO"},
+            //     { type: "sakai_tool", libelle: "TYPE_ELEMENT_SAKAI_TOOL"}
+            // ];
 
-            $scope.types = [ 
-                { type: "text", libelle: "TYPE_ELEMENT_TEXTE" } , 
-                { type: "document", libelle: "TYPE_ELEMENT_DOCUMENT"},
+            $scope.update = function() {
+
+                // console.log('update : ' + $scope.element.id);
+
+                var template = SyllabusService.getTemplate();
+                var selectedItem2 = TreeService.getSelectedItem();
+                var selectedItem = $scope.element;
+                var templateSelectedItem = template[selectedItem.templateElementId];
+
+                $scope.types = [];
+
+                if (templateSelectedItem) {
+
+                    for (var i = 0; i < templateSelectedItem.length; i++) {
+                        $scope.types.push( { type: templateSelectedItem[i].type, libelle: templateSelectedItem[i].label });
+                    }  
+                    $scope.isDisabled = false;   
+                } else {
+                    // si aucun template n'existe pour l'élément, on désactive le bouton "Ajouter"
+                    $scope.isDisabled = true; 
+                }
+
                 
-            ];
+            };
 
             $scope.toggleMenu = function(){
                 $scope.showMenuAjouter = $scope.showMenuAjouter === false ? true : false;
@@ -43,27 +73,14 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', '$document',  funct
                 }, function () {
                     console.debug('élément non ajouté');
                 });
+
             };
 
-            var onClick = function($event) {
-                // hide menu sauf si clic sur "bouton-ajout"    
-                var element = document.querySelector('#bouton-ajout');
-                // element.querySelector
-                // 
-                if (angular.element($event.target).prop('id') === "bouton-ajout" || angular.element($event.target).parent().prop('id') === "bouton-ajout") {
-                    // rien
-                } else {
-                    if ($scope.showMenuAjouter) {
-                        $scope.$apply($scope.showMenuAjouter = false);
-                    }
-                }
-            };
 
-            $document.on('click', onClick );
-
-            $scope.$on('$destroy', function() {
-                $document.off('click', onClick);
+            $scope.$on('selectedItemChanged', function(event) { 
+                $scope.update();
             });
+
 
         }
 

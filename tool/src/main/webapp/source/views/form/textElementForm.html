@@ -1,5 +1,4 @@
-﻿<!-- <div data-ng-attr-id="{{ 'attribut-' + element.syllabusElement_id }}"> -->
-<div class="element-form"> 
+﻿<div class="element-form"> 
 
     <!-- Titre -->
     <label for="male" class="label-text-title">{{ 'FORM_TITRE' | translate }}</label>
@@ -7,7 +6,7 @@
 
     <!-- Description --> 
     <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
-    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
+    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description" required></textarea>
 
     <!-- Buttons form --> 
     <div data-buttons-form="element"></div>
