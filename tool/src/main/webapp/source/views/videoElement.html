@@ -12,7 +12,7 @@
         <iframe width="300" height="220" data-ng-src="{{videoUrl}}" frameborder="0" allowfullscreen data-ng-if="isIframe"></iframe>
     </div> 
 
-    <div data-ng-bind-html="element.attributes.videoComment" class="comment"></div>
+    <div data-ng-bind-html="element.description" class="comment"></div>
 
     <div class="infos">
         <span data-ng-class="{ 'picto-important' : ( element.attributes.videoImportant === 'true') }" title="Important"></span>

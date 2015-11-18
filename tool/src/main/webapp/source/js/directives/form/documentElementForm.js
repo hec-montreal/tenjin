@@ -15,7 +15,9 @@ opensyllabusApp.directive('documentElementForm', function (){
                 language: 'fr',
                 // uiColor: '#fff',
                 height: '200',
-                removeButtons: 'Maximize,Anchor,Source,PageBreak'
+                removeButtons: 'Maximize,Anchor,Source,PageBreak',
+                // removeButtons: removeButtonsList,
+                removePlugins: 'elementspath,resize'
             };
 
         },

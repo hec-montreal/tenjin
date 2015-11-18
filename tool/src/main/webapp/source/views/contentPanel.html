@@ -33,9 +33,8 @@
             <div data-ng-switch-when="contact_info" data-contact-element="item"></div>
 
 
-
             <!-- élément de type lien vers outil -->
-            <div data-ng-switch-when="tool" data-tool-element="item"></div>
+            <div data-ng-switch-when="sakai_tool" data-tool-element="item"></div>
 
             <div ng-switch-default>
                 <!-- Affichage attributs -->
@@ -75,21 +74,6 @@
         <span data-ng-if="treeService.getSelectedItem().type == 'evaluation'"> ({{treeService.getSelectedItem().attributes.evalWeight}}%)</span>
     </div> 
     <div data-ng-if="treeService.getSelectedItem().type == 'evaluation'"> <div data-evaluationattr-element="treeService.getSelectedItem()"></div></div>
-
-
-
-<!--     <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" data-ng-click="toggleMenu();">
-            <span class="glyphicon glyphicon-plus-sign"></span>
-            Ajouter
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" data-ng-show="showMenuAjouter">
-            <li role="presentation" data-ng-repeat="type in types">
-                <a role="menuitem" tabindex="-1" href="#" data-ng-click="add.addElement(type)">{{type}}</a>
-            </li>
-        </ul>
-    </div> -->
 
 
     <div ui-tree data-drag-enabled="true">

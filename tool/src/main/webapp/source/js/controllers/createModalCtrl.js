@@ -7,7 +7,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
 
     $scope.element = {};
     $scope.element.attributes = {};
-    $scope.element.type = $scope.type;
+    $scope.element.type = $scope.type.type;
 
     
     $scope.ok = function () {
@@ -17,19 +17,19 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
 
         // RESULT
         if (result > 0) {
-            var selectedItem = TreeService.getSelectedItem();
+            // var selectedItem = TreeService.getSelectedItem();
             var savePromise = SyllabusService.saveElement($scope.element);
             
             savePromise.$promise.then(function($data) {
                 // alert ajout ok
                 AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_ELEMENT'));
                 // ajout de l'élément au plan de cours
-                SyllabusService.addElement($scope.element, selectedItem);
+                SyllabusService.addElement($scope.element, $scope.parent);
             }, function ($error){
                 // alert ajout ko
                 AlertService.display('danger');
                 // TEST : ajout de l'élément au plan de cours
-                SyllabusService.addElement($scope.element, selectedItem);
+                SyllabusService.addElement($scope.element, $scope.parent);
             });
 
             // on ferme la modale dans tous les cas

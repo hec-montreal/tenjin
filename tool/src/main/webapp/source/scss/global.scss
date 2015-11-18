@@ -74,9 +74,11 @@ body {
     // XEDITABLE
     .editable-click {
         border-bottom: none;
+        color: #444;
 
         &:hover {
             cursor: pointer;
+            color: #444;
         }
     }
 

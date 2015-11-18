@@ -13,16 +13,16 @@
             // setup editor options
             $scope.editorOptionsDisponibilite = {
                 language: 'fr',
-                // uiColor: '#fff',
-                height: '200',
-                removeButtons: removeButtonsList
+                height: '120',
+                removeButtons: removeButtonsList,
+                removePlugins: 'elementspath,resize'
             };
 
             $scope.editorOptionsCommentaire = {
                 language: 'fr',
-                // uiColor: '#fff',
-                height: '200',
-                removeButtons: removeButtonsList
+                height: '120',
+                removeButtons: removeButtonsList,
+                removePlugins: 'elementspath,resize'
             };
 
             $scope.data = {
