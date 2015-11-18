@@ -1,11 +1,6 @@
-/**
- *
- */
 package ca.hec.opensyllabus2.api.model.template;
 
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.List;
 
 import lombok.*;
 
@@ -18,19 +13,11 @@ import lombok.*;
 @NoArgsConstructor
 public class Template {
 
-
-    @NonNull private Long id;
-
-    @NonNull private String title;
-
+    private Long id;
+    private String title;
     private String description;
-
-    @NonNull private Boolean active;
-
-    private Set<TemplateStructure> elements;
-
-    /*
-    private String createdBy;
-    private Date createdDate;
-    */
+    private Boolean active;
+    private List<TemplateElement> elements;
+//    private String createdBy;
+//    private Date createdDate;
 }

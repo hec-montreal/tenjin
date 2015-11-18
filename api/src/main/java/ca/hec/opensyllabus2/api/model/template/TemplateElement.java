@@ -20,6 +20,8 @@
  ******************************************************************************/
 package ca.hec.opensyllabus2.api.model.template;
 
+import java.util.Map;
+
 import lombok.*;
 
 /**
@@ -33,9 +35,8 @@ import lombok.*;
 public class TemplateElement {
 
     private Long id;
-
+//    private String description;
     private TemplateElementType type;
-
-    private String defaultLabel;
+    private Map<String, String> labels;
 }
 

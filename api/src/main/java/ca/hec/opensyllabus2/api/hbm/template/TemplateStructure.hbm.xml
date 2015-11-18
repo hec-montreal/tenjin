@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <class name="ca.hec.opensyllabus2.api.model.template.TemplateStructure" table="OSYL2_TEMPLATESTRUCTURE">
         <id name="id" type="long">
             <column name="TEMPLATESTRUCTURE_ID" />
@@ -19,19 +19,13 @@
             <column name="DISPLAY_ORDER" />
         </property>
 
-        <many-to-one name="templateElement" column="TEMPLATEELEMENT_ID" lazy="false"
+        <many-to-one name="templateElement" column="TEMPLATEELEMENT_ID"
             class="ca.hec.opensyllabus2.api.model.template.TemplateElement"/>
 
-        <set name="elements" lazy="false">
+        <list name="elements">
             <key column="PARENT_ID"/>
+            <list-index column="DISPLAY_ORDER"/>
             <one-to-many class="ca.hec.opensyllabus2.api.model.template.TemplateStructure"/>
-        </set>
-
-        <set name="rubrics" table="OSYL2_TEMPLATESTRUCTURE_RUBRIC" lazy="false">
-            <key column="TEMPLATESTRUCTURE_ID"/>
-            <many-to-many class="ca.hec.opensyllabus2.api.model.template.Rubric">
-            	<column name="RUBRIC_ID"/>
-            </many-to-many>
-        </set>
+        </list>
     </class>
 </hibernate-mapping>

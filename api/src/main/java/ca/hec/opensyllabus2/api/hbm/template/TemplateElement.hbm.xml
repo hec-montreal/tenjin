@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <class name="ca.hec.opensyllabus2.api.model.template.TemplateElement" table="OSYL2_TEMPLATEELEMENT">
         <id name="id" type="long">
             <column name="TEMPLATEELEMENT_ID" />
@@ -10,10 +10,12 @@
                  <param name="sequence">TEMPLATEELEMENT_ID_SEQ</param>
         	</generator>
         </id>
-        <property name="defaultLabel" type="string" not-null="true">
-        	<column name="DEFAULT_LABEL"/>
-        </property>
-        <many-to-one name="type" column="ELEMENTTYPE_ID" lazy="false"
+        <map name="labels" table="OSYL2_TEMPLATEELEMENT_I18NLABEL">
+			<key column="TEMPLATEELEMENT_ID" />
+			<map-key column="locale" type="string" />
+			<element column="label" type="string" />
+	    </map>
+        <many-to-one name="type" column="TEMPLATEELEMENTTYPE_ID"
             class="ca.hec.opensyllabus2.api.model.template.TemplateElementType"/>
     </class>
 </hibernate-mapping>
