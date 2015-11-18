@@ -70,6 +70,23 @@ body {
         min-width: 220px;
         left: -120px;
     }
+    
+    .btn-primary {
+        background-color: $bleu-hec;
+        border: none;
+
+        &:hover {
+            background-color: $bleu-hec-hover;
+            border: none;
+        }
+    }
+
+    .open {
+        .dropdown-toggle.btn-primary {
+            background-color: $bleu-hec-hover;
+            border: none; 
+        }
+    }
 
     // XEDITABLE
     .editable-click {
