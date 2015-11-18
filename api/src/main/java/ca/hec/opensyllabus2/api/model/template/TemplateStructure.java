@@ -17,7 +17,6 @@ public class TemplateStructure {
 
     private Long id;
     private Boolean mandatory;
-    private Integer displayOrder;
     private TemplateElement templateElement;
     private List<TemplateStructure> elements;
 }

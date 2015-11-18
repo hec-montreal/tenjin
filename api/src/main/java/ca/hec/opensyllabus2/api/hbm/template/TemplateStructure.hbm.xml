@@ -15,10 +15,6 @@
             <column name="MANDATORY" />
         </property>
 
-        <property name="displayOrder" type="int" not-null="true">
-            <column name="DISPLAY_ORDER" />
-        </property>
-
         <many-to-one name="templateElement" column="TEMPLATEELEMENT_ID"
             class="ca.hec.opensyllabus2.api.model.template.TemplateElement"/>
 
