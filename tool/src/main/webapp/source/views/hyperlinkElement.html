@@ -4,7 +4,7 @@
 
     <div class="titre-element">
         <a href="{{element.attributes.hyperlinkUrl}}" target="_blank">
-            {{ element.title }} 
+            {{ (element.title ? element.title : element.attributes.hyperlinkUrl) }} 
         </a>
         <span class="link-type">
             [{{ element.attributes.hyperlinkType }}] 

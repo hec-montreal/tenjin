@@ -75,6 +75,7 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         FORM_VISIBILITE: "Visibilité limitée aux étudiants inscrits au cours",
         FORM_DATE_AFFICHAGE_DEBUT: "Date d'affichage",
         FORM_DATE_AFFICHAGE_FIN: "Date de retrait",
+        FORM_URL: 'URL',
         FORM_DOCUMENT_PRENOM: "Prénom",
         FORM_DOCUMENT_NOM: "Nom",
         FORM_DOCUMENT_TITRE: "Titre",
@@ -82,6 +83,20 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         FORM_DOCUMENT_TELEPHONE: "Téléphone",
         FORM_DOCUMENT_BUREAU: "Bureau",
         FORM_DOCUMENT_DISPONIBILITES: "Disponibilités",
+        FORM_CONTACT_TITLE_ATTACHE: 'Attaché(e) d\'enseignement',
+        FORM_CONTACT_TITLE_CHARGE_ENS: 'Chargé(e) d\'enseignement',
+        FORM_CONTACT_TITLE_CHARGE_COURS: 'Chargé(e) de cours',
+        FORM_CONTACT_TITLE_ETUDIANT: 'Étudiant(e)',
+        FORM_CONTACT_TITLE_MAITRE: 'Maître d\'enseignement',
+        FORM_CONTACT_TITLE_PROF_ADJOINT: 'Professeur(e) adjoint(e)',
+        FORM_CONTACT_TITLE_PROF_AFFILIE: 'Professeur(e) affilié(e)',
+        FORM_CONTACT_TITLE_PROF_AGREGE: 'Professeur(e) agrégé(e)',
+        FORM_CONTACT_TITLE_PROF_ASSOCIE: 'Professeur(e) associé(e)',
+        FORM_CONTACT_TITLE_PROF_HONORAIRE: 'Professeur(e) honoraire',
+        FORM_CONTACT_TITLE_PROF_INVITE: 'Professeur(e) invité(e)',
+        FORM_CONTACT_TITLE_PROF_TITULAIRE: 'Professeur(e) titulaire',
+        FORM_CONTACT_TITLE_SECRETAIRE: 'Attaché(e) d\'enseignement',
+        FORM_CONTACT_TITLE_STAGIAIRE: 'Attaché(e) d\'enseignement',
         REF_BIBLIO_RECUPERE: "Récupéré de ",
         REF_BIBLIO_DISPONIBILITE:"Disponible à la bibliothèque",
         REF_BIBLIO_DE: "DE",
@@ -106,7 +121,6 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ALERT_ERROR: 'Une erreur s\'est produite. Veuillez réessayer ultérieurement.',
         ALERT_SUCCESS: 'L\' opération a réussi.',
         ALERT_SUCCESS_ADD_ELEMENT: 'L\' élément a été ajouté.'
-
     });
 
      $translateProvider.preferredLanguage('fr');

@@ -1,23 +1,22 @@
-﻿<div class="element hyperlink">
+﻿<div class="element-form form-hyperlink"> 
 
-    <div class="titre-element">
-        <a href="{{element.attributes.hyperlinkUrl}}" target="_blank">
-            {{ element.title }} 
-        </a>
-        <span class="link-type">
-            [{{ element.attributes.hyperlinkType }}]  
-        </span> 
-    </div>
-    <div class="url-lien">
-        ({{ element.attributes.hyperlinkUrl }}) 
+    <!-- URL -->
+    <div>
+        <label for="male" class="label-text-url">{{ 'FORM_URL' | translate }} <span class="mandatory"></label>
+        <input type="text" name="url" data-ng-model="element.attributes.hyperlinkUrl" class="input-text-title" required/>
     </div>
 
-    <div data-ng-bind-html="element.attributes.hyperlinkComment" class="comment"></div>
-
-    <div class="infos">
-        <span data-ng-class="{ 'picto-important' : ( element.attributes.hyperlinkImportant === 'true') }" title="Important"></span>
-        <span data-ng-class="{ 'picto-hec' : ( element.attributes.hyperlinkDiffusion === 'hec' ), 'picto-public' : ( element.attributes.hyperlinkDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
-        <span data-ng-class="{ 'picto-hidden' : ( element.attributes.hyperlinkHidden === 'true') }" title="Visible"></span>     
+    <!-- Titre -->
+    <div class="container-title">
+        <label for="male" class="label-text-title">{{ 'FORM_TITRE' | translate }}</span></label>
+        <input type="text" name="title" data-ng-model="element.title" class="input-text-title" placeholder="{{element.attributes.hyperlinkUrl}}" />
     </div>
+
+    <!-- Description --> 
+    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
+    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description" required></textarea>
+
+    <!-- Buttons form --> 
+    <div data-buttons-form="element"></div>
 
 </div>
