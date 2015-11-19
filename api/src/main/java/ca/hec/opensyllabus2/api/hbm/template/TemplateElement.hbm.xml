@@ -10,7 +10,7 @@
                  <param name="sequence">TEMPLATEELEMENT_ID_SEQ</param>
         	</generator>
         </id>
-        <map name="labels" table="OSYL2_TEMPLATEELEMENT_I18NLABEL">
+        <map name="labels" table="OSYL2_TEMPLATEELEMENT_I18N">
 			<key column="TEMPLATEELEMENT_ID" />
 			<map-key column="locale" type="string" />
 			<element column="label" type="string" />
