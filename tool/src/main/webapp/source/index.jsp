@@ -28,9 +28,8 @@
 		<div class="loader"></div>
 	</div>
 
-	<div class="row row-title" ng-cloak>
-		<h1>{{syllabusService.syllabus.courseTitle}}</h1> 
-	</div>
+	<h1 ng-cloak>{{syllabusService.syllabus.courseTitle}}</h1> 
+
 	<!-- <div class="row">	
 		<div class="col-sm-10">
 		</div>
