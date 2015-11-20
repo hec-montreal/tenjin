@@ -14,21 +14,21 @@
 	    	<label for="male" class="label-text-title">{{ 'FORM_PONDERATION_EVALUATION' | translate }}</label>
 	    </td>
 	    <td>
-	    	<input type="number" name="evaluationWeight" data-ng-model="element.evalWeight" />
+	    	<input type="text" name="evaluationWeight" data-ng-model="element.evalWeight" />
 		</td>
 	  </tr>
-	  <tr>
+	  <tr data-ng-if="element.type == 'evaluation'" >
 	    <td>
 	    	<label for="male" class="label-text-title">{{ 'EVALUATION_DATE' | translate }}</label>
 	    </td>
 	    <td >
 	    	    	<table>
-		    	<tr class="container-date-debut">
+		    	<tr class="input-group">
 				    <td>
-				    	<input type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.evalDate" is-open="statusDateEval.opened" />
+				    	<input type="text" class="eval-form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.evalDate" is-open="statusDateEval.opened" />
 				    </td>
 				    <td>
-						<span class="input-group-btn">
+						<span class="input-eval-group-btn">
 		                    <button type="button" class="btn btn-default" data-ng-click="openDateEval($event)">
 		                        <i class="glyphicon glyphicon-calendar" ></i>
 		                    </button>
@@ -46,12 +46,12 @@
 	    	<table>
 		    	<tr>
 				    <td>
-				    	<input type="checkbox" name="evalInClass" checked="element.evalInClass"> {{ 'EVALUATION_INCLASS' | translate }}
+				    	<input type="checkbox" name="evalInClass" > {{ 'EVALUATION_INCLASS' | translate }}
 				    </td>
 				</tr>
 				<tr>
 				    <td>
-				    	<input type="checkbox" name="evalAtHome" checked="element.evalAtHome"> {{ 'EVALUATION_ATHOME' | translate }}
+				    	<input type="checkbox" name="evalAtHome" > {{ 'EVALUATION_ATHOME' | translate }}
 					</td>
 				</tr>
 			</table>
@@ -65,12 +65,12 @@
 	    	<table>
 		    	<tr>
 				    <td>
-				    	<input type="checkbox" name="evalOral" checked="element.evalOral"> {{ 'EVALUATION_ORAL' | translate }}
+				    	<input type="checkbox" name="evalOral" > {{ 'EVALUATION_ORAL' | translate }}
 				    </td>
 				</tr>
 				<tr>
 				    <td>
-				    	<input type="checkbox" name="evalWritten" checked="element.evalWritten"> {{ 'EVALUATION_WRITTEN' | translate }}
+				    	<input type="checkbox" name="evalWritten" > {{ 'EVALUATION_WRITTEN' | translate }}
 					</td>
 				</tr>
 			</table>
@@ -84,12 +84,12 @@
 	    	<table>
 		    	<tr>
 				    <td>
-				    	<input type="checkbox" name="evalPaper" checked="element.evalOral"> {{ 'EVALUATION_PAPER' | translate }}
+				    	<input type="checkbox" name="evalPaper" > {{ 'EVALUATION_PAPER' | translate }}
 				    </td>
 				</tr>
 				<tr>
 				    <td>
-				    	<input type="checkbox" name="evalElectronic" checked="element.evalElectronic"> {{ 'EVALUATION_ELECTRONIC' | translate }}
+				    	<input type="checkbox" name="evalElectronic" > {{ 'EVALUATION_ELECTRONIC' | translate }}
 					</td>
 				</tr>
 			</table>
@@ -103,12 +103,12 @@
 	    	<table>
 		    	<tr>
 				    <td>
-				    	<input type="radio" name="evalMode" checked="element.evalIndividual"> {{ 'EVALUATION_INDIVIDUAL' | translate }}
+				    	<input type="radio" name="evalMode" > {{ 'EVALUATION_INDIVIDUAL' | translate }}
 				    </td>
 				</tr>
 				<tr>
 				    <td>
-				    	<input type="radio" name="evalMode" checked="element.evalTeam"> {{ 'EVALUATION_TEAM' | translate }}
+				    	<input type="radio" name="evalMode" > {{ 'EVALUATION_TEAM' | translate }}
 					</td>
 				</tr>
 			</table>
