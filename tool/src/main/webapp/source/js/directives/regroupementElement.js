@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('regroupementElement', function (){
+opensyllabusApp.directive('regroupementElement', ['TreeService', function (TreeService){
     'use strict';
 
     return {
@@ -12,9 +12,10 @@ opensyllabusApp.directive('regroupementElement', function (){
 
         },
         link: function ($scope, $element) {
+        	$scope.treeService = TreeService;
         }
 
     };
 
-});
+}]);
 
