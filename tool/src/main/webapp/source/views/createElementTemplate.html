@@ -1,4 +1,4 @@
-ï»¿<!-- modal confirm delete -->
+<!-- modal confirm delete -->
 <script type="text/ng-template" id="createElementModal.html">
 
     <form data-ng-submit="ok()">
@@ -17,21 +17,25 @@
             </div>
 
             <div data-ng-switch="type.type">
-                 <!-- Ã©lÃ©ment de type texte -->
+                 <!-- élément de type texte -->
                 <div data-ng-switch-when="text" data-text-element-form="element"></div>
                 <!-- <div data-dyn-attr="data-text-element" data-element="element"></div> -->
-                <!-- Ã©lÃ©ment de type document -->
+                <!-- élément de type document -->
                 <div data-ng-switch-when="document" data-document-element-form="element"></div>
-                <!-- Ã©lÃ©ment de type hyperlien -->
+                <!-- élément de type hyperlien -->
                 <div data-ng-switch-when="hyperlink" data-hyperlink-element-form="element"></div>
-                <!-- Ã©lÃ©ment de type image -->
+                <!-- élément de type image -->
                 <div data-ng-switch-when="image" data-image-element-form="element"></div>
-                  <!-- Ã©lÃ©ment de type video -->
+                  <!-- élément de type video -->
                 <div data-ng-switch-when="video" data-video-element-form="element"></div>
-                <!-- Ã©lÃ©ment de type contactInfo -->
+                <!-- élément de type contactInfo -->
                 <div data-ng-switch-when="contact_info" data-contact-element-form="element"></div>
                 <!-- regroupement de type composite -->
                 <div data-ng-switch-when="composite" data-regroupement-element-form="element"></div>
+				<!-- élément de type évaluation-->
+                <div data-ng-switch-when="evaluation" data-evaluation-element-form="element"></div>
+				<!-- élément de type examen-->
+                <div data-ng-switch-when="examen" data-evaluation-element-form="element"></div>
             </div>
         </div>
 

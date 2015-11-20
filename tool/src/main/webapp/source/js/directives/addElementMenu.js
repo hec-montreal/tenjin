@@ -27,7 +27,8 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
             //     { type: "citation", libelle: "TYPE_ELEMENT_CITATION"},
             //     { type: "image", libelle: "TYPE_ELEMENT_IMAGE"},
             //     { type: "video", libelle: "TYPE_ELEMENT_VIDEO"},
-            //     { type: "sakai_tool", libelle: "TYPE_ELEMENT_SAKAI_TOOL"}
+            //     { type: "sakai_tool", libelle: "TYPE_ELEMENT_SAKAI_TOOL"},
+            //     { type: "evaluation", libelle: "TYPE_ELEMENT_EVALUATION"}
             // ];
 
             $scope.update = function() {
@@ -52,6 +53,7 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
                     $scope.isDisabled = true; 
                 }
 
+                
                 
             };
 
