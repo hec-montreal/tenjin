@@ -14,6 +14,9 @@
 		<property name="siteId" type="string">
 			<column name="SITE_ID" />
 		</property>
+		<property name="courseTitle" type="string">
+			<column name="COURSE_TITLE" />
+		</property>
 		<property name="templateId" type="long">
 			<column name="TEMPLATE_ID" />
 		</property>
