@@ -1,14 +1,25 @@
 ﻿
-opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', '$translate','type', 'parent', 'SyllabusService', 'TreeService', 'AlertService', function ($scope, $uibModalInstance, $translate, type, parent, SyllabusService, TreeService, AlertService) {
+opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', '$translate','type', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', function ($scope, $uibModalInstance, $translate, type, parent, element, SyllabusService, TreeService, AlertService) {
     'use strict';
 
     $scope.parent = parent;
     $scope.type = type;
+    $scope.source = element;
 
-    $scope.element = {};
-    $scope.element.attributes = {};
-    $scope.element.type = $scope.type.type;
+    // Modification
+    if (element) {
+        // $scope.element = element;
+        $scope.element = angular.copy(element);
+        $scope.mode = "edition";
 
+
+    }else {
+    // Création    
+        $scope.element = {};
+        $scope.element.attributes = {};
+        $scope.element.type = $scope.type.type;
+        $scope.mode = "creation";
+    }
     
     $scope.ok = function () {
 
@@ -23,13 +34,23 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
             savePromise.$promise.then(function($data) {
                 // alert ajout ok
                 AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_ELEMENT'));
-                // ajout de l'élément au plan de cours
-                SyllabusService.addElement($scope.element, $scope.parent);
+                if ($scope.mode === "creation") {
+                    // ajout de l'élément au plan de cours
+                    SyllabusService.addElement($scope.element, $scope.parent);
+                } else if ($scope.mode === "edition") {
+                    angular.copy($scope.element, $scope.source);       
+                }
+
             }, function ($error){
                 // alert ajout ko
                 AlertService.display('danger');
-                // TEST : ajout de l'élément au plan de cours
-                SyllabusService.addElement($scope.element, $scope.parent);
+                // TEST
+                if ($scope.mode === "creation") {  
+                    SyllabusService.addElement($scope.element, $scope.parent);
+                } else if ($scope.mode === "edition") {
+                    angular.copy($scope.element, $scope.source);
+                }
+
             });
 
             // on ferme la modale dans tous les cas

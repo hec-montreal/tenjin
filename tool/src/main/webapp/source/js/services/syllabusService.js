@@ -1,8 +1,8 @@
 ﻿opensyllabusApp.service('SyllabusService', ['$rootScope', '$resource', '$http',  function ($rootScope, $resource, $http){
     'use strict';
 
-    this.syllabus = null;
-    this.template = null;
+    this.syllabus;
+    this.template;
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusProvider = $resource('v1/syllabus/init.json');

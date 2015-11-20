@@ -27,6 +27,17 @@ opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'Moda
                 });
             };
 
+            $scope.edit = function($event, $element) {
+                // Création modale
+                var modal = ModalService.editElement($event, $element);
+                // Traitement du résultat
+                modal.result.then(function (selectedItem) {
+                    console.debug('élément supprimé');
+                }, function () {
+                    console.debug('élément toujours là');
+                });
+            };
+
 
         },
         link: function ($scope, $element) {

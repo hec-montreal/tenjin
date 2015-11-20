@@ -6,7 +6,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
     $scope.infos = {};
  
     $scope.alertService = AlertService;
-
+    $scope.syllabusService = SyllabusService;
 
     // mockup
     if (config.mockUp) {
@@ -40,6 +40,8 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$timeout', 'SyllabusS
     		console.log(data);
             // $scope.syllabus = data;
             SyllabusService.setSyllabus(data);
+            // $scope.syllabusService = SyllabusService;
+            // $scope.courseTitle = data.courseTitle;
 
             // MOCKUP template
             var template = {"1":[{"type":"rubric","label":"Description"},{"type":"rubric","label":"Objectifs"},{"type":"rubric","label":"Approche pédagogique"}],"2":[{"type":"rubric","label":"Coordonnateur"},{"type":"rubric","label":"Enseignant(s)"},{"type":"rubric","label":"Stagiaire(s) d'enseignement"},{"type":"rubric","label":"Conférencier(s)"},{"type":"rubric","label":"Secrétaire(s)"}],"3":[{"type":"text","label":"Texte"},{"type":"document","label":"Document"},{"type":"hyperlien","label":"Hyperlien"},{"type":"citation","label":"Référence bibliographique"}],"4":[{"type":"examen","label":"Examen intra"},{"type":"examen","label":"Examen Final"},{"type":"evaluation","label":"Travail"},{"type":"evaluation","label":"Participation"},{"type":"evaluation","label":"Test/Quiz"},{"type":"evaluation","label":"Autre"}],"5":[{"type":"composite","label":"Regroupement"},{"type":"lecture","label":"Séance de Cours"},{"type":"tutorial","label":"Séance de travaux pratique"}],"6":[{"type":"text","label":"Texte"},{"type":"document","label":"Document"},{"type":"hyperlink","label":"Hyperlien"},{"type":"video","label":"Vidéo"},{"type":"image","label":"Image"}],"7":[{"type":"text","label":"Texte"},{"type":"document","label":"Document"},{"type":"hyperlink","label":"Hyperlien"}],"8":[{"type":"text","label":"Texte"},{"type":"document","label":"Document"},{"type":"hyperlink","label":"Hyperlien"}],"22":[{"type":"contact_info","label":"Coordonnées"}]};

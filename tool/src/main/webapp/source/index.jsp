@@ -29,7 +29,7 @@
 	</div>
 
 	<div class="row row-title" ng-cloak>
-		<h1>{{syllabus.courseTitle}}</h1>
+		<h1>{{syllabusService.syllabus.courseTitle}}</h1> 
 	</div>
 	<!-- <div class="row">	
 		<div class="col-sm-10">
