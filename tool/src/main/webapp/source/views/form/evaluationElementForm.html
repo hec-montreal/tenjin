@@ -1,48 +1,45 @@
 <div class="element-form"> 
 
-  <table class="eval-form">
-	  <tr>
-	    <td>
+  <div class="container-eval-form">
+  	<div class="row">
+	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'FORM_TITRE_EVALUATION' | translate }}</label>
-	    </td>
-	    <td >
+	    </div>
+	    <div class="col-md-4" >
 	    	<input type="text" name="evaluationTitle" data-ng-model="element.title" class="input-text-title" />
-		</td>
-	  </tr>
-	  <tr>
-	    <td>
+		</div>
+		<div class="col-md-4">  </div>
+	</div>
+	<div class="row">
+	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'FORM_PONDERATION_EVALUATION' | translate }}</label>
-	    </td>
-	    <td>
+	    </div>
+	    <div class="col-md-4">
 	    	<input type="text" name="evaluationWeight" data-ng-model="element.evalWeight" />
-		</td>
-	  </tr>
-	  <tr data-ng-if="element.type == 'evaluation'" >
-	    <td>
+		</div>
+	    <div class="col-md-4"> </div>
+	</div>
+	<div class="row" data-ng-if="element.type == 'evaluation'" >
+	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'EVALUATION_DATE' | translate }}</label>
-	    </td>
-	    <td >
-	    	    	<table>
-		    	<tr class="input-group">
-				    <td>
+	    </div>
+	    <div class="col-md-4" >
+		    	<span class=" input-group">
 				    	<input type="text" class="eval-form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.evalDate" is-open="statusDateEval.opened" />
-				    </td>
-				    <td>
-						<span class="input-eval-group-btn">
+						<span class="input-group-btn">
 		                    <button type="button" class="btn btn-default" data-ng-click="openDateEval($event)">
 		                        <i class="glyphicon glyphicon-calendar" ></i>
 		                    </button>
 		                </span>
-                	</td>
-				</tr>
-			</table>
-		</td>
-	  </tr>
-	  <tr>
-	    <td>
+            	</span>
+			</div>
+	    <div class="col-md-4"></div>
+	 </div>
+	 <div class="row">
+	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'EVALUATION_LOCALISATION' | translate }}</label>
-	    </td>
-	    <td>
+	    </div>
+	    <div class="col-md-4">
 	    	<table>
 		    	<tr>
 				    <td>
@@ -55,13 +52,14 @@
 					</td>
 				</tr>
 			</table>
-		</td>
-	  </tr>
-	  <tr>
-	    <td>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<div class="row">
+	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'EVALUATION_TERMS' | translate }}</label>
-	    </td>
-	    <td>
+	    </div>
+	    <div class="col-md-4">
 	    	<table>
 		    	<tr>
 				    <td>
@@ -74,13 +72,14 @@
 					</td>
 				</tr>
 			</table>
-		</td>
-	  </tr>
-	  <tr>
-	    <td>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<div class="row">
+	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'EVALUATION_SUBMISSION_TYPE' | translate }}</label>
-	    </td>
-	    <td>
+	    </div>
+	    <div class="col-md-4">
 	    	<table>
 		    	<tr>
 				    <td>
@@ -93,13 +92,14 @@
 					</td>
 				</tr>
 			</table>
-		</td>
-	  </tr>
-	  <tr>
-	    <td>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<div class="row">
+	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'EVALUATION_ASSESSMENT_TYPE' | translate }}</label>
-	    </td>
-	    <td>
+	    </div>
+	    <div class="col-md-4">
 	    	<table>
 		    	<tr>
 				    <td>
@@ -112,10 +112,10 @@
 					</td>
 				</tr>
 			</table>
-		</td>
-	  </tr>
-	 
-	</table>  
+		</div>
+	 	<div class="col-md-4"></div>
+	 </div>	
+	</div>  
     <!-- Buttons form --> 
     <div data-buttons-form="element"></div>
 
