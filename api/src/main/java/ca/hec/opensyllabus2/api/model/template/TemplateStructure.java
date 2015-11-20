@@ -19,5 +19,10 @@ public class TemplateStructure {
     private Boolean mandatory;
     private TemplateElement templateElement;
     private List<TemplateStructure> elements;
+    private Long parentId;
+
+    public Boolean hasElements() {
+        return elements != null && !elements.isEmpty();
+    }
 }
 

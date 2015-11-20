@@ -17,7 +17,7 @@ public class Template {
     private String title;
     private String description;
     private Boolean active;
-    private List<TemplateElement> elements;
+    private List<TemplateStructure> elements;
 //    private String createdBy;
 //    private Date createdDate;
 }

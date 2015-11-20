@@ -9,6 +9,7 @@ import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
 import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.template.Template;
+import ca.hec.opensyllabus2.api.model.template.TemplateElement;
 
 /**
  * An interface to abstract all Sakai related API calls in a central method that can be injected into our app.
@@ -56,20 +57,20 @@ public interface Syllabus2Service {
 
 	/**
 	 * Retrieve the syllabus for the current user in the active site
-	 * 
+	 *
 	 * @return the syllabus of the site or an error message
-	 * @throws NoSyllabusException 
-	 * @throws NoSiteException 
+	 * @throws NoSyllabusException
+	 * @throws NoSiteException
 	 */
 	public Object loadSyllabus () throws NoSyllabusException, NoSiteException;
-	
-	
+
+
 	/**
 	 * Retrieves the syllabus associated to a specific section and sectionId.
 	 * @param courseId
 	 * @param sectionId
 	 * @return
-	 * @throws NoSyllabusException 
+	 * @throws NoSyllabusException
 	 */
 	public Syllabus getSyllabus (String courseId, String sectionId ) throws NoSyllabusException;
 
@@ -77,7 +78,7 @@ public interface Syllabus2Service {
 	 * Retrieves the syllabus at the top of the hierarchy associated to the courseId.
 	 * @param courseId
 	 * @return
-	 * @throws NoSyllabusException 
+	 * @throws NoSyllabusException
 	 */
 	public Syllabus getShareableSyllabus (String courseId) throws NoSyllabusException;
 
@@ -85,7 +86,7 @@ public interface Syllabus2Service {
 	 * Retrieves the syllabus content shared by the list of sectionIds.
 	 * @param sectionIds
 	 * @return
-	 * @throws NoSyllabusException 
+	 * @throws NoSyllabusException
 	 */
 	public Syllabus getCommonSyllabus (String courseId, String[] sectionIds) throws NoSyllabusException;
 
@@ -95,5 +96,13 @@ public interface Syllabus2Service {
 	 * @return
 	 */
 	public Template getTemplate(Long templateId) throws IdUnusedException;
-	
+
+	/**
+	 * Retrieves the template rules
+	 * 	that is, a mapping of TemplateStructure id's with the TemplateElements that can be added to it.
+	 *
+	 * @param templateId
+	 * @return
+	 */
+	public Map<String, List<TemplateElement>> getTemplateRules(Long templateId) throws IdUnusedException;
 }

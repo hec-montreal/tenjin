@@ -1,5 +1,10 @@
 package ca.hec.opensyllabus2.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import lombok.Setter;
 
 import org.apache.log4j.Logger;
@@ -21,6 +26,8 @@ import ca.hec.opensyllabus2.api.dao.Syllabus2Dao;
 import ca.hec.opensyllabus2.api.dao.TemplateDao;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.template.Template;
+import ca.hec.opensyllabus2.api.model.template.TemplateElement;
+import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
 
 /**
  * Implementation of {@link Syllabus2Service}
@@ -159,6 +166,43 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	@Override
 	public Template getTemplate(Long templateId) throws IdUnusedException {
 		return templateDao.getTemplate(templateId);
+	}
+
+	@Override
+	public Map<String, List<TemplateElement>> getTemplateRules(Long templateId) throws IdUnusedException {
+		HashMap<String, List<TemplateElement>> results = new HashMap<String, List<TemplateElement>>();
+
+		Template t = templateDao.getTemplate(templateId);
+
+		for (TemplateStructure elem : t.getElements()) {
+			getRules(elem, results);
+		}
+
+		return results;
+	}
+
+	private void getRules(TemplateStructure structure, HashMap<String, List<TemplateElement>> map) {
+
+		if (structure!= null && structure.getParentId() != null) {
+			List<TemplateElement> elementList;
+
+			String parentId = structure.getParentId().toString();
+
+			if (!map.containsKey(parentId)) {
+				elementList = new ArrayList<TemplateElement>();
+				map.put(parentId, elementList);
+			} else {
+				elementList = map.get(parentId);
+			}
+
+			elementList.add(structure.getTemplateElement());
+		}
+
+		for (TemplateStructure elem : structure.getElements()) {
+			getRules(elem, map);
+		}
+
+		return;
 	}
 
 
