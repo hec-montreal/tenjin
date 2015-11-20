@@ -1,5 +1,5 @@
 
-opensyllabusApp.directive('evaluationElementForm', ['$anchorScroll', '$location', 'ModalService', function ($anchorScroll, $location, ModalService){
+opensyllabusApp.directive('evaluationElementForm',  function (){
     'use strict';
 
     return {
@@ -12,7 +12,7 @@ opensyllabusApp.directive('evaluationElementForm', ['$anchorScroll', '$location'
             $scope.formats = ['dd-MMMM-yyyy HH:mm']; 
             $scope.format = $scope.formats[0];
 
-            $scope.status = {
+            $scope.statusDateEval = {
                 opened: false
             };
 
@@ -21,8 +21,8 @@ opensyllabusApp.directive('evaluationElementForm', ['$anchorScroll', '$location'
                 startingDay: 1
             };
 
-            $scope.open = function($event) {
-                $scope.status.opened = true;
+            $scope.openDateEval = function($event) {
+                $scope.statusDateEval.opened = true;
             };
 
             // Disable weekend selection
@@ -36,5 +36,5 @@ opensyllabusApp.directive('evaluationElementForm', ['$anchorScroll', '$location'
 
     };
 
-}]);
+});
 
