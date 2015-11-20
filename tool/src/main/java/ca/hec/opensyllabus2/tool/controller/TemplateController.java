@@ -21,7 +21,6 @@ import org.springframework.stereotype.Controller;
 
 import ca.hec.opensyllabus2.api.Syllabus2Service;
 import ca.hec.opensyllabus2.api.model.template.Template;
-import ca.hec.opensyllabus2.api.model.template.TemplateElement;
 
 @Controller
 @RequestMapping(value ="v1/template")
@@ -40,7 +39,7 @@ public class TemplateController {
 	}
 
 	@RequestMapping(value = "/{templateId}/rules", method = RequestMethod.GET)
-	public @ResponseBody Map<String, List<TemplateElement>> getTemplateRules(@PathVariable Long templateId) throws IdUnusedException {
+	public @ResponseBody Map<String, List<Object>> getTemplateRules(@PathVariable Long templateId) throws IdUnusedException {
 		return osyl2Service.getTemplateRules(templateId);
 	}
 

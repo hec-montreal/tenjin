@@ -169,8 +169,8 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	}
 
 	@Override
-	public Map<String, List<TemplateElement>> getTemplateRules(Long templateId) throws IdUnusedException {
-		HashMap<String, List<TemplateElement>> results = new HashMap<String, List<TemplateElement>>();
+	public Map<String, List<Object>> getTemplateRules(Long templateId) throws IdUnusedException {
+		HashMap<String, List<Object>> results = new HashMap<String, List<Object>>();
 
 		Template t = templateDao.getTemplate(templateId);
 
@@ -181,21 +181,29 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return results;
 	}
 
-	private void getRules(TemplateStructure structure, HashMap<String, List<TemplateElement>> map) {
+	/*
+	 * Cet méthode récursive est assez lente, il faudra au moins mettre les valeurs en cache
+	 * ZCII-2008
+	 */
+	private void getRules(TemplateStructure structure, Map<String, List<Object>> map) {
 
 		if (structure!= null && structure.getParentId() != null) {
-			List<TemplateElement> elementList;
+			List<Object> elementList;
 
 			String parentId = structure.getParentId().toString();
 
 			if (!map.containsKey(parentId)) {
-				elementList = new ArrayList<TemplateElement>();
+				elementList = new ArrayList<Object>();
 				map.put(parentId, elementList);
 			} else {
 				elementList = map.get(parentId);
 			}
 
-			elementList.add(structure.getTemplateElement());
+			Map<String, String> templateElementMap = new HashMap<String, String>();
+			templateElementMap.put("type", structure.getTemplateElement().getType().getTitle());
+			templateElementMap.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
+
+			elementList.add(templateElementMap);
 		}
 
 		for (TemplateStructure elem : structure.getElements()) {

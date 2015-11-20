@@ -104,5 +104,5 @@ public interface Syllabus2Service {
 	 * @param templateId
 	 * @return
 	 */
-	public Map<String, List<TemplateElement>> getTemplateRules(Long templateId) throws IdUnusedException;
+	public Map<String, List<Object>> getTemplateRules(Long templateId) throws IdUnusedException;
 }
