@@ -25,7 +25,7 @@
 		</property>
 
 		<property name="templateElementId" type="long">
-			<column name="TEMPLATE_ELEMENT_ID" />
+			<column name="TEMPLATEELEMENT_ID" />
 		</property>
 
 		<property name="title" type="string">
