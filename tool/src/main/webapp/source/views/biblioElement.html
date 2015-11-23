@@ -45,8 +45,8 @@
  			</div>
  			<div data-ng-switch-when="proceed">
  				<span data-ng-if="element.attributes.author">{{element.attributes.author}}</span> 
-				<span data-ng-if="element.attributes.year">{{dot}} {{leftAngleQuote}}{{element.attributes.year}}{{rightAngleQuote}}</span>			
-				<span data-ng-if="element.attributes.sectionTitle">{{dot}} {{leftAngleQuote}}{{element.attributes.title}}{{rightAngleQuote}}</span>
+				<span data-ng-if="element.attributes.year">{{dot}} {{openParenthesis}}{{element.attributes.year}}{{closeParenthesis}}</span>			
+				<span data-ng-if="element.attributes.title">{{dot}} {{leftAngleQuote}}{{element.attributes.title}}{{rightAngleQuote}}</span>
 				<span data-ng-if="element.attributes.proceedTitle"  class="biblio-boldTitle">{{comma}} {{element.attributes.proceedTitle}}</span>				
  			</div>
  			<div data-ng-switch-when="report">
