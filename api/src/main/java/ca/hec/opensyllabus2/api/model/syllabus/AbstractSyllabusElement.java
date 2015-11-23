@@ -16,7 +16,7 @@ public abstract class AbstractSyllabusElement {
 
 	private Long id;
 	private Long parentId;
-	private Long templateElementId;
+	private Long templateStructureId;
 
 	private String title;
 	private String description;

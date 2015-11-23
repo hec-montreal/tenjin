@@ -24,8 +24,8 @@
 			<column name="PARENT_ID" />
 		</property>
 
-		<property name="templateElementId" type="long">
-			<column name="TEMPLATEELEMENT_ID" />
+		<property name="templateStructureId" type="long">
+			<column name="TEMPLATESTRUCTURE_ID" />
 		</property>
 
 		<property name="title" type="string">
