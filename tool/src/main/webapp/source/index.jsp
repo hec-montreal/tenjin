@@ -28,31 +28,19 @@
 		<div class="loader"></div>
 	</div>
 
+	<div class="main-errors">
+	 	<uib-alert data-ng-if="planFailed" class="myalert" type="danger">{{ 'ERROR_PLAN_COURS' | translate }}</uib-alert>
+
+	 	<uib-alert data-ng-if="(!planFailed && templateFailed)" class="myalert" type="danger">{{ 'ERROR_TEMPLATE' | translate }}</uib-alert>
+
+	 	<uib-alert data-ng-if="alertService.isVisible('danger')" class="myalert" type="danger" close="alertService.closeAlert('danger')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('danger')}}</uib-alert>
+	 	<uib-alert data-ng-if="alertService.isVisible('success')" class="myalert" type="success" close="alertService.closeAlert('success')">{{alertService.getAlertMsg('success')}}</uib-alert>
+	</div>
+
 	<h1 ng-cloak>{{syllabusService.syllabus.courseTitle}}</h1> 
 
-	<!-- <div class="row">	
-		<div class="col-sm-10">
-		</div>
-		<div class="col-sm-2 pull-right">
 
-			<div class="dropdown">
-				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-					<span class="glyphicon glyphicon-plus-sign"></span>
-					Ajouter
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" data-ng-controller="addElementCtrl as add">
-					<li role="presentation" data-ng-repeat="type in add.types"><a role="menuitem" tabindex="-1" href="#" data-ng-click="add.addElement(type)">{{type}}</a></li>
-				</ul>
-			</div>
-
-		</div>
-	</div> -->
-
- 	<uib-alert data-ng-if="alertService.isVisible('danger')" class="myalert" type="danger" close="alertService.closeAlert('danger')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('danger')}}</uib-alert>
- 	<uib-alert data-ng-if="alertService.isVisible('success')" class="myalert" type="success" close="alertService.closeAlert('success')">{{alertService.getAlertMsg('success')}}</uib-alert>
-
-	<div class="row row-content">
+	<div data-ng-if="!planFailed" class="row row-content">
 
 		<!-- Menu de gauche -->
 		<div data-ng-include="'leftMenu.html'"   class="col-md-3 hide-tablet pull-left left-menu" id="menu" ></div>

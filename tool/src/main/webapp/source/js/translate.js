@@ -62,7 +62,9 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         CALENDAR_DATE : 'Date',
         CALENDAR_TIME : 'Time',
         CALENDAR_CLEAR : 'Reset',
-        CALENDAR_CLOSE : 'Close'
+        CALENDAR_CLOSE : 'Close',
+        ERROR_PLAN_COURS : 'EN, Le chargement du plan de cours a échoué. Veuillez essayer ultérieurement ou contacter le support.',
+        ERROR_TEMPLATE : 'EN, Le chargement du plan de cours a partiellement échoué. Celui ci est disponible en lecture seulement. Veuillez essayer ultérieurement ou contacter le support.'
 
     })
     .translations('fr', {
@@ -133,12 +135,14 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ALERT_ERROR: 'Une erreur s\'est produite. Veuillez réessayer ultérieurement.',
         ALERT_SUCCESS: 'L\' opération a réussi.',
         ALERT_SUCCESS_ADD_ELEMENT: 'L\' élément a été ajouté.',
-        CALENDAR_TODAY : 'Aujourd\'hui',
+        CALENDAR_TODAY : 'Aujourd\'hui', 
         CALENDAR_NOW : 'Maintenant',
         CALENDAR_DATE : 'Date',
         CALENDAR_TIME : 'Heure',
         CALENDAR_CLEAR : 'Effacer',
-        CALENDAR_CLOSE : 'Fermer'
+        CALENDAR_CLOSE : 'Fermer',
+        ERROR_PLAN_COURS : 'Le chargement du plan de cours a échoué. Veuillez essayer ultérieurement ou contacter le support.',
+        ERROR_TEMPLATE : 'Le chargement du plan de cours a partiellement échoué. Celui ci est disponible en lecture seulement. Veuillez essayer ultérieurement ou contacter le support.'
     });
 
      $translateProvider.preferredLanguage('fr');
