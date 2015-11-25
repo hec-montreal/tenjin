@@ -5,7 +5,7 @@
     this.template;
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
-    var syllabusProvider = $resource('v1/syllabusss/iniiit.json');
+    var syllabusProvider = $resource('v1/syllabus/init.json');
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var templateProvider = $resource('v1/template/1/rules.json');

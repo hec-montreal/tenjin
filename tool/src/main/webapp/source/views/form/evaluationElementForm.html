@@ -1,6 +1,6 @@
 <div class="element-form"> 
 
-  <div class="container-eval-form">
+  <div >
   	<div class="row">
 	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'FORM_TITRE_EVALUATION' | translate }}</label>
@@ -10,6 +10,7 @@
 		</div>
 		<div class="col-md-4">  </div>
 	</div>
+	<br>
 	<div class="row">
 	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'FORM_PONDERATION_EVALUATION' | translate }}</label>
@@ -19,21 +20,23 @@
 		</div>
 	    <div class="col-md-4"> </div>
 	</div>
+	<br>
+	{{element.type}}
 	<div class="row" data-ng-if="element.type == 'evaluation'" >
 	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'EVALUATION_DATE' | translate }}</label>
 	    </div>
-	    <div class="col-md-4" >
-		    	<span class=" input-group">
-				    	<input type="text" class="eval-form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.evalDate" is-open="statusDateEval.opened" />
-						<span class="input-group-btn">
-		                    <button type="button" class="btn btn-default" data-ng-click="openDateEval($event)">
-		                        <i class="glyphicon glyphicon-calendar" ></i>
-		                    </button>
-		                </span>
-            	</span>
-			</div>
-	    <div class="col-md-4"></div>
+	    <div class="col-md-8" >
+	    	<p class="input-group" >
+		    	<input type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.evalDate" is-open="statusDateEval.opened" />
+		      	<span class="input-group-btn">
+		      		<button type="button" class="btn btn-default" data-ng-click="openDateEval($event)">
+	                	<i class="glyphicon glyphicon-calendar" ></i>
+	            	</button>
+	            </span>
+	   		</p>
+ 		  <br>  
+   		</div>
 	 </div>
 	 <div class="row">
 	    <div class="col-md-4">
@@ -55,6 +58,7 @@
 		</div>
 		<div class="col-md-4"></div>
 	</div>
+	<br>
 	<div class="row">
 	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'EVALUATION_TERMS' | translate }}</label>
@@ -75,6 +79,7 @@
 		</div>
 		<div class="col-md-4"></div>
 	</div>
+	<br>
 	<div class="row">
 	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'EVALUATION_SUBMISSION_TYPE' | translate }}</label>
@@ -95,6 +100,7 @@
 		</div>
 		<div class="col-md-4"></div>
 	</div>
+	<br>
 	<div class="row">
 	    <div class="col-md-4">
 	    	<label for="male" class="label-text-title">{{ 'EVALUATION_ASSESSMENT_TYPE' | translate }}</label>
