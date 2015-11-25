@@ -200,6 +200,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			}
 
 			Map<String, String> templateElementMap = new HashMap<String, String>();
+			templateElementMap.put("id", structure.getId().toString());
 			templateElementMap.put("type", structure.getTemplateElement().getType().getTitle());
 			templateElementMap.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
 
