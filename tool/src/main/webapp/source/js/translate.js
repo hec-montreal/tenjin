@@ -56,7 +56,13 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ERROR_FORMAT_DATE_RETRAIT: 'The format of the ending date is invalid',
         ALERT_ERROR: 'An error has occured. Please try later.',
         ALERT_SUCCESS: 'The operation succeeded.',
-        ALERT_SUCCESS_ADD_ELEMENT: 'The element has been added.'
+        ALERT_SUCCESS_ADD_ELEMENT: 'The element has been added.',
+        CALENDAR_TODAY : 'Today',
+        CALENDAR_NOW : 'Now',
+        CALENDAR_DATE : 'Date',
+        CALENDAR_TIME : 'Time',
+        CALENDAR_CLEAR : 'Reset',
+        CALENDAR_CLOSE : 'Close'
 
     })
     .translations('fr', {
@@ -126,7 +132,13 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ERROR_FORMAT_DATE_RETRAIT: 'Le format de la date de retrait est incorrect',
         ALERT_ERROR: 'Une erreur s\'est produite. Veuillez réessayer ultérieurement.',
         ALERT_SUCCESS: 'L\' opération a réussi.',
-        ALERT_SUCCESS_ADD_ELEMENT: 'L\' élément a été ajouté.'
+        ALERT_SUCCESS_ADD_ELEMENT: 'L\' élément a été ajouté.',
+        CALENDAR_TODAY : 'Aujourd\'hui',
+        CALENDAR_NOW : 'Maintenant',
+        CALENDAR_DATE : 'Date',
+        CALENDAR_TIME : 'Heure',
+        CALENDAR_CLEAR : 'Effacer',
+        CALENDAR_CLOSE : 'Fermer'
     });
 
      $translateProvider.preferredLanguage('fr');

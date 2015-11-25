@@ -65,10 +65,11 @@ body {
     .modal-body {
         padding: 5px 15px 10px;
     }
-    
-    .dropdown-menu {
-        min-width: 220px;
-        left: -120px;
+
+    .liste-menu-ajout {
+        right: 0;
+        left: initial;
+        min-width: initial;
     }
     
     .btn-primary {

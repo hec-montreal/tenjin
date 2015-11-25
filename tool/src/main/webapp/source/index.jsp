@@ -16,7 +16,7 @@
 
 	<!-- include sakai scripts (for resizing frame, etc). includes ckeditor -->
 	<%= request.getAttribute("sakai.html.head.js") %>
-	<!-- include skin/tool.css and tool_base.css -->
+<!-- include skin/tool.css and tool_base.css -->
 	<!-- <%= request.getAttribute("sakai.html.head") %> -->
 	<!-- <%= request.getAttribute("sakai.html.head.css.skin") %> -->
 	<!-- a good example is bootstrap.jsp in roster2! -->
@@ -68,6 +68,9 @@
 
 	<!-- <script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script> -->
 	<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
+	<script src="/opensyllabus2-tool/lib/angular-dynamic-locale-master/tmhDynamicLocale.min.js"></script>
+
+	<script src="http://code.angularjs.org/1.0.8/i18n/angular-locale_fr-fr.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular/angular-resource.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular/angular-animate.min.js"></script>

@@ -38,7 +38,7 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
                 var template = SyllabusService.getTemplate();
                 var selectedItem2 = TreeService.getSelectedItem();
                 var selectedItem = $scope.element;
-                var templateSelectedItem = template[selectedItem.templateElementId];
+                var templateSelectedItem = template[selectedItem.templateStructureId];
 
                 $scope.types = [];
 
