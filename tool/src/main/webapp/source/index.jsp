@@ -69,7 +69,7 @@
 	<!-- <script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script> -->
 	<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-dynamic-locale-master/tmhDynamicLocale.min.js"></script>
-
+	<script src="/opensyllabus2-tool/lib/angular-promise-extras-master/angular-promise-extras.js"></script>
 	<script src="http://code.angularjs.org/1.0.8/i18n/angular-locale_fr-fr.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular/angular-resource.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular/angular-sanitize.min.js"></script>
