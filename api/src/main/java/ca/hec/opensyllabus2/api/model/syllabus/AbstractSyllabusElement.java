@@ -26,8 +26,7 @@ public abstract class AbstractSyllabusElement {
     private Boolean shareable;
     private Boolean important;
 
-// this is more a property of the list? see compositeElementMapping/Syllabus mapping
-//    private Integer order;
+    private Integer displayOrder;
 
     private Date availabilityStartDate;
     private Date availabilityEndDate;

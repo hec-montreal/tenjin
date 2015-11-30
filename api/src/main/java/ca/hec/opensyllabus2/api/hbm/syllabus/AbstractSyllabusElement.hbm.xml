@@ -75,8 +75,8 @@
 			<element column="SECTION" type="string" />
 		</set>
 
-<!-- 		<property name="order" type="integer"> -->
-<!-- 			<column name="DISPLAY_ORDER" unique-key="unique_parent_and_order" /> -->
-<!-- 		</property> -->
+		<property name="displayOrder" type="int">
+			<column name="DISPLAY_ORDER"/>
+		</property>
 	</class>
 </hibernate-mapping>
