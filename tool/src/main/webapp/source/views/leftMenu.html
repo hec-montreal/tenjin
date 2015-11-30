@@ -10,13 +10,13 @@
 
   <!-- Display items composite, evaluation, lecture and tutorial -->
   <span data-ng-if="item.type === 'composite' || item.type === 'evaluation' || item.type === 'lecture' || item.type === 'tutorial'">
-    <span data-ng-click="treeService.setSelectedItem(item)" class="select-item" data-ng-class="{'item-selected': item.selected, 'item-composite': item.type === 'composite' }" >
+    <span data-ng-click="treeService.setSelectedItem(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }" >
       {{item.title}}
-      <span ui-tree-handle class="tree-node tree-node-content picto-move" data-ng-if="item.parent"></span>
+      <span ui-tree-handle class="tree-node tree-node-content picto-move" data-ng-if="item.parentId"></span>
     </span>
 
      <!-- Pas de drag and drop pour les éléments de premier niveau -->
-    <span ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.parent"></span>
+    <span ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.parentId"></span>
   </span>
 
   <!-- <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-class="{hidden: collapsed}" data-ng-if="item.elements && item.elements.length > 0 && item.elements[0].displayPage"> -->

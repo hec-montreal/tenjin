@@ -28,6 +28,16 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
 
         // RESULT
         if (result > 0) {
+
+            // TODO : si le plan de cours est vide on le sauvegarde
+            // var syllabus = SyllabusService.getSyllabus();
+            // // plan de cours vide
+            // if (!syllabus.id) {       
+            //     // ajout de l'élément au plan de cours
+            //     SyllabusService.addElement($scope.element, $scope.parent);
+            //     // sauvegarde du plan de cours + l'élément en cours
+            // }
+
             // var selectedItem = TreeService.getSelectedItem();
             var savePromise = SyllabusService.saveElement($scope.element);
             

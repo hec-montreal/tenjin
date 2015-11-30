@@ -12,6 +12,14 @@ body {
         margin-bottom: 20px; 
     }
 
+    .title-dirty {
+        font-style: italic;
+        
+        &:after {
+            content: ' *';
+        }
+    }
+
     .row-title {
         min-height: 69px;
     }

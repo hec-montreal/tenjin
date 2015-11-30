@@ -2,7 +2,9 @@
     'use strict';
 
     this.syllabus;
+    this.syllabusSaved;
     this.template;
+    this.dirty = false;
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusProvider = $resource('v1/syllabus/init.json');
@@ -22,6 +24,7 @@
         return templateProvider.get();
     };
 
+
     this.saveElement = function($element, $parent) {
         return syllabusElementProvider.save($element, $parent);
     };
@@ -30,8 +33,14 @@
         return this.syllabus;
     };
 
+    this.getSyllabusSaved = function() {
+        return this.syllabusSaved;
+    };
+
     this.setSyllabus = function($syllabus) {
         this.syllabus = $syllabus;
+        // sauvegarde d'une copie du syllabus
+        this.syllabusSaved = angular.copy(this.syllabus);
     };
 
     this.getTemplate = function() {
@@ -51,8 +60,17 @@
 
     };
 
+
     this.broadcastTemplateLoaded = function($template) {
         $rootScope.$broadcast('templateLoaded');
+    };
+
+    this.setDirty = function($dirty) {
+        this.dirty = $dirty;
+    };
+
+    this.isDirty = function($dirty) {
+        return this.dirty;
     };
 
 

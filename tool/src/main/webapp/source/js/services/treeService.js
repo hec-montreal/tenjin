@@ -17,7 +17,7 @@
     var unselectTreeElements = function($rootTree) {
         if ($rootTree.elements) {
             for (var i = 0; i < $rootTree.elements.length; i++){
-                $rootTree.elements[i].selected = false;
+                $rootTree.elements[i].$selected = false;
                 unselectTreeElements($rootTree.elements[i]);
             }
         }
@@ -58,32 +58,34 @@
     };
     
     
-    this.setSelectedItem = function($item){
+    this.setSelectedItem = function($item, $firstTime){
 
-        if (this.selectedItem && $item.id !== this.selectedItem.id ) {            
-            // permet de déselectionner l'élément précédemment sélectionné
-        	unselectTree(SyllabusService.getSyllabus());
+        // si l'item n'est pas celui déjà sélectionné
+        if ($firstTime || !$item.$selected ) {
+            if (!$firstTime) {
+                // permet de déselectionner l'élément précédemment sélectionné
+                unselectTree(SyllabusService.getSyllabus());
+            }
+
+            $item.$selected = true;
+            this.selectedItem = $item;
+
+            // permet d'émettre l'évènement après le digest cycle et de s'assurer que les scopes soient à jours ( notamment le scope de addElementCtrl)
+            $rootScope.$$postDigest( function() {
+                // event item selected
+                $rootScope.$broadcast("selectedItemChanged");
+            });
+            
+            $timeout(function() {
+                
+                // anything you want can go here and will safely be run on the next digest.
+                // resize frame (should be done also whenever we change content)
+                if (window.frameElement) {
+                    setMainFrameHeight(window.frameElement.id);
+                }
+            });  
         }
 
-
-        $item.selected = true;
-        this.selectedItem = $item;
-
-        // permet d'émettre l'évènement après le digest cycle et de s'assurer que les scopes soient à jours ( notamment le scope de addElementCtrl)
-        $rootScope.$$postDigest( function() {
-            // event item selected
-            $rootScope.$broadcast("selectedItemChanged");
-        });
-        
-        $timeout(function() {
-            
-            // anything you want can go here and will safely be run on the next digest.
-            // resize frame (should be done also whenever we change content)
-            if (window.frameElement) {
-                setMainFrameHeight(window.frameElement.id);
-            }
-        });
-
-
 	};
+
 }]);

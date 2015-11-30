@@ -37,7 +37,9 @@
 	 	<uib-alert data-ng-if="alertService.isVisible('success')" class="myalert" type="success" close="alertService.closeAlert('success')">{{alertService.getAlertMsg('success')}}</uib-alert>
 	</div>
 
-	<h1 ng-cloak>{{syllabusService.syllabus.courseTitle}}</h1> 
+	<h1 data-ng-class="{ 'title-dirty' : syllabusService.dirty }" ng-cloak>
+		{{syllabusService.syllabus.courseTitle}}
+	</h1> 
 
 
 	<div data-ng-if="!planFailed" class="row row-content">
