@@ -103,7 +103,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$interval' ,'$timeout
 
                 // TEST INTERVAL SAUVEGARDE PLAN DE COURS
                 // SyllabusService.startUpdateProcess(5000);
-                $interval( $scope.updateSyllabus, 5000);
+                // $interval( $scope.updateSyllabus, 5000);
 
                 $timeout(function() {
                     // anything you want can go here and will safely be run on the next digest.
@@ -130,7 +130,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$interval' ,'$timeout
 
     $scope.updateSyllabus = function() {
 
-        if (!angular.equals($scope.syllabusService.syllabus, $scope.syllabusService.syllabusSaved)) {
+        if (SyllabusService.isDirty()) {
             // parcours des éléments de premier niveau pour voir lesquels sont en brouillon
             for (var i = 0; i < $scope.syllabusService.syllabus.elements.length ; i++ ) {
                 var element = $scope.syllabusService.syllabus.elements[i];
@@ -142,6 +142,23 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$interval' ,'$timeout
             }
 
         }
+    };
+
+    $scope.save = function() {
+        
+        var results = SyllabusService.saveSyllabus(SyllabusService.syllabus.siteId);
+        
+        SyllabusService.setWorking(true);
+        results.$promise.then( function($data) {
+            AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_ELEMENT'));
+            SyllabusService.setSyllabus($data);
+        },
+        function($error) {
+            AlertService.display('danger');
+        }).finally( function() {
+            SyllabusService.setWorking(false);
+        });
+
     };
 
 

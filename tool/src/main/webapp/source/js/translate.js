@@ -57,6 +57,7 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ALERT_ERROR: 'An error has occured. Please try later.',
         ALERT_SUCCESS: 'The operation succeeded.',
         ALERT_SUCCESS_ADD_ELEMENT: 'The element has been added.',
+        ALERT_SUCCESS_SAVE_SYLLABUS: 'The course plan has been saved.',
         CALENDAR_TODAY : 'Today',
         CALENDAR_NOW : 'Now',
         CALENDAR_DATE : 'Date',
@@ -64,8 +65,9 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         CALENDAR_CLEAR : 'Reset',
         CALENDAR_CLOSE : 'Close',
         ERROR_PLAN_COURS : 'EN, Le chargement du plan de cours a échoué. Veuillez essayer ultérieurement ou contacter le support.',
-        ERROR_TEMPLATE : 'EN, Le chargement du plan de cours a partiellement échoué. Celui ci est disponible en lecture seulement. Veuillez essayer ultérieurement ou contacter le support.'
-
+        ERROR_TEMPLATE : 'EN, Le chargement du plan de cours a partiellement échoué. Celui ci est disponible en lecture seulement. Veuillez essayer ultérieurement ou contacter le support.',
+        BUTTON_SAVE: 'Save',
+        SAVE_WORKING: 'Save in progress...'
     })
     .translations('fr', {
         MENU_LABEL: 'Menu du cours',
@@ -135,6 +137,7 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ALERT_ERROR: 'Une erreur s\'est produite. Veuillez réessayer ultérieurement.',
         ALERT_SUCCESS: 'L\' opération a réussi.',
         ALERT_SUCCESS_ADD_ELEMENT: 'L\' élément a été ajouté.',
+        ALERT_SUCCESS_SAVE_SYLLABUS: 'Le plan de cours a été sauvegardé.',
         CALENDAR_TODAY : 'Aujourd\'hui', 
         CALENDAR_NOW : 'Maintenant',
         CALENDAR_DATE : 'Date',
@@ -142,7 +145,9 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         CALENDAR_CLEAR : 'Effacer',
         CALENDAR_CLOSE : 'Fermer',
         ERROR_PLAN_COURS : 'Le chargement du plan de cours a échoué. Veuillez essayer ultérieurement ou contacter le support.',
-        ERROR_TEMPLATE : 'Le chargement du plan de cours a partiellement échoué. Celui ci est disponible en lecture seulement. Veuillez essayer ultérieurement ou contacter le support.'
+        ERROR_TEMPLATE : 'Le chargement du plan de cours a partiellement échoué. Celui ci est disponible en lecture seulement. Veuillez essayer ultérieurement ou contacter le support.',
+        BUTTON_SAVE: 'Enregistrer',
+        SAVE_WORKING: 'Sauvegarde en cours...'
     });
 
      $translateProvider.preferredLanguage('fr');

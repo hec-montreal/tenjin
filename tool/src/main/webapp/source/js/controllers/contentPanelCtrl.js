@@ -13,9 +13,20 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
         }
     };
 
+    $scope.getAncestorList = function($node){
+        if ($node.$parentNodeScope) {
+            return $scope.getAncestor($node.$parentNodeScope);
+        } else {
+            return $node;
+        }
+    };
+
+
     $scope.treeOptions = {
 
         name: "contentPanelTree",
+
+        item: TreeService.selectedItem,
 
         accept: function(sourceNodeScope, destNodesScope, destIndex) {
 
@@ -30,14 +41,21 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
                         if (sourceNodeScope.item.type === 'composite' && destNodesScope.item.type === 'composite')                                 {
                             return false;
                         } else {
+                            
+                            // console.log("drag and drop 1");
                             return true;
                         }
 
                     } else {
+                        // drag and drop entre éléments
+                        // console.log("drag and drop 2");
+
+
                         return true;
                     }
 
                 } else {
+                    // console.log("drag and drop 3");
                     // on est à la racine
                     return true;
                 }
@@ -46,6 +64,27 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
 
             return false;
         },
+
+
+        dropped: function(event) {
+
+            var srcItem = event.source.nodesScope.item;
+            var destItem = event.dest.nodesScope.item;
+
+            console.log('dropped');
+
+            if (srcItem && destItem && srcItem.id === destItem.id ) {
+                // ex : déplacement au sein d'une même rubrique
+                console.log("save une rubrique"); 
+
+            } else{ 
+                // recherche ancêtre commun
+                console.log("save selected item"); 
+
+            }
+
+        },
+
     };
 
 }]);

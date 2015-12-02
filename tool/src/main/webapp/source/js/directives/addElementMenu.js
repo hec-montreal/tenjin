@@ -19,6 +19,8 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
             $scope.showMenuAjouter = false;
             $scope.isDisabled = true;
 
+            $scope.syllabusService = SyllabusService;
+
             // $scope.types = [ 
             //     { type: "text", libelle: "TYPE_ELEMENT_TEXTE" } , 
             //     { type: "document", libelle: "TYPE_ELEMENT_DOCUMENT"},

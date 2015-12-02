@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'ModalService', function ($anchorScroll, $location, ModalService){
+opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'ModalService', 'SyllabusService', function ($anchorScroll, $location, ModalService, SyllabusService){
     'use strict';
 
     return {
@@ -10,6 +10,8 @@ opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'Moda
         restrict: 'A',
         templateUrl: 'buttonsElement.html',
         controller: function ($scope) {
+
+            $scope.syllabusService = SyllabusService;
 
             $scope.confirmDelete = function($event, $element) {
                 // scroll to the top

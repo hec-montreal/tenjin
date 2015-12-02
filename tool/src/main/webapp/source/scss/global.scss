@@ -54,6 +54,20 @@ body {
         }
     }
 
+    .container-save-working {
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+        vertical-align: bottom;
+
+        .message-save-working {
+            display: inline-block;
+            height: 100%;
+            vertical-align: top;
+        }
+
+    }
+
     // BOOTSTRAP
     .container-fluid {
         padding-left: 15px;
@@ -96,7 +110,7 @@ body {
             border: none; 
         }
     }
-
+ 
     // XEDITABLE
     .editable-click {
         border-bottom: none;

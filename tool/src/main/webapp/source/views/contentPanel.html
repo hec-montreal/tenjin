@@ -76,8 +76,8 @@
     <div data-ng-if="treeService.getSelectedItem().type == 'evaluation'"> <div data-evaluationattr-element="treeService.getSelectedItem()"></div></div>
 
 
-    <div ui-tree data-drag-enabled="true">
-    <!-- <div ui-tree="treeOptions" data-drag-enabled="true"> -->
+    <!-- <div ui-tree data-drag-enabled="true"> -->
+    <div ui-tree="treeOptions" data-drag-enabled="!syllabusService.working" data-ng-model="treeService.selectedItem">
       <ol ui-tree-nodes="" ng-model="treeService.getSelectedItem().elements" class="liste-element">
         <li ng-repeat="item in treeService.getSelectedItem().elements" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          
       </ol>

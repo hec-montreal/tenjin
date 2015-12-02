@@ -39,8 +39,13 @@
 
 	<h1 data-ng-class="{ 'title-dirty' : syllabusService.dirty }" ng-cloak>
 		{{syllabusService.syllabus.courseTitle}}
-	</h1> 
 
+	</h1> 
+	<button class="btn btn-primary" type="button" data-ng-disabled="(!syllabusService.dirty || syllabusService.working)" data-ng-click="save()">{{ 'BUTTON_SAVE' | translate }}</button>
+	<span class="container-save-working" data-ng-show="syllabusService.working">
+		<span class="picto-ajax-loader" data-ng-show="syllabusService.working"></span>
+		<span class="message-save-working">{{ 'SAVE_WORKING' | translate }}</span>
+	</span>
 
 	<div data-ng-if="!planFailed" class="row row-content">
 

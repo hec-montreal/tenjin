@@ -88,3 +88,11 @@
     margin-right: 5px;
     // vertical-align: top;
 }
+
+.picto-ajax-loader {
+    display: inline-block;
+    background: url('/opensyllabus2-tool/img/desktop/ajax-loader.gif') no-repeat;
+    height: 24px;
+    width: 24px;
+    margin-left: 10px;
+}

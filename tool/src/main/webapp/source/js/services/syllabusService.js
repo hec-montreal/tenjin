@@ -5,15 +5,26 @@
     this.syllabusSaved;
     this.template;
     this.dirty = false;
+    this.working = false;
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusProvider = $resource('v1/syllabus/init.json');
+
+    //
+    var syllabusProviderSave = $resource('v1/syllabus/:siteId', null,
+    {
+        'update': { method:'PUT' }
+    });
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var templateProvider = $resource('v1/template/1/rules.json');
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusElementProvider = $resource('v1/syllabus/');
+
+    this.saveSyllabus =  function($siteId) {
+        return syllabusProviderSave.update($siteId);
+    };
 
     this.loadSyllabus =  function() {  
         // return syllabusProvider.getSyllabus({sectionId : "A01,B03"});   
@@ -72,6 +83,16 @@
     this.isDirty = function($dirty) {
         return this.dirty;
     };
+
+
+    this.setWorking = function($working) {
+        this.working = $working;
+    };
+
+    this.isWorking = function($working) {
+        return this.working;
+    };
+
 
 
     // this.initSyllabus = function(){
