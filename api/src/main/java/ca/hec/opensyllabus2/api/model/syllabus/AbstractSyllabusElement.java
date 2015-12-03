@@ -4,6 +4,11 @@ import lombok.Data;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+
 /**
  *
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
@@ -12,6 +17,17 @@ import java.util.*;
  */
 
 @Data
+@JsonSubTypes({
+	@Type(value = SyllabusCompositeElement.class, name = "compositeSyllabusElement"),
+	@Type(value = SyllabusCitationElement.class, name = "citationElement"),
+	@Type(value = SyllabusContactInfoElement.class, name = "contactInfoElement"),
+	@Type(value = SyllabusDocumentElement.class, name = "documentElement"),
+	@Type(value = SyllabusHyperlinkElement.class, name = "hyperlinkElement"),
+	@Type(value = SyllabusImageElement.class, name = "imageElement"),
+	@Type(value = SyllabusSakaiToolElement.class, name = "sakaiToolElement"),
+	@Type(value = SyllabusTextElement.class, name = "textElement"),
+	@Type(value = SyllabusVideoElement.class, name = "videoElement") })
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = As.PROPERTY, property = "@class")
 public abstract class AbstractSyllabusElement {
 
 	private Long id;

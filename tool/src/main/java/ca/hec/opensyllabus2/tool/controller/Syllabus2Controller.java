@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.util.ResourceLoader;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,14 +58,14 @@ public class Syllabus2Controller {
     private Syllabus2Service osyl2Service = null;
 
     private ResourceLoader msgs = null;
- 
+
     private static Log log = LogFactory.getLog(Syllabus2Controller.class);
 
     @PostConstruct
     public void init() {
 	// retrieve ui and co messages
 	msgs = new ResourceLoader("openSyllabus2");
-	
+
     }
 
     @RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
@@ -113,15 +114,21 @@ public class Syllabus2Controller {
 	}
 //	Hibernate4Module hbm = new Hibernate4Module();
 //	hbm.enable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
-//	
+//
 //	mapper.registerModule(hbm);
 //	ObjectWriter w = mapper.writer();
 //	String result = null;
 //	result = w.writeValueAsString(syllabus);
-	    
+
 	return syllabus;
 
     }
+
+	@RequestMapping(value="/{siteId}", method = RequestMethod.POST)
+	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) {
+
+		return osyl2Service.createOrUpdateSyllabus(syllabus);
+	}
 
     private int countParams(String parameters) {
 	int nb = parameters.split(",").length;

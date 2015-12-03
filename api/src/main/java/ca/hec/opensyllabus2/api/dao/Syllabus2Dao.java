@@ -40,18 +40,8 @@ public interface Syllabus2Dao {
 	public Syllabus getShareableSyllabus (String courseId )throws Exception;
 
 	public Syllabus getCommonSyllabus (String courseId, String[] sectionIds)throws Exception;
-//
-//	public List<Object> getElementsSection (String elementId);
-//
-//	public List<Object> getElementsAttributes (String elementId);
-//
-//	public List<Rubric> getAllRubrics();
-//
-//	public String getElementsRubric (String elementId);
-//
-//	public String getSyllabusRubric (String syllabusId);
-//
-//	public String getSyllabusLocale (String syllabusId);
+
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus);
 
 }
 

@@ -9,7 +9,6 @@ import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
 import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.template.Template;
-import ca.hec.opensyllabus2.api.model.template.TemplateElement;
 
 /**
  * An interface to abstract all Sakai related API calls in a central method that can be injected into our app.
@@ -105,4 +104,13 @@ public interface Syllabus2Service {
 	 * @return
 	 */
 	public Map<String, List<Object>> getTemplateRules(Long templateId) throws IdUnusedException;
+
+	/**
+	 * Create a new syllabus or update the existing syllabus based on id
+	 *
+	 * @param syllabus
+	 * @return the saved syllabus
+	 */
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus);
+
 }

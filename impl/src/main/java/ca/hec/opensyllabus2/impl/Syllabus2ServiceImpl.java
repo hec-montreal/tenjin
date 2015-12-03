@@ -26,7 +26,6 @@ import ca.hec.opensyllabus2.api.dao.Syllabus2Dao;
 import ca.hec.opensyllabus2.api.dao.TemplateDao;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.template.Template;
-import ca.hec.opensyllabus2.api.model.template.TemplateElement;
 import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
 
 /**
@@ -182,7 +181,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	}
 
 	/*
-	 * Cet méthode récursive est assez lente, il faudra au moins mettre les valeurs en cache
+	 * il faudra au moins mettre les valeurs en cache?
 	 * ZCII-2008
 	 */
 	private void getRules(TemplateStructure structure, Map<String, List<Object>> map) {
@@ -245,6 +244,11 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		siteRef = siteService.getSite(context).getId();
 
 		return siteRef;
+	}
+
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) {
+		log.info("syllabus:" + syllabus.toString());
+		return syllabusDao.createOrUpdateSyllabus(syllabus);
 	}
 
 }
