@@ -123,18 +123,21 @@
 		<!-- Jackson JSON Mapper -->
 		<dependency>
           <groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
+		  <artifactId>jackson-core</artifactId>
           <version>${sakai.jackson.version}</version>
+	      <scope>provided</scope>
 		</dependency>
         <dependency>
           <groupId>com.fasterxml.jackson.core</groupId>
           <artifactId>jackson-annotations</artifactId>
           <version>${sakai.jackson.version}</version>
+          <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>com.fasterxml.jackson.core</groupId>
           <artifactId>jackson-databind</artifactId>
           <version>${sakai.jackson.version}</version>
+          <scope>provided</scope>
         </dependency>
 	</dependencies>
 
@@ -167,16 +170,16 @@
 			</resource>
 		</resources>
 		<plugins>
-		
+
 		<plugin>
 	        <groupId>nl.geodienstencentrum.maven</groupId>
 	        <artifactId>sass-maven-plugin</artifactId>
 	        <version>2.5</version>
 	    </plugin>
-      
-		
+
+
 		<!-- frontend maven plugin -->
-		
+
 	 <plugin>
        <groupId>com.github.eirslett</groupId>
        <artifactId>frontend-maven-plugin</artifactId>
@@ -184,7 +187,7 @@
        <configuration>
        		<workingDirectory>src/main/webapp</workingDirectory>
        </configuration>
-    
+
 	    <executions>
 		   <execution>
 			    <id>install node and npm</id>
@@ -196,18 +199,18 @@
 			        <npmVersion>2.11.3</npmVersion>
 			    </configuration>
 			</execution>
-	    
+
 			<execution>
 			    <id>npm install</id>
 			    <goals>
 			        <goal>npm</goal>
 			    </goals>
-			
+
 			    <configuration>
 			        <arguments>install</arguments>
 			    </configuration>
 			</execution>
-			
+
 		     <execution>
 			    <id>gulp build </id>
 			    <goals>
@@ -218,7 +221,7 @@
 			    </configuration>
 			</execution>
 
-		   </executions>	    
+		   </executions>
 	     </plugin>
 
 			<!-- configure the war plugin to correctly use the standard maven structure -->
@@ -230,7 +233,7 @@
 				</configuration>
 			</plugin>
 
-		
+
 		</plugins>
 	</build>
 
