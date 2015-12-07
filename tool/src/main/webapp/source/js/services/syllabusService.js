@@ -1,4 +1,4 @@
-﻿opensyllabusApp.service('SyllabusService', ['$rootScope', '$resource', '$http',  function ($rootScope, $resource, $http){
+﻿opensyllabusApp.service('SyllabusService', ['$rootScope', '$resource', '$http', function ($rootScope, $resource, $http){
     'use strict';
 
     this.syllabus;
@@ -11,19 +11,29 @@
     var syllabusProvider = $resource('v1/syllabus/init.json');
 
     //
-    var syllabusProviderSave = $resource('v1/syllabus/:siteId', null,
-    {
-        'update': { method:'PUT' }
-    });
+    // var syllabusProviderSave = $resource('v1/syllabus/:siteId', null,
+    // {
+    //     'update': { method:'PUT' }
+    // });
+
+    //
+    // var syllabusProviderSave = $resource('v1/syllabus');
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var templateProvider = $resource('v1/template/1/rules.json');
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
-    var syllabusElementProvider = $resource('v1/syllabus/');
+    var syllabusElementProvider = $resource('v1/syllabus');
 
-    this.saveSyllabus =  function($siteId) {
-        return syllabusProviderSave.update($siteId);
+
+    this.save =  function($data) {
+        var syllabusProviderSave = $resource('v1/syllabus/'+$data.siteId+'.json');
+        return syllabusProviderSave.save($data);
+    };
+
+    this.saveSyllabus =  function() {
+        var syllabusProviderSave = $resource('v1/syllabus/'+this.syllabus.siteId+'.json');
+        return syllabusProviderSave.save(this.syllabus);
     };
 
     this.loadSyllabus =  function() {  
@@ -48,10 +58,12 @@
         return this.syllabusSaved;
     };
 
-    this.setSyllabus = function($syllabus) {
+    this.setSyllabus = function($syllabus) {      
         this.syllabus = $syllabus;
+ 
         // sauvegarde d'une copie du syllabus
         this.syllabusSaved = angular.copy(this.syllabus);
+        this.dirty = false;
     };
 
     this.getTemplate = function() {
@@ -94,6 +106,92 @@
     };
 
 
+    var addElementToSyllabus = function($rootTree, $parent, $element, $position) {
+
+        if ($rootTree.elements) {
+
+            if ($rootTree.id === $parent.id) { 
+                // si l'élément existe déjà on le supprime et on le remplace
+                for (var i = 0; i < $rootTree.elements.length; i++){
+                    if ($rootTree.elements[i].id === $element.id) {
+                        $rootTree.elements.splice(i, 1);
+                    }
+                }   
+
+                if ($position) {
+                    
+                } else {
+
+                    $rootTree.elements.push($element);
+                }  
+            } else {
+                
+                for (var i = 0; i < $rootTree.elements.length; i++){
+                    addElementToSyllabus($rootTree.elements[i], $parent, $element, $position); 
+                }
+            
+            }
+
+        }
+
+    };
+
+
+    this.addElementToSyllabus = function($data, $parent, $element, $position) {
+        addElementToSyllabus($data, $parent, $element, $position);
+    };
+
+
+    var deleteElementFromSyllabus = function($rootTree, $parent, $element) {
+
+        if ($rootTree.elements) {
+
+            if ($rootTree.id === $parent.id) { 
+                // si l'élément existe déjà on le supprime et on le remplace
+                for (var i = 0; i < $rootTree.elements.length; i++){
+                    if ($rootTree.elements[i].id === $element.id) {
+                        $rootTree.elements.splice(i, 1);
+                    }
+                }   
+  
+            } else {
+                
+                for (var i = 0; i < $rootTree.elements.length; i++){
+                    deleteElementFromSyllabus($rootTree.elements[i], $parent, $element); 
+                }
+            
+            }
+
+        }
+
+    };
+
+
+    this.deleteElementFromSyllabus = function($data, $parent, $element) {
+        deleteElementFromSyllabus($data, $parent, $element);
+    };
+
+
+    var getParent = function($rootTree, $element) {
+        
+        if ($rootTree.id === $element.parentId) {
+            return $rootTree;
+        } else {
+            if ($rootTree.elements) {
+                for (var i = 0; i < $rootTree.elements.length; i++){
+                    var resultat = getParent($rootTree.elements[i], $element); 
+                    if (resultat) {
+                        return resultat;
+                    }
+                }
+            }
+        }
+        return undefined;
+    };
+
+    this.getParent = function($element) {
+        return getParent(this.syllabus, $element);
+    };
 
     // this.initSyllabus = function(){
     // 	return $http.get('v1/syllabus/init.json');

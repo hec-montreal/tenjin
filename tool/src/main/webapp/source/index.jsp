@@ -22,7 +22,7 @@
 	<!-- a good example is bootstrap.jsp in roster2! -->
 <!--  -->
 </head>
-<body id="body" class="portletBody container-fluid" data-ng-controller="OpensyllabusCtrl" >
+<body id="body" class="portletBody container-fluid body-syllabus" data-ng-controller="OpensyllabusCtrl" >
 
 	<div class="loader-container" data-ng-show="infos.working">
 		<div class="loader"></div>
@@ -34,7 +34,7 @@
 	 	<uib-alert data-ng-if="(!planFailed && templateFailed)" class="myalert" type="danger">{{ 'ERROR_TEMPLATE' | translate }}</uib-alert>
 
 	 	<uib-alert data-ng-if="alertService.isVisible('danger')" class="myalert" type="danger" close="alertService.closeAlert('danger')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('danger')}}</uib-alert>
-	 	<uib-alert data-ng-if="alertService.isVisible('success')" class="myalert" type="success" close="alertService.closeAlert('success')">{{alertService.getAlertMsg('success')}}</uib-alert>
+	 	<uib-alert data-ng-if="alertService.isVisible('success')" class="myalert" type="success" close="alertService.closeAlert('success')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('success')}}</uib-alert>
 	</div>
 
 	<h1 data-ng-class="{ 'title-dirty' : syllabusService.dirty }" ng-cloak>

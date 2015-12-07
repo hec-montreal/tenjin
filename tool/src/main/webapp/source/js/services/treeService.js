@@ -88,4 +88,40 @@
 
 	};
 
+
+    var getItemFromId = function($rootTree, $id) {
+        // on regarde tous les éléments hormis l'élément racine
+        if ($rootTree.id === $id && !$rootTree.siteId) {
+            return $rootTree;
+        } else {
+
+            if ($rootTree.elements) {
+                for (var i = 0; i < $rootTree.elements.length; i++){
+                    var resultat = getItemFromId($rootTree.elements[i], $id);
+                    if (resultat) {
+                        return resultat;
+                    }
+                }
+            }
+        }
+        return undefined;
+    };
+
+    this.setSelectedItemFromId = function($id){
+
+        var selectedItem = getItemFromId(SyllabusService.getSyllabus(), $id);
+
+        this.selectedItem = selectedItem;
+        this.selectedItem.$selected = true;
+
+        // permet d'émettre l'évènement après le digest cycle et de s'assurer que les scopes soient à jours ( notamment le scope de addElementCtrl)
+        $rootScope.$$postDigest( function() {
+            // event item selected
+            $rootScope.$broadcast("selectedItemChanged");
+        });
+
+    };
+
+
+
 }]);

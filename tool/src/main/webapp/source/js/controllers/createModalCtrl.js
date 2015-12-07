@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', '$translate','type', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', function ($scope, $uibModalInstance, $translate, type, parent, element, SyllabusService, TreeService, AlertService) {
+opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', '$translate', 'type', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', 'config' , function ($scope, $uibModalInstance, $translate, type, parent, element, SyllabusService, TreeService, AlertService, config) {
     'use strict';
 
     $scope.parent = parent;
@@ -18,6 +18,8 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
         $scope.element = {};
         $scope.element.attributes = {};
         $scope.element.type = $scope.type.type;
+        $scope.element['@class'] = config.typeClass[$scope.type.type];
+        $scope.element.parentId = $scope.parent.id;
         $scope.mode = "creation";
     }
     
@@ -39,28 +41,30 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
             // }
 
             // var selectedItem = TreeService.getSelectedItem();
-            var savePromise = SyllabusService.saveElement($scope.element);
             
+            // On fait une copie du syllabus courant auquel on attache l'élément en cours d'ajout 
+            var data = angular.copy(SyllabusService.syllabus);
+            var selectedItemId = TreeService.selectedItem.id;
+
+            SyllabusService.addElementToSyllabus(data, $scope.parent, $scope.element);
+
+
+            var savePromise = SyllabusService.save(data);
+            SyllabusService.setWorking(true);
+
             savePromise.$promise.then(function($data) {
                 // alert ajout ok
                 AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_ELEMENT'));
-                if ($scope.mode === "creation") {
-                    // ajout de l'élément au plan de cours
-                    SyllabusService.addElement($scope.element, $scope.parent);
-                } else if ($scope.mode === "edition") {
-                    angular.copy($scope.element, $scope.source);       
-                }
+                SyllabusService.setSyllabus($data);
+                // refresh the reference of the selected item and refresh the right panel
+                TreeService.setSelectedItemFromId(selectedItemId);
 
             }, function ($error){
                 // alert ajout ko
                 AlertService.display('danger');
-                // TEST
-                if ($scope.mode === "creation") {  
-                    SyllabusService.addElement($scope.element, $scope.parent);
-                } else if ($scope.mode === "edition") {
-                    angular.copy($scope.element, $scope.source);
-                }
 
+            }).finally(function() {
+                 SyllabusService.setWorking(false);
             });
 
             // on ferme la modale dans tous les cas
@@ -68,6 +72,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
 
         }
     };
+
 
 
     // $scope.checkElement = function($type) {

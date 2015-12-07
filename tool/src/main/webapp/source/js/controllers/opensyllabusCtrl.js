@@ -146,9 +146,9 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$interval' ,'$timeout
 
     $scope.save = function() {
         
-        var results = SyllabusService.saveSyllabus(SyllabusService.syllabus.siteId);
-        
+        var results = SyllabusService.saveSyllabus();        
         SyllabusService.setWorking(true);
+        
         results.$promise.then( function($data) {
             AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_ELEMENT'));
             SyllabusService.setSyllabus($data);

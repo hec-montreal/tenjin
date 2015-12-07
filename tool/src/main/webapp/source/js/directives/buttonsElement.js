@@ -18,9 +18,9 @@ opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'Moda
                 // $location.hash('body');
                 // $anchorScroll();
                 // window.scrollTo(0,0);
-
+                var parent = SyllabusService.getParent($element);
                 // Création modale
-                var modal = ModalService.confirmDelete($event, $element);
+                var modal = ModalService.confirmDelete($event, parent, $element);
                 // Traitement du résultat
                 modal.result.then(function (selectedItem) {
                     console.debug('élément supprimé');
@@ -30,8 +30,11 @@ opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'Moda
             };
 
             $scope.edit = function($event, $element) {
+
+                var parent = SyllabusService.getParent($element);
                 // Création modale
-                var modal = ModalService.editElement($event, $element);
+                var modal = ModalService.editElement($event, parent, $element);
+                
                 // Traitement du résultat
                 modal.result.then(function (selectedItem) {
                     console.debug('élément supprimé');

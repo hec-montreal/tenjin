@@ -70,16 +70,16 @@
     
     <!-- Titre -->
     <div class='titre' > 
-        {{treeService.getSelectedItem().title}}
-        <span data-ng-if="treeService.getSelectedItem().type == 'evaluation'"> ({{treeService.getSelectedItem().attributes.evalWeight}}%)</span>
+        {{treeService.selectedItem.title}}
+        <span data-ng-if="treeService.selectedItem.type == 'evaluation'"> ({{treeService.selectedItem.attributes.evalWeight}}%)</span>
     </div> 
-    <div data-ng-if="treeService.getSelectedItem().type == 'evaluation'"> <div data-evaluationattr-element="treeService.getSelectedItem()"></div></div>
+    <div data-ng-if="treeService.selectedItem.type == 'evaluation'"> <div data-evaluationattr-element="treeService.selectedItem"></div></div>
 
 
     <!-- <div ui-tree data-drag-enabled="true"> -->
     <div ui-tree="treeOptions" data-drag-enabled="!syllabusService.working" data-ng-model="treeService.selectedItem">
-      <ol ui-tree-nodes="" ng-model="treeService.getSelectedItem().elements" class="liste-element">
-        <li ng-repeat="item in treeService.getSelectedItem().elements" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          
+      <ol ui-tree-nodes="" ng-model="treeService.selectedItem.elements" class="liste-element">
+        <li ng-repeat="item in treeService.selectedItem.elements" ui-tree-node ng-include="'nodes_renderer_content.html'"></li>          
       </ol>
 
     </div> 

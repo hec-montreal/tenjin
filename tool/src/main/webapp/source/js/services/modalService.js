@@ -3,7 +3,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', function ($uibModal){
     'use strict';
 
 
-    this.confirmDelete = function($event, $element) {
+    this.confirmDelete = function($event, $parent, $element) {
 
         // var offset = angular.element($event.target).prop('offsetLeft');
         // var modal = angular.element(document.querySelector('.modal'));
@@ -15,6 +15,9 @@ opensyllabusApp.service('ModalService', ['$uibModal', function ($uibModal){
           controller: 'DeleteModalCtrl',
           size: '',
           resolve: {
+            parent: function () {
+              return $parent;
+            },
             element: function () {
               return $element;
             }
@@ -54,7 +57,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', function ($uibModal){
     };
 
 
-    this.editElement = function($type, $element) {
+    this.editElement = function($type, $parent, $element) {
 
         // var offset = angular.element($event.target).prop('offsetLeft');
         // var modal = angular.element(document.querySelector('.modal'));
@@ -70,7 +73,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', function ($uibModal){
               return $type;
             },
             parent: function () {
-              return undefined;
+              return $parent;
             },
             element: function () {
               return $element;
