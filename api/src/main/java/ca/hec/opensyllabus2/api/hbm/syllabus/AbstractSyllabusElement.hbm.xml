@@ -64,13 +64,13 @@
 
 		<property name="lastModifiedBy" column="LAST_MODIFIED_BY" type="string" />
 
-		<map name="attributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE" cascade="all">
+		<map name="attributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE" cascade="all-delete-orphan">
 			<key column="SYLLABUSELEMENT_ID" />
 			<map-key column="name" type="string" />
 			<element column="value" type="materialized_clob" />
 		</map>
 
-		<set name="sections" table="OSYL2_SYLLABUSELEMENTSECTION" cascade="all">
+		<set name="sections" table="OSYL2_SYLLABUSELEMENTSECTION" cascade="all-delete-orphan">
 			<key column="SYLLABUSELEMENT_ID" />
 			<element column="SECTION" type="string" />
 		</set>

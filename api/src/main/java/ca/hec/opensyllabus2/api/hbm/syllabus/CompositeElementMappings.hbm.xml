@@ -7,7 +7,7 @@
 		name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement"
 		extends="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement">
 
-		<list name="elements" table="OSYL2_SYLLABUSELEMENT">
+		<list name="elements" table="OSYL2_SYLLABUSELEMENT" cascade="all-delete-orphan">
 			<key column="PARENT_ID" />
 			<list-index column="DISPLAY_ORDER"/>
 			<one-to-many
