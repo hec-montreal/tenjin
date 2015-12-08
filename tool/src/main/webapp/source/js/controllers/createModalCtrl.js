@@ -19,7 +19,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
         $scope.element.type = $scope.type.type;
         $scope.element['@class'] = config.typeClass[$scope.type.type];
         $scope.element.parentId = $scope.parent.id;
-        $scope.element.templateStructureId = $scope.type.id;
+        $scope.element.templateStructureId = parseInt($scope.type.id);
         $scope.mode = "creation";
     }
     
