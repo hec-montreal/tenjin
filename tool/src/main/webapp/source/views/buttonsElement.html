@@ -1,7 +1,7 @@
 ﻿<div class="buttons">
 
     <!-- Menu ajout -->
-    <span data-ng-if="element.type === 'rubric'" id="menu-ajout" data-add-element-menu="element"  class="container-menu-ajout-rubric" ></span>
+    <span data-ng-if="element.type === 'rubric' || element.type === 'composite'" data-add-element-menu="element"  class="container-menu-ajout-rubric" ></span>
     
     <span class="picto-edit" data-ng-click="!syllabusService.working && edit($event, element);" data-ng-if="!(noedit)"></span>  
     <span ui-tree-handle class="tree-node tree-node-content picto-move-content"></span>  
