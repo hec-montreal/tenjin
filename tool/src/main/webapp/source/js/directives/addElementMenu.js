@@ -17,9 +17,10 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
         link: function ($scope, $element) {
 
             $scope.showMenuAjouter = false;
-            $scope.isDisabled = true;
+            // $scope.isDisabled = true;
 
             $scope.syllabusService = SyllabusService;
+            $scope.treeService = TreeService;
 
             // $scope.types = [ 
             //     { type: "text", libelle: "TYPE_ELEMENT_TEXTE" } , 
@@ -33,31 +34,6 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
             //     { type: "evaluation", libelle: "TYPE_ELEMENT_EVALUATION"}
             // ];
 
-            $scope.update = function() {
-
-                // console.log('update : ' + $scope.element.id);
-
-                var template = SyllabusService.getTemplate();
-                var selectedItem2 = TreeService.getSelectedItem();
-                var selectedItem = $scope.element;
-                var templateSelectedItem = template[selectedItem.templateStructureId];
-
-                $scope.types = [];
-
-                if (templateSelectedItem) {
-
-                    for (var i = 0; i < templateSelectedItem.length; i++) {
-                        $scope.types.push( { type: templateSelectedItem[i].type, libelle: templateSelectedItem[i].label });
-                    }  
-                    $scope.isDisabled = false;   
-                } else {
-                    // si aucun template n'existe pour l'élément, on désactive le bouton "Ajouter"
-                    $scope.isDisabled = true; 
-                }
-
-                
-                
-            };
 
             $scope.toggleMenu = function(){
                 $scope.showMenuAjouter = $scope.showMenuAjouter === false ? true : false;
@@ -79,11 +55,6 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
                 });
 
             };
-
-
-            $scope.$on('selectedItemChanged', function(event) { 
-                $scope.update();
-            });
 
 
         }

@@ -10,8 +10,6 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
         templateUrl: 'form/buttonsForm.html',
         controller: function ($scope) {
 
-
-
             $scope.formats = ['dd-MMMM-yyyy HH:mm']; 
             $scope.format = $scope.formats[0];
 
