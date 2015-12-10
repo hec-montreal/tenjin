@@ -19,8 +19,11 @@
 			<column name="CLASS_TYPE" not-null="true" length="100" />
 		</discriminator>
 
+		<property name="syllabusId" type="long">
+			<column name="SYLLABUS_ID" />
+		</property>
+
 		<property name="parentId" type="long">
-<!-- 			<column name="PARENT_ID" unique-key="unique_parent_and_order" /> -->
 			<column name="PARENT_ID" />
 		</property>
 
@@ -64,13 +67,13 @@
 
 		<property name="lastModifiedBy" column="LAST_MODIFIED_BY" type="string" />
 
-		<map name="attributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE" cascade="all-delete-orphan">
+		<map name="attributes" table="OSYL2_SYLLABUSELEMENTATTRIBUTE" cascade="all">
 			<key column="SYLLABUSELEMENT_ID" />
 			<map-key column="name" type="string" />
 			<element column="value" type="materialized_clob" />
 		</map>
 
-		<set name="sections" table="OSYL2_SYLLABUSELEMENTSECTION" cascade="all-delete-orphan">
+		<set name="sections" table="OSYL2_SYLLABUSELEMENTSECTION" cascade="all">
 			<key column="SYLLABUSELEMENT_ID" />
 			<element column="SECTION" type="string" />
 		</set>

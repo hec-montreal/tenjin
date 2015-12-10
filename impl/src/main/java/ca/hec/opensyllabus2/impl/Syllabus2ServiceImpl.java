@@ -1,9 +1,12 @@
 package ca.hec.opensyllabus2.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import lombok.Setter;
 
@@ -24,7 +27,9 @@ import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
 import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.dao.Syllabus2Dao;
 import ca.hec.opensyllabus2.api.dao.TemplateDao;
+import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.opensyllabus2.api.model.template.Template;
 import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
 
@@ -246,9 +251,73 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return siteRef;
 	}
 
+	// TODO: make this one hibernate transaction? see http://docs.spring.io/spring/docs/current/spring-framework-reference/html/orm.html#orm-hibernate
+	//@Transactional
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) {
-		log.info("info log syllabus:" + syllabus.toString());
-		log.debug("debug log syllabus:" + syllabus.toString());
+		Date now = new Date();
+
+		if (syllabus.getId() == null) {
+			syllabusDao.createOrUpdateSyllabus(syllabus);
+			for (int i = 0; i<5; i++) {
+				SyllabusCompositeElement e = new SyllabusCompositeElement();
+				e.setSyllabusId(syllabus.getId());
+				e.setAvailabilityStartDate(now);
+				e.setCreatedDate(now);
+				e.setCreatedBy(getCurrentUserDisplayName());
+				e.setDisplayOrder(i);
+				e.setTitle("Test Composite 1");
+				e.setTemplateStructureId(1L);
+				syllabusDao.saveOrUpdateSyllabusElement(e);
+			}
+			return syllabus;
+		}
+
+		Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
+		for (AbstractSyllabusElement element : syllabus.getElements()) {
+			searchQueue.add(element);
+		}
+
+		while (!searchQueue.isEmpty()) {
+			AbstractSyllabusElement element = searchQueue.remove();
+			SyllabusCompositeElement compositeElement = null;
+
+			if (element instanceof SyllabusCompositeElement) {
+				compositeElement = (SyllabusCompositeElement)element;
+			}
+
+			if (compositeElement != null && compositeElement.getElements() != null) {
+				int i = 0;
+				for (AbstractSyllabusElement child : compositeElement.getElements()) {
+						child.setDisplayOrder(i++);
+						child.setParentId(compositeElement.getId());
+						searchQueue.add(child);
+				}
+			}
+
+			if (element.getId() == null) {
+				element.setCreatedBy(getCurrentUserDisplayName());
+				element.setCreatedDate(new Date());
+				element.setLastModifiedBy(getCurrentUserDisplayName());
+				element.setLastModifiedDate(new Date());
+				syllabusDao.saveOrUpdateSyllabusElement(element);
+
+				if (compositeElement != null) {
+					for (AbstractSyllabusElement child : compositeElement.getElements()) {
+						child.setParentId(element.getId());
+					}
+				}
+			} else {
+				//perform update
+//				if (element != syllabusDao.getSyllabusElement(element.getId())) {
+//					element.setLastModifiedBy(getCurrentUserDisplayName());
+//					element.setLastModifiedDate(new Date());
+//					syllabusDao.saveOrUpdateSyllabusElement(element);
+//				}
+			}
+
+			log.error("handled node : " + element.getId() + " parent : " + element.getParentId() + " order : " + element.getDisplayOrder());
+		}
+
 		return syllabus;
 	}
 
