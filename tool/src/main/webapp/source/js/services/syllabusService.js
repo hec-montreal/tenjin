@@ -110,8 +110,8 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id) { 
-                // si l'élément existe déjà on le supprime et on le remplace
+            if ($rootTree.id === $parent.id && !$rootTree.siteId) { 
+                // si l'élément existe déjà on le supprime et on le remplace (modification)
                 for (var i = 0; i < $rootTree.elements.length; i++){
                     if ($rootTree.elements[i].id === $element.id) {
                         $rootTree.elements.splice(i, 1);
@@ -141,12 +141,97 @@
         addElementToSyllabus($data, $parent, $element, $position);
     };
 
+    var addRubricToSyllabus = function($rootTree, $parent, $element, $rules) {
+        // var results;
+
+        if ($rootTree.elements) {
+
+            if ($rootTree.id === $parent.id && !$rootTree.siteId) {   
+                if ($rootTree.elements.length > 0) {
+
+                    // vérifie si la rubrique a déjà été insérée
+                    for (var i = 0; i < $rootTree.elements.length; i++) {
+                        if ($rootTree.elements[i].templateStructureId === $element.templateStructureId) {
+                            // rubrique déjà présente
+                            // return -1;
+                            return -1;
+                        }
+                    }
+
+                    // vérifie où doit être insérée la rubrique
+                    var listeTemp = [];
+                    var index = -1;
+                    for (var i = 0 ; i < $rules.length; i++) {
+                        for (var j = 0; j < $rootTree.elements.length; j++) {
+                            if ($rules[i].id === $rootTree.elements[j].templateStructureId) {
+                                listeTemp.push($rootTree.elements[j]);
+                                break;
+                            }  
+                        }
+
+                        if ($rules[i].id === $element.templateStructureId) {
+                            listeTemp.push($element);               
+                        }
+                    }
+
+                    for (var i = 0 ; i < listeTemp.length; i++ ){
+                        if (listeTemp[i].templateStructureId === $element.templateStructureId) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    // On ajoute l'élément au plan de cours
+                    if (index !== -1) {
+                        $rootTree.elements.splice(index, 0, $element);
+                        return 1;
+                    }
+
+
+                } else {
+                    $rootTree.elements.push($element);
+                    return 1;
+                }       
+
+            } else {
+                
+                for (var i = 0; i < $rootTree.elements.length; i++){
+                    var results = addRubricToSyllabus($rootTree.elements[i], $parent, $element, $rules); 
+                    if (results === -1 ) {
+                        return results;
+                    }
+                }
+            
+            }
+
+        }
+
+        return 1;
+
+    };
+
+
+    this.addRubricToSyllabus = function($data, $parent, $element) {
+        // On récupère les règles du template de l'élément parent, 
+        // afin d'ajouter la rubrique au bon endroit
+        var rules = this.template[$parent.templateStructureId];
+        // var index = -1;
+        // for ( var i = 0 ; i < rules.length ; i++ ) {
+        //     if ( rules[i].id === $element.templateStructureId ) {
+        //         index = i;
+        //         break;
+        //     }
+        // }
+
+        return addRubricToSyllabus($data, $parent, $element, rules);
+    };
+
 
     var deleteElementFromSyllabus = function($rootTree, $parent, $element) {
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id) { 
+            if ($rootTree.id === $parent.id && !$rootTree.siteId) { 
                 // si l'élément existe déjà on le supprime et on le remplace
                 for (var i = 0; i < $rootTree.elements.length; i++){
                     if ($rootTree.elements[i].id === $element.id) {

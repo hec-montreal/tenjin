@@ -4,7 +4,7 @@
     <form data-ng-submit="ok()">
 
         <div class="modal-header">
-            <h3 class="modal-title">{{'MODALE_CREATE_ELEMENT_TITLE' | translate}} "{{ type.label | translate }}"</h3>
+            <h3 class="modal-title">{{'MODALE_CREATE_ELEMENT_TITLE' | translate}} "{{ type.label }}"</h3>
         </div>
 
         <div class="modal-body">
@@ -16,7 +16,7 @@
                 </ul>
             </div>
 
-            <div data-ng-switch="element.type">
+            <div data-ng-switch="type.type">
                  <!-- élément de type texte -->
                 <div data-ng-switch-when="text" data-text-element-form="element"></div>
                 <!-- <div data-dyn-attr="data-text-element" data-element="element"></div> -->

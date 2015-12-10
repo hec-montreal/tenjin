@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeService' ,'$document', '$timeout',  function (ModalService, SyllabusService, TreeService, $document, $timeout){
+opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeService', 'AlertService', 'config','$document', '$timeout', '$translate',  function (ModalService, SyllabusService, TreeService, AlertService, config, $document, $timeout, $translate){
     'use strict';
 
     return {
@@ -22,37 +22,84 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
             $scope.syllabusService = SyllabusService;
             $scope.treeService = TreeService;
 
-            // $scope.types = [ 
-            //     { type: "text", libelle: "TYPE_ELEMENT_TEXTE" } , 
-            //     { type: "document", libelle: "TYPE_ELEMENT_DOCUMENT"},
-            //     { type: "contact", libelle: "TYPE_ELEMENT_CONTACT"},
-            //     { type: "hyperlink", libelle: "TYPE_ELEMENT_HYPERLINK"},
-            //     { type: "citation", libelle: "TYPE_ELEMENT_CITATION"},
-            //     { type: "image", libelle: "TYPE_ELEMENT_IMAGE"},
-            //     { type: "video", libelle: "TYPE_ELEMENT_VIDEO"},
-            //     { type: "sakai_tool", libelle: "TYPE_ELEMENT_SAKAI_TOOL"},
-            //     { type: "evaluation", libelle: "TYPE_ELEMENT_EVALUATION"}
-            // ];
-
-
             $scope.toggleMenu = function(){
                 $scope.showMenuAjouter = $scope.showMenuAjouter === false ? true : false;
             };
 
             $scope.addElement = function($type) {
 
-                // hide menu
-                $scope.showMenuAjouter = false;
+                console.log("type : "+ $type.type );
 
-                // TODO : open edition popup
-                var modal = ModalService.createElement($type, $scope.element);
+                // Si il s'agit d'une rubrique on l'ajoute directement
+                if ($type.type === "rubric") {
 
-                // Traitement du résultat
-                modal.result.then(function (createdItem) {
-                    console.debug('élément ajouté');
-                }, function () {
-                    console.debug('élément non ajouté');
-                });
+                    // TODO : si le plan de cours est vide on le sauvegarde
+                    // var syllabus = SyllabusService.getSyllabus();
+                    // // plan de cours vide
+                    // if (!syllabus.id) {       
+                    //     // ajout de l'élément au plan de cours
+                    //     SyllabusService.addElement($scope.element, $scope.parent);
+                    //     // sauvegarde du plan de cours + l'élément en cours
+                    // }
+                    
+                    // Création    
+                    var element = {
+                        'attributes': {},
+                        'type': $type.type,
+                        '@class': config.types[$type.type].classe,
+                        'parentId': $scope.element.id,
+                        'templateStructureId': $type.id,
+                        'availabilityStartDate': Date.now(),
+                        'title': $type.label
+                    };
+                    $scope.mode = "creation";
+
+                    var data = angular.copy(SyllabusService.syllabus);
+                    var selectedItemId = TreeService.selectedItem.id;
+
+                    var result = SyllabusService.addRubricToSyllabus(data, $scope.element, element);
+
+                    if (result > 0) {
+
+                        var savePromise = SyllabusService.save(data);
+                        SyllabusService.setWorking(true);
+
+                        savePromise.$promise.then(function($data) {
+                            // alert ajout ok
+                            AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_ELEMENT'));
+                            SyllabusService.setSyllabus($data);
+                            // refresh the reference of the selected item and refresh the right panel
+                            TreeService.setSelectedItemFromId(selectedItemId);
+
+                        }, function ($error){
+                            // alert ajout ko
+                            AlertService.display('danger');
+
+                        }).finally(function() {
+                             SyllabusService.setWorking(false);
+                        });
+
+                    } else {
+                        // Rubrique déjà présente
+                        AlertService.display('danger', $translate.instant('ALERT_RUBRIC_EXISTS'));
+                    }
+
+                } // Sinon on lance une popup de création de l'élément
+                else {
+
+                    // hide menu
+                    $scope.showMenuAjouter = false;
+
+                    // TODO : open edition popup
+                    var modal = ModalService.createElement($type, $scope.element);
+
+                    // Traitement du résultat
+                    modal.result.then(function (createdItem) {
+                        console.debug('élément ajouté');
+                    }, function () {
+                        console.debug('élément non ajouté');
+                    });
+                }
 
             };
 

@@ -3,8 +3,8 @@
     <!-- Menu ajout -->
     <span data-ng-if="element.type === 'rubric' || element.type === 'composite'" data-add-element-menu="element"  class="container-menu-ajout-rubric" ></span>
     
-    <span class="picto-edit" data-ng-click="!syllabusService.working && edit($event, element);" data-ng-if="!(noedit)"></span>  
+    <span class="picto-edit" data-ng-click="!syllabusService.working && edit(element);" data-ng-if="!(noedit)"></span>  
     <span ui-tree-handle class="tree-node tree-node-content picto-move-content"></span>  
-    <span class="picto-delete" data-ng-click="!syllabusService.working && confirmDelete($event, element);"></span> 
+    <span class="picto-delete" data-ng-click="!syllabusService.working && confirmDelete(element);"></span> 
 
 </div> 

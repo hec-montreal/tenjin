@@ -3,27 +3,34 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
     'use strict';
 
     $scope.parent = parent;
-    $scope.type = type;
-    $scope.source = element;
-
+    
     // Modification
     if (element) {
-        // $scope.element = element;
+        $scope.type = {
+            'label' : $translate.instant(config.types[element.type].label),
+            'type' : element.type
+        };
+
         $scope.element = angular.copy(element);
         $scope.mode = "edition";
+    } else {
+        // Creation
+        $scope.type = type;
 
-    }else {
         // Création    
-        $scope.element = {};
-        $scope.element.attributes = {};
-        $scope.element.type = $scope.type.type;
-        $scope.element['@class'] = config.typeClass[$scope.type.type];
-        $scope.element.parentId = $scope.parent.id;
-        $scope.element.templateStructureId = parseInt($scope.type.id);
+        $scope.element = {
+            'attributes': {},
+            'type': $scope.type.type,
+            '@class': config.types[$scope.type.type].classe,
+            'parentId': $scope.parent.id,
+            'templateStructureId': $scope.type.id,
+        };
         $scope.mode = "creation";
     }
-    
+ 
+
     $scope.ok = function () {
+
 
         // CHECK ELEMENT
         var result = $scope.checkElement($scope.element.type);
@@ -47,7 +54,6 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
             var selectedItemId = TreeService.selectedItem.id;
 
             SyllabusService.addElementToSyllabus(data, $scope.parent, $scope.element);
-
 
             var savePromise = SyllabusService.save(data);
             SyllabusService.setWorking(true);
