@@ -20,6 +20,7 @@
  ******************************************************************************/
 package ca.hec.opensyllabus2.api.dao;
 
+import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 
 /**
@@ -42,6 +43,8 @@ public interface Syllabus2Dao {
 	public Syllabus getCommonSyllabus (String courseId, String[] sectionIds)throws Exception;
 
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus);
+
+	public AbstractSyllabusElement saveOrUpdateSyllabusElement(AbstractSyllabusElement element);
 
 }
 

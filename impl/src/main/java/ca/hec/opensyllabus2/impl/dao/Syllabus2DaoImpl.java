@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ca.hec.opensyllabus2.api.dao.*;
+import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 
 public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Dao {
@@ -99,4 +100,25 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 
 		return syllabus;
 	}
+
+	public AbstractSyllabusElement saveOrUpdateSyllabusElement(AbstractSyllabusElement element) {
+		try {
+			getHibernateTemplate().saveOrUpdate(element);
+//			getHibernateTemplate().flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return element;
+	}
+
+//	public SyllabusElement getSyllabusElement(Long syllabusElementId) {
+//		try {
+//			getHibernateTemplate();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		return syllabus;
+//	}
 }
