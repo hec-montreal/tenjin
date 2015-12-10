@@ -247,8 +247,9 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	}
 
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) {
-		log.info("syllabus:" + syllabus.toString());
-		return syllabusDao.createOrUpdateSyllabus(syllabus);
+		log.info("info log syllabus:" + syllabus.toString());
+		log.debug("debug log syllabus:" + syllabus.toString());
+		return syllabus;
 	}
 
 }
