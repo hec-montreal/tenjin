@@ -301,7 +301,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				element.setLastModifiedDate(new Date());
 				syllabusDao.saveOrUpdateSyllabusElement(element);
 
-				if (compositeElement != null) {
+				if (compositeElement != null && compositeElement.getElements() != null) {
 					for (AbstractSyllabusElement child : compositeElement.getElements()) {
 						child.setParentId(element.getId());
 					}
