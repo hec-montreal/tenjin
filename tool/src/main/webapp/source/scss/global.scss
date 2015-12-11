@@ -29,6 +29,12 @@ body {
         margin-top: 20px;
     }
 
+    .dropdown-menu > li > a {
+        &.link-deactivated {
+            color: #999;
+        }
+    }
+
     // ANGULAR UI TREE
     .angular-ui-tree-placeholder  {
         border: 1px dashed $bleu-hec;

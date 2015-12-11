@@ -15,7 +15,6 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
 
         },
         link: function ($scope, $element) {
-
             $scope.showMenuAjouter = false;
             // $scope.isDisabled = true;
 
@@ -29,6 +28,7 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
             $scope.addElement = function($type) {
 
                 console.log("type : "+ $type.type );
+                $scope.isOpen = false;
 
                 // Si il s'agit d'une rubrique on l'ajoute directement
                 if ($type.type === "rubric") {
@@ -101,6 +101,28 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
                     });
                 }
 
+            };
+
+            $scope.checkRubricsAlreadyPresent = function() {
+                // if there are elements and the first one is a rubric ( so the others would be rubric aswell )
+                if ($scope.element.elements) {
+                    // reinit
+                    for (var k = 0 ; k < $scope.syllabusService.template[$scope.element.templateStructureId].length ; k++) {
+                        $scope.syllabusService.template[$scope.element.templateStructureId][k].alreadyPresent = false;
+                    }
+                    // mark rubric already present
+                    for( var i = 0; i < $scope.element.elements.length; i++) {
+                        for (var j = 0 ; j < $scope.syllabusService.template[$scope.element.templateStructureId].length ; j++) {
+                            // check if the rubric is already present
+                            var ruleElement = $scope.syllabusService.template[$scope.element.templateStructureId][j];
+                            if (ruleElement.id === $scope.element.elements[i].templateStructureId ){
+                                $scope.syllabusService.template[$scope.element.templateStructureId][j].alreadyPresent = true;
+                                break;
+                            }
+                        }
+                        
+                    }
+                }
             };
 
 
