@@ -35,12 +35,5 @@
 		<property name="lastModifiedDate" type="java.util.Date">
 			<column name="LAST_MODIFIED_DATE" />
 		</property>
-
-		<list name="elements" table="OSYL2_SYLLABUSELEMENT">
-			<key column="SYLLABUS_ID" />
-			<list-index column="DISPLAY_ORDER"/>
-			<one-to-many
-				class="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement" />
-		</list>
 	</class>
 </hibernate-mapping>

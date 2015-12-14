@@ -95,7 +95,7 @@ public class Syllabus2Controller {
 	    e.printStackTrace();
 	}
 
-	return syllabus;
+	return syllabus.getStructuredSyllabus();
 
     }
 

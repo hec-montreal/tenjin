@@ -22,30 +22,18 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 
 	public Syllabus getShareableSyllabus(String courseId) throws Exception{
 		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where site_id = ?", courseId);
-		return syllabi.get(0);
+		Syllabus shareable = syllabi.get(0);
+
+		shareable.setElements(this.getSyllabusElements(shareable.getId()));
+		return shareable;
 	}
 
+	private List<AbstractSyllabusElement> getSyllabusElements(Long id) {
+		List<AbstractSyllabusElement> elements =
+				getHibernateTemplate().find("from AbstractSyllabusElement where syllabus_id = ? order by parent_id, display_order", id);
 
-
-	@Override
-	public boolean createSyllabus(String courseId) {
-		// TODO Auto-generated method stub
-		return false;
+		return elements;
 	}
-
-	@Override
-	public boolean removeSyllabus(String courseId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean updateSyllabus(String courseId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
 
 	@Override
 	public Syllabus getSyllabus(String courseId, String sectionId) throws Exception {

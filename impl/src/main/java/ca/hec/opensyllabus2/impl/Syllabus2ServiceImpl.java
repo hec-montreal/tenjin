@@ -21,6 +21,7 @@ import org.sakaiproject.tool.api.Placement;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.UserDirectoryService;
+import org.springframework.transaction.annotation.Transactional;
 
 import ca.hec.opensyllabus2.api.Syllabus2Service;
 import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
@@ -232,7 +233,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		//TODO: retreive user allowed access
 		Syllabus syllabus = getShareableSyllabus(siteId);
 
-		return syllabus;
+		return syllabus.getStructuredSyllabus();
 
 	}
 
@@ -258,6 +259,9 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 		if (syllabus.getId() == null) {
 			syllabusDao.createOrUpdateSyllabus(syllabus);
+			syllabus.setElements(new ArrayList<AbstractSyllabusElement>());
+
+			//TODO: remove temp code (creates new syllabus without template)
 			for (int i = 0; i<5; i++) {
 				SyllabusCompositeElement e = new SyllabusCompositeElement();
 				e.setSyllabusId(syllabus.getId());
@@ -265,12 +269,37 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				e.setCreatedDate(now);
 				e.setCreatedBy(getCurrentUserDisplayName());
 				e.setDisplayOrder(i);
-				e.setTitle("Test Composite 1");
-				e.setTemplateStructureId(1L);
+
+				switch (i) {
+				case 0:
+					e.setTitle("Présentation du cours");
+					e.setTemplateStructureId(1L);
+					break;
+				case 1:
+					e.setTitle("Coordonnées");
+					e.setTemplateStructureId(5L);
+					break;
+				case 2:
+					e.setTitle("Matériel pédagogique");
+					e.setTemplateStructureId(7L);
+					break;
+				case 3:
+					e.setTitle("Évaluations");
+					e.setTemplateStructureId(12L);
+					break;
+				case 4:
+					e.setTitle("Organisation du cours");
+					e.setTemplateStructureId(14L);
+					break;
+				}
+				// END hardcoded template
+
 				syllabusDao.saveOrUpdateSyllabusElement(e);
+				syllabus.getElements().add(e);
 			}
 			return syllabus;
 		}
+
 
 		Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
 		for (AbstractSyllabusElement element : syllabus.getElements()) {
@@ -285,6 +314,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				compositeElement = (SyllabusCompositeElement)element;
 			}
 
+			// add this elements children to the search queue
 			if (compositeElement != null && compositeElement.getElements() != null) {
 				int i = 0;
 				for (AbstractSyllabusElement child : compositeElement.getElements()) {
@@ -294,11 +324,13 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				}
 			}
 
+			// create this element
 			if (element.getId() == null) {
 				element.setCreatedBy(getCurrentUserDisplayName());
 				element.setCreatedDate(new Date());
 				element.setLastModifiedBy(getCurrentUserDisplayName());
 				element.setLastModifiedDate(new Date());
+				element.setSyllabusId(syllabus.getId());
 				syllabusDao.saveOrUpdateSyllabusElement(element);
 
 				if (compositeElement != null && compositeElement.getElements() != null) {
@@ -318,7 +350,12 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			log.error("handled node : " + element.getId() + " parent : " + element.getParentId() + " order : " + element.getDisplayOrder());
 		}
 
-		return syllabus;
+		try {
+			return getShareableSyllabus(syllabus.getSiteId()).getStructuredSyllabus();
+		} catch (Exception e) {}
+
+		//TODO: change this!
+		return new Syllabus();
 	}
 
 }

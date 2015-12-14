@@ -30,13 +30,7 @@ import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
  */
 public interface Syllabus2Dao {
 
-	public boolean createSyllabus (String courseId);
-
 	public Syllabus getSyllabus (String courseId, String sectionId) throws Exception;
-
-	public boolean updateSyllabus (String courseId);
-
-	public boolean removeSyllabus (String courseId);
 
 	public Syllabus getShareableSyllabus (String courseId )throws Exception;
 
