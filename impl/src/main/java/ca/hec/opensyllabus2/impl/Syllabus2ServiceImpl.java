@@ -259,47 +259,8 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 		if (syllabus.getId() == null) {
 			syllabusDao.createOrUpdateSyllabus(syllabus);
-			syllabus.setElements(new ArrayList<AbstractSyllabusElement>());
-
-			//TODO: remove temp code (creates new syllabus without template)
-			for (int i = 0; i<5; i++) {
-				SyllabusCompositeElement e = new SyllabusCompositeElement();
-				e.setSyllabusId(syllabus.getId());
-				e.setAvailabilityStartDate(now);
-				e.setCreatedDate(now);
-				e.setCreatedBy(getCurrentUserDisplayName());
-				e.setDisplayOrder(i);
-
-				switch (i) {
-				case 0:
-					e.setTitle("Présentation du cours");
-					e.setTemplateStructureId(1L);
-					break;
-				case 1:
-					e.setTitle("Coordonnées");
-					e.setTemplateStructureId(5L);
-					break;
-				case 2:
-					e.setTitle("Matériel pédagogique");
-					e.setTemplateStructureId(7L);
-					break;
-				case 3:
-					e.setTitle("Évaluations");
-					e.setTemplateStructureId(12L);
-					break;
-				case 4:
-					e.setTitle("Organisation du cours");
-					e.setTemplateStructureId(14L);
-					break;
-				}
-				// END hardcoded template
-
-				syllabusDao.saveOrUpdateSyllabusElement(e);
-				syllabus.getElements().add(e);
-			}
-			return syllabus;
+			// TODO: set creation time, etc
 		}
-
 
 		Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
 		for (AbstractSyllabusElement element : syllabus.getElements()) {

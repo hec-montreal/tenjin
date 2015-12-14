@@ -1,5 +1,8 @@
 package ca.hec.opensyllabus2.tool.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import lombok.Getter;
@@ -8,20 +11,24 @@ import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.util.ResourceLoader;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-
 
 import ca.hec.opensyllabus2.api.Syllabus2Service;
 import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
 import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
+import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
 
 /******************************************************************************
  * $Id: $
@@ -46,6 +53,7 @@ import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 
 /**
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
+ * @author <a href="mailto:curtis.van-osch@hec.ca">Curtis van Osch</a>
  * @version $Id: $
  */
 @Controller
@@ -71,11 +79,10 @@ public class Syllabus2Controller {
     @RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
     public @ResponseBody Syllabus getSyllabus(
 	    @PathVariable String courseId,
-	    @RequestParam(value = "sectionId", required = false) String sectionId) {
+	    @RequestParam(value = "sectionId", required = false) String sectionId) throws NoSyllabusException {
 
 	Syllabus syllabus = null;
 
-	try {
 	    if (sectionId != null) {
 		int nbParams = countParams(sectionId);
 		if (nbParams <= 1) {
@@ -91,37 +98,23 @@ public class Syllabus2Controller {
 		syllabus = osyl2Service.getShareableSyllabus(courseId);
 
 	    }
-	} catch (NoSyllabusException e) {
-	    e.printStackTrace();
-	}
 
 	return syllabus.getStructuredSyllabus();
 
     }
 
     @RequestMapping(value = "/init", method = RequestMethod.GET)
-    public @ResponseBody Object loadSyllabus() {
+    public @ResponseBody Object loadSyllabus() throws NoSyllabusException {
 
-	Object syllabus = null;;
-	try {
-	    syllabus = osyl2Service.loadSyllabus();
-	} catch (NoSyllabusException e) {
-	    e.getMessage();
-	    return e.toJSON();
-	} catch (NoSiteException e) {
-	    e.getMessage();
-	    return e.toJSON();
-	}
-//	Hibernate4Module hbm = new Hibernate4Module();
-//	hbm.enable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
-//
-//	mapper.registerModule(hbm);
-//	ObjectWriter w = mapper.writer();
-//	String result = null;
-//	result = w.writeValueAsString(syllabus);
+    	Object syllabus = null;;
+    	try {
+    		syllabus = osyl2Service.loadSyllabus();
+    	} catch (NoSiteException e) {
+    		e.getMessage();
+    		return e.toJSON();
+    	}
 
-	return syllabus;
-
+    	return syllabus;
     }
 
 	@RequestMapping(value="/{siteId}", method = RequestMethod.POST)
@@ -141,5 +134,51 @@ public class Syllabus2Controller {
 
 	return parameters.split(",");
     }
+
+	@ExceptionHandler(NoSyllabusException.class)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public @ResponseBody Syllabus handleNoSyllabusException(NoSyllabusException ex)
+	{
+	    Syllabus syllabus = new Syllabus();
+	    syllabus.setCourseTitle("Hardcoded template title");
+	    syllabus.setTemplateId(1L);
+	    syllabus.setLocale("fr_CA");
+	    List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
+
+		//TODO: remove temp code (creates new syllabus without template)
+		for (int i = 0; i<5; i++) {
+			SyllabusCompositeElement e = new SyllabusCompositeElement();
+			e.setDisplayOrder(i);
+
+			switch (i) {
+			case 0:
+				e.setTitle("Présentation du cours");
+				e.setTemplateStructureId(1L);
+				break;
+			case 1:
+				e.setTitle("Coordonnées");
+				e.setTemplateStructureId(5L);
+				break;
+			case 2:
+				e.setTitle("Matériel pédagogique");
+				e.setTemplateStructureId(7L);
+				break;
+			case 3:
+				e.setTitle("Évaluations");
+				e.setTemplateStructureId(12L);
+				break;
+			case 4:
+				e.setTitle("Organisation du cours");
+				e.setTemplateStructureId(14L);
+				break;
+			}
+			// END hardcoded template
+			elements.add(e);
+		}
+
+	    syllabus.setElements(elements);
+
+	    return syllabus.getStructuredSyllabus();
+	}
 
 }
