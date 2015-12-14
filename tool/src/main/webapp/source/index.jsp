@@ -41,11 +41,25 @@
 		{{syllabusService.syllabus.courseTitle}}
 
 	</h1> 
+
+    <div class="btn-group btn-section" uib-dropdown uib-keyboard-nav>
+        <button id="btn-section" type="button" class="btn btn-primary" data-ng-disabled="syllabusService.working" uib-dropdown-toggle>
+            <span class="ajouter-libelle">{{syllabusService.section.name}}</span>
+            <span class="caret"></span>
+        </button>
+        <ul class="uib-dropdown-menu liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+            <li role="menuitem" data-ng-repeat="section in syllabusService.listeSections">
+                <a href="#" data-ng-click="selectSection(section)">{{ section.name }}</a> 
+            </li>
+        </ul>
+    </div>
+
 	<button class="btn btn-primary" type="button" data-ng-disabled="(!syllabusService.dirty || syllabusService.working)" data-ng-click="save()">{{ 'BUTTON_SAVE' | translate }}</button>
 	<span class="container-save-working" data-ng-show="syllabusService.working">
 		<span class="picto-ajax-loader" data-ng-show="syllabusService.working"></span>
 		<span class="message-save-working">{{ 'SAVE_WORKING' | translate }}</span>
 	</span>
+
 
 	<div data-ng-if="!planFailed" class="row row-content">
 

@@ -86,7 +86,7 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ERROR_PLAN_COURS : 'EN, Le chargement du plan de cours a échoué. Veuillez essayer ultérieurement ou contacter le support.',
         ERROR_TEMPLATE : 'EN, Le chargement du plan de cours a partiellement échoué. Celui ci est disponible en lecture seulement. Veuillez essayer ultérieurement ou contacter le support.',
         BUTTON_SAVE: 'Save',
-        SAVE_WORKING: 'Save in progress...'
+        SAVE_WORKING: 'Operation in progress...'
     })
     .translations('fr', {
         MENU_LABEL: 'Menu du cours',
@@ -173,7 +173,7 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ERROR_PLAN_COURS : 'Le chargement du plan de cours a échoué. Veuillez essayer ultérieurement ou contacter le support.',
         ERROR_TEMPLATE : 'Le chargement du plan de cours a partiellement échoué. Celui ci est disponible en lecture seulement. Veuillez essayer ultérieurement ou contacter le support.',
         BUTTON_SAVE: 'Enregistrer',
-        SAVE_WORKING: 'Sauvegarde en cours...'
+        SAVE_WORKING: 'Opération en cours...'
     });
 
      $translateProvider.preferredLanguage('fr');

@@ -35,8 +35,34 @@ body {
         }
     }
 
+    .select-section {
+        display: inline-block;
+        height: 32px;
+        line-height: 32px;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        background-color: $bleu-hec;
+        margin-right: 20px;
+
+        option {
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+            padding: 5px;
+        }
+    }
+
+    .btn-section {
+        margin-right: 10px;
+ 
+        button {
+            min-width: 120px;       
+        }
+    }
+
     // ANGULAR UI TREE
-    .angular-ui-tree-placeholder  {
+    .angular-ui-tree-placeholder {
         border: 1px dashed $bleu-hec;
     }
 

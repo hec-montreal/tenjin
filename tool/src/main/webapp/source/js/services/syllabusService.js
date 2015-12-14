@@ -6,6 +6,27 @@
     this.template;
     this.dirty = false;
     this.working = false;
+    this.listeSections = [
+        {
+            'id' : 1,
+            'name' : 'Partageable'
+        },
+            {
+            'id' : 2,
+            'name' : 'Commun'
+        },
+        {
+            'id' : 3,
+            'name' : 'Section A'
+        },
+        {
+            'id' : 4,
+            'name' : 'Section B'
+        }
+    ];    
+    this.section = this.listeSections[0];
+    
+
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusProvider = $resource('v1/syllabus/init.json');
@@ -181,7 +202,7 @@
                         }
                     }
 
-                    // On ajoute l'élément au plan de cours
+                    // On ajoute la rubrique au plan de cours
                     if (index !== -1) {
                         $rootTree.elements.splice(index, 0, $element);
                         return 1;

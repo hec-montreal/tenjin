@@ -148,10 +148,46 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$scope', '$interval' ,'$timeout
         
         var results = SyllabusService.saveSyllabus();        
         SyllabusService.setWorking(true);
-        
+
         results.$promise.then( function($data) {
             AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_ELEMENT'));
             SyllabusService.setSyllabus($data);
+        },
+        function($error) {
+            AlertService.display('danger');
+        }).finally( function() {
+            SyllabusService.setWorking(false);
+        });
+
+    };
+
+    $scope.selectSection = function($section) {
+
+        var results = SyllabusService.loadSyllabus();   
+        SyllabusService.setWorking(true);
+
+        results.$promise.then( function($data) {
+            $scope.syllabusService.section = $section;
+
+            SyllabusService.setSyllabus($data);
+
+            // sélection du premier élément par défaut (attention : après chargement du plan de cours + template)
+            if ($data.elements.length > 0 ) {
+                // data[0].value.elements[0].selected = true;
+                TreeService.setSelectedItem($data.elements[0], true);
+            }
+
+            // TEST INTERVAL SAUVEGARDE PLAN DE COURS
+            // SyllabusService.startUpdateProcess(5000);
+            // $interval( $scope.updateSyllabus, 5000);
+
+            $timeout(function() {
+                // anything you want can go here and will safely be run on the next digest.
+                // resize frame (should be done also whenever we change content)
+                if (window.frameElement) {
+                    setMainFrameHeight(window.frameElement.id);
+                }
+            });
         },
         function($error) {
             AlertService.display('danger');
