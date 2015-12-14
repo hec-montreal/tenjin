@@ -44,43 +44,46 @@ public class Syllabus {
 
 		Map<Long, AbstractSyllabusElement> elementMap = new HashMap<Long, AbstractSyllabusElement>();
 
-    	for (AbstractSyllabusElement e : elements) {
+    	for (AbstractSyllabusElement currElement : elements) {
 
-    		// Add current element to the lookup map
-    		if (elementMap.containsKey(e.getId())) {
-    			if (elementMap.get(e.getId()) instanceof SyllabusCompositeElement &&
-    					e instanceof SyllabusCompositeElement) {
+    		// Add current element to the lookup map (only needed if it's composite), or replace the dummy one that was inserted previously
+    		if (currElement instanceof SyllabusCompositeElement) {
 
-    				SyllabusCompositeElement uninitializedElement = (SyllabusCompositeElement)elementMap.get(e.getId());
-        			((SyllabusCompositeElement)e).setElements(uninitializedElement.getElements());
+    			if (elementMap.containsKey(currElement.getId())) {
+    				// element map had a dummy element, transfer it's children before replacing it
+    				SyllabusCompositeElement uninitializedElement = (SyllabusCompositeElement)elementMap.get(currElement.getId());
+        			((SyllabusCompositeElement)currElement).setElements(uninitializedElement.getElements());
+
+    			} else {
+        			((SyllabusCompositeElement) currElement).setElements(new ArrayList<AbstractSyllabusElement>());
     			}
-    		}
-    		elementMap.put(e.getId(), e);
 
-    		if (e.getParentId() == null) {
+    			elementMap.put(currElement.getId(), currElement);
+    		}
+
+
+    		if (currElement.getParentId() == null) {
     			// if syllabus sub-elements list is null, create one
     			if (structuredSyllabus.getElements() == null) {
     				structuredSyllabus.setElements(new ArrayList<AbstractSyllabusElement>());
     			}
     			// add current element to syllabus's root nodes
-    			structuredSyllabus.getElements().add(e);
+    			structuredSyllabus.getElements().add(currElement);
     		} else {
         		// add current element to it's parent (in the lookup map)
     			SyllabusCompositeElement parent;
 
-    			if (!elementMap.containsKey(e.getParentId())) {
+    			if (!elementMap.containsKey(currElement.getParentId())) {
+    				// insert a dummy element, to be replaced later
     				parent = new SyllabusCompositeElement();
-    				elementMap.put(e.getParentId(), parent);
+    				parent.setElements(new ArrayList<AbstractSyllabusElement>());
+    				elementMap.put(currElement.getParentId(), parent);
     			} else {
-    				// should be safe to cast to composite, because it has a child
-    				parent = ((SyllabusCompositeElement)elementMap.get(e.getParentId()));
+    				// should be safe to cast to composite, because another element specified it as a parent
+    				parent = ((SyllabusCompositeElement)elementMap.get(currElement.getParentId()));
     			}
 
-    			// if parent sub-elements list is null, create one
-    			if (parent.getElements() == null) {
-    				parent.setElements(new ArrayList<AbstractSyllabusElement>());
-    			}
-    			parent.getElements().add(e.getDisplayOrder(), e);
+    			parent.getElements().add(currElement.getDisplayOrder(), currElement);
     		}
     	}
 
