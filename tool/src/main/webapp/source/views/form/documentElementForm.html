@@ -1,12 +1,26 @@
-﻿<div class="element-form"> 
+
+<div class="element-form"> 
 
     <!-- Fichier -->
     <input class="file-upload" type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="1MB" required>
-
-    <!-- Titre -->
+   <!-- Titre -->
     <label for="male" class="label-text-title">{{ 'FORM_TITRE' | translate }}</label>
-    <input type="text" name="title" data-ng-model="element.title" class="input-text-title" />
-
+ 
+ 	<div>{{filesList.content_collection.resourceChildren}}</div>
+ 	<div class="documentBrowser" >
+     <!-- <div ui-tree data-drag-enabled="true"> -->
+	    <div ui-tree="fileBrowser" >
+	
+	      <ol ui-tree-nodes="" ng-model="filesList.content_collection.resourceChildren">
+	        <li ng-repeat="item in filesList.content_collection.resourceChildren" ui-tree-node>
+	        	<span>Folder: {{item.name}}</span>
+	        </li>          
+	      </ol>
+	
+	    </div>
+     
+	</div>
+  
     <!-- Description --> 
     <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
     <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
