@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper=true,exclude={"elements"})
 @JsonSubTypes({
 	@Type(value = SyllabusEvaluationElement.class, name = "evaluationElement"),
 	@Type(value = SyllabusLectureElement.class, name = "lectureElement"),
