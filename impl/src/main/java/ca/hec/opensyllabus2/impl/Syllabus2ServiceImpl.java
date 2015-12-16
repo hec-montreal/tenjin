@@ -261,9 +261,13 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			throw new NoSiteException();
 		}
 
+		Map<Long, AbstractSyllabusElement> existingSyllabusElements = null;
+
 		if (syllabus.getId() == null) {
 			syllabusDao.createOrUpdateSyllabus(syllabus);
 			// TODO: set creation time, etc
+		} else {
+			existingSyllabusElements = getExistingSyllabusElementMap(syllabus.getId());
 		}
 
 		Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
@@ -282,13 +286,17 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				element.setLastModifiedDate(now);
 				element.setSyllabusId(syllabus.getId());
 				syllabusDao.saveOrUpdateSyllabusElement(element);
-			} else {
-				//perform update
-//				if (element != syllabusDao.getSyllabusElement(element.getId())) {
-//					element.setLastModifiedBy(getCurrentUserDisplayName());
-//					element.setLastModifiedDate(new Date());
-//					syllabusDao.saveOrUpdateSyllabusElement(element);
-//				}
+			} else if (existingSyllabusElements != null && !existingSyllabusElements.isEmpty()){
+				//compare element from front-end to what is in the database
+				if (!element.equals(existingSyllabusElements.get(element.getId()))) {
+					element.setLastModifiedBy(getCurrentUserDisplayName());
+					element.setLastModifiedDate(new Date());
+					syllabusDao.saveOrUpdateSyllabusElement(element);
+
+					// Remove this element from the map.
+					// Remaining elements will be deleted
+					existingSyllabusElements.remove(element.getId());
+				}
 			}
 
 			// add this element's children to the search queue
@@ -314,6 +322,17 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 		//TODO: change this!
 		return new Syllabus();
+	}
+
+	private Map<Long, AbstractSyllabusElement> getExistingSyllabusElementMap(
+			Long id) {
+
+		Map<Long, AbstractSyllabusElement> map = new HashMap<Long, AbstractSyllabusElement>();
+		for (AbstractSyllabusElement element : syllabusDao.getSyllabusElements(id)) {
+			map.put(element.getId(), element);
+		}
+
+		return map;
 	}
 
 }

@@ -28,7 +28,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		return shareable;
 	}
 
-	private List<AbstractSyllabusElement> getSyllabusElements(Long id) {
+	public List<AbstractSyllabusElement> getSyllabusElements(Long id) {
 		List<AbstractSyllabusElement> elements =
 				getHibernateTemplate().find("from AbstractSyllabusElement where syllabus_id = ? order by parent_id, display_order", id);
 
