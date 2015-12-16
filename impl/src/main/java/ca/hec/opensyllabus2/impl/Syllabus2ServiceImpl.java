@@ -124,17 +124,17 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	private ContentHostingService chs;
 
 
-    public Syllabus getShareableSyllabus(String courseId) throws NoSyllabusException {
+    public Syllabus getShareableSyllabus(String siteId) throws NoSyllabusException {
 		// TODO check if the user is allowed to get the syllabus before
 
 		Syllabus syllabus;
 
 		try {
-			syllabus = syllabusDao.getShareableSyllabus(courseId);
+			syllabus = syllabusDao.getShareableSyllabus(siteId);
 			return syllabus;
 		} catch (Exception e) {
 			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
-			throw new NoSyllabusException();
+			throw new NoSyllabusException(siteId);
 		}
 
 
@@ -254,8 +254,12 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 	// TODO: make this one hibernate transaction? see http://docs.spring.io/spring/docs/current/spring-framework-reference/html/orm.html#orm-hibernate
 	//@Transactional
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) {
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException {
 		Date now = new Date();
+
+		if (syllabus.getSiteId() == null) {
+			throw new NoSiteException();
+		}
 
 		if (syllabus.getId() == null) {
 			syllabusDao.createOrUpdateSyllabus(syllabus);
@@ -269,36 +273,15 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 		while (!searchQueue.isEmpty()) {
 			AbstractSyllabusElement element = searchQueue.remove();
-			SyllabusCompositeElement compositeElement = null;
-
-			if (element instanceof SyllabusCompositeElement) {
-				compositeElement = (SyllabusCompositeElement)element;
-			}
-
-			// add this elements children to the search queue
-			if (compositeElement != null && compositeElement.getElements() != null) {
-				int i = 0;
-				for (AbstractSyllabusElement child : compositeElement.getElements()) {
-						child.setDisplayOrder(i++);
-						child.setParentId(compositeElement.getId());
-						searchQueue.add(child);
-				}
-			}
 
 			// create this element
 			if (element.getId() == null) {
 				element.setCreatedBy(getCurrentUserDisplayName());
-				element.setCreatedDate(new Date());
+				element.setCreatedDate(now);
 				element.setLastModifiedBy(getCurrentUserDisplayName());
-				element.setLastModifiedDate(new Date());
+				element.setLastModifiedDate(now);
 				element.setSyllabusId(syllabus.getId());
 				syllabusDao.saveOrUpdateSyllabusElement(element);
-
-				if (compositeElement != null && compositeElement.getElements() != null) {
-					for (AbstractSyllabusElement child : compositeElement.getElements()) {
-						child.setParentId(element.getId());
-					}
-				}
 			} else {
 				//perform update
 //				if (element != syllabusDao.getSyllabusElement(element.getId())) {
@@ -308,7 +291,21 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 //				}
 			}
 
-			log.error("handled node : " + element.getId() + " parent : " + element.getParentId() + " order : " + element.getDisplayOrder());
+			// add this element's children to the search queue
+			if (element instanceof SyllabusCompositeElement) {
+				SyllabusCompositeElement compositeElement = (SyllabusCompositeElement)element;
+				if (compositeElement.getElements() != null) {
+					int i = 0;
+					for (AbstractSyllabusElement child : compositeElement.getElements()) {
+							child.setDisplayOrder(i++);
+							child.setParentId(compositeElement.getId());
+							searchQueue.add(child);
+					}
+				}
+			}
+
+
+			log.debug("handled node : " + element.getId() + " parent : " + element.getParentId() + " order : " + element.getDisplayOrder());
 		}
 
 		try {
