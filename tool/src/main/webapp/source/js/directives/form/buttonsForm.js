@@ -53,7 +53,9 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
         link: function ($scope, $element) {
             // Date actuelle par défaut
             $scope.element.availabilityStartDate = Date.now();
+            $scope.element.$hasDates = true;
         }
+
 
     };
 

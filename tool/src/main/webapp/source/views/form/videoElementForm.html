@@ -1,21 +1,21 @@
-﻿<div class="element video">
+﻿<div class="element-form"> 
 
-    <div class="titre-element">
-        <!-- <a href="{{element.attributes.videoUrl}}" target="_blank"> -->
-            {{ element.title }}
-        <!-- </a> -->
+    <!-- Titre -->
+    <label for="male" class="label-text-title">{{ 'FORM_TITRE' | translate }}</label>
+    <input type="text" name="title" data-ng-model="element.title" class="input-text-title" />
+
+    <!-- URL ou Embed -->
+    <div>
+        <label for="male" class="label-text-url">{{ 'FORM_URL_EMBED' | translate }} <span class="mandatory"></label>
+        <input type="text" name="url" data-ng-model="element.attributes.videoUrl" class="input-text-title" required/>
     </div>
-    <div class="video">
-        <div class="embed-object"></div>
-        <iframe width="300" height="220" data-ng-src="{{videoUrl}}" frameborder="0" allowfullscreen data-ng-if="isIframe"></iframe>
-    </div> 
 
-    <div data-ng-bind-html="element.attributes.videoComment" class="comment"></div>
 
-    <div class="infos">
-        <span data-ng-class="{ 'picto-important' : ( element.attributes.videoImportant === 'true') }" title="Important"></span>
-        <span data-ng-class="{ 'picto-hec' : ( element.attributes.videoDiffusion === 'hec' ), 'picto-public' : ( element.attributes.videoDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
-        <span data-ng-class="{ 'picto-hidden' : ( element.attributes.videoHidden === 'true') }" title="Visible"></span>     
-    </div> 
+    <!-- Description -->
+    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
+    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description" required></textarea> 
+
+    <!-- Buttons form --> 
+    <div data-buttons-form="element"></div>
 
 </div>

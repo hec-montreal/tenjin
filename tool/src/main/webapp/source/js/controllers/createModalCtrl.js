@@ -80,32 +80,14 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
     };
 
 
-
-    // $scope.checkElement = function($type) {
-    //     var result;
-
-    //     switch($type) {
-    //         case 'text' : {
-    //             result = $scope.checkElementText();
-    //             break;
-    //         }
-    //         case 'document' : {
-    //             result = $scope.checkElementText();
-    //             break;
-    //         }
-    //         default: break;
-    //     }
-
-    //     return result;
-    // };
-
     $scope.checkElement = function() {
         var result = 1;
 
         $scope.errors = {};
 
-        // CONTROLE date affichage
-        if ( typeof($scope.element.availabilityStartDate) !== 'undefined') {
+        
+        if ( $scope.element.$hasDates ) {
+            // CONTROLE date affichage
             if ($scope.element.availabilityStartDate ) {
                 // convert to timestamp
                 if ( Object.prototype.toString.call($scope.element.availabilityStartDate) === '[object Date]' ) {
@@ -116,11 +98,9 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
                 $scope.errors.isErrorDateDebut = true;
                 result = -1;
             }
-        }
 
-         // CONTROLE date retrait
-        if ($scope.element.hasEndDate) {
-            if ( typeof($scope.element.availabilityEndDate) !== 'undefined') {
+            // CONTROLE date retrait
+            if ($scope.hasEndDate){
                 if ($scope.element.availabilityEndDate) {
                     // convert to timestamp
                     if ( Object.prototype.toString.call($scope.element.availabilityEndDate) === '[object Date]' ) {
@@ -133,6 +113,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
                 }
             }
         }
+
 
         return result;
     };

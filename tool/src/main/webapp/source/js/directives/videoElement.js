@@ -21,11 +21,11 @@ opensyllabusApp.directive('videoElement', ['$sce', function ($sce){
                 var videoEmbedUrl;
 
                 // look for the source (youtube, vimeo, dailymotion)
-                // Melies
-                if ($scope.element.attributes.videoUrl.indexOf('<object') > -1) { 
+                // Embed ou iframe 
+                if ($scope.element.attributes.videoUrl.indexOf('<object') > -1 || $scope.element.attributes.videoUrl.indexOf('<iframe') > -1) { 
                     $scope.isIframe = false;
 
-                    var elem = angular.element( $element[0].querySelector('.embed-object') );
+                    var elem = angular.element( $element[0].querySelector('.embed') );
    
                     // Set default height and width to 300*220
                     var res = $scope.element.attributes.videoUrl.replace(/height="[0-9]*"/g, "height=220");

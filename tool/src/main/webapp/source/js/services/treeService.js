@@ -5,10 +5,7 @@
    // this.selectedItem = { id : 12356};
     
    var syllabus = null;
-  
-    // $scope.$watch(this.selectedItem, function() {
 
-    // });
     
     /**
      * Parcours de manière récursive les enfants de l'arbre
@@ -34,6 +31,7 @@
     };
 
 
+
     /**
      * Parcours de l'arbre
      * @param {Object} $rootTree racine de l'arbre
@@ -49,6 +47,10 @@
         // console.timeEnd('select');
     };
 
+    /**
+     * Récupère l'item sélectionné
+     * @return {Object} L'élément sélectionné
+     */
     this.getSelectedItem = function(){
     	return this.selectedItem;
     };
@@ -57,7 +59,13 @@
     	this.selectedItem = $item;
     };
     
-    
+    /**
+     * Met à jour l'item sélectionné
+     * Déselectionne le précédent item sélectionné
+     * Redimensionne l'iframe
+     * @param {Object} $item Item sélectionné
+     * @param {Boolean} $firstTime Première sélection d'un élément
+     */
     this.setSelectedItem = function($item, $firstTime){
 
         // si l'item n'est pas celui déjà sélectionné
@@ -82,7 +90,12 @@
 
 	};
 
-
+    /**
+     * Récupère l'élément correspondant à l'identifiant
+     * @param {Object} $rootTree Racine de l'arbre à parcourir
+     * @param {Number} $id Identifiant de l'élément recherché
+     * @return {Object} Retourne l'item ou undefined si non trouvé
+     */
     var getItemFromId = function($rootTree, $id) {
         // on regarde tous les éléments hormis l'élément racine
         if ($rootTree.id === $id && !$rootTree.siteId) {
@@ -101,13 +114,15 @@
         return undefined;
     };
 
+    /**
+     * Met à jour l'item sélectionné à partir d'un identifiant d'élément
+     * @param {Number} $id Identifiant de l'élément
+     */
     this.setSelectedItemFromId = function($id){
-
         var selectedItem = getItemFromId(SyllabusService.getSyllabus(), $id);
 
         this.selectedItem = selectedItem;
         this.selectedItem.$selected = true;
-
     };
 
 
