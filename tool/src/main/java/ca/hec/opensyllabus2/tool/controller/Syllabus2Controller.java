@@ -60,90 +60,98 @@ import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
 @RequestMapping(value = "v1/syllabus")
 public class Syllabus2Controller {
 
-    @Setter
-    @Getter
-    @Autowired
-    private Syllabus2Service osyl2Service = null;
+	@Setter
+	@Getter
+	@Autowired
+	private Syllabus2Service osyl2Service = null;
 
-    private ResourceLoader msgs = null;
+	private ResourceLoader msgs = null;
 
-    private static Log log = LogFactory.getLog(Syllabus2Controller.class);
+	private static Log log = LogFactory.getLog(Syllabus2Controller.class);
 
-    @PostConstruct
-    public void init() {
-	// retrieve ui and co messages
-	msgs = new ResourceLoader("openSyllabus2");
+	@PostConstruct
+	public void init() {
+		// retrieve ui and co messages
+		msgs = new ResourceLoader("openSyllabus2");
 
-    }
+	}
 
-    @RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
-    public @ResponseBody Syllabus getSyllabus(
-	    @PathVariable String courseId,
-	    @RequestParam(value = "sectionId", required = false) String sectionId) throws NoSyllabusException {
+	@RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
+	public @ResponseBody Syllabus getSyllabus(
+			@PathVariable String courseId,
+			@RequestParam(value = "sectionId", required = false) String sectionId) throws NoSyllabusException {
 
-	Syllabus syllabus = null;
+		Syllabus syllabus = null;
 
-	    if (sectionId != null) {
-		int nbParams = countParams(sectionId);
-		if (nbParams <= 1) {
-		    // We get the syllabus of the specified section
-		    syllabus = osyl2Service.getSyllabus(courseId, sectionId);
+		if (sectionId != null) {
+			int nbParams = countParams(sectionId);
+			if (nbParams <= 1) {
+				// We get the syllabus of the specified section
+				syllabus = osyl2Service.getSyllabus(courseId, sectionId);
+			} else {
+				// We get the common syllabus of the specified sections
+				syllabus =
+						osyl2Service.getCommonSyllabus(courseId,
+								getParams(sectionId));
+			}
 		} else {
-		    // We get the common syllabus of the specified sections
-		    syllabus =
-			    osyl2Service.getCommonSyllabus(courseId,
-				    getParams(sectionId));
+			syllabus = osyl2Service.getShareableSyllabus(courseId);
+
 		}
-	    } else {
-		syllabus = osyl2Service.getShareableSyllabus(courseId);
 
-	    }
+		return syllabus.getStructuredSyllabus();
 
-	return syllabus.getStructuredSyllabus();
+	}
 
-    }
+	@RequestMapping(value = "/init", method = RequestMethod.GET)
+	public @ResponseBody Object loadSyllabus() throws NoSyllabusException {
 
-    @RequestMapping(value = "/init", method = RequestMethod.GET)
-    public @ResponseBody Object loadSyllabus() throws NoSyllabusException {
+		Object syllabus = null;;
+		try {
+			syllabus = osyl2Service.loadSyllabus();
+		} catch (NoSiteException e) {
+			e.getMessage();
+			return e.toJSON();
+		}
 
-    	Object syllabus = null;;
-    	try {
-    		syllabus = osyl2Service.loadSyllabus();
-    	} catch (NoSiteException e) {
-    		e.getMessage();
-    		return e.toJSON();
-    	}
-
-    	return syllabus;
-    }
+		return syllabus;
+	}
 
 	@RequestMapping(value="/{siteId}", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) {
+	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSiteException {
 
 		return osyl2Service.createOrUpdateSyllabus(syllabus);
 	}
 
-    private int countParams(String parameters) {
-	int nb = parameters.split(",").length;
+	private int countParams(String parameters) {
+		int nb = parameters.split(",").length;
 
-	return nb;
+		return nb;
 
-    }
+	}
 
-    private String[] getParams(String parameters) {
+	private String[] getParams(String parameters) {
 
-	return parameters.split(",");
-    }
+		return parameters.split(",");
+	}
+
+	@ExceptionHandler(NoSiteException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public @ResponseBody Object handleNoSiteException(NoSiteException ex)
+	{
+		return "Specified site does not exist";
+	}
 
 	@ExceptionHandler(NoSyllabusException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public @ResponseBody Syllabus handleNoSyllabusException(NoSyllabusException ex)
 	{
-	    Syllabus syllabus = new Syllabus();
-	    syllabus.setCourseTitle("Hardcoded template title");
-	    syllabus.setTemplateId(1L);
-	    syllabus.setLocale("fr_CA");
-	    List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
+		Syllabus syllabus = new Syllabus();
+		syllabus.setCourseTitle("Hardcoded template title");
+		syllabus.setTemplateId(1L);
+		syllabus.setLocale("fr_CA");
+		syllabus.setSiteId(ex.getSiteId());
+		List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
 
 		//TODO: remove temp code (creates new syllabus without template)
 		for (int i = 0; i<5; i++) {
@@ -176,9 +184,9 @@ public class Syllabus2Controller {
 			elements.add(e);
 		}
 
-	    syllabus.setElements(elements);
+		syllabus.setElements(elements);
 
-	    return syllabus.getStructuredSyllabus();
+		return syllabus.getStructuredSyllabus();
 	}
 
 }

@@ -1,5 +1,7 @@
 package ca.hec.opensyllabus2.api.OsylException;
 
+import lombok.Data;
+
 import org.springframework.http.HttpStatus;
 
 /******************************************************************************
@@ -28,13 +30,21 @@ import org.springframework.http.HttpStatus;
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
  */
+@Data
 public class NoSyllabusException extends SyllabusException {
- 
+
+	// Le site pour lequel on n'a pas trouvé de syllabus
+	private String siteId;
+
     public NoSyllabusException (){
-	super(HttpStatus.NOT_FOUND);
-	this.setHttpStatus(HttpStatus.NOT_FOUND);
+    	super(HttpStatus.NOT_FOUND);
     }
-    
-  
-   
+
+    public NoSyllabusException(String siteId) {
+    	super(HttpStatus.NOT_FOUND);
+		this.siteId = siteId;
+	}
+
+
+
 }

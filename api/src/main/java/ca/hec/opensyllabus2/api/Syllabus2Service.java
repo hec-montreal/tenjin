@@ -110,7 +110,8 @@ public interface Syllabus2Service {
 	 *
 	 * @param syllabus
 	 * @return the saved syllabus
+	 * @throws NoSiteException if no site is specified by the syllabus
 	 */
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus);
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException;
 
 }
