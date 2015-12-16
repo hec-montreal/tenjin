@@ -44,5 +44,7 @@ public interface Syllabus2Dao {
 
 	public AbstractSyllabusElement saveOrUpdateSyllabusElement(AbstractSyllabusElement element);
 
+	public void deleteSyllabusElement(AbstractSyllabusElement element);
+
 }
 

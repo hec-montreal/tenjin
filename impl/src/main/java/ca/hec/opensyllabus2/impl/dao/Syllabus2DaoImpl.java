@@ -81,7 +81,6 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) {
 		try {
 			getHibernateTemplate().saveOrUpdate(syllabus);
-//			getHibernateTemplate().flush();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,9 +89,9 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	}
 
 	public AbstractSyllabusElement saveOrUpdateSyllabusElement(AbstractSyllabusElement element) {
+		log.debug("Save or update syllabus element : " + element.getId());
 		try {
 			getHibernateTemplate().saveOrUpdate(element);
-//			getHibernateTemplate().flush();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -100,13 +99,15 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		return element;
 	}
 
-//	public SyllabusElement getSyllabusElement(Long syllabusElementId) {
-//		try {
-//			getHibernateTemplate();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		return syllabus;
-//	}
+	public void deleteSyllabusElement(AbstractSyllabusElement element) {
+		log.debug("Delete syllabus element : " + element.getId());
+
+		try {
+			getHibernateTemplate().delete(element);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 }

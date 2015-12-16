@@ -292,11 +292,11 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 					element.setLastModifiedBy(getCurrentUserDisplayName());
 					element.setLastModifiedDate(new Date());
 					syllabusDao.saveOrUpdateSyllabusElement(element);
-
-					// Remove this element from the map.
-					// Remaining elements will be deleted
-					existingSyllabusElements.remove(element.getId());
 				}
+
+				// Remove this element from the map.
+				// Remaining elements will be deleted
+				existingSyllabusElements.remove(element.getId());
 			}
 
 			// add this element's children to the search queue
@@ -312,8 +312,13 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				}
 			}
 
-
 			log.debug("handled node : " + element.getId() + " parent : " + element.getParentId() + " order : " + element.getDisplayOrder());
+		}
+
+		if (existingSyllabusElements != null && !existingSyllabusElements.isEmpty()) {
+			for (AbstractSyllabusElement element : existingSyllabusElements.values()) {
+				syllabusDao.deleteSyllabusElement(element);
+			}
 		}
 
 		try {
