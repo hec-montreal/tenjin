@@ -2,14 +2,11 @@
         
     <div data-buttons-element="element" class="buttons-elements"></div>
 
-    <div class="titre-element">
-        <!-- <a href="{{element.attributes.videoUrl}}" target="_blank"> -->
-            {{ element.title }}
-        <!-- </a> -->
-    </div>
     <div class="video">
-        <div class="embed"></div>
-        <iframe width="300" height="220" data-ng-src="{{videoUrl}}" frameborder="0" allowfullscreen data-ng-if="isIframe"></iframe>
+        <div class="embed">
+            <iframe width="300" height="220" data-ng-src="{{videoUrl}}" frameborder="0" allowfullscreen data-ng-if="isIframe"></iframe>  
+        </div>
+
     </div> 
 
     <div data-ng-bind-html="element.description" class="comment"></div>
