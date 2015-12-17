@@ -12,14 +12,25 @@
         margin: 5px 0;
     }
 
+    .comment {
+        display: inline-block;   
+        vertical-align: top;    
+    }
+
     // élément image
     img {
         max-height: 100px;
     }
     
+    .link-image {
+        margin-right: 10px;
+    }
+
     // élément video
     .video {
-        width: 300px;
+        iframe {
+            margin-right: 10px;
+        }
     }
 
     // contact info

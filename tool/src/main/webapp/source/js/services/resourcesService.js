@@ -1,7 +1,7 @@
 opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http', '$location',  function ( $rootScope, $resource, $http, $location){
+    'use strict';	
 	
-	
-	this.allSiteResources;
+	this.resources;
 	var folderType = "org.sakaiproject.content.types.folder";
 	var citationType = "org.sakaiproject.citation.impl.CitationList";
 	
@@ -9,18 +9,36 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 	var baseUrl = "http://localhost:8080";
 	var siteResourcesProviderUri = "/direct/content/resources/";
 	
-	this.setAllSiteResources = function($siteResources){
-		this.allSiteResources
+	
+	this.loadResources = function($siteId){
+		siteResourcesProviderUri = baseUrl + siteResourcesProviderUri + $siteId + ".json?depth=all";
+		return $resource(siteResourcesProviderUri).get();
+	};	
+
+	this.setResources = function($resources){
+		this.resources = $resources;
 	};
 
-	this.getSiteResources = function($siteId){
-		siteResourcesProviderUri = baseUrl + siteResourcesProviderUri + $siteId + ".json?depth=all";
-		resources = $resource(siteResourcesProviderUri).get();
-		console.log("resources " + resources.content_collection[0]);
-		return resources;
+	var getResource = function($rootTree, $resourceId) {
+		
+		if ($rootTree.resourceId === $resourceId) {
+			return $rootTree;
+		} else {
+			for ( var i = 0 ; i < $rootTree.resourceChildren.length ; i++) {
+				var results = getResource($rootTree.resourceChildren[i], $resourceId);
+				if (results) {
+					return results;
+				}
+			}
+		}
+
+		return undefined;
 	};
-	
-	
+
+	this.getResource = function($resourceId) {
+		return getResource(this.resources, $resourceId);
+	};
+
 //	this.documentTreeOptions = {
 //		name: "",
 //		item: documentList ,

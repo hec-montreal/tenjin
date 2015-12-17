@@ -1,19 +1,23 @@
 ﻿<div class="element image">
 
     <div data-buttons-element="element" class="buttons-elements"></div>
+    
+    <div browser-file type="image"></div>
+    <div browser-file type="document"></div>
 
     <div class="titre-element">
         <!-- <a href="{{element.attributes.imageUrl}}" target="_blank"> -->
-            {{ element.title }} 
+            {{ element.title }}
         <!-- </a> -->
     </div>
     <div> 
-        <a href="{{element.attributes.imageUrl}} " target="_blank">
-            <img data-ng-src="{{element.attributes.imageUrl}}" alt="{{ element.title }}" title="{{ element.title }}"></img>
+        <a href="{{resource.url}} " target="_blank" class="link-image">
+            <img data-ng-src="{{resource.url}}" alt="{{ element.title }}" title="{{ element.title }}"></img>
         </a> 
+
+        <span data-ng-bind-html="element.description" class="comment"></span>
     </div>
 
-    <div data-ng-bind-html="element.description" class="comment"></div>
     
     <div class="infos">
         <span data-ng-class="{ 'picto-important' : ( element.attributes.imageImportant === 'true') }" title="Important"></span>
