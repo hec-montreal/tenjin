@@ -6,12 +6,11 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 	var citationType = "org.sakaiproject.citation.impl.CitationList";
 	
 	
-	var baseUrl = "http://localhost:8080";
-	var siteResourcesProviderUri = "/direct/content/resources/";
+	var siteResourcesProviderUri = "../../../direct/content/resources/";
 	
 	
 	this.loadResources = function($siteId){
-		siteResourcesProviderUri = baseUrl + siteResourcesProviderUri + $siteId + ".json?depth=all";
+		siteResourcesProviderUri = siteResourcesProviderUri + $siteId + ".json?depth=all";
 		return $resource(siteResourcesProviderUri).get();
 	};	
 
