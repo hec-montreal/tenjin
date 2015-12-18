@@ -18,16 +18,16 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 @Data
 @JsonSubTypes({
-	@Type(value = SyllabusCompositeElement.class, name = "compositeSyllabusElement"),
-	@Type(value = SyllabusCitationElement.class, name = "citationElement"),
-	@Type(value = SyllabusContactInfoElement.class, name = "contactInfoElement"),
-	@Type(value = SyllabusDocumentElement.class, name = "documentElement"),
-	@Type(value = SyllabusHyperlinkElement.class, name = "hyperlinkElement"),
-	@Type(value = SyllabusImageElement.class, name = "imageElement"),
-	@Type(value = SyllabusSakaiToolElement.class, name = "sakaiToolElement"),
-	@Type(value = SyllabusTextElement.class, name = "textElement"),
-	@Type(value = SyllabusVideoElement.class, name = "videoElement") })
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = As.PROPERTY, property = "@class")
+	@Type(value = SyllabusCompositeElement.class, name = "composite"),
+	@Type(value = SyllabusCitationElement.class, name = "citation"),
+	@Type(value = SyllabusContactInfoElement.class, name = "contact_info"),
+	@Type(value = SyllabusDocumentElement.class, name = "document"),
+	@Type(value = SyllabusHyperlinkElement.class, name = "hyperlink"),
+	@Type(value = SyllabusImageElement.class, name = "image"),
+	@Type(value = SyllabusSakaiToolElement.class, name = "sakai_tool"),
+	@Type(value = SyllabusTextElement.class, name = "text"),
+	@Type(value = SyllabusVideoElement.class, name = "video") })
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.EXISTING_PROPERTY, property = "type")
 public abstract class AbstractSyllabusElement {
 
 	private Long id;
@@ -37,7 +37,6 @@ public abstract class AbstractSyllabusElement {
 
 	private String title;
 	private String description;
-	private String type;
 
 	private Boolean publicElement;
     private Boolean shareable;
@@ -56,10 +55,7 @@ public abstract class AbstractSyllabusElement {
     private Set<String> sections;
     private Map<String, String> attributes;
 
-    // always force concrete classes to specify the type
-    public AbstractSyllabusElement(String type) {
-    	if (type == null) throw new NullPointerException("SyllabusElement type may not be null");
-    	this.type = type;
-    }
+    // force each subclass to return a type
+    abstract public String getType();
 }
 

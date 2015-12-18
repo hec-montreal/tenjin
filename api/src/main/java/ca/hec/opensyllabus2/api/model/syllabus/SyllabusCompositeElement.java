@@ -13,21 +13,18 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 @Data
 @EqualsAndHashCode(callSuper=true,exclude={"elements"})
 @JsonSubTypes({
-	@Type(value = SyllabusEvaluationElement.class, name = "evaluationElement"),
-	@Type(value = SyllabusLectureElement.class, name = "lectureElement"),
-	@Type(value = SyllabusRubricElement.class, name = "rubricElement"),
-	@Type(value = SyllabusTutorialElement.class, name = "tutorialElement"),})
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = As.PROPERTY, property = "@class")
+	@Type(value = SyllabusEvaluationElement.class, name = "evaluation"),
+	@Type(value = SyllabusLectureElement.class, name = "lecture"),
+	@Type(value = SyllabusRubricElement.class, name = "rubric"),
+	@Type(value = SyllabusTutorialElement.class, name = "tutorial"),})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.EXISTING_PROPERTY, property = "type")
 public class SyllabusCompositeElement extends AbstractSyllabusElement {
+
 	private static final String TYPE = "composite";
 
 	private List<AbstractSyllabusElement> elements;
 
-	public SyllabusCompositeElement() {
-		super(TYPE);
-	}
-
-	public SyllabusCompositeElement(String type) {
-		super(type);
+	public String getType() {
+		return TYPE;
 	}
 }

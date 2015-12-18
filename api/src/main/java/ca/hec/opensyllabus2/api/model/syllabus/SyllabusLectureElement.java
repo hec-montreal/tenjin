@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 public class SyllabusLectureElement extends SyllabusCompositeElement {
 	private static final String TYPE = "lecture";
 
-	public SyllabusLectureElement() {
-		super(TYPE);
+	public String getType() {
+		return TYPE;
 	}
 }

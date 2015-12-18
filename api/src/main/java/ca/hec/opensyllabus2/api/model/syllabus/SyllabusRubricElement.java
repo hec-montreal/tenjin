@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 public class SyllabusRubricElement extends SyllabusCompositeElement {
 	private static final String TYPE = "rubric";
 
-	public SyllabusRubricElement() {
-		super(TYPE);
+	public String getType() {
+		return TYPE;
 	}
 }

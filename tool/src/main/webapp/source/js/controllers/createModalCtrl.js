@@ -21,7 +21,6 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
         $scope.element = {
             'attributes': {},
             'type': $scope.type.type,
-            '@class': config.types[$scope.type.type].classe,
             'parentId': $scope.parent.id,
             'templateStructureId': $scope.type.id,
         };

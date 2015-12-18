@@ -3,7 +3,7 @@ package ca.hec.opensyllabus2.api.model.syllabus;
 public class SyllabusSakaiToolElement extends AbstractSyllabusElement {
 	private static final String TYPE = "sakai_tool";
 
-	public SyllabusSakaiToolElement() {
-		super(TYPE);
+	public String getType() {
+		return TYPE;
 	}
 }
