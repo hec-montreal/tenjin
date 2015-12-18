@@ -233,7 +233,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		//TODO: retreive user allowed access
 		Syllabus syllabus = getShareableSyllabus(siteId);
 
-		return syllabus.getStructuredSyllabus();
+		return syllabus;
 
 	}
 
@@ -261,37 +261,36 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			throw new NoSiteException();
 		}
 
+		// create syllabus if it doesn't exist, otherwise get it's elements from the database.
 		Map<Long, AbstractSyllabusElement> existingSyllabusElements = null;
 
 		if (syllabus.getId() == null) {
+			syllabus.setCreatedDate(now);
+			syllabus.setLastModifiedDate(now);
 			syllabusDao.createOrUpdateSyllabus(syllabus);
-			// TODO: set creation time, etc
 		} else {
 			existingSyllabusElements = getExistingSyllabusElementMap(syllabus.getId());
 		}
 
+		// add top-level elements to the search queue
 		Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
 		for (AbstractSyllabusElement element : syllabus.getElements()) {
+			element.setSyllabusId(syllabus.getId());
 			searchQueue.add(element);
 		}
 
 		while (!searchQueue.isEmpty()) {
 			AbstractSyllabusElement element = searchQueue.remove();
 
-			// create this element
+
 			if (element.getId() == null) {
-				element.setCreatedBy(getCurrentUserDisplayName());
-				element.setCreatedDate(now);
-				element.setLastModifiedBy(getCurrentUserDisplayName());
-				element.setLastModifiedDate(now);
-				element.setSyllabusId(syllabus.getId());
-				syllabusDao.saveOrUpdateSyllabusElement(element);
+				// create this element
+				saveOrUpdateSyllabusElement(element);
 			} else if (existingSyllabusElements != null && !existingSyllabusElements.isEmpty()){
+
 				//compare element from front-end to what is in the database
 				if (!element.equals(existingSyllabusElements.get(element.getId()))) {
-					element.setLastModifiedBy(getCurrentUserDisplayName());
-					element.setLastModifiedDate(new Date());
-					syllabusDao.saveOrUpdateSyllabusElement(element);
+					saveOrUpdateSyllabusElement(element);
 				}
 
 				// Remove this element from the map.
@@ -307,6 +306,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 					for (AbstractSyllabusElement child : compositeElement.getElements()) {
 							child.setDisplayOrder(i++);
 							child.setParentId(compositeElement.getId());
+							child.setSyllabusId(syllabus.getId());
 							searchQueue.add(child);
 					}
 				}
@@ -315,6 +315,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			log.debug("handled node : " + element.getId() + " parent : " + element.getParentId() + " order : " + element.getDisplayOrder());
 		}
 
+		// delete the syllabus elements that are missing from the new syllabus
 		if (existingSyllabusElements != null && !existingSyllabusElements.isEmpty()) {
 			for (AbstractSyllabusElement element : existingSyllabusElements.values()) {
 				syllabusDao.deleteSyllabusElement(element);
@@ -322,11 +323,22 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		}
 
 		try {
-			return getShareableSyllabus(syllabus.getSiteId()).getStructuredSyllabus();
+			return getShareableSyllabus(syllabus.getSiteId());
 		} catch (Exception e) {}
 
 		//TODO: change this!
 		return new Syllabus();
+	}
+
+	private void saveOrUpdateSyllabusElement(AbstractSyllabusElement element) {
+		Date now = new Date();
+		if (element.getId() == null) {
+			element.setCreatedBy(getCurrentUserDisplayName());
+			element.setCreatedDate(now);
+		}
+		element.setLastModifiedBy(getCurrentUserDisplayName());
+		element.setLastModifiedDate(now);
+		syllabusDao.saveOrUpdateSyllabusElement(element);
 	}
 
 	private Map<Long, AbstractSyllabusElement> getExistingSyllabusElementMap(

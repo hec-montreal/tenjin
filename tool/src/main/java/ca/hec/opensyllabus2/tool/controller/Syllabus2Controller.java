@@ -99,7 +99,7 @@ public class Syllabus2Controller {
 
 		}
 
-		return syllabus.getStructuredSyllabus();
+		return syllabus;
 
 	}
 
@@ -186,7 +186,7 @@ public class Syllabus2Controller {
 
 		syllabus.setElements(elements);
 
-		return syllabus.getStructuredSyllabus();
+		return syllabus;
 	}
 
 }
