@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('documentElementForm', ['FileBrowserService', function (FileBrowserService){
+opensyllabusApp.directive('documentElementForm', function (){
     'use strict';
 
     return {
@@ -22,11 +22,10 @@ opensyllabusApp.directive('documentElementForm', ['FileBrowserService', function
 
         },
         link: function ($scope, $element) {
-        	$scope.filesList = FileBrowserService.getDocuments();
         	//console.log( $scope.filesList.content_collection.entityPrefix);
         }
 
     };
 
-}]);
+});
 

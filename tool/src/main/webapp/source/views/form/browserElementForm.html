@@ -1,0 +1,34 @@
+<!-- <div ui-tree data-drag-enabled="true"> -->
+
+<script type="text/ng-template" id="browser_renderer.html">
+
+  <!-- Display é à expand, collpase button only if there are sub elements -->
+  <a class="btn btn-success btn-xs" data-ng-if="item.resourceChildren && item.resourceChildren.length > 0 " data-ng-click="toggleTree(this)"><span
+    class="glyphicon"
+    data-ng-class="{
+      'glyphicon-chevron-right': collapsed,
+      'glyphicon-chevron-down': !collapsed
+    }"></span></a>
+
+  <!-- Display item  -->
+
+      {{item.name}}
+
+ 
+  <ol ui-tree-nodes="" data-ng-model="item.resourceChildren" data-ng-class="{hidden: collapsed}">
+    <li data-ng-repeat="item in item.resourceChildren" ui-tree-node data-ng-include="'browser_renderer.html'">
+    </li>
+  </ol>
+
+</script>
+
+
+
+<div ui-tree="browserOptions" data-drag-enabled="false" data-nodrop-enabled="true" browserElement>
+    <ol ui-tree-nodes="" ng-model="resources.resourceChildren">
+        <li ng-repeat="item in resources.resourceChildren" ui-tree-node ng-include="'browser_renderer.html'">
+           {{item.name}}
+        </li>          
+    </ol>  
+</div>
+
