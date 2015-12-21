@@ -18,7 +18,9 @@ opensyllabusApp.directive('imageElement', [ '$rootScope', '$location', 'Resource
                 // Get ressources informations
                 if(!$scope.resource && ResourcesService.resources ) {
                     if( $scope.element.attributes.resourceId ) {
-                       $scope.resource = ResourcesService.getResource($scope.element.attributes.resourceId);
+                        console.time('loadResource');
+                        $scope.resource = ResourcesService.getResource($scope.element.attributes.resourceId);
+                        console.timeEnd('loadResource');
                     }    
                 } 
             };

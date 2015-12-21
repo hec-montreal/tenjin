@@ -4,7 +4,8 @@ opensyllabusApp.directive('evaluationElement', ['TreeService', function (TreeSer
 
     return {
         scope: {
-            element: '=evaluationElement'
+            element: '=evaluationElement',
+            index: '='
         },
         restrict: 'A',
         templateUrl: 'evaluationElement.html',

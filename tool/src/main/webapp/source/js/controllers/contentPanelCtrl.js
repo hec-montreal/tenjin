@@ -83,6 +83,9 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
 
             }
 
+
+            // numerotation
+            SyllabusService.numerotationSyllabus(SyllabusService.syllabus);
         },
 
     };

@@ -54,6 +54,13 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService'
 
             return false;
         },
+
+        dropped: function(event) {
+
+            // numerotation
+            SyllabusService.numerotationSyllabus(SyllabusService.syllabus);
+        },
+
     };
 
     

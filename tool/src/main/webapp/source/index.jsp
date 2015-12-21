@@ -38,7 +38,7 @@
 	</div>
 
 	<h1 data-ng-class="{ 'title-dirty' : syllabusService.dirty }" ng-cloak>
-		{{syllabusService.syllabus.courseTitle}}
+		{{::syllabusService.syllabus.courseTitle}}
 
 	</h1> 
 
@@ -49,7 +49,7 @@
         </button>
         <ul class="uib-dropdown-menu liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
             <li role="menuitem" data-ng-repeat="section in syllabusService.listeSections">
-                <a href="#" data-ng-click="selectSection(section)">{{ section.name }}</a> 
+                <a href="#" data-ng-click="selectSection(section)">{{::section.name }}</a> 
             </li>
         </ul>
     </div>
@@ -71,7 +71,7 @@
 
 		<!-- Modales templates -->
 		<div data-ng-include="'confirmModalTemplate.html'"></div>
-		<div data-ng-include="'createElementTemplate.html'"></div>
+		<div data-ng-include="'createElementTemplate.html'"></div> 
 
 	</div>
 
@@ -87,7 +87,7 @@
 	<script src="/opensyllabus2-tool/lib/angular-ui/ui-bootstrap-custom-tpls-0.14.3.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/xeditable/xeditable.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-translate/angular-translate.min.js"></script>
-	<script src="/opensyllabus2-tool/lib/ng-ckeditor-master/ng-ckeditor.js"></script>
+	<!--  <script src="/opensyllabus2-tool/lib/ng-ckeditor-master/ng-ckeditor.js"></script> -->
 	<script src="/opensyllabus2-tool/lib/bootstrap-ui-datetime-picker-master/dist/datetime-picker.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/ng-file-upload-master/dist/ng-file-upload.min.js"></script>
 	

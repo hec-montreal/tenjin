@@ -11,6 +11,10 @@
   <!-- Display items composite, evaluation, lecture and tutorial -->
   <span data-ng-if="item.type === 'composite' || item.type === 'evaluation' || item.type === 'lecture' || item.type === 'tutorial'">
     <span data-ng-click="treeService.setSelectedItem(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }" >
+      <span data-ng-if="item.type === 'evaluation'">{{$index+1}} - </span>
+      <span data-ng-if="item.type === 'lecture' || item.type === 'tutorial'">{{item.$numero}} - </span>
+      <!-- <span data-ng-if="item.parentId === null">{{::item.title}}</span>
+      <span data-ng-if="item.parentId">{{item.title}}</span> -->
       {{item.title}}
       <span ui-tree-handle class="tree-node tree-node-content picto-move" data-ng-if="item.parentId"></span>
     </span>
@@ -35,6 +39,7 @@
     </div>
 
     <!-- <div ui-tree data-drag-enabled="true"> -->
+    <!-- <div ui-tree="treeOptions" data-drag-enabled="false"> -->
     <div ui-tree="treeOptions" data-drag-enabled="!syllabusService.working">
 
       <ol ui-tree-nodes="" ng-model="syllabusService.syllabus.elements">

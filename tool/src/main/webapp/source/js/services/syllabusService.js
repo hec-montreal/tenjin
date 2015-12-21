@@ -25,7 +25,6 @@
         }
     ];    
     this.section = this.listeSections[0];
-    
 
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
@@ -81,7 +80,9 @@
 
     this.setSyllabus = function($syllabus) {      
         this.syllabus = $syllabus;
- 
+        // numérotation
+        this.numerotationSyllabus(this.syllabus);
+
         // sauvegarde d'une copie du syllabus
         this.syllabusSaved = angular.copy(this.syllabus);
         this.dirty = false;
@@ -299,8 +300,37 @@
         return getParent(this.syllabus, $element);
     };
 
-    // this.initSyllabus = function(){
-    // 	return $http.get('v1/syllabus/init.json');
-    // };
+    var numerotationSyllabus = function($rootTree, $infosNumerotation) {
+
+        if ($rootTree.elements) {
+
+            for (var i = 0; i < $rootTree.elements.length; i++){
+
+                if($rootTree.elements[i].type === "lecture") {
+                    $infosNumerotation.nbLecture++;
+                    $rootTree.elements[i].$numero = $infosNumerotation.nbLecture;
+                } else if ($rootTree.elements[i].type === "tutorial") {
+                    $infosNumerotation.nbTutorial++;
+                    String.fromCharCode('65');
+                    $rootTree.elements[i].$numero = String.fromCharCode(64 + $infosNumerotation.nbTutorial);
+                }
+
+                numerotationSyllabus($rootTree.elements[i], $infosNumerotation); 
+            }
+
+
+        }
+
+    };
+
+
+    this.numerotationSyllabus = function($data) {
+        var infosNumerotations = {
+            'nbLecture' : 0,
+            'nbTutorial' : 0
+        };
+
+        numerotationSyllabus($data, infosNumerotations);
+    };
 
 }]);
