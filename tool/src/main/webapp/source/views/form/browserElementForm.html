@@ -2,8 +2,8 @@
 
 <script type="text/ng-template" id="browser_renderer.html">
 
-  <!-- Display é à expand, collpase button only if there are sub elements -->
-  <a class="btn btn-success btn-xs" data-ng-if="item.resourceChildren && item.resourceChildren.length > 0 " data-ng-click="toggleTree(this)"><span
+    <!-- Display é à expand, collpase button only if there are sub elements -->
+    <a class="btn btn-success btn-xs" data-ng-if="item.resourceChildren && item.resourceChildren.length > 0" data-ng-click="toggleTree(this)"><span
     class="glyphicon"
     data-ng-class="{
       'glyphicon-chevron-right': collapsed,
@@ -12,23 +12,33 @@
 
   <!-- Display item  -->
 
-      {{item.name}}
-
+    <span data-ng-if="item.type === 'org.sakaiproject.content.types.folder'">
+        {{item.name}}
+    </span>
+    <span data-ng-if="item.type === 'org.sakaiproject.content.types.fileUpload'" data-ng-click="setSelectedResource(item)" class="select-resource" data-ng-class="{'item-selected': (selectedResource.resourceId === item.resourceId) }" >
+        {{item.name}}
+    </span>
  
-  <ol ui-tree-nodes="" data-ng-model="item.resourceChildren" data-ng-class="{hidden: collapsed}">
-    <li data-ng-repeat="item in item.resourceChildren" ui-tree-node data-ng-include="'browser_renderer.html'">
-    </li>
-  </ol>
+    <ol ui-tree-nodes="" data-ng-model="item.resourceChildren" data-ng-class="{hidden: collapsed}">
+        <li data-ng-repeat="item in item.resourceChildren" ui-tree-node data-ng-include="'browser_renderer.html'">
+        </li>
+    </ol>
 
 </script>
 
 
+<div class="container-browser-element">
 
-<div ui-tree="browserOptions" data-drag-enabled="false" data-nodrop-enabled="true" browserElement>
-    <ol ui-tree-nodes="" ng-model="resources.resourceChildren">
-        <li ng-repeat="item in resources.resourceChildren" ui-tree-node ng-include="'browser_renderer.html'">
-           {{item.name}}
-        </li>          
-    </ol>  
+  <div class="browser-element" ui-tree="browserOptions" data-drag-enabled="false" data-nodrop-enabled="true" browserElement>
+      <ol ui-tree-nodes="" ng-model="resources.resourceChildren">
+          <li ng-repeat="item in resources.resourceChildren" ui-tree-node ng-include="'browser_renderer.html'">
+             {{item.name}}
+          </li>          
+      </ol>  
+  </div>
+
+  <div>
+    {{ 'RESOURCE_BROWSER_SELECTED' | translate }} : {{selectedResource.name || '?'}}
+  </div>
+
 </div>
-

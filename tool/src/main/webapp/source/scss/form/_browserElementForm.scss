@@ -1,0 +1,25 @@
+.container-browser-element {
+    margin-bottom: 10px;   
+
+    .browser-element {
+        background-color: #eee;
+        padding: 0 5px;
+        height: 120px;
+        overflow: auto;
+        margin-bottom: 2px;  
+
+        .glyphicon-chevron-right,
+        .glyphicon-chevron-down {
+            padding-bottom: 2px;
+        }
+
+        .item-selected {
+            font-weight: bold;
+        }
+
+        .select-resource {
+            cursor: pointer;
+        }
+    }
+
+}
