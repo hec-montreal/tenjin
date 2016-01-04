@@ -32,7 +32,7 @@ gulp.task('jsp', function() {
 
 // Template cache task
 gulp.task('viewscache', function () {
-  return gulp.src('./source/views/**/*.html')
+  return gulp.src('./source/components/**/*.html')
     // .pipe(templateCache())
     .pipe(templateCache({ module: 'templateModule', standalone: true }))
     .pipe(gulp.dest('./source/js'));
@@ -40,13 +40,13 @@ gulp.task('viewscache', function () {
 
 // Views task
 gulp.task('views', function() {
-  return gulp.src('./source/views/**/*.html')
+  return gulp.src('./source/components/**/*.html')
   .pipe(gulp.dest('./dest/views'));
 });
  
 //Js task
 gulp.task('js', ['viewscache'], function() {
-    return gulp.src(['./source/js/**/*.js'])
+    return gulp.src([ './source/js/**/*.js', './source/components/**/*.js'])
     .pipe(concat('opensyllabus.js'))
     .pipe(gulp.dest('./dest/js'));
 });
@@ -71,7 +71,7 @@ gulp.task('tools', function() {
 // });
 
 gulp.task('sass', function () {
-  return sass('./source/scss/opensyllabus.scss', { sourcemap: true })
+  return sass('./source/components/opensyllabus/opensyllabus.scss', { sourcemap: true })
     .on('error', sass.logError)
     .pipe(autoprefixer({
             browsers: ['last 2 versions']
@@ -90,10 +90,10 @@ gulp.task('watch', function(){
   //html
   gulp.watch(['*.html'], ['html']);
   gulp.watch(['./source/img/**/*'], ['img']);
-  gulp.watch(['./source/js/**/*.js'], ['js']);
-  gulp.watch(['./source/scss/**/*.scss'], ['sass']);
+  gulp.watch(['./source/js/**/*.js', './source/components/**/*.js'], ['js']);
+  gulp.watch(['./source/**/*.scss'], ['sass']);
   gulp.watch(['./source/index.jsp'], ['jsp']);
-  gulp.watch(['./source/views/**/*.html'], ['js']); // on met les views dans un fichier js puis on lance js pour concatener le tout
+  gulp.watch(['./source/**/*.html'], ['js']); // on met les views dans un fichier js puis on lance js pour concatener le tout
   gulp.watch(['./source/tools/*'], ['tools']);
   gulp.watch(['./source/WEB-INF/*'], ['web-inf']);
   gulp.watch(['./dest/**/*'], ['copy']);

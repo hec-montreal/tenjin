@@ -1,0 +1,29 @@
+@import '../../scss/variables';
+@import '../../scss/global';
+@import '../../scss/icones';
+
+
+@import '../leftMenu/leftMenu';
+@import '../contentPanel/contentPanel';
+
+@import '../element/element';
+@import '../element/biblioElement/biblioElement';
+@import '../element/buttonsElement/buttonsElement';
+@import '../element/contactElement/contactElement';
+@import '../element/evaluationElement/evaluationElement';
+@import '../element/imageElement/imageElement';
+@import '../element/videoElement/videoElement';
+
+
+@import '../../scss/modal/modal';
+@import '../../scss/xeditable/xeditable';
+
+@import '../form/elementForm';
+@import '../form/textElementForm/textElementForm';
+@import '../form/documentElementForm/documentElementForm';
+@import '../form/contactElementForm/contactElementForm';
+@import '../form/hyperlinkElementForm/hyperlinkElementForm';
+@import '../form/evaluationElementForm/evaluationElementForm';
+@import '../form/browserElementForm/browserElementForm';
+
+@import '../alert/alert';

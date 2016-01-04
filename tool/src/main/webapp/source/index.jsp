@@ -64,14 +64,14 @@
 	<div data-ng-if="!planFailed" class="row row-content">
 
 		<!-- Menu de gauche -->
-		<div data-ng-include="'leftMenu.html'"   class="col-md-3 hide-tablet pull-left left-menu" id="menu" ></div>
+		<div data-ng-include="'leftMenu/leftMenu.html'"   class="col-md-3 hide-tablet pull-left left-menu" id="menu" ></div>
 		
 		<!-- Container de droite -->
-		<div data-ng-include="'contentPanel.html'" class="col-md-9 col-sm-12 content-panel" id="content"></div>
+		<div data-ng-include="'contentPanel/contentPanel.html'" class="col-md-9 col-sm-12 content-panel" id="content"></div>
 
 		<!-- Modales templates -->
-		<div data-ng-include="'confirmModalTemplate.html'"></div>
-		<div data-ng-include="'createElementTemplate.html'"></div> 
+		<div data-ng-include="'deleteModal/confirmModalTemplate.html'"></div>
+		<div data-ng-include="'createModal/createElementTemplate.html'"></div> 
 
 	</div>
 
@@ -87,7 +87,7 @@
 	<script src="/opensyllabus2-tool/lib/angular-ui/ui-bootstrap-custom-tpls-0.14.3.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/xeditable/xeditable.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-translate/angular-translate.min.js"></script>
-	<!--  <script src="/opensyllabus2-tool/lib/ng-ckeditor-master/ng-ckeditor.js"></script> -->
+	<script src="/opensyllabus2-tool/lib/ng-ckeditor-master/ng-ckeditor.js"></script>
 	<script src="/opensyllabus2-tool/lib/bootstrap-ui-datetime-picker-master/dist/datetime-picker.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/ng-file-upload-master/dist/ng-file-upload.min.js"></script>
 	

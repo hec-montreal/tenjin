@@ -1,0 +1,39 @@
+// Boutons edition et suppression
+.buttons-elements {
+    float: right;
+    margin-left: 10px;
+    
+    .picto-edit {
+        margin-right: 10px;
+    }
+
+    .picto-delete {
+
+    }
+
+
+    .container-menu-ajout-rubric {
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: top;
+
+        .btn {
+            border: none;
+            background-color: initial;
+            padding: 0 2px;
+            color: #000;
+        }
+
+        .ajouter-libelle {
+            display: none;
+        }
+
+        .glyphicon-plus-sign {
+            font-size: 20px;
+        }
+
+        .caret {
+            display: none;
+        }
+    }
+}

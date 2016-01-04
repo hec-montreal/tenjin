@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+.element {
+
+    padding: 10px;
+    
+    .titre-element {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .infos {
+        margin: 5px 0;
+    }
+
+    .comment {
+        display: inline-block;   
+        vertical-align: top;    
+    }
+ 
+    .url-lien {
+        font-weight: normal;
+        color: #777;
+    }
+
+}
+
+
+.composite {
+
+    .link-description {
+        text-decoration: underline;
+    }
+
+}
