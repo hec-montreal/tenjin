@@ -14,12 +14,20 @@
         }
 
         .item-selected {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
             font-weight: bold;
+            color: red;
         }
 
         .select-resource {
             cursor: pointer;
         }
+    }
+
+    .folder {
+        font-weight: bold;
     }
 
 }

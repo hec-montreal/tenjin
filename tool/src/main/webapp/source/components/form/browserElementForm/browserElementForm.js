@@ -22,10 +22,10 @@ opensyllabusApp.directive('browserElementForm', ['ResourcesService', function (R
             };
 
             $scope.setSelectedResource = function($item) {
-                $scope.selectedResource = $item;
+                // $scope.selectedResource = $item;
+                $scope.element.selectedResource = $item;
             };
 
-            console.log($scope.resources);
 
         },
         link: function ($scope, $element) {
