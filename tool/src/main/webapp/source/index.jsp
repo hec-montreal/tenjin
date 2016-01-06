@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 <!-- PREPARE TO USE NGBINDHTML FOR FUTURE VIEW OF CKEEDITOR TEXT (ANGULAR-SANITIZE.JS) -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="fr_CA" data-ng-app="opensyllabus">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr_CA" >
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -77,6 +77,12 @@
 
 	<!-- <script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script> -->
 	<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
+	<!--<script src="/opensyllabus2-tool/lib/angular2/angular2.js"></script> -->
+	<!-- <script src="/opensyllabus2-tool/lib/systemjs/system.js"></script> -->
+	<script src="/opensyllabus2-tool/lib/typescript/typescript.js"></script> <!-- dev uniquement  -->
+    <script src="/opensyllabus2-tool/lib/reflect-metadata/reflect.js"></script> <!-- use typescript decorator  -->
+
+
 	<script src="/opensyllabus2-tool/lib/angular-dynamic-locale-master/tmhDynamicLocale.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-promise-extras-master/angular-promise-extras.js"></script>
 	<script src="http://code.angularjs.org/1.0.8/i18n/angular-locale_fr-fr.js"></script>
@@ -100,7 +106,8 @@
 	// <script src="/opensyllabus2-tool/js/controllers/addElementButton/addElementCtrl.js"></script> -->
 
 	<script src="/opensyllabus2-tool/js/opensyllabus.js"></script>
-	
+
+
 </body>
 </html>
 
