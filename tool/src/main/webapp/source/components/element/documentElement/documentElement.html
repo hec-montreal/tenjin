@@ -3,12 +3,9 @@
     <div data-buttons-element="element" class="buttons-elements"></div>
 
     <div class="titre-element">
-        <a href="{{element.attributes.docResourceUrl}}" target="_blank">
+        <a href="{{resource.url}}" target="_blank">
             {{ element.title }} 
-        </a>
-        <span class="resource-type">
-            [{{ documentType }}]
-        </span> 
+        </a> <span class="resource-type">[{{ documentType }}]</span> 
     </div>
     <div class="titre-fichier">
         ({{ resource.name }})
