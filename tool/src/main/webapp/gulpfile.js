@@ -50,6 +50,7 @@ gulp.task('ts', function() {
     return gulp.src([ './source/js/**/*.ts', './source/components/**/*.ts'])
     .pipe(ts({
       noImplicitAny: true,
+      // module: 'system',
       out: 'ts_output.js'
     }))
     .pipe(gulp.dest('./source/js'));

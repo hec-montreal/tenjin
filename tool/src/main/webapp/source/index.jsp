@@ -78,7 +78,7 @@
 	<!-- <script src="/opensyllabus2-tool/lib/bootstrap/js/bootstrap.min.js"></script> -->
 	<script src="/opensyllabus2-tool/lib/angular/angular.js"></script>
 	<!--<script src="/opensyllabus2-tool/lib/angular2/angular2.js"></script> -->
-	<!-- <script src="/opensyllabus2-tool/lib/systemjs/system.js"></script> -->
+	<!--<script src="/opensyllabus2-tool/lib/systemjs/system.js"></script> --> 
 	<script src="/opensyllabus2-tool/lib/typescript/typescript.js"></script> <!-- dev uniquement  -->
     <script src="/opensyllabus2-tool/lib/reflect-metadata/reflect.js"></script> <!-- use typescript decorator  -->
 
@@ -95,7 +95,7 @@
 	<script src="/opensyllabus2-tool/lib/angular-translate/angular-translate.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/ng-ckeditor-master/ng-ckeditor.js"></script>
 	<script src="/opensyllabus2-tool/lib/bootstrap-ui-datetime-picker-master/dist/datetime-picker.min.js"></script>
-	<script src="/opensyllabus2-tool/lib/ng-file-upload-master/dist/ng-file-upload.min.js"></script>
+	<script src="/opensyllabus2-tool/lib/ng-file-upload-master/dist/ng-file-upload.min.js"></script> 
 	
 
 <!-- 	// <script src="/opensyllabus2-tool/js/controllers/opensyllabus/opensyllabus.js"></script>

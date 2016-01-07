@@ -7,11 +7,11 @@
             {{ element.title }} 
         </a>
         <span class="resource-type">
-            [{{ element.attributes.docResourceType }}]
+            [{{ documentType }}]
         </span> 
     </div>
     <div class="titre-fichier">
-        ({{ element.attributes.docResourceName }})
+        ({{ resource.name }})
     </div>
 
     <div data-ng-bind-html="element.description" class="comment"></div>

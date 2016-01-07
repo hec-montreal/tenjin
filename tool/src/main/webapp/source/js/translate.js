@@ -38,6 +38,7 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         FORM_DOCUMENT_TELEPHONE: "Phone number",
         FORM_DOCUMENT_BUREAU: "Office",
         FORM_DOCUMENT_DISPONIBILITES: "Disponibilities",
+        FORM_DOCUMENT_TYPE: "Type",
         FORM_CONTACT_TITLE_ATTACHE: 'Attaché(e) d\'enseignement',
         FORM_CONTACT_TITLE_CHARGE_ENS: 'Chargé(e) d\'enseignement',
         FORM_CONTACT_TITLE_CHARGE_COURS: 'Chargé(e) de cours',
@@ -90,7 +91,17 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ERROR_PLAN_COURS : 'EN, Le chargement du plan de cours a échoué. Veuillez essayer ultérieurement ou contacter le support.',
         ERROR_TEMPLATE : 'EN, Le chargement du plan de cours a partiellement échoué. Celui ci est disponible en lecture seulement. Veuillez essayer ultérieurement ou contacter le support.',
         BUTTON_SAVE: 'Save',
-        SAVE_WORKING: 'Operation in progress...'
+        SAVE_WORKING: 'Operation in progress...',
+        DOCUMENT_TYPE_DEFAULT : 'Type...',
+        DOCUMENT_TYPE_PRESENTATION : 'Slides/presentation',
+        DOCUMENT_TYPE_EXERCICE : 'Exercise/problem',
+        DOCUMENT_TYPE_SOLUTION : 'Solution',
+        DOCUMENT_TYPE_CAS : 'Case',
+        DOCUMENT_TYPE_RAPPORT : 'Report',
+        DOCUMENT_TYPE_DONNEES : 'Data',
+        DOCUMENT_TYPE_LIVRE : 'Book chapter',
+        DOCUMENT_TYPE_OLDEXAMEN : 'Old exam',
+        DOCUMENT_TYPE_PEDAGOGIQUE : 'Pedagogical document'
     })
     .translations('fr', {
         MENU_LABEL: 'Menu du cours',
@@ -127,6 +138,7 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         FORM_DOCUMENT_TELEPHONE: "Téléphone",
         FORM_DOCUMENT_BUREAU: "Bureau",
         FORM_DOCUMENT_DISPONIBILITES: "Disponibilités",
+        FORM_DOCUMENT_TYPE: "Type",
         FORM_CONTACT_TITLE_ATTACHE: 'Attaché(e) d\'enseignement',
         FORM_CONTACT_TITLE_CHARGE_ENS: 'Chargé(e) d\'enseignement',
         FORM_CONTACT_TITLE_CHARGE_COURS: 'Chargé(e) de cours',
@@ -146,7 +158,6 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         REF_BIBLIO_DE: "DE",
         FORM_TITRE_EVALUATION: "Titre de l'évaluation",
         FORM_PONDERATION_EVALUATION: "Pondération",
-        TYPE_ELEMENT_EVALUATION: "Évaluation",
 		EVALUATION_LOCALISATION: "Localisation: ",
 		EVALUATION_INCLASS: "En classe ",
 		EVALUATION_ATHOME: "A la maison",
@@ -180,7 +191,17 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ERROR_PLAN_COURS : 'Le chargement du plan de cours a échoué. Veuillez essayer ultérieurement ou contacter le support.',
         ERROR_TEMPLATE : 'Le chargement du plan de cours a partiellement échoué. Celui ci est disponible en lecture seulement. Veuillez essayer ultérieurement ou contacter le support.',
         BUTTON_SAVE: 'Enregistrer',
-        SAVE_WORKING: 'Opération en cours...'
+        SAVE_WORKING: 'Opération en cours...',
+        DOCUMENT_TYPE_DEFAULT : 'Type...',
+        DOCUMENT_TYPE_PRESENTATION : 'Diapositives/présentation',
+        DOCUMENT_TYPE_EXERCICE : 'Exercice/problème',
+        DOCUMENT_TYPE_SOLUTION : 'Solution',
+        DOCUMENT_TYPE_CAS : 'Cas',
+        DOCUMENT_TYPE_RAPPORT : 'Rapport',
+        DOCUMENT_TYPE_DONNEES : 'Données',
+        DOCUMENT_TYPE_LIVRE : 'Chapitre de livre',
+        DOCUMENT_TYPE_OLDEXAMEN : 'Ancien examen',
+        DOCUMENT_TYPE_PEDAGOGIQUE : 'Document de nature pédagogique'
     });
 
      $translateProvider.preferredLanguage('fr');

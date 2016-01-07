@@ -1,14 +1,27 @@
 
-<div class="element-form"> 
+<div class="element-form document-form"> 
 	<label for="male" class="label-text-title">{{ 'RESOURCE_BROWSER_TITRE' | translate }} : <span class="mandatory"></span></span>  
     </label>
     
     <div data-browser-element-form="element"></div>
 
-   <!-- Titre -->
+    <!-- Titre -->
     <label for="male" class="label-text-title">{{ 'FORM_TITRE' | translate }}</label>
     <input type="text" name="title" data-ng-model="element.title" class="input-text-title" />
-     
+    
+    <!-- Type -->
+    <!-- <label class="label-text-title">{{ 'FORM_DOCUMENT_TYPE' | translate }}</label> -->
+    <div class="btn-group" uib-dropdown uib-keyboard-nav>
+        <button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
+            <span class="ajouter-libelle">{{currentType.name | translate }}</span>
+            <span class="caret"></span>
+        </button>
+        <ul class="uib-dropdown-menu liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+            <li role="menuitem" data-ng-repeat="type in config.documentTypes">
+                <a href="#" data-ng-click="selectType(type)">{{::type.name | translate }}</a> 
+            </li>
+        </ul>
+    </div> 
   
     <!-- Description --> 
     <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>

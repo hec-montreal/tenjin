@@ -57,6 +57,49 @@ opensyllabusApp.constant('config', {
             'type': 'tutorial',
             'label': ''
         },
-    }
+    },
+    documentTypes: [
+        {
+            'id' : -1,
+            'name' : 'DOCUMENT_TYPE_DEFAULT' 
+        },
+        {
+            'id' : 1,
+            'name' : 'DOCUMENT_TYPE_PRESENTATION'
+        },
+        {
+            'id' : 2,
+            'name' : 'DOCUMENT_TYPE_EXERCICE'
+        },
+        {
+            'id' : 3,
+            'name' : 'DOCUMENT_TYPE_SOLUTION'
+        },
+        {
+            'id' : 4,
+            'name' : 'DOCUMENT_TYPE_CAS'
+        },
+        {
+            'id' : 5,
+            'name' : 'DOCUMENT_TYPE_RAPPORT'
+        },
+        {
+            'id' : 6,
+            'name' : 'DOCUMENT_TYPE_DONNEES'
+        },
+        {
+            'id' : 7,
+            'name' : 'DOCUMENT_TYPE_LIVRE'
+        },
+        {
+            'id' : 8,
+            'name' : 'DOCUMENT_TYPE_OLDEXAMEN'
+        },
+        {
+            'id' : 9,
+            'name' : 'DOCUMENT_TYPE_PEDAGOGIQUE'
+        }
+    ],   
 
+    
 });
