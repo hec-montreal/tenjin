@@ -7,7 +7,7 @@
 
     <!-- Titre -->
     <label for="male" class="label-text-title">{{ 'FORM_TITRE' | translate }}</label>
-    <input type="text" name="title" data-ng-model="element.title" class="input-text-title" />
+    <input type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
     
     <!-- Type -->
     <div class="label-text-type">{{ 'FORM_DOCUMENT_TYPE' | translate }}</div>

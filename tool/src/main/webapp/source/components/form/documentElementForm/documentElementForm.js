@@ -50,7 +50,8 @@ opensyllabusApp.directive('documentElementForm', ['config', '$translate' ,  func
             } else {
                 $scope.currentType = $scope.config.documentTypes[0];
             }
-
+            
+            $scope.element.$formHasRessource  = true;
             // $scope.element.attributes.docType = $scope.config.documentTypes[0];
         }
 

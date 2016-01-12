@@ -85,8 +85,8 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
 
         $scope.errors = {};
 
-        
-        if ( $scope.element.$hasDates ) {
+        // Si le formulaire associé à l'élément comprend des dates
+        if ( $scope.element.$formHasDates ) {
             // CONTROLE date affichage
             if ($scope.element.availabilityStartDate ) {
                 // convert to timestamp
@@ -114,6 +114,13 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
             }
         }
 
+        // Si le formulaire associé à l'élément comprend une ressource
+        if ( $scope.element.$formHasRessource ) {
+            if (!$scope.element.attributes.resourceId) {
+                $scope.errors.isErrorRessource = true;
+                result = -1;
+            }
+        }
 
         return result;
     };

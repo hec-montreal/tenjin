@@ -4,7 +4,7 @@
 
     <div class="titre-element">
         <a href="{{resource.url}}" target="_blank">
-            {{ element.title }} 
+            {{ element.title || resource.name }} 
         </a> <span class="resource-type">[{{ documentType }}]</span> 
     </div>
     <div class="titre-fichier">
