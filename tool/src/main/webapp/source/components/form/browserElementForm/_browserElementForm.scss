@@ -4,7 +4,7 @@
     .browser-element {
         // background-color: #eee;
         border: 1px solid #bbb;
-        padding: 0 5px;
+        
         height: 120px;
         overflow: auto;
         margin-bottom: 2px;  
@@ -15,15 +15,19 @@
         }
 
         .item-selected {
-            display: inline-block;
-            width: 100%;
-            height: 100%;
+            background-color: #ddd;
             font-weight: bold;
-            color: #39A633;
+            // color: #39A633;
         }
 
         .select-resource {
             cursor: pointer;
+        }
+
+        .folder,
+        .select-resource {
+            display: inline-block;
+            padding: 0 5px;
         }
     }
 

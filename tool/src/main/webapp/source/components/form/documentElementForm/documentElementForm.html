@@ -10,7 +10,7 @@
     <input type="text" name="title" data-ng-model="element.title" class="input-text-title" />
     
     <!-- Type -->
-    <!-- <label class="label-text-title">{{ 'FORM_DOCUMENT_TYPE' | translate }}</label> -->
+    <div class="label-text-type">{{ 'FORM_DOCUMENT_TYPE' | translate }}</div>
     <div class="btn-group" uib-dropdown uib-keyboard-nav>
         <button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
             <span class="ajouter-libelle">{{currentType.name | translate }}</span>
@@ -24,7 +24,7 @@
     </div> 
   
     <!-- Description --> 
-    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
+    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
     <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
 
     <!-- Buttons form --> 

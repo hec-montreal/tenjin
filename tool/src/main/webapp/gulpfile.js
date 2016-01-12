@@ -58,7 +58,18 @@ gulp.task('ts', function() {
 
 
 //Js task
-gulp.task('js', ['ts', 'viewscache'], function() {
+gulp.task('js', ['viewscache'], function() {
+    return gulp.src([ './source/js/**/*.js', './source/components/**/*.js'])
+
+    .pipe(concat('opensyllabus.js'))
+    .pipe(browserify({
+      insertGlobals : true
+    }))
+    .pipe(gulp.dest('./dest/js'));
+});
+
+//Js deploy task
+gulp.task('jsdeploy', ['ts', 'viewscache'], function() {
     return gulp.src([ './source/js/**/*.js', './source/components/**/*.js'])
 
     .pipe(concat('opensyllabus.js'))
@@ -119,12 +130,12 @@ gulp.task('watch', function(){
 
 
 
-gulp.task('deploy',['lib', 'img', 'js', 'web-inf', 'sass', 'tools','jsp', 'copy'] , function(){
+gulp.task('deploy',['lib', 'img', 'jsdeploy', 'web-inf', 'sass', 'tools','jsp', 'copy'] , function(){
 	gutil.log('Source déployée sur tomcat!');
 });
 
 
-gulp.task('deploy-maven',['lib', 'img', 'js', 'web-inf', 'sass', 'tools','jsp'] , function(){
+gulp.task('deploy-maven',['lib', 'img', 'jsdeploy', 'web-inf', 'sass', 'tools','jsp'] , function(){
 	  gutil.log('Source déployée sur tomcat avec maven!');
 });
 

@@ -2,19 +2,17 @@
 
 <script type="text/ng-template" id="browser_renderer.html">
 
-    <!-- Display é à expand, collpase button only if there are sub elements -->
-    <a class="btn btn-success btn-xs" data-ng-if="item.resourceChildren && item.resourceChildren.length > 0" data-ng-click="toggleTree(this)"><span
-    class="glyphicon"
-    data-ng-class="{
-      'glyphicon-chevron-right': collapsed,
-      'glyphicon-chevron-down': !collapsed
-    }"></span></a>
-
   <!-- Display item  --> 
-
     <span data-ng-if="item.type === 'org.sakaiproject.content.types.folder'" class="folder">
+          <a class="btn btn-success btn-xs" data-ng-if="item.resourceChildren && item.resourceChildren.length > 0" data-ng-click="toggleTree(this)"><span
+      class="glyphicon"
+      data-ng-class="{
+        'glyphicon-chevron-right': collapsed,
+        'glyphicon-chevron-down': !collapsed
+      }"></span></a>
         {{::item.name}}
     </span>
+
     <span data-ng-if="item.type === 'org.sakaiproject.content.types.fileUpload'" data-ng-click="setSelectedResource(item)" class="select-resource" data-ng-class="{'item-selected': (element.$selectedResource.resourceId === item.resourceId) }" >
         {{::item.name}}
     </span>

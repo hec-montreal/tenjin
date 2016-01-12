@@ -13,6 +13,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
 
         $scope.element = angular.copy(element);
         $scope.mode = "edition";
+        $scope.title = $translate.instant('MODALE_EDIT_ELEMENT_TITLE');
     } else {
         // Creation
         $scope.type = type;
@@ -24,7 +25,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
             'parentId': $scope.parent.id,
             'templateStructureId': $scope.type.id,
         };
-        $scope.mode = "creation";
+        $scope.title = $translate.instant('MODALE_CREATE_ELEMENT_TITLE');
     }
  
 
