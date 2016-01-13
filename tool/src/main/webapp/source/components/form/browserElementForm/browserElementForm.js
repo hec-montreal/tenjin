@@ -3,13 +3,13 @@ opensyllabusApp.directive('browserElementForm', ['ResourcesService', function (R
 
     return {
         scope: {
-            element: '=browserElementForm'
+            element: '=browserElementForm',
+            type: '@'
         },
         restrict: 'A',
         templateUrl: 'form/browserElementForm/browserElementForm.html',
         controller: function ($scope) {
             $scope.resources = ResourcesService.resources;
-
 
             $scope.browserOptions  = {
                 name: "browserTree",

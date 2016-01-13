@@ -100,6 +100,6 @@ opensyllabusApp.constant('config', {
             'name' : 'DOCUMENT_TYPE_PEDAGOGIQUE'
         }
     ],   
-
+    extensionsImage: ['jpg', 'gif', 'png'],
     
 });

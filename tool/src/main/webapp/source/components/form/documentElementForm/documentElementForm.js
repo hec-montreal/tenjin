@@ -31,13 +31,8 @@ opensyllabusApp.directive('documentElementForm', ['config', '$translate' ,  func
 
         },
         link: function ($scope, $element) {
-        	//console.log( $scope.filesList.content_collection.entityPrefix);
             
-            // $scope.$watch($scope.element, function() {
-            //     debugger;
-            //     $scope.element.title = $scope.element.$selectedResource.name;
-            // }, true);
-            
+            // Récupération du type de document
             if ($scope.element.attributes.docType) { 
 
                 for (var i=0 ; i < config.documentTypes.length; i++) {
@@ -52,7 +47,6 @@ opensyllabusApp.directive('documentElementForm', ['config', '$translate' ,  func
             }
             
             $scope.element.$formHasRessource  = true;
-            // $scope.element.attributes.docType = $scope.config.documentTypes[0];
         }
 
     };

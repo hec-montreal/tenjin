@@ -19,7 +19,6 @@ opensyllabusApp.directive('imageElementForm', function (){
                 removeButtons: removeButtonsList,
                 removePlugins: 'elementspath,resize'
             };
-
             
 
         },
