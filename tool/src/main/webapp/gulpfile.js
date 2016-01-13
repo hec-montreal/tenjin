@@ -49,9 +49,9 @@ gulp.task('views', function() {
 gulp.task('ts', function() {
     return gulp.src([ './source/js/**/*.ts', './source/components/**/*.ts'])
     .pipe(ts({
-      noImplicitAny: true,
+      // noImplicitAny: true,
       // module: 'system',
-      out: 'ts_output.js'
+      out: 'ts_output.js' // useful just to compile...
     }))
     .pipe(gulp.dest('./source/js'));
 });
