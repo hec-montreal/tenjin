@@ -11,6 +11,8 @@ var gulp         = require('gulp'),
     templateCache = require('gulp-angular-templatecache'),
     browserify    = require('gulp-browserify'),
     ts            = require('gulp-typescript');
+    // ts            = require('gulp-ts');
+ 
 
 // Img task
 gulp.task('img', function() {
@@ -48,14 +50,22 @@ gulp.task('views', function() {
 //Ts task
 gulp.task('ts', function() {
     return gulp.src([ './source/js/**/*.ts', './source/components/**/*.ts'])
-    .pipe(ts({
-      // noImplicitAny: true,
-      // module: 'system',
-      out: 'ts_output.js' // useful just to compile...
-    }))
-    .pipe(gulp.dest('./source/js'));
+    .pipe(ts())
+    .pipe(gulp.dest('./source/js/typescript'));
 });
 
+//Ts task
+// gulp.task('ts', function() {
+//     gulp.src('./source/components/opensyllabus/opensyllabusCtrl.ts')
+//     .pipe(ts())
+//     .pipe(gulp.dest('out'));
+// });
+
+gulp.task('typescript', function() {
+  gulp.src('source.ts')
+    // .pipe(ts())
+    .pipe(gulp.dest('out'));
+});
 
 //Js task
 gulp.task('js', ['viewscache'], function() {
