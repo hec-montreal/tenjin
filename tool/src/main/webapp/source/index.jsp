@@ -107,6 +107,11 @@
 
 	<script src="/opensyllabus2-tool/js/opensyllabus.js"></script>
 
+	<script>
+		// Bootstrap application
+		// adapter.bootstrap(document.body, ['opensyllabus']);
+		angular.bootstrap(document.body, ['opensyllabus']);
+	</script>
 
 </body>
 </html>

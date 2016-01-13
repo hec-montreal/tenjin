@@ -229,9 +229,3 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
 
 
 }]);
-
-
-
-// Bootstrap application
-// adapter.bootstrap(document.body, ['opensyllabus']);
-angular.bootstrap(document.body, ['opensyllabus']);
