@@ -72,21 +72,9 @@
 
 	</h1> 
 	
-	<div>
-		<!-- SECTIONS -->
-<!-- 	    <div class="btn-group btn-section" uib-dropdown uib-keyboard-nav>
-	        <button id="btn-section" type="button" class="btn btn-primary" data-ng-disabled="syllabusService.working" uib-dropdown-toggle>
-	            <span class="ajouter-libelle">{{syllabusService.section.name}}</span>
-	            <span class="caret"></span>
-	        </button>
-	        <ul class="uib-dropdown-menu liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-	            <li role="menuitem" data-ng-repeat="section in syllabusService.listeSections">
-	                <a href="#" data-ng-click="selectSection(section)">{{::section.name }}</a> 
-	            </li> 
-	        </ul>
-	    </div>  -->
+	<div class="buttons-list">
 
-	    <!-- Single button with keyboard nav -->
+	    <!-- SECTIONS -->
 	    <div class="btn-group" uib-dropdown keyboard-nav>
 	        <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" data-ng-disabled="syllabusService.working" uib-dropdown-toggle>
 	            <span class="ajouter-libelle">{{syllabusService.section.name}}</span> <span class="caret"></span> 
@@ -112,7 +100,7 @@
 	</div>
 
 	<div data-ng-if="!planFailed">
-		<div data-ng-show="syllabusService.showMobileMenu" class="row row-content">
+		<div data-ng-show="syllabusService.showMobileMenu">
 			<!-- Test menu mobile -->
 			<mobile-menu></mobile-menu>
 			<!-- <div mobile-menu></div> -->

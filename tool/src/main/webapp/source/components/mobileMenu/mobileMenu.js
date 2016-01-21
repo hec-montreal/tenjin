@@ -47,12 +47,13 @@ opensyllabusApp.directive('mobileMenu', ['$timeout', 'TreeService', 'SyllabusSer
                                 $item.elements[0].type === "rubric") {
                         SyllabusService.showMobileMenu = false;
                     }else {
+                        TreeService.setViewedItem($item);
                         this.showBackButton = true;
                         SyllabusService.hideItems($item);
                     }
                     
                     TreeService.setSelectedItem($item);
-                    TreeService.setViewedItem($item);
+
                 }
             };
 

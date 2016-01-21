@@ -62,8 +62,9 @@ body {
     }
 
     .mobile-menu-button {
-        // float: right;
+        float: right;
     }
+
 
     // ANGULAR UI TREE
     .angular-ui-tree-placeholder {
@@ -147,6 +148,10 @@ body {
             border: none; 
         }
     }
+
+    .btn {
+        border-radius: 0;
+    }
  
     // XEDITABLE
     .editable-click {
@@ -221,11 +226,6 @@ body {
 
         .btn-section {
             margin-left: 10px;
-        }
-
-        h1 {
-            margin-left: 10px;
-            margin-right: 10px;
         }
 
         .loader-container {

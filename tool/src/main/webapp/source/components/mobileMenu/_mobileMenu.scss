@@ -1,6 +1,13 @@
 .mobile-menu {
     // color: $bleu-hec;
-    padding: 0 25px;
+    padding: 0;
+    margin-top: 10px;
+    // background-color: #333;
+    background-color: #286090;
+    color: #fff;
+    // font-size: 16px;
+    // font-family: 'Helvetica Condensed Regular','Helvetica Neue',Arial,sans-serif;
+    font-weight: normal;
 
     .glyphicon {
         top: 0;
@@ -8,6 +15,7 @@
 
     .item-selected {
         background-color: $item-selected;
+        color: #333;
     }
 
     .item-composite {
@@ -20,7 +28,7 @@
 
     .select-item {
         display: inline-block;
-        padding: 5px 5px;
+        padding: 10px;
         cursor: pointer;
         width: 100%;
     }
@@ -51,6 +59,8 @@
     }
 
     .back-button {
-        padding: 5px 5px; 
+        cursor: pointer;
+        padding: 10px;
+        background-color: $bleu-hec;
     }
 }
