@@ -12,12 +12,12 @@
     
     <!-- Type -->
     <div class="label-text-type">{{ 'FORM_DOCUMENT_TYPE' | translate }}</div>
-    <div class="btn-group" uib-dropdown uib-keyboard-nav>
+    <div class="btn-group" uib-dropdown keyboard-nav>
         <button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
             <span class="ajouter-libelle">{{currentType.name | translate }}</span>
             <span class="caret"></span>
         </button>
-        <ul class="uib-dropdown-menu liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+        <ul uib-dropdown-menu class="liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
             <li role="menuitem" data-ng-repeat="type in config.documentTypes">
                 <a href="#" data-ng-click="selectType(type)">{{::type.name | translate }}</a> 
             </li>

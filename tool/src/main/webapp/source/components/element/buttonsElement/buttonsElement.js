@@ -37,7 +37,7 @@ opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'Moda
 
                 // Traitement du résultat
                 modal.result.then(function (selectedItem) {
-                    console.debug('élément supprimé');
+                    console.debug('élément modifié');
                 }, function () {
                     console.debug('élément toujours là');
                 });

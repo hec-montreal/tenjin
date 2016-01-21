@@ -138,18 +138,20 @@
 
             if ($rootTree.id === $parent.id && !$rootTree.siteId) { 
                 // si l'élément existe déjà on le supprime et on le remplace (modification)
+                var modification = false;
                 for (var i = 0; i < $rootTree.elements.length; i++){
                     if ($rootTree.elements[i].id === $element.id) {
-                        $rootTree.elements.splice(i, 1);
+                        // modification
+                        $rootTree.elements[i] = $element;
+                        modification = true;
+                        break;
                     }
                 }   
+                // ajout    
+                if (!modification) {
+                    $rootTree.elements.push($element);                
+                } 
 
-                if ($position) {
-                    
-                } else {
-
-                    $rootTree.elements.push($element);
-                }  
             } else {
                 
                 for (var i = 0; i < $rootTree.elements.length; i++){
