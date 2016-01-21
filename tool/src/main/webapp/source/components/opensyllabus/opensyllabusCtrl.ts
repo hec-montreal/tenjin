@@ -3,7 +3,7 @@
 var adapter = new UpgradeAdapter();
 
 // loader les donnees du plan de cours
-opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interval' ,'$timeout', '$q', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService',  'config', '$translate', 'AlertService', 'tmhDynamicLocale', function($rootScope, $scope, $interval, $timeout, $q, SyllabusService, TreeService, ResourcesService, CitationsService, config, $translate, AlertService, tmhDynamicLocale) {
+opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interval', '$timeout', '$q', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'config', '$translate', 'AlertService', 'tmhDynamicLocale', 'Modernizr', 'variables', function($rootScope, $scope, $interval, $timeout, $q, SyllabusService, TreeService, ResourcesService, CitationsService, config, $translate, AlertService, tmhDynamicLocale, Modernizr, variables) {
 	'use strict';
 
     $scope.infos = {};
