@@ -1,9 +1,9 @@
 ﻿
-// var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize", "ngAnimate", "templateModule", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngCkeditor", "ngFileUpload", "tmh.dynamicLocale", "ngPromiseExtras"]);
+var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize", "ngAnimate", "templateModule", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngCkeditor", "ngFileUpload", "tmh.dynamicLocale", "ngPromiseExtras"]);
 // TEST VIEWS HTML
 // var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngCkeditor", "ngFileUpload", "tmh.dynamicLocale", "ngPromiseExtras"]);
 // MOCKUP sans CKEDITOR
-var opensyllabusApp = angular.module('opensyllabus', [ "templateModule", "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngFileUpload", "tmh.dynamicLocale", "ngPromiseExtras"]);
+// var opensyllabusApp = angular.module('opensyllabus', [ "templateModule", "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngFileUpload", "tmh.dynamicLocale", "ngPromiseExtras"]);
 
 opensyllabusApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function ($compileProvider, tmhDynamicLocaleProvider ) {
     'use strict';

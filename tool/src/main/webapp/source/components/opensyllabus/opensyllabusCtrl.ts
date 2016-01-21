@@ -98,8 +98,9 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
                 // data contient d'abord le résultat de la première requête
                 if (data[0].state === "fulfilled") {
                     SyllabusService.setSyllabus(data[0].value);
-                       
-                        
+                    // Masquer les items du menu sur mobile
+                    SyllabusService.hideItemsInit();
+   
                     // $scope.planLoaded = true;
                 } else if (data[0].state === "rejected") {
                     if (data[0].reason.status === 404) {
