@@ -36,7 +36,7 @@ opensyllabusApp.directive('browserElementForm', ['ResourcesService', function (R
             if ($scope.element.attributes.resourceId) {
 
                 var ressource = ResourcesService.getResource($scope.element.attributes.resourceId);
-                if (ressource) {
+               if (ressource) {
                     $scope.element.$selectedResource = ressource;
                 }
             }

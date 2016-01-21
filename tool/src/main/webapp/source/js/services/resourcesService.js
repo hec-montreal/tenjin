@@ -1,9 +1,7 @@
-opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http', '$location', 'config',  function ( $rootScope, $resource, $http, $location, config){
+opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http', '$location', 'config',   function ( $rootScope, $resource, $http, $location, config){
     'use strict';	
 	
 	this.resources;
-	var folderType = "org.sakaiproject.content.types.folder";
-	var citationType = "org.sakaiproject.citation.impl.CitationList";
 	var siteResourcesProviderUri = "../../../direct/content/resources/";
 	
 	var getExtension = function($filename) {
@@ -71,10 +69,12 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 		if ($rootTree.resourceId === $resourceId) {
 			return $rootTree;
 		} else {
-			for ( var i = 0 ; i < $rootTree.resourceChildren.length ; i++) {
-				var results = getResource($rootTree.resourceChildren[i], $resourceId);
-				if (results) {
-					return results;
+			if ( $rootTree.resourceChildren ){
+				for ( var i = 0 ; i < $rootTree.resourceChildren.length ; i++) {
+					var results = getResource($rootTree.resourceChildren[i], $resourceId);
+					if (results) {
+						return results;
+					}
 				}
 			}
 		}
@@ -85,6 +85,10 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 	this.getResource = function($resourceId) {
 		return getResource(this.resources, $resourceId);
 	};
+
+
+
+	
 
 //	this.documentTreeOptions = {
 //		name: "",

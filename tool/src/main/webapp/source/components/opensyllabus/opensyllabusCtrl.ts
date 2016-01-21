@@ -3,7 +3,7 @@
 var adapter = new UpgradeAdapter();
 
 // loader les donnees du plan de cours
-opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interval', '$timeout', '$q', 'SyllabusService', 'TreeService', 'ResourcesService', 'config', '$translate', 'AlertService', 'tmhDynamicLocale', 'Modernizr', 'variables', function($rootScope, $scope, $interval, $timeout, $q, SyllabusService, TreeService, ResourcesService, config, $translate, AlertService, tmhDynamicLocale, Modernizr, variables) {
+opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interval' ,'$timeout', '$q', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService',  'config', '$translate', 'AlertService', 'tmhDynamicLocale', function($rootScope, $scope, $interval, $timeout, $q, SyllabusService, TreeService, ResourcesService, CitationsService, config, $translate, AlertService, tmhDynamicLocale) {
 	'use strict';
 
     $scope.infos = {};
@@ -16,7 +16,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
     $scope.planLoaded = false;
     $scope.templateLoaded = false;
 
-    $scope.variables = variables;
+        $scope.variables = variables;
 
     $scope.infos.showMobileMenu = true;
 
@@ -89,7 +89,6 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
         var results = SyllabusService.loadSyllabus();
         var resultsTemplate = SyllabusService.loadTemplate();
 
-        var resultsResources;
 
         // console.log(results);
 
@@ -148,8 +147,10 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
 
        	    });
         };
+
         
-        var loadResources = function (){
+        
+      var loadResources = function (){
         	return ResourcesService.loadResources(SyllabusService.syllabus.siteId).$promise.then(function($data){
                 ResourcesService.setResources($data.content_collection[0]);
 
@@ -161,10 +162,39 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
             });
         };
         
-        // Chargement du plan de cours et du template, puis des ressources
+        var loadCitations = function(){
+            var citationsLists =  CitationsService.getCitationLists(ResourcesService.resources);
+            return $q.allSettled(citationsLists.promises).then( function(data) {
+                var updatedResource, updatedResourceId;
+                for (var i = 0 ; i < data.length ; i++) {
+                    // data contient d'abord le résultat de la première requête
+                    if (data[i].state === "fulfilled") {
+                       updatedResourceId = citationsLists.resourceIds[i];
+                       updatedResource = ResourcesService.getResource(updatedResourceId);
+
+                       updatedResource.resourceChildren = CitationsService.updateJsonProperties(updatedResourceId, data[i].value.citations);
+                          
+                             
+                    } else if (data[i].state === "rejected") {
+                        //TODO: Voir si on veut mettre plus d'informations sur le message d'erreur
+                        $rootScope.$broadcast('CITATIONS_NOT_LOADED');
+                    }
+                }
+
+            }, function(error) {
+                console.log('erreur get citations');
+
+            });
+        };
+
+       
+
+      // Chargement du plan de cours et du template, puis des ressources
         loadSyllabusAndTemplate()
     	.then(loadResources)
+        .then(loadCitations)
     	.finally(function(){
+             console.dir(ResourcesService.resources);
             $scope.infos.working = false;   		
         });
 
