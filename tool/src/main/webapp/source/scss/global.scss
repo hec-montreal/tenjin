@@ -5,7 +5,7 @@ body {
     font-weight: normal;
     height: 100%;
     width: 100%;
-    overflow-y: hidden;
+    // overflow-y: hidden;
 
     .titre {
         margin: 10px 0;
@@ -59,6 +59,10 @@ body {
         button {
             min-width: 120px;       
         }
+    }
+
+    .mobile-menu-button {
+        // float: right;
     }
 
     // ANGULAR UI TREE
@@ -186,6 +190,7 @@ body {
 
 }
 
+// Loader
 .loader-container {
     position: fixed;
     width: 100%;
@@ -206,18 +211,46 @@ body {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
-    .hide-mobile {
-        display: none;
+    body {
+
+        .hide-mobile {
+            display: none;
+        }
+
+        .btn-section {
+            margin-left: 10px;
+        }
+
+        h1 {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .loader-container {
+            .loader {
+                background: url('/opensyllabus2-tool/img/desktop/loader.gif') no-repeat;
+                width: 160px;
+                height: 160px;
+                margin-right: auto;
+                margin-left: auto;
+                margin-top: 200px;
+            }
+        }
+
     }
 
 }
 
 @media (max-width: 992px) {
 
-    .hide-tablet {
-        display: none;
+    body {
+
+        .hide-tablet {
+            display: none;
+        }
+
     }
 
 }

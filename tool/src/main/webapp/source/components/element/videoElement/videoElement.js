@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('videoElement', ['$sce', function ($sce){
+opensyllabusApp.directive('videoElement', ['$sce', 'variables', function ($sce, variables){
     'use strict';
 
     return {
@@ -12,9 +12,8 @@ opensyllabusApp.directive('videoElement', ['$sce', function ($sce){
 
         },
         link: function ($scope, $element) {
-
+            $scope.variables = variables;
             $scope.isIframe = true;
-
 
             // Vérification sur l'url obligatoire avant insertion dans le src de l'iframe
             if ($scope.element.attributes.videoUrl) {

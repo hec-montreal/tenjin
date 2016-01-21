@@ -1,5 +1,6 @@
-.left-menu {
+.mobile-menu {
     // color: $bleu-hec;
+    padding: 0 25px;
 
     .glyphicon {
         top: 0;
@@ -19,8 +20,9 @@
 
     .select-item {
         display: inline-block;
-        padding: 0 5px;
+        padding: 5px 5px;
         cursor: pointer;
+        width: 100%;
     }
 
     .angular-ui-tree-nodes {
@@ -33,6 +35,10 @@
         height: auto;
         opacity: 1;
         // max-height: 200px;
+        
+        .angular-ui-tree-nodes {
+            padding-left: 0;
+        }
     }
 
     .hidden {
@@ -42,5 +48,9 @@
         opacity: 0;
         max-height: 0;
         visibility: hidden !important;
+    }
+
+    .back-button {
+        padding: 5px 5px; 
     }
 }

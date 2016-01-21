@@ -16,7 +16,7 @@
       <!-- <span data-ng-if="item.parentId === null">{{::item.title}}</span>
       <span data-ng-if="item.parentId">{{item.title}}</span> -->
       {{item.title}}
-      <span ui-tree-handle class="tree-node tree-node-content picto-move" data-ng-if="item.parentId"></span>
+      <span ui-tree-handle class="tree-node tree-node-content picto-move" data-ng-if="variables.mode === 'edition' && item.parentId"></span>
     </span>
 
      <!-- Pas de drag and drop pour les éléments de premier niveau -->
@@ -24,7 +24,7 @@
   </span>
 
   <!-- <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-class="{hidden: collapsed}" data-ng-if="item.elements && item.elements.length > 0 && item.elements[0].displayPage"> -->
-  <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite'">
+  <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-if="item.type === 'composite'">
     <li data-ng-repeat="item in item.elements" ui-tree-node data-ng-include="'nodes_renderer.html'">
     </li>
   </ol>

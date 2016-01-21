@@ -103,7 +103,8 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         DOCUMENT_TYPE_DONNEES : 'Data',
         DOCUMENT_TYPE_LIVRE : 'Book chapter',
         DOCUMENT_TYPE_OLDEXAMEN : 'Old exam',
-        DOCUMENT_TYPE_PEDAGOGIQUE : 'Pedagogical document'
+        DOCUMENT_TYPE_PEDAGOGIQUE : 'Pedagogical document',
+        MOBILE_MENU_BACK: 'Back'
     })
     .translations('fr', {
         MENU_LABEL: 'Menu du cours',
@@ -205,7 +206,8 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         DOCUMENT_TYPE_DONNEES : 'Données',
         DOCUMENT_TYPE_LIVRE : 'Chapitre de livre',
         DOCUMENT_TYPE_OLDEXAMEN : 'Ancien examen',
-        DOCUMENT_TYPE_PEDAGOGIQUE : 'Document de nature pédagogique'
+        DOCUMENT_TYPE_PEDAGOGIQUE : 'Document de nature pédagogique',
+        MOBILE_MENU_BACK: 'Retour'
     });
 
      $translateProvider.preferredLanguage('fr');

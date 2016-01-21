@@ -22,6 +22,8 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 			return "citationList";
 		} else if ( $resource.type === "org.sakaiproject.content.types.folder" ){
 			return "folder";
+		} else if ( $resource.type === "org.sakaiproject.content.types.TextDocumentType" || $resource.type === "org.sakaiproject.content.types.HtmlDocumentType" ) {
+			return "document";
 		} else if ( $resource.type === "org.sakaiproject.content.types.fileUpload" ) {
 			var extension = getExtension(name);
 

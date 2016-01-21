@@ -26,6 +26,10 @@
     ];    
     this.section = this.listeSections[0];
 
+    this.showMobileMenu = true;
+    this.navigation = {
+        'level' : 1
+    };
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusProvider = $resource('v1/syllabus/init.json');
@@ -332,5 +336,54 @@
 
         numerotationSyllabus($data, infosNumerotations);
     };
+
+    var hideAllChildren = function($rootTree) {
+
+        if ($rootTree.elements) {
+            for (var i = 0; i < $rootTree.elements.length; i++ ) {
+                $rootTree.elements[i].$hidden = true;
+
+                hideAllChildren($rootTree.elements[i]);
+            }   
+        }
+    };
+
+    var hideItems = function($rootTree, $item, $levelTmp, $navigation) {
+   
+        if ($rootTree.id === $item.id && !$rootTree.siteId) {
+            $rootTree.$hidden = false;
+            $navigation.level = $levelTmp;
+
+            // On affiche les enfants mais on masque les potentiels sous-enfants, etc.
+            for (var i = 0; i < $rootTree.elements.length; i++ ) {
+                $rootTree.elements[i].$hidden = false;
+                hideAllChildren($rootTree.elements[i]);
+            }
+        } else {
+            $rootTree.$hidden = true;
+
+            $levelTmp++;
+            if ($rootTree.elements) {
+                for (var i = 0; i < $rootTree.elements.length; i++ ) {
+                    hideItems($rootTree.elements[i], $item, $levelTmp, $navigation); 
+                }
+            }
+        }
+
+    };
+
+    this.hideItems = function($item) {
+        var tmpLevel = 1;
+        hideItems(this.syllabus, $item, tmpLevel, this.navigation);
+
+    };
+
+    this.hideItemsInit = function() {
+        for (var i = 0; i < this.syllabus.elements.length; i++ ) {
+            this.syllabus.elements[i].$hidden = false;
+            hideAllChildren(this.syllabus.elements[i]);
+        } 
+    };
+
 
 }]);

@@ -1,5 +1,5 @@
 
-opensyllabusApp.directive('biblioElement', function (){
+opensyllabusApp.directive('biblioElement', ['variables', function (variables){
     'use strict';
 
     return {
@@ -9,7 +9,7 @@ opensyllabusApp.directive('biblioElement', function (){
         restrict: 'A',
         templateUrl: 'element/biblioElement/biblioElement.html',
         controller: function ($scope) {
-
+            $scope.variables = variables;
         },
         link: function ($scope, $element) {
         	$scope.dot = ".";
@@ -26,5 +26,5 @@ opensyllabusApp.directive('biblioElement', function (){
 
     };
 
-});
+}]);
 

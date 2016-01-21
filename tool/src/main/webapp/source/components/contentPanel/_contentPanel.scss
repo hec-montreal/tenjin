@@ -39,3 +39,15 @@
     left: -50px;
     min-width: initial;
 }
+
+@media(max-width: 767px) {
+
+    .content-panel { 
+        border-left : none;
+    }
+        
+    ol.liste-element.ng-pristine.ng-untouched.ng-valid.ng-scope.angular-ui-tree-nodes {
+        padding-left: 0;
+    }
+
+}

@@ -1,10 +1,11 @@
 
-opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeService', 'SyllabusService', 'config' , function ($scope, $timeout, TreeService, SyllabusService, config){
+opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeService', 'SyllabusService', 'config' , 'variables', function ($scope, $timeout, TreeService, SyllabusService, config, variables){
     'use strict';
 
     $scope.syllabusService = SyllabusService;
     $scope.treeService = TreeService;
-    
+    $scope.variables = variables;
+
     $scope.getAncestor = function($node){
         if ($node.$parentNodeScope) {
             return $scope.getAncestor($node.$parentNodeScope);

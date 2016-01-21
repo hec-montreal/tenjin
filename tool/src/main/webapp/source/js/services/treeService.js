@@ -5,7 +5,9 @@
    // this.selectedItem = { id : 12356};
     
    var syllabus = null;
-
+   
+   // Item en cours de visualisation (menu mobile)
+   this.viewedItem = undefined;
     
     /**
      * Parcours de manière récursive les enfants de l'arbre
@@ -126,5 +128,13 @@
     };
 
 
+
+    this.setViewedItem = function($item) {
+        this.viewedItem = $item;
+    };
+
+    this.getViewedItem = function() {
+        return this.viewedItem;
+    };
 
 }]);

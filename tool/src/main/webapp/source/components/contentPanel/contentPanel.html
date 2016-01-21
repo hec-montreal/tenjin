@@ -2,8 +2,10 @@
 <section class="content-panel-section" data-ng-controller='ContentPanelCtrl'>
 
     <!-- Menu ajout -->
-    <div id="menu-ajout" data-add-element-menu="treeService.selectedItem"  class="container-menu-ajout"></div>
-    
+    <div data-ng-if="variables.mode === 'edition'">
+        <div id="menu-ajout" data-add-element-menu="treeService.selectedItem"  class="container-menu-ajout"></div> 
+    </div>
+
     <!-- Titre -->
     <div class='titre' > 
         {{treeService.selectedItem.title}}

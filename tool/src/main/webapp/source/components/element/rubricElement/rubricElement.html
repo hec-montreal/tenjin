@@ -6,7 +6,7 @@
         {{element.title}}
         <!-- <span data-ng-if="element.type == 'evaluation'"> ({{element.attributes.weight}}%)</span> -->
 
-        <span data-buttons-element="element" noedit="true" class="buttons-elements"></span>
+        <span data-ng-if="variables.mode === 'edition'" data-buttons-element="element" noedit="true" class="buttons-elements"></span>
 
 <!--         <div data-ng-if="!element.description" >
             <a href="" class="link-description" data-ng-click="">Ajouter une description</a>

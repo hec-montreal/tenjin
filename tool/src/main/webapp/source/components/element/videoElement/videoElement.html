@@ -1,12 +1,12 @@
 ﻿<div class="element video">
         
-    <div data-buttons-element="element" class="buttons-elements"></div>
+    <div data-ng-if="variables.mode === 'edition'" data-buttons-element="element" class="buttons-elements"></div>
 
     <div class="video">
-        <div class="embed">
-            <iframe width="300" height="220" data-ng-src="{{videoUrl}}" frameborder="0" allowfullscreen data-ng-if="isIframe"></iframe>  
+        <div class="row embed">
+            <iframe height="220" data-ng-src="{{videoUrl}}" frameborder="0" allowfullscreen data-ng-if="isIframe" class="col-sm-3 col-xs-12"></iframe>  
 
-            <span data-ng-bind-html="element.description" class="comment"></span>
+            <span data-ng-bind-html="element.description" class="col-sm-9 col-xs-12 comment"></span>
         </div>
 
     </div> 

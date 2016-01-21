@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('rubricElement', function (){
+opensyllabusApp.directive('rubricElement', ['variables', function (variables){
     'use strict';
 
     return {
@@ -9,12 +9,12 @@ opensyllabusApp.directive('rubricElement', function (){
         restrict: 'A',
         templateUrl: 'element/rubricElement/rubricElement.html',
         controller: function ($scope) {
-
+            $scope.variables = variables;
         },
         link: function ($scope, $element) {
         }
 
     };
 
-});
+}]);
 

@@ -1,13 +1,13 @@
-﻿<div class="dropdown" data-ng-class="{ 'open' : showMenuAjouter}">
+﻿<div class="dropdown" data-ng-class="{ 'open' : showMenuAjouter}"> 
 
-    <div class="btn-group" uib-dropdown auto-close="outsideClick" is-open="isOpen" uib-keyboard-nav>
+    <div class="btn-group" uib-dropdown auto-close="outsideClick" is-open="isOpen" keyboard-nav>
         <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle  data-ng-disabled="syllabusService.working" data-ng-click="element.elements && element.elements[0].type ==='rubric' && checkRubricsAlreadyPresent()">
             <span class="glyphicon glyphicon-plus-sign"></span>
             <span class="ajouter-libelle">Ajouter</span>
             <span class="caret"></span>
         </button>
-        <ul class="uib-dropdown-menu liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-            <li role="menuitem" data-ng-repeat="type in syllabusService.template[element.templateStructureId]">
+        <ul uib-dropdown-menu class="liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+        <li role="menuitem" data-ng-repeat="type in syllabusService.template[element.templateStructureId]">
                 <a href="#" data-ng-class="{ 'link-deactivated': (type.alreadyPresent===true) }" data-ng-click="!type.alreadyPresent && addElement(type)">{{ type.label | translate }}</a>
             </li>
         </ul>
