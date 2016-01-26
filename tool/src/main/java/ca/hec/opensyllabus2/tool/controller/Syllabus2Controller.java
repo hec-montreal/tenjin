@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.util.ResourceLoader;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,10 @@ import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement;
+
+import ca.hec.opensyllabus2.api.model.template.Template;
+import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
 
 /******************************************************************************
  * $Id: $
@@ -77,8 +82,7 @@ public class Syllabus2Controller {
 	}
 
 	@RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
-	public @ResponseBody Syllabus getSyllabus(
-			@PathVariable String courseId,
+	public @ResponseBody Syllabus getSyllabus(@PathVariable String courseId,
 			@RequestParam(value = "sectionId", required = false) String sectionId) throws NoSyllabusException {
 
 		Syllabus syllabus = null;
@@ -90,9 +94,7 @@ public class Syllabus2Controller {
 				syllabus = osyl2Service.getSyllabus(courseId, sectionId);
 			} else {
 				// We get the common syllabus of the specified sections
-				syllabus =
-						osyl2Service.getCommonSyllabus(courseId,
-								getParams(sectionId));
+				syllabus = osyl2Service.getCommonSyllabus(courseId, getParams(sectionId));
 			}
 		} else {
 			syllabus = osyl2Service.getShareableSyllabus(courseId);
@@ -106,7 +108,8 @@ public class Syllabus2Controller {
 	@RequestMapping(value = "/init", method = RequestMethod.GET)
 	public @ResponseBody Object loadSyllabus() throws NoSyllabusException {
 
-		Object syllabus = null;;
+		Object syllabus = null;
+		;
 		try {
 			syllabus = osyl2Service.loadSyllabus();
 		} catch (NoSiteException e) {
@@ -117,7 +120,7 @@ public class Syllabus2Controller {
 		return syllabus;
 	}
 
-	@RequestMapping(value="/{siteId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{siteId}", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSiteException {
 
 		return osyl2Service.createOrUpdateSyllabus(syllabus);
@@ -135,56 +138,111 @@ public class Syllabus2Controller {
 		return parameters.split(",");
 	}
 
+	private void recursiveAddElements(TemplateStructure root, AbstractSyllabusElement element, String locale, long idElement) {
+		
+		List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
+		for (int i = 0; i < root.getElements().size(); i++) {
+			
+			TemplateStructure templateStructure = root.getElements().get(i);
+			if (templateStructure.getMandatory() != null && templateStructure.getMandatory() == true) {
+				AbstractSyllabusElement el = null;
+				
+				
+				String type = templateStructure.getTemplateElement().getType().getTitle();
+				if ( type.equalsIgnoreCase("composite") ) {
+					el = new SyllabusCompositeElement();
+				} else if ( type.equalsIgnoreCase("rubric") ) {
+					el = new SyllabusRubricElement();
+				}
+	
+				if (el != null) {
+					el.setDisplayOrder(i);
+					el.setTitle(templateStructure.getTemplateElement().getLabels().get(locale));
+					el.setTemplateStructureId(templateStructure.getId());
+					long idEl = idElement*1000 - i;
+					el.setId(idEl);
+					
+					// recursivité sur les éléments enfants
+					recursiveAddElements(templateStructure, el, locale, idEl);
+					
+					elements.add(el);
+				}
+			}
+			
+		}
+		
+		element.setElements(elements);
+		
+	}
+	
+	private Syllabus initSyllabusFromTemplate(Template root, Syllabus syllabus, String locale) {
+
+		long level = -1;
+		
+		List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
+		for (int i = 0; i < root.getElements().size(); i++) {
+
+			TemplateStructure templateStructure = root.getElements().get(i);
+			if (templateStructure.getMandatory() != null && templateStructure.getMandatory() == true) {
+				AbstractSyllabusElement element = null;
+
+				String type = templateStructure.getTemplateElement().getType().getTitle();
+				if ( type.equalsIgnoreCase("composite") ) {
+					element = new SyllabusCompositeElement();
+				} else if ( type.equalsIgnoreCase("rubric") ) {
+					element = new SyllabusRubricElement();
+				}
+
+				if (element != null) {
+					element.setDisplayOrder(i);
+					element.setTitle(templateStructure.getTemplateElement().getLabels().get(locale));
+					element.setTemplateStructureId(templateStructure.getId());
+					long idElement = level*1000 - i;
+					element.setId(idElement);
+
+					// recursivité sur les éléments enfants
+					recursiveAddElements(templateStructure, element, locale, idElement);
+					
+					elements.add(element);
+				}
+				// add other types
+
+			}
+
+		}
+
+		syllabus.setElements(elements);
+
+		return syllabus;
+	}
+
 	@ExceptionHandler(NoSiteException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	public @ResponseBody Object handleNoSiteException(NoSiteException ex)
-	{
+	public @ResponseBody Object handleNoSiteException(NoSiteException ex) {
 		return "Specified site does not exist";
 	}
 
 	@ExceptionHandler(NoSyllabusException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public @ResponseBody Syllabus handleNoSyllabusException(NoSyllabusException ex)
-	{
+	public @ResponseBody Syllabus handleNoSyllabusException(NoSyllabusException ex) {
 		Syllabus syllabus = new Syllabus();
 		syllabus.setCourseTitle("Hardcoded template title");
 		syllabus.setTemplateId(1L);
 		syllabus.setLocale("fr_CA");
 		syllabus.setSiteId(ex.getSiteId());
-		List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
+		
+		//List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
 
-		//TODO: remove temp code (creates new syllabus without template)
-		for (int i = 0; i<5; i++) {
-			SyllabusCompositeElement e = new SyllabusCompositeElement();
-			e.setDisplayOrder(i);
+		// get bac template
+		try {
+			Template template = osyl2Service.getTemplate(1L);
 
-			switch (i) {
-			case 0:
-				e.setTitle("Présentation du cours");
-				e.setTemplateStructureId(1L);
-				break;
-			case 1:
-				e.setTitle("Coordonnées");
-				e.setTemplateStructureId(5L);
-				break;
-			case 2:
-				e.setTitle("Matériel pédagogique");
-				e.setTemplateStructureId(7L);
-				break;
-			case 3:
-				e.setTitle("Évaluations");
-				e.setTemplateStructureId(12L);
-				break;
-			case 4:
-				e.setTitle("Organisation du cours");
-				e.setTemplateStructureId(14L);
-				break;
-			}
-			// END hardcoded template
-			elements.add(e);
+			syllabus = initSyllabusFromTemplate(template, syllabus, syllabus.getLocale());
+
+		} catch (IdUnusedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-
-		syllabus.setElements(elements);
 
 		return syllabus;
 	}
