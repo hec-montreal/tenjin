@@ -57,5 +57,8 @@ public abstract class AbstractSyllabusElement {
 
     // force each subclass to return a type
     abstract public String getType();
+    
+    // 
+    public void setElements( List<AbstractSyllabusElement> elements ) {}
 }
 

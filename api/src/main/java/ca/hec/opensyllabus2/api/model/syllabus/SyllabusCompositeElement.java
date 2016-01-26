@@ -24,6 +24,10 @@ public class SyllabusCompositeElement extends AbstractSyllabusElement {
 
 	private List<AbstractSyllabusElement> elements;
 
+	public void setElements( List<AbstractSyllabusElement> elements ) {
+		this.elements = elements;
+	}
+	
 	public String getType() {
 		return TYPE;
 	}
