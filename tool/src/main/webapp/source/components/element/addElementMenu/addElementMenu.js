@@ -55,6 +55,7 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
 
                     var data = angular.copy(SyllabusService.syllabus);
                     var selectedItemId = TreeService.selectedItem.id;
+                    var emplacement = TreeService.selectedItem.$emplacement;
 
                     var result = SyllabusService.addRubricToSyllabus(data, $scope.element, element);
 
@@ -68,7 +69,8 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
                             AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_ELEMENT'));
                             SyllabusService.setSyllabus($data);
                             // refresh the reference of the selected item and refresh the right panel
-                            TreeService.setSelectedItemFromId(selectedItemId);
+                            // TreeService.setSelectedItemFromId(selectedItemId);
+                            TreeService.setSelectedItemFromEmplacement(emplacement);
 
                         }, function ($error){
                             // alert ajout ko

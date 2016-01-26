@@ -61,6 +61,7 @@
     	this.selectedItem = $item;
     };
     
+
     /**
      * Met à jour l'item sélectionné
      * Déselectionne le précédent item sélectionné
@@ -77,9 +78,20 @@
                 unselectTree(SyllabusService.getSyllabus());
             }
 
+            // niveau et position
+            var emplacement = {
+                'niveau' : 0,
+                'position' : 0
+            };
+            var tmpLevel = 0;
+            var tmpPosition = 0;
+            var selectedItem = getItemFromId(SyllabusService.getSyllabus(), $item.id, tmpLevel, tmpPosition ,emplacement);
+
+            this.selectedItem = $item;     
             $item.$selected = true;
-            this.selectedItem = $item;
-            
+            $item.$emplacement = emplacement; // mémorise l'emplacement de l'élément
+
+
             $timeout(function() {
                 
                 // anything you want can go here and will safely be run on the next digest.
@@ -95,21 +107,58 @@
     /**
      * Récupère l'élément correspondant à l'identifiant
      * @param {Object} $rootTree Racine de l'arbre à parcourir
-     * @param {Number} $id Identifiant de l'élément recherché
+     * @param {Number} $tmpLevel Niveau temporaire dans l'arbre parcouru
+     * @param {Number} $tmpPosition Position temporaire dans l'arbre parcouru
+     * @param {Object} $emplacement Emplacement final de l'élément recherché
      * @return {Object} Retourne l'item ou undefined si non trouvé
      */
-    var getItemFromId = function($rootTree, $id) {
+    var getItemFromEmplacement = function($rootTree, $tmpLevel, $tmpPosition, $emplacement) {
+        
         // on regarde tous les éléments hormis l'élément racine
-        if ($rootTree.id === $id && !$rootTree.siteId) {
+        if ($tmpLevel === $emplacement.niveau &&  $tmpPosition === $emplacement.position && !$rootTree.siteId) {
             return $rootTree;
         } else {
 
             if ($rootTree.elements) {
+                $tmpLevel++ ;
                 for (var i = 0; i < $rootTree.elements.length; i++){
-                    var resultat = getItemFromId($rootTree.elements[i], $id);
+                    $tmpPosition = i;
+                    var resultat = getItemFromEmplacement($rootTree.elements[i], $tmpLevel, $tmpPosition, $emplacement);
                     if (resultat) {
                         return resultat;
-                    }
+                    }     
+                }
+            }
+        }
+        return undefined;
+    };
+
+    /**
+     * Récupère l'élément correspondant à l'identifiant
+     * @param {Object} $rootTree Racine de l'arbre à parcourir
+     * @param {Number} $id Identifiant de l'élément recherché
+     * @param {Number} $tmpLevel Niveau temporaire dans l'arbre parcouru
+     * @param {Number} $tmpPosition Position temporaire dans l'arbre parcouru
+     * @param {Object} $emplacement Emplacement final de l'élément recherché
+     * @return {Object} Retourne l'item ou undefined si non trouvé
+     */
+    var getItemFromId = function($rootTree, $id, $tmpLevel, $tmpPosition, $emplacement) {
+        
+        // on regarde tous les éléments hormis l'élément racine
+        if ($rootTree.id === $id && !$rootTree.siteId) {
+            $emplacement.niveau = $tmpLevel;
+            $emplacement.position = $tmpPosition;
+            return $rootTree;
+        } else {
+
+            if ($rootTree.elements) {
+                $tmpLevel++ ;
+                for (var i = 0; i < $rootTree.elements.length; i++){
+                    $tmpPosition = i;
+                    var resultat = getItemFromId($rootTree.elements[i], $id, $tmpLevel, $tmpPosition, $emplacement);
+                    if (resultat) {
+                        return resultat;
+                    }     
                 }
             }
         }
@@ -121,13 +170,33 @@
      * @param {Number} $id Identifiant de l'élément
      */
     this.setSelectedItemFromId = function($id){
-        var selectedItem = getItemFromId(SyllabusService.getSyllabus(), $id);
+        var emplacement = {
+            'niveau' : 0,
+            'position' : 0
+        };
+        var tmpLevel = 0;
+        var tmpPosition = 0;
+        var selectedItem = getItemFromId(SyllabusService.getSyllabus(), $id, tmpLevel, tmpPosition, emplacement);
 
         this.selectedItem = selectedItem;
         this.selectedItem.$selected = true;
+        this.selectedItem.$emplacement = emplacement; // mémorise l'emplacement de l'élément
     };
 
+    /**
+     * Met à jour l'item sélectionné à partir de l'emplacement de l'élément
+     * @param {Number} $emplacement Emplacement de l'élément
+     */
+    this.setSelectedItemFromEmplacement = function($emplacement){
 
+        var tmpLevel = 0;
+        var tmpPosition = 0;
+        var selectedItem = getItemFromEmplacement(SyllabusService.getSyllabus(), tmpLevel, tmpPosition, $emplacement);
+
+        this.selectedItem = selectedItem;
+        this.selectedItem.$selected = true;
+        this.selectedItem.$emplacement = $emplacement;
+    };
 
     this.setViewedItem = function($item) {
         this.viewedItem = $item;

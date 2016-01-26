@@ -54,7 +54,7 @@
 </head>
 <body id="body" class="portletBody container-fluid body-syllabus" data-ng-controller="OpensyllabusCtrl" >
 
-	<div class="loader-container" data-ng-show="infos.working">
+	<div class="loader-container" data-ng-show="infos.working"> 
 		<div class="loader"></div>
 	</div>
 

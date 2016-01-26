@@ -10,7 +10,8 @@ opensyllabusApp.controller('DeleteModalCtrl',  [ '$scope', '$translate', '$uibMo
         // On fait une copie du syllabus courant auquel on attache l'élément en cours d'ajout 
         var data = angular.copy(SyllabusService.syllabus);
         
-        var selectedItemId = TreeService.selectedItem.id;
+        // var selectedItemId = TreeService.selectedItem.id;
+        var emplacement = TreeService.selectedItem.$emplacement;
 
         SyllabusService.deleteElementFromSyllabus(data, $scope.parent, $scope.element);
 
@@ -20,8 +21,8 @@ opensyllabusApp.controller('DeleteModalCtrl',  [ '$scope', '$translate', '$uibMo
             // alert ajout ok
             AlertService.display('success', $translate.instant('ALERT_SUCCESS_DELETE_ELEMENT'));
             SyllabusService.setSyllabus($data);
-            TreeService.setSelectedItemFromId(selectedItemId);
-
+            // TreeService.setSelectedItemFromId(selectedItemId);
+            TreeService.setSelectedItemFromEmplacement(emplacement);
         }, function ($error){
             // alert ajout ko
             AlertService.display('danger');
