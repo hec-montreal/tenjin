@@ -1,4 +1,4 @@
-﻿opensyllabusApp.service('SyllabusService', ['$rootScope', '$resource', '$http', function ($rootScope, $resource, $http){
+﻿opensyllabusApp.service('SyllabusService', ['$rootScope', '$resource', '$http', 'Modernizr', function ($rootScope, $resource, $http, Modernizr){
     'use strict';
 
     this.syllabus;
@@ -26,7 +26,9 @@
     ];    
     this.section = this.listeSections[0];
 
-    this.showMobileMenu = true;
+    this.showMobileMenu = false;
+
+
     this.navigation = {
         'level' : 1
     };

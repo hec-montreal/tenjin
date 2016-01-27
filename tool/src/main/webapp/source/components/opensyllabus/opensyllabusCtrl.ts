@@ -16,10 +16,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
     $scope.planLoaded = false;
     $scope.templateLoaded = false;
 
-        $scope.variables = variables;
-
-    $scope.infos.showMobileMenu = true;
-
+    $scope.variables = variables;
 
     // test taille de l'écran
     var query = Modernizr.mq('(max-width: 767px)');
@@ -27,6 +24,9 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
         // smartphone
         variables.device = "mobile";
         variables.mode = "lecture";
+        $scope.syllabusService.showMobileMenu = true;
+    } else {
+        $scope.syllabusService.showMobileMenu = false;
     }
 
     var localePromise = tmhDynamicLocale.set('fr');
