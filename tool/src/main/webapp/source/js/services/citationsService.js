@@ -4,7 +4,9 @@ opensyllabusApp.service('CitationsService', [ '$rootScope', '$resource', '$http'
 	var siteCitationsProviderUri = "../../../direct/citation/list";
 	
 	var load = function($citationListId){
-		return $resource(siteCitationsProviderUri + $citationListId + ".json").get();
+		return $resource(siteCitationsProviderUri + $citationListId + ".json").get( {
+			nocache:{}
+		});
 	};	
 
 	var loadCitationLists = function($rootTree, $resourceIds, $promises ){

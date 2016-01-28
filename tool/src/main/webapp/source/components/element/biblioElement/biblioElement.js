@@ -1,5 +1,5 @@
 
-opensyllabusApp.directive('biblioElement',['variables', 'ResourcesService', function (ResourcesService, variables){
+opensyllabusApp.directive('biblioElement',['variables', 'ResourcesService', function (variables, ResourcesService){
     'use strict';
 
     return {
@@ -9,12 +9,12 @@ opensyllabusApp.directive('biblioElement',['variables', 'ResourcesService', func
         restrict: 'A',
         templateUrl: 'element/biblioElement/biblioElement.html',
         controller: function ($scope) {
-            $scope.citation = ResourcesService.getResource($scope.element.attributes.resourceId);
-            $scope.element.title ="Citation";
             $scope.variables = variables;
         },
         link: function ($scope, $element) {
-            
+            $scope.citation = ResourcesService.getResource($scope.element.attributes.resourceId);
+            $scope.element.title ="Citation";
+           
         	$scope.dot = ".";
         	$scope.comma = ',';
         	$scope.openParenthesis = '(';
