@@ -1,7 +1,5 @@
 ﻿<div class="element video">
         
-    <div data-ng-if="variables.mode === 'edition'" data-buttons-element="element" class="buttons-elements"></div>
-
     <div class="video">
         <div class="row embed">
             <iframe height="220" data-ng-src="{{videoUrl}}" frameborder="0" allowfullscreen data-ng-if="isIframe" class="col-sm-3 col-xs-12"></iframe>  
@@ -10,7 +8,6 @@
         </div>
 
     </div> 
-
 
     <div class="infos">
         <span data-ng-class="{ 'picto-important' : ( element.attributes.videoImportant === 'true') }" title="Important"></span>

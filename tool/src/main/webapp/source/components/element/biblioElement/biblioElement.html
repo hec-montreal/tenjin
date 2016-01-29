@@ -1,7 +1,5 @@
 <div class="element biblio">
 	
-	<div data-ng-if="variables.mode === 'edition'" data-buttons-element="element" class="buttons-elements"></div>
-
 	<div data-ng-switch="citation.type">
 		<div data-ng-switch-when="article">
 			<span ng-repeat="author in citation.values.creator">
