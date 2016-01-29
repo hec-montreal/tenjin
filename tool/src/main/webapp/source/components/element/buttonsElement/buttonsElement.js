@@ -1,23 +1,17 @@
 ﻿
-opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'ModalService', 'SyllabusService', function ($anchorScroll, $location, ModalService, SyllabusService){
-    'use strict';
+opensyllabusApp.directive('buttonsElement', ['ModalService', 'SyllabusService', function (ModalService, SyllabusService){
+  'use strict';
 
     return {
-        scope: {
-            element: '=buttonsElement',
-            noedit: '='
-        },
-        restrict: 'A',
+        scope: {},
+        restrict: 'E', 
         templateUrl: 'element/buttonsElement/buttonsElement.html',
-        controller: function ($scope) {
+        controller: function () {
 
-            $scope.syllabusService = SyllabusService;
+            this.syllabusService = SyllabusService;
 
-            $scope.confirmDelete = function($element) {
-                // scroll to the top
-                // $location.hash('body');
-                // $anchorScroll();
-                // window.scrollTo(0,0);
+            this.confirmDelete = function($element) {
+
                 var parent = SyllabusService.getParent($element);
                 // Création modale
                 var modal = ModalService.confirmDelete(parent, $element);
@@ -29,7 +23,7 @@ opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'Moda
                 });
             };
 
-            $scope.edit = function($element) {
+            this.edit = function($element) {
 
                 var parent = SyllabusService.getParent($element);
                 // Création modale
@@ -45,11 +39,12 @@ opensyllabusApp.directive('buttonsElement', ['$anchorScroll', '$location', 'Moda
 
 
         },
-        link: function ($scope, $element) {
-
-        }
+        bindToController: {
+            element: '=',
+            noedit: '='
+        },
+        controllerAs: 'buttonsElementCtrl'
 
     };
 
 }]);
-

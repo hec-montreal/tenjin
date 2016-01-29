@@ -42,6 +42,7 @@
 	<link rel="stylesheet" href="/opensyllabus2-tool/css/opensyllabus.css"/>
 	<link rel="stylesheet" href="/opensyllabus2-tool/lib/angular-ui-tree/angular-ui-tree.min.css">
 
+
 	<!--<script src="/opensyllabus2-tool/lib/jquery/jquery-2.1.3.min.js"></script> -->
 
 	<!-- include sakai scripts (for resizing frame, etc). includes ckeditor -->
@@ -151,10 +152,27 @@
 
 	<script src="/opensyllabus2-tool/js/opensyllabus.js"></script>
 
+
+	<!--<script>
+		System.config({
+			// we want to import modules without writing .js at the end
+			defaultJSExtensions: true,
+			// the app will need the following dependencies
+			map: {
+			  'angular2': 'node_modules/angular2',
+			  // 'rxjs': 'node_modules/rxjs'
+			}
+		});
+		// and to finish, let's boot the app!
+		System.import('/opensyllabus2-tool/js/opensyllabus');
+	</script>-->
+
+	<!--<script src="/opensyllabus2-tool/js/bootstrap.js"></script>-->
+
 	<script>
 		// Bootstrap application
 		// adapter.bootstrap(document.body, ['opensyllabus']);
-		angular.bootstrap(document.body, ['opensyllabus']);
+		// angular.bootstrap(document.body, ['opensyllabus']);
 	</script>
 
 </body>

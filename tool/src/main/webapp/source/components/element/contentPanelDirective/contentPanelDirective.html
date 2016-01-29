@@ -2,6 +2,10 @@
 <div class="tree-node tree-node-content">
 
     <div data-ng-switch="element.type">
+    
+        <!-- Affichage boutons -->
+        <buttons-element data-element="element" noedit="(element.type==='rubric')" class="buttons-elements"></buttons-element>
+
         <!-- élément de type composite --> 
         <div data-ng-switch-when="composite" data-regroupement-element="element"></div>
         <!-- élément de type lecture -->
@@ -14,7 +18,8 @@
         <div data-ng-switch-when="rubric" data-rubric-element="element"></div>
 
         <!-- élément de type texte -->
-        <div data-ng-switch-when="text" data-text-element="element"></div>
+        <text-element data-ng-switch-when="text" [element]="element" ></text-element>
+
         <!-- <div data-dyn-attr="data-text-element" data-element="element"></div> -->
         <!-- élément de type document -->
         <div data-ng-switch-when="document" data-document-element="element"></div>
@@ -47,7 +52,10 @@
 
         </div> 
 
+
     </div>
+
+
 
 <!--     <ol ui-tree-nodes="" data-ng-model="element.elements" data-ng-class="{hidden: collapsed, 'liste-element': true}" data-ng-if="element.type === 'composite' || element.type === 'rubric'" >
         <li data-ng-repeat="element in element.elements" ui-tree-node>

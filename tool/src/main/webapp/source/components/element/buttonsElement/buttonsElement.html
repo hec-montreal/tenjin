@@ -1,10 +1,10 @@
 ﻿<div class="buttons">
 
     <!-- Menu ajout -->
-    <span data-ng-if="element.type === 'rubric' || element.type === 'composite'" data-add-element-menu="element"  class="container-menu-ajout-rubric" ></span>
+    <span data-ng-if="buttonsElementCtrl.element.type === 'rubric' || buttonsElementCtrl.element.type === 'composite'" data-add-element-menu="buttonsElementCtrl.element"  class="container-menu-ajout-rubric" ></span>
     
-    <span class="picto-edit" data-ng-click="!syllabusService.working && edit(element);" data-ng-if="!(noedit)"></span>  
+    <span class="picto-edit" data-ng-click="!buttonsElementCtrl.syllabusService.working && buttonsElementCtrl.edit(buttonsElementCtrl.element);" data-ng-if="!(buttonsElementCtrl.noedit)"></span>   
     <span ui-tree-handle class="tree-node tree-node-content picto-move-content"></span>  
-    <span class="picto-delete" data-ng-click="!syllabusService.working && confirmDelete(element);"></span> 
+    <span class="picto-delete" data-ng-click="!buttonsElementCtrl.syllabusService.working && buttonsElementCtrl.confirmDelete(buttonsElementCtrl.element);"></span> 
 
 </div> 

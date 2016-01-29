@@ -10,7 +10,8 @@ var gulp         = require('gulp'),
     sourcemaps   = require('gulp-sourcemaps'),
     templateCache = require('gulp-angular-templatecache'),
     browserify    = require('gulp-browserify'),
-    ts            = require('gulp-typescript');
+    ts            = require('gulp-typescript'),
+    order         = require("gulp-order");
     // ts            = require('gulp-ts');
  
 
@@ -50,7 +51,9 @@ gulp.task('views', function() {
 //Ts task
 gulp.task('ts', function() {
     return gulp.src([ './source/js/**/*.ts', './source/components/**/*.ts'])
-    .pipe(ts())
+    .pipe(ts({
+      'experimentalDecorators' : true
+    }))
     .pipe(gulp.dest('./source/js/typescript'));
 });
 
@@ -61,16 +64,23 @@ gulp.task('ts', function() {
 //     .pipe(gulp.dest('out'));
 // });
 
-gulp.task('typescript', function() {
-  gulp.src('source.ts')
-    // .pipe(ts())
-    .pipe(gulp.dest('out'));
-});
+// gulp.task('typescript', function() {
+//   gulp.src('source.ts')
+//     // .pipe(ts())
+//     .pipe(gulp.dest('out'));
+// });
 
 //Js task
 gulp.task('js', ['viewscache'], function() {
-    return gulp.src([ './source/js/**/*.js', './source/components/**/*.js'])
-
+    // return gulp.src([ 'source/js/**/*.js', 'source/components/**/*.js'])
+    return gulp.src([ "source/js/app.js", "source/components/**/*.js", "source/js/*.js", "source/js/services/*.js", "source/js/typescript/element/**/*.js", "source/js/typescript/opensyllabus/*.js", "source/js/typescript/bootstrap.js"  ])
+    // .pipe(order([
+    //     "source/components/**/*.js",
+    //     "source/js/*.js",
+    //     "source/js/services/*.js",
+    //     "source/js/typescript/opensyllabus/*.js",
+    //     "source/js/typescript/bootstrap.js"
+    // ]))
     .pipe(concat('opensyllabus.js'))
     .pipe(browserify({
       insertGlobals : true
