@@ -282,7 +282,10 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		while (!searchQueue.isEmpty()) {
 			AbstractSyllabusElement element = searchQueue.remove();
 
-
+			// si l'élément n'a pas d'id ou si celui-ci est négatif, l'élément doit être sauvegardé
+			if ( element.getId() != null && element.getId() < 0) {
+				element.setId(null);
+			}
 			if (element.getId() == null) {
 				// create this element
 				saveOrUpdateSyllabusElement(element);
