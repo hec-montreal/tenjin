@@ -44,6 +44,8 @@ public abstract class AbstractSyllabusElement {
 
     private Integer displayOrder;
 
+    private Boolean hasDatesInterval;
+    
     private Date availabilityStartDate;
     private Date availabilityEndDate;
 

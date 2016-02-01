@@ -51,6 +51,10 @@
 			<column name="IMPORTANT" />
 		</property>
 
+		<property name="hasDatesInterval" type="boolean">
+			<column name="HAS_DATES_INTERVAL" />
+		</property>
+
 		<property name="availabilityStartDate" column="AVAILABILITY_START_DATE"
 			type="java.util.Date" />
 
