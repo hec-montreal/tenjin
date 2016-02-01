@@ -10,8 +10,7 @@ var gulp         = require('gulp'),
     sourcemaps   = require('gulp-sourcemaps'),
     templateCache = require('gulp-angular-templatecache'),
     browserify    = require('gulp-browserify'),
-    ts            = require('gulp-typescript'),
-    order         = require("gulp-order");
+    ts            = require('gulp-typescript');
     // ts            = require('gulp-ts');
  
 
