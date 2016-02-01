@@ -9,10 +9,6 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
         restrict: 'A',
         templateUrl: 'element/addElementMenu/addElementMenu.html',
         controller: function ($scope) {
-
-            // $scope.$on("templateLoaded", $scope.update);
-
-
         },
         link: function ($scope, $element) {
             $scope.showMenuAjouter = false;

@@ -54,6 +54,8 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
             // Date actuelle par défaut
             $scope.element.availabilityStartDate = Date.now();
             $scope.element.$formHasDates = true;
+
+            $scope.element.hasDatesInterval = $scope.element.hasDatesInterval || false;
         }
 
 

@@ -9,7 +9,6 @@ opensyllabusApp.directive('textElement', adapter.downgradeNg2Component(TextEleme
 // downgrade buttons element directive to angular 1 context
 // opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
 
-
 // const ButtonsElement = adapter.upgradeNg1Component('buttonsElement');
 
 // upgrade to angular 2 variables provider
@@ -25,5 +24,5 @@ adapter.upgradeNg1Provider('ModalService');
 // opensyllabusApp.directive('buttonsElements', adapter.upgradeNg1Component(TextElementComponent));
 
 
-adapter.bootstrap(document.body, ['opensyllabus'], 'SyllabusService');
+adapter.bootstrap(document.body, ['opensyllabus']);
 

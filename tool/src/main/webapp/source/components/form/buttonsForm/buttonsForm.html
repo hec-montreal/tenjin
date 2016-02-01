@@ -11,40 +11,52 @@
         <input type="checkbox" name="visibility" id="visibilityCheckbox" data-ng-model="element.visibility"/>
         <label for="visibilityCheckbox">{{ 'FORM_VISIBILITE' | translate }}</label> 
     </div>
-    <!-- Date d'affichage -->
-    <div class="date-debut">
-        <span class="libelle-date-debut">{{ 'FORM_DATE_AFFICHAGE_DEBUT' | translate }} : <span class="mandatory"></span> </span>
-        <!-- TODO : calendrier -->
-        <span class="container-date-debut">
 
-            <p class="input-group">
-                <input type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.availabilityStartDate" is-open="status.opened" today-text="{{ 'CALENDAR_TODAY' | translate }}" now-text="{{ 'CALENDAR_NOW' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" time-text="{{ 'CALENDAR_TIME' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" required/>
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" data-ng-click="open($event)">
-                        <i class="glyphicon glyphicon-calendar" ></i>
-                    </button>
-                </span>
-            </p>
-      
-        </span>
+    <div>
+        <input id="radioNoDate" type="radio" name="affichage" class="radio-date" data-ng-model="element.hasDatesInterval" data-ng-value="false" /> <label for="radioNoDate">{{ 'FORM_AFFICHAGE_DEFAUT' | translate  }}</label>
     </div>
-    <!-- Date de retrait -->
-    <div data-ng-init=>
-        <input type="checkbox" name="displayEnd" id="displayEndCheckbox" data-ng-model="element.hasEndDate"/>
-        <label for="displayEndCheckbox">{{ 'FORM_DATE_AFFICHAGE_FIN' | translate }} : </label> 
-        <!-- TODO : calendrier -->
-        <span class="container-date-debut">
-
-            <p class="input-group">
-                <input id="input-date-retrait" type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.availabilityEndDate" is-open="statusRetrait.opened" data-ng-disabled="!element.hasEndDate" required/>
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" data-ng-click="openRetrait($event)" data-ng-disabled="!element.hasEndDate">
-                        <i class="glyphicon glyphicon-calendar" ></i>
-                    </button>
-                </span>
-            </p>
-
-        </span>
+     
+    <div>
+        <input id="radioDates" type="radio" name="affichage" class="radio-date" data-ng-model="element.hasDatesInterval" data-ng-value="true" /> <label for="radioDates">{{ 'FORM_AFFICHAGE_INTERVALLE' | translate  }}</label>
     </div>
+
+    <div data-ng-show="(element.hasDatesInterval === true)" class="group-dates">
+        <!-- Date d'affichage -->
+        <div class="date-debut">
+            <span class="libelle-date-debut">{{ 'FORM_DATE_AFFICHAGE_DEBUT' | translate }} : <span class="mandatory"></span> </span>
+            <!-- TODO : calendrier -->
+            <span class="container-date-debut">
+
+                <p class="input-group">
+                    <input type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.availabilityStartDate" is-open="status.opened" today-text="{{ 'CALENDAR_TODAY' | translate }}" now-text="{{ 'CALENDAR_NOW' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" time-text="{{ 'CALENDAR_TIME' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" data-ng-click="open($event)">
+                            <i class="glyphicon glyphicon-calendar" ></i>
+                        </button>
+                    </span>
+                </p>
+          
+            </span>
+        </div>
+        <!-- Date de retrait -->
+        <div data-ng-init=>
+            <input type="checkbox" name="displayEnd" id="displayEndCheckbox" data-ng-model="element.hasEndDate"/>
+            <label for="displayEndCheckbox">{{ 'FORM_DATE_AFFICHAGE_FIN' | translate }} : </label> 
+            <!-- TODO : calendrier -->
+            <span class="container-date-debut">
+
+                <p class="input-group">
+                    <input id="input-date-retrait" type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.availabilityEndDate" is-open="statusRetrait.opened" data-ng-disabled="!element.hasEndDate" required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" data-ng-click="openRetrait($event)" data-ng-disabled="!element.hasEndDate">
+                            <i class="glyphicon glyphicon-calendar" ></i>
+                        </button>
+                    </span>
+                </p>
+
+            </span>
+        </div>
+    <div>
+
 
 </div>
