@@ -11,7 +11,6 @@ var gulp         = require('gulp'),
     templateCache = require('gulp-angular-templatecache'),
     browserify    = require('gulp-browserify'),
     ts            = require('gulp-typescript');
-    // ts            = require('gulp-ts');
  
 
 // Img task
@@ -56,30 +55,11 @@ gulp.task('ts', function() {
     .pipe(gulp.dest('./source/js/typescript'));
 });
 
-//Ts task
-// gulp.task('ts', function() {
-//     gulp.src('./source/components/opensyllabus/opensyllabusCtrl.ts')
-//     .pipe(ts())
-//     .pipe(gulp.dest('out'));
-// });
-
-// gulp.task('typescript', function() {
-//   gulp.src('source.ts')
-//     // .pipe(ts())
-//     .pipe(gulp.dest('out'));
-// });
 
 //Js task
 gulp.task('js', ['viewscache'], function() {
     // return gulp.src([ 'source/js/**/*.js', 'source/components/**/*.js'])
     return gulp.src([ "source/js/app.js", "source/components/**/*.js", "source/js/*.js", "source/js/services/*.js", "source/js/typescript/element/**/*.js", "source/js/typescript/opensyllabus/*.js", "source/js/typescript/bootstrap.js"  ])
-    // .pipe(order([
-    //     "source/components/**/*.js",
-    //     "source/js/*.js",
-    //     "source/js/services/*.js",
-    //     "source/js/typescript/opensyllabus/*.js",
-    //     "source/js/typescript/bootstrap.js"
-    // ]))
     .pipe(concat('opensyllabus.js'))
     .pipe(browserify({
       insertGlobals : true
@@ -89,7 +69,7 @@ gulp.task('js', ['viewscache'], function() {
 
 //Js deploy task
 gulp.task('jsdeploy', ['ts', 'viewscache'], function() {
-    return gulp.src([ './source/js/**/*.js', './source/components/**/*.js'])
+    return gulp.src([ "source/js/app.js", "source/components/**/*.js", "source/js/*.js", "source/js/services/*.js", "source/js/typescript/element/**/*.js", "source/js/typescript/opensyllabus/*.js", "source/js/typescript/bootstrap.js"  ])
 
     .pipe(concat('opensyllabus.js'))
     .pipe(browserify({
