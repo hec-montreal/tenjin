@@ -75,7 +75,7 @@ gulp.task('js', ['viewscache'],  function() {
 //Js deploy task
 gulp.task('jsdeploy', ['ts', 'viewscache'], function() {
     return gulp.src([ "source/js/app.js", "source/components/**/*.js", "source/js/*.js", "source/js/services/*.js", "source/js/typescript/element/**/*.js", "source/js/typescript/opensyllabus/*.js", "source/js/typescript/bootstrap.js"  ])
-
+    .pipe(embedTemplates())
     .pipe(concat('opensyllabus.js'))
     .pipe(browserify({
       insertGlobals : true
