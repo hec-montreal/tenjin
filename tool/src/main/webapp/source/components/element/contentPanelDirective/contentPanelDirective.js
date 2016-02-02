@@ -8,7 +8,7 @@ opensyllabusApp.directive('contentPanelDirective', ['$anchorScroll', '$location'
             index: '='
         },
         restrict: 'A',
-        templateUrl: 'element/contentPanelDirective/contentPanelDirective.html',
+        templateUrl: 'contentPanelDirective.html',
         controller: function ($scope) {
 
         },

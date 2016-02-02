@@ -42,7 +42,7 @@ opensyllabusApp.constant('config', {
         },
         'composite' : {
             'type': 'composite',
-            'label': ''
+            'label': 'TYPE_ELEMENT_COMPOSITE'
         },
         'rubric': {
             'type': 'rubric',

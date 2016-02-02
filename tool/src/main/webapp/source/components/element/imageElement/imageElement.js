@@ -7,7 +7,7 @@ opensyllabusApp.directive('imageElement', [ '$rootScope', '$location', 'Resource
             element: '=imageElement' 
         },
         restrict: 'A',
-        templateUrl: 'element/imageElement/imageElement.html',
+        templateUrl: 'imageElement.html',
         controller: function ($scope) {
             $scope.variables = variables;
 

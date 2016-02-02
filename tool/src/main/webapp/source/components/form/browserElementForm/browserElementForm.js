@@ -7,7 +7,7 @@ opensyllabusApp.directive('browserElementForm', ['ResourcesService', function (R
             type: '@'
         },
         restrict: 'A',
-        templateUrl: 'form/browserElementForm/browserElementForm.html',
+        templateUrl: 'browserElementForm.html',
         controller: function ($scope) {
             $scope.resources = ResourcesService.resources;
 

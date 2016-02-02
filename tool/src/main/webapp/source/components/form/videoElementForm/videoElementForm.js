@@ -4,10 +4,10 @@ opensyllabusApp.directive('videoElementForm', ['$sce', function ($sce){
 
     return {
         scope: {
-            element: '=videoElementForm' 
+            element: '=videoElementForm'
         },
         restrict: 'A',
-        templateUrl: 'form/videoElementForm/videoElementForm.html',
+        templateUrl: 'videoElementForm.html',
         controller: function ($scope) {
 
             var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';

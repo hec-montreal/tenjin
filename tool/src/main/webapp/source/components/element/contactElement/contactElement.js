@@ -7,7 +7,7 @@
         },
         // scope: true,
         restrict: 'A',
-        templateUrl: 'element/contactElement/contactElement.html',
+        templateUrl: 'contactElement.html',
         controller: function ($scope) {
             $scope.variables = variables;
         }        

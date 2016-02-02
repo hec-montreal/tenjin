@@ -8,7 +8,7 @@ opensyllabusApp.directive('evaluationElement', ['TreeService', 'variables', func
             index: '='
         },
         restrict: 'A',
-        templateUrl: 'element/evaluationElement/evaluationElement.html',
+        templateUrl: 'evaluationElement.html',
         controller: function ($scope) {
             $scope.variables = variables;
         },

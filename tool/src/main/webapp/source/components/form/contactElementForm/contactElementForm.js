@@ -7,7 +7,7 @@
         // },
         scope: true,
         restrict: 'A',
-        templateUrl: 'form/contactElementForm/contactElementForm.html', 
+        templateUrl: 'contactElementForm.html', 
         controller: function ($scope) {
             var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';
             // setup editor options

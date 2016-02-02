@@ -7,7 +7,7 @@ opensyllabusApp.directive('documentElement', ['ResourcesService', 'config' ,'$ro
             element: '=documentElement'
         },
         restrict: 'A',
-        templateUrl: 'element/documentElement/documentElement.html',
+        templateUrl: 'documentElement.html',
         controller: function ($scope) {
             $scope.variables = variables;
             // $rootScope.$on('RESOURCES_LOADED', this.displayResource);

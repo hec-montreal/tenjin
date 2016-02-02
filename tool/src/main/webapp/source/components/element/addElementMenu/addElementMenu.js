@@ -7,7 +7,7 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
             element: '=addElementMenu'
         },
         restrict: 'A',
-        templateUrl: 'element/addElementMenu/addElementMenu.html',
+        templateUrl: 'addElementMenu.html',
         controller: function ($scope) {
         },
         link: function ($scope, $element) {

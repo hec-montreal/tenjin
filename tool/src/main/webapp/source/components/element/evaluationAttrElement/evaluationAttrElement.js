@@ -7,7 +7,7 @@ opensyllabusApp.directive('evaluationAttrElement', function (){
             element: '=evaluationAttrElement'
         },
         restrict: 'A',
-        templateUrl: 'element/evaluationAttrElement/evaluationAttrElement.html',
+        templateUrl: 'evaluationAttrElement.html',
         controller: function ($scope) {
 
         },

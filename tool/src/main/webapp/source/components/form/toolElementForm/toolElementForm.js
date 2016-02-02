@@ -7,7 +7,7 @@ opensyllabusApp.directive('toolElementForm', function (){
             element: '=toolElementForm'
         },
         restrict: 'A',
-        templateUrl: 'form/toolElementForm/toolElementForm.html',
+        templateUrl: 'toolElementForm.html',
         controller: function ($scope) {
 
         },

@@ -9,6 +9,7 @@ var gulp         = require('gulp'),
     config       = require('./config.json'),
     sourcemaps   = require('gulp-sourcemaps'),
     templateCache = require('gulp-angular-templatecache'),
+    embedTemplates = require('gulp-angular-embed-templates'),
     browserify    = require('gulp-browserify'),
     ts            = require('gulp-typescript');
  
@@ -33,22 +34,25 @@ gulp.task('jsp', function() {
 
 // Template cache task
 gulp.task('viewscache', function () {
-  return gulp.src('./source/components/**/*.html')
-    // .pipe(templateCache())
-    // .pipe(templateCache({ module: 'templateModule', standalone: true }))
+  return gulp.src(['./source/components/contentPanel/*.html', './source/components/leftMenu/*.html'])
     .pipe(templateCache({ module: 'templateModule' }))
     .pipe(gulp.dest('./source/js'));
 });
 
 // Views task
-gulp.task('views', function() {
-  return gulp.src('./source/components/**/*.html')
-  .pipe(gulp.dest('./dest/views'));
-});
+// gulp.task('views', function() {
+//   return gulp.src('./source/components/**/*.html')
+//   .pipe(gulp.dest('./dest/views'));
+// });
+
+// gulp.task('embed', function() {
+
+// });
 
 //Ts task
 gulp.task('ts', function() {
     return gulp.src([ './source/js/**/*.ts', './source/components/**/*.ts'])
+    .pipe(embedTemplates())
     .pipe(ts({
       'experimentalDecorators' : true
     }))
@@ -57,9 +61,10 @@ gulp.task('ts', function() {
 
 
 //Js task
-gulp.task('js', ['viewscache'], function() {
+gulp.task('js', ['viewscache'],  function() {
     // return gulp.src([ 'source/js/**/*.js', 'source/components/**/*.js'])
     return gulp.src([ "source/js/app.js", "source/components/**/*.js", "source/js/*.js", "source/js/services/*.js", "source/js/typescript/element/**/*.js", "source/js/typescript/opensyllabus/*.js", "source/js/typescript/bootstrap.js"  ])
+    .pipe(embedTemplates())
     .pipe(concat('opensyllabus.js'))
     .pipe(browserify({
       insertGlobals : true

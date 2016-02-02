@@ -109,14 +109,14 @@
 		</div>
 		<div class="row row-content">
 			<!-- Menu de gauche -->
-			<div data-ng-if="variables.device !== 'mobile'" data-ng-include="'leftMenu/leftMenu.html'"   class="col-sm-3 pull-left left-menu" id="menu" ></div>
+			<div data-ng-if="variables.device !== 'mobile'" data-ng-include="'leftMenu.html'"   class="col-sm-3 pull-left left-menu" id="menu" ></div>
 			
 			<!-- Container de droite -->
-			<div data-ng-include="'contentPanel/contentPanel.html'" class="col-sm-9 col-xs-12 pull-left  content-panel" id="content"></div>
+			<div data-ng-include="'contentPanel.html'" class="col-sm-9 col-xs-12 pull-left  content-panel" id="content"></div>
 
 			<!-- Modales templates -->
-			<div data-ng-include="'deleteModal/confirmModalTemplate.html'"></div>
-			<div data-ng-include="'createModal/createElementTemplate.html'"></div> 
+			<!-- <div data-ng-include="'confirmModalTemplate.html'"></div> -->
+			<!-- <div data-ng-include="'createElementTemplate.html'"></div>  -->
 		</div>
 	</div>
 

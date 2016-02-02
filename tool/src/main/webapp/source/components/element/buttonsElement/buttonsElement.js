@@ -4,8 +4,8 @@ opensyllabusApp.directive('buttonsElement', ['ModalService', 'SyllabusService', 
 
     return {
         scope: {},
-        restrict: 'E', 
-        templateUrl: 'element/buttonsElement/buttonsElement.html',
+        restrict: 'E',
+        templateUrl: 'buttonsElement.html',
         controller: function () {
 
             this.syllabusService = SyllabusService;

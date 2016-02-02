@@ -1,0 +1,53 @@
+
+<form data-ng-submit="ok()"> 
+
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}} "{{ type.label }}"</h3>
+
+    </div>
+
+    <div class="modal-body"> 
+
+        <div class="errors">
+            <ul>
+                <li data-ng-show="errors.isErrorDateDebut">{{ 'ERROR_FORMAT_DATE_DEBUT' | translate}}</li>
+                <li data-ng-show="errors.isErrorDateRetrait">{{ 'ERROR_FORMAT_DATE_RETRAIT' | translate}}</li>
+                <li data-ng-show="errors.isErrorRessource">{{ 'ERROR_RESSOURCE' | translate}}</li>
+            </ul>
+        </div>
+
+        <div data-ng-switch="type.type">
+             <!-- élément de type texte -->
+            <div data-ng-switch-when="text" data-text-element-form="element"></div>
+            <!-- <div data-dyn-attr="data-text-element" data-element="element"></div> -->
+            <!-- élément de type document -->
+            <div data-ng-switch-when="document" data-document-element-form="element"></div>
+            <!-- élément de type citation -->
+            <div data-ng-switch-when="citation" data-biblio-element-form="element"></div>
+            <!-- élément de type hyperlien -->
+            <div data-ng-switch-when="url" data-hyperlink-element-form="element"></div>
+            <!-- élément de type image -->
+            <div data-ng-switch-when="image" data-image-element-form="element"></div>
+              <!-- élément de type video -->
+            <div data-ng-switch-when="video" data-video-element-form="element"></div>
+            <!-- élément de type contactInfo -->
+            <div data-ng-switch-when="contact_info" data-contact-element-form="element"></div>
+            <!-- regroupement de type composite -->
+            <div data-ng-switch-when="composite" data-regroupement-element-form="element"></div>
+			<!-- élément de type évaluation-->
+            <div data-ng-switch-when="evaluation" data-evaluation-element-form="element"></div>
+			<!-- élément de type examen-->
+            <div data-ng-switch-when="examen" data-evaluation-element-form="element"></div>
+            <!-- élément de type cours -->
+            <div data-ng-switch-when="lecture" data-cours-element-form="element"></div>
+            <!-- élément de type tp -->
+            <div data-ng-switch-when="tutorial" data-cours-element-form="element"></div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <input class="btn btn-primary" type="submit" value="OK"/> 
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
+    </div> 
+    
+</form>

@@ -7,7 +7,7 @@ opensyllabusApp.directive('toolElement', ['variables', function (variables){
             element: '=toolElement'
         },
         restrict: 'A',
-        templateUrl: 'element/toolElement/toolElement.html',
+        templateUrl: 'toolElement.html',
         controller: function ($scope) {
             $scope.variables = variables; 
         },

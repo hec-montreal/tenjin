@@ -7,7 +7,7 @@ opensyllabusApp.directive('biblioElementForm', ['config', '$translate' ,  functi
             element: '=biblioElementForm'
         },
         restrict: 'A',
-        templateUrl: 'form/biblioElementForm/biblioElementForm.html',
+        templateUrl: 'biblioElementForm.html',
         controller: function ($scope) {
 
             // setup editor options

@@ -7,7 +7,7 @@ opensyllabusApp.directive('videoElement', ['$sce', 'variables', function ($sce, 
             element: '=videoElement' 
         },
         restrict: 'A',
-        templateUrl: 'element/videoElement/videoElement.html',
+        templateUrl: 'videoElement.html',
         controller: function ($scope) {
 
         },
