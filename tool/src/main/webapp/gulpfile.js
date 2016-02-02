@@ -52,7 +52,7 @@ gulp.task('viewscache', function () {
 //Ts task
 gulp.task('ts', function() {
     return gulp.src([ './source/js/**/*.ts', './source/components/**/*.ts'])
-    .pipe(embedTemplates())
+    // .pipe(embedTemplates())
     .pipe(ts({
       'experimentalDecorators' : true
     }))
