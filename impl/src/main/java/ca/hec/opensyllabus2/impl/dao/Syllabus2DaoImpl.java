@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ca.hec.opensyllabus2.api.dao.*;
@@ -92,11 +93,13 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	}
 
 	public AbstractSyllabusElement saveOrUpdateSyllabusElement(AbstractSyllabusElement element) {
-		log.debug("Save or update syllabus element : " + element.getId());
+		log.debug("Create or update syllabus element : " + element.getId());
+
 		try {
 			getHibernateTemplate().saveOrUpdate(element);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (DuplicateKeyException e) {
+			// object already loaded in the session, merge them
+			getHibernateTemplate().merge(element);
 		}
 
 		return element;

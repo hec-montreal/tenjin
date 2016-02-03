@@ -5,20 +5,33 @@
 	<!-- import the hibernate related beans -->
 	<import resource="spring-hibernate.xml" />
 
- 	<bean id="ca.hec.opensyllabus2.api.Syllabus2Service"
-    	class="ca.hec.opensyllabus2.impl.Syllabus2ServiceImpl"
-        init-method="init">
-        <!-- API injection -->
-        <property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
-        <property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
-         <property name="chs" ref="org.sakaiproject.content.api.ContentHostingService" />
-        <property name="toolManager" ref="org.sakaiproject.tool.api.ToolManager" />
-        <property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService" />
-		<property name="eventTrackingService" ref="org.sakaiproject.event.api.EventTrackingService" />
-		<property name="serverConfigurationService" ref="org.sakaiproject.component.api.ServerConfigurationService" />
-		<property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
-		<property name="syllabusDao" ref="ca.hec.opensyllabus2.api.dao.Syllabus2Dao" />
- 		<property name="templateDao" ref="ca.hec.opensyllabus2.api.dao.TemplateDao" />
+	<bean id="ca.hec.opensyllabus2.api.Syllabus2Service"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+
+		<property name="transactionManager"
+			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
+		<property name="target">
+			<bean class="ca.hec.opensyllabus2.impl.Syllabus2ServiceImpl">
+				<!-- API injection -->
+				<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
+				<property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
+				<property name="chs" ref="org.sakaiproject.content.api.ContentHostingService" />
+				<property name="toolManager" ref="org.sakaiproject.tool.api.ToolManager" />
+				<property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService" />
+				<property name="eventTrackingService" ref="org.sakaiproject.event.api.EventTrackingService" />
+				<property name="serverConfigurationService" ref="org.sakaiproject.component.api.ServerConfigurationService" />
+				<property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
+				<property name="syllabusDao" ref="ca.hec.opensyllabus2.api.dao.Syllabus2Dao" />
+		 		<property name="templateDao" ref="ca.hec.opensyllabus2.api.dao.TemplateDao" />
+			</bean>
+
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="createOrUpdateSyllabus">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+
 	</bean>
 
 	<bean id="ca.hec.opensyllabus2.api.Syllabus2SecurityService"

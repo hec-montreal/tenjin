@@ -60,7 +60,24 @@ public abstract class AbstractSyllabusElement {
     // force each subclass to return a type
     abstract public String getType();
     
-    // 
-    public void setElements( List<AbstractSyllabusElement> elements ) {}
+    public void copy(AbstractSyllabusElement e) {
+    	this.setParentId(e.getParentId());
+    	this.setTemplateStructureId(e.getTemplateStructureId());
+    	this.setSyllabusId(e.getSyllabusId());
+    	this.setTitle(e.getTitle());
+    	this.setDescription(e.getDescription());
+    	this.setPublicElement(e.getPublicElement());
+    	this.setShareable(e.getShareable());
+    	this.setImportant(e.getImportant());
+    	this.setDisplayOrder(e.getDisplayOrder());
+    	this.setAvailabilityStartDate(e.getAvailabilityStartDate());
+    	this.setAvailabilityEndDate(e.getAvailabilityEndDate());
+    	this.setCreatedDate(e.getCreatedDate());
+    	this.setCreatedBy(e.getCreatedBy());
+    	this.setLastModifiedDate(e.getLastModifiedDate());
+    	this.setLastModifiedBy(e.getLastModifiedBy());
+    	this.setSections(e.getSections());
+    	this.setAttributes(e.getAttributes());
+    }
 }
 

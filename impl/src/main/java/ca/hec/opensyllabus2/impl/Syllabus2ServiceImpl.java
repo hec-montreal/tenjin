@@ -21,7 +21,6 @@ import org.sakaiproject.tool.api.Placement;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.UserDirectoryService;
-import org.springframework.transaction.annotation.Transactional;
 
 import ca.hec.opensyllabus2.api.Syllabus2Service;
 import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
@@ -252,8 +251,6 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return siteRef;
 	}
 
-	// TODO: make this one hibernate transaction? see http://docs.spring.io/spring/docs/current/spring-framework-reference/html/orm.html#orm-hibernate
-	//@Transactional
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException {
 		Date now = new Date();
 
@@ -266,13 +263,15 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 		if (syllabus.getId() == null) {
 			syllabus.setCreatedDate(now);
+			syllabus.setCreatedBy(getCurrentUserDisplayName());
 			syllabus.setLastModifiedDate(now);
+			syllabus.setLastModifiedBy(getCurrentUserDisplayName());
 			syllabusDao.createOrUpdateSyllabus(syllabus);
 		} else {
 			existingSyllabusElements = getExistingSyllabusElementMap(syllabus.getId());
 		}
 
-		// add top-level elements to the search queue
+		// add top-level elements to the search queue (breadth-first traversal)
 		Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
 		for (AbstractSyllabusElement element : syllabus.getElements()) {
 			element.setSyllabusId(syllabus.getId());
@@ -288,16 +287,27 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			}
 			if (element.getId() == null) {
 				// create this element
-				saveOrUpdateSyllabusElement(element);
-			} else if (existingSyllabusElements != null && !existingSyllabusElements.isEmpty()){
+				element.setCreatedBy(getCurrentUserDisplayName());
+				element.setCreatedDate(now);
+				element.setLastModifiedBy(getCurrentUserDisplayName());
+				element.setLastModifiedDate(now);
+				syllabusDao.saveOrUpdateSyllabusElement(element);
 
-				//compare element from front-end to what is in the database
-				if (!element.equals(existingSyllabusElements.get(element.getId()))) {
-					saveOrUpdateSyllabusElement(element);
+			} else if (existingSyllabusElements != null && !existingSyllabusElements.isEmpty()) {
+
+				//compare element from the new syllabus to what is in the database
+				AbstractSyllabusElement existingElement = existingSyllabusElements.get(element.getId());
+				
+				if (!element.equals(existingElement)) {
+
+					//update persistent object,  save handled by hibernate at end of transaction
+					existingElement.copy(element);
+					existingElement.setLastModifiedBy(getCurrentUserDisplayName());
+					existingElement.setLastModifiedDate(now);
 				}
 
 				// Remove this element from the map.
-				// Remaining elements will be deleted
+				// Remaining elements at the end will be deleted
 				existingSyllabusElements.remove(element.getId());
 			}
 
@@ -325,23 +335,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			}
 		}
 
-		try {
-			return getShareableSyllabus(syllabus.getSiteId());
-		} catch (Exception e) {}
-
-		//TODO: change this!
-		return new Syllabus();
-	}
-
-	private void saveOrUpdateSyllabusElement(AbstractSyllabusElement element) {
-		Date now = new Date();
-		if (element.getId() == null) {
-			element.setCreatedBy(getCurrentUserDisplayName());
-			element.setCreatedDate(now);
-		}
-		element.setLastModifiedBy(getCurrentUserDisplayName());
-		element.setLastModifiedDate(now);
-		syllabusDao.saveOrUpdateSyllabusElement(element);
+		return syllabus;
 	}
 
 	private Map<Long, AbstractSyllabusElement> getExistingSyllabusElementMap(

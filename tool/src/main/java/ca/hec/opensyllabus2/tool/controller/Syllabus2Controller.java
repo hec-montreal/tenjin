@@ -109,7 +109,7 @@ public class Syllabus2Controller {
 	public @ResponseBody Object loadSyllabus() throws NoSyllabusException {
 
 		Object syllabus = null;
-		;
+		
 		try {
 			syllabus = osyl2Service.loadSyllabus();
 		} catch (NoSiteException e) {
@@ -171,7 +171,9 @@ public class Syllabus2Controller {
 			
 		}
 		
-		element.setElements(elements);
+		if (!elements.isEmpty() && element instanceof SyllabusCompositeElement) {
+			((SyllabusCompositeElement)element).setElements(elements);
+		}
 		
 	}
 	
