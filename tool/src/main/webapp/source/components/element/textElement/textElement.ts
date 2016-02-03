@@ -3,7 +3,7 @@
 
 @Component({
     selector: 'text-element',
-    templateUrl: 'textElement.html',
+    templateUrl: '../../../../components/element/textElement/textElement.html',
 })
 
 export class TextElementComponent {
