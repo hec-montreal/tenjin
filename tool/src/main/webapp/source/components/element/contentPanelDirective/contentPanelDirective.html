@@ -4,7 +4,7 @@
     <div data-ng-switch="element.type">
     
         <!-- Affichage boutons -->
-        <buttons-element  data-element="element" data-noedit="(element.type==='rubric')" class="buttons-elements"></buttons-element>
+        <buttons-element data-ng-if="variables.mode === 'edition'" data-element="element" data-noedit="(element.type==='rubric')" class="buttons-elements"></buttons-element>
 
         <!-- élément de type composite --> 
         <div data-ng-switch-when="composite" data-regroupement-element="element"></div>

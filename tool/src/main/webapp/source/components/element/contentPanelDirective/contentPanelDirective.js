@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('contentPanelDirective', ['$anchorScroll', '$location', '$compile', 'ModalService', 'SyllabusService', function ($anchorScroll, $location, $compile, ModalService, SyllabusService){
+opensyllabusApp.directive('contentPanelDirective', ['$anchorScroll', '$location', '$compile', 'ModalService', 'SyllabusService', 'variables', function ($anchorScroll, $location, $compile, ModalService, SyllabusService, variables){
     'use strict';
 
     return {
