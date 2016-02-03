@@ -228,7 +228,7 @@ public class Syllabus2Controller {
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public @ResponseBody Syllabus handleNoSyllabusException(NoSyllabusException ex) {
 		Syllabus syllabus = new Syllabus();
-		syllabus.setCourseTitle("Hardcoded template title");
+		syllabus.setCourseTitle("Default title");
 		syllabus.setTemplateId(1L);
 		syllabus.setLocale("fr_CA");
 		syllabus.setSiteId(ex.getSiteId());

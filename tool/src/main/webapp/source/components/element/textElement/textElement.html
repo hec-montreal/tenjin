@@ -1,6 +1,6 @@
 ﻿<div class="element">
 
     <div editable-text="element.type" class="titre-element" data-ng-if="element.title"> {{element.title }}</div>
-    <div ng-bind-html="element.description" class="comment"></div> 
+    <div [innerHtml]="element.description" class="comment"></div>
 
 </div>
