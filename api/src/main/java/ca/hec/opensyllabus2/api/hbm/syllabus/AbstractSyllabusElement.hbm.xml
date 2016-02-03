@@ -27,7 +27,7 @@
 			<column name="PARENT_ID" />
 		</property>
 
-		<property name="templateStructureId" type="long">
+		<property name="templateStructureId" not-null="true" type="long">
 			<column name="TEMPLATESTRUCTURE_ID" />
 		</property>
 
