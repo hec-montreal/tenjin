@@ -7,7 +7,7 @@ opensyllabusApp.directive('documentElementForm', ['config', '$translate' ,  func
             element: '=documentElementForm'
         },
         restrict: 'A',
-        templateUrl: 'documentElementForm.html',
+        templateUrl: 'form/documentElementForm/documentElementForm.html',
         controller: function ($scope) {
 
             // setup editor options

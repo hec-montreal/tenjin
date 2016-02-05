@@ -7,7 +7,7 @@ opensyllabusApp.directive('hyperlinkElementForm', function (){
             element: '=hyperlinkElementForm'
         },
         restrict: 'A',
-        templateUrl: 'hyperlinkElementForm.html',
+        templateUrl: 'form/hyperlinkElementForm/hyperlinkElementForm.html',
         controller: function ($scope) {
 
             var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';

@@ -7,7 +7,7 @@ opensyllabusApp.directive('regroupementElement', ['TreeService', 'variables', fu
             element: '=regroupementElement'
         },
         restrict: 'A',
-        templateUrl: 'regroupementElement.html',
+        templateUrl: 'element/regroupementElement/regroupementElement.html',
         controller: function ($scope) {
             $scope.variables = variables; 
         },

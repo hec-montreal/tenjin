@@ -7,7 +7,7 @@ opensyllabusApp.directive('coursElementForm', function (){
             element: '=coursElementForm'
         },
         restrict: 'A',
-        templateUrl: 'coursElementForm.html',
+        templateUrl: 'form/coursElementForm/coursElementForm.html',
         controller: function ($scope) {
 
         },

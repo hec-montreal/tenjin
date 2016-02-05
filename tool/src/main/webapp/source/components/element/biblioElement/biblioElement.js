@@ -7,7 +7,7 @@ opensyllabusApp.directive('biblioElement',['variables', 'ResourcesService', func
             element: '=biblioElement'
         },
         restrict: 'A',
-        templateUrl: 'biblioElement.html',
+        templateUrl: 'element/biblioElement/biblioElement.html',
         controller: function ($scope) {
             $scope.variables = variables;
         },

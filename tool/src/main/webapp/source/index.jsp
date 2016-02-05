@@ -7,36 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>OpenSyllabus 2</title>
-	<style>
-		.loader-container {
-		    position: fixed;
-		    width: 100%;
-		    height: 1500px;
-		    background-color: #fff;
-		    z-index: 100;
-		}
-		.loader-container .loader {
-	        background: url('/opensyllabus2-tool/img/desktop/loader.gif') no-repeat;
-	        width: 160px;
-	        height: 160px;
-	        margin-left: 30%;
-	        margin-top: 250px;
-	    }
 
-	    @media (max-width: 767px) {
-	    	
-	        .loader-container .loader {
-                background: url('/opensyllabus2-tool/img/desktop/loader.gif') no-repeat;
-                width: 160px;
-                height: 160px;
-                margin-right: auto;
-                margin-left: auto;
-                margin-top: 200px;
-	        }
-
-	    }
-
-	</style>
 	<link rel="stylesheet" href="/opensyllabus2-tool/lib/bootstrap/css/bootstrap.css"/>
 
 	<link rel="stylesheet" href="/opensyllabus2-tool/css/opensyllabus.css"/>
@@ -109,10 +80,10 @@
 		</div>
 		<div class="row row-content">
 			<!-- Menu de gauche -->
-			<div data-ng-if="variables.device !== 'mobile'" data-ng-include="'leftMenu.html'"   class="col-sm-3 pull-left left-menu" id="menu" ></div>
+			<div data-ng-if="variables.device !== 'mobile'" data-ng-include="'leftMenu/leftMenu.html'"   class="col-sm-3 pull-left left-menu" id="menu" ></div>
 			
 			<!-- Container de droite -->
-			<div data-ng-include="'contentPanel.html'" class="col-sm-9 col-xs-12 pull-left  content-panel" id="content"></div>
+			<div data-ng-include="'contentPanel/contentPanel.html'" class="col-sm-9 col-xs-12 pull-left  content-panel" id="content"></div>
 
 			<!-- Modales templates -->
 			<!-- <div data-ng-include="'confirmModalTemplate.html'"></div> -->
@@ -140,8 +111,9 @@
 	<script src="/opensyllabus2-tool/lib/angular-translate/angular-translate.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/ng-ckeditor-master/ng-ckeditor.js"></script>
 	<script src="/opensyllabus2-tool/lib/bootstrap-ui-datetime-picker-master/dist/datetime-picker.min.js"></script>
-	<script src="/opensyllabus2-tool/lib/ng-file-upload-master/dist/ng-file-upload.min.js"></script> 
+	<!-- <script src="/opensyllabus2-tool/lib/ng-file-upload-master/dist/ng-file-upload.min.js"></script> --> 
 	<script src="/opensyllabus2-tool/lib/modernizr/modernizr-custom.js"></script> 
+
 
 <!-- 	// <script src="/opensyllabus2-tool/js/controllers/opensyllabus/opensyllabus.js"></script>
 	// <script src="/opensyllabus2-tool/js/controllers/leftMenu/leftMenuCtrl.js"></script>

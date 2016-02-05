@@ -7,7 +7,7 @@ opensyllabusApp.directive('regroupementElementForm', function (){
             element: '=regroupementElementForm'
         },
         restrict: 'A',
-        templateUrl: 'regroupementElementForm.html',
+        templateUrl: 'form/regroupementElementForm/regroupementElementForm.html',
         controller: function ($scope) {
 
             var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';

@@ -6,7 +6,7 @@ opensyllabusApp.directive('mobileMenu', ['$timeout', 'TreeService', 'SyllabusSer
         scope: {
         },
         restrict: 'E',
-        templateUrl: 'mobileMenu.html',
+        templateUrl: 'mobileMenu/mobileMenu.html',
         controller: function () {
             this.syllabusService = SyllabusService;
             this.treeService = TreeService;

@@ -11,7 +11,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
 
         var modalInstance = $uibModal.open({
           animation: true,
-          templateUrl: '../../components/deleteModal/deleteModalContent.html',
+          templateUrl: 'deleteModal/deleteModalContent.html',
           controller: 'DeleteModalCtrl',
           size: '',
           resolve: {
@@ -37,7 +37,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
 
         var modalInstance = $uibModal.open({
           animation: true,
-          templateUrl: '../../components/createModal/createElementModal.html',
+          templateUrl: 'createModal/createElementModal.html',
           controller: 'CreateModalCtrl',
           size: '',
           resolve: {
@@ -65,7 +65,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
 
         var modalInstance = $uibModal.open({
           animation: true,
-          templateUrl: '../../components/createModal/createElementModal.html',
+          templateUrl: 'createModal/createElementModal.html',
           controller: 'CreateModalCtrl',
           size: '',
           resolve: {

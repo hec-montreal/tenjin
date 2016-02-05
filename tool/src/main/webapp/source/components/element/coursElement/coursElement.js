@@ -7,7 +7,7 @@ opensyllabusApp.directive('coursElement', ['TreeService', 'variables', function 
             element: '=coursElement'
         },
         restrict: 'A',
-        templateUrl: 'coursElement.html',
+        templateUrl: 'element/coursElement/coursElement.html',
         controller: function ($scope) {
             $scope.variables = variables;
         },

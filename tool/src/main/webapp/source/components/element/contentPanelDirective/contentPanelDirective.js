@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('contentPanelDirective', ['$anchorScroll', '$location', '$compile', 'ModalService', 'SyllabusService', 'variables', function ($anchorScroll, $location, $compile, ModalService, SyllabusService, variables){
+opensyllabusApp.directive('contentPanelDirective', ['variables', function (variables){
     'use strict';
 
     return {
@@ -8,9 +8,9 @@ opensyllabusApp.directive('contentPanelDirective', ['$anchorScroll', '$location'
             index: '='
         },
         restrict: 'A',
-        templateUrl: 'contentPanelDirective.html',
+        templateUrl: 'element/contentPanelDirective/contentPanelDirective.html',
         controller: function ($scope) {
-
+            $scope.variables = variables;
         },
         link: function ($scope, $element) {
         }

@@ -7,7 +7,7 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
             element: '=evaluationElementForm'
         },
         restrict: 'A',
-        templateUrl: 'evaluationElementForm.html',
+        templateUrl: 'form/evaluationElementForm/evaluationElementForm.html',
         controller: function ($scope) {
             $scope.formats = ['dd-MMMM-yyyy HH:mm']; 
             $scope.format = $scope.formats[0];

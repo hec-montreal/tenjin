@@ -7,7 +7,7 @@ opensyllabusApp.directive('rubricElement', ['variables', function (variables){
             element: '=rubricElement'
         },
         restrict: 'A',
-        templateUrl: 'rubricElement.html',
+        templateUrl: 'element/rubricElement/rubricElement.html',
         controller: function ($scope) {
             $scope.variables = variables;
         },

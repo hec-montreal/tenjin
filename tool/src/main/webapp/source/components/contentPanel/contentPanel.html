@@ -3,7 +3,8 @@
 
     <!-- Menu ajout -->
     <div data-ng-if="variables.mode === 'edition'">
-        <div id="menu-ajout" data-add-element-menu="treeService.selectedItem"  class="container-menu-ajout"></div> 
+        <!-- <div id="menu-ajout" data-add-element-menu="treeService.selectedItem"  class="container-menu-ajout"></div>  -->
+        <add-element-menu id="menu-ajout" [element]="treeService.selectedItem"  class="container-menu-ajout"></div> 
     </div>
 
     <!-- Titre -->
