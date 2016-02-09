@@ -15,7 +15,6 @@
     "gulp-sass": "^2.0.4",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-typescript": "^2.10.0",
-    "ng2-bootstrap": "^0.53.0",
     "gulp-util": "^3.0.6",
     "modernizr": "^3.3.1"
   },
