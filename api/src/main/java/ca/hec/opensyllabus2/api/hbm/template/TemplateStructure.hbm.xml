@@ -14,7 +14,11 @@
         <property name="mandatory" type="boolean" not-null="true">
             <column name="MANDATORY" />
         </property>
-
+        
+        <property name="displayInMenu" type="boolean" not-null="true">
+            <column name="DISPLAY_IN_MENU" />
+        </property>
+        
         <property name="parentId"  type="long" column="PARENT_ID"/>
 
         <many-to-one name="templateElement" column="TEMPLATEELEMENT_ID"

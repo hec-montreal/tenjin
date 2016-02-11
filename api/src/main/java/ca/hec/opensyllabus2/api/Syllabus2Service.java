@@ -1,5 +1,6 @@
 package ca.hec.opensyllabus2.api;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -103,7 +104,7 @@ public interface Syllabus2Service {
 	 * @param templateId
 	 * @return
 	 */
-	public Map<String, List<Object>> getTemplateRules(Long templateId) throws IdUnusedException;
+	public HashMap<String, HashMap<String, Object>> getTemplateRules(Long templateId) throws IdUnusedException;
 
 	/**
 	 * Create a new syllabus or update the existing syllabus based on id

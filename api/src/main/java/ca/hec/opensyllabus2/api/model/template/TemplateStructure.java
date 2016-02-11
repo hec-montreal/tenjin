@@ -17,6 +17,7 @@ public class TemplateStructure {
 
     private Long id;
     private Boolean mandatory;
+    private Boolean displayInMenu;
     private TemplateElement templateElement;
     private List<TemplateStructure> elements;
     private Long parentId;

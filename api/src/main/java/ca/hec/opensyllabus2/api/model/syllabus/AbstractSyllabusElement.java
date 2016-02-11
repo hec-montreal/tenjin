@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
+
 /**
  *
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
@@ -42,6 +43,9 @@ public abstract class AbstractSyllabusElement {
     private Boolean shareable;
     private Boolean important;
 
+    private Boolean displayInMenu;
+    private Boolean mandatory;
+    
     private Integer displayOrder;
 
     private Boolean hasDatesInterval;
