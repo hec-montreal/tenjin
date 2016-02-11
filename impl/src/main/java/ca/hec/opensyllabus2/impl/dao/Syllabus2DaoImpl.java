@@ -35,6 +35,8 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	public List<AbstractSyllabusElement> getSyllabusElements(Long id) {
 		List<AbstractSyllabusElement> elements =
 				getHibernateTemplate().find("from AbstractSyllabusElement where syllabus_id = ? order by parent_id, display_order", id);
+		/*List<AbstractSyllabusElement> elements =
+				getHibernateTemplate().find("from AbstractSyllabusElement where syllabus_id = ?", id);*/
 
 		return elements;
 	}
@@ -154,8 +156,32 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
     				// should be safe to cast to composite, because another element specified it as a parent
     				parent = ((SyllabusCompositeElement)elementMap.get(currElement.getParentId()));
     			}
-
+    			
+//    			// Add child element sorted by display order
+//    			// if there are already elements then compare the display order to insert the new element at the good position
+//    			if ( parent.getElements().size() > 0) {
+//	    			int index = -1;
+//	    			for (int i = 0; i < parent.getElements().size(); i++) {
+//	    				AbstractSyllabusElement el = parent.getElements().get(i);
+//	    				if (el.getDisplayOrder() > currElement.getDisplayOrder()) {
+//	    					index = i;
+//	    					break;
+//	    				}
+//	    			}
+//	    			// insert the new element
+//	    			if (index != -1) {
+//	    				parent.getElements().add(index, currElement);
+//	    			} else {
+//	    			// append the element	
+//	    				parent.getElements().add(currElement);
+//	    			}
+//    			} else {
+//    				// append the element
+//    				parent.getElements().add(currElement);
+//    			}
+    			
     			parent.getElements().add(currElement.getDisplayOrder(), currElement);
+
     		}
     	}
 

@@ -173,9 +173,10 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	}
 
 	@Override
-	public Map<String, List<Object>> getTemplateRules(Long templateId) throws IdUnusedException {
-		HashMap<String, List<Object>> results = new HashMap<String, List<Object>>();
-
+	public HashMap<String, HashMap<String, Object>> getTemplateRules(Long templateId) throws IdUnusedException {
+		//HashMap<String, List<Object>> results = new HashMap<String, List<Object>>();
+		HashMap<String, HashMap<String, Object>> results = new HashMap<String, HashMap<String, Object>>();
+		
 		Template t = templateDao.getTemplate(templateId);
 
 		for (TemplateStructure elem : t.getElements()) {
@@ -189,26 +190,81 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	 * il faudra au moins mettre les valeurs en cache?
 	 * ZCII-2008
 	 */
-	private void getRules(TemplateStructure structure, Map<String, List<Object>> map) {
+//	private void getRules(TemplateStructure structure, HashMap<String, HashMap<String, Object>> map) {
+//
+//		if (structure!= null && structure.getParentId() != null) {
+//			
+//			HashMap<String, Object> elementObject;
+//			elementObject = new HashMap<String, Object>();
+//			elementObject.put("displayInMenu", structure.getDisplayInMenu());
+//			elementObject.put("mandatory", structure.getMandatory());
+//			// add template structure to the main map
+//			map.put(structure.getId().toString(), elementObject);
+//			
+//			List<Object> elementList;
+//
+//			String parentId = structure.getParentId().toString();
+//
+//			if (!map.containsKey(parentId)) {
+//				elementObject = new HashMap<String, Object>();
+//				elementList = new ArrayList<Object>();
+//				elementObject.put("elements", elementList);
+//				map.put(parentId, elementObject);
+//
+//			} else {
+//				elementList = (List<Object>) map.get(parentId).get("elements");
+//				
+//			}
+//
+//			Map<String, Object> templateElementMap = new HashMap<String, Object>();
+//			templateElementMap.put("id", structure.getId());
+//			templateElementMap.put("type", structure.getTemplateElement().getType().getTitle());
+//			templateElementMap.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
+//			// add child template element to the list of the parent element
+//			elementList.add(templateElementMap);
+//		}
+//
+//		for (TemplateStructure elem : structure.getElements()) {
+//			getRules(elem, map);
+//		}
+//
+//		return;
+//	}
 
-		if (structure!= null && structure.getParentId() != null) {
+
+	/*
+	 * il faudra au moins mettre les valeurs en cache?
+	 * ZCII-2008
+	 */
+	private void getRules(TemplateStructure structure, HashMap<String, HashMap<String, Object>> map) {
+
+		if (structure!= null) {
+			HashMap<String, Object> elementObject;
+			elementObject = new HashMap<String, Object>();
+			elementObject.put("displayInMenu", structure.getDisplayInMenu());
+			elementObject.put("mandatory", structure.getMandatory());		
+			// add template structure to the main map
+			map.put(structure.getId().toString(), elementObject);		
+			
+			// if the element has a parent, then add this one to the parent elements list
 			List<Object> elementList;
-
-			String parentId = structure.getParentId().toString();
-
-			if (!map.containsKey(parentId)) {
-				elementList = new ArrayList<Object>();
-				map.put(parentId, elementList);
-			} else {
-				elementList = map.get(parentId);
-			}
-
-			Map<String, Object> templateElementMap = new HashMap<String, Object>();
-			templateElementMap.put("id", structure.getId());
-			templateElementMap.put("type", structure.getTemplateElement().getType().getTitle());
-			templateElementMap.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
-
-			elementList.add(templateElementMap);
+			if (structure.getParentId() != null ) {
+				String parentId = structure.getParentId().toString();
+				HashMap<String, Object> parentObject = map.get(parentId);
+		
+				List<Object> elementParentList = (List<Object>) parentObject.get("elements");
+				if (elementParentList == null) {
+					elementParentList = new ArrayList<Object>();
+					parentObject.put("element", elementParentList);
+				}
+	
+				Map<String, Object> templateElementMap = new HashMap<String, Object>();
+				templateElementMap.put("id", structure.getId());
+				templateElementMap.put("type", structure.getTemplateElement().getType().getTitle());
+				templateElementMap.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
+				// add child template element to the list of the parent element
+				elementParentList.add(templateElementMap);
+			}	
 		}
 
 		for (TemplateStructure elem : structure.getElements()) {
@@ -218,7 +274,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return;
 	}
 
-
+	
 	@Override
 	public Object loadSyllabus() throws NoSyllabusException, NoSiteException {
 		String siteId = "";
