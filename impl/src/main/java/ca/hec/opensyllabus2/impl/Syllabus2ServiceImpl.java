@@ -255,7 +255,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				List<Object> elementParentList = (List<Object>) parentObject.get("elements");
 				if (elementParentList == null) {
 					elementParentList = new ArrayList<Object>();
-					parentObject.put("element", elementParentList);
+					parentObject.put("elements", elementParentList);
 				}
 	
 				Map<String, Object> templateElementMap = new HashMap<String, Object>();
