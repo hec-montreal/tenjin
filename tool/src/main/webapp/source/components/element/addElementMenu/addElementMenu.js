@@ -104,16 +104,16 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
                 // if there are elements and the first one is a rubric ( so the others would be rubric aswell )
                 if ($scope.element.elements) {
                     // reinit
-                    for (var k = 0 ; k < $scope.syllabusService.template[$scope.element.templateStructureId].length ; k++) {
-                        $scope.syllabusService.template[$scope.element.templateStructureId][k].alreadyPresent = false;
+                    for (var k = 0 ; k < $scope.syllabusService.template[$scope.element.templateStructureId].elements.length ; k++) {
+                        $scope.syllabusService.template[$scope.element.templateStructureId].elements[k].alreadyPresent = false;
                     }
                     // mark rubric already present
                     for( var i = 0; i < $scope.element.elements.length; i++) {
-                        for (var j = 0 ; j < $scope.syllabusService.template[$scope.element.templateStructureId].length ; j++) {
+                        for (var j = 0 ; j < $scope.syllabusService.template[$scope.element.templateStructureId].elements.length ; j++) {
                             // check if the rubric is already present
-                            var ruleElement = $scope.syllabusService.template[$scope.element.templateStructureId][j];
+                            var ruleElement = $scope.syllabusService.template[$scope.element.templateStructureId].elements[j];
                             if (ruleElement.id === $scope.element.elements[i].templateStructureId ){
-                                $scope.syllabusService.template[$scope.element.templateStructureId][j].alreadyPresent = true;
+                                $scope.syllabusService.template[$scope.element.templateStructureId].elements[j].alreadyPresent = true;
                                 break;
                             }
                         }
@@ -121,7 +121,6 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
                     }
                 }
             };
-
 
         }
 

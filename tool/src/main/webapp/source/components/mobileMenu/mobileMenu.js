@@ -130,9 +130,6 @@ opensyllabusApp.directive('mobileMenu', ['$timeout', 'TreeService', 'SyllabusSer
         },
         controllerAs: 'menuMobileCtrl',
         bindToController: {
-        },
-        link: function ($element) {
-            
         }
 
     };
