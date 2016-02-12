@@ -1,5 +1,6 @@
 package ca.hec.opensyllabus2.tool.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class TemplateController {
 	}
 
 	@RequestMapping(value = "/{templateId}/rules", method = RequestMethod.GET)
-	public @ResponseBody Map<String, List<Object>> getTemplateRules(@PathVariable Long templateId) throws IdUnusedException {
+	public @ResponseBody HashMap<String, HashMap<String, Object>> getTemplateRules(@PathVariable Long templateId) throws IdUnusedException {
 		return osyl2Service.getTemplateRules(templateId);
 	}
 
