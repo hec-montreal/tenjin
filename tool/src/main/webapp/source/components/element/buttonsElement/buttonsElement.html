@@ -1,10 +1,12 @@
 ﻿<div class="buttons">
 
-    <!-- Menu ajout -->
+    <!-- Ajout -->
     <span data-ng-if="buttonsElementCtrl.element.type === 'rubric' || buttonsElementCtrl.element.type === 'composite'" data-add-element-menu="buttonsElementCtrl.element"  class="container-menu-ajout-rubric" ></span>
-    
-    <span class="picto-edit" data-ng-click="!buttonsElementCtrl.syllabusService.working && buttonsElementCtrl.edit(buttonsElementCtrl.element);" data-ng-if="!(buttonsElementCtrl.noedit)"></span>   
-    <span ui-tree-handle class="tree-node tree-node-content picto-move-content"></span>  
-    <span class="picto-delete" data-ng-click="!buttonsElementCtrl.syllabusService.working && buttonsElementCtrl.confirmDelete(buttonsElementCtrl.element);"></span> 
+    <!-- Edition -->
+    <span class="picto-edit" data-ng-click="!buttonsElementCtrl.syllabusService.working && buttonsElementCtrl.edit(buttonsElementCtrl.element);" data-ng-if="!(buttonsElementCtrl.noedit) && !(buttonsElementCtrl.syllabusService.template[buttonsElementCtrl.element.templateStructureId].mandatory)"></span>   
+    <!-- Drag and drop -->
+    <span ui-tree-handle data-ng-if="!(buttonsElementCtrl.syllabusService.template[buttonsElementCtrl.element.templateStructureId].mandatory)" class="tree-node tree-node-content picto-move-content"></span>
+    <!-- Suppression -->
+    <span data-ng-if="!(buttonsElementCtrl.syllabusService.template[buttonsElementCtrl.element.templateStructureId].mandatory)" class="picto-delete" data-ng-click="!buttonsElementCtrl.syllabusService.working && buttonsElementCtrl.confirmDelete(buttonsElementCtrl.element);"></span> 
  
 </div> 

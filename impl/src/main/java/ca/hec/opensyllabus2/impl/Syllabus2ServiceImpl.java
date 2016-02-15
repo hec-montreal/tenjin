@@ -246,9 +246,9 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			// add template structure to the main map
 			map.put(structure.getId().toString(), elementObject);		
 			
-			// if the element has a parent, then add this one to the parent elements list
+			// if the element has a parent and is not mandatory, then add this one to the parent elements list
 			List<Object> elementList;
-			if (structure.getParentId() != null ) {
+			if (structure.getParentId() != null && (structure.getMandatory() == null || structure.getMandatory() == false )) {
 				String parentId = structure.getParentId().toString();
 				HashMap<String, Object> parentObject = map.get(parentId);
 		

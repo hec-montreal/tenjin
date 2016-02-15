@@ -19,9 +19,9 @@
 
 export class TextElementComponent {
 
-    @Input() element: any;
+    @Input() element: any; 
 
-    constructor( @Inject('variables') variables: variables) {
+    constructor( @Inject('variables') variables: variables) { 
         this.variables = variables;
     }
 

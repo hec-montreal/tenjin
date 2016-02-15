@@ -42,9 +42,6 @@ public abstract class AbstractSyllabusElement {
 	private Boolean publicElement;
     private Boolean shareable;
     private Boolean important;
-
-    private Boolean displayInMenu;
-    private Boolean mandatory;
     
     private Integer displayOrder;
 
