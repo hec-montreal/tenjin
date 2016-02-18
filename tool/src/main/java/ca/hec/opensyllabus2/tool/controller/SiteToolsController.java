@@ -131,13 +131,15 @@ public class SiteToolsController {
     		    
     		    for (String ent : entities) {
     			entityMap = new HashMap<String, Object>();
-    			entityMap.put("id", ent);
+    			entityMap.put("resourceId", ent);
     			name = entityBroker.getPropertyValue(ent, "title");
     			entityMap.put("name", name);
     			// Have to pass through direct to get to the entity
     			entityMap.put("url",
     				ServerConfigurationService.getServerUrl()
     					+ "/direct" + ent);
+    			entityMap.put("osylType", "sakai_entity");
+    			entityMap.put("tool", provider);
     			entityList.add(entityMap);
     		    }
     		}
@@ -152,7 +154,7 @@ public class SiteToolsController {
     		    }
     		    
     		    resourceFolder.put("name", provider);
-    		    resourceFolder.put("type", "org.sakaiproject.content.types.folder");
+    		    resourceFolder.put("osylType", "folder");
     		    resourceFolder.put("resourceChildren", entityList);
     		    resourceChildren.add(resourceFolder);
     		    

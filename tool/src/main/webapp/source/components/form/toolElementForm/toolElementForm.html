@@ -1,21 +1,19 @@
-﻿<div class="element tool">
+﻿<div class="element tool-form">
 
-    <div class="titre-element">
-        <a href="{{element.attributes.toolUrl}}" target="_blank">
-            {{ element.title }} 
-        </a>
-        <span class="url-lien">
-            ({{ element.attributes.toolUrl }}) 
-        </span> 
-    </div>
+    <!-- Tool <-->
+    <label for="male" class="label-text-title">{{ 'SAKAI_TOOL_BROWSER_TITRE' | translate }} : <span class="mandatory"></span></span>  
+    </label>
+    
+    <div data-browser-element-form="element" data-type="sakai_entity"></div>
+ 
+    <!-- Titre -->
+    <label for="male" class="label-text-title">{{ 'FORM_TITRE' | translate }}</label>
+    <input type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
+  
+    <!-- Description  --> 
+    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
+    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
 
-
-    <div data-ng-bind-html="element.attributes.toolComment" class="comment"></div>
-
-    <div class="infos">
-        <span data-ng-class="{ 'picto-important' : ( element.attributes.toolImportant === 'true') }" title="Important"></span>
-        <span data-ng-class="{ 'picto-hec' : ( element.attributes.toolDiffusion === 'hec' ), 'picto-public' : ( element.attributes.toolDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
-        <span data-ng-class="{ 'picto-hidden' : ( element.attributes.toolHidden === 'true') }" title="Visible"></span>     
-    </div>
-
+    <!-- Buttons form --> 
+    <div data-buttons-form="element"></div>
 </div>

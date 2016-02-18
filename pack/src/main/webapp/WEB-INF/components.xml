@@ -39,5 +39,7 @@
 		init-method="init">
 		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService"/>
 	</bean>
+	
+	
 
 </beans>

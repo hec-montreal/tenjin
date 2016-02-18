@@ -32,9 +32,9 @@ opensyllabusApp.constant('config', {
             'type': 'citation',
             'label': 'TYPE_ELEMENT_CITATION'
         },
-        'sakai_tool' : {
-            'type': 'sakai_tool',
-            'label': 'TYPE_ELEMENT_SAKAI_TOOL'
+        'sakai_entity' : {
+            'type': 'sakai_entity',
+            'label': 'TYPE_ELEMENT_SAKAIENTITY'
         },
         'evaluation' : {
             'type': 'evaluation',

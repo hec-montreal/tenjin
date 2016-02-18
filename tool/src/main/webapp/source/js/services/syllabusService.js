@@ -51,8 +51,7 @@
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusElementProvider = $resource('v1/syllabus');
 
-
-    this.save =  function($data) {
+     this.save =  function($data) {
         var syllabusProviderSave = $resource('v1/syllabus/'+$data.siteId+'.json');
         return syllabusProviderSave.save($data);
     };

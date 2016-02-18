@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 	@Type(value = SyllabusDocumentElement.class, name = "document"),
 	@Type(value = SyllabusHyperlinkElement.class, name = "hyperlink"),
 	@Type(value = SyllabusImageElement.class, name = "image"),
-	@Type(value = SyllabusSakaiToolElement.class, name = "sakai_tool"),
+	@Type(value = SyllabusSakaiToolElement.class, name = "sakai_entity"),
 	@Type(value = SyllabusTextElement.class, name = "text"),
 	@Type(value = SyllabusVideoElement.class, name = "video") })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.EXISTING_PROPERTY, property = "type")

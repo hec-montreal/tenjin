@@ -1,5 +1,5 @@
 ﻿// loader les donnees du plan de cours
-opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interval', '$timeout', '$q', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'config', '$translate', 'AlertService', 'tmhDynamicLocale', 'Modernizr', 'variables', function($rootScope, $scope, $interval, $timeout, $q, SyllabusService, TreeService, ResourcesService, CitationsService, config, $translate, AlertService, tmhDynamicLocale, Modernizr, variables) {
+opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interval', '$timeout', '$q', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'config', '$translate', 'AlertService', 'tmhDynamicLocale', 'Modernizr', 'variables', function($rootScope, $scope, $interval, $timeout, $q, SyllabusService, TreeService, ResourcesService, CitationsService, SakaiToolsService, config, $translate, AlertService, tmhDynamicLocale, Modernizr, variables) {
 	'use strict';
 
     $scope.infos = {};
@@ -145,7 +145,14 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
        	    });
         };
 
-        
+      var loadSakaiTools = function(){
+        return SakaiToolsService.loadToolEntities(SyllabusService.syllabus.siteId).$promise.then(function($data){
+               $rootScope.$broadcast('TOOLS_LOADED');
+               SakaiToolsService.setToolsEntities($data);
+            }, function($error){
+                // erreur load resources
+        });
+      };
         
       var loadResources = function (){
         	return ResourcesService.loadResources(SyllabusService.syllabus.siteId).$promise.then(function($data){
@@ -184,12 +191,12 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
             });
         };
 
-       
-
+   
       // Chargement du plan de cours et du template, puis des ressources
         loadSyllabusAndTemplate()
     	.then(loadResources)
         .then(loadCitations)
+        .then(loadSakaiTools)
     	.finally(function(){
              console.dir(ResourcesService.resources);
             $scope.infos.working = false;   		

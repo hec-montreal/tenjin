@@ -1,14 +1,14 @@
 ﻿<div class="element tool">
 
-    <div class="titre-element">
-        <a href="{{element.attributes.toolUrl}}" target="_blank">
-            {{ element.title }} 
+     <div class="titre-element">
+        <a href="{{entity.url}}" target="_blank">
+            {{ entity.name }} 
         </a>
-        <span class="url-lien">
-            ({{ element.attributes.toolUrl }}) 
+        <span class="tool-title">
+            [{{ entity.tool }}]
         </span> 
     </div>
-
+ 
 
     <div data-ng-bind-html="element.description" class="comment"></div>
 

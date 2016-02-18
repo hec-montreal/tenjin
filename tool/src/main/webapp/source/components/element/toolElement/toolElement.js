@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('toolElement', ['variables', function (variables){
+opensyllabusApp.directive('toolElement', ['variables', 'SakaiToolsService',  function (variables, SakaiToolsService){
     'use strict';
 
     return {
@@ -12,6 +12,8 @@ opensyllabusApp.directive('toolElement', ['variables', function (variables){
             $scope.variables = variables; 
         },
         link: function ($scope, $element) {
+            $scope.entity = SakaiToolsService.getEntity($scope.element.attributes.resourceId);
+            console.dir($scope.entity);
         }
 
     };
