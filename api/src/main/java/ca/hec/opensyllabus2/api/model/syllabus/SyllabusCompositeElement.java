@@ -1,5 +1,6 @@
 package ca.hec.opensyllabus2.api.model.syllabus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
@@ -22,7 +23,7 @@ public class SyllabusCompositeElement extends AbstractSyllabusElement {
 
 	private static final String TYPE = "composite";
 
-	private List<AbstractSyllabusElement> elements;
+	private List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
 
 	public String getType() {
 		return TYPE;
