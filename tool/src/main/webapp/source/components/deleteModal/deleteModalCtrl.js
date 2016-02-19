@@ -21,6 +21,7 @@ opensyllabusApp.controller('DeleteModalCtrl',  [ '$scope', '$translate', '$uibMo
             // alert ajout ok
             AlertService.display('success', $translate.instant('ALERT_SUCCESS_DELETE_ELEMENT'));
             SyllabusService.setSyllabus($data);
+            
             // TreeService.setSelectedItemFromId(selectedItemId);
             TreeService.setSelectedItemFromEmplacement(emplacement);
         }, function ($error){

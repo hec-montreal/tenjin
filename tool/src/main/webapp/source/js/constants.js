@@ -100,6 +100,12 @@ opensyllabusApp.constant('config', {
         }
     ],   
     extensionsImage: ['jpg', 'gif', 'png'],
+    statusLabel : {
+        1 : "STATUS_INITIAL",
+        2 : "STATUS_BROUILLON",
+        3 : "STATUS_PUBLIE",
+        4 : "STATUS_NON_ATTRIBUE"
+    }
     
 });
 

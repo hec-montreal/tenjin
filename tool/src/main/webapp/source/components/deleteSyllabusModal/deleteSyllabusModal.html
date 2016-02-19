@@ -1,0 +1,32 @@
+
+<form data-ng-submit="ok()"> 
+
+    <div class="modal-header">
+        <h3 class="modal-title">{{ 'MODAL_TITLE_DELETE_SYLLABUS' | translate}}</h3> 
+        <div>{{ 'MODAL_DESCRIPTION_DELETE_SYLLABUS' | translate}} ?</div>       
+    </div>
+
+    <div class="modal-body"> 
+
+        <div class="errors">
+            <ul>
+                <li data-ng-show="errors.isErrorDateDebut">{{ 'ERROR_FORMAT_DATE_DEBUT' | translate}}</li>
+                <li data-ng-show="errors.isErrorDateRetrait">{{ 'ERROR_FORMAT_DATE_RETRAIT' | translate}}</li>
+                <li data-ng-show="errors.isErrorRessource">{{ 'ERROR_RESSOURCE' | translate}}</li> 
+            </ul>
+        </div>
+        
+        <div data-ng-switch="type.type">
+            <div>{{ 'MODAL_SECTIONS_DELETE_SYLLABUS' | translate}}</div>
+            <div data-ng-repeat="section in sections" data-ng-if="section.syllabusSpecId===null">
+                Section {{section.name}}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <input class="btn btn-primary" type="submit" value="OK"/> 
+        <button class="btn btn-warning" type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
+    </div> 
+    
+</form>

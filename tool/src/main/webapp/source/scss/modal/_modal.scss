@@ -1,5 +1,9 @@
 .modal-dialog {
 
+    input[type='checkbox'] {
+        cursor : pointer;
+    }
+
     .btn-primary {
         background-color: $bleu-hec;
 
@@ -9,7 +13,7 @@
     }
 
     .btn-warning {
- 
+
     }
 
 }

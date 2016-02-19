@@ -85,5 +85,45 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
 
     };
 
+    this.createSyllabus = function($syllabus) {
+
+        // var offset = angular.element($event.target).prop('offsetLeft');
+        // var modal = angular.element(document.querySelector('.modal'));
+        // modal.css('top', offset);
+
+        var modalInstance = $uibModal.open({
+          animation: true,
+          templateUrl: 'createSyllabusModal/createSyllabusModal.html',
+          controller: 'CreateSyllabusModalCtrl',
+          size: '',
+          resolve: {
+            data: $syllabus
+          }        
+        });
+
+        return modalInstance;
+
+    };
+
+     this.deleteSyllabus = function($syllabusId) {
+
+        // var offset = angular.element($event.target).prop('offsetLeft');
+        // var modal = angular.element(document.querySelector('.modal'));
+        // modal.css('top', offset);
+
+        var modalInstance = $uibModal.open({
+          animation: true,
+          templateUrl: 'deleteSyllabusModal/deleteSyllabusModal.html',
+          controller: 'DeleteSyllabusModalCtrl',
+          size: '',
+          resolve: {
+            data: $syllabusId
+          }        
+        });
+
+        return modalInstance;
+
+    };
+
 
 }]);

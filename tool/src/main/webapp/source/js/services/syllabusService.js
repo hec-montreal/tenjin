@@ -4,6 +4,7 @@
     this.syllabus;
     this.syllabusSaved;
     this.template;
+    this.syllabusList;
     this.dirty = false;
     this.working = false;
     this.listeSections = [
@@ -36,6 +37,9 @@
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusProvider = $resource('v1/syllabus/init.json');
 
+
+    //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
+    var syllabusListProvider = $resource('v1/syllabus/list.json');
     //
     // var syllabusProviderSave = $resource('v1/syllabus/:siteId', null,
     // {
@@ -61,9 +65,19 @@
         return syllabusProviderSave.save(this.syllabus);
     };
 
+    this.saveSyllabusSpec =  function($data) {
+        var syllabusSpecProvider = $resource('v1/syllabus/spec');
+        return syllabusSpecProvider.save($data);
+    };
+
     this.loadSyllabus =  function() {  
         // return syllabusProvider.getSyllabus({sectionId : "A01,B03"});   
         return syllabusProvider.get();
+    };
+
+    this.loadSyllabusList =  function() {  
+        // return syllabusProvider.getSyllabus({sectionId : "A01,B03"});   
+        return syllabusListProvider.get();
     };
 
     this.loadTemplate = function() {
@@ -73,6 +87,15 @@
 
     this.saveElement = function($element, $parent) {
         return syllabusElementProvider.save($element, $parent);
+    };
+
+    this.getSyllabusList = function() {
+        return this.syllabusList;
+    };
+
+
+    this.setSyllabusList = function($syllabusList) {  
+        this.syllabusList = $syllabusList;
     };
 
     this.getSyllabus = function() {

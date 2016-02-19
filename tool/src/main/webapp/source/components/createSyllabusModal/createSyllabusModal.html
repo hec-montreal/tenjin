@@ -1,0 +1,37 @@
+
+<form data-ng-submit="ok()" > 
+
+    <div class="modal-header">
+        <h3 class="modal-title">{{ 'MODAL_TITLE_NEW_SYLLABUS' | translate}}</h3> 
+        <div>{{ 'MODAL_DESCRIPTION_NEW_SYLLABUS' | translate}}</div>       
+    </div>
+
+    <div class="modal-body"> 
+
+        <div class="errors">
+            <ul>
+                <li data-ng-show="errors.isErrorDateDebut">{{ 'ERROR_FORMAT_DATE_DEBUT' | translate}}</li>
+                <li data-ng-show="errors.isErrorDateRetrait">{{ 'ERROR_FORMAT_DATE_RETRAIT' | translate}}</li>
+                <li data-ng-show="errors.isErrorRessource">{{ 'ERROR_RESSOURCE' | translate}}</li>
+            </ul>
+        </div>
+        
+        <div data-ng-switch="type.type">
+            <div>{{ 'MODAL_SECTIONS_NEW_SYLLABUS' | translate}}</div>
+            <div data-ng-repeat="section in data.sections" data-ng-if="section.syllabusSpecId===null">
+                <input type="checkbox" id="{{section.id}}" name="{{section.id}}" data-ng-model="section.checked" />
+                <label for="{{section.id}}">{{section.name}}</label>
+            </div>
+            <div>
+                <label for="libelle">{{ 'MODAL_LIBELLE_NEW_SYLLABUS' | translate}} : </label> <span class="mandatory"></span>
+                <input type="text" id="libelle" name="libelle" data-ng-model="data.syllabusName" required/>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <input class="btn btn-primary" type="submit" value="OK"/> 
+        <button class="btn btn-warning" type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
+    </div> 
+    
+</form>

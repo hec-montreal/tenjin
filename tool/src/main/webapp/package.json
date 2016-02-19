@@ -5,6 +5,7 @@
   "main": "gulpfile.js",
   "preinstall": "npm i tsd",
   "dependencies": {
+    "angular-ui-router": "^0.2.18",
     "angular2": "2.0.0-beta.3",
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^1.7.0",
@@ -20,8 +21,7 @@
     "modernizr": "^3.3.1",
     "tsd": "0.6.5"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

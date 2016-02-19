@@ -1,0 +1,68 @@
+<section class="home">
+    <a ui-sref="syllabus">Retour</a>
+ 
+    <div class="loader-container" data-ng-show="homeCtrl.infos.working"> 
+        <div class="loader"></div>
+    </div>
+
+    <div class="main-errors">
+        <uib-alert data-ng-if="planFailed" class="myalert" type="danger">{{ 'ERROR_PLAN_COURS' | translate }}</uib-alert>
+
+        <uib-alert data-ng-if="(!planFailed && templateFailed)" class="myalert" type="danger">{{ 'ERROR_TEMPLATE' | translate }}</uib-alert>
+
+        <uib-alert data-ng-if="alertService.isVisible('danger')" class="myalert" type="danger" close="alertService.closeAlert('danger')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('danger')}}</uib-alert>
+        <uib-alert data-ng-if="alertService.isVisible('success')" class="myalert" type="success" close="alertService.closeAlert('success')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('success')}}</uib<-alert>
+    </div>
+
+    <div class="buttons-list">
+        <!-- CREATE -->
+        <button class="btn btn-primary" type="button" data-ng-click="homeCtrl.addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
+    
+    </div>
+
+    <div>
+        
+      <table>
+        <tr>
+          <th>Plan de cours</th>
+          <th>Auteur</th>
+          <th>Sections</th>
+          <th>Statut</th>
+          <th> </th>
+          <th class="th-select"> </th>
+        </tr>
+
+        <tr data-ng-repeat="syllabus in homeCtrl.syllabusList">
+          <td>
+          {{syllabus.name}}
+          </td>
+          <td>
+          {{syllabus.createdBy}}
+          </td>
+          <td>
+            <span data-ng-repeat="section in syllabus.sections">{{section}}<span data-ng-if="$index !== syllabus.sections.length-1">, </span></span>
+          </td>
+          <td>
+          {{homeCtrl.config.statusLabel[syllabus.status] | translate }}
+          </td>
+          <td>
+              <a>{{ 'LINK_SYLLABUS' | translate }}</a>
+          </td>
+          <td>
+              <input type="checkbox" name="" />
+          </td>
+        </tr> 
+
+      </table>
+
+      <div class="button-container-delete">
+          <!-- DELETE -->
+          <button class="btn btn-primary" type="button" data-ng-click="homeCtrl.deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
+      
+      </div>
+
+    </div>
+    
+
+
+</section>

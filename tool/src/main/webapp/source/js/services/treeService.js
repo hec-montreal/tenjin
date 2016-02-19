@@ -69,7 +69,7 @@
      * @param {Object} $item Item sélectionné
      * @param {Boolean} $firstTime Première sélection d'un élément
      */
-    this.setSelectedItem = function($item, $firstTime){
+    this.setSelectedItem = function($item, $firstTime){ 
 
         // si l'item n'est pas celui déjà sélectionné
         if ($firstTime || !$item.$selected ) {
@@ -79,13 +79,20 @@
             }
 
             // niveau et position
+            // ex : [2, 1, 3], dans l'arbre, 2ème élément, puis 1er élément, puis 3ème élément
             var emplacement = {
-                'niveau' : 0,
-                'position' : 0
+                'emplacement' : []
+            }; 
+            var tmpEmplacement = {
+                'emplacement' : []
             };
-            var tmpLevel = 0;
-            var tmpPosition = 0;
-            var selectedItem = getItemFromId(SyllabusService.getSyllabus(), $item.id, tmpLevel, tmpPosition ,emplacement);
+            // var emplacement = {
+            //     'niveau' : 0,
+            //     'position' : 0
+            // };
+            // var tmpLevel = 0;
+            // var tmpPosition = 0;
+            var selectedItem = getItemFromId(SyllabusService.getSyllabus(), $item.id, emplacement, tmpEmplacement);
 
             this.selectedItem = $item;     
             $item.$selected = true;
@@ -104,26 +111,41 @@
 
 	};
 
+    var arrayEquals = function($tab1, $tab2) {
+        if ($tab1.length === $tab2.length && $tab1.length > 0) { 
+            for (var i = 0; i< $tab1.length; i++) {
+                if ( $tab1[i] !==  $tab2[i] ) {
+                    return false;
+                }
+            }
+            return true; // all values are identical
+        }
+
+        return false;
+    };
+
+
     /**
-     * Récupère l'élément correspondant à l'identifiant
-     * @param {Object} $rootTree Racine de l'arbre à parcourir
-     * @param {Number} $tmpLevel Niveau temporaire dans l'arbre parcouru
-     * @param {Number} $tmpPosition Position temporaire dans l'arbre parcouru
-     * @param {Object} $emplacement Emplacement final de l'élément recherché
-     * @return {Object} Retourne l'item ou undefined si non trouvé
+     * Get the element giving his position in the tree
+     * @param {Object} $rootTree Root tree
+     * @param {Object} $emplacement Final place for the element
+     * @param {Object} $tmpEmplacement Temporary place
+     * @return {Object} Returns the found element or undefined
      */
-    var getItemFromEmplacement = function($rootTree, $tmpLevel, $tmpPosition, $emplacement) {
+    var getItemFromEmplacement = function($rootTree, $emplacement, $tmpEmplacement) {
         
         // on regarde tous les éléments hormis l'élément racine
-        if ($tmpLevel === $emplacement.niveau &&  $tmpPosition === $emplacement.position && !$rootTree.siteId) {
+        if (!$rootTree.siteId && arrayEquals($emplacement.emplacement, $tmpEmplacement.emplacement) === true ) {
             return $rootTree;
         } else {
 
             if ($rootTree.elements) {
-                $tmpLevel++ ;
+                // $tmpLevel++ ;
                 for (var i = 0; i < $rootTree.elements.length; i++){
-                    $tmpPosition = i;
-                    var resultat = getItemFromEmplacement($rootTree.elements[i], $tmpLevel, $tmpPosition, $emplacement);
+                    var newTmpEmplacement = { 'emplacement' : $tmpEmplacement.emplacement.slice() };
+                    newTmpEmplacement.emplacement.push(i);
+                    // $tmpPosition = i;
+                    var resultat = getItemFromEmplacement($rootTree.elements[i], $emplacement, newTmpEmplacement);
                     if (resultat) {
                         return resultat;
                     }     
@@ -134,34 +156,37 @@
     };
 
     /**
-     * Récupère l'élément correspondant à l'identifiant
-     * @param {Object} $rootTree Racine de l'arbre à parcourir
-     * @param {Number} $id Identifiant de l'élément recherché
-     * @param {Number} $tmpLevel Niveau temporaire dans l'arbre parcouru
-     * @param {Number} $tmpPosition Position temporaire dans l'arbre parcouru
-     * @param {Object} $emplacement Emplacement final de l'élément recherché
-     * @return {Object} Retourne l'item ou undefined si non trouvé
+     * Get the element from id and calculate the position of this one
+     * @param {Object} $rootTree Root tree
+     * @param {Number} $id Element id
+     * @param {Object} $emplacement Final place for the element
+     * @param {Object} $tmpEmplacement Temporary place
+     * @return {Object} Returns the found element or undefined
      */
-    var getItemFromId = function($rootTree, $id, $tmpLevel, $tmpPosition, $emplacement) {
+    var getItemFromId = function($rootTree, $id, $emplacement, $tmpEmplacement) {
         
-        // on regarde tous les éléments hormis l'élément racine
+        // compare element id
         if ($rootTree.id === $id && !$rootTree.siteId) {
-            $emplacement.niveau = $tmpLevel;
-            $emplacement.position = $tmpPosition;
+            // $emplacement.niveau = $tmpLevel;
+            // $emplacement.position = $tmpPosition;
+            $emplacement.emplacement = $tmpEmplacement.emplacement.slice();
             return $rootTree;
         } else {
 
             if ($rootTree.elements) {
-                $tmpLevel++ ;
+                // $tmpLevel++ ;
                 for (var i = 0; i < $rootTree.elements.length; i++){
-                    $tmpPosition = i;
-                    var resultat = getItemFromId($rootTree.elements[i], $id, $tmpLevel, $tmpPosition, $emplacement);
+                    var newTmpEmplacement = { 'emplacement' : $tmpEmplacement.emplacement.slice() };
+                    newTmpEmplacement.emplacement.push(i);
+                    // $tmpPosition = i;
+                    var resultat = getItemFromId($rootTree.elements[i], $id, $emplacement, newTmpEmplacement);
                     if (resultat) {
                         return resultat;
                     }     
                 }
             }
         }
+
         return undefined;
     };
 
@@ -171,12 +196,13 @@
      */
     this.setSelectedItemFromId = function($id){
         var emplacement = {
-            'niveau' : 0,
-            'position' : 0
+            'emplacement' : []
+        }; 
+        var tmpEmplacement = {
+            'emplacement' : []
         };
-        var tmpLevel = 0;
-        var tmpPosition = 0;
-        var selectedItem = getItemFromId(SyllabusService.getSyllabus(), $id, tmpLevel, tmpPosition, emplacement);
+
+        var selectedItem = getItemFromId(SyllabusService.getSyllabus(), $id, emplacement);
 
         this.selectedItem = selectedItem;
         this.selectedItem.$selected = true;
@@ -188,10 +214,12 @@
      * @param {Number} $emplacement Emplacement de l'élément
      */
     this.setSelectedItemFromEmplacement = function($emplacement){
-
-        var tmpLevel = 0;
-        var tmpPosition = 0;
-        var selectedItem = getItemFromEmplacement(SyllabusService.getSyllabus(), tmpLevel, tmpPosition, $emplacement);
+        var tmpEmplacement = {
+            'emplacement' : []
+        }; 
+        // var tmpLevel = 0;
+        // var tmpPosition = 0;
+        var selectedItem = getItemFromEmplacement(SyllabusService.getSyllabus(), $emplacement, tmpEmplacement);
 
         this.selectedItem = selectedItem;
         this.selectedItem.$selected = true;
