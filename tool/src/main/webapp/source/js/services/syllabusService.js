@@ -213,15 +213,15 @@
                     // vérifie où doit être insérée la rubrique
                     var listeTemp = [];
                     var index = -1;
-                    for (var i = 0 ; i < $rules.length; i++) {
+                    for (var i = 0 ; i < $rules.elements.length; i++) {
                         for (var j = 0; j < $rootTree.elements.length; j++) {
-                            if ($rules[i].id === $rootTree.elements[j].templateStructureId) {
+                            if ($rules.elements[i].id === $rootTree.elements[j].templateStructureId) {
                                 listeTemp.push($rootTree.elements[j]);
                                 break;
                             }  
                         }
 
-                        if ($rules[i].id === $element.templateStructureId) {
+                        if ($rules.elements[i].id === $element.templateStructureId) {
                             listeTemp.push($element);               
                         }
                     }
