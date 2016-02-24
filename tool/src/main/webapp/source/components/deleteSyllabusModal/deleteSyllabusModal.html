@@ -7,20 +7,24 @@
     </div>
 
     <div class="modal-body"> 
-
-        <div class="errors">
-            <ul>
-                <li data-ng-show="errors.isErrorDateDebut">{{ 'ERROR_FORMAT_DATE_DEBUT' | translate}}</li>
-                <li data-ng-show="errors.isErrorDateRetrait">{{ 'ERROR_FORMAT_DATE_RETRAIT' | translate}}</li>
-                <li data-ng-show="errors.isErrorRessource">{{ 'ERROR_RESSOURCE' | translate}}</li> 
-            </ul>
-        </div>
         
-        <div data-ng-switch="type.type">
-            <div>{{ 'MODAL_SECTIONS_DELETE_SYLLABUS' | translate}}</div>
-            <div data-ng-repeat="section in sections" data-ng-if="section.syllabusSpecId===null">
-                Section {{section.name}}
+        <div>
+            <div data-ng-if="(syllabusToDelete.length > 0)">{{ 'DELETE_SYLLABUS_OK' | translate }} : 
+                <ul>
+                    <li data-ng-repeat="syllabus in syllabusToDelete">
+                    {{syllabus.name}}
+                    </li>
+                <ul>
             </div>
+
+            <div data-ng-if="(syllabusNotToDelete.length > 0)">{{ 'DELETE_SYLLABUS_KO' | translate }} : 
+                <ul>
+                    <li data-ng-repeat="syllabus in syllabusNotToDelete">
+                    {{syllabus.name}}
+                    </li>
+                <ul>
+            </div>
+
         </div>
     </div>
 

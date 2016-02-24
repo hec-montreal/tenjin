@@ -7,7 +7,9 @@
         <div class="col-md-8" data-browser-element-form="element" data-type="image"></div>
         <div class="col-md-4" >
             <span class="placeholder-image" data-ng-if="!element.$selectedResource.url"></span>
-            <img class="img-apercu" data-ng-if="element.$selectedResource.url" src="{{element.$selectedResource.url}}" />
+            <span data-ng-if="element.$selectedResource.url">
+                <img class="img-apercu" src="{{element.$selectedResource.url}}" />
+            </span>
         </div>
     </div>
 

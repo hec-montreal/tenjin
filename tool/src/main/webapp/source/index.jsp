@@ -46,6 +46,7 @@
 	<script src="/opensyllabus2-tool/lib/angular-ui-tree/angular-ui-tree.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-ui/ui-bootstrap-custom-tpls-1.1.0.js"></script>
 	<script src="/opensyllabus2-tool/lib/xeditable/xeditable.min.js"></script>
+	<script src="/opensyllabus2-tool/lib/checklist-model/checklist-model.js"></script>
 	<script src="/opensyllabus2-tool/lib/angular-translate/angular-translate.min.js"></script>
 	<script src="/opensyllabus2-tool/lib/ng-ckeditor-master/ng-ckeditor.js"></script>
 	<script src="/opensyllabus2-tool/lib/bootstrap-ui-datetime-picker-master/dist/datetime-picker.min.js"></script>

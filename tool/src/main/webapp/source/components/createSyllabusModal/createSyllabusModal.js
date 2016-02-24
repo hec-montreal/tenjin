@@ -3,12 +3,21 @@ opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalIns
     'use strict';
 
     $scope.data = {
-        'sections' : angular.copy(mockup.sections),
-        'syllabusName' : 'Specific syllabus'
+        'sectionsFree' : angular.copy(mockup.sectionsFree),
+        'name' : 'Specific syllabus'
     };
     // $scope.sections = angular.copy(mockup.sections);
 
     $scope.ok = function () {
+
+        // keep only the selected sections
+        var sections = [];
+        for( var i = 0 ; i < $scope.data.sections.length; i++) {
+            if ($scope.data.sections[i].checked === true) {
+                sections.push($scope.data.sections[i]);
+            }
+        }
+        $scope.data.sections = sections;
 
         var savePromise = SyllabusService.saveSyllabusSpec($scope.data);
         SyllabusService.setWorking(true);

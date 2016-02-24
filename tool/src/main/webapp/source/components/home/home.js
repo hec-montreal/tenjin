@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('home', ['$timeout', 'TreeService', 'SyllabusService', 'AlertService', 'ModalService', 'variables', 'config', 'mockup', function ($timeout, TreeService, SyllabusService, AlertService, ModalService, variables, config, mockup){
+opensyllabusApp.directive('home', ['$timeout', '$translate','TreeService', 'SyllabusService', 'AlertService', 'ModalService', 'variables', 'config', 'mockup', function ($timeout, $translate, TreeService, SyllabusService, AlertService, ModalService, variables, config, mockup){
     'use strict';
 
     return {
@@ -14,22 +14,12 @@ opensyllabusApp.directive('home', ['$timeout', 'TreeService', 'SyllabusService',
             this.variables = variables;
             this.config = config;
 
+
             this.infos = {};
+            this.disableDelete = true;
  
             this.syllabusList = mockup.syllabusList;
-
-            // mockup ou non
-            if (config.mockUp === true) {
-                this.syllabusList = mockup.syllabusList;
-            } else {
-                this.syllabusList = mockup.syllabusList;
-                // Load the syllabus list
-                // loadSyllabusList().finally(function() {
-                //      this.infos.working = false; 
-                // });
-                // this.infos.working = true;
-            }
-
+            this.sections = mockup.sections;
 
             var loadSyllabusList = function (){
 
@@ -43,6 +33,20 @@ opensyllabusApp.directive('home', ['$timeout', 'TreeService', 'SyllabusService',
                     AlertService.display('danger');
                 });
             };
+
+            // mockup ou non
+            if (config.mockUp === true) {
+                this.syllabusList = mockup.syllabusList;
+            } else {
+                // this.syllabusList = mockup.syllabusList;
+                
+                // Load the syllabus list
+                loadSyllabusList().finally(function() {
+                     this.infos.working = false; 
+                });
+                // this.infos.working = true;
+            }
+
 
             this.addSyllabus = function() {
                 // Get sections and libelle
@@ -59,12 +63,17 @@ opensyllabusApp.directive('home', ['$timeout', 'TreeService', 'SyllabusService',
                 });    
             };
 
-            this.deleteSyllabus = function($syllabusList) {
+            this.deleteSyllabus = function() {
                 // Get list of selected syllabus
-                var data = {};
+                var syllabusList =[];
+                for (var i = 0 ; i < this.syllabusList.length; i++) {
+                    if (this.syllabusList[i].checked === true) {
+                        syllabusList.push(this.syllabusList[i]);
+                    }
+                }
 
                 // Création modale
-                var modal = ModalService.deleteSyllabus($syllabusList);
+                var modal = ModalService.deleteSyllabus(syllabusList);
 
                 // Traitement du résultat
                 modal.result.then(function (selectedItem) {
@@ -74,6 +83,39 @@ opensyllabusApp.directive('home', ['$timeout', 'TreeService', 'SyllabusService',
                 });    
             };
             
+
+            this.enableDelete = function() {
+
+                this.disableDelete = true;
+                // if a syllabus is checked then the delete button should be enabled
+                for (var i = 0 ; i < this.syllabusList.length; i++) {
+                    if (this.syllabusList[i].checked === true) {
+                        this.disableDelete = false;
+                    }
+                }
+            };
+
+            this.showSections = function($syllabus) {
+                var selected = [];
+                angular.forEach(this.sections, function(s) { 
+                  if ($syllabus.sections.indexOf(s.id) >= 0) {
+                    selected.push(s.name);
+                  }
+                });
+
+                return selected.length ? selected.join(', ') : $translate.instant("HOME_NO_SECTION");
+            }; 
+            
+            this.updateName = function($data, $syllabus) {
+                if ($data.length === 0 ) {
+                    return $translate.instant("HOME_ERREUR_NAME");
+                }
+                return SyllabusService.saveSyl($syllabus).$promise;
+            };
+
+            this.updateSections = function($data, $syllabus) {         
+                return SyllabusService.saveSyl($syllabus).$promise;
+            };
 
             $timeout(function() {
                 // anything you want can go here and will safely be run on the next digest.

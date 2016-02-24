@@ -55,7 +55,10 @@
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusElementProvider = $resource('v1/syllabus');
 
-     this.save =  function($data) {
+    var sylProvider = $resource('v1/syllabus');
+    var sylProviderId = $resource('v1/syllabus/:id');
+
+    this.save =  function($data) {
         var syllabusProviderSave = $resource('v1/syllabus/'+$data.siteId+'.json');
         return syllabusProviderSave.save($data);
     };
@@ -65,9 +68,18 @@
         return syllabusProviderSave.save(this.syllabus);
     };
 
-    this.saveSyllabusSpec =  function($data) {
-        var syllabusSpecProvider = $resource('v1/syllabus/spec');
-        return syllabusSpecProvider.save($data);
+
+    this.saveSyl =  function($data) {
+        // if the syllabus has already an id then call a specific url
+        if($data.id) {
+            return sylProviderId.save( {id: $data.id} , $data);
+        }
+
+        return sylProvider.save($data);  
+    };
+
+    this.deleteSyllabusList =  function($syllabusList) {
+        return sylProvider.delete($syllabusList);
     };
 
     this.loadSyllabus =  function() {  
@@ -77,7 +89,7 @@
 
     this.loadSyllabusList =  function() {  
         // return syllabusProvider.getSyllabus({sectionId : "A01,B03"});   
-        return syllabusListProvider.get();
+        return sylProvider.get();
     };
 
     this.loadTemplate = function() {

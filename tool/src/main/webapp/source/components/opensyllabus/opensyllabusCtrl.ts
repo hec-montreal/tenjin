@@ -1,5 +1,6 @@
 ﻿// loader les donnees du plan de cours
 opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interval', '$timeout', '$q', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'config', '$translate', 'AlertService', 'tmhDynamicLocale', 'Modernizr', 'variables', function($rootScope, $scope, $interval, $timeout, $q, SyllabusService, TreeService, ResourcesService, CitationsService, SakaiToolsService, config, $translate, AlertService, tmhDynamicLocale, Modernizr, variables) {
+
 	'use strict';
 
     $scope.infos = {};

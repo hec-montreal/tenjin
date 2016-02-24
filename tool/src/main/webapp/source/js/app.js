@@ -1,9 +1,9 @@
 ﻿
-var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize", "ngAnimate", "templateModule", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngCkeditor", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router"]);
+var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize", "ngAnimate", "templateModule", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngCkeditor", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router", "checklist-model"]);
 // TEST VIEWS HTML
-// var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngCkeditor", "ngFileUpload", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router"]);
+// var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngCkeditor", "ngFileUpload", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router" , "checklist-model"]);
 // MOCKUP sans CKEDITOR
-// var opensyllabusApp = angular.module('opensyllabus', [ "templateModule", "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router"]);
+// var opensyllabusApp = angular.module('opensyllabus', [ "templateModule", "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router" , "checklist-model"]);
 
 opensyllabusApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function ($compileProvider, tmhDynamicLocaleProvider ) {
     'use strict';
@@ -19,7 +19,7 @@ opensyllabusApp.config(function($stateProvider, $urlRouterProvider) {
     'use strict';
     //
     // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise("/syllabus");
+    $urlRouterProvider.otherwise("/home");
     //
     // Now set up the states
     $stateProvider
@@ -34,10 +34,20 @@ opensyllabusApp.config(function($stateProvider, $urlRouterProvider) {
 });
 
 
-opensyllabusApp.run( ['editableOptions', function(editableOptions) { 
+opensyllabusApp.run( ['editableOptions', '$httpBackend', function(editableOptions, $httpBackend) { 
     'use strict';
     
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+
+    // $httpBackend.whenPOST(/\/v1\/syllabus\/2/).respond(function(method, url, data) {
+    //     debugger;
+    //     data = angular.fromJson(data);
+    //     if(data.name === 'error') {
+    //       return [500, 'Error message']; 
+    //     } else {
+    //       return [200, {status: 'ok'}]; 
+    //     }
+    // });
 }]);
 
 // Création du module template

@@ -90,6 +90,7 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ALERT_SUCCESS_SAVE_SYLLABUS: 'The course outline has been saved.',
         ALERT_RUBRIC_EXISTS: 'The rubric already exists',
         ALERT_SUCCESS_ADD_SYLLABUS: 'The specific syllabus has been added.',
+        ALERT_SUCCESS_DELETE_SYLLABUS: 'The suppression succeeded',
         CALENDAR_TODAY : 'Today',
         CALENDAR_NOW : 'Now',
         CALENDAR_DATE : 'Date',
@@ -126,7 +127,15 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         MODAL_LIBELLE_NEW_SYLLABUS: 'Label',
         MODAL_TITLE_DELETE_SYLLABUS: 'Alert',
         MODAL_DESCRIPTION_DELETE_SYLLABUS: 'Delete the course outline ',
-        MODAL_SECTIONS_DELETE_SYLLABUS: 'The following sections have been assigned to this course outline. You have to retire them from the course outline.'
+        MODAL_SECTIONS_DELETE_SYLLABUS: 'The following sections have been assigned to this course outline. You have to retire them from the course outline.',
+        TABLE_NAME : 'Course outline',
+        TABLE_AUTHOR : 'Author',
+        TABLE_SECTIONS : 'Sections',
+        TABLE_STATUS : 'Status',
+        DELETE_SYLLABUS_OK : 'The following courses outlines will be deleted',
+        DELETE_SYLLABUS_KO : 'The following courses outlines can\'t be deleted because there are sections attached to them',
+        HOME_ERREUR_NAME: 'The name must be specified',
+        HOME_NO_SECTION: 'No section'
     })
     .translations('fr', {
         MENU_LABEL: 'Menu du cours',
@@ -215,6 +224,7 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         ALERT_SUCCESS_SAVE_SYLLABUS: 'Le plan de cours a été sauvegardé.',
         ALERT_RUBRIC_EXISTS: 'La rubrique est déjà présente',
         ALERT_SUCCESS_ADD_SYLLABUS: 'Le syllabus a bien été ajouté.',
+        ALERT_SUCCESS_DELETE_SYLLABUS: 'La suppression a réussi',
         CALENDAR_TODAY : 'Aujourd\'hui', 
         CALENDAR_NOW : 'Maintenant',
         CALENDAR_DATE : 'Date',
@@ -251,7 +261,15 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         MODAL_LIBELLE_NEW_SYLLABUS: 'Libellé',
         MODAL_TITLE_DELETE_SYLLABUS: 'Alerte',
         MODAL_DESCRIPTION_DELETE_SYLLABUS: 'Supprimer le plan de cours ',
-        MODAL_SECTIONS_DELETE_SYLLABUS: 'Les sections suivantes sont assignées à ce plan de cours. Vous devez d\'abord les retirer du plan de cours.'
+        MODAL_SECTIONS_DELETE_SYLLABUS: 'Les sections suivantes sont assignées à ce plan de cours. Vous devez d\'abord les retirer du plan de cours.',
+        TABLE_NAME : 'Plan de cours',
+        TABLE_AUTHOR : 'Auteur',
+        TABLE_SECTIONS : 'Sections',
+        TABLE_STATUS : 'Statut',
+        DELETE_SYLLABUS_OK : 'Les plans de cours suivant vont être supprimés',
+        DELETE_SYLLABUS_KO : 'Les plans de cours suivant ne peuvent pas être supprimés car il y a des sections associées',
+        HOME_ERREUR_NAME: 'Le nom doit être indiqué',
+        HOME_NO_SECTION: 'Aucune section'
     });
 
      $translateProvider.preferredLanguage('fr');

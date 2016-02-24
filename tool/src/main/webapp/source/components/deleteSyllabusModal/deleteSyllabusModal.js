@@ -1,21 +1,35 @@
 ﻿
-opensyllabusApp.controller('DeleteSyllabusModalCtrl',  [ '$scope', '$uibModalInstance', '$translate', 'SyllabusService', 'TreeService', 'AlertService', 'data', 'config', 'mockup' , function ($scope, $uibModalInstance, $translate, SyllabusService, TreeService, AlertService, data, config, mockup) {
+opensyllabusApp.controller('DeleteSyllabusModalCtrl',  [ '$scope', '$uibModalInstance', '$translate', 'SyllabusService', 'TreeService', 'AlertService', 'config', 'mockup', 'syllabusList' , function ($scope, $uibModalInstance, $translate, SyllabusService, TreeService, AlertService, config, mockup, syllabusList) {
     'use strict';
 
-    $scope.sections = mockup.sections;
+    // $scope.sections = mockup.sections;
+    $scope.syllabusList = syllabusList.syllabusList;
+
+    $scope.syllabusToDelete = [];
+    $scope.syllabusNotToDelete = [];
+
+    // Initialize a list with syllabus which can be deleted, and another which cannot be deleted
+    for (var i = 0 ; i < $scope.syllabusList.length; i++ ) {
+        if ( $scope.syllabusList[i].sections.length === 0 ) { 
+            $scope.syllabusToDelete.push($scope.syllabusList[i]);
+        }
+        else if ( $scope.syllabusList[i].sections.length > 0 ) {
+            $scope.syllabusNotToDelete.push($scope.syllabusList[i]);
+        }
+    }
+
 
     $scope.ok = function () {
 
-        var savePromise = SyllabusService.saveSyllabusSpec(data);
+        var deletePromise = SyllabusService.deleteSyllabusList($scope.syllabusToDelete);
         SyllabusService.setWorking(true);
 
-        savePromise.$promise.then(function($data) {
+        deletePromise.$promise.then(function($data) {
             // alert ajout ok
             AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_ELEMENT'));
-            SyllabusService.setSyllabus($data);
-            // refresh the reference of the selected item and refresh the right panel
-            // TreeService.setSelectedItemFromId(selectedItemId);
-            TreeService.setSelectedItemFromEmplacement(emplacement);
+
+            // TODO : refresh syllabus list
+
         }, function ($error){
             // alert ajout ko
             AlertService.display('danger');

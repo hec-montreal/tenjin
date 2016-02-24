@@ -24,32 +24,40 @@
         
       <table>
         <tr>
-          <th>Plan de cours</th>
-          <th>Auteur</th>
-          <th>Sections</th>
-          <th>Statut</th>
+          <th>{{ 'TABLE_NAME' | translate }}</th>
+          <th>{{ 'TABLE_AUTHOR' | translate }}</th>
+          <th>{{ 'TABLE_SECTIONS' | translate }}</th>
+          <th>{{ 'TABLE_STATUS' | translate }}</th>
           <th> </th>
           <th class="th-select"> </th>
         </tr>
 
         <tr data-ng-repeat="syllabus in homeCtrl.syllabusList">
           <td>
-          {{syllabus.name}}
+            <a href="#" editable-text="syllabus.name" onbeforesave="homeCtrl.updateName($data, syllabus)">{{syllabus.name}}</a>
+          
           </td>
           <td>
           {{syllabus.createdBy}}
           </td>
           <td>
-            <span data-ng-repeat="section in syllabus.sections">{{section}}<span data-ng-if="$index !== syllabus.sections.length-1">, </span></span>
-          </td>
+
+            <span data-ng-if="syllabus.shareable" data-ng-repeat="section in syllabus.sections">{{homeCtrl.sections[section].name}}<span data-ng-if="$index !== syllabus.sections.length-1">, </span></span>
+
+            <a data-ng-if="!syllabus.shareable" href="#" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in homeCtrl.sections" onbeforesave="homeCtrl.updateSections($data, syllabus)">
+              <!-- test -->
+              {{ homeCtrl.showSections(syllabus) }}
+            </a>
+
+          </td> 
           <td>
-          {{homeCtrl.config.statusLabel[syllabus.status] | translate }}
+          {{ syllabus.status | translate }}
           </td>
           <td>
               <a>{{ 'LINK_SYLLABUS' | translate }}</a>
           </td>
           <td>
-              <input type="checkbox" name="" />
+              <input data-ng-if="!syllabus.shareable" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="homeCtrl.enableDelete()" /> 
           </td>
         </tr> 
 
@@ -57,7 +65,7 @@
 
       <div class="button-container-delete">
           <!-- DELETE -->
-          <button class="btn btn-primary" type="button" data-ng-click="homeCtrl.deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
+          <button class="btn btn-primary" type="button" data-ng-disabled="homeCtrl.disableDelete" data-ng-click="homeCtrl.deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
       
       </div>
 
