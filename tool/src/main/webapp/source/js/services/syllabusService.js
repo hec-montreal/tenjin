@@ -1,6 +1,7 @@
 ﻿opensyllabusApp.service('SyllabusService', ['$rootScope', '$resource', '$http', 'Modernizr', function ($rootScope, $resource, $http, Modernizr){
     'use strict';
 
+    this.currentSyllabusId;
     this.syllabus;
     this.syllabusSaved;
     this.template;
@@ -55,8 +56,9 @@
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusElementProvider = $resource('v1/syllabus');
 
-    var sylProvider = $resource('v1/syllabus');
-    var sylProviderId = $resource('v1/syllabus/:id');
+    var sylProvider = $resource('v1/syllabus.json');
+    var sylProviderList = $resource('v1/syllabus.json', {}, {'get':{method:'GET', isArray: true}});
+    var sylProviderId = $resource('v1/syllabus/:id.json');
 
     this.save =  function($data) {
         var syllabusProviderSave = $resource('v1/syllabus/'+$data.siteId+'.json');
@@ -82,14 +84,13 @@
         return sylProvider.delete($syllabusList);
     };
 
-    this.loadSyllabus =  function() {  
-        // return syllabusProvider.getSyllabus({sectionId : "A01,B03"});   
-        return syllabusProvider.get();
+    this.loadSyllabus =  function($syllabusId) {   
+        // return syllabusProvider.get();
+        return sylProviderId.get({id : $syllabusId});
     };
 
-    this.loadSyllabusList =  function() {  
-        // return syllabusProvider.getSyllabus({sectionId : "A01,B03"});   
-        return sylProvider.get();
+    this.loadSyllabusList =  function() {    
+        return sylProviderList.get({siteId : "test"});
     };
 
     this.loadTemplate = function() {
@@ -421,6 +422,10 @@
             this.syllabus.elements[i].$hidden = false;
             hideAllChildren(this.syllabus.elements[i]);
         } 
+    };
+
+    this.setCurrentSyllabusId = function($syllabusId) {
+        this.currentSyllabusId = $syllabusId;
     };
 
 

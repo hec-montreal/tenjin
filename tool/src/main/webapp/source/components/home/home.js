@@ -39,12 +39,13 @@ opensyllabusApp.directive('home', ['$timeout', '$translate','TreeService', 'Syll
                 this.syllabusList = mockup.syllabusList;
             } else {
                 // this.syllabusList = mockup.syllabusList;
-                
+                // SyllabusService.loadSyllabusList().$promise.then(function() {
+                //     debugger;
+                // });
                 // Load the syllabus list
                 loadSyllabusList().finally(function() {
                      this.infos.working = false; 
                 });
-                // this.infos.working = true;
             }
 
 
@@ -115,6 +116,10 @@ opensyllabusApp.directive('home', ['$timeout', '$translate','TreeService', 'Syll
 
             this.updateSections = function($data, $syllabus) {         
                 return SyllabusService.saveSyl($syllabus).$promise;
+            };
+
+            this.redirectToSyllabus = function($syllabusId) {
+                SyllabusService.setCurrentSyllabusId($syllabusId);
             };
 
             $timeout(function() {

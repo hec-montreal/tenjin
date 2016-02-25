@@ -140,11 +140,42 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	}
 
 	@Override
-	public Syllabus getSyllabus(String courseId, String sectionId) throws NoSyllabusException {
-		Syllabus syllabus;
+	public List<Syllabus> getSyllabusList(String siteId) throws NoSyllabusException, NoSiteException {
+		List<Syllabus> syllabusList = new ArrayList<Syllabus>();
+
+	    // get contextual site Id
+		String contextSiteId = "";
+		try {
+			contextSiteId = getCurrentSiteContext();
+		} catch (IdUnusedException e) {
+		    e.printStackTrace();
+		    throw new NoSiteException();
+		}
+		
+		// compare context site id with the param site id
+		if (siteId == contextSiteId) {
+			try {
+//				syllabusList = syllabusDao.getSyllabusList(siteId);
+				return syllabusList;
+			} catch (Exception e) {
+				log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
+				throw new NoSyllabusException();
+			}
+		} else {
+			// error
+//			throw new SiteException();
+		}
+		
+		return syllabusList;
+	}
+    
+	@Override
+	public Syllabus getSyllabus(String courseId) throws NoSyllabusException {
+		Syllabus syllabus = null;
 
 		try {
-			syllabus = syllabusDao.getSyllabus(courseId, sectionId);
+			// TODO : change DAO
+//			syllabus = syllabusDao.getSyllabus(courseId);
 			return syllabus;
 		} catch (Exception e) {
 			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
@@ -185,51 +216,6 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 		return results;
 	}
-
-	/*
-	 * il faudra au moins mettre les valeurs en cache?
-	 * ZCII-2008
-	 */
-//	private void getRules(TemplateStructure structure, HashMap<String, HashMap<String, Object>> map) {
-//
-//		if (structure!= null && structure.getParentId() != null) {
-//			
-//			HashMap<String, Object> elementObject;
-//			elementObject = new HashMap<String, Object>();
-//			elementObject.put("displayInMenu", structure.getDisplayInMenu());
-//			elementObject.put("mandatory", structure.getMandatory());
-//			// add template structure to the main map
-//			map.put(structure.getId().toString(), elementObject);
-//			
-//			List<Object> elementList;
-//
-//			String parentId = structure.getParentId().toString();
-//
-//			if (!map.containsKey(parentId)) {
-//				elementObject = new HashMap<String, Object>();
-//				elementList = new ArrayList<Object>();
-//				elementObject.put("elements", elementList);
-//				map.put(parentId, elementObject);
-//
-//			} else {
-//				elementList = (List<Object>) map.get(parentId).get("elements");
-//				
-//			}
-//
-//			Map<String, Object> templateElementMap = new HashMap<String, Object>();
-//			templateElementMap.put("id", structure.getId());
-//			templateElementMap.put("type", structure.getTemplateElement().getType().getTitle());
-//			templateElementMap.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
-//			// add child template element to the list of the parent element
-//			elementList.add(templateElementMap);
-//		}
-//
-//		for (TemplateStructure elem : structure.getElements()) {
-//			getRules(elem, map);
-//		}
-//
-//		return;
-//	}
 
 
 	/*
@@ -291,6 +277,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return syllabus;
 
 	}
+	
 
 	private String getCurrentSiteContext () throws IdUnusedException, NoSiteException{
 		String siteRef = null;

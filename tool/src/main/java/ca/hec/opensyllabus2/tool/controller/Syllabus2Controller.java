@@ -62,7 +62,7 @@ import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
  * @version $Id: $
  */
 @Controller
-@RequestMapping(value = "v1/syllabus")
+@RequestMapping(value = "v1")
 public class Syllabus2Controller {
 
 	@Setter
@@ -81,31 +81,56 @@ public class Syllabus2Controller {
 
 	}
 
-	@RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
-	public @ResponseBody Syllabus getSyllabus(@PathVariable String courseId,
-			@RequestParam(value = "sectionId", required = false) String sectionId) throws NoSyllabusException {
+	@RequestMapping(value = "/syllabus", method = RequestMethod.GET)
+	public @ResponseBody List<Syllabus> getSyllabusList(@RequestParam(value = "siteId", required = true) String siteId) throws NoSyllabusException, NoSiteException {
 
-		Syllabus syllabus = null;
+		List<Syllabus> syllabusList = null;
 
-		if (sectionId != null) {
-			int nbParams = countParams(sectionId);
-			if (nbParams <= 1) {
-				// We get the syllabus of the specified section
-				syllabus = osyl2Service.getSyllabus(courseId, sectionId);
-			} else {
-				// We get the common syllabus of the specified sections
-				syllabus = osyl2Service.getCommonSyllabus(courseId, getParams(sectionId));
-			}
-		} else {
-			syllabus = osyl2Service.getShareableSyllabus(courseId);
+		if (siteId != null) {
+			
+			// We get the syllabus list of the specified site id
+			syllabusList = osyl2Service.getSyllabusList(siteId);
 
+		} 
+
+		return syllabusList;
+
+	}
+	
+	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.GET)
+	public @ResponseBody Syllabus getSyllabus(@PathVariable String courseId) throws NoSyllabusException {
+
+		Object tmpSyllabus = null;
+		
+		try {
+			tmpSyllabus = osyl2Service.loadSyllabus();
+		} catch (NoSiteException e) {
+			e.getMessage();
+			//return e.toJSON();
 		}
-
-		return syllabus;
+		return (Syllabus)tmpSyllabus;
+		
+//		Syllabus syllabus = null;
+//		try {
+//			syllabus = osyl2Service.getSyllabus();
+//		} catch (NoSiteException e) {
+//			e.getMessage();
+//			//return e.toJSON();
+//		}
+//		
+//		return syllabus;
 
 	}
 
-	@RequestMapping(value = "/init", method = RequestMethod.GET)
+	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
+	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSiteException {
+
+		return osyl2Service.createOrUpdateSyllabus(syllabus);
+	}
+
+	
+
+	@RequestMapping(value = "/syllabus/init", method = RequestMethod.GET)
 	public @ResponseBody Object loadSyllabus() throws NoSyllabusException {
 
 		Object syllabus = null;
@@ -120,12 +145,13 @@ public class Syllabus2Controller {
 		return syllabus;
 	}
 
-	@RequestMapping(value = "/{siteId}", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSiteException {
-
-		return osyl2Service.createOrUpdateSyllabus(syllabus);
-	}
-
+//	@RequestMapping(value = "/syllabus/{siteId}", method = RequestMethod.POST)
+//	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSiteException {
+//
+//		return osyl2Service.createOrUpdateSyllabus(syllabus);
+//	}
+//
+	
 	private int countParams(String parameters) {
 		int nb = parameters.split(",").length;
 
@@ -162,7 +188,7 @@ public class Syllabus2Controller {
 					long idEl = idElement*1000 - i;
 					el.setId(idEl);
 					
-					// recursivité sur les éléments enfants
+					// recursion on the children
 					recursiveAddElements(templateStructure, el, locale, idEl);
 					
 					elements.add(el);
@@ -202,7 +228,7 @@ public class Syllabus2Controller {
 					long idElement = level*1000 - i;
 					element.setId(idElement);
 
-					// recursivité sur les éléments enfants
+					// recursion on the children
 					recursiveAddElements(templateStructure, element, locale, idElement);
 					
 					elements.add(element);

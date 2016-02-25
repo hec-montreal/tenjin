@@ -34,7 +34,7 @@
 
         <tr data-ng-repeat="syllabus in homeCtrl.syllabusList">
           <td>
-            <a href="#" editable-text="syllabus.name" onbeforesave="homeCtrl.updateName($data, syllabus)">{{syllabus.name}}</a>
+            <a editable-text="syllabus.name" onbeforesave="homeCtrl.updateName($data, syllabus)">{{syllabus.name}}</a>
           
           </td>
           <td>
@@ -54,7 +54,7 @@
           {{ syllabus.status | translate }}
           </td>
           <td>
-              <a>{{ 'LINK_SYLLABUS' | translate }}</a>
+              <a ui-sref="syllabus" data-ng-click="homeCtrl.redirectToSyllabus(syllabus.id)">{{ 'LINK_SYLLABUS' | translate }}</a> 
           </td>
           <td>
               <input data-ng-if="!syllabus.shareable" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="homeCtrl.enableDelete()" /> 

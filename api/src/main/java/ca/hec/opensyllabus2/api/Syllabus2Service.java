@@ -68,12 +68,19 @@ public interface Syllabus2Service {
 	/**
 	 * Retrieves the syllabus associated to a specific section and sectionId.
 	 * @param courseId
-	 * @param sectionId
 	 * @return
 	 * @throws NoSyllabusException
 	 */
-	public Syllabus getSyllabus (String courseId, String sectionId ) throws NoSyllabusException;
+	public Syllabus getSyllabus(String courseId) throws NoSyllabusException;
 
+	/**
+	 * Retrieve the syllabus list for the current user in the active site
+	 *
+	 * @return the syllabus list of the site or an error message
+	 * @throws NoSiteException
+	 */
+	public List<Syllabus> getSyllabusList(String siteId) throws NoSyllabusException, NoSiteException;
+	
 	/**
 	 * Retrieves the syllabus at the top of the hierarchy associated to the courseId.
 	 * @param courseId
@@ -114,5 +121,9 @@ public interface Syllabus2Service {
 	 * @throws NoSiteException if no site is specified by the syllabus
 	 */
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException;
+
+
+
+
 
 }

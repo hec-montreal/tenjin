@@ -19,7 +19,7 @@ opensyllabusApp.config(function($stateProvider, $urlRouterProvider) {
     'use strict';
     //
     // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise("/home");
+    $urlRouterProvider.otherwise("/syllabus");
     //
     // Now set up the states
     $stateProvider

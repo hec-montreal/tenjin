@@ -7,7 +7,6 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
  
     $scope.alertService = AlertService;
     $scope.syllabusService = SyllabusService;
-
     $scope.resourcesService = ResourcesService;
 
     $scope.planLoaded = false;
@@ -83,14 +82,10 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
         console.time('xhr');
         $scope.infos.working = true;
     	//var results = SyllabusService.getSyllabus();
-        var results = SyllabusService.loadSyllabus();
-        var resultsTemplate = SyllabusService.loadTemplate();
-
 
         // console.log(results);
-
-        var loadSyllabusAndTemplate = function(){
-        	return $q.allSettled([results.$promise, resultsTemplate.$promise]).then( function(data) {
+        var loadSyllabusAndTemplate = function($syllabusId?){
+            return $q.allSettled([SyllabusService.loadSyllabus($syllabusId).$promise, SyllabusService.loadTemplate().$promise]).then(function(data) {
 
                 // data contient d'abord le résultat de la première requête
                 if (data[0].state === "fulfilled") {
@@ -146,16 +141,16 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
        	    });
         };
 
-      var loadSakaiTools = function(){
-        return SakaiToolsService.loadToolEntities(SyllabusService.syllabus.siteId).$promise.then(function($data){
-               $rootScope.$broadcast('TOOLS_LOADED');
-               SakaiToolsService.setToolsEntities($data);
+        var loadSakaiTools = function(){
+            return SakaiToolsService.loadToolEntities(SyllabusService.syllabus.siteId).$promise.then(function($data){
+                $rootScope.$broadcast('TOOLS_LOADED');
+                SakaiToolsService.setToolsEntities($data);
             }, function($error){
                 // erreur load resources
-        });
-      };
+            });
+        };
         
-      var loadResources = function (){
+        var loadResources = function (){
         	return ResourcesService.loadResources(SyllabusService.syllabus.siteId).$promise.then(function($data){
                 ResourcesService.setResources($data.content_collection[0]);
 
@@ -192,16 +187,18 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
             });
         };
 
-   
-      // Chargement du plan de cours et du template, puis des ressources
-        loadSyllabusAndTemplate()
-    	.then(loadResources)
+
+        var syllabusId = $scope.syllabusService.currentSyllabusId || 1;
+        // Chargement du plan de cours et du template, puis des ressources
+        loadSyllabusAndTemplate(syllabusId)
+        .then(loadResources)
         .then(loadCitations)
         .then(loadSakaiTools)
-    	.finally(function(){
-             console.dir(ResourcesService.resources);
-            $scope.infos.working = false;   		
+        .finally(function() {
+            console.dir(ResourcesService.resources);
+            $scope.infos.working = false;
         });
+
 
     }
 

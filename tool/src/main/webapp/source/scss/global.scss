@@ -164,6 +164,28 @@ body {
             color: #444;
         }
     }
+    
+    .editable-checklist {
+        position: absolute;
+        border: 1px solid #777;
+        background-color: #fff;
+        padding: 10px;
+        z-index: 100;
+        top: 0;
+
+        label {
+            display: block;
+        }
+
+        .editable-buttons {
+            display: block;
+
+            button[type="submit"] {
+                margin-left: 0;
+            }
+
+        }
+    }
 
     form.editable-wrap {
         .btn > span {
