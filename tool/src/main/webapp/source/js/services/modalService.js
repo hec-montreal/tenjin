@@ -5,10 +5,6 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
 
     this.confirmDelete = function($parent, $element) {
 
-        // var offset = angular.element($event.target).prop('offsetLeft');
-        // var modal = angular.element(document.querySelector('.modal'));
-        // modal.css('top', offset);
-
         var modalInstance = $uibModal.open({
           animation: true,
           templateUrl: 'deleteModal/deleteModalContent.html',
@@ -30,10 +26,6 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
 
 
     this.createElement = function($type, $parent) {
-
-        // var offset = angular.element($event.target).prop('offsetLeft');
-        // var modal = angular.element(document.querySelector('.modal'));
-        // modal.css('top', offset);
 
         var modalInstance = $uibModal.open({
           animation: true,

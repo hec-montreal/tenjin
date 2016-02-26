@@ -29,10 +29,6 @@ opensyllabusApp.service('AlertService', ['$translate',  function ($translate){
         alerts[$type].visible = true;
     };
 
-    // this.display = function($type) {
-    //     alerts[$type].visible = true;
-    // };
-
     this.display = function($type, $msg) {    
         alerts[$type].msg = $msg || defaultMsg[$type];
         alerts[$type].visible = true;

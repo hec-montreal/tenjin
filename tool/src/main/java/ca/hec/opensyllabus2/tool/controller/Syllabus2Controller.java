@@ -110,9 +110,10 @@ public class Syllabus2Controller {
 		}
 		return (Syllabus)tmpSyllabus;
 		
+		// TODO : use getSyllabus with the courseId
 //		Syllabus syllabus = null;
 //		try {
-//			syllabus = osyl2Service.getSyllabus();
+//			syllabus = osyl2Service.getSyllabus(courseId);
 //		} catch (NoSiteException e) {
 //			e.getMessage();
 //			//return e.toJSON();
