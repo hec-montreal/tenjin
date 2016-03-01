@@ -89,10 +89,10 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
         // Si le formulaire associé à l'élément comprend des dates
         if ( $scope.element.$formHasDates ) {
             // CONTROLE date affichage
-            if ($scope.element.availabilityStartDate ) {
+            if ($scope.element.availability_start_date ) {
                 // convert to timestamp
-                if ( Object.prototype.toString.call($scope.element.availabilityStartDate) === '[object Date]' ) {
-                    $scope.element.availabilityStartDate = $scope.element.availabilityStartDate.getTime();
+                if ( Object.prototype.toString.call($scope.element.availability_start_date) === '[object Date]' ) {
+                    $scope.element.availability_start_date = $scope.element.availability_start_date.getTime();
                 }
 
             } else {       

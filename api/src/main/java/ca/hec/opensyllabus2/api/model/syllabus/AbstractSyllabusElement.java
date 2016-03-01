@@ -47,7 +47,7 @@ public abstract class AbstractSyllabusElement {
 
     private Boolean hasDatesInterval;
     
-    private Date availabilityStartDate;
+    private Date availability_start_date;
     private Date availabilityEndDate;
 
     private Date createdDate;
@@ -71,7 +71,7 @@ public abstract class AbstractSyllabusElement {
     	this.setShareable(e.getShareable());
     	this.setImportant(e.getImportant());
     	this.setDisplayOrder(e.getDisplayOrder());
-    	this.setAvailabilityStartDate(e.getAvailabilityStartDate());
+    	this.setAvailability_start_date(e.getAvailability_start_date());
     	this.setAvailabilityEndDate(e.getAvailabilityEndDate());
     	this.setCreatedDate(e.getCreatedDate());
     	this.setCreatedBy(e.getCreatedBy());
@@ -79,6 +79,7 @@ public abstract class AbstractSyllabusElement {
     	this.setLastModifiedBy(e.getLastModifiedBy());
     	this.setSections(e.getSections());
     	this.setAttributes(e.getAttributes());
+    	this.setHasDatesInterval(e.getHasDatesInterval());
     }
 }
 

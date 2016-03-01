@@ -10,7 +10,7 @@
         'glyphicon-chevron-right': collapsed,
         'glyphicon-chevron-down': !collapsed
       }"></span></a>
-        {{::item.name}}
+        {{::item.name | translate}}
     </span>
 
     <span data-ng-if="item.osylType === 'citationList' && type === 'citation'" class="folder">

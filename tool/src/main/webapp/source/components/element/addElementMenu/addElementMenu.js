@@ -44,7 +44,7 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
                         'type': $type.type,
                         'parentId': $scope.element.id,
                         'templateStructureId': $type.id,
-                        'availabilityStartDate': Date.now(),
+                        'availability_start_date': Date.now(),
                         'title': $type.label
                     };
                     $scope.mode = "creation";

@@ -22,7 +22,7 @@ opensyllabusApp.directive('hyperlinkElementForm', function (){
         },
         link: function ($scope, $element) {
             // Date actuelle par défaut
-            // $scope.element.availabilityStartDate = Date.now();
+            // $scope.element.availability_start_date = Date.now();
         }
 
     };

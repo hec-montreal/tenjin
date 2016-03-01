@@ -83,6 +83,9 @@ public class SiteToolsController {
 
     	private static Log log = LogFactory.getLog(SiteToolsController.class);
     	
+    	public final String BLOCKED_FORUM_TOPIC = "forum_topic";
+    	
+    	public final String BLOCKED_TOPIC = "topic";
 	@Setter
     	@Autowired
     	private SessionManager sessionManager;
@@ -127,39 +130,42 @@ public class SiteToolsController {
     				new String[] { siteId, currentUserId }, true);
     		entityList = new ArrayList<Object>();
     
-    		if (entities != null && !entities.isEmpty()) {
-    		    
-    		    for (String ent : entities) {
-    			entityMap = new HashMap<String, Object>();
-    			entityMap.put("resourceId", ent);
-    			name = entityBroker.getPropertyValue(ent, "title");
-    			entityMap.put("name", name);
-    			// Have to pass through direct to get to the entity
-    			entityMap.put("url",
-    				ServerConfigurationService.getServerUrl()
-    					+ "/direct" + ent);
-    			entityMap.put("osylType", "sakai_entity");
-    			entityMap.put("tool", provider);
-    			entityList.add(entityMap);
-    		    }
-    		}
-    
-    		if (entityList.size() > 0) {
-    		    resourceFolder = new HashMap<String, Object>();
-    		    
-    		    if (allTools.containsKey("resourceChildren")) {
-    			resourceChildren =
-    				 (List<Object>) allTools
-    					.get ("resourceChildren");
-    		    }
-    		    
-    		    resourceFolder.put("name", provider);
-    		    resourceFolder.put("osylType", "folder");
-    		    resourceFolder.put("resourceChildren", entityList);
-    		    resourceChildren.add(resourceFolder);
-    		    
-    		    allTools.put("resourceChildren", resourceChildren);
-    		}
+		if (!provider.equalsIgnoreCase(BLOCKED_TOPIC)
+			&& !provider.equalsIgnoreCase(BLOCKED_FORUM_TOPIC)) {
+		    if (entities != null && !entities.isEmpty()) {
+
+			for (String ent : entities) {
+			    entityMap = new HashMap<String, Object>();
+			    entityMap.put("resourceId", ent);
+			    name = entityBroker.getPropertyValue(ent, "title");
+			    entityMap.put("name", name);
+			    // Have to pass through direct to get to the entity
+			    entityMap.put("url",
+				    ServerConfigurationService.getServerUrl()
+					    + "/direct" + ent);
+			    entityMap.put("osylType", "sakai_entity");
+			    entityMap.put("tool", provider);
+			    entityList.add(entityMap);
+			}
+		    }
+
+		    if (entityList.size() > 0) {
+			resourceFolder = new HashMap<String, Object>();
+
+			if (allTools.containsKey("resourceChildren")) {
+			    resourceChildren =
+				    (List<Object>) allTools
+					    .get("resourceChildren");
+			}
+
+			resourceFolder.put("name", provider.toUpperCase());
+			resourceFolder.put("osylType", "folder");
+			resourceFolder.put("resourceChildren", entityList);
+			resourceChildren.add(resourceFolder);
+
+			allTools.put("resourceChildren", resourceChildren);
+		    }
+		}
     	    }
     	} catch (IdUnusedException e) {
     	    e.printStackTrace();
