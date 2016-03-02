@@ -138,7 +138,7 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         HOME_NO_SECTION: 'No section',
         FORUM: 'Forum',
         ASSIGNMENT: 'Assignments',
-        SAM_PUB: 'Tests & Quizzes'
+        SAM_PUB: 'Tests et Quizzes'
     })
     .translations('fr', {
         MENU_LABEL: 'Menu du cours',
@@ -275,7 +275,7 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         HOME_NO_SECTION: 'Aucune section',
         FORUM: 'Forum',
         ASSIGNMENT: 'Remise de travaux',
-        SAM_PUB: 'Tests & Quiz'
+        SAM_PUB: 'Tests et Quiz'
     });
 
      $translateProvider.preferredLanguage('fr');
