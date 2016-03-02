@@ -39,6 +39,8 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
 
             $scope.open = function($event) {
                 $scope.status.opened = true;
+                 $scope.element.$formHasDates = true;
+                 $scope.element.availability_start_date = Date.now();
             };
 
             // Disable weekend selection
@@ -48,16 +50,20 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
 
             $scope.openRetrait = function($event) {
                 $scope.statusRetrait.opened = true;
+                 $scope.element.$formHasDates = true;
+                 $scope.element.$hasEndDate = true;
+                 $scope.element.availability_start_date = Date.now();
             };
         },
         link: function ($scope, $element) {
 
-            $scope.element.availability_start_date = Date.now();
+           // $scope.element.availability_start_date = Date.now();
           
 
-            $scope.element.$formHasDates = true;
+           
 
             $scope.element.hasDatesInterval = $scope.element.hasDatesInterval || false;
+            $scope.element.$formHasDates = $scope.element.hasDatesInterval;
         }
 
 

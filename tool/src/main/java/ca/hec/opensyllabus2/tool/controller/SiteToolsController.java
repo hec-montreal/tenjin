@@ -144,7 +144,7 @@ public class SiteToolsController {
 				    ServerConfigurationService.getServerUrl()
 					    + "/direct" + ent);
 			    entityMap.put("osylType", "sakai_entity");
-			    entityMap.put("tool", provider);
+			    entityMap.put("tool", provider.toUpperCase());
 			    entityList.add(entityMap);
 			}
 		    }

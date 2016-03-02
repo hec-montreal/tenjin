@@ -101,7 +101,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
             }
 
             // CONTROLE date retrait
-            if ($scope.hasEndDate){
+            if ($scope.element.hasEndDate){
                 if ($scope.element.availabilityEndDate) {
                     // convert to timestamp
                     if ( Object.prototype.toString.call($scope.element.availabilityEndDate) === '[object Date]' ) {
