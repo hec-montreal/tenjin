@@ -1,8 +1,8 @@
-ï»¿<div class="element-form form-contact"> 
+<div class="element-form form-contact"> 
     
     <div class="container-contact">
         <div class="row row-content">
-            <!-- PrÃ©nom -->
+            <!-- Prénom -->
             <div class="col-md-2">
                 <label for="prenom">
                     {{ 'FORM_DOCUMENT_PRENOM' | translate }} <span class="mandatory"></span> 
@@ -34,12 +34,12 @@
             <div class="col-md-4">
                 <select name="select-titre" id="select-titre" class="select-titre"
                   ng-options="option.name for option in data.availableOptions track by option.id"
-                  ng-model="data.selectedOption"></select>
+                  ng-model="data.selectedOption" data-ng-click="selectedTitle(data.selectedOption)"></select>
             </div>
         </div>
 
         <div class="row row-content">
-            <!-- TÃ©lÃ©phone -->
+            <!-- Téléphone -->
             <div class="col-md-2">
                 <label for="telephone">
                     {{ 'FORM_DOCUMENT_TELEPHONE' | translate }}
@@ -55,7 +55,7 @@
                 </label>
             </div>
             <div class="col-md-4">
-                <input type="text" name="courriel" id="courriel" data-ng-model="element.attributes.contactEmail" />
+                <input type="email" name="courriel" id="courriel" data-ng-model="element.attributes.contactEmail" />
             </div>
         </div>
 
@@ -72,7 +72,7 @@
         </div>
     </div>
 
-    <!-- DisponibilitÃ©s -->
+    <!-- Disponibilités -->
     <div class="label-text-description">{{ 'FORM_DOCUMENT_DISPONIBILITES' | translate }}</div>
     <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptionsDisponibilite" data-ng-model="element.attributes.disponibilites" required></textarea>
 

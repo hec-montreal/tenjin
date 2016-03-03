@@ -1,25 +1,24 @@
-.element-contact {
+.contact-info {
 
-    .contact-firstname,
-    .contact-lastname {
-        color: #444;
-        font-size: 16px;
-        // font-weight: bold;
-        padding: 1px 0 0;
+    .titre-element {
+        font-weight: bold;
     }
 
     .contact-lastname {
-        margin-left: 5px;
         text-transform: uppercase;
     }
 
+	.contact-disponibilite{
+		display: inline-block;  
+	}
     .contact-title,
     .contact-email,
     .contact-tel,
     .contact-officeroom {
         // font-size: 11px;
         // margin-left: 5px;
-        padding: 0 0 2px;
+        //padding: 0 0 2px;
     }
+
 
 }

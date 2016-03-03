@@ -48,6 +48,10 @@
 
                 selectedOption: {id: '1', name: ''} //This sets the default value of the select in the ui
             };
+
+            $scope.selectedTitle = function ( $option){
+                $scope.element.attributes.contactTitle = $option.name;
+            };
         }        
     };
 
