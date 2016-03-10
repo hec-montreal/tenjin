@@ -5,15 +5,13 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta http-equiv="X-UA-Compatible" content="IE=11" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>OpenSyllabus 2</title>
 
 	<link rel="stylesheet" href="/opensyllabus2-tool/lib/bootstrap/css/bootstrap.css"/>
 
-	<link rel="stylesheet" href="/opensyllabus2-tool/css/opensyllabus.css"/>
+	<link rel="stylesheet" href="/opensyllabus2-tool/css/opensyllabus.css"/>  
 	<link rel="stylesheet" href="/opensyllabus2-tool/node_modules/angular-ui-tree/dist/angular-ui-tree.min.css">  
-
 
 	<!--<script src="/opensyllabus2-tool/lib/jquery/jquery-2.1.3.min.js"></script> -->
 
