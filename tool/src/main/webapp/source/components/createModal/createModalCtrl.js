@@ -15,6 +15,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
         $scope.mode = "edition";
         $scope.title = $translate.instant('MODALE_EDIT_ELEMENT_TITLE');
     } else {
+        
         // Creation
         $scope.type = type;
 

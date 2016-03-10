@@ -97,7 +97,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
 
     };
 
-     this.deleteSyllabus = function($syllabusList) {
+    this.deleteSyllabus = function($syllabusList) {
 
         // var offset = angular.element($event.target).prop('offsetLeft');
         // var modal = angular.element(document.querySelector('.modal'));

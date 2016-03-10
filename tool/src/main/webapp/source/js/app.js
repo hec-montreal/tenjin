@@ -11,7 +11,7 @@ opensyllabusApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function
     // use this in production to improve performance
     // $compileProvider.debugInfoEnabled(false);
 
-    tmhDynamicLocaleProvider.localeLocationPattern('http://localhost:8080/opensyllabus2-tool/lib/angular/i18n/angular-locale_{{locale}}-ca.js');
+    tmhDynamicLocaleProvider.localeLocationPattern('/opensyllabus2-tool/lib/angular/i18n/angular-locale_{{locale}}-ca.js');
 }]);
 
 
