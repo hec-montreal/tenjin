@@ -12,7 +12,7 @@
     <div editable-text="element.type" class="titre-element" data-ng-if="element.title"> {{element.title }}</div>
     <div [innerHtml]="element.description" class="comment"></div>
 
-    </div>
+    </div> 
     `
 })
 

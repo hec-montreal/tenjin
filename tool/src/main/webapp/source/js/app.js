@@ -12,7 +12,7 @@ opensyllabusApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function
     // $compileProvider.debugInfoEnabled(false);
 
     // TODO : Change url for production
-    tmhDynamicLocaleProvider.localeLocationPattern('/opensyllabus2-tool/node_modules/angular-i18n/angular-locale_{{locale}}-ca.js');
+    tmhDynamicLocaleProvider.localeLocationPattern('/opensyllabus2-tool/lib/locale/angular-locale_{{locale}}-ca.js');
 }]);
 
 

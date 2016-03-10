@@ -35,7 +35,9 @@
     "tsd": "0.6.5",
     "typescript": "^1.8.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp-uglify": "^1.5.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
