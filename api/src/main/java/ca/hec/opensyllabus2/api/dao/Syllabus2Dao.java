@@ -24,6 +24,7 @@ import java.util.List;
 
 import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
 
 /**
  *
@@ -32,19 +33,37 @@ import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
  */
 public interface Syllabus2Dao {
 
-	public Syllabus getSyllabus (String courseId, String sectionId) throws Exception;
+	public Syllabus getSyllabus(Long id, boolean retrieveElements);
 
-	public Syllabus getShareableSyllabus (String courseId )throws Exception;
+	public List<Syllabus> getSyllabusList(String siteId);
+	
+	/**
+	 * Retrieves the syllabus associated to a specific site, section and shareable status
+	 *  TODO: implementation is incomplete (doesn't work for sectionId)
+	 * @param String siteId
+	 * @param String sectionId
+	 * @param Boolean shareable
+	 * @return The syllabus associated with the specified section or the shareable
+	 */
+	public Syllabus getSyllabus(String siteId, String sectionId, Boolean shareable);
 
-	public Syllabus getCommonSyllabus (String courseId, String[] sectionIds)throws Exception;
+	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId);
 
-	public List<AbstractSyllabusElement> getSyllabusElements(Long id);
+	public List<AbstractSyllabusElement> getSyllabusElements(Long syllabusId);
 
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus);
+	public AbstractSyllabusElement getSyllabusElement(Long elementId);
 
-	public AbstractSyllabusElement saveOrUpdateSyllabusElement(AbstractSyllabusElement element);
+	/**
+	 * Save a hibernate object to the database (merge them if it's already in the session).
+	 * @param Object o
+	 * @return The saved object
+	 */
+	public Object save(Object o);
 
-	public void deleteSyllabusElement(AbstractSyllabusElement element);
-
+	/**
+	 * Delete a hibernate object to the database (merge them if it's already in the session).
+	 * @param Object o
+	 */
+	public void delete(Object o);
 }
 

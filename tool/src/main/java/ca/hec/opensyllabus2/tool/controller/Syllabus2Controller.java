@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import ca.hec.opensyllabus2.api.Syllabus2Service;
@@ -82,45 +83,34 @@ public class Syllabus2Controller {
 	}
 
 	@RequestMapping(value = "/syllabus", method = RequestMethod.GET)
-	public @ResponseBody List<Syllabus> getSyllabusList(@RequestParam(value = "siteId", required = true) String siteId) throws NoSyllabusException, NoSiteException {
+	public @ResponseBody ResponseEntity<List<Syllabus>> getSyllabusList(@RequestParam(value = "siteId", required = false) String siteId) {
 
 		List<Syllabus> syllabusList = null;
 
-		if (siteId != null) {
-			
+		try {
 			// We get the syllabus list of the specified site id
 			syllabusList = osyl2Service.getSyllabusList(siteId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		} 
-
-		return syllabusList;
+		return new ResponseEntity<List<Syllabus>>(syllabusList, HttpStatus.OK);
 
 	}
 	
-	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.GET)
-	public @ResponseBody Syllabus getSyllabus(@PathVariable String courseId) throws NoSyllabusException {
+	@RequestMapping(value = "/syllabus/{syllabusId}", method = RequestMethod.GET)
+	public @ResponseBody Syllabus getSyllabus(@PathVariable Long syllabusId) throws NoSyllabusException {
 
-		Object tmpSyllabus = null;
-		
+		// TODO remove this part.
 		try {
-			tmpSyllabus = osyl2Service.loadSyllabus();
-		} catch (NoSiteException e) {
-			e.getMessage();
-			//return e.toJSON();
+		if (syllabusId == -1L) {
+			return osyl2Service.getShareableSyllabus(osyl2Service.getCurrentSiteContext());
 		}
-		return (Syllabus)tmpSyllabus;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		// TODO : use getSyllabus with the courseId
-//		Syllabus syllabus = null;
-//		try {
-//			syllabus = osyl2Service.getSyllabus(courseId);
-//		} catch (NoSiteException e) {
-//			e.getMessage();
-//			//return e.toJSON();
-//		}
-//		
-//		return syllabus;
-
+		return osyl2Service.getSyllabus(syllabusId);
 	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
@@ -128,30 +118,6 @@ public class Syllabus2Controller {
 
 		return osyl2Service.createOrUpdateSyllabus(syllabus);
 	}
-
-	
-
-	@RequestMapping(value = "/syllabus/init", method = RequestMethod.GET)
-	public @ResponseBody Object loadSyllabus() throws NoSyllabusException {
-
-		Object syllabus = null;
-		
-		try {
-			syllabus = osyl2Service.loadSyllabus();
-		} catch (NoSiteException e) {
-			e.getMessage();
-			return e.toJSON();
-		}
-
-		return syllabus;
-	}
-
-//	@RequestMapping(value = "/syllabus/{siteId}", method = RequestMethod.POST)
-//	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSiteException {
-//
-//		return osyl2Service.createOrUpdateSyllabus(syllabus);
-//	}
-//
 	
 	private int countParams(String parameters) {
 		int nb = parameters.split(",").length;
@@ -255,10 +221,9 @@ public class Syllabus2Controller {
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public @ResponseBody Syllabus handleNoSyllabusException(NoSyllabusException ex) {
 		Syllabus syllabus = new Syllabus();
-		syllabus.setCourseTitle("Default title");
+		syllabus.setTitle("Default title");
 		syllabus.setTemplateId(1L);
 		syllabus.setLocale("fr_CA");
-		syllabus.setSiteId(ex.getSiteId());
 		
 		//List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
 
@@ -267,6 +232,14 @@ public class Syllabus2Controller {
 			Template template = osyl2Service.getTemplate(1L);
 
 			syllabus = initSyllabusFromTemplate(template, syllabus, syllabus.getLocale());
+
+			try {
+				syllabus.setSiteId(osyl2Service.getCurrentSiteContext());
+				syllabus.setCourseTitle(osyl2Service.getCurrentSiteContext());
+				syllabus.setShareable(true);
+			} catch (Exception e) {
+				log.error("No context found");
+			}
 
 		} catch (IdUnusedException e1) {
 			// TODO Auto-generated catch block

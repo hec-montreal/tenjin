@@ -7,125 +7,91 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ca.hec.opensyllabus2.api.dao.*;
 import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
 
 public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Dao {
 
 	private Log log = LogFactory.getLog(Syllabus2DaoImpl.class);
 
-     public Syllabus2DaoImpl (){
+	@Override
+	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId) {
+		List<SyllabusElementMapping> mappings =
+				getHibernateTemplate().find("from SyllabusElementMapping mapping where syllabusId = ? order by syllabusElement.parentId, displayOrder", syllabusId);
 
-    }
-
-	public Syllabus getShareableSyllabus(String courseId) throws Exception{
-		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where site_id = ?", courseId);
-		Syllabus shareable = syllabi.get(0);
-
-		shareable.setElements(this.getStructuredSyllabusElements(shareable.getId()));
-		return shareable;
+		return mappings;
 	}
 
-	public List<AbstractSyllabusElement> getSyllabusElements(Long id) {
-		List<AbstractSyllabusElement> elements =
-				getHibernateTemplate().find("from AbstractSyllabusElement where syllabus_id = ? order by parent_id, display_order", id);
-		/*List<AbstractSyllabusElement> elements =
-				getHibernateTemplate().find("from AbstractSyllabusElement where syllabus_id = ?", id);*/
+	// TODO probably remove this? May be unnecessary
+	@Override
+	public Syllabus getSyllabus(String siteId, String sectionId, Boolean shareable) {
+		List<Syllabus> syllabi = 
+				getHibernateTemplate().find("from Syllabus where siteId = ? and shareable = ?", siteId, shareable);
+		Syllabus syllabus = syllabi.get(0);
+		syllabus.setElements(getStructuredSyllabusElements(syllabus.getId()));
+		return syllabi.get(0);
+	}
+	
+	@Override
+	public Syllabus getSyllabus(Long id, boolean retrieveElements) {
+		List<Syllabus> syllabi = getHibernateTemplate().find("from Syllabus where id = ?", id);
+		
+		Syllabus syllabus = syllabi.get(0); 
+		if (retrieveElements) {
+			syllabus.setElements(getStructuredSyllabusElements(id));
+		}
+		
+		return syllabus;
+	}
 
+	@Override
+	public List<Syllabus> getSyllabusList(String siteId) {
+		List<Syllabus> syllabi;
+		if (null != siteId) {
+			syllabi = getHibernateTemplate().find("from Syllabus where site_id = ?", siteId);
+		} else {
+			syllabi = getHibernateTemplate().find("from Syllabus");
+		}
+		return syllabi;
+	}
+
+	@Override
+	public List<AbstractSyllabusElement> getSyllabusElements(Long syllabusId) {
+		List<AbstractSyllabusElement> elements = 
+				getHibernateTemplate().find(
+						"select element from SyllabusElementMapping as mapping "
+						+ "join mapping.syllabusElement as element "
+						+ "where mapping.syllabusId = ?", syllabusId);
+		
 		return elements;
+		
 	}
-
-	@Override
-	public Syllabus getSyllabus(String courseId, String sectionId) throws Exception {
-		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where site_id = ?", courseId);
-		return syllabi.get(0);
-
-	}
-
-	@Override
-	public Syllabus getCommonSyllabus(String courseId, String[] sectionIds) {
-		List<Syllabus> results = null;
-		Syllabus syllabus = null;
-		/*
-		if (courseId == null)
-		    throw new IllegalArgumentException();
-
-		try{
-			String hql = "from Syllabus syll LEFT JOIN FETCH syll.syllabusStructures where site_id = :courseId";
-			Query query = getSession().createQuery(hql);
-			query.setParameter("courseId", courseId);
-			results = query.list();
-		} catch (Exception e) {
-		    log.error("Unable to retrieve syllabus by its course id", e);
-		    throw e;
-	}
-
-	if (results.size() >= 1) {
-	    syllabus = results.get(0);
-	  //syllabusStructures = syllabus.getSyllabusStructures();
-	    Iterator it = syllabus.getSyllabusStructures().iterator();
-	    SyllabusStructure sstructure = null;
-	    while (it.hasNext()){
-	    	sstructure = ((SyllabusStructure)it.next());
-	    }
-	    System.out.println(syllabus);
-		return syllabus;
-	} else{
-	    throw new Exception("No syllabus with course id= " + courseId);
-    }
-*/
-		List<Syllabus> syllabi =  getHibernateTemplate().find("from Syllabus where site_id = ?", courseId);
-		return syllabi.get(0);
-	}
-
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) {
-		try {
-			getHibernateTemplate().saveOrUpdate(syllabus);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return syllabus;
-	}
-
-	public AbstractSyllabusElement saveOrUpdateSyllabusElement(AbstractSyllabusElement element) {
-		log.debug("Create or update syllabus element : " + element.getId());
-
-		try {
-			getHibernateTemplate().saveOrUpdate(element);
-		} catch (DuplicateKeyException e) {
-			// object already loaded in the session, merge them
-			getHibernateTemplate().merge(element);
-		}
-
-		return element;
-	}
-
-	public void deleteSyllabusElement(AbstractSyllabusElement element) {
-		log.debug("Delete syllabus element : " + element.getId());
-
-		try {
-			getHibernateTemplate().delete(element);
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-		}
-
+	
+	public AbstractSyllabusElement getSyllabusElement(Long elementId) {
+		List<AbstractSyllabusElement> elements;
+		elements = getHibernateTemplate().find("from AbstractSyllabusElement where id = ?", elementId);
+		return elements.get(0);
 	}
 
 	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Long id) {
 
-		List<AbstractSyllabusElement> elements = this.getSyllabusElements(id);
+		List<SyllabusElementMapping> elementMappings = this.getSyllabusElementMappings(id);
+		
 		List<AbstractSyllabusElement> structuredElements = new ArrayList<AbstractSyllabusElement>();
 		Map<Long, AbstractSyllabusElement> elementMap = new HashMap<Long, AbstractSyllabusElement>();
 
-    	for (AbstractSyllabusElement currElement : elements) {
-
+    	for (SyllabusElementMapping currElementMapping : elementMappings) {
+    		AbstractSyllabusElement currElement = currElementMapping.getSyllabusElement(); 
+    		
+    		// set the hidden property for the element (from the mapping) so it can be used in UI
+    		currElement.setHidden(currElementMapping.getHidden());
+    		currElement.setDisplayOrder(currElementMapping.getDisplayOrder());
+    		
     		// Add current element to the lookup map (only needed if it's composite), or replace the dummy one that was inserted previously
     		if (currElement instanceof SyllabusCompositeElement) {
     			if (elementMap.containsKey(currElement.getId())) {
@@ -156,31 +122,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
     				// should be safe to cast to composite, because another element specified it as a parent
     				parent = ((SyllabusCompositeElement)elementMap.get(currElement.getParentId()));
     			}
-    			
-//    			// Add child element sorted by display order
-//    			// if there are already elements then compare the display order to insert the new element at the good position
-//    			if ( parent.getElements().size() > 0) {
-//	    			int index = -1;
-//	    			for (int i = 0; i < parent.getElements().size(); i++) {
-//	    				AbstractSyllabusElement el = parent.getElements().get(i);
-//	    				if (el.getDisplayOrder() > currElement.getDisplayOrder()) {
-//	    					index = i;
-//	    					break;
-//	    				}
-//	    			}
-//	    			// insert the new element
-//	    			if (index != -1) {
-//	    				parent.getElements().add(index, currElement);
-//	    			} else {
-//	    			// append the element	
-//	    				parent.getElements().add(currElement);
-//	    			}
-//    			} else {
-//    				// append the element
-//    				parent.getElements().add(currElement);
-//    			}
-    			
-    			parent.getElements().add(currElement.getDisplayOrder(), currElement);
+    			parent.getElements().add(currElementMapping.getDisplayOrder(), currElement);
 
     		}
     	}
@@ -188,4 +130,23 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
     	return structuredElements;
 	}
 
+	@Override
+	public Object save(Object o) {
+		try {
+			return getHibernateTemplate().save(o);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public void delete(Object o) {
+		try {
+			getHibernateTemplate().delete(o);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

@@ -34,17 +34,18 @@ public abstract class AbstractSyllabusElement {
 	private Long id;
 	private Long parentId;
 	private Long templateStructureId;
-	private Long syllabusId;
+	private String siteId;
 
 	private String title;
 	private String description;
 
 	private Boolean publicElement;
-    private Boolean shareable;
     private Boolean important;
     
+    // not mapped by hibernate because it's actually from SyllabusElementMapping
+    private Boolean hidden;
     private Integer displayOrder;
-
+    
     private Boolean hasDatesInterval;
     
     private Date availability_start_date;
@@ -55,7 +56,6 @@ public abstract class AbstractSyllabusElement {
     private Date lastModifiedDate;
     private String lastModifiedBy;
 
-    private Set<String> sections;
     private Map<String, String> attributes;
 
     // force each subclass to return a type
@@ -64,20 +64,19 @@ public abstract class AbstractSyllabusElement {
     public void copy(AbstractSyllabusElement e) {
     	this.setParentId(e.getParentId());
     	this.setTemplateStructureId(e.getTemplateStructureId());
-    	this.setSyllabusId(e.getSyllabusId());
+    	this.setSiteId(e.getSiteId());
     	this.setTitle(e.getTitle());
     	this.setDescription(e.getDescription());
     	this.setPublicElement(e.getPublicElement());
-    	this.setShareable(e.getShareable());
     	this.setImportant(e.getImportant());
     	this.setDisplayOrder(e.getDisplayOrder());
+    	this.setHidden(e.getHidden());
     	this.setAvailability_start_date(e.getAvailability_start_date());
     	this.setAvailabilityEndDate(e.getAvailabilityEndDate());
     	this.setCreatedDate(e.getCreatedDate());
     	this.setCreatedBy(e.getCreatedBy());
     	this.setLastModifiedDate(e.getLastModifiedDate());
     	this.setLastModifiedBy(e.getLastModifiedBy());
-    	this.setSections(e.getSections());
     	this.setAttributes(e.getAttributes());
     	this.setHasDatesInterval(e.getHasDatesInterval());
     }

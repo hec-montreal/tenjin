@@ -18,7 +18,6 @@ opensyllabusApp.directive('home', ['$timeout', '$translate','TreeService', 'Syll
             this.infos = {};
             this.disableDelete = true;
  
-            this.syllabusList = mockup.syllabusList;
             this.sections = mockup.sections;
 
             var loadSyllabusList = function (){

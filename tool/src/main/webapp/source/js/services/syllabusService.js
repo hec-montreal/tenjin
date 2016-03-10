@@ -89,8 +89,8 @@
         return sylProviderId.get({id : $syllabusId});
     };
 
-    this.loadSyllabusList =  function() {    
-        return sylProviderList.get({siteId : "test"});
+    this.loadSyllabusList =  function($siteId) {    
+        return sylProviderList.get({siteId : $siteId});
     };
 
     this.loadTemplate = function() {
@@ -173,7 +173,7 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id && !$rootTree.siteId) { 
+            if ($rootTree.id === $parent.id) {
                 // si l'élément existe déjà on le supprime et on le remplace (modification)
                 var modification = false;
                 for (var i = 0; i < $rootTree.elements.length; i++){
@@ -211,7 +211,7 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id && !$rootTree.siteId) {   
+            if ($rootTree.id === $parent.id) {
                 if ($rootTree.elements.length > 0) {
 
                     // vérifie si la rubrique a déjà été insérée
@@ -296,7 +296,7 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id && !$rootTree.siteId) { 
+            if ($rootTree.id === $parent.id) { 
                 // si l'élément existe déjà on le supprime et on le remplace
                 for (var i = 0; i < $rootTree.elements.length; i++){
                     if ($rootTree.elements[i].id === $element.id) {
@@ -389,7 +389,7 @@
 
     var hideItems = function($rootTree, $item, $levelTmp, $navigation) {
    
-        if ($rootTree.id === $item.id && !$rootTree.siteId) {
+        if ($rootTree.id === $item.id) {
             $rootTree.$hidden = false;
             $navigation.level = $levelTmp;
 

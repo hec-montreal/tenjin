@@ -29,7 +29,7 @@ opensyllabusApp.config(function($stateProvider, $urlRouterProvider) {
         template: "<home></home>"
     })
     .state('syllabus', {
-        url: "/syllabus",
+        url: "/syllabus", //TODO: add id du syllabus
         templateUrl: "opensyllabus/opensyllabus.html"
     });
 });

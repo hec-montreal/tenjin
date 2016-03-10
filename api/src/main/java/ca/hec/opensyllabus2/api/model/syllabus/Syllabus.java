@@ -1,17 +1,11 @@
 package ca.hec.opensyllabus2.api.model.syllabus;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 /**
 *
@@ -21,16 +15,34 @@ import lombok.NoArgsConstructor;
 */
 
 @Data
+@EqualsAndHashCode(exclude={"elements"})
 public class Syllabus {
 
 	private Long id;
     private String siteId;
     private String courseTitle;
+    private String title;
     private Long templateId;
     private String locale;
+    private Boolean shareable;
     private String createdBy;
     private Date createdDate;
     private String lastModifiedBy;
     private Date lastModifiedDate;
     private List<AbstractSyllabusElement> elements;
+    private Set<String> sections;
+    
+    public void copy(Syllabus syllabus) {
+    	this.setSiteId(syllabus.getSiteId());
+    	this.setCourseTitle(syllabus.getCourseTitle());
+    	this.setTitle(syllabus.getTitle());
+    	this.setTemplateId(syllabus.getTemplateId());
+    	this.setLocale(syllabus.getLocale());
+    	this.setShareable(syllabus.getShareable());
+    	this.setCreatedBy(syllabus.getCreatedBy());
+    	this.setCreatedDate(syllabus.getCreatedDate());
+    	this.setLastModifiedBy(syllabus.getLastModifiedBy());
+    	this.setLastModifiedDate(syllabus.getLastModifiedDate());
+    	this.setSections(syllabus.getSections());
+    }
  }

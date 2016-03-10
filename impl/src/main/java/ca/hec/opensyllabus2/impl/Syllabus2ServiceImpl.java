@@ -28,6 +28,7 @@ import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.dao.Syllabus2Dao;
 import ca.hec.opensyllabus2.api.dao.TemplateDao;
 import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.opensyllabus2.api.model.template.Template;
@@ -122,80 +123,48 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
     @Setter
 	private ContentHostingService chs;
 
-
-    public Syllabus getShareableSyllabus(String siteId) throws NoSyllabusException {
-		// TODO check if the user is allowed to get the syllabus before
-
-		Syllabus syllabus;
-
-		try {
-			syllabus = syllabusDao.getShareableSyllabus(siteId);
-			return syllabus;
-		} catch (Exception e) {
-			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
-			throw new NoSyllabusException(siteId);
-		}
-
-
-	}
-
-	@Override
-	public List<Syllabus> getSyllabusList(String siteId) throws NoSyllabusException, NoSiteException {
-		List<Syllabus> syllabusList = new ArrayList<Syllabus>();
-
-	    // get contextual site Id
-		String contextSiteId = "";
-		try {
-			contextSiteId = getCurrentSiteContext();
-		} catch (IdUnusedException e) {
-		    e.printStackTrace();
-		    throw new NoSiteException();
-		}
+	public List<Syllabus> getSyllabusList(String siteId) {
+		List<Syllabus> syllabusList = null;
 		
-		// compare context site id with the param site id
-		if (siteId == contextSiteId) {
+		if (siteId == null) {
 			try {
-//				syllabusList = syllabusDao.getSyllabusList(siteId);
-				return syllabusList;
+				siteId = getCurrentSiteContext();
 			} catch (Exception e) {
-				log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
-				throw new NoSyllabusException();
+				log.error("error retrieving current site context");
 			}
-		} else {
-			// error
-//			throw new SiteException();
 		}
-		
+
+		syllabusList = syllabusDao.getSyllabusList(siteId);
 		return syllabusList;
 	}
     
+	//TODO delete this?
 	@Override
-	public Syllabus getSyllabus(String courseId) throws NoSyllabusException {
+	public Syllabus getShareableSyllabus(String siteId) throws NoSyllabusException {
 		Syllabus syllabus = null;
 
 		try {
-			// TODO : change DAO
-//			syllabus = syllabusDao.getSyllabus(courseId);
+			syllabus = syllabusDao.getSyllabus(siteId, "", true);
 			return syllabus;
 		} catch (Exception e) {
 			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
 			throw new NoSyllabusException();
 		}
-
+		
 	}
 
+	
 	@Override
-	public Syllabus getCommonSyllabus(String courseId, String[]  sectionIds) throws NoSyllabusException {
-		Syllabus syllabus;
+	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException {
+		Syllabus syllabus = null;
 
 		try {
-			syllabus = syllabusDao.getCommonSyllabus(courseId, sectionIds);
+			syllabus = syllabusDao.getSyllabus(syllabusId, true);
 			return syllabus;
 		} catch (Exception e) {
 			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
 			throw new NoSyllabusException();
 		}
-
 	}
 
 	@Override
@@ -216,7 +185,6 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 		return results;
 	}
-
 
 	/*
 	 * il faudra au moins mettre les valeurs en cache?
@@ -259,27 +227,9 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 		return;
 	}
-
 	
 	@Override
-	public Object loadSyllabus() throws NoSyllabusException, NoSiteException {
-		String siteId = "";
-		try {
-		    siteId = getCurrentSiteContext();
-		} catch (IdUnusedException e) {
-		    e.printStackTrace();
-		    throw new NoSiteException();
-		}
-
-		//TODO: retreive user allowed access
-		Syllabus syllabus = getShareableSyllabus(siteId);
-
-		return syllabus;
-
-	}
-	
-
-	private String getCurrentSiteContext () throws IdUnusedException, NoSiteException{
+	public String getCurrentSiteContext () throws IdUnusedException, NoSiteException{
 		String siteRef = null;
 		Placement placement = toolManager.getCurrentPlacement();
 		String context = null;
@@ -297,96 +247,129 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException {
 		Date now = new Date();
 
-		if (syllabus.getSiteId() == null) {
-			throw new NoSiteException();
-		}
-
-		// create syllabus if it doesn't exist, otherwise get it's elements from the database.
-		Map<Long, AbstractSyllabusElement> existingSyllabusElements = null;
+		// create syllabus if it doesn't exist, otherwise get it's element mappings from the database.
+		Map<Long, SyllabusElementMapping> existingSyllabusElementMappings = null;
 
 		if (syllabus.getId() == null) {
 			syllabus.setCreatedDate(now);
 			syllabus.setCreatedBy(getCurrentUserDisplayName());
 			syllabus.setLastModifiedDate(now);
 			syllabus.setLastModifiedBy(getCurrentUserDisplayName());
-			syllabusDao.createOrUpdateSyllabus(syllabus);
+			syllabusDao.save(syllabus);
 		} else {
-			existingSyllabusElements = getExistingSyllabusElementMap(syllabus.getId());
+			Syllabus existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false);
+			if (existingSyllabus != syllabus) {
+				//update persistent object,  save handled by hibernate at end of transaction
+				existingSyllabus.copy(syllabus);
+			}
+			
+			existingSyllabusElementMappings = getExistingSyllabusElementMappings(syllabus.getId());
 		}
 
 		// add top-level elements to the search queue (breadth-first traversal)
 		Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
+		int order = 0;
 		for (AbstractSyllabusElement element : syllabus.getElements()) {
-			element.setSyllabusId(syllabus.getId());
+			element.setSiteId(syllabus.getSiteId());
+			element.setDisplayOrder(order++);
 			searchQueue.add(element);
 		}
 
 		while (!searchQueue.isEmpty()) {
 			AbstractSyllabusElement element = searchQueue.remove();
 
-			// if the element has no id or if the id is negative, the element should be saved
-			if ( element.getId() != null && element.getId() < 0) {
-				element.setId(null);
-			}
-			if (element.getId() == null) {
+			// if the element has no id or if the id is negative, the element should be created
+			if (element.getId() == null || element.getId() < 0) {
 				// create this element
 				element.setCreatedBy(getCurrentUserDisplayName());
 				element.setCreatedDate(now);
 				element.setLastModifiedBy(getCurrentUserDisplayName());
 				element.setLastModifiedDate(now);
-				syllabusDao.saveOrUpdateSyllabusElement(element);
+				//TODO set element id to null ?
+				syllabusDao.save(element);
+				// TODO if this is shareable, create a mapping entry for each syllabus
+				createSyllabusElementMapping(syllabus.getId(), element, element.getDisplayOrder(), element.getHidden());
 
-			} else if (existingSyllabusElements != null && !existingSyllabusElements.isEmpty()) {
-
-				//compare element from the new syllabus to what is in the database
-				AbstractSyllabusElement existingElement = existingSyllabusElements.get(element.getId());
+			} else if (existingSyllabusElementMappings != null) {
+				if (existingSyllabusElementMappings.containsKey(element.getId())) {
+					//compare element from the new syllabus to what is in the database
+					SyllabusElementMapping existingElementMapping = existingSyllabusElementMappings.get(element.getId());
 				
-				if (!element.equals(existingElement)) {
+					AbstractSyllabusElement existingElement = existingElementMapping.getSyllabusElement();
+					if (!element.equals(existingElement)) {
 
-					//update persistent object,  save handled by hibernate at end of transaction
-					existingElement.copy(element);
-					existingElement.setLastModifiedBy(getCurrentUserDisplayName());
-					existingElement.setLastModifiedDate(now);
+						//update persistent object,  save handled by hibernate at end of transaction
+						existingElement.copy(element);
+						existingElement.setLastModifiedBy(getCurrentUserDisplayName());
+						existingElement.setLastModifiedDate(now);
+					}
+					
+					// update display order and hidden
+					if (existingElementMapping.getDisplayOrder() != element.getDisplayOrder()) {
+						existingElementMapping.setDisplayOrder(element.getDisplayOrder());
+					}
+					if (existingElementMapping.getHidden() != element.getHidden()) {
+						existingElementMapping.setHidden(element.getHidden());
+					}
+
+					// Remove this element from the map.
+					// Remaining elements at the end will be deleted
+					existingSyllabusElementMappings.remove(element.getId());
+				} else {
+					// TODO: element id specified, assume it exists for now?
+					AbstractSyllabusElement existingElement = syllabusDao.getSyllabusElement(element.getId());
+					createSyllabusElementMapping(
+							syllabus.getId(), existingElement, element.getDisplayOrder(), element.getHidden());
 				}
-
-				// Remove this element from the map.
-				// Remaining elements at the end will be deleted
-				existingSyllabusElements.remove(element.getId());
 			}
 
 			// add this element's children to the search queue
 			if (element instanceof SyllabusCompositeElement) {
 				SyllabusCompositeElement compositeElement = (SyllabusCompositeElement)element;
 				if (compositeElement.getElements() != null) {
-					int i = 0;
+					order = 0;
 					for (AbstractSyllabusElement child : compositeElement.getElements()) {
-							child.setDisplayOrder(i++);
-							child.setParentId(compositeElement.getId());
-							child.setSyllabusId(syllabus.getId());
-							searchQueue.add(child);
+						child.setParentId(compositeElement.getId());
+						child.setSiteId(syllabus.getSiteId());
+						child.setDisplayOrder(order++);
+						searchQueue.add(child);
 					}
 				}
 			}
 
-			log.debug("handled node : " + element.getId() + " parent : " + element.getParentId() + " order : " + element.getDisplayOrder());
+			log.debug("handled node : " + element.getId() + " parent : " + element.getParentId());
 		}
 
-		// delete the syllabus elements that are missing from the new syllabus
-		if (existingSyllabusElements != null && !existingSyllabusElements.isEmpty()) {
-			for (AbstractSyllabusElement element : existingSyllabusElements.values()) {
-				syllabusDao.deleteSyllabusElement(element);
+		// delete the syllabus element mappings that are missing from the new syllabus
+		if (existingSyllabusElementMappings != null && !existingSyllabusElementMappings.isEmpty()) {
+			for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
+				syllabusDao.delete(mapping);
+				// TODO if there are no more mappings, delete the element?
 			}
 		}
 
 		return syllabus;
 	}
 
-	private Map<Long, AbstractSyllabusElement> getExistingSyllabusElementMap(
+	@Override
+	public SyllabusElementMapping createSyllabusElementMapping(Long syllabusId, AbstractSyllabusElement syllabusElement, Integer displayOrder, Boolean hidden) {
+		SyllabusElementMapping mapping = new SyllabusElementMapping();
+		mapping.setSyllabusId(syllabusId);
+		mapping.setSyllabusElement(syllabusElement);
+		mapping.setDisplayOrder(displayOrder);
+		mapping.setHidden(hidden);
+		
+		syllabusDao.save(mapping);
+		return mapping;
+		
+	}
+	
+	private Map<Long, SyllabusElementMapping> getExistingSyllabusElementMappings(
 			Long id) {
 
-		Map<Long, AbstractSyllabusElement> map = new HashMap<Long, AbstractSyllabusElement>();
-		for (AbstractSyllabusElement element : syllabusDao.getSyllabusElements(id)) {
-			map.put(element.getId(), element);
+		Map<Long, SyllabusElementMapping> map = new HashMap<Long, SyllabusElementMapping>();
+		for (SyllabusElementMapping mapping : syllabusDao.getSyllabusElementMappings(id)) {
+			map.put(mapping.getSyllabusElement().getId(), mapping);
 		}
 
 		return map;

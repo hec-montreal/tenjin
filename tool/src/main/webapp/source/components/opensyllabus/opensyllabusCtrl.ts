@@ -188,7 +188,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
         };
 
 
-        var syllabusId = $scope.syllabusService.currentSyllabusId || 1;
+        var syllabusId = $scope.syllabusService.currentSyllabusId || -1;
         // Chargement du plan de cours et du template, puis des ressources
         loadSyllabusAndTemplate(syllabusId)
         .then(loadResources)

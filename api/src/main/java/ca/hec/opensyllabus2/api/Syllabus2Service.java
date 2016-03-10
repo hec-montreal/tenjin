@@ -8,7 +8,9 @@ import org.sakaiproject.exception.IdUnusedException;
 
 import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
 import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
+import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.opensyllabus2.api.model.template.Template;
 
 /**
@@ -54,25 +56,17 @@ public interface Syllabus2Service {
 	 */
 	public String getToolSkinCSS(String skinRepo);
 
-
-	/**
-	 * Retrieve the syllabus for the current user in the active site
-	 *
-	 * @return the syllabus of the site or an error message
-	 * @throws NoSyllabusException
-	 * @throws NoSiteException
-	 */
-	public Object loadSyllabus () throws NoSyllabusException, NoSiteException;
-
-
 	/**
 	 * Retrieves the syllabus associated to a specific section and sectionId.
 	 * @param courseId
 	 * @return
 	 * @throws NoSyllabusException
 	 */
-	public Syllabus getSyllabus(String courseId) throws NoSyllabusException;
+	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException;
 
+
+	public Syllabus getShareableSyllabus(String siteId) throws NoSyllabusException;
+	
 	/**
 	 * Retrieve the syllabus list for the current user in the active site
 	 *
@@ -82,21 +76,12 @@ public interface Syllabus2Service {
 	public List<Syllabus> getSyllabusList(String siteId) throws NoSyllabusException, NoSiteException;
 	
 	/**
-	 * Retrieves the syllabus at the top of the hierarchy associated to the courseId.
-	 * @param courseId
-	 * @return
-	 * @throws NoSyllabusException
+	 * Create a syllabus element mapping and insert it in the database
+	 *
+	 * @return the syllabus element mapping
 	 */
-	public Syllabus getShareableSyllabus (String courseId) throws NoSyllabusException;
-
-	/**
-	 * Retrieves the syllabus content shared by the list of sectionIds.
-	 * @param sectionIds
-	 * @return
-	 * @throws NoSyllabusException
-	 */
-	public Syllabus getCommonSyllabus (String courseId, String[] sectionIds) throws NoSyllabusException;
-
+	public SyllabusElementMapping createSyllabusElementMapping(Long syllabusId, AbstractSyllabusElement syllabusElement, Integer displayOrder, Boolean hidden);
+	
 	/**
 	 * Retrieves the template
 	 * @param templateId
@@ -122,8 +107,6 @@ public interface Syllabus2Service {
 	 */
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException;
 
-
-
-
+	public String getCurrentSiteContext () throws IdUnusedException, NoSiteException;
 
 }

@@ -4,7 +4,7 @@
 
 <hibernate-mapping default-lazy="false">
 	<class name="ca.hec.opensyllabus2.api.model.syllabus.Syllabus"
-		table="OSYL2_SYLLABUS">
+		table="TENJ_SYLLABUS">
 		<id name="id" type="long">
 			<column name="SYLLABUS_ID" />
 			<generator class="native">
@@ -14,14 +14,21 @@
 		<property name="siteId" type="string">
 			<column name="SITE_ID" />
 		</property>
+		<!--  TODO: probably better to get this from web service -->
 		<property name="courseTitle" type="string">
 			<column name="COURSE_TITLE" />
+		</property>
+		<property name="title" type="string">
+			<column name="TITLE" />
 		</property>
 		<property name="templateId" type="long">
 			<column name="TEMPLATE_ID" />
 		</property>
 		<property name="locale" type="string">
 			<column name="LOCALE" />
+		</property>
+		<property name="shareable" type="boolean">
+			<column name="SHAREABLE" />
 		</property>
 		<property name="createdBy" type="string">
 			<column name="CREATED_BY" />
@@ -35,5 +42,10 @@
 		<property name="lastModifiedDate" type="java.util.Date">
 			<column name="LAST_MODIFIED_DATE" />
 		</property>
+		<set name="sections" table="TENJ_SYLLABUSSECTION" cascade="all">
+			<key column="SYLLABUS_ID" />
+			<element column="SECTION" type="string" />
+		</set>
+		
 	</class>
 </hibernate-mapping>
