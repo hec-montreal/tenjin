@@ -31,8 +31,8 @@
 	<!-- <script src="/opensyllabus2-tool/node_modules/angular/angular.js"></script> 
 	<script src="/opensyllabus2-tool/node_modules/es6-shim/es6-shim.js"></script>
 	<script src="/opensyllabus2-tool/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script> -->
-	<!-- <script src="/opensyllabus2-tool/node_modules/typescript/lib/typescript.js"></script>  <!-- dev uniquement  --> -->
-    <!-- <script src="/opensyllabus2-tool/node_modules/reflect-metadata/Reflect.js"></script><!-- use typescript decorator  -->   -->
+	<!-- <script src="/opensyllabus2-tool/node_modules/typescript/lib/typescript.js"></script>-->  <!-- dev uniquement  -->
+    <!-- <script src="/opensyllabus2-tool/node_modules/reflect-metadata/Reflect.js"></script>--><!-- use typescript decorator  -->
 	<!-- <script src="/opensyllabus2-tool/node_modules/angular-dynamic-locale/tmhDynamicLocale.min.js"></script>  
 	<script src="/opensyllabus2-tool/node_modules/angular-promise-extras/angular-promise-extras.js"></script> 
 	<script src="/opensyllabus2-tool/node_modules/angular-resource/angular-resource.min.js"></script> 
