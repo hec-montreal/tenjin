@@ -10,6 +10,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
           templateUrl: 'deleteModal/deleteModalContent.html',
           controller: 'DeleteModalCtrl',
           size: '',
+          backdrop: 'static',
           resolve: {
             parent: function () {
               return $parent;
@@ -32,6 +33,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
           templateUrl: 'createModal/createElementModal.html',
           controller: 'CreateModalCtrl',
           size: '',
+          backdrop: 'static',
           resolve: {
             type: function() {
               return $type;
@@ -60,6 +62,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
           templateUrl: 'createModal/createElementModal.html',
           controller: 'CreateModalCtrl',
           size: '',
+          backdrop: 'static',
           resolve: {
             type: function() {
               return undefined;
@@ -88,6 +91,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
           templateUrl: 'createSyllabusModal/createSyllabusModal.html',
           controller: 'CreateSyllabusModalCtrl',
           size: '',
+          backdrop: 'static',
           resolve: {
             data: $syllabus
           }        
@@ -108,6 +112,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
           templateUrl: 'deleteSyllabusModal/deleteSyllabusModal.html',
           controller: 'DeleteSyllabusModalCtrl',
           size: '',
+          backdrop: 'static',
           resolve: {
             syllabusList: { 'syllabusList':$syllabusList }
           }        
