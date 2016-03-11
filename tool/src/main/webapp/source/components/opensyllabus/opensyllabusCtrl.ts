@@ -195,7 +195,6 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
         .then(loadCitations)
         .then(loadSakaiTools)
         .finally(function() {
-            console.dir(ResourcesService.resources);
             $scope.infos.working = false;
         });
 

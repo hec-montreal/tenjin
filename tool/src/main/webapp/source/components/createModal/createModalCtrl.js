@@ -25,6 +25,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
             'type': $scope.type.type,
             'parentId': $scope.parent.id,
             'templateStructureId': $scope.type.id,
+            'availability_start_date': new Date()
         };
         $scope.title = $translate.instant('MODALE_CREATE_ELEMENT_TITLE');
     }
