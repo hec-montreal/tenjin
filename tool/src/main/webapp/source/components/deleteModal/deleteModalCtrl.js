@@ -16,10 +16,10 @@ opensyllabusApp.controller('DeleteModalCtrl',  [ '$scope', '$translate', '$uibMo
         SyllabusService.deleteElementFromSyllabus(data, $scope.parent, $scope.element);
 
         var savePromise = SyllabusService.save(data);
-        
+        SyllabusService.setWorking(true);
+
         savePromise.$promise.then(function($data) {
-            // alert ajout ok
-            AlertService.display('success', $translate.instant('ALERT_SUCCESS_DELETE_ELEMENT'));
+
             SyllabusService.setSyllabus($data);
             
             // TreeService.setSelectedItemFromId(selectedItemId);
@@ -28,6 +28,8 @@ opensyllabusApp.controller('DeleteModalCtrl',  [ '$scope', '$translate', '$uibMo
             // alert ajout ko
             AlertService.display('danger');
 
+        }).finally(function() {
+             SyllabusService.setWorking(false);
         });
 
 
