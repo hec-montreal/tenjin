@@ -202,7 +202,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			
 			// if the element has a parent and is not mandatory, then add this one to the parent elements list
 			List<Object> elementList;
-			if (structure.getParentId() != null && (structure.getMandatory() == null || structure.getMandatory() == false )) {
+			if (structure.getParentId() != null) {
 				String parentId = structure.getParentId().toString();
 				HashMap<String, Object> parentObject = map.get(parentId);
 		
