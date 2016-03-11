@@ -135,7 +135,7 @@
     var getItemFromEmplacement = function($rootTree, $emplacement, $tmpEmplacement) {
         
         // on regarde tous les éléments hormis l'élément racine
-        if (!$rootTree.siteId && arrayEquals($emplacement.emplacement, $tmpEmplacement.emplacement) === true ) {
+        if (typeof($rootTree.shareable) === "undefined" && arrayEquals($emplacement.emplacement, $tmpEmplacement.emplacement) === true ) {
             return $rootTree;
         } else {
 
@@ -166,7 +166,7 @@
     var getItemFromId = function($rootTree, $id, $emplacement, $tmpEmplacement) {
         
         // compare element id
-        if ($rootTree.id === $id && !$rootTree.siteId) {
+        if ($rootTree.id === $id && typeof($rootTree.shareable) === "undefined") {
             // $emplacement.niveau = $tmpLevel;
             // $emplacement.position = $tmpPosition;
             $emplacement.emplacement = $tmpEmplacement.emplacement.slice();

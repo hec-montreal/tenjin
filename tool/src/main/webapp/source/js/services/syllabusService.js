@@ -173,7 +173,7 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id) {
+            if ($rootTree.id === $parent.id && typeof($rootTree.shareable) === "undefined") {
                 // si l'élément existe déjà on le supprime et on le remplace (modification)
                 var modification = false;
                 for (var i = 0; i < $rootTree.elements.length; i++){
@@ -211,7 +211,7 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id) {
+            if ($rootTree.id === $parent.id && typeof($rootTree.shareable) === "undefined") {
                 if ($rootTree.elements.length > 0) {
 
                     // vérifie si la rubrique a déjà été insérée
@@ -296,7 +296,7 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id) { 
+            if ($rootTree.id === $parent.id && typeof($rootTree.shareable) === "undefined") { 
                 // si l'élément existe déjà on le supprime et on le remplace
                 for (var i = 0; i < $rootTree.elements.length; i++){
                     if ($rootTree.elements[i].id === $element.id) {
