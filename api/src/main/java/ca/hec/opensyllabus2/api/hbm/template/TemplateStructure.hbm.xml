@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false">
-    <class name="ca.hec.opensyllabus2.api.model.template.TemplateStructure" table="OSYL2_TEMPLATESTRUCTURE">
+    <class name="ca.hec.opensyllabus2.api.model.template.TemplateStructure" table="TENJIN_TEMPLATESTRUCTURE">
         <id name="id" type="long">
             <column name="TEMPLATESTRUCTURE_ID" />
             <generator class="native">

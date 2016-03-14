@@ -4,7 +4,7 @@
           "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false">
-	<class name="ca.hec.opensyllabus2.api.model.template.Template" table="OSYL2_TEMPLATE">
+	<class name="ca.hec.opensyllabus2.api.model.template.Template" table="TENJIN_TEMPLATE">
 		<id name="id" type="long" column="TEMPLATE_ID">
 	    	<generator class="native">
                  <param name="sequence">TEMPLATE_ID_SEQ</param>

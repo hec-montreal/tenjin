@@ -3,14 +3,14 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false">
-    <class name="ca.hec.opensyllabus2.api.model.template.TemplateElement" table="OSYL2_TEMPLATEELEMENT">
+    <class name="ca.hec.opensyllabus2.api.model.template.TemplateElement" table="TENJIN_TEMPLATEELEMENT">
         <id name="id" type="long">
             <column name="TEMPLATEELEMENT_ID" />
             <generator class="native">
                  <param name="sequence">TEMPLATEELEMENT_ID_SEQ</param>
         	</generator>
         </id>
-        <map name="labels" table="OSYL2_TEMPLATEELEMENT_I18N">
+        <map name="labels" table="TENJIN_TEMPLATEELEMENT_I18N">
 			<key column="TEMPLATEELEMENT_ID" />
 			<map-key column="locale" type="string" />
 			<element column="label" type="string" />
