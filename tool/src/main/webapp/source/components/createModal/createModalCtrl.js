@@ -33,7 +33,6 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
 
     $scope.ok = function () {
 
-
         // CHECK ELEMENT
         var result = $scope.checkElement($scope.element.type);
 

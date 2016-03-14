@@ -20,7 +20,7 @@ opensyllabusApp.config(function($stateProvider, $urlRouterProvider) {
     'use strict';
     //
     // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise("/syllabus");
+    $urlRouterProvider.otherwise("/home");
     //
     // Now set up the states
     $stateProvider
@@ -29,7 +29,7 @@ opensyllabusApp.config(function($stateProvider, $urlRouterProvider) {
         template: "<home></home>"
     })
     .state('syllabus', {
-        url: "/syllabus", //TODO: add id du syllabus
+        url: "/syllabus/:id", //TODO: add id du syllabus
         templateUrl: "opensyllabus/opensyllabus.html"
     });
 });
@@ -40,20 +40,10 @@ opensyllabusApp.run( ['editableOptions', '$httpBackend', function(editableOption
     
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 
-    // $httpBackend.whenPOST(/\/v1\/syllabus\/2/).respond(function(method, url, data) {
-    //     debugger;
-    //     data = angular.fromJson(data);
-    //     if(data.name === 'error') {
-    //       return [500, 'Error message']; 
-    //     } else {
-    //       return [200, {status: 'ok'}]; 
-    //     }
-    // });
 }]);
 
 // Création du module template
 var templateModule = angular.module("templateModule", []);
-
 
 
 // resize frame (should be done also whenever we change content)

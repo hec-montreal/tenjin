@@ -1,8 +1,9 @@
 ﻿// loader les donnees du plan de cours
-opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interval', '$timeout', '$q', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'config', '$translate', 'AlertService', 'tmhDynamicLocale', 'Modernizr', 'variables', function($rootScope, $scope, $interval, $timeout, $q, SyllabusService, TreeService, ResourcesService, CitationsService, SakaiToolsService, config, $translate, AlertService, tmhDynamicLocale, Modernizr, variables) {
+opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interval', '$timeout', '$q', '$state', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'config', '$translate', 'AlertService', 'tmhDynamicLocale', 'Modernizr', 'variables', function($rootScope, $scope, $interval, $timeout, $q, $state, SyllabusService, TreeService, ResourcesService, CitationsService, SakaiToolsService, config, $translate, AlertService, tmhDynamicLocale, Modernizr, variables) {
 
 	'use strict';
-
+    // debugger;
+    // $state.current;
     $scope.infos = {};
  
     $scope.alertService = AlertService;
@@ -188,7 +189,8 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
         };
 
 
-        var syllabusId = $scope.syllabusService.currentSyllabusId || -1;
+        var syllabusId = $state.params.id || -1;
+
         // Chargement du plan de cours et du template, puis des ressources
         loadSyllabusAndTemplate(syllabusId)
         .then(loadResources)

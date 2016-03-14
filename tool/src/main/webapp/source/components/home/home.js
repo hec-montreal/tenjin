@@ -121,6 +121,10 @@ opensyllabusApp.directive('home', ['$timeout', '$translate','TreeService', 'Syll
                 SyllabusService.setCurrentSyllabusId($syllabusId);
             };
 
+            this.getSyllabusRoute = function($id) {
+                return "syllabus/"+$id;
+            };
+
             $timeout(function() {
                 // anything you want can go here and will safely be run on the next digest.
                 // resize frame (should be done also whenever we change content)

@@ -1,7 +1,7 @@
 ﻿opensyllabusApp.service('SyllabusService', ['$rootScope', '$resource', '$http', 'Modernizr', function ($rootScope, $resource, $http, Modernizr){
     'use strict';
 
-    this.currentSyllabusId;
+    // this.currentSyllabusId;
     this.syllabus;
     this.syllabusSaved;
     this.template;
@@ -424,9 +424,9 @@
         } 
     };
 
-    this.setCurrentSyllabusId = function($syllabusId) {
-        this.currentSyllabusId = $syllabusId;
-    };
+    // this.setCurrentSyllabusId = function($syllabusId) {
+    //     this.currentSyllabusId = $syllabusId;
+    // };
 
 
 }]);
