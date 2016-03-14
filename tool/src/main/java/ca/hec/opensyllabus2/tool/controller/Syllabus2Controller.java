@@ -154,6 +154,9 @@ public class Syllabus2Controller {
 					el.setTemplateStructureId(templateStructure.getId());
 					long idEl = idElement*1000 - i;
 					el.setId(idEl);
+					el.setPublicElement(true);
+					el.setHidden(false);
+					el.setImportant(false);
 					
 					// recursion on the children
 					recursiveAddElements(templateStructure, el, locale, idEl);
@@ -194,6 +197,9 @@ public class Syllabus2Controller {
 					element.setTemplateStructureId(templateStructure.getId());
 					long idElement = level*1000 - i;
 					element.setId(idElement);
+					element.setPublicElement(true);
+					element.setHidden(false);
+					element.setImportant(false);
 
 					// recursion on the children
 					recursiveAddElements(templateStructure, element, locale, idElement);

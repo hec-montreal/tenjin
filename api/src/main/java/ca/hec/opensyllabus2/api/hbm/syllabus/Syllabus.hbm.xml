@@ -4,7 +4,7 @@
 
 <hibernate-mapping default-lazy="false">
 	<class name="ca.hec.opensyllabus2.api.model.syllabus.Syllabus"
-		table="TENJ_SYLLABUS">
+		table="TENJIN_SYLLABUS">
 		<id name="id" type="long">
 			<column name="SYLLABUS_ID" />
 			<generator class="native">
@@ -12,37 +12,37 @@
 			</generator>
 		</id>
 		<property name="siteId" type="string">
-			<column name="SITE_ID" />
+			<column name="SITE_ID" not-null="true" />
 		</property>
 		<!--  TODO: probably better to get this from web service -->
 		<property name="courseTitle" type="string">
-			<column name="COURSE_TITLE" />
+			<column name="COURSE_TITLE" not-null="true" />
 		</property>
 		<property name="title" type="string">
-			<column name="TITLE" />
+			<column name="TITLE" not-null="true" />
 		</property>
 		<property name="templateId" type="long">
-			<column name="TEMPLATE_ID" />
+			<column name="TEMPLATE_ID" not-null="true" />
 		</property>
 		<property name="locale" type="string">
-			<column name="LOCALE" />
+			<column name="LOCALE" not-null="true" />
 		</property>
 		<property name="shareable" type="boolean">
-			<column name="SHAREABLE" />
+			<column name="SHAREABLE" not-null="true" />
 		</property>
 		<property name="createdBy" type="string">
-			<column name="CREATED_BY" />
+			<column name="CREATED_BY" not-null="true" />
 		</property>
 		<property name="createdDate" type="java.util.Date">
-			<column name="CREATED_DATE" />
+			<column name="CREATED_DATE" not-null="true" />
 		</property>
 		<property name="lastModifiedBy" type="string">
-			<column name="LAST_MODIFIED_BY" />
+			<column name="LAST_MODIFIED_BY" not-null="true" />
 		</property>
 		<property name="lastModifiedDate" type="java.util.Date">
-			<column name="LAST_MODIFIED_DATE" />
+			<column name="LAST_MODIFIED_DATE" not-null="true" />
 		</property>
-		<set name="sections" table="TENJ_SYLLABUSSECTION" cascade="all">
+		<set name="sections" table="TENJIN_SYLLABUSSECTION" cascade="all">
 			<key column="SYLLABUS_ID" />
 			<element column="SECTION" type="string" />
 		</set>

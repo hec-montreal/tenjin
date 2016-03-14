@@ -14,8 +14,8 @@
 			<list>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/Syllabus.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/AbstractSyllabusElement.hbm.xml</value>
-				<value>ca/hec/opensyllabus2/api/hbm/syllabus/BaseElementMappings.hbm.xml</value>
-				<value>ca/hec/opensyllabus2/api/hbm/syllabus/CompositeElementMappings.hbm.xml</value>
+				<value>ca/hec/opensyllabus2/api/hbm/syllabus/BasicElements.hbm.xml</value>
+				<value>ca/hec/opensyllabus2/api/hbm/syllabus/CompositeElements.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/syllabus/SyllabusElementMapping.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/Template.hbm.xml</value>
 				<value>ca/hec/opensyllabus2/api/hbm/template/TemplateElement.hbm.xml</value>

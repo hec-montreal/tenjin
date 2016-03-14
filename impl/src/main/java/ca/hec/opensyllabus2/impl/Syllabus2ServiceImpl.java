@@ -285,6 +285,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				element.setCreatedDate(now);
 				element.setLastModifiedBy(getCurrentUserDisplayName());
 				element.setLastModifiedDate(now);
+				element.setHidden(false);
 				//TODO set element id to null ?
 				syllabusDao.save(element);
 				// TODO if this is shareable, create a mapping entry for each syllabus

@@ -6,7 +6,7 @@
 	default-lazy="false" default-cascade="none">
 	<class
 		name="SyllabusElementMapping"
-		table="TENJ_SYLLABUSELEMENTMAPPING">
+		table="TENJIN_SYLLABUSELEMENTMAPPING">
 
 		<id name="id" type="long">
 			<column name="SYLLABUSELEMENTMAPPING_ID" />

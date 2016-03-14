@@ -6,7 +6,7 @@
 	default-lazy="false" default-cascade="none">
 	<class
 		name="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement"
-		table="TENJ_SYLLABUSELEMENT" discriminator-value="0">
+		table="TENJIN_SYLLABUSELEMENT" discriminator-value="0">
 
 		<id name="id" type="long">
 			<column name="SYLLABUSELEMENT_ID" />
@@ -20,7 +20,7 @@
 		</discriminator>
 
 		<property name="siteId" type="string">
-			<column name="SITE_ID" />
+			<column name="SITE_ID" not-null="true"/>
 		</property>
 
 		<property name="parentId" type="long">
@@ -28,7 +28,7 @@
 		</property>
 
 		<property name="templateStructureId" not-null="true" type="long">
-			<column name="TEMPLATESTRUCTURE_ID" />
+			<column name="TEMPLATESTRUCTURE_ID" not-null="true"/>
 		</property>
 
 		<property name="title" type="string">
@@ -57,17 +57,17 @@
 		<property name="availabilityEndDate" column="AVAILABILITY_END_DATE"
 			type="java.util.Date" />
 
-		<property name="createdDate" column="CREATED_DATE"
+		<property name="createdDate" column="CREATED_DATE" not-null="true"
 			type="java.util.Date" />
 
-		<property name="createdBy" column="CREATED_BY" type="string" />
+		<property name="createdBy" column="CREATED_BY" type="string" not-null="true"/>
 
-		<property name="lastModifiedDate" column="LAST_MODIFIED_DATE"
+		<property name="lastModifiedDate" column="LAST_MODIFIED_DATE" not-null="true"
 			type="java.util.Date" />
 
-		<property name="lastModifiedBy" column="LAST_MODIFIED_BY" type="string" />
+		<property name="lastModifiedBy" column="LAST_MODIFIED_BY" type="string" not-null="true"/>
 
-		<map name="attributes" table="TENJ_SYLLABUSELEMENTATTRIBUTE" cascade="all">
+		<map name="attributes" table="TENJIN_SYLLABUSLELEM_ATTRIBUTE" cascade="all">
 			<key column="SYLLABUSELEMENT_ID" />
 			<map-key column="name" type="string" />
 			<element column="value" type="materialized_clob" />
