@@ -33,16 +33,15 @@ import org.springframework.http.HttpStatus;
 @Data
 public class NoSyllabusException extends SyllabusException {
 
-	// Le site pour lequel on n'a pas trouvé de syllabus
-	private String siteId;
+	private Long syllabusId;
 
     public NoSyllabusException (){
     	super(HttpStatus.NOT_FOUND);
     }
 
-    public NoSyllabusException(String siteId) {
+    public NoSyllabusException(Long syllabusId) {
     	super(HttpStatus.NOT_FOUND);
-		this.siteId = siteId;
+		this.syllabusId = syllabusId;
 	}
 
 

@@ -64,7 +64,13 @@ public interface Syllabus2Service {
 	 */
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException;
 
-
+	/**
+	 * Retrieves the common syllabus associated to a specific site.
+	 * 
+	 * @param siteId
+	 * @return
+	 * @throws NoSyllabusException
+	 */
 	public Syllabus getShareableSyllabus(String siteId) throws NoSyllabusException;
 	
 	/**
@@ -104,8 +110,9 @@ public interface Syllabus2Service {
 	 * @param syllabus
 	 * @return the saved syllabus
 	 * @throws NoSiteException if no site is specified by the syllabus
+	 * @throws NoSyllabusException 
 	 */
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException;
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException;
 
 	public String getCurrentSiteContext () throws IdUnusedException, NoSiteException;
 

@@ -7,8 +7,10 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.exception.IdUnusedException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.dao.*;
 import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
@@ -38,10 +40,13 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	}
 	
 	@Override
-	public Syllabus getSyllabus(Long id, boolean retrieveElements) {
-		List<Syllabus> syllabi = getHibernateTemplate().find("from Syllabus where id = ?", id);
+	public Syllabus getSyllabus(Long id, boolean retrieveElements) throws NoSyllabusException {
+		Syllabus syllabus = getHibernateTemplate().get(Syllabus.class, id);
 		
-		Syllabus syllabus = syllabi.get(0); 
+		if (syllabus == null) {
+			throw new NoSyllabusException(id);
+		}
+		
 		if (retrieveElements) {
 			syllabus.setElements(getStructuredSyllabusElements(id));
 		}
@@ -61,17 +66,6 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	}
 
 	@Override
-	public List<AbstractSyllabusElement> getSyllabusElements(Long syllabusId) {
-		List<AbstractSyllabusElement> elements = 
-				getHibernateTemplate().find(
-						"select element from SyllabusElementMapping as mapping "
-						+ "join mapping.syllabusElement as element "
-						+ "where mapping.syllabusId = ?", syllabusId);
-		
-		return elements;
-		
-	}
-	
 	public AbstractSyllabusElement getSyllabusElement(Long elementId) {
 		List<AbstractSyllabusElement> elements;
 		elements = getHibernateTemplate().find("from AbstractSyllabusElement where id = ?", elementId);

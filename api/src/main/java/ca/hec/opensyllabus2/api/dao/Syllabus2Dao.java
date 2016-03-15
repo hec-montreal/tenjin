@@ -22,6 +22,7 @@ package ca.hec.opensyllabus2.api.dao;
 
 import java.util.List;
 
+import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
@@ -33,13 +34,28 @@ import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
  */
 public interface Syllabus2Dao {
 
-	public Syllabus getSyllabus(Long id, boolean retrieveElements);
+	/**
+	 * Retrieve a syllabus by id
+	 * 
+	 * @param Long id
+	 * @param boolean retrieveElements
+	 * @return The syllabus, and it's organized sub-elements if retrieveElements is true.
+	 * @throws NoSyllabusException 
+	 */
+	public Syllabus getSyllabus(Long id, boolean retrieveElements) throws NoSyllabusException;
 
+	/**
+	 * Retrieves the list of syllabi for a given site id
+	 * 
+	 * @param String siteId
+	 * @return The list of syllabi associated with the site id, without their elements
+	 */
 	public List<Syllabus> getSyllabusList(String siteId);
 	
 	/**
 	 * Retrieves the syllabus associated to a specific site, section and shareable status
 	 *  TODO: implementation is incomplete (doesn't work for sectionId)
+	 * 
 	 * @param String siteId
 	 * @param String sectionId
 	 * @param Boolean shareable
@@ -47,14 +63,26 @@ public interface Syllabus2Dao {
 	 */
 	public Syllabus getSyllabus(String siteId, String sectionId, Boolean shareable);
 
+	/**
+	 * Retrieves the syllabus element mappings for the specified syllabusId
+     *  TODO: add parameter for hidden?
+     *  
+	 * @param String syllabusId
+	 * @return The list of syllabus element mappings
+	 */
 	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId);
 
-	public List<AbstractSyllabusElement> getSyllabusElements(Long syllabusId);
-
+	/**
+	 * Retrieves a persistent syllabus element by id 
+     * 
+	 * @param String elementId
+	 * @return The syllabus element
+	 */
 	public AbstractSyllabusElement getSyllabusElement(Long elementId);
 
 	/**
 	 * Save a hibernate object to the database (merge them if it's already in the session).
+	 * 
 	 * @param Object o
 	 * @return The saved object
 	 */
@@ -62,6 +90,7 @@ public interface Syllabus2Dao {
 
 	/**
 	 * Delete a hibernate object to the database (merge them if it's already in the session).
+	 * 
 	 * @param Object o
 	 */
 	public void delete(Object o);

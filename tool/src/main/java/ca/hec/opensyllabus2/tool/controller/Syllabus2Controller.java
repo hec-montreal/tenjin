@@ -114,9 +114,14 @@ public class Syllabus2Controller {
 	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSiteException {
+	public @ResponseBody ResponseEntity<Syllabus> createOrUpdateSyllabus(@RequestBody Syllabus syllabus) {
 
-		return osyl2Service.createOrUpdateSyllabus(syllabus);
+		try {
+			Syllabus s = osyl2Service.createOrUpdateSyllabus(syllabus);
+			return new ResponseEntity<Syllabus>(s, HttpStatus.OK);
+		} catch (NoSyllabusException e) {
+			return new ResponseEntity<Syllabus>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	private int countParams(String parameters) {

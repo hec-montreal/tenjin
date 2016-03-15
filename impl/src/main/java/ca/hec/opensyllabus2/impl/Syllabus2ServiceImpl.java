@@ -43,7 +43,6 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 	private static final Logger log = Logger.getLogger(Syllabus2ServiceImpl.class);
 
-
 	/**
  	* {@inheritDoc}
  	*/
@@ -123,6 +122,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
     @Setter
 	private ContentHostingService chs;
 
+    @Override
 	public List<Syllabus> getSyllabusList(String siteId) {
 		List<Syllabus> syllabusList = null;
 		
@@ -198,7 +198,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			elementObject.put("displayInMenu", structure.getDisplayInMenu());
 			elementObject.put("mandatory", structure.getMandatory());		
 			// add template structure to the main map
-			map.put(structure.getId().toString(), elementObject);		
+			map.put(structure.getId().toString(), elementObject);
 			
 			// if the element has a parent and is not mandatory, then add this one to the parent elements list
 			List<Object> elementList;
@@ -244,12 +244,11 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return siteRef;
 	}
 
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException {
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException {
 		Date now = new Date();
 
 		// create syllabus if it doesn't exist, otherwise get it's element mappings from the database.
 		Map<Long, SyllabusElementMapping> existingSyllabusElementMappings = null;
-
 		if (syllabus.getId() == null) {
 			syllabus.setCreatedDate(now);
 			syllabus.setCreatedBy(getCurrentUserDisplayName());
@@ -270,6 +269,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
 		int order = 0;
 		for (AbstractSyllabusElement element : syllabus.getElements()) {
+			// correct site id and display order
 			element.setSiteId(syllabus.getSiteId());
 			element.setDisplayOrder(order++);
 			searchQueue.add(element);
@@ -280,48 +280,20 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 			// if the element has no id or if the id is negative, the element should be created
 			if (element.getId() == null || element.getId() < 0) {
-				// create this element
-				element.setCreatedBy(getCurrentUserDisplayName());
-				element.setCreatedDate(now);
-				element.setLastModifiedBy(getCurrentUserDisplayName());
-				element.setLastModifiedDate(now);
-				element.setHidden(false);
-				//TODO set element id to null ?
-				syllabusDao.save(element);
-				// TODO if this is shareable, create a mapping entry for each syllabus
-				createSyllabusElementMapping(syllabus.getId(), element, element.getDisplayOrder(), element.getHidden());
-
-			} else if (existingSyllabusElementMappings != null) {
-				if (existingSyllabusElementMappings.containsKey(element.getId())) {
-					//compare element from the new syllabus to what is in the database
-					SyllabusElementMapping existingElementMapping = existingSyllabusElementMappings.get(element.getId());
 				
-					AbstractSyllabusElement existingElement = existingElementMapping.getSyllabusElement();
-					if (!element.equals(existingElement)) {
+				createSyllabusElement(element);
+				createSyllabusElementMapping(syllabus.getId(), element, element.getDisplayOrder(), element.getHidden());
+				// TODO if this is shareable, create a mapping entry for each syllabus
+				
+			} else if (existingSyllabusElementMappings != null &&
+					existingSyllabusElementMappings.containsKey(element.getId())) {
 
-						//update persistent object,  save handled by hibernate at end of transaction
-						existingElement.copy(element);
-						existingElement.setLastModifiedBy(getCurrentUserDisplayName());
-						existingElement.setLastModifiedDate(now);
-					}
-					
-					// update display order and hidden
-					if (existingElementMapping.getDisplayOrder() != element.getDisplayOrder()) {
-						existingElementMapping.setDisplayOrder(element.getDisplayOrder());
-					}
-					if (existingElementMapping.getHidden() != element.getHidden()) {
-						existingElementMapping.setHidden(element.getHidden());
-					}
+				compareAndUpdateSyllabusElementMapping(
+						existingSyllabusElementMappings.get(element.getId()), element);
 
-					// Remove this element from the map.
-					// Remaining elements at the end will be deleted
-					existingSyllabusElementMappings.remove(element.getId());
-				} else {
-					// TODO: element id specified, assume it exists for now?
-					AbstractSyllabusElement existingElement = syllabusDao.getSyllabusElement(element.getId());
-					createSyllabusElementMapping(
-							syllabus.getId(), existingElement, element.getDisplayOrder(), element.getHidden());
-				}
+				// Remove this element from the map.
+				// Remaining elements at the end will be deleted
+				existingSyllabusElementMappings.remove(element.getId());
 			}
 
 			// add this element's children to the search queue
@@ -330,6 +302,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				if (compositeElement.getElements() != null) {
 					order = 0;
 					for (AbstractSyllabusElement child : compositeElement.getElements()) {
+						// correct parent id, site id and display order
 						child.setParentId(compositeElement.getId());
 						child.setSiteId(syllabus.getSiteId());
 						child.setDisplayOrder(order++);
@@ -350,6 +323,42 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		}
 
 		return syllabus;
+	}
+
+	/**
+	 * Update a Persistent syllabus element mapping (including the syllabus element) 
+	 */
+	private void compareAndUpdateSyllabusElementMapping(SyllabusElementMapping existingElementMapping,
+			AbstractSyllabusElement newElement) {
+
+		//compare element from the new syllabus to what is in the database
+		AbstractSyllabusElement existingElement = existingElementMapping.getSyllabusElement();
+		if (!newElement.equals(existingElement)) {
+
+			//update persistent object,  save handled by hibernate at end of transaction
+			existingElement.copy(newElement);
+			existingElement.setLastModifiedBy(getCurrentUserDisplayName());
+			existingElement.setLastModifiedDate(new Date());
+		}
+
+		// update display order and hidden
+		if (existingElementMapping.getDisplayOrder() != newElement.getDisplayOrder()) {
+			existingElementMapping.setDisplayOrder(newElement.getDisplayOrder());
+		}
+		if (existingElementMapping.getHidden() != newElement.getHidden()) {
+			existingElementMapping.setHidden(newElement.getHidden());
+		}
+	}
+
+	private void createSyllabusElement(AbstractSyllabusElement element) {
+		Date now = new Date();
+		// create this element
+		element.setCreatedBy(getCurrentUserDisplayName());
+		element.setCreatedDate(now);
+		element.setLastModifiedBy(getCurrentUserDisplayName());
+		element.setLastModifiedDate(now);
+		element.setHidden(false);
+		syllabusDao.save(element);
 	}
 
 	@Override
