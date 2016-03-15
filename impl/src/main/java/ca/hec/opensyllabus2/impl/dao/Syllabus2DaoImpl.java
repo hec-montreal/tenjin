@@ -22,25 +22,32 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	private Log log = LogFactory.getLog(Syllabus2DaoImpl.class);
 
 	@Override
-	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId) {
-		List<SyllabusElementMapping> mappings =
-				getHibernateTemplate().find("from SyllabusElementMapping mapping where syllabusId = ? order by syllabusElement.parentId, displayOrder", syllabusId);
+	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden) {
+		String query = "from SyllabusElementMapping mapping where syllabusId = ?";
+		if (!hidden) {
+			query += " and hidden = false";
+		}
+		// these must be ordered by display order for each parent id for getStructuredSyllabusElements()
+		query += " order by syllabusElement.parentId, displayOrder";
+		
+		List<SyllabusElementMapping> mappings = 
+				getHibernateTemplate().find(query, syllabusId);
 
 		return mappings;
 	}
 
 	// TODO probably remove this? May be unnecessary
 	@Override
-	public Syllabus getSyllabus(String siteId, String sectionId, Boolean shareable) {
+	public Syllabus getSyllabus(String siteId, String sectionId, Boolean shareable, boolean hidden) {
 		List<Syllabus> syllabi = 
 				getHibernateTemplate().find("from Syllabus where siteId = ? and shareable = ?", siteId, shareable);
 		Syllabus syllabus = syllabi.get(0);
-		syllabus.setElements(getStructuredSyllabusElements(syllabus.getId()));
+		syllabus.setElements(getStructuredSyllabusElements(syllabus.getId(), hidden));
 		return syllabi.get(0);
 	}
 	
 	@Override
-	public Syllabus getSyllabus(Long id, boolean retrieveElements) throws NoSyllabusException {
+	public Syllabus getSyllabus(Long id, boolean retrieveElements, boolean hidden) throws NoSyllabusException {
 		Syllabus syllabus = getHibernateTemplate().get(Syllabus.class, id);
 		
 		if (syllabus == null) {
@@ -48,7 +55,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		}
 		
 		if (retrieveElements) {
-			syllabus.setElements(getStructuredSyllabusElements(id));
+			syllabus.setElements(getStructuredSyllabusElements(id, hidden));
 		}
 		
 		return syllabus;
@@ -72,9 +79,9 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		return elements.get(0);
 	}
 
-	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Long id) {
+	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Long id, boolean hidden) {
 
-		List<SyllabusElementMapping> elementMappings = this.getSyllabusElementMappings(id);
+		List<SyllabusElementMapping> elementMappings = this.getSyllabusElementMappings(id, hidden);
 		
 		List<AbstractSyllabusElement> structuredElements = new ArrayList<AbstractSyllabusElement>();
 		Map<Long, AbstractSyllabusElement> elementMap = new HashMap<Long, AbstractSyllabusElement>();
@@ -116,7 +123,9 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
     				// should be safe to cast to composite, because another element specified it as a parent
     				parent = ((SyllabusCompositeElement)elementMap.get(currElement.getParentId()));
     			}
-    			parent.getElements().add(currElementMapping.getDisplayOrder(), currElement);
+    			
+    			// elements are returned ordered from the query, so we can just add them
+    			parent.getElements().add(currElement);
 
     		}
     	}

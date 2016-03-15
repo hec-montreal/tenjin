@@ -144,7 +144,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		Syllabus syllabus = null;
 
 		try {
-			syllabus = syllabusDao.getSyllabus(siteId, "", true);
+			syllabus = syllabusDao.getSyllabus(siteId, "", true, true);
 			return syllabus;
 		} catch (Exception e) {
 			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
@@ -159,7 +159,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		Syllabus syllabus = null;
 
 		try {
-			syllabus = syllabusDao.getSyllabus(syllabusId, true);
+			syllabus = syllabusDao.getSyllabus(syllabusId, true, true);
 			return syllabus;
 		} catch (Exception e) {
 			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
@@ -246,6 +246,8 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException {
 		Date now = new Date();
+		
+		// add permission check
 
 		// create syllabus if it doesn't exist, otherwise get it's element mappings from the database.
 		Map<Long, SyllabusElementMapping> existingSyllabusElementMappings = null;
@@ -256,7 +258,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			syllabus.setLastModifiedBy(getCurrentUserDisplayName());
 			syllabusDao.save(syllabus);
 		} else {
-			Syllabus existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false);
+			Syllabus existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false, false);
 			if (existingSyllabus != syllabus) {
 				//update persistent object,  save handled by hibernate at end of transaction
 				existingSyllabus.copy(syllabus);
@@ -378,7 +380,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			Long id) {
 
 		Map<Long, SyllabusElementMapping> map = new HashMap<Long, SyllabusElementMapping>();
-		for (SyllabusElementMapping mapping : syllabusDao.getSyllabusElementMappings(id)) {
+		for (SyllabusElementMapping mapping : syllabusDao.getSyllabusElementMappings(id, true)) {
 			map.put(mapping.getSyllabusElement().getId(), mapping);
 		}
 

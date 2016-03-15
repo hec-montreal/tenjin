@@ -39,10 +39,11 @@ public interface Syllabus2Dao {
 	 * 
 	 * @param Long id
 	 * @param boolean retrieveElements
+	 * @param boolean hidden - if retrieveElements is true, should the hidden elements be included
 	 * @return The syllabus, and it's organized sub-elements if retrieveElements is true.
 	 * @throws NoSyllabusException 
 	 */
-	public Syllabus getSyllabus(Long id, boolean retrieveElements) throws NoSyllabusException;
+	public Syllabus getSyllabus(Long id, boolean retrieveElements, boolean hidden) throws NoSyllabusException;
 
 	/**
 	 * Retrieves the list of syllabi for a given site id
@@ -59,18 +60,19 @@ public interface Syllabus2Dao {
 	 * @param String siteId
 	 * @param String sectionId
 	 * @param Boolean shareable
+	 * @param boolean hidden - include hidden elements
 	 * @return The syllabus associated with the specified section or the shareable
 	 */
-	public Syllabus getSyllabus(String siteId, String sectionId, Boolean shareable);
+	public Syllabus getSyllabus(String siteId, String sectionId, Boolean shareable, boolean hidden);
 
 	/**
 	 * Retrieves the syllabus element mappings for the specified syllabusId
-     *  TODO: add parameter for hidden?
      *  
 	 * @param String syllabusId
+	 * @param boolean hidden - include hidden elements
 	 * @return The list of syllabus element mappings
 	 */
-	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId);
+	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden);
 
 	/**
 	 * Retrieves a persistent syllabus element by id 
