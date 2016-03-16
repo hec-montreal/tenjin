@@ -24,9 +24,48 @@ opensyllabusApp.config(function($stateProvider, $urlRouterProvider) {
     //
     // Now set up the states
     $stateProvider
+
     .state('home', {
-        url: "/home",
+        url: "/home", //TODO: add id du syllabus
         template: "<home></home>"
+    })
+    .state('management', {
+        url: "/management",
+        template: "<management></management>"
+        // controller: ['promiseObj', 'SyllabusService', function(promiseObj, SyllabusService) {
+
+        //     // SyllabusService.loadSyllabusList().$promise.then(function($data){
+        //     //     SyllabusService.setSyllabusList($data);
+
+        //     //     // $rootScope.$broadcast('RESOURCES_LOADED');
+        //     //     console.log('ok');
+        //     // }, function($error){
+        //     //     // erreur load syllabus list
+        //     //     console.log('erreur');
+        //     //     // AlertService.display('danger');
+        //     // });
+        // }]
+        // resolve: {
+
+        //     promiseObj:  ['$state', 'SyllabusService', function($state, SyllabusService){
+
+        //         return SyllabusService.loadSyllabusList().$promise.then(function($data){
+        //             SyllabusService.setSyllabusList($data);
+
+        //             // $rootScope.$broadcast('RESOURCES_LOADED');
+        //             console.log('ok');
+        //             $state.go('syllabus', {id: 362});
+        //         }, function($error){
+        //             // erreur load syllabus list
+        //             console.log('erreur');
+        //             // AlertService.display('danger');
+        //         });
+
+        //     }]
+
+
+
+        // }
     })
     .state('syllabus', {
         url: "/syllabus/:id", //TODO: add id du syllabus

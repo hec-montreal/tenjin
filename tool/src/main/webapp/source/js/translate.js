@@ -137,8 +137,8 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         TABLE_STATUS : 'Status',
         DELETE_SYLLABUS_OK : 'The following courses outlines will be deleted',
         DELETE_SYLLABUS_KO : 'The following courses outlines can\'t be deleted because there are sections attached to them',
-        HOME_ERREUR_NAME: 'The name must be specified',
-        HOME_NO_SECTION: 'No section',
+        MANAGEMENT_NO_SECTION: 'The name must be specified',
+        MANAGEMENT_ERREUR_NAME: 'No section',
         FORUM: 'Forum',
         ASSIGNMENT: 'Assignments',
         SAM_PUB: 'Tests et Quizzes'
@@ -277,8 +277,8 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         TABLE_STATUS : 'Statut',
         DELETE_SYLLABUS_OK : 'Les plans de cours suivant vont être supprimés',
         DELETE_SYLLABUS_KO : 'Les plans de cours suivant ne peuvent pas être supprimés car il y a des sections associées',
-        HOME_ERREUR_NAME: 'Le nom doit être indiqué',
-        HOME_NO_SECTION: 'Aucune section',
+        MANAGEMENT_NO_SECTION: 'Le nom doit être indiqué',
+        MANAGEMENT_ERREUR_NAME: 'Aucune section',
         FORUM: 'Forum',
         ASSIGNMENT: 'Remise de travaux',
         SAM_PUB: 'Tests et Quiz'

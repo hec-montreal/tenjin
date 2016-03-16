@@ -14,9 +14,13 @@
         }
     );
 
-    this.getSyllabus =  function($userId) {     
-       return userProvider.getSyllabus({userId : $userId});
+
+    this.loadProfile = function($userId) {
+        return userProvider.get({userId : $userId});
     };
 
+    this.setProfile = function($dataProfile) {
+        this.profile = $dataProfile;
+    };
 
 }]);

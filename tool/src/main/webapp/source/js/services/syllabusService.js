@@ -93,6 +93,33 @@
         return sylProviderList.get({siteId : $siteId});
     };
 
+    this.loadSyllabusList2 =  function($siteId) {    
+        return sylProviderList.get({siteId : $siteId}).$promise.then( function($data) {
+
+        }, function($error) {
+        });
+        
+    };
+
+    this.resolveSyllabusList =  function($siteId) {  
+
+        var objSyllabusService = this;
+        sylProviderList.get({siteId : $siteId}).$promise.then( function($data) {
+            console.log("resolve!");
+            objSyllabusService.setSyllabusList($data);
+
+            if($data.length === 1) { // only the shareable syllabus
+                console.log("redirect home");
+            }
+            // $deferred.resolve();
+
+        }, function($error){
+            // erreur load syllabus list
+            // AlertService.display('danger');
+        });
+
+    };
+
     this.loadTemplate = function() {
         return templateProvider.get();
     };
