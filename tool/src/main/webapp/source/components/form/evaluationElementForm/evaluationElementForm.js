@@ -4,7 +4,8 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
 
     return {
         scope: {
-            element: '=evaluationElementForm'
+            element: '=evaluationElementForm',
+            typelabel: '=' //Might need to link to rules for I18N purposes
         },
         restrict: 'A',
         templateUrl: 'form/evaluationElementForm/evaluationElementForm.html',
@@ -25,6 +26,8 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
                 $scope.statusDateEval.opened = true;
             };
 
+            console.log ($scope.type);
+
             // Disable weekend selection
             $scope.disabled = function(date, mode) {
                 return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
@@ -32,12 +35,10 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
 
         },
         link: function ($scope, $element) {
-            $scope.elementDate = new Date($scope.element.attributes.evalDate);
-
-            $scope.fillDate = function(){
-                $scope.element.attributes.evalDate = $scope.elementDate;
-                console.log($scope.element.attributes.evalDate);
-            };
+            $scope.element.attributes.evalType = $scope.typelabel;
+          
+            console.log ($scope.element.evalDate);
+            
         }
 
     };

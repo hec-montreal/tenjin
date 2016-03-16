@@ -1,13 +1,13 @@
 
-opensyllabusApp.directive('evaluationAttrElement', function (){
+opensyllabusApp.directive('evaluationattrElement', function (){
     'use strict';
 
     return {
         scope: {
-            element: '=evaluationAttrElement'
+            element: '=evaluationattrElement'
         },
         restrict: 'A',
-        templateUrl: 'element/evaluationAttrElement/evaluationAttrElement.html',
+        templateUrl: 'element/evaluationattrElement/evaluationattrElement.html',
         controller: function ($scope) {
 
         },
