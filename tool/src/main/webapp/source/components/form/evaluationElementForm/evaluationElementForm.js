@@ -9,7 +9,7 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
         restrict: 'A',
         templateUrl: 'form/evaluationElementForm/evaluationElementForm.html',
         controller: function ($scope) {
-            $scope.formats = ['dd-MMMM-yyyy HH:mm']; 
+            $scope.formats = ['dd-MM-yyyy']; 
             $scope.format = $scope.formats[0];
 
             $scope.statusDateEval = {
@@ -32,9 +32,17 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
 
         },
         link: function ($scope, $element) {
+            $scope.elementDate = new Date($scope.element.attributes.evalDate);
+
+            $scope.fillDate = function(){
+                $scope.element.attributes.evalDate = $scope.elementDate;
+                console.log($scope.element.attributes.evalDate);
+            };
         }
 
     };
 
 });
+
+
 

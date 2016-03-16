@@ -38,6 +38,7 @@ opensyllabusApp.directive('mobileMenu', ['$timeout', 'TreeService', 'SyllabusSer
 
                     // Si il n'y a aucun élément enfant alos on referme le menu
                     if ($item.type === 'evaluation' || 
+                        $item.type === 'exam' || 
                         $item.type === 'lecture' || 
                         $item.type === 'tutorial' ) {
                         SyllabusService.showMobileMenu = false;

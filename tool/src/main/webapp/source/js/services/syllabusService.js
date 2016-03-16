@@ -356,8 +356,9 @@
                     $infosNumerotation.nbTutorial++;
                     String.fromCharCode('65');
                     $rootTree.elements[i].$numero = String.fromCharCode(64 + $infosNumerotation.nbTutorial);
+                } else if ($rootTree.elements[i].type === "evaluation" || $rootTree.elements[i].type === "exam") {
+                    $rootTree.elements[i].$numero =$infosNumerotation.nbEvalAndExam++;
                 }
-
                 numerotationSyllabus($rootTree.elements[i], $infosNumerotation); 
             }
 
@@ -370,7 +371,8 @@
     this.numerotationSyllabus = function($data) {
         var infosNumerotations = {
             'nbLecture' : 0,
-            'nbTutorial' : 0
+            'nbTutorial' : 0,
+            'nbEvalAndExam': 1
         };
 
         numerotationSyllabus($data, infosNumerotations);

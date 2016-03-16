@@ -34,7 +34,6 @@ opensyllabusApp.config(function($stateProvider, $urlRouterProvider) {
     });
 });
 
-
 opensyllabusApp.run( ['editableOptions', '$httpBackend', function(editableOptions, $httpBackend) { 
     'use strict';
     

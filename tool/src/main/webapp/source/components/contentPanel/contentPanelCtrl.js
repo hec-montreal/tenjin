@@ -36,7 +36,7 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
 
                 if (destNodesScope.item) {
 
-                    if ( destNodesScope.item.type === 'composite' || destNodesScope.item.type === 'lecture' || destNodesScope.item.type === 'tutorial' || destNodesScope.item.type === 'evaluation' ) {
+                    if ( destNodesScope.item.type === 'composite' || destNodesScope.item.type === 'lecture' || destNodesScope.item.type === 'tutorial' || destNodesScope.item.type === 'evaluation' || destNodesScope.item.type === 'exam' ) {
 
                         // on ne peut pas déplacer un composite dans un composite
                         if (sourceNodeScope.item.type === 'composite' && destNodesScope.item.type === 'composite')                                 {

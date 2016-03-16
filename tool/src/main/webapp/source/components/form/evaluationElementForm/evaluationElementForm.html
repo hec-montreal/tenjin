@@ -2,8 +2,9 @@
 
   <div >
   	<div class="row">
-	    <div class="col-md-4">
-	    	<label for="male" class="label-text-title">{{ 'FORM_TITRE_EVALUATION' | translate }}</label>
+	    <div class="col-md-4" data-ng-switch on="element.type">
+	    	<label for="male" class="label-text-title" ng-switch-when="evaluation">{{ 'FORM_TITRE_EVALUATION' | translate }}</label>
+	    	<label for="male" class="label-text-title" ng-switch-when="exam">{{ 'FORM_TITRE_EXAM' | translate }}</label>
 	    </div>
 	    <div class="col-md-4" >
 	    	<input type="text" name="evaluationTitle" data-ng-model="element.title" class="input-text-title" />
@@ -16,9 +17,9 @@
 	    	<label for="male" class="label-text-title">{{ 'FORM_PONDERATION_EVALUATION' | translate }}</label>
 	    </div>
 	    <div class="col-md-4">
-	    	<input type="text" name="evaluationWeight" data-ng-model="element.evalWeight" />
+	    	<input type="text" name="evaluationWeight" data-ng-model="element.attributes.evalWeight" />
 		</div>
-	    <div class="col-md-4"> </div>
+	    <div class="col-md-4">% </div>
 	</div>
 	<br>
 	<div class="row" data-ng-if="element.type == 'evaluation'" >
@@ -27,7 +28,8 @@
 	    </div>
 	    <div class="col-md-8" >
 	    	<p class="input-group" >
-		    	<input type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.evalDate" is-open="statusDateEval.opened" />
+		    	<input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" data-ng-model="element.attributes.evalDate" is-open="statusDateEval.opened" 
+		    	today-text="{{ 'CALENDAR_TODAY' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}"  ng-change="fillDate()"/>
 		      	<span class="input-group-btn">
 		      		<button type="button" class="btn btn-default" data-ng-click="openDateEval($event)">
 	                	<i class="glyphicon glyphicon-calendar" ></i>
@@ -45,12 +47,14 @@
 	    	<table>
 		    	<tr>
 				    <td>
-				    	<input type="checkbox" name="evalInClass" > {{ 'EVALUATION_INCLASS' | translate }}
+				    	<input type="checkbox" name="evalInClass" data-ng-model="element.attributes.evalInClass" 
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_INCLASS' | translate }}
 				    </td>
 				</tr>
 				<tr>
 				    <td>
-				    	<input type="checkbox" name="evalAtHome" > {{ 'EVALUATION_ATHOME' | translate }}
+				    	<input type="checkbox" name="evalAtHome" data-ng-model="element.attributes.evalAtHome"
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_ATHOME' | translate }}
 					</td>
 				</tr>
 			</table>
@@ -66,12 +70,14 @@
 	    	<table>
 		    	<tr>
 				    <td>
-				    	<input type="checkbox" name="evalOral" > {{ 'EVALUATION_ORAL' | translate }}
+				    	<input type="checkbox" name="evalOral" data-ng-model="element.attributes.evalOral" 
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_ORAL' | translate }}
 				    </td>
 				</tr>
 				<tr>
 				    <td>
-				    	<input type="checkbox" name="evalWritten" > {{ 'EVALUATION_WRITTEN' | translate }}
+				    	<input type="checkbox" name="evalWritten" data-ng-model="element.attributes.evalWritten"
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_WRITTEN' | translate }}
 					</td>
 				</tr>
 			</table>
@@ -87,12 +93,14 @@
 	    	<table>
 		    	<tr>
 				    <td>
-				    	<input type="checkbox" name="evalPaper" > {{ 'EVALUATION_PAPER' | translate }}
+				    	<input type="checkbox" name="evalPaper" data-ng-model="element.attributes.evalPaper"
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_PAPER' | translate }}
 				    </td>
 				</tr>
 				<tr>
 				    <td>
-				    	<input type="checkbox" name="evalElectronic" > {{ 'EVALUATION_ELECTRONIC' | translate }}
+				    	<input type="checkbox" name="evalElectronic" data-ng-model="element.attributes.evalElectronic"
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_ELECTRONIC' | translate }}
 					</td>
 				</tr>
 			</table>
@@ -105,18 +113,14 @@
 	    	<label for="male" class="label-text-title">{{ 'EVALUATION_ASSESSMENT_TYPE' | translate }}</label>
 	    </div>
 	    <div class="col-md-4">
-	    	<table>
-		    	<tr>
-				    <td>
-				    	<input type="radio" name="evalMode" > {{ 'EVALUATION_INDIVIDUAL' | translate }}
-				    </td>
-				</tr>
-				<tr>
-				    <td>
-				    	<input type="radio" name="evalMode" > {{ 'EVALUATION_TEAM' | translate }}
-					</td>
-				</tr>
-			</table>
+	    	<div class="row">
+				    <div class="col-md-12">
+				    	<input type="radio" name="evalMode" data-ng-model="element.attributes.evalMode" value="individual"> {{ 'EVALUATION_INDIVIDUAL' | translate }}
+				    </div>
+				    <div class="col-md-12">
+				    	<input type="radio" name="evalMode" data-ng-model="element.attributes.evalMode" value="team"> {{ 'EVALUATION_TEAM' | translate }}
+					</div>
+				</div>
 		</div>
 	 	<div class="col-md-4"></div>
 	 </div>	

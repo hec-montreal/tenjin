@@ -14,6 +14,9 @@
 	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusEvaluationElement"
 			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
 	</subclass>
+		<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusExamElement"
+			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
+	</subclass>
 	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusLectureElement"
 			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
 	</subclass>

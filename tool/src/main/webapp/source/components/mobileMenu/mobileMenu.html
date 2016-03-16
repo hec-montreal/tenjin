@@ -3,7 +3,7 @@
   <!-- Display items composite, evaluation, lecture and tutorial -->
   <span data-ng-if="menuMobileCtrl.syllabusService.template[item.templateStructureId].displayInMenu">
     <span data-ng-click="menuMobileCtrl.navigate(this, item)" class="select-item" data-ng-hide="item.$hidden" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }" >
-      <span data-ng-if="item.type === 'evaluation'">{{$index+1}} - </span>
+      <span data-ng-if="item.type === 'evaluation' || item.type ==='exam'">{{$index+1}} - </span>
       <span data-ng-if="item.type === 'lecture' || item.type === 'tutorial'">{{item.$numero}} - </span>
       <!-- <span data-ng-if="item.parentId === null">{{::item.title}}</span> 
       <span data-ng-if="item.parentId">{{item.title}}</span> -->

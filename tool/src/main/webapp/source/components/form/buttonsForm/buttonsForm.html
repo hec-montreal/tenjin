@@ -1,4 +1,4 @@
-﻿<!-- <div data-ng-attr-id="{{ 'attribut-' + element.syllabusElement_id }}"> -->
+<!-- <div data-ng-attr-id="{{ 'attribut-' + element.syllabusElement_id }}"> -->
 <div class="buttons-form"> 
 
     <!-- Important -->
@@ -6,7 +6,7 @@
         <input type="checkbox" name="important" id="importantCheckbox" data-ng-model="element.important"/>
         <label for="importantCheckbox">{{ 'FORM_IMPORTANT' | translate }}</label> 
     </div> 
-    <!-- Visibilité -->
+    <!-- Visibilit� -->
     <div>
         <input type="checkbox" name="visibility" id="visibilityCheckbox" data-ng-model="element.visibility"/>
         <label for="visibilityCheckbox">{{ 'FORM_VISIBILITE' | translate }}</label> 
@@ -28,7 +28,7 @@
             <span class="container-date-debut">
 
                 <p class="input-group">
-                    <input type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.availability_start_date" is-open="status.opened" today-text="{{ 'CALENDAR_TODAY' | translate }}" now-text="{{ 'CALENDAR_NOW' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" time-text="{{ 'CALENDAR_TIME' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" required/>
+                    <input type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.availability_start_date " is-open="status.opened" today-text="{{ 'CALENDAR_TODAY' | translate }}" now-text="{{ 'CALENDAR_NOW' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" time-text="{{ 'CALENDAR_TIME' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" required/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" data-ng-click="open($event)">
                             <i class="glyphicon glyphicon-calendar" ></i>
