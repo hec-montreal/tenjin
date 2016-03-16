@@ -65,15 +65,6 @@ public interface Syllabus2Service {
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException;
 
 	/**
-	 * Retrieves the common syllabus associated to a specific site.
-	 * 
-	 * @param siteId
-	 * @return
-	 * @throws NoSyllabusException
-	 */
-	public Syllabus getShareableSyllabus(String siteId) throws NoSyllabusException;
-	
-	/**
 	 * Retrieve the syllabus list for the current user in the active site
 	 *
 	 * @return the syllabus list of the site or an error message
@@ -88,22 +79,6 @@ public interface Syllabus2Service {
 	 */
 	public SyllabusElementMapping createSyllabusElementMapping(Long syllabusId, AbstractSyllabusElement syllabusElement, Integer displayOrder, Boolean hidden);
 	
-	/**
-	 * Retrieves the template
-	 * @param templateId
-	 * @return
-	 */
-	public Template getTemplate(Long templateId) throws IdUnusedException;
-
-	/**
-	 * Retrieves the template rules
-	 * 	that is, a mapping of TemplateStructure id's with the TemplateElements that can be added to it.
-	 *
-	 * @param templateId
-	 * @return
-	 */
-	public HashMap<String, HashMap<String, Object>> getTemplateRules(Long templateId) throws IdUnusedException;
-
 	/**
 	 * Create a new syllabus or update the existing syllabus based on id
 	 *

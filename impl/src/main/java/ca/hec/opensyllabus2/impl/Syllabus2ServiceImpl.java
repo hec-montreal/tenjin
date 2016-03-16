@@ -1,6 +1,5 @@
 package ca.hec.opensyllabus2.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -23,16 +22,14 @@ import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.UserDirectoryService;
 
 import ca.hec.opensyllabus2.api.Syllabus2Service;
+import ca.hec.opensyllabus2.api.TemplateService;
 import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
 import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.dao.Syllabus2Dao;
-import ca.hec.opensyllabus2.api.dao.TemplateDao;
 import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
-import ca.hec.opensyllabus2.api.model.template.Template;
-import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
 
 /**
  * Implementation of {@link Syllabus2Service}
@@ -96,7 +93,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	private Syllabus2Dao syllabusDao;
 
     @Setter
-	private TemplateDao templateDao;
+	private TemplateService templateService;
 
 	@Setter
 	private ToolManager toolManager;
@@ -119,41 +116,56 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
     @Setter
 	private SiteService siteService;
 
-    @Setter
-	private ContentHostingService chs;
-
     @Override
-	public List<Syllabus> getSyllabusList(String siteId) {
+	public List<Syllabus> getSyllabusList(String siteId) throws NoSiteException {
 		List<Syllabus> syllabusList = null;
 		
+		// if no site is specified, check for current context 
 		if (siteId == null) {
 			try {
 				siteId = getCurrentSiteContext();
 			} catch (Exception e) {
-				log.error("error retrieving current site context");
+				throw new NoSiteException();
 			}
 		}
 
 		syllabusList = syllabusDao.getSyllabusList(siteId);
+		
+		// if no syllabus, create common and add it to the list
+		if (syllabusList.isEmpty()) {
+			syllabusList.add(createCommonSyllabus(siteId));
+		}
 		return syllabusList;
 	}
     
-	//TODO delete this?
-	@Override
-	public Syllabus getShareableSyllabus(String siteId) throws NoSyllabusException {
-		Syllabus syllabus = null;
-
-		try {
-			syllabus = syllabusDao.getSyllabus(siteId, "", true, true);
-			return syllabus;
-		} catch (Exception e) {
-			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
-			throw new NoSyllabusException();
+	private Syllabus createCommonSyllabus(String siteId) {
+		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, "fr_CA");
+		
+		if (newCommonSyllabus != null) {
+			newCommonSyllabus.setSiteId(siteId);
+			newCommonSyllabus.setShareable(true);
+			newCommonSyllabus.setCreatedBy(this.getCurrentUserDisplayName());
+			newCommonSyllabus.setCreatedDate(new Date());
+			newCommonSyllabus.setLastModifiedBy(this.getCurrentUserDisplayName());
+			newCommonSyllabus.setLastModifiedDate(new Date());
+			// TODO :
+			newCommonSyllabus.setTemplateId(1L); //hardcoded for now 
+			newCommonSyllabus.setCourseTitle("CourseTitleFromSakai");
+			newCommonSyllabus.setLocale("fr_CA");
+			newCommonSyllabus.setTitle("Partageable"); // i18n
+			//newCommonSyllabus.setSections(sections); //get all possible sections for site
+			
+			try {
+				createOrUpdateSyllabus(newCommonSyllabus);
+			} catch (NoSyllabusException e) {
+				// should not be possible, only happens when we try to update a syllabus that doesn't exist
+				log.error("Error saving new common syllabus for site: " + siteId);
+			}
 		}
 		
+		return newCommonSyllabus;
 	}
 
-	
 	@Override
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException {
 		Syllabus syllabus = null;
@@ -167,67 +179,6 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		}
 	}
 
-	@Override
-	public Template getTemplate(Long templateId) throws IdUnusedException {
-		return templateDao.getTemplate(templateId);
-	}
-
-	@Override
-	public HashMap<String, HashMap<String, Object>> getTemplateRules(Long templateId) throws IdUnusedException {
-		//HashMap<String, List<Object>> results = new HashMap<String, List<Object>>();
-		HashMap<String, HashMap<String, Object>> results = new HashMap<String, HashMap<String, Object>>();
-		
-		Template t = templateDao.getTemplate(templateId);
-
-		for (TemplateStructure elem : t.getElements()) {
-			getRules(elem, results);
-		}
-
-		return results;
-	}
-
-	/*
-	 * il faudra au moins mettre les valeurs en cache?
-	 * ZCII-2008
-	 */
-	private void getRules(TemplateStructure structure, HashMap<String, HashMap<String, Object>> map) {
-
-		if (structure!= null) {
-			HashMap<String, Object> elementObject;
-			elementObject = new HashMap<String, Object>();
-			elementObject.put("displayInMenu", structure.getDisplayInMenu());
-			elementObject.put("mandatory", structure.getMandatory());		
-			// add template structure to the main map
-			map.put(structure.getId().toString(), elementObject);
-			
-			// if the element has a parent and is not mandatory, then add this one to the parent elements list
-			List<Object> elementList;
-			if (structure.getParentId() != null) {
-				String parentId = structure.getParentId().toString();
-				HashMap<String, Object> parentObject = map.get(parentId);
-		
-				List<Object> elementParentList = (List<Object>) parentObject.get("elements");
-				if (elementParentList == null) {
-					elementParentList = new ArrayList<Object>();
-					parentObject.put("elements", elementParentList);
-				}
-	
-				Map<String, Object> templateElementMap = new HashMap<String, Object>();
-				templateElementMap.put("id", structure.getId());
-				templateElementMap.put("type", structure.getTemplateElement().getType().getTitle());
-				templateElementMap.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
-				// add child template element to the list of the parent element
-				elementParentList.add(templateElementMap);
-			}	
-		}
-
-		for (TemplateStructure elem : structure.getElements()) {
-			getRules(elem, map);
-		}
-
-		return;
-	}
-	
 	@Override
 	public String getCurrentSiteContext () throws IdUnusedException, NoSiteException{
 		String siteRef = null;

@@ -1,10 +1,7 @@
 package ca.hec.opensyllabus2.tool.controller;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import lombok.Getter;
 import lombok.Setter;
 
 import org.apache.commons.logging.Log;
@@ -20,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
-import ca.hec.opensyllabus2.api.Syllabus2Service;
+import ca.hec.opensyllabus2.api.TemplateService;
 import ca.hec.opensyllabus2.api.model.template.Template;
 
 @Controller
@@ -30,18 +27,17 @@ public class TemplateController {
 	private static Log log = LogFactory.getLog(TemplateController.class);
 
 	@Setter
-	@Getter
 	@Autowired
-	private Syllabus2Service osyl2Service = null;
+	private TemplateService templateService = null;
 
 	@RequestMapping(value = "/{templateId}", method = RequestMethod.GET)
 	public @ResponseBody Template getTemplate(@PathVariable Long templateId) throws IdUnusedException {
-		return osyl2Service.getTemplate(templateId);
+		return templateService.getTemplate(templateId);
 	}
 
 	@RequestMapping(value = "/{templateId}/rules", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String, HashMap<String, Object>> getTemplateRules(@PathVariable Long templateId) throws IdUnusedException {
-		return osyl2Service.getTemplateRules(templateId);
+		return templateService.getTemplateRules(templateId);
 	}
 
 	@ExceptionHandler(IdUnusedException.class)

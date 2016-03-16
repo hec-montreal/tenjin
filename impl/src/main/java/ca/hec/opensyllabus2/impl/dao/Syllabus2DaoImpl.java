@@ -36,7 +36,6 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		return mappings;
 	}
 
-	// TODO probably remove this? May be unnecessary
 	@Override
 	public Syllabus getSyllabus(String siteId, String sectionId, Boolean shareable, boolean hidden) {
 		List<Syllabus> syllabi = 

@@ -101,127 +101,15 @@ public class Syllabus2Controller {
 	@RequestMapping(value = "/syllabus/{syllabusId}", method = RequestMethod.GET)
 	public @ResponseBody Syllabus getSyllabus(@PathVariable Long syllabusId) throws NoSyllabusException {
 
-		// TODO remove this part.
-		try {
-		if (syllabusId == -1L) {
-			return osyl2Service.getShareableSyllabus(osyl2Service.getCurrentSiteContext());
-		}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
 		return osyl2Service.getSyllabus(syllabusId);
 	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<Syllabus> createOrUpdateSyllabus(@RequestBody Syllabus syllabus) {
+	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException {
 
-		try {
-			Syllabus s = osyl2Service.createOrUpdateSyllabus(syllabus);
-			return new ResponseEntity<Syllabus>(s, HttpStatus.OK);
-		} catch (NoSyllabusException e) {
-			return new ResponseEntity<Syllabus>(HttpStatus.NOT_FOUND);
-		}
+			return osyl2Service.createOrUpdateSyllabus(syllabus);
 	}
 	
-	private int countParams(String parameters) {
-		int nb = parameters.split(",").length;
-
-		return nb;
-
-	}
-
-	private String[] getParams(String parameters) {
-
-		return parameters.split(",");
-	}
-
-	private void recursiveAddElements(TemplateStructure root, AbstractSyllabusElement element, String locale, long idElement) {
-		
-		List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
-		for (int i = 0; i < root.getElements().size(); i++) {
-			
-			TemplateStructure templateStructure = root.getElements().get(i);
-			if (templateStructure.getMandatory() != null && templateStructure.getMandatory() == true) {
-				AbstractSyllabusElement el = null;
-				
-				
-				String type = templateStructure.getTemplateElement().getType().getTitle();
-				if ( type.equalsIgnoreCase("composite") ) {
-					el = new SyllabusCompositeElement();
-				} else if ( type.equalsIgnoreCase("rubric") ) {
-					el = new SyllabusRubricElement();
-				}
-	
-				if (el != null) {
-					el.setDisplayOrder(i);
-					el.setTitle(templateStructure.getTemplateElement().getLabels().get(locale));
-					el.setTemplateStructureId(templateStructure.getId());
-					long idEl = idElement*1000 - i;
-					el.setId(idEl);
-					el.setPublicElement(true);
-					el.setHidden(false);
-					el.setImportant(false);
-					
-					// recursion on the children
-					recursiveAddElements(templateStructure, el, locale, idEl);
-					
-					elements.add(el);
-				}
-			}
-			
-		}
-		
-		if (!elements.isEmpty() && element instanceof SyllabusCompositeElement) {
-			((SyllabusCompositeElement)element).setElements(elements);
-		}
-		
-	}
-	
-	private Syllabus initSyllabusFromTemplate(Template root, Syllabus syllabus, String locale) {
-
-		long level = -1;
-		
-		List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
-		for (int i = 0; i < root.getElements().size(); i++) {
-
-			TemplateStructure templateStructure = root.getElements().get(i);
-			if (templateStructure.getMandatory() != null && templateStructure.getMandatory() == true) {
-				AbstractSyllabusElement element = null;
-
-				String type = templateStructure.getTemplateElement().getType().getTitle();
-				if ( type.equalsIgnoreCase("composite") ) {
-					element = new SyllabusCompositeElement();
-				} else if ( type.equalsIgnoreCase("rubric") ) {
-					element = new SyllabusRubricElement();
-				}
-
-				if (element != null) {
-					element.setDisplayOrder(i);
-					element.setTitle(templateStructure.getTemplateElement().getLabels().get(locale));
-					element.setTemplateStructureId(templateStructure.getId());
-					long idElement = level*1000 - i;
-					element.setId(idElement);
-					element.setPublicElement(true);
-					element.setHidden(false);
-					element.setImportant(false);
-
-					// recursion on the children
-					recursiveAddElements(templateStructure, element, locale, idElement);
-					
-					elements.add(element);
-				}
-				// add other types
-
-			}
-
-		}
-
-		syllabus.setElements(elements);
-
-		return syllabus;
-	}
-
 	@ExceptionHandler(NoSiteException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public @ResponseBody Object handleNoSiteException(NoSiteException ex) {
@@ -230,34 +118,8 @@ public class Syllabus2Controller {
 
 	@ExceptionHandler(NoSyllabusException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public @ResponseBody Syllabus handleNoSyllabusException(NoSyllabusException ex) {
-		Syllabus syllabus = new Syllabus();
-		syllabus.setTitle("Default title");
-		syllabus.setTemplateId(1L);
-		syllabus.setLocale("fr_CA");
-		
-		//List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
-
-		// get bac template
-		try {
-			Template template = osyl2Service.getTemplate(1L);
-
-			syllabus = initSyllabusFromTemplate(template, syllabus, syllabus.getLocale());
-
-			try {
-				syllabus.setSiteId(osyl2Service.getCurrentSiteContext());
-				syllabus.setCourseTitle(osyl2Service.getCurrentSiteContext());
-				syllabus.setShareable(true);
-			} catch (Exception e) {
-				log.error("No context found");
-			}
-
-		} catch (IdUnusedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		return syllabus;
+	public @ResponseBody String handleNoSyllabusException(NoSyllabusException ex) {
+		return ex.getLocalizedMessage();
 	}
 
 }
