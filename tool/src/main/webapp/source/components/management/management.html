@@ -1,7 +1,7 @@
-<section class="home">
+<section class="management">
     <a ui-sref="syllabus">Retour</a>
  
-    <div class="loader-container" data-ng-show="homeCtrl.infos.working"> 
+    <div class="loader-container" data-ng-show="managementCtrl.infos.working"> 
         <div class="loader"></div>
     </div>
 
@@ -16,7 +16,7 @@
 
     <div class="buttons-list">
         <!-- CREATE -->
-        <button class="btn btn-primary" type="button" data-ng-click="homeCtrl.addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
+        <button class="btn btn-primary" type="button" data-ng-click="managementCtrl.addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
     
     </div>
 
@@ -32,9 +32,9 @@
           <th class="th-select"> </th>
         </tr>
 
-        <tr data-ng-repeat="syllabus in homeCtrl.syllabusService.syllabusList">
+        <tr data-ng-repeat="syllabus in managementCtrl.syllabusService.syllabusList">
           <td>
-            <a editable-text="syllabus.title" onbeforesave="homeCtrl.updateName($data, syllabus)">{{syllabus.title}}</a>
+            <a editable-text="syllabus.title" onbeforesave="managementCtrl.updateName($data, syllabus)">{{syllabus.title}}</a>
           
           </td>
           <td>
@@ -42,11 +42,11 @@
           </td>
           <td>
 
-            <span data-ng-if="syllabus.shareable" data-ng-repeat="section in syllabus.sections">{{homeCtrl.sections[section].name}}<span data-ng-if="$index !== syllabus.sections.length-1">, </span></span>
+            <span data-ng-if="syllabus.shareable" data-ng-repeat="section in syllabus.sections">{{managementCtrl.sections[section].name}}<span data-ng-if="$index !== syllabus.sections.length-1">, </span></span>
 
-            <a data-ng-if="!syllabus.shareable" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in homeCtrl.sections" onbeforesave="homeCtrl.updateSections($data, syllabus)">
+            <a data-ng-if="!syllabus.shareable" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.sections" onbeforesave="managementCtrl.updateSections($data, syllabus)">
               <!-- test -->
-              {{ homeCtrl.showSections(syllabus) }}
+              {{ managementCtrl.showSections(syllabus) }}
             </a>
 
           </td> 
@@ -57,7 +57,7 @@
               <a ui-sref="syllabus({ id: syllabus.id })"  >{{ 'LINK_SYLLABUS' | translate }}</a>
           </td>
           <td>
-              <input data-ng-if="!syllabus.shareable" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="homeCtrl.enableDelete()" /> 
+              <input data-ng-if="!syllabus.shareable" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="managementCtrl.enableDelete()" /> 
           </td>
         </tr> 
 
@@ -65,7 +65,7 @@
 
       <div class="button-container-delete">
           <!-- DELETE -->
-          <button class="btn btn-primary" type="button" data-ng-disabled="homeCtrl.disableDelete" data-ng-click="homeCtrl.deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
+          <button class="btn btn-primary" type="button" data-ng-disabled="managementCtrl.disableDelete" data-ng-click="managementCtrl.deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
       
       </div>
 

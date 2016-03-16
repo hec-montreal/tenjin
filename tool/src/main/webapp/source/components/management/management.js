@@ -1,19 +1,25 @@
 ﻿
-opensyllabusApp.directive('home', ['$timeout', '$translate','TreeService', 'SyllabusService', 'AlertService', 'ModalService', 'variables', 'config', 'mockup', function ($timeout, $translate, TreeService, SyllabusService, AlertService, ModalService, variables, config, mockup){
+opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService', 'SyllabusService', 'AlertService', 'ModalService', 'variables', 'config', 'mockup', function ($timeout, $translate, TreeService, SyllabusService, AlertService, ModalService, variables, config, mockup){
     'use strict';
 
     return {
         scope: {
         },
         restrict: 'E',
-        templateUrl: 'home/home.html',
+        templateUrl: 'management/management.html',
         controller: function () {
+
+            // promiseObj.then(function($data) {
+            //     console.log("coucou");
+            // }, function($error) {
+
+            // });
+
             this.syllabusService = SyllabusService;
             this.treeService = TreeService;
             this.alertService = AlertService;
             this.variables = variables;
             this.config = config;
-
 
             this.infos = {};
             this.disableDelete = true;
@@ -103,12 +109,12 @@ opensyllabusApp.directive('home', ['$timeout', '$translate','TreeService', 'Syll
                   }
                 });
 
-                return selected.length ? selected.join(', ') : $translate.instant("HOME_NO_SECTION");
+                return selected.length ? selected.join(', ') : $translate.instant("MANAGEMENT_NO_SECTION");
             }; 
             
             this.updateName = function($data, $syllabus) {
                 if ($data.length === 0 ) {
-                    return $translate.instant("HOME_ERREUR_NAME");
+                    return $translate.instant("MANAGEMENT_ERREUR_NAME");
                 }
                 return SyllabusService.saveSyl($syllabus).$promise;
             };
@@ -134,7 +140,7 @@ opensyllabusApp.directive('home', ['$timeout', '$translate','TreeService', 'Syll
             });
 
         },
-        controllerAs: 'homeCtrl',
+        controllerAs: 'managementCtrl',
         bindToController: {
         }
 
