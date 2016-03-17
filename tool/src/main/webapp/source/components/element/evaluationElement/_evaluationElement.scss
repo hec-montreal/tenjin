@@ -1,6 +1,14 @@
-.element-evaluation {
+.element-evaluation,
+.element-evaluationattr {
 
-    .eval {
+    .location-title,
+    .location,
+    .terms-title,
+    .terms,
+    .submission-title,
+    .submission,
+    .assessmenttype-title,
+    .assessmenttype {
         font-weight: bold;
     }
 
@@ -10,8 +18,10 @@
     }
 
     .eval-type {
-        margin-top: 10px;
         color: #999;
+        font-weight: normal;
+        margin-top: 10px;
+
     }
 
 }

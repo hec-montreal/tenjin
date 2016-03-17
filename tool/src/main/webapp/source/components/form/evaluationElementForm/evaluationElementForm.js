@@ -37,7 +37,7 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
         link: function ($scope, $element) {
             $scope.element.attributes.evalType = $scope.typelabel;
           
-            console.log ($scope.element.evalDate);
+            console.log ("le type est" + $scope.typelabel );
             
         }
 
