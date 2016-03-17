@@ -22,12 +22,6 @@ import ca.hec.opensyllabus2.api.model.template.Template;
 public interface Syllabus2Service {
 
 	/**
-	 * Get current user display name
-	 * @return
-	 */
-	public String getCurrentUserDisplayName();
-
-	/**
 	 * Is the current user a superUser? (anyone in admin realm)
 	 * @return
 	 */

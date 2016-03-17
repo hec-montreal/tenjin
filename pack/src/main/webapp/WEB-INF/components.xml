@@ -22,6 +22,7 @@
 				<property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
 				<property name="syllabusDao" ref="ca.hec.opensyllabus2.api.dao.Syllabus2Dao" />
 		 		<property name="templateService" ref="ca.hec.opensyllabus2.api.TemplateService" />
+		 		<property name="sakaiProxy" ref="ca.hec.opensyllabus2.api.SakaiProxy" />
 			</bean>
 
 		</property>
@@ -57,6 +58,18 @@
 		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService"/>
 	</bean>
 	
-	
-
+    <bean name="ca.hec.opensyllabus2.api.SakaiProxy"
+        class="ca.hec.opensyllabus2.impl.SakaiProxyImpl">
+<!--         <property name="courseManagementService"><ref bean="org.sakaiproject.coursemanagement.api.CourseManagementService"/></property> -->
+<!--         <property name="functionManager"><ref bean="org.sakaiproject.authz.api.FunctionManager"/></property> -->
+<!--         <property name="groupProvider"><ref bean="org.sakaiproject.authz.api.GroupProvider"/></property> -->
+<!--         <property name="privacyManager"><ref bean="org.sakaiproject.api.privacy.PrivacyManager"/></property> -->
+<!--         <property name="connectionsLogic"><ref bean="org.sakaiproject.profile2.logic.ProfileConnectionsLogic"/></property> -->
+<!--         <property name="securityService"><ref bean="org.sakaiproject.authz.api.SecurityService"/></property> -->
+<!--         <property name="serverConfigurationService"><ref bean="org.sakaiproject.component.api.ServerConfigurationService"/></property> -->
+        <property name="sessionManager"><ref bean="org.sakaiproject.tool.api.SessionManager"/></property>
+        <property name="siteService"><ref bean="org.sakaiproject.site.api.SiteService"/></property>
+        <property name="toolManager"><ref bean="org.sakaiproject.tool.api.ToolManager"/></property>
+<!--         <property name="userDirectoryService"><ref bean="org.sakaiproject.user.api.UserDirectoryService"/></property> -->
+    </bean>
 </beans>

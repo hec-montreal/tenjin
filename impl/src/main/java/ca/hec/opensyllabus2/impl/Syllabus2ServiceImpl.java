@@ -2,6 +2,7 @@ package ca.hec.opensyllabus2.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +16,15 @@ import org.sakaiproject.component.api.ServerConfigurationService;
 import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.event.api.EventTrackingService;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.site.api.Group;
+import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.Placement;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.UserDirectoryService;
 
+import ca.hec.opensyllabus2.api.SakaiProxy;
 import ca.hec.opensyllabus2.api.Syllabus2Service;
 import ca.hec.opensyllabus2.api.TemplateService;
 import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
@@ -39,13 +43,6 @@ import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
 public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 	private static final Logger log = Logger.getLogger(Syllabus2ServiceImpl.class);
-
-	/**
- 	* {@inheritDoc}
- 	*/
-	public String getCurrentUserDisplayName() {
-	   return userDirectoryService.getCurrentUser().getDisplayName();
-	}
 
 	/**
  	* {@inheritDoc}
@@ -89,6 +86,9 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		log.info("init");
 	}
 
+	@Setter 
+	private SakaiProxy sakaiProxy;
+	
     @Setter
 	private Syllabus2Dao syllabusDao;
 
@@ -140,20 +140,40 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
     
 	private Syllabus createCommonSyllabus(String siteId) {
 		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, "fr_CA");
+		Site site = null;
+		
+		try {
+			site = siteService.getSite(siteId);
+		} catch (Exception e) {
+			log.error("Site " + siteId + " could not be retrieved.");
+			return null;
+		}
 		
 		if (newCommonSyllabus != null) {
+			newCommonSyllabus.setTemplateId(1L); 
 			newCommonSyllabus.setSiteId(siteId);
 			newCommonSyllabus.setShareable(true);
-			newCommonSyllabus.setCreatedBy(this.getCurrentUserDisplayName());
+			newCommonSyllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
 			newCommonSyllabus.setCreatedDate(new Date());
-			newCommonSyllabus.setLastModifiedBy(this.getCurrentUserDisplayName());
+			newCommonSyllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 			newCommonSyllabus.setLastModifiedDate(new Date());
-			// TODO :
-			newCommonSyllabus.setTemplateId(1L); //hardcoded for now 
-			newCommonSyllabus.setCourseTitle("CourseTitleFromSakai");
-			newCommonSyllabus.setLocale("fr_CA");
+			newCommonSyllabus.setCourseTitle(site.getTitle());
+
+			String locale = site.getProperties().getProperty("locale_string");
+			if (locale != null) {
+				newCommonSyllabus.setLocale(locale);
+			} else {
+				// TODO use a different default?
+				newCommonSyllabus.setLocale("fr_CA");
+			}
 			newCommonSyllabus.setTitle("Partageable"); // i18n
-			//newCommonSyllabus.setSections(sections); //get all possible sections for site
+
+			newCommonSyllabus.setSections(new HashSet<String>());
+			for (Group g : site.getGroups()) {
+				if (!g.getProviderGroupId().isEmpty()) {
+					newCommonSyllabus.getSections().add(g.getId());
+				}
+			}
 			
 			try {
 				createOrUpdateSyllabus(newCommonSyllabus);
@@ -204,9 +224,9 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		Map<Long, SyllabusElementMapping> existingSyllabusElementMappings = null;
 		if (syllabus.getId() == null) {
 			syllabus.setCreatedDate(now);
-			syllabus.setCreatedBy(getCurrentUserDisplayName());
+			syllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
 			syllabus.setLastModifiedDate(now);
-			syllabus.setLastModifiedBy(getCurrentUserDisplayName());
+			syllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 			syllabusDao.save(syllabus);
 		} else {
 			Syllabus existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false, false);
@@ -290,7 +310,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 			//update persistent object,  save handled by hibernate at end of transaction
 			existingElement.copy(newElement);
-			existingElement.setLastModifiedBy(getCurrentUserDisplayName());
+			existingElement.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 			existingElement.setLastModifiedDate(new Date());
 		}
 
@@ -306,9 +326,9 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	private void createSyllabusElement(AbstractSyllabusElement element) {
 		Date now = new Date();
 		// create this element
-		element.setCreatedBy(getCurrentUserDisplayName());
+		element.setCreatedBy(sakaiProxy.getCurrentUserId());
 		element.setCreatedDate(now);
-		element.setLastModifiedBy(getCurrentUserDisplayName());
+		element.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 		element.setLastModifiedDate(now);
 		element.setHidden(false);
 		syllabusDao.save(element);
