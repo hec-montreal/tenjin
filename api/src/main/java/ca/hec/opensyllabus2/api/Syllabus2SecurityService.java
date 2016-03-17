@@ -1,5 +1,7 @@
 package ca.hec.opensyllabus2.api;
 
+import java.util.List;
+
 public interface Syllabus2SecurityService {
 
 	public static final String OSYL2_EDIT_PERMISSION = "osyl2.edit";
@@ -34,4 +36,8 @@ public interface Syllabus2SecurityService {
 	 * @return
 	 */
 	public boolean isAllowed (String userId, String permission, String entityRef);
+	
+	public List<String> getUserPermissionsForGroup(String groupId);
+
+
 }
