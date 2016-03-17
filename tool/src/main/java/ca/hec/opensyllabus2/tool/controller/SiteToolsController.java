@@ -81,18 +81,18 @@ import ca.hec.opensyllabus2.api.Syllabus2Service;
 @RequestMapping(value = "tools")
 public class SiteToolsController {
 
-    	private static Log log = LogFactory.getLog(SiteToolsController.class);
-    	
-    	public final String BLOCKED_FORUM_TOPIC = "forum_topic";
-    	
-    	public final String BLOCKED_TOPIC = "topic";
+	private static Log log = LogFactory.getLog(SiteToolsController.class);
+	
+	public final String BLOCKED_FORUM_TOPIC = "forum_topic";
+	
+	public final String BLOCKED_TOPIC = "topic";
 	@Setter
-    	@Autowired
-    	private SessionManager sessionManager;
+	@Autowired
+	private SessionManager sessionManager;
     	
 	@Setter
-    	@Autowired
-    	private ToolManager toolManager;
+	@Autowired
+	private ToolManager toolManager;
 
 	@Setter
 	@Autowired
