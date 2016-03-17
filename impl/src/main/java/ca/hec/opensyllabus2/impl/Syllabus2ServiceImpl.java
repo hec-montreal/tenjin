@@ -13,13 +13,10 @@ import lombok.Setter;
 import org.apache.log4j.Logger;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.component.api.ServerConfigurationService;
-import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.event.api.EventTrackingService;
-import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
-import org.sakaiproject.tool.api.Placement;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.UserDirectoryService;
@@ -40,151 +37,14 @@ import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
  *
  *
  */
+@Setter 
 public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 	private static final Logger log = Logger.getLogger(Syllabus2ServiceImpl.class);
 
-	/**
- 	* {@inheritDoc}
- 	*/
-	public boolean isSuperUser() {
-		return securityService.isSuperUser();
-	}
-
-	/**
- 	* {@inheritDoc}
- 	*/
-	public void postEvent(String event,String reference,boolean modify) {
-		eventTrackingService.post(eventTrackingService.newEvent(event,reference,modify));
-	}
-
-	/**
- 	* {@inheritDoc}
- 	*/
-	public String getSkinRepoProperty(){
-		return serverConfigurationService.getString("skin.repo");
-	}
-
-	/**
- 	* {@inheritDoc}
- 	*/
-	public String getToolSkinCSS(String skinRepo){
-
-		String skin = siteService.findTool(sessionManager.getCurrentToolSession().getPlacementId()).getSkin();
-
-		if(skin == null) {
-			skin = serverConfigurationService.getString("skin.default");
-		}
-
-		return skinRepo + "/" + skin + "/tool.css";
-	}
-
-	/**
-	 * init - perform any actions required here for when this bean starts up
-	 */
-	public void init() {
-		log.info("init");
-	}
-
-	@Setter 
-	private SakaiProxy sakaiProxy;
-	
-    @Setter
+	private SakaiProxy sakaiProxy;	
 	private Syllabus2Dao syllabusDao;
-
-    @Setter
 	private TemplateService templateService;
-
-	@Setter
-	private ToolManager toolManager;
-
-    @Setter
-	private SessionManager sessionManager;
-
-    @Setter
-	private UserDirectoryService userDirectoryService;
-
-    @Setter
-	private SecurityService securityService;
-
-    @Setter
-	private EventTrackingService eventTrackingService;
-
-    @Setter
-	private ServerConfigurationService serverConfigurationService;
-
-    @Setter
-	private SiteService siteService;
-
-    @Override
-	public List<Syllabus> getSyllabusList(String siteId) throws NoSiteException {
-		List<Syllabus> syllabusList = null;
-		
-		// if no site is specified, check for current context 
-		if (siteId == null) {
-			try {
-				siteId = getCurrentSiteContext();
-			} catch (Exception e) {
-				throw new NoSiteException();
-			}
-		}
-
-		syllabusList = syllabusDao.getSyllabusList(siteId);
-		
-		// if no syllabus, create common and add it to the list
-		if (syllabusList.isEmpty()) {
-			syllabusList.add(createCommonSyllabus(siteId));
-		}
-		return syllabusList;
-	}
-    
-	private Syllabus createCommonSyllabus(String siteId) {
-		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, "fr_CA");
-		Site site = null;
-		
-		try {
-			site = siteService.getSite(siteId);
-		} catch (Exception e) {
-			log.error("Site " + siteId + " could not be retrieved.");
-			return null;
-		}
-		
-		if (newCommonSyllabus != null) {
-			newCommonSyllabus.setTemplateId(1L); 
-			newCommonSyllabus.setSiteId(siteId);
-			newCommonSyllabus.setShareable(true);
-			newCommonSyllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
-			newCommonSyllabus.setCreatedDate(new Date());
-			newCommonSyllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
-			newCommonSyllabus.setLastModifiedDate(new Date());
-			newCommonSyllabus.setCourseTitle(site.getTitle());
-
-			String locale = site.getProperties().getProperty("locale_string");
-			if (locale != null) {
-				newCommonSyllabus.setLocale(locale);
-			} else {
-				// TODO use a different default?
-				newCommonSyllabus.setLocale("fr_CA");
-			}
-			newCommonSyllabus.setTitle("Partageable"); // i18n
-
-			newCommonSyllabus.setSections(new HashSet<String>());
-			for (Group g : site.getGroups()) {
-				if (!g.getProviderGroupId().isEmpty()) {
-					newCommonSyllabus.getSections().add(g.getId());
-				}
-			}
-			
-			try {
-				createOrUpdateSyllabus(newCommonSyllabus);
-			} catch (NoSyllabusException e) {
-				// should not be possible, only happens when we try to update a syllabus that doesn't exist
-				log.error("Error saving new common syllabus for site: " + siteId);
-			}
-		}
-		
-		return newCommonSyllabus;
-	}
 
 	@Override
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException {
@@ -199,22 +59,28 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		}
 	}
 
-	@Override
-	public String getCurrentSiteContext () throws IdUnusedException, NoSiteException{
-		String siteRef = null;
-		Placement placement = toolManager.getCurrentPlacement();
-		String context = null;
+    @Override
+	public List<Syllabus> getSyllabusList(String siteId) throws NoSiteException {
+		List<Syllabus> syllabusList = null;
+		
+		// if no site is specified, check for current context 
+		if (siteId == null) {
+			try {
+				siteId = sakaiProxy.getCurrentSiteId();
+			} catch (Exception e) {
+				throw new NoSiteException();
+			}
+		}
 
-		if (placement == null)
-		    throw new NoSiteException();
-		else
-		    context = placement.getContext();
-
-		siteRef = siteService.getSite(context).getId();
-
-		return siteRef;
+		syllabusList = syllabusDao.getSyllabusList(siteId);
+		
+		// if no syllabus, create common and add it to the list
+		if (syllabusList.isEmpty()) {
+			syllabusList.add(createCommonSyllabus(siteId));
+		}
+		return syllabusList;
 	}
-
+    
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException {
 		Date now = new Date();
 		
@@ -298,6 +164,54 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return syllabus;
 	}
 
+	private Syllabus createCommonSyllabus(String siteId) {
+		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, "fr_CA");
+		Site site = null;
+		
+		try {
+			site = sakaiProxy.getSite(siteId);
+		} catch (Exception e) {
+			log.error("Site " + siteId + " could not be retrieved.");
+			return null;
+		}
+		
+		if (newCommonSyllabus != null) {
+			newCommonSyllabus.setTemplateId(1L); 
+			newCommonSyllabus.setSiteId(siteId);
+			newCommonSyllabus.setShareable(true);
+			newCommonSyllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
+			newCommonSyllabus.setCreatedDate(new Date());
+			newCommonSyllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
+			newCommonSyllabus.setLastModifiedDate(new Date());
+			newCommonSyllabus.setCourseTitle(site.getTitle());
+
+			String locale = site.getProperties().getProperty("locale_string");
+			if (locale != null) {
+				newCommonSyllabus.setLocale(locale);
+			} else {
+				// TODO use a different default?
+				newCommonSyllabus.setLocale("fr_CA");
+			}
+			newCommonSyllabus.setTitle("Partageable"); // i18n
+
+			newCommonSyllabus.setSections(new HashSet<String>());
+			for (Group g : site.getGroups()) {
+				if (!g.getProviderGroupId().isEmpty()) {
+					newCommonSyllabus.getSections().add(g.getId());
+				}
+			}
+			
+			try {
+				createOrUpdateSyllabus(newCommonSyllabus);
+			} catch (NoSyllabusException e) {
+				// should not be possible, only happens when we try to update a syllabus that doesn't exist
+				log.error("Error saving new common syllabus for site: " + siteId);
+			}
+		}
+		
+		return newCommonSyllabus;
+	}
+
 	/**
 	 * Update a Persistent syllabus element mapping (including the syllabus element) 
 	 */
@@ -334,8 +248,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		syllabusDao.save(element);
 	}
 
-	@Override
-	public SyllabusElementMapping createSyllabusElementMapping(Long syllabusId, AbstractSyllabusElement syllabusElement, Integer displayOrder, Boolean hidden) {
+	private SyllabusElementMapping createSyllabusElementMapping(Long syllabusId, AbstractSyllabusElement syllabusElement, Integer displayOrder, Boolean hidden) {
 		SyllabusElementMapping mapping = new SyllabusElementMapping();
 		mapping.setSyllabusId(syllabusId);
 		mapping.setSyllabusElement(syllabusElement);

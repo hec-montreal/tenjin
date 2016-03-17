@@ -1,54 +1,18 @@
 package ca.hec.opensyllabus2.api;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.sakaiproject.exception.IdUnusedException;
 
 import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
 import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
-import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.opensyllabus2.api.model.template.Template;
 
 /**
- * An interface to abstract all Sakai related API calls in a central method that can be injected into our app.
+ * An interface to abstract all Syllabus related methods.
  *
- * @author Mike Jennings (mike_jennings@unc.edu)
+ * @author Curtis van Osch (curtis.van-osch@hec.ca)
  *
  */
 public interface Syllabus2Service {
-
-	/**
-	 * Is the current user a superUser? (anyone in admin realm)
-	 * @return
-	 */
-	public boolean isSuperUser();
-
-	/**
-	 * Post an event to Sakai
-	 *
-	 * @param event			name of event
-	 * @param reference		reference
-	 * @param modify		true if something changed, false if just access
-	 *
-	 */
-	public void postEvent(String event,String reference,boolean modify);
-
-	/**
-	 * Wrapper for ServerConfigurationService.getString("skin.repo")
-	 * @return
-	 */
-	public String getSkinRepoProperty();
-
-	/**
-	 * Gets the tool skin CSS first by checking the tool, otherwise by using the default property.
-	 * @param	the location of the skin repo
-	 * @return
-	 */
-	public String getToolSkinCSS(String skinRepo);
 
 	/**
 	 * Retrieves the syllabus associated to a specific section and sectionId.
@@ -67,13 +31,6 @@ public interface Syllabus2Service {
 	public List<Syllabus> getSyllabusList(String siteId) throws NoSyllabusException, NoSiteException;
 	
 	/**
-	 * Create a syllabus element mapping and insert it in the database
-	 *
-	 * @return the syllabus element mapping
-	 */
-	public SyllabusElementMapping createSyllabusElementMapping(Long syllabusId, AbstractSyllabusElement syllabusElement, Integer displayOrder, Boolean hidden);
-	
-	/**
 	 * Create a new syllabus or update the existing syllabus based on id
 	 *
 	 * @param syllabus
@@ -82,7 +39,4 @@ public interface Syllabus2Service {
 	 * @throws NoSyllabusException 
 	 */
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException;
-
-	public String getCurrentSiteContext () throws IdUnusedException, NoSiteException;
-
 }
