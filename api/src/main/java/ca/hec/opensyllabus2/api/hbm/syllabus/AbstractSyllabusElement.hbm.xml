@@ -39,6 +39,10 @@
 			<column name="DESCRIPTION" />
 		</property>
 
+		<property name="common" type="boolean">
+			<column name="COMMON" not-null="true" />
+		</property>
+
 		<property name="publicElement" type="boolean">
 			<column name="PUBLIC_ELEMENT" />
 		</property>

@@ -24,7 +24,7 @@ public class Syllabus {
     private String title;
     private Long templateId;
     private String locale;
-    private Boolean shareable;
+    private Boolean common;
     private String createdBy;
     private Date createdDate;
     private String lastModifiedBy;
@@ -38,7 +38,7 @@ public class Syllabus {
     	this.setTitle(syllabus.getTitle());
     	this.setTemplateId(syllabus.getTemplateId());
     	this.setLocale(syllabus.getLocale());
-    	this.setShareable(syllabus.getShareable());
+    	this.setCommon(syllabus.getCommon());
     	this.setCreatedBy(syllabus.getCreatedBy());
     	this.setCreatedDate(syllabus.getCreatedDate());
     	this.setLastModifiedBy(syllabus.getLastModifiedBy());

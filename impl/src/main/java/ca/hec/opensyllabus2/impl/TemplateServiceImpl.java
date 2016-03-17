@@ -62,6 +62,7 @@ public class TemplateServiceImpl implements TemplateService {
 					element.setPublicElement(true);
 					element.setHidden(false);
 					element.setImportant(false);
+					element.setCommon(true);
 
 					// recursion on the children
 					recursiveAddElements(templateStructure, element, locale, idElement);
@@ -104,6 +105,7 @@ public class TemplateServiceImpl implements TemplateService {
 					el.setPublicElement(true);
 					el.setHidden(false);
 					el.setImportant(false);
+					el.setCommon(true);
 					
 					// recursion on the children
 					recursiveAddElements(templateStructure, el, locale, idEl);

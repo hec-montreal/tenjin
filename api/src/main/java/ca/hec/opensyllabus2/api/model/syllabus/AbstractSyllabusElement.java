@@ -39,6 +39,7 @@ public abstract class AbstractSyllabusElement {
 	private String title;
 	private String description;
 
+	private Boolean common;
 	private Boolean publicElement;
     private Boolean important;
     
@@ -67,6 +68,7 @@ public abstract class AbstractSyllabusElement {
     	this.setSiteId(e.getSiteId());
     	this.setTitle(e.getTitle());
     	this.setDescription(e.getDescription());
+    	this.setCommon(e.getCommon());
     	this.setPublicElement(e.getPublicElement());
     	this.setImportant(e.getImportant());
     	this.setDisplayOrder(e.getDisplayOrder());

@@ -27,8 +27,8 @@
 		<property name="locale" type="string">
 			<column name="LOCALE" not-null="true" />
 		</property>
-		<property name="shareable" type="boolean">
-			<column name="SHAREABLE" not-null="true" />
+		<property name="common" type="boolean">
+			<column name="COMMON" not-null="true" />
 		</property>
 		<property name="createdBy" type="string">
 			<column name="CREATED_BY" not-null="true" />

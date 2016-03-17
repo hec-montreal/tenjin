@@ -54,7 +54,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			syllabus = syllabusDao.getSyllabus(syllabusId, true, true);
 			return syllabus;
 		} catch (Exception e) {
-			log.warn("The syllabus could not be retrieved because: " + e.getMessage()) ;
+			log.warn("The syllabus " + syllabusId + " could not be retrieved because: " + e.getMessage()) ;
 			throw new NoSyllabusException();
 		}
 	}
@@ -178,7 +178,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		if (newCommonSyllabus != null) {
 			newCommonSyllabus.setTemplateId(1L); 
 			newCommonSyllabus.setSiteId(siteId);
-			newCommonSyllabus.setShareable(true);
+			newCommonSyllabus.setCommon(true);
 			newCommonSyllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
 			newCommonSyllabus.setCreatedDate(new Date());
 			newCommonSyllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
