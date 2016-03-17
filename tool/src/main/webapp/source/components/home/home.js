@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('home', ['$q', '$state', 'SyllabusService', 'UserService', 'AlertService', function ($q, $state, SyllabusService, UserService, AlertService) {
+opensyllabusApp.directive('home', ['$q', '$state', '$timeout', 'SyllabusService', 'UserService', 'AlertService', function ($q, $state, $timeout, SyllabusService, UserService, AlertService) {
     'use strict';
 
     return {
@@ -16,8 +16,16 @@ opensyllabusApp.directive('home', ['$q', '$state', 'SyllabusService', 'UserServi
             
             this.loading = true;  
 
-            var loadProfileAndSyllabusList = function($userId){
-                return $q.allSettled([UserService.loadProfile($userId).$promise, SyllabusService.loadSyllabusList().$promise]).then(function(data) {
+            $timeout(function() {
+                // anything you want can go here and will safely be run on the next digest.
+                // resize frame (should be done also whenever we change content)
+                if (window.frameElement) {
+                    setMainFrameHeight(window.frameElement.id);
+                }
+            });
+
+            var loadProfileAndSyllabusList = function(){
+                return $q.allSettled([UserService.loadProfile().$promise, SyllabusService.loadSyllabusList().$promise]).then(function(data) {
 
                     // data contient d'abord le résultat de la première requête
                     if (data[0].state === "rejected") {
@@ -31,8 +39,8 @@ opensyllabusApp.directive('home', ['$q', '$state', 'SyllabusService', 'UserServi
                     }
              
                     // no error during loading
-                    // if ( data[0].state === "fulfilled" && data[1].state === "fulfilled") {
-                    if ( data[1].state === "fulfilled") {
+                    // TODO : if ( data[0].state === "fulfilled" && data[1].state === "fulfilled") {
+                    if ( data[0].state === "fulfilled" && data[1].state === "fulfilled") {
                         // set user profile
                         UserService.setProfile(data[0].value);
                         // set syllabus list
@@ -40,20 +48,18 @@ opensyllabusApp.directive('home', ['$q', '$state', 'SyllabusService', 'UserServi
                         SyllabusService.setSyllabusList(syllabusList);
 
                         if (syllabusList.length === 1) {
+                            console.log('=> redirection to /syllabus');
                             $state.go('syllabus', { 'id' : syllabusList[0].id });
+                            // $state.go('management');
                         }
 
                     }
-
-                }, function(error) {
-                    console.log('erreur get syllabus');
 
                 });
             };
 
             // load profile and syllabus list            
-            var userId = 1;
-            loadProfileAndSyllabusList(userId).finally(function() {
+            loadProfileAndSyllabusList().finally(function() {
                 // end of loading
                 this.loading = false;     
             });

@@ -21,6 +21,7 @@ opensyllabusApp.service('CitationsService', [ '$rootScope', '$resource', '$http'
 				}
 			}
 	};
+	
 	this.getCitationLists = function($rootTree){
 		var resourceIds = [];
 		var promises = [];
@@ -30,7 +31,7 @@ opensyllabusApp.service('CitationsService', [ '$rootScope', '$resource', '$http'
 		var promisesList = {promises: promises, resourceIds: resourceIds};
 
 		 return promisesList;
-	}
+	};
 
 	//Add a citationList to the resources list
 	this.updateResources = function ($rootTree, $citationList){

@@ -43,14 +43,14 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
             if (config.mockUp === true) {
                 this.syllabusList = mockup.syllabusList;
             } else {
-                // this.syllabusList = mockup.syllabusList;
-                // SyllabusService.loadSyllabusList().$promise.then(function() {
-                //     debugger;
-                // });
-                // Load the syllabus list
+                
+                // Load the syllabus list (if the syllabus has not been loaded earlier)
+                // var syllabusList = SyllabusService.getSyllabusList();
+                // if ( !syllabusList  ) {
                 loadSyllabusList().finally(function() {
                      this.infos.working = false; 
                 });
+                // }
             }
 
 

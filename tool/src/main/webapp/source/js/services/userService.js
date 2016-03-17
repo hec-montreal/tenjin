@@ -2,21 +2,11 @@
     'use strict';
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
-    var userProvider = $resource('v1/syllabus/:userId.json', 
-        {
-            userId : "@userId"
-        }, 
-        {
-            getUser : {
-                method : 'GET',
-                isArray : false
-            }
-        }
-    );
+    var userProvider = $resource('v1/user.json');
 
 
-    this.loadProfile = function($userId) {
-        return userProvider.get({userId : $userId});
+    this.loadProfile = function() {
+        return userProvider.get();
     };
 
     this.setProfile = function($dataProfile) {
