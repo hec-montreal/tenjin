@@ -1,5 +1,7 @@
 package ca.hec.opensyllabus2.api;
 
+import java.util.List;
+
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;
 

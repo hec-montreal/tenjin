@@ -1,7 +1,12 @@
 package ca.hec.opensyllabus2.impl;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.authz.api.AuthzGroupService;
+import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.event.api.EventTrackingService;
 import org.sakaiproject.exception.IdUnusedException;
@@ -11,6 +16,7 @@ import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
 
 import ca.hec.opensyllabus2.api.SakaiProxy;
+import ca.hec.opensyllabus2.api.TenjinFunctions;
 import ca.hec.opensyllabus2.impl.dao.Syllabus2DaoImpl;
 import lombok.Setter;
 
@@ -24,6 +30,22 @@ public class SakaiProxyImpl implements SakaiProxy {
 	private ToolManager toolManager;
 	private EventTrackingService eventTrackingService;
 	private SecurityService securityService;
+	private AuthzGroupService groupService;
+	private FunctionManager functionManager;
+
+	public void init() {
+		
+		List<String> registered = functionManager.getRegisteredFunctions();
+		
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ, true);
+		}
+
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_WRITE)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_WRITE, true);
+		}
+
+	}
 	
 	/**
  	* {@inheritDoc}
