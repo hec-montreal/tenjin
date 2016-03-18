@@ -10,6 +10,10 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
         restrict: 'A',
         templateUrl: 'form/evaluationElementForm/evaluationElementForm.html',
         controller: function ($scope) {
+            if ($scope.element.attributes.evalDate){
+                $scope.element.attributes.evalDate =  new Date($scope.element.attributes.evalDate);
+            }
+
             $scope.formats = ['dd-MM-yyyy']; 
             $scope.format = $scope.formats[0];
 
@@ -23,10 +27,9 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
             };
 
             $scope.openDateEval = function($event) {
+                //$scope.element.attributes.evalDate = new Date('2002-04-26T09:00:00');
                 $scope.statusDateEval.opened = true;
             };
-
-            console.log ($scope.type);
 
             // Disable weekend selection
             $scope.disabled = function(date, mode) {
@@ -35,9 +38,10 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
 
         },
         link: function ($scope, $element) {
-            $scope.element.attributes.evalType = $scope.typelabel;
+            
+          $scope.element.attributes.evalType = $scope.typelabel;
           
-            console.log ("le type est" + $scope.typelabel );
+            console.log ("le type est" + $scope.element.attributes.evalDate );
             
         }
 

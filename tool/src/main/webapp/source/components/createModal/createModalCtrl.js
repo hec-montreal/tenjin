@@ -106,6 +106,12 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
             }
         }
 
+        //CHECK evaluation date
+        if ($scope.element.type === 'evaluation'){
+            if ($scope.element.attributes.evalDate){
+                $scope.element.attributes.evalDate = $scope.element.attributes.evalDate.toString();                
+            }
+        }
         // Si le formulaire associé à l'élément comprend une ressource
         if ( $scope.element.$formHasRessource ) {
             if (!$scope.element.attributes.resourceId) {
