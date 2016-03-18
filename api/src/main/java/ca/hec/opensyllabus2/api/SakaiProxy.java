@@ -1,7 +1,5 @@
 package ca.hec.opensyllabus2.api;
 
-import java.util.List;
-
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;
 
@@ -36,5 +34,7 @@ public interface SakaiProxy {
 	public String getCurrentUserId();
 	
 	public Site getSite(String siteId) throws IdUnusedException;
+
+	public boolean isAllowed(String userId, String function, String groupId);
 
 }

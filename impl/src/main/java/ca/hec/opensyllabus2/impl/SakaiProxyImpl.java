@@ -1,7 +1,6 @@
 package ca.hec.opensyllabus2.impl;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,7 +16,6 @@ import org.sakaiproject.tool.api.ToolManager;
 
 import ca.hec.opensyllabus2.api.SakaiProxy;
 import ca.hec.opensyllabus2.api.TenjinFunctions;
-import ca.hec.opensyllabus2.impl.dao.Syllabus2DaoImpl;
 import lombok.Setter;
 
 @Setter
@@ -106,5 +104,10 @@ public class SakaiProxyImpl implements SakaiProxy {
 			log.warn("site not found: " + e.getId());
 			return null;
 		}
+	}
+
+	@Override
+	public boolean isAllowed(String userId, String function, String reference) {
+		return securityService.unlock(userId, function,  reference);
 	}
 }

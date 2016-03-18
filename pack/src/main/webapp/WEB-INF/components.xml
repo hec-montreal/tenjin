@@ -46,15 +46,13 @@
 	</bean>
 
 	<bean id="ca.hec.opensyllabus2.api.Syllabus2SecurityService"
-		class="ca.hec.opensyllabus2.impl.Syllabus2SecurityServiceImpl"
-		init-method="init">
-		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService"/>
+		class="ca.hec.opensyllabus2.impl.Syllabus2SecurityServiceImpl">
+ 		<property name="sakaiProxy" ref="ca.hec.opensyllabus2.api.SakaiProxy" />
 	</bean>
 	
     <bean name="ca.hec.opensyllabus2.api.SakaiProxy"
         class="ca.hec.opensyllabus2.impl.SakaiProxyImpl" init-method="init" singleton="true">
 <!--         <property name="courseManagementService"><ref bean="org.sakaiproject.coursemanagement.api.CourseManagementService"/></property> -->
-<!--         <property name="functionManager"><ref bean="org.sakaiproject.authz.api.FunctionManager"/></property> -->
 <!--         <property name="groupProvider"><ref bean="org.sakaiproject.authz.api.GroupProvider"/></property> -->
 <!--         <property name="privacyManager"><ref bean="org.sakaiproject.api.privacy.PrivacyManager"/></property> -->
 <!--         <property name="connectionsLogic"><ref bean="org.sakaiproject.profile2.logic.ProfileConnectionsLogic"/></property> -->
@@ -64,6 +62,7 @@
         <property name="sessionManager"><ref bean="org.sakaiproject.tool.api.SessionManager"/></property>
         <property name="siteService"><ref bean="org.sakaiproject.site.api.SiteService"/></property>
         <property name="toolManager"><ref bean="org.sakaiproject.tool.api.ToolManager"/></property>
+        <property name="functionManager"><ref bean="org.sakaiproject.authz.api.FunctionManager"/></property>
 <!--         <property name="userDirectoryService"><ref bean="org.sakaiproject.user.api.UserDirectoryService"/></property> -->
     </bean>
 </beans>

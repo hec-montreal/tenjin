@@ -22,6 +22,7 @@
 package ca.hec.opensyllabus2.tool.controller;
 
 import ca.hec.opensyllabus2.api.SakaiProxy;
+import ca.hec.opensyllabus2.api.TenjinFunctions;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,11 +41,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
-import org.sakaiproject.tool.api.Session;
 import org.sakaiproject.tool.api.SessionManager;
 
 import ca.hec.opensyllabus2.api.Syllabus2SecurityService;
-import ca.hec.opensyllabus2.api.TemplateService;
 
 @Controller
 @RequestMapping(value ="v1")
@@ -82,31 +81,36 @@ public class UserController {
 			Map<String, Object> siteMap = new HashMap<String, Object>();
 			siteMap.put("courseId", site.getId());
 			siteMap.put("courseTitle", site.getTitle());
+			
 			// set site permissions
-			List<String> sitePermissionsList = securityService.getUserPermissionsForGroup(site.getId());
 			Map<String, Object> sitePermissionsMap = new HashMap<String, Object>();
-			for(String permission:sitePermissionsList) {
-				sitePermissionsMap.put(permission, true);
+			if (securityService.isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, site.getReference())) {
+				sitePermissionsMap.put("read", true);
 			}
+			if (securityService.isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site.getReference())) {
+				sitePermissionsMap.put("write", true);
+			}
+			
 			siteMap.put("permissions", sitePermissionsMap);
 			entityMap.put("site", siteMap);
 			
 			// set sections
 			for (Group g : site.getGroups()) {
 				if (!g.getProviderGroupId().isEmpty()) {
-					//newCommonSyllabus.getSections().add(g.getId());
 					Map<String, Object> sectionMap = new HashMap<String, Object>();
 					sectionMap.put("id", g.getId());
 					sectionMap.put("name", g.getTitle());
 					
 					// set section permissions
-					List<String> permissionsList = securityService.getUserPermissionsForGroup(g.getId());			
 					Map<String, Object> permissionsMap = new HashMap<String, Object>();
-					for(String permission:permissionsList) {
-						permissionsMap.put(permission, true);
+					if (securityService.isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, g.getReference())) {
+						permissionsMap.put("read", true);
 					}
-					sectionMap.put("permissions", permissionsMap);
+					if (securityService.isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, g.getReference())) {
+						permissionsMap.put("write", true);
+					}
 					
+					sectionMap.put("permissions", permissionsMap);
 					sectionsList.add(sectionMap);
 				}
 			}
