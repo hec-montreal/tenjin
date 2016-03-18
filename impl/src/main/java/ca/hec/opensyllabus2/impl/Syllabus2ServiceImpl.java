@@ -24,6 +24,7 @@ import org.sakaiproject.user.api.UserDirectoryService;
 import ca.hec.opensyllabus2.api.SakaiProxy;
 import ca.hec.opensyllabus2.api.Syllabus2Service;
 import ca.hec.opensyllabus2.api.TemplateService;
+import ca.hec.opensyllabus2.api.OsylException.DeniedAccessException;
 import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
 import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.dao.Syllabus2Dao;
@@ -81,7 +82,8 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return syllabusList;
 	}
     
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException {
+    @Override
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException, DeniedAccessException {
 		Date now = new Date();
 		
 		// add permission check
@@ -156,8 +158,13 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		// delete the syllabus element mappings that are missing from the new syllabus
 		if (existingSyllabusElementMappings != null && !existingSyllabusElementMappings.isEmpty()) {
 			for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
-				syllabusDao.delete(mapping);
-				// TODO if there are no more mappings, delete the element?
+				// cannot delete common element from another syllabus
+				if (!syllabus.getCommon() && mapping.getSyllabusElement().getCommon()) {
+					throw new DeniedAccessException("Cannot delete common element from a regular syllabus");
+				}
+				
+				// delete the element and it's mappings
+				syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
 			}
 		}
 
@@ -203,9 +210,10 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			
 			try {
 				createOrUpdateSyllabus(newCommonSyllabus);
-			} catch (NoSyllabusException e) {
+			} catch (Exception e) {
 				// should not be possible, only happens when we try to update a syllabus that doesn't exist
 				log.error("Error saving new common syllabus for site: " + siteId);
+				e.printStackTrace();
 			}
 		}
 		

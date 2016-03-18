@@ -46,7 +46,11 @@ public class SyllabusException extends Exception{
 	this.message = httpStatus.getReasonPhrase();
     }
     
-    public Map<String, Object> toJSON(){
+    public SyllabusException(String message) {
+		super(message);
+	}
+
+	public Map<String, Object> toJSON(){
 	Map<String, Object> json = new HashMap<String,Object>();
 	json.put("code", httpStatus.value());
 	json.put("message", httpStatus.getReasonPhrase());

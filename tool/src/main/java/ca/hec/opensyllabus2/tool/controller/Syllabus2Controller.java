@@ -26,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import ca.hec.opensyllabus2.api.Syllabus2Service;
+import ca.hec.opensyllabus2.api.OsylException.DeniedAccessException;
 import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
 import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
@@ -105,7 +106,7 @@ public class Syllabus2Controller {
 	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException {
+	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException {
 
 			return osyl2Service.createOrUpdateSyllabus(syllabus);
 	}
@@ -119,6 +120,12 @@ public class Syllabus2Controller {
 	@ExceptionHandler(NoSyllabusException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public @ResponseBody String handleNoSyllabusException(NoSyllabusException ex) {
+		return ex.getLocalizedMessage();
+	}
+
+	@ExceptionHandler(NoSyllabusException.class)
+	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+	public @ResponseBody String handleDeniedAccessException(DeniedAccessException ex) {
 		return ex.getLocalizedMessage();
 	}
 

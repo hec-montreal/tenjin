@@ -33,5 +33,9 @@ public class DeniedAccessException extends SyllabusException{
 	super(HttpStatus.UNAUTHORIZED);
 	this.setHttpStatus(HttpStatus.UNAUTHORIZED);
     }
+
+	public DeniedAccessException(String message) {
+		super(message);
+	}
 }
 

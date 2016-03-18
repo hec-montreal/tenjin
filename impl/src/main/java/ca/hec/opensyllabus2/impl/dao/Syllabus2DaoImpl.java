@@ -150,5 +150,16 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void deleteElementAndMappings(AbstractSyllabusElement syllabusElement) {
+		
+		List<SyllabusElementMapping> mappings = 
+				getHibernateTemplate().find("from SyllabusElementMapping where syllabuselement_id = ?", syllabusElement.getId());
+		
+		getHibernateTemplate().deleteAll(mappings);
+		getHibernateTemplate().delete(syllabusElement);
+		
+	}
 	
 }

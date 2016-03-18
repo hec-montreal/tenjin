@@ -96,5 +96,12 @@ public interface Syllabus2Dao {
 	 * @param Object o
 	 */
 	public void delete(Object o);
+	
+	/**
+	 * Delete an AbstractSyllabusElement and all it's mappings
+	 * 
+	 * @param Object o
+	 */
+	public void deleteElementAndMappings(AbstractSyllabusElement syllabusElement);
 }
 
