@@ -36,9 +36,13 @@ opensyllabusApp.constant('config', {
             'type': 'sakai_entity',
             'label': 'TYPE_ELEMENT_SAKAIENTITY'
         },
-        'evaluation' : { // For evaluation and exam
+        'evaluation' : { 
             'type': 'evaluation',
-            'label': ''
+            'label': 'TYPE_ELEMENT_EVALUATION'
+        },
+        'exam' : { 
+            'type': 'evaluation',
+            'label': 'TYPE_ELEMENT_EXAM'
         },
         'composite' : {
             'type': 'composite',
