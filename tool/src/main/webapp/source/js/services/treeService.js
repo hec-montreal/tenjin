@@ -135,7 +135,8 @@
     var getItemFromEmplacement = function($rootTree, $emplacement, $tmpEmplacement) {
         
         // on regarde tous les éléments hormis l'élément racine
-        if (typeof($rootTree.common) === false && arrayEquals($emplacement.emplacement, $tmpEmplacement.emplacement) === true ) {
+        if (SyllabusService.isSyllabusElement($rootTree) && 
+            arrayEquals($emplacement.emplacement, $tmpEmplacement.emplacement) === true ) {
             return $rootTree;
         } else {
 
@@ -166,7 +167,7 @@
     var getItemFromId = function($rootTree, $id, $emplacement, $tmpEmplacement) {
         
         // compare element id
-        if ($rootTree.id === $id && typeof($rootTree.common) === false) {
+        if ($rootTree.id === $id && SyllabusService.isSyllabusElement($rootTree)) {
             // $emplacement.niveau = $tmpLevel;
             // $emplacement.position = $tmpPosition;
             $emplacement.emplacement = $tmpEmplacement.emplacement.slice();

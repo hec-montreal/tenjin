@@ -196,11 +196,23 @@
     };
 
 
+    // return whether or not the provided object is a syllabus element 
+    // as opposed to the syllabus object itself (useful for recursive traversal
+    // of the syllabus)
+    var isSyllabusElement = function($object) {
+        //syllabus does not have parent
+        return typeof($object.templateId) === "undefined";
+    }
+
+    this.isSyllabusElement = function($object) {
+        return isSyllabusElement($object);
+    }
+
     var addElementToSyllabus = function($rootTree, $parent, $element, $position) {
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id && typeof($rootTree.common) === false) {
+            if ($rootTree.id === $parent.id && isSyllabusElement($rootTree)) {
                 // si l'élément existe déjà on le supprime et on le remplace (modification)
                 var modification = false;
                 for (var i = 0; i < $rootTree.elements.length; i++){
@@ -238,7 +250,7 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id && typeof($rootTree.common) === false) {
+            if ($rootTree.id === $parent.id && isSyllabusElement($rootTree)) {
                 if ($rootTree.elements.length > 0) {
 
                     // vérifie si la rubrique a déjà été insérée
@@ -323,7 +335,7 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id && typeof($rootTree.common) === false) { 
+            if ($rootTree.id === $parent.id && isSyllabusElement($rootTree)) { 
                 // si l'élément existe déjà on le supprime et on le remplace
                 for (var i = 0; i < $rootTree.elements.length; i++){
                     if ($rootTree.elements[i].id === $element.id) {
@@ -456,6 +468,4 @@
     // this.setCurrentSyllabusId = function($syllabusId) {
     //     this.currentSyllabusId = $syllabusId;
     // };
-
-
 }]);
