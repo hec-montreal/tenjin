@@ -13,7 +13,7 @@ opensyllabusApp.constant('mockup', {
             "createdBy": "Nadine",
             "sections": [1],
             "status": "STATUS_INITIAL",
-            "shareable" : true,
+            "common" : true,
             "siteId": ""
         },
         {
@@ -21,6 +21,7 @@ opensyllabusApp.constant('mockup', {
             "name": "Plan de cours Curtis",
             "createdBy": "Curtis",
             "sections": [2, 3],
+            "common" : false,
             "status": "STATUS_BROUILLON"
         },
         {
@@ -28,6 +29,7 @@ opensyllabusApp.constant('mockup', {
             "name": "Plan de cours Awa",
             "createdBy": "Awa",
             "sections": [4],
+            "common" : false,
             "status": "STATUS_PUBLIE"
         },
         {
@@ -35,6 +37,7 @@ opensyllabusApp.constant('mockup', {
             "name": "Plan de cours Mugurel",
             "createdBy": "Mugurel",
             "sections": [5],
+            "common" : false,
             "status": "STATUS_BROUILLON"
         },
         {
@@ -42,6 +45,7 @@ opensyllabusApp.constant('mockup', {
             "name": "Sans section",
             "createdBy": "Johan",
             "sections": [],
+            "common" : false,
             "status": "STATUS_BROUILLON"
         },
         {
@@ -49,6 +53,7 @@ opensyllabusApp.constant('mockup', {
             "name": "Sans section 2",
             "createdBy": "Johan",
             "sections": [],
+            "common" : false,
             "status": "STATUS_PUBLIE"
         }
     ],

@@ -42,9 +42,9 @@
           </td>
           <td>
 
-            <span data-ng-if="syllabus.shareable" data-ng-repeat="section in syllabus.sections">{{managementCtrl.sections[section].name}}<span data-ng-if="$index !== syllabus.sections.length-1">, </span></span>
+            <span data-ng-if="syllabus.common" data-ng-repeat="section in syllabus.sections">{{managementCtrl.sections[section].name}}<span data-ng-if="$index !== syllabus.sections.length-1">, </span></span>
 
-            <a data-ng-if="!syllabus.shareable" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.sections" onbeforesave="managementCtrl.updateSections($data, syllabus)">
+            <a data-ng-if="!syllabus.common" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.sections" onbeforesave="managementCtrl.updateSections($data, syllabus)">
               <!-- test -->
               {{ managementCtrl.showSections(syllabus) }}
             </a>
@@ -57,7 +57,7 @@
               <a ui-sref="syllabus({ id: syllabus.id })"  >{{ 'LINK_SYLLABUS' | translate }}</a>
           </td>
           <td>
-              <input data-ng-if="!syllabus.shareable" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="managementCtrl.enableDelete()" /> 
+              <input data-ng-if="!syllabus.common" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="managementCtrl.enableDelete()" /> 
           </td>
         </tr> 
 

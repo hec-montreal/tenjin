@@ -108,7 +108,7 @@
             console.log("resolve!");
             objSyllabusService.setSyllabusList($data);
 
-            if($data.length === 1) { // only the shareable syllabus
+            if($data.length === 1) { // only the common syllabus
                 console.log("redirect home");
             }
             // $deferred.resolve();
@@ -200,7 +200,7 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id && typeof($rootTree.shareable) === "undefined") {
+            if ($rootTree.id === $parent.id && typeof($rootTree.common) === false) {
                 // si l'élément existe déjà on le supprime et on le remplace (modification)
                 var modification = false;
                 for (var i = 0; i < $rootTree.elements.length; i++){
@@ -238,7 +238,7 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id && typeof($rootTree.shareable) === "undefined") {
+            if ($rootTree.id === $parent.id && typeof($rootTree.common) === false) {
                 if ($rootTree.elements.length > 0) {
 
                     // vérifie si la rubrique a déjà été insérée
@@ -323,7 +323,7 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id && typeof($rootTree.shareable) === "undefined") { 
+            if ($rootTree.id === $parent.id && typeof($rootTree.common) === false) { 
                 // si l'élément existe déjà on le supprime et on le remplace
                 for (var i = 0; i < $rootTree.elements.length; i++){
                     if ($rootTree.elements[i].id === $element.id) {
