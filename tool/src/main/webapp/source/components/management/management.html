@@ -32,7 +32,7 @@
           <th class="th-select"> </th>
         </tr>
 
-        <tr data-ng-repeat="syllabus in managementCtrl.syllabusService.syllabusList">
+        <tr data-ng-repeat="syllabus in managementCtrl.syllabusService.syllabusList track by syllabus.id">
           <td>
             <a editable-text="syllabus.title" onbeforesave="managementCtrl.updateName($data, syllabus)">{{syllabus.title}}</a>
           

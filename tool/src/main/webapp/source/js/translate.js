@@ -279,8 +279,8 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         TABLE_STATUS : 'Statut',
         DELETE_SYLLABUS_OK : 'Les plans de cours suivant vont être supprimés',
         DELETE_SYLLABUS_KO : 'Les plans de cours suivant ne peuvent pas être supprimés car il y a des sections associées',
-        MANAGEMENT_NO_SECTION: 'Le nom doit être indiqué',
-        MANAGEMENT_ERREUR_NAME: 'Aucune section',
+        MANAGEMENT_NO_SECTION: 'Aucune section',
+        MANAGEMENT_ERREUR_NAME: 'Le nom doit être indiqué',
         FORUM: 'Forum',
         ASSIGNMENT: 'Remise de travaux',
         SAM_PUB: 'Tests et Quiz'
