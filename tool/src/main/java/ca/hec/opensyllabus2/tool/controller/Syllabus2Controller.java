@@ -106,7 +106,7 @@ public class Syllabus2Controller {
 	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException {
+	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 
 			return osyl2Service.createOrUpdateSyllabus(syllabus);
 	}
@@ -123,7 +123,7 @@ public class Syllabus2Controller {
 		return ex.getLocalizedMessage();
 	}
 
-	@ExceptionHandler(NoSyllabusException.class)
+	@ExceptionHandler(DeniedAccessException.class)
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 	public @ResponseBody String handleDeniedAccessException(DeniedAccessException ex) {
 		return ex.getLocalizedMessage();
