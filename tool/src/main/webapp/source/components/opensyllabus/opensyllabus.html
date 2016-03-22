@@ -23,11 +23,11 @@
         <!-- SECTIONS -->
         <div class="btn-group" uib-dropdown keyboard-nav>
             <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" data-ng-disabled="syllabusService.working" uib-dropdown-toggle>
-                <span class="ajouter-libelle">{{syllabusService.syllabus.courseTitle}}</span> <span class="caret"></span> 
+                <span class="ajouter-libelle">{{syllabusService.syllabus.title}}</span> <span class="caret"></span> 
             </button>
             <ul uib-dropdown-menu class="liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
                 <li role="menuitem" data-ng-repeat="syllabus in syllabusService.syllabusList">
-                    <a href="" data-ng-click="selectSyllabus(syllabus)">{{::syllabus.courseTitle }}</a> 
+                    <a href="" data-ng-click="selectSyllabus(syllabus)">{{::syllabus.title }}</a> 
                 </li> 
             </ul>
         </div>
