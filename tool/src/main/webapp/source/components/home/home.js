@@ -9,9 +9,12 @@ opensyllabusApp.directive('home', ['$q', '$state', '$timeout', 'SyllabusService'
         templateUrl: 'home/home.html',
         controller: function () {
 
-            var errors = {
+            var objHome = this;
+
+            this.errors = {
                 'loadingProfile' : false,
                 'loadingSyllabusList' : false,
+                'redirectionError': false
             };
             
             this.loading = true;  
@@ -29,11 +32,11 @@ opensyllabusApp.directive('home', ['$q', '$state', '$timeout', 'SyllabusService'
 
                     // data contient d'abord le résultat de la première requête
                     if (data[0].state === "rejected") {
-                        errors.loadingProfile = true;
+                        objHome.errors.loadingProfile = true;
                     }
 
                     if (data[1].state === "rejected") {
-                        errors.loadingSyllabusList = true;
+                        objHome.errors.loadingSyllabusList = true;
                         // erreur load syllabus list
                         // AlertService.display('danger');
                     }
@@ -55,6 +58,7 @@ opensyllabusApp.directive('home', ['$q', '$state', '$timeout', 'SyllabusService'
                             $state.go(redirectionInfos.route, redirectionInfos.params);
                         } else {
                             // TODO : Error
+                            objHome.errors.redirectionError = true; 
                         }
 
                     }
@@ -108,10 +112,8 @@ opensyllabusApp.directive('home', ['$q', '$state', '$timeout', 'SyllabusService'
             // load profile and syllabus list            
             loadProfileAndSyllabusList().finally(function() {
                 // end of loading
-                this.loading = false;     
+                objHome.loading = false;     
             });
-
-
 
         },
         controllerAs: 'homeCtrl',

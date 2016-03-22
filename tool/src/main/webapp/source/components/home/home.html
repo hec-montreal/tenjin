@@ -1,6 +1,12 @@
 <section class="home">
 
-    <div class="loader-container" data-ng-show="homeCtrl.loading"> 
+     <div class="main-errors">
+
+        <uib-alert data-ng-if="homeCtrl.errors.loadingProfile || homeCtrl.errors.loadingSyllabusList || homeCtrl.errors.redirectionError" class="myalert" type="danger">{{ 'HOME_ERROR_LOADING' | translate }}</uib-alert>
+
+    </div>
+
+    <div class="loader-container" data-ng-show="homeCtrl.loading">  
         <div class="loader"></div>
     </div>
     

@@ -34,8 +34,7 @@
 
         <tr data-ng-repeat="syllabus in managementCtrl.syllabusService.syllabusList track by syllabus.id">
           <td>
-            <a editable-text="syllabus.title" onbeforesave="managementCtrl.updateName($data, syllabus)">{{syllabus.title}}</a>
-          
+            <a editable-text="syllabus.courseTitle" onbeforesave="managementCtrl.updateName($data, syllabus)">{{syllabus.courseTitle}}</a>          
           </td>
           <td>
           {{syllabus.createdBy}}

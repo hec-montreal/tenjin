@@ -242,13 +242,13 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$interv
 
     };
 
-    $scope.selectSection = function($section) {
+    $scope.selectSyllabus = function($syllabus) {
 
-        var results = SyllabusService.loadSyllabus();   
+        var results = SyllabusService.loadSyllabus($syllabus.id);   
         SyllabusService.setWorking(true);
 
         results.$promise.then( function($data) {
-            $scope.syllabusService.section = $section;
+            // $scope.syllabusService.section = $section;
 
             SyllabusService.setSyllabus($data);
 

@@ -142,7 +142,8 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         MANAGEMENT_ERREUR_NAME: 'No section',
         FORUM: 'Forum',
         ASSIGNMENT: 'Assignments',
-        SAM_PUB: 'Tests et Quizzes'
+        SAM_PUB: 'Tests et Quizzes',
+        HOME_ERROR_LOADING: 'Error during loading.'
     })
     .translations('fr', {
         MENU_LABEL: 'Menu du cours',
@@ -283,7 +284,8 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         MANAGEMENT_ERREUR_NAME: 'Le nom doit être indiqué',
         FORUM: 'Forum',
         ASSIGNMENT: 'Remise de travaux',
-        SAM_PUB: 'Tests et Quiz'
+        SAM_PUB: 'Tests et Quiz',
+        HOME_ERROR_LOADING: 'Erreur durant le chargement.'
     });
 
      $translateProvider.preferredLanguage('fr');

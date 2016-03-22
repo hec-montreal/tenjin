@@ -8,6 +8,7 @@
     this.syllabusList;
     this.dirty = false;
     this.working = false;
+    
     this.listeSections = [
         {
             'id' : 1,
@@ -34,18 +35,6 @@
     this.navigation = {
         'level' : 1
     };
-
-    //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
-    var syllabusProvider = $resource('v1/syllabus/init.json');
-
-
-    //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
-    var syllabusListProvider = $resource('v1/syllabus/list.json');
-    //
-    // var syllabusProviderSave = $resource('v1/syllabus/:siteId', null,
-    // {
-    //     'update': { method:'PUT' }
-    // });
 
     //
     // var syllabusProviderSave = $resource('v1/syllabus');
