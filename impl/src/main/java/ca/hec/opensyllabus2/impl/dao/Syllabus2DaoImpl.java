@@ -39,9 +39,9 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	}
 
 	@Override
-	public Syllabus getSyllabus(String siteId, String sectionId, Boolean shareable, boolean hidden) {
+	public Syllabus getSyllabus(String siteId, String sectionId, Boolean common, boolean hidden) {
 		List<Syllabus> syllabi = 
-				getHibernateTemplate().find("from Syllabus where siteId = ? and shareable = ?", siteId, shareable);
+				getHibernateTemplate().find("from Syllabus where siteId = ? and common = ?", siteId, common);
 		Syllabus syllabus = syllabi.get(0);
 		syllabus.setElements(getStructuredSyllabusElements(syllabus.getId(), hidden));
 		return syllabi.get(0);
@@ -62,6 +62,19 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		return syllabus;
 	}
 
+	@Override
+	public Syllabus getCommonSyllabus(String siteId) throws NoSyllabusException {
+		List<Syllabus> syllabi = null;
+		
+		if (null != siteId) {
+			syllabi = getHibernateTemplate().find("from Syllabus where site_id = ? and common = ? ", siteId, true);
+		}
+		if(syllabi == null){
+			throw new NoSyllabusException();
+		}
+		return syllabi.get(0);
+	}
+	
 	@Override
 	public List<Syllabus> getSyllabusList(String siteId) {
 		List<Syllabus> syllabi;

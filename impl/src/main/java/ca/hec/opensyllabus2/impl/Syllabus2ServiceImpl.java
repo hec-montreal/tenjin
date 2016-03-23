@@ -98,6 +98,16 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			syllabus.setLastModifiedDate(now);
 			syllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 			syllabusDao.save(syllabus);
+			
+			Syllabus common = syllabusDao.getCommonSyllabus(syllabus.getSiteId());
+			existingSyllabusElementMappings = getExistingSyllabusElementMappings(common.getId());
+			
+			for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
+				createSyllabusElementMapping( syllabus.getId(), mapping.getSyllabusElement(), mapping.getDisplayOrder(), false );
+			}
+			
+			// return new created syllabus
+			return syllabus;
 		} else {
 			Syllabus existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false, false);
 			if (existingSyllabus != syllabus) {

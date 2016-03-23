@@ -99,6 +99,13 @@ public class Syllabus2Controller {
 
 	}
 	
+	@RequestMapping(value = "/syllabus", method = RequestMethod.POST)
+	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException{
+
+		return osyl2Service.createOrUpdateSyllabus(syllabus);
+
+	}
+	
 	@RequestMapping(value = "/syllabus/{syllabusId}", method = RequestMethod.GET)
 	public @ResponseBody Syllabus getSyllabus(@PathVariable Long syllabusId) throws NoSyllabusException {
 
@@ -121,9 +128,9 @@ public class Syllabus2Controller {
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public @ResponseBody String handleNoSyllabusException(NoSyllabusException ex) {
 		return ex.getLocalizedMessage();
-	}
+	} 
 
-	@ExceptionHandler(DeniedAccessException.class)
+	@ExceptionHandler(DeniedAccessException.class) 
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 	public @ResponseBody String handleDeniedAccessException(DeniedAccessException ex) {
 		return ex.getLocalizedMessage();

@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService', 'SyllabusService', 'AlertService', 'ModalService', 'variables', 'config', 'mockup', function ($timeout, $translate, TreeService, SyllabusService, AlertService, ModalService, variables, config, mockup){
+opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'variables', 'config', 'mockup', function ($timeout, $translate, TreeService, SyllabusService, AlertService, ModalService, UserService, variables, config, mockup){
     'use strict';
 
     return {
@@ -24,7 +24,15 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
             this.infos = {};
             this.disableDelete = true;
  
-            this.sections = mockup.sections;
+            //this.sections = mockup.sections;
+            this.sections = [];
+            // get user sections with write permissions
+            for (var i = 0; i < UserService.profile.sections.length; i++) {
+                var sectionUser = UserService.profile.sections[i];
+                if (sectionUser.permissions.write === true) {
+                    this.sections.push(sectionUser);
+                }
+            }
 
             var loadSyllabusList = function (){
 

@@ -143,7 +143,8 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         FORUM: 'Forum',
         ASSIGNMENT: 'Assignments',
         SAM_PUB: 'Tests et Quizzes',
-        HOME_ERROR_LOADING: 'Error during loading.'
+        HOME_ERROR_LOADING: 'Error during loading.',
+        CREATE_SYLLABUS_DEFAULT_NAME: 'Specific syllabus'
     })
     .translations('fr', {
         MENU_LABEL: 'Menu du cours',
@@ -285,7 +286,8 @@ opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
         FORUM: 'Forum',
         ASSIGNMENT: 'Remise de travaux',
         SAM_PUB: 'Tests et Quiz',
-        HOME_ERROR_LOADING: 'Erreur durant le chargement.'
+        HOME_ERROR_LOADING: 'Erreur durant le chargement.',
+        CREATE_SYLLABUS_DEFAULT_NAME: 'Plan de cours spécifique'
     });
 
      $translateProvider.preferredLanguage('fr');

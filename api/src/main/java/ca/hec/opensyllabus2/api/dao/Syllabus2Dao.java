@@ -45,6 +45,16 @@ public interface Syllabus2Dao {
 	 */
 	public Syllabus getSyllabus(Long id, boolean retrieveElements, boolean hidden) throws NoSyllabusException;
 
+	
+	/**
+	 * Retrieves the common syllabus
+	 * 
+	 * @param String siteId
+	 * @return The common syllabus (without the elements)
+	 */
+	public Syllabus getCommonSyllabus(String siteId) throws NoSyllabusException;
+	
+	
 	/**
 	 * Retrieves the list of syllabi for a given site id
 	 * 

@@ -59,6 +59,10 @@
         return syllabusProviderSave.save(this.syllabus);
     };
 
+    this.saveNewSyllabus =  function($syllabus) {
+        var syllabusProviderSave = $resource('v1/syllabus/'+$syllabus.siteId+'.json');
+        return syllabusProviderSave.save($syllabus);
+    };
 
     this.saveSyl =  function($data) {
         // if the syllabus has already an id then call a specific url
@@ -130,6 +134,18 @@
     this.getSyllabus = function() {
         return this.syllabus;
     };
+
+    this.getCommonSyllabus = function() {
+        if (this.syllabusList) {
+            for (var i=0 ; i < this.syllabusList.length; i++) {
+                if (this.syllabusList[i].common === true) {
+                    return this.syllabusList[i];
+                }
+            }
+        }
+        return undefined;
+    };
+
 
     this.getSyllabusSaved = function() {
         return this.syllabusSaved;

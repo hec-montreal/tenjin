@@ -1,25 +1,55 @@
 ﻿
-opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalInstance', '$translate', 'SyllabusService', 'TreeService', 'AlertService', 'data', 'config', 'mockup' , function ($scope, $uibModalInstance, $translate, SyllabusService, TreeService, AlertService, data, config, mockup) {
+opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalInstance', '$translate', 'SyllabusService', 'TreeService', 'AlertService', 'UserService' ,'data', 'config', 'mockup' , function ($scope, $uibModalInstance, $translate, SyllabusService, TreeService, AlertService, UserService, data, config, mockup) {
     'use strict';
 
+
     $scope.data = {
-        'sections' : angular.copy(mockup.sectionsFree),
-        'name' : 'Specific syllabus'
+        'name' : $translate.instant('CREATE_SYLLABUS_DEFAULT_NAME'),
+        'sections' : []
     };
+    // get user sections with write permissions
+    for (var i = 0; i < UserService.profile.sections.length; i++) {
+        var sectionUser = UserService.profile.sections[i];
+        if (sectionUser.permissions.write === true) {
+            $scope.data.sections.push(sectionUser);
+        }
+    }
+
     // $scope.sections = angular.copy(mockup.sections);
 
     $scope.ok = function () {
+
+        var common = SyllabusService.getCommonSyllabus();
 
         // keep only the selected sections
         var sections = [];
         for( var i = 0 ; i < $scope.data.sections.length; i++) {
             if ($scope.data.sections[i].checked === true) {
-                sections.push($scope.data.sections[i]);
+                sections.push($scope.data.sections[i].id);
             }
         }
-        $scope.data.sections = sections;
 
-        var savePromise = SyllabusService.saveSyl($scope.data);
+        // init data for a new specific syllabus
+        // common is not loaded and templateId is null then it's not going to work
+        var newSyllabus = {
+            'id' : null,
+            'courseTitle': UserService.profile.site.courseTitle,
+            'siteId' : UserService.profile.site.courseId,
+            'sections' : sections,
+            'title' : $scope.data.name,
+            'common' : false,
+            'templateId' : (common ? common.templateId : null),
+            'elements' : [],
+            'locale' : 'fr_CA',
+            'createdBy' : 'Johan',
+            'createdDate' : Date.now(),
+            'lastModifiedBy' : Date.now(),
+            'lastModifiedDate' : Date.now()
+        };
+
+
+        // var savePromise = SyllabusService.saveSyl(newSyllabus);
+        var savePromise = SyllabusService.saveNewSyllabus(newSyllabus);
         SyllabusService.setWorking(true);
 
         savePromise.$promise.then(function($data) {
@@ -27,7 +57,7 @@ opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalIns
             AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_SYLLABUS'));
 
             // refresh the list 
-            
+            SyllabusService.syllabusList.push($data);
         }, function ($error){
             // alert add syllabus ko
             AlertService.display('danger');
