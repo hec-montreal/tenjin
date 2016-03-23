@@ -83,10 +83,12 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	}
     
     @Override
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException, DeniedAccessException {
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException, NoSyllabusException, DeniedAccessException {
 		Date now = new Date();
 		
 		// add permission check
+		
+		//check that site exists
 
 		// create syllabus if it doesn't exist, otherwise get it's element mappings from the database.
 		Map<Long, SyllabusElementMapping> existingSyllabusElementMappings = null;
@@ -122,9 +124,20 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			// if the element has no id or if the id is negative, the element should be created
 			if (element.getId() == null || element.getId() < 0) {
 				
+				// treat rubrics differently
+				
 				createSyllabusElement(element);
 				createSyllabusElementMapping(syllabus.getId(), element, element.getDisplayOrder(), element.getHidden());
-				// TODO if this is shareable, create a mapping entry for each syllabus
+
+				// add mappings to all syllabi if this is a common syllabus
+				if (syllabus.getCommon()) {
+					List<Syllabus> syllabi = this.getSyllabusList(syllabus.getSiteId());
+					for (Syllabus s : syllabi) {
+						if (!s.getCommon()) {
+							createSyllabusElementMapping(s.getId(), element, element.getDisplayOrder(), element.getHidden());							
+						}
+					}
+				}
 				
 			} else if (existingSyllabusElementMappings != null &&
 					existingSyllabusElementMappings.containsKey(element.getId())) {
@@ -163,8 +176,16 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 					throw new DeniedAccessException("Cannot delete common element from a regular syllabus");
 				}
 				
-				// delete the element and it's mappings
-				syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
+				if (mapping.getSyllabusElement().getCommon() && 
+						syllabusDao.elementHasNonCommonChildren(mapping.getSyllabusElement())) {
+					// if the element has children in any other syllabus, simply remove the mapping
+					// keep the element and mark it non-common
+					mapping.getSyllabusElement().setCommon(false);
+					syllabusDao.delete(mapping);
+				} else {
+					// delete the element and all it's mappings
+					syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
+				}
 			}
 		}
 

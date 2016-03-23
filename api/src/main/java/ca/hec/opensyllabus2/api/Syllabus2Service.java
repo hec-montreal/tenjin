@@ -39,5 +39,5 @@ public interface Syllabus2Service {
 	 * @throws NoSiteException if no site is specified by the syllabus
 	 * @throws NoSyllabusException 
 	 */
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException, DeniedAccessException;
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException;
 }

@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.sakaiproject.exception.IdUnusedException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -160,6 +162,16 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		getHibernateTemplate().deleteAll(mappings);
 		getHibernateTemplate().delete(syllabusElement);
 		
+	}
+
+	@Override
+	public boolean elementHasNonCommonChildren(AbstractSyllabusElement element) {
+		DetachedCriteria dc = DetachedCriteria.forClass(AbstractSyllabusElement.class);
+		dc.add(Restrictions.eq("parentId", element.getId()));
+		dc.add(Restrictions.eq("common", false));
+		
+		List<Object> children = getHibernateTemplate().findByCriteria(dc, 0, 1);
+		return children.size() > 0;
 	}
 	
 }

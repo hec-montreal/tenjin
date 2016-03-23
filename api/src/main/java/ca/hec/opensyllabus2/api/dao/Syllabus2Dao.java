@@ -103,5 +103,12 @@ public interface Syllabus2Dao {
 	 * @param Object o
 	 */
 	public void deleteElementAndMappings(AbstractSyllabusElement syllabusElement);
+
+	/**
+	 * True if this element has children in a non-common syllabus, false otherwise
+	 * 
+	 * @param AbstractSyllabusElement element
+	 */
+	public boolean elementHasNonCommonChildren(AbstractSyllabusElement element);
 }
 
