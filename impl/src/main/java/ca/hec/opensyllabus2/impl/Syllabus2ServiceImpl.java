@@ -73,7 +73,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			}
 		}
 
-		syllabusList = syllabusDao.getSyllabusList(siteId);
+		syllabusList = syllabusDao.getSyllabusList(siteId, null, null, true);
 		
 		// if no syllabus, create common and add it to the list
 		if (syllabusList.isEmpty()) {
