@@ -57,12 +57,16 @@ public interface Syllabus2Dao {
 	
 	
 	/**
-	 * Retrieves the list of syllabi for a given site id
+	 * Retrieves the list of syllabi for a given site id, optionally filtered by sections, userId (created by) 
+	 * and whether or not to include the common
 	 * 
 	 * @param String siteId
-	 * @return The list of syllabi associated with the site id, without their elements
+	 * @param List<String> sections - include the syllabuses assigned to one of the given sections
+	 * @param String userId - include all syllabuses that were created by this user
+	 * @param boolean common - include or not the common syllabus
+	 * @return The list of syllabuses, without their elements
 	 */
-	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, String userId, boolean common);
+	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, String userId, Boolean common);
 	
 	/**
 	 * Retrieves the syllabus associated to a specific site, section and shareable status

@@ -77,7 +77,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	}
 	
 	@Override
-	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, String userId, boolean common) {
+	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, String userId, Boolean common) {
 		List<Syllabus> syllabi;
 		if (null == siteId) {
 			return null;
@@ -211,7 +211,6 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	public List<SyllabusElementMapping> getMappingsForElement(AbstractSyllabusElement element) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SyllabusElementMapping.class);
 		dc.add(Restrictions.eq("syllabusElement", element));
-//		dc.add(Restrictions.eq("templateStructureId", templateStructureId));
 		
 		return getHibernateTemplate().findByCriteria(dc);
 	}

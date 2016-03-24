@@ -62,6 +62,11 @@ public abstract class AbstractSyllabusElement {
     // force each subclass to return a type
     abstract public String getType();
     
+    public boolean isComposite() {
+    	// false by default, override in SyllabusCompositeElement
+    	return false;
+    }
+    
     public void copy(AbstractSyllabusElement e) {
     	this.setParentId(e.getParentId());
     	this.setTemplateStructureId(e.getTemplateStructureId());

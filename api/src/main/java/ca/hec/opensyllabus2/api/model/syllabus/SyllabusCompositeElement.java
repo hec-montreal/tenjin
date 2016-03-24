@@ -29,4 +29,8 @@ public class SyllabusCompositeElement extends AbstractSyllabusElement {
 	public String getType() {
 		return TYPE;
 	}
+	
+	public boolean isComposite() {
+		return true;
+	}
 }

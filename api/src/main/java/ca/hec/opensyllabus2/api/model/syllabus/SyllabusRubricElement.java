@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=true)
 public class SyllabusRubricElement extends SyllabusCompositeElement {
-	private static final String TYPE = "rubric";
+	public static final String TYPE = "rubric";
 
 	public String getType() {
 		return TYPE;
