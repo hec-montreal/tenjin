@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.EXISTING_PROPERTY, property = "type")
 public class SyllabusCompositeElement extends AbstractSyllabusElement {
 
-	private static final String TYPE = "composite";
+	public static final String TYPE = "composite";
 
 	private List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
 

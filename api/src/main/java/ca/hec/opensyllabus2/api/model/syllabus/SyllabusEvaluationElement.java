@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=true)
 public class SyllabusEvaluationElement extends SyllabusCompositeElement {
-	private static final String TYPE = "evaluation";
+	public static final String TYPE = "evaluation";
 
 	public String getType() {
 		return TYPE;
