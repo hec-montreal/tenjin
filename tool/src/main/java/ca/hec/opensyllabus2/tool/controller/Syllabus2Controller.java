@@ -100,7 +100,7 @@ public class Syllabus2Controller {
 	}
 	
 	@RequestMapping(value = "/syllabus", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException{
+	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 
 		return osyl2Service.createOrUpdateSyllabus(syllabus);
 
