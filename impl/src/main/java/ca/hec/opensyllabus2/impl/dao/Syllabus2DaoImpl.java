@@ -18,6 +18,7 @@ import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement;
 
 public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Dao {
 
@@ -76,13 +77,14 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	}
 	
 	@Override
-	public List<Syllabus> getSyllabusList(String siteId) {
+	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, String userId, boolean common) {
 		List<Syllabus> syllabi;
-		if (null != siteId) {
-			syllabi = getHibernateTemplate().find("from Syllabus where site_id = ?", siteId);
-		} else {
-			syllabi = getHibernateTemplate().find("from Syllabus");
+		if (null == siteId) {
+			return null;
 		}
+		
+		syllabi = getHibernateTemplate().find("from Syllabus where site_id = ?", siteId);
+
 		return syllabi;
 	}
 
@@ -185,6 +187,33 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		
 		List<Object> children = getHibernateTemplate().findByCriteria(dc, 0, 1);
 		return children.size() > 0;
+	}
+	
+	@Override
+	public SyllabusRubricElement getRubric(Long parentId, Long templateStructureId) {
+		DetachedCriteria dc = DetachedCriteria.forClass(SyllabusRubricElement.class);
+		dc.add(Restrictions.eq("parentId", parentId));
+		dc.add(Restrictions.eq("templateStructureId", templateStructureId));
+		
+		List<SyllabusRubricElement> l = getHibernateTemplate().findByCriteria(dc);
+		if (l.size() > 1) { 
+			// Error! TODO exception?
+			log.error("More than one rubric for the given parent id and template structure id! This is very bard");
+			return null;
+		} else if (l.size() == 1) {
+			return l.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<SyllabusElementMapping> getMappingsForElement(AbstractSyllabusElement element) {
+		DetachedCriteria dc = DetachedCriteria.forClass(SyllabusElementMapping.class);
+		dc.add(Restrictions.eq("syllabusElement", element));
+//		dc.add(Restrictions.eq("templateStructureId", templateStructureId));
+		
+		return getHibernateTemplate().findByCriteria(dc);
 	}
 	
 }

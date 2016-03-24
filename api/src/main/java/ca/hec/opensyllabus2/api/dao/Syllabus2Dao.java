@@ -26,6 +26,7 @@ import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement;
 
 /**
  *
@@ -61,7 +62,7 @@ public interface Syllabus2Dao {
 	 * @param String siteId
 	 * @return The list of syllabi associated with the site id, without their elements
 	 */
-	public List<Syllabus> getSyllabusList(String siteId);
+	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, String userId, boolean common);
 	
 	/**
 	 * Retrieves the syllabus associated to a specific site, section and shareable status
@@ -120,5 +121,21 @@ public interface Syllabus2Dao {
 	 * @param AbstractSyllabusElement element
 	 */
 	public boolean elementHasNonCommonChildren(AbstractSyllabusElement element);
+
+	/**
+	 * get a rubric for the given parent id and template structure id (there should be only one for all syllabi)
+	 * 
+	 * @param Long parentId
+	 * @param Long templateStructureId
+	 */
+	public SyllabusRubricElement getRubric(Long parentId, Long templateStructureId);
+
+	/**
+	 * get syllabus element mappings for a given element
+	 * 
+	 * @param Long parentId
+	 * @param Long templateStructureId
+	 */
+	public List<SyllabusElementMapping> getMappingsForElement(AbstractSyllabusElement element);
 }
 
