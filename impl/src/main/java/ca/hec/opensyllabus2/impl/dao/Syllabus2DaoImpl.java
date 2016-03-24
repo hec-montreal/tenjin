@@ -110,7 +110,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
     		currElement.setDisplayOrder(currElementMapping.getDisplayOrder());
     		
     		// Add current element to the lookup map (only needed if it's composite), or replace the dummy one that was inserted previously
-    		if (currElement instanceof SyllabusCompositeElement) {
+    		if (currElement.isComposite()) {
     			if (elementMap.containsKey(currElement.getId())) {
     				// element map had a dummy element, transfer it's children before replacing it
     				SyllabusCompositeElement uninitializedElement = (SyllabusCompositeElement)elementMap.get(currElement.getId());

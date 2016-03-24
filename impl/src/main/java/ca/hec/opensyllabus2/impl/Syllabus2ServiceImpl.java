@@ -184,7 +184,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			}
 
 			// add this element's children to the search queue
-			if (element instanceof SyllabusCompositeElement) {
+			if (element.isComposite()) {
 				SyllabusCompositeElement compositeElement = (SyllabusCompositeElement)element;
 				if (compositeElement.getElements() != null) {
 					order = 0;

@@ -116,7 +116,7 @@ public class TemplateServiceImpl implements TemplateService {
 			
 		}
 		
-		if (!elements.isEmpty() && element instanceof SyllabusCompositeElement) {
+		if (!elements.isEmpty() && element.isComposite()) {
 			((SyllabusCompositeElement)element).setElements(elements);
 		}
 		
