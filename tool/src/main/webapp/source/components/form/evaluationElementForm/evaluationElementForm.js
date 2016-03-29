@@ -11,12 +11,6 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
         templateUrl: 'form/evaluationElementForm/evaluationElementForm.html',
         controller: function ($scope) {
 
-            //init special variables
-            if ($scope.element.attributes.evalDate){
-                $scope.element.attributes.evalDate =  new Date($scope.element.attributes.evalDate);
-            }
-            if ($scope.element.availabilityEndDate)
-                $scope.element.hasEndDate = true;
 
             $scope.formats = ['dd-MM-yyyy']; 
             $scope.format = $scope.formats[0];
@@ -44,9 +38,6 @@ opensyllabusApp.directive('evaluationElementForm',  function (){
         link: function ($scope, $element) {
             
           $scope.element.attributes.evalType = $scope.typelabel;
-
-          
-            console.log ("le type est" + $scope.element.attributes.evalDate );
             
         }
 

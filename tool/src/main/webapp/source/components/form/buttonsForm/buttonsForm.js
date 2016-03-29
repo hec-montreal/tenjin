@@ -10,6 +10,14 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
         templateUrl: 'form/buttonsForm/buttonsForm.html',
         controller: function ($scope) {
 
+            //init special variables
+            if ($scope.element.attributes.evalDate){
+                $scope.element.attributes.evalDate =  new Date($scope.element.attributes.evalDate);
+            }
+            if ($scope.element.availabilityEndDate){
+                $scope.element.hasEndDate = true;
+            }
+
             $scope.formats = ['dd-MMMM-yyyy HH:mm']; 
             $scope.format = $scope.formats[0];
 
@@ -54,6 +62,11 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
                  $scope.element.$formHasDates = true;
                  $scope.element.$hasEndDate = true;
                  $scope.element.availabilityEndDate = new Date();
+                
+            };
+
+            $scope.updateDateRetrait = function($event){
+                $scope.element.availabilityEndDate = "";
             };
         },
         link: function ($scope, $element) {

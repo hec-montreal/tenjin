@@ -40,7 +40,7 @@
         </div>
         <!-- Date de retrait -->
         <div data-ng-init=>
-            <input type="checkbox" name="displayEnd" id="displayEndCheckbox" data-ng-model="element.hasEndDate"/>
+            <input type="checkbox" name="displayEnd" id="displayEndCheckbox" data-ng-model="element.hasEndDate" data-ng-click="updateDateRetrait($event)"/>
             <label for="displayEndCheckbox">{{ 'FORM_DATE_AFFICHAGE_FIN' | translate }} : </label> 
             <!-- TODO : calendrier -->
             <span class="container-date-debut">
