@@ -91,15 +91,19 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			syllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 			syllabusDao.save(syllabus);
 			
-			Syllabus common = syllabusDao.getCommonSyllabus(syllabus.getSiteId());
-			existingSyllabusElementMappings = getExistingSyllabusElementMappings(common.getId());
+			// if this call is to create a non-common syllabus, copy the common's mappings and return the syllabus
+			// if it is to create the common syllabus, continue on to create the required elements
+			if (!syllabus.getCommon()) {
+				Syllabus common = syllabusDao.getCommonSyllabus(syllabus.getSiteId());
+				existingSyllabusElementMappings = getExistingSyllabusElementMappings(common.getId());
 			
-			for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
-				createSyllabusElementMapping( syllabus.getId(), mapping.getSyllabusElement(), mapping.getDisplayOrder(), false );
+				for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
+					createSyllabusElementMapping( syllabus.getId(), mapping.getSyllabusElement(), mapping.getDisplayOrder(), false );
+				}
+			
+				// return new created syllabus
+				return syllabus;
 			}
-			
-			// return new created syllabus
-			return syllabus;
 		} else {
 			Syllabus existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false, false);
 			if (existingSyllabus != syllabus) {
