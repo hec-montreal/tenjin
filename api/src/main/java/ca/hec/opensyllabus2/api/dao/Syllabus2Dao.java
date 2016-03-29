@@ -142,5 +142,13 @@ public interface Syllabus2Dao {
 	 */
 	public List<SyllabusElementMapping> getMappingsForElement(AbstractSyllabusElement element);
 
+	/**
+	 * Add a syllabus element mapping to the end of the list for the given element's parentId (not hidden) 
+	 * 
+	 * @param Long syllabusId
+	 * @param AbstractSyllabusElement element
+	 */
+	public SyllabusElementMapping addMappingToEndOfList(Long syllabusId, AbstractSyllabusElement element);
+
 }
 
