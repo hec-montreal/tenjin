@@ -77,13 +77,28 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	}
 	
 	@Override
-	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, String userId, Boolean common) {
+	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, boolean commonRead, boolean commonWrite, String currentUserId ) {
 		List<Syllabus> syllabi;
 		if (null == siteId) {
 			return null;
 		}
 		
-		syllabi = getHibernateTemplate().find("from Syllabus where site_id = ?", siteId);
+		if (sections == null && commonWrite == true) {
+			// get all the syllabus
+			syllabi = getHibernateTemplate().find("from Syllabus where site_id = ?", siteId);
+		} else {
+			// TODO : construct query string
+			//String s = "from Syllabus syllabus where siteId = ? and '1c4f729a-9d95-4396-a1ae-92581d01964d' in elements(syllabus.sections)";
+			//syllabi = getHibernateTemplate().find(s, siteId);
+			
+			String querySections = "and ( created_by='"+ currentUserId + "' ";
+			for (int i = 0 ; i < sections.size(); i++) {
+				querySections += " or '"+ sections.get(i) + "' in elements(syllabus.sections) ";
+			}
+			querySections += " ) ";
+
+			syllabi = getHibernateTemplate().find("from Syllabus syllabus where site_id = ? "+ querySections , siteId );
+		}	
 
 		return syllabi;
 	}
@@ -110,7 +125,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
     		currElement.setDisplayOrder(currElementMapping.getDisplayOrder());
     		
     		// Add current element to the lookup map (only needed if it's composite), or replace the dummy one that was inserted previously
-    		if (currElement.isComposite()) {
+    		if (currElement instanceof SyllabusCompositeElement) {
     			if (elementMap.containsKey(currElement.getId())) {
     				// element map had a dummy element, transfer it's children before replacing it
     				SyllabusCompositeElement uninitializedElement = (SyllabusCompositeElement)elementMap.get(currElement.getId());
@@ -211,6 +226,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	public List<SyllabusElementMapping> getMappingsForElement(AbstractSyllabusElement element) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SyllabusElementMapping.class);
 		dc.add(Restrictions.eq("syllabusElement", element));
+//		dc.add(Restrictions.eq("templateStructureId", templateStructureId));
 		
 		return getHibernateTemplate().findByCriteria(dc);
 	}

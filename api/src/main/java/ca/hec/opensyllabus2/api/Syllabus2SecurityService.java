@@ -1,5 +1,7 @@
 package ca.hec.opensyllabus2.api;
 
+import java.util.List;
+
 public interface Syllabus2SecurityService {
 
 	/**
@@ -16,5 +18,28 @@ public interface Syllabus2SecurityService {
 	 * @param entityRef
 	 * @return
 	 */
-	public boolean isAllowed(String userId, String permission, String entityRef);	
+	public boolean isAllowed(String userId, String permission, String entityRef);
+
+	/**
+	 * Checks whether the user has the permission for the common syllabus
+	 * @param userId
+	 * @param permission
+	 * @return
+	 */
+	public boolean isAllowedCommon(String userId, String permission);	
+	
+	/**
+	 * Return the sections (with permissions) for the current user
+	 * @param permissions Get the permissions (optional)
+	 * @return
+	 */
+	public List<Object> getSections(boolean permissions);
+
+	
+	/**
+	 * Return an array with the sections for the current user
+	 * @return
+	 */
+	public List<String> getArraySections();
+
 }

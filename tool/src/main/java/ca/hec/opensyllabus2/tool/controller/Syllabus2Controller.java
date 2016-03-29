@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.site.api.Site;
 import org.sakaiproject.util.ResourceLoader;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
+import ca.hec.opensyllabus2.api.SakaiProxy;
+import ca.hec.opensyllabus2.api.Syllabus2SecurityService;
 import ca.hec.opensyllabus2.api.Syllabus2Service;
+import ca.hec.opensyllabus2.api.TenjinFunctions;
 import ca.hec.opensyllabus2.api.OsylException.DeniedAccessException;
 import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
 import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
@@ -71,6 +75,14 @@ public class Syllabus2Controller {
 	@Getter
 	@Autowired
 	private Syllabus2Service osyl2Service = null;
+	
+	@Setter
+	@Autowired
+	private SakaiProxy sakaiProxy;	
+
+	@Setter
+	@Autowired
+	private Syllabus2SecurityService securityService = null; 
 
 	private ResourceLoader msgs = null;
 
@@ -87,10 +99,27 @@ public class Syllabus2Controller {
 	public @ResponseBody ResponseEntity<List<Syllabus>> getSyllabusList(@RequestParam(value = "siteId", required = false) String siteId) {
 
 		List<Syllabus> syllabusList = null;
-
+		//Site site = null;
+		String currentSiteId = sakaiProxy.getCurrentSiteId();
+		String currentUserId = sakaiProxy.getCurrentUserId();
+		
+		// get common syllabus read permission
+		boolean commonPermissionRead = securityService.isAllowedCommon(currentUserId,  TenjinFunctions.TENJIN_FUNCTION_READ);
+		boolean commonPermissionWrite = securityService.isAllowedCommon(currentUserId,  TenjinFunctions.TENJIN_FUNCTION_WRITE);
+		
+		
+		List<String> sections = null;
+		// If user has write permission, then no need to get sections
+		if (commonPermissionWrite == false) {
+			// get sections available for the current user
+			sections = securityService.getArraySections();
+		}
+		
 		try {
-			// We get the syllabus list of the specified site id
-			syllabusList = osyl2Service.getSyllabusList(siteId);
+
+			// We get the syllabus list for the current site with the sections associated to the user
+			syllabusList = osyl2Service.getSyllabusList(currentSiteId, sections, commonPermissionRead, commonPermissionWrite, currentUserId );
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

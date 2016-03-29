@@ -49,7 +49,7 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
 
             // mockup ou non
             if (config.mockUp === true) {
-                this.syllabusList = mockup.syllabusList;
+                this.syllabusService.syllabusList = mockup.syllabusList;
             } else {
                 
                 // Load the syllabus list (if the syllabus has not been loaded earlier)
@@ -80,9 +80,9 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
             this.deleteSyllabus = function() {
                 // Get list of selected syllabus
                 var syllabusList =[];
-                for (var i = 0 ; i < this.syllabusList.length; i++) {
-                    if (this.syllabusList[i].checked === true) {
-                        syllabusList.push(this.syllabusList[i]);
+                for (var i = 0 ; i < this.syllabusService.syllabusList.length; i++) {
+                    if (this.syllabusService.syllabusList[i].checked === true) {
+                        syllabusList.push(this.syllabusService.syllabusList[i]);
                     }
                 }
 
@@ -102,8 +102,8 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
 
                 this.disableDelete = true;
                 // if a syllabus is checked then the delete button should be enabled
-                for (var i = 0 ; i < this.syllabusList.length; i++) {
-                    if (this.syllabusList[i].checked === true) {
+                for (var i = 0 ; i < this.syllabusService.syllabusList.length; i++) {
+                    if (this.syllabusService.syllabusList[i].checked === true) {
                         this.disableDelete = false;
                     }
                 }

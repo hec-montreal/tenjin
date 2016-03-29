@@ -26,10 +26,16 @@ public interface Syllabus2Service {
 	/**
 	 * Retrieve the syllabus list for the current user in the active site
 	 *
-	 * @return the syllabus list of the site or an error message
+	 * @return the syllabus list for the user
+	 * @param siteId The site ID
+	 * @param sections List of the sections (optional)
+	 * @param commonRead Common read permission
+	 * @param commonWrite Common write permission
+	 * @param currentUserId Current user id
 	 * @throws NoSiteException
+	 * @throws NoSyllabusException
 	 */
-	public List<Syllabus> getSyllabusList(String siteId) throws NoSyllabusException, NoSiteException;
+	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, boolean commonRead, boolean commonWrite, String currentUserId) throws NoSyllabusException, NoSiteException;
 	
 	/**
 	 * Create a new syllabus or update the existing syllabus based on id
@@ -40,4 +46,5 @@ public interface Syllabus2Service {
 	 * @throws NoSyllabusException 
 	 */
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException;
+
 }

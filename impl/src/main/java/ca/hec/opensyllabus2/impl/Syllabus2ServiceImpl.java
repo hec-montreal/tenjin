@@ -1,6 +1,5 @@
 package ca.hec.opensyllabus2.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,13 +24,13 @@ import org.sakaiproject.user.api.UserDirectoryService;
 import ca.hec.opensyllabus2.api.SakaiProxy;
 import ca.hec.opensyllabus2.api.Syllabus2Service;
 import ca.hec.opensyllabus2.api.TemplateService;
+import ca.hec.opensyllabus2.api.TenjinFunctions;
 import ca.hec.opensyllabus2.api.OsylException.DeniedAccessException;
 import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
 import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
 import ca.hec.opensyllabus2.api.dao.Syllabus2Dao;
 import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
 
@@ -63,20 +62,11 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	}
 
     @Override
-	public List<Syllabus> getSyllabusList(String siteId) throws NoSiteException {
+	public List<Syllabus> getSyllabusList(String siteId, List<String> sections,  boolean commonRead, boolean commonWrite, String currentUserId) throws NoSiteException {
 		List<Syllabus> syllabusList = null;
-		
-		// if no site is specified, check for current context 
-		if (siteId == null) {
-			try {
-				siteId = sakaiProxy.getCurrentSiteId();
-			} catch (Exception e) {
-				throw new NoSiteException();
-			}
-		}
 
-		syllabusList = syllabusDao.getSyllabusList(siteId, null, null, true);
-		
+		syllabusList = syllabusDao.getSyllabusList(siteId, sections, commonRead, commonWrite, currentUserId);
+
 		// if no syllabus, create common and add it to the list
 		if (syllabusList.isEmpty()) {
 			syllabusList.add(createCommonSyllabus(siteId));
@@ -133,41 +123,20 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		while (!searchQueue.isEmpty()) {
 			AbstractSyllabusElement element = searchQueue.remove();
 
-			List<Long> syllabusesWithExistingRubricMapping = null;
-			
 			// if the element has no id or if the id is negative, the element should be created
 			if (element.getId() == null || element.getId() < 0) {
 				
-				if (element.getType().equals(SyllabusRubricElement.TYPE)) {
-					// A rubric should be the same element in all syllabuses
-					SyllabusRubricElement existingRubric = 
-							syllabusDao.getRubric(element.getParentId(), element.getTemplateStructureId());
-					
-					syllabusesWithExistingRubricMapping = getSyllabusesWithElementMapping(existingRubric);
-					
-					if (existingRubric != null) {
-						existingRubric.setCommon(true);
-						existingRubric.setDisplayOrder(element.getDisplayOrder());
-						existingRubric.setElements(((SyllabusRubricElement)element).getElements());
-						element = existingRubric;
-					}
-				}
+				// treat rubrics differently
 				
-				if (element.getId() == null || element.getId() < 0) {
-					createSyllabusElement(element);
-				}
-				
-				createSyllabusElementMapping(syllabus.getId(), element, element.getDisplayOrder(), false);
+				createSyllabusElement(element);
+				createSyllabusElementMapping(syllabus.getId(), element, element.getDisplayOrder(), element.getHidden());
 
 				// add mappings to all syllabi if this is a common syllabus
 				if (syllabus.getCommon()) {
-					List<Syllabus> syllabi = this.getSyllabusList(syllabus.getSiteId());
+					List<Syllabus> syllabi = this.getSyllabusList(syllabus.getSiteId(), null, true, true, "");
 					for (Syllabus s : syllabi) {
-						if (!s.getCommon() && 
-								(syllabusesWithExistingRubricMapping == null || 
-								!syllabusesWithExistingRubricMapping.contains(s.getId()))) {
-							
-							createSyllabusElementMapping(s.getId(), element, element.getDisplayOrder(), false);							
+						if (!s.getCommon()) {
+							createSyllabusElementMapping(s.getId(), element, element.getDisplayOrder(), element.getHidden());							
 						}
 					}
 				}
@@ -184,7 +153,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			}
 
 			// add this element's children to the search queue
-			if (element.isComposite()) {
+			if (element instanceof SyllabusCompositeElement) {
 				SyllabusCompositeElement compositeElement = (SyllabusCompositeElement)element;
 				if (compositeElement.getElements() != null) {
 					order = 0;
@@ -210,13 +179,10 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				}
 				
 				if (mapping.getSyllabusElement().getCommon() && 
-						mapping.getSyllabusElement().isComposite() &&
 						syllabusDao.elementHasNonCommonChildren(mapping.getSyllabusElement())) {
 					// if the element has children in any other syllabus, simply remove the mapping
 					// keep the element and mark it non-common
 					mapping.getSyllabusElement().setCommon(false);
-					
-					//TODO delete mapping from every syllabus that doesn't have a child?
 					syllabusDao.delete(mapping);
 				} else {
 					// delete the element and all it's mappings
@@ -226,16 +192,6 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		}
 
 		return syllabus;
-	}
-
-	private List<Long> getSyllabusesWithElementMapping(AbstractSyllabusElement element) {
-		List<Long> syllabuses = new ArrayList<Long>();
-		List<SyllabusElementMapping> l = syllabusDao.getMappingsForElement(element);
-		for (SyllabusElementMapping mapping : l) {
-			syllabuses.add(mapping.getSyllabusId());
-		}
-
-		return syllabuses;
 	}
 
 	private Syllabus createCommonSyllabus(String siteId) {
@@ -336,10 +292,10 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	}
 	
 	private Map<Long, SyllabusElementMapping> getExistingSyllabusElementMappings(
-			Long syllabusId) {
+			Long id) {
 
 		Map<Long, SyllabusElementMapping> map = new HashMap<Long, SyllabusElementMapping>();
-		for (SyllabusElementMapping mapping : syllabusDao.getSyllabusElementMappings(syllabusId, true)) {
+		for (SyllabusElementMapping mapping : syllabusDao.getSyllabusElementMappings(id, true)) {
 			map.put(mapping.getSyllabusElement().getId(), mapping);
 		}
 
