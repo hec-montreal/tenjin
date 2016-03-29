@@ -226,7 +226,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				// TODO use a different default?
 				newCommonSyllabus.setLocale("fr_CA");
 			}
-			newCommonSyllabus.setTitle("Partageable"); // i18n
+			newCommonSyllabus.setTitle("Commun"); // i18n
 
 			newCommonSyllabus.setSections(new HashSet<String>());
 			for (Group g : site.getGroups()) {
