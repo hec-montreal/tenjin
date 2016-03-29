@@ -198,7 +198,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		List<SyllabusRubricElement> l = getHibernateTemplate().findByCriteria(dc);
 		if (l.size() > 1) { 
 			// Error! TODO exception?
-			log.error("More than one rubric for the given parent id and template structure id! This is very bard");
+			log.error("More than one rubric for the given parent id and template structure id! This is very bad");
 			return null;
 		} else if (l.size() == 1) {
 			return l.get(0);
@@ -213,6 +213,29 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		dc.add(Restrictions.eq("syllabusElement", element));
 		
 		return getHibernateTemplate().findByCriteria(dc);
+	}
+
+	@Override
+	public SyllabusElementMapping addMappingToEndOfList(Long syllabusId, AbstractSyllabusElement element) {
+		
+		List<Integer> maxOrderArray = getHibernateTemplate().find(
+				"select max(displayOrder) from SyllabusElementMapping mapping, AbstractSyllabusElement elem "
+				+ "where syllabusId = ? and elem.parentId = ?",
+				syllabusId, element.getParentId());
+		
+		int order = 0;
+		if (maxOrderArray.size() == 1) {
+			order = maxOrderArray.get(0)+1;
+		}
+		
+		SyllabusElementMapping mapping = new SyllabusElementMapping();
+		mapping.setSyllabusId(syllabusId);
+		mapping.setSyllabusElement(element);
+		mapping.setHidden(false);
+		mapping.setDisplayOrder(order);
+		this.save(mapping);
+		
+		return mapping;
 	}
 	
 }
