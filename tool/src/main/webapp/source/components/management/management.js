@@ -9,12 +9,6 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
         templateUrl: 'management/management.html',
         controller: function () {
 
-            // promiseObj.then(function($data) {
-            //     console.log("coucou");
-            // }, function($error) {
-
-            // });
-
             this.syllabusService = SyllabusService;
             this.treeService = TreeService;
             this.alertService = AlertService;
@@ -30,7 +24,7 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
             for (var i = 0; i < UserService.profile.sections.length; i++) {
                 var sectionUser = UserService.profile.sections[i];
                 if (sectionUser.permissions.write === true) {
-                    this.sections.push(sectionUser);
+                    this.sections.push(angular.copy(sectionUser));
                 }
             }
 
@@ -127,7 +121,9 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                 return SyllabusService.saveSyl($syllabus).$promise;
             };
 
-            this.updateSections = function($data, $syllabus) {         
+            this.updateSections = function($data, $syllabus) {
+                // assign sections
+                $syllabus.sections = $data;         
                 return SyllabusService.saveSyl($syllabus).$promise;
             };
 

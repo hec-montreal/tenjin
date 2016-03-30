@@ -115,72 +115,88 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		}
 
 		// add top-level elements to the search queue (breadth-first traversal)
-		Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
-		int order = 0;
-		for (AbstractSyllabusElement element : syllabus.getElements()) {
-			// correct site id and display order
-			element.setSiteId(syllabus.getSiteId());
-			element.setDisplayOrder(order++);
-			searchQueue.add(element);
-		}
-
-		while (!searchQueue.isEmpty()) {
-			AbstractSyllabusElement element = searchQueue.remove();
-
-			// if the element has no id or if the id is negative, the element should be created
-			if (element.getId() == null || element.getId() < 0) {
-				
-				// treat rubrics differently
-				
-				createSyllabusElement(element);
-				createSyllabusElementMapping(syllabus.getId(), element, element.getDisplayOrder(), element.getHidden());
-
-				// add mappings to all syllabi if this is a common syllabus
-				if (syllabus.getCommon()) {
-					List<Syllabus> syllabi = this.getSyllabusList(syllabus.getSiteId(), null, true, true, "");
-					for (Syllabus s : syllabi) {
-						if (!s.getCommon()) {
-							createSyllabusElementMapping(s.getId(), element, element.getDisplayOrder(), element.getHidden());							
+		if (syllabus.getElements() != null) {
+			
+		
+			Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
+			int order = 0;
+			for (AbstractSyllabusElement element : syllabus.getElements()) {
+				// correct site id and display order
+				element.setSiteId(syllabus.getSiteId());
+				element.setDisplayOrder(order++);
+				searchQueue.add(element);
+			}
+	
+			while (!searchQueue.isEmpty()) {
+				AbstractSyllabusElement element = searchQueue.remove();
+	
+				// if the element has no id or if the id is negative, the element should be created
+				if (element.getId() == null || element.getId() < 0) {
+					
+					// treat rubrics differently
+					
+					createSyllabusElement(element);
+					createSyllabusElementMapping(syllabus.getId(), element, element.getDisplayOrder(), element.getHidden());
+	
+					// add mappings to all syllabi if this is a common syllabus
+					if (syllabus.getCommon()) {
+						List<Syllabus> syllabi = this.getSyllabusList(syllabus.getSiteId(), null, true, true, "");
+						for (Syllabus s : syllabi) {
+							if (!s.getCommon()) {
+								createSyllabusElementMapping(s.getId(), element, element.getDisplayOrder(), element.getHidden());							
+							}
+						}
+					}
+					
+				} else if (existingSyllabusElementMappings != null &&
+						existingSyllabusElementMappings.containsKey(element.getId())) {
+	
+					compareAndUpdateSyllabusElementMapping(
+							existingSyllabusElementMappings.get(element.getId()), element);
+	
+					// Remove this element from the map.
+					// Remaining elements at the end will be deleted
+					existingSyllabusElementMappings.remove(element.getId());
+				}
+	
+				// add this element's children to the search queue
+				if (element instanceof SyllabusCompositeElement) {
+					SyllabusCompositeElement compositeElement = (SyllabusCompositeElement)element;
+					if (compositeElement.getElements() != null) {
+						order = 0;
+						for (AbstractSyllabusElement child : compositeElement.getElements()) {
+							// correct parent id, site id and display order
+							child.setParentId(compositeElement.getId());
+							child.setSiteId(syllabus.getSiteId());
+							child.setDisplayOrder(order++);
+							searchQueue.add(child);
 						}
 					}
 				}
-				
-			} else if (existingSyllabusElementMappings != null &&
-					existingSyllabusElementMappings.containsKey(element.getId())) {
-
-				compareAndUpdateSyllabusElementMapping(
-						existingSyllabusElementMappings.get(element.getId()), element);
-
-				// Remove this element from the map.
-				// Remaining elements at the end will be deleted
-				existingSyllabusElementMappings.remove(element.getId());
+	
+				log.debug("handled node : " + element.getId() + " parent : " + element.getParentId());
 			}
-
-			// add this element's children to the search queue
-			if (element instanceof SyllabusCompositeElement) {
-				SyllabusCompositeElement compositeElement = (SyllabusCompositeElement)element;
-				if (compositeElement.getElements() != null) {
-					order = 0;
-					for (AbstractSyllabusElement child : compositeElement.getElements()) {
-						// correct parent id, site id and display order
-						child.setParentId(compositeElement.getId());
-						child.setSiteId(syllabus.getSiteId());
-						child.setDisplayOrder(order++);
-						searchQueue.add(child);
+	
+			// delete the syllabus element mappings that are missing from the new syllabus
+			if (existingSyllabusElementMappings != null && !existingSyllabusElementMappings.isEmpty()) {
+				for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
+					// cannot delete common element from another syllabus
+					if (!syllabus.getCommon() && mapping.getSyllabusElement().getCommon()) {
+						throw new DeniedAccessException("Cannot delete common element from a regular syllabus");
+					}
+					
+					if (mapping.getSyllabusElement().getCommon() && 
+							syllabusDao.elementHasNonCommonChildren(mapping.getSyllabusElement())) {
+						// if the element has children in any other syllabus, simply remove the mapping
+						// keep the element and mark it non-common
+						mapping.getSyllabusElement().setCommon(false);
+						syllabusDao.delete(mapping);
+					} else {
+						// delete the element and all it's mappings
+						syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
 					}
 				}
-			}
 
-			log.debug("handled node : " + element.getId() + " parent : " + element.getParentId());
-		}
-
-		// delete the syllabus element mappings that are missing from the new syllabus
-		if (existingSyllabusElementMappings != null && !existingSyllabusElementMappings.isEmpty()) {
-			for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
-				// cannot delete common element from another syllabus
-				if (!syllabus.getCommon() && mapping.getSyllabusElement().getCommon()) {
-					throw new DeniedAccessException("Cannot delete common element from a regular syllabus");
-				}
 				
 				if (mapping.getSyllabusElement().getCommon() && 
 						mapping.getSyllabusElement().isComposite() &&
@@ -197,7 +213,9 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 					// delete the element and all it's mappings
 					syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
 				}
+
 			}
+			
 		}
 
 		return syllabus;

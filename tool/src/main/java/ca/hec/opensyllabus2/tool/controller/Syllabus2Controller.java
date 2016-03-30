@@ -116,7 +116,6 @@ public class Syllabus2Controller {
 		}
 		
 		try {
-
 			// We get the syllabus list for the current site with the sections associated to the user
 			syllabusList = osyl2Service.getSyllabusList(currentSiteId, sections, commonPermissionRead, commonPermissionWrite, currentUserId );
 

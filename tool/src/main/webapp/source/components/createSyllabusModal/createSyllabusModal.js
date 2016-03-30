@@ -49,11 +49,7 @@ opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalIns
             'common' : false,
             'templateId' : (common ? common.templateId : null),
             'elements' : [],
-            'locale' : 'fr_CA',
-            'createdBy' : 'Johan',
-            'createdDate' : Date.now(),
-            'lastModifiedBy' : Date.now(),
-            'lastModifiedDate' : Date.now()
+            'locale' : 'fr_CA'
         };
 
 
