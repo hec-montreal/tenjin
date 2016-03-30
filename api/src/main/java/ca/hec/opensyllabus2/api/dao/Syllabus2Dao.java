@@ -131,6 +131,7 @@ public interface Syllabus2Dao {
 	 * 
 	 * @param Long parentId
 	 * @param Long templateStructureId
+	 * @return Rubric 
 	 */
 	public SyllabusRubricElement getRubric(Long parentId, Long templateStructureId);
 
@@ -150,5 +151,12 @@ public interface Syllabus2Dao {
 	 */
 	public SyllabusElementMapping addMappingToEndOfList(Long syllabusId, AbstractSyllabusElement element);
 
+	/**
+	 * Return the mappings for a specified element where no corresponding mapping exists for the children of the given element
+	 * (meaning they can be deleted)  
+	 * 
+	 * @param AbstractSyllabusElement element
+	 */
+	public List<SyllabusElementMapping> getMappingsWithoutChildren(AbstractSyllabusElement syllabusElement);
 }
 

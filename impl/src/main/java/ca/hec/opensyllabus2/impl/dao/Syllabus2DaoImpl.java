@@ -253,5 +253,18 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		
 		return mapping;
 	}
+
+	@Override
+	public List<SyllabusElementMapping> getMappingsWithoutChildren(AbstractSyllabusElement syllabusElement) {
+		String s = "from SyllabusElementMapping mapping where mapping.syllabusElement.id = ? and not exists "
+				+ "(from SyllabusElementMapping childMapping "
+				+ "where childMapping.syllabusId = mapping.syllabusId and "
+				+ "childMapping.syllabusElement.parentId = mapping.syllabusElement.id)";
+				
+		List<SyllabusElementMapping> mappings = getHibernateTemplate().find(
+				s, syllabusElement.getId());
+		
+		return mappings;
+	}
 	
 }

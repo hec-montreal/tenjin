@@ -183,11 +183,16 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				}
 				
 				if (mapping.getSyllabusElement().getCommon() && 
+						mapping.getSyllabusElement().isComposite() &&
 						syllabusDao.elementHasNonCommonChildren(mapping.getSyllabusElement())) {
 					// if the element has children in any other syllabus, simply remove the mapping
 					// keep the element and mark it non-common
 					mapping.getSyllabusElement().setCommon(false);
-					syllabusDao.delete(mapping);
+					// delete each mapping for this element when there is no child
+					for (SyllabusElementMapping mappingWithoutChild : syllabusDao.getMappingsWithoutChildren(mapping.getSyllabusElement())) {
+						syllabusDao.delete(mappingWithoutChild);	
+					}
+					
 				} else {
 					// delete the element and all it's mappings
 					syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
