@@ -2,7 +2,7 @@
 opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalInstance', '$translate', 'SyllabusService', 'TreeService', 'AlertService', 'UserService' ,'data', 'config', 'mockup' , function ($scope, $uibModalInstance, $translate, SyllabusService, TreeService, AlertService, UserService, data, config, mockup) {
     'use strict';
 
-
+    // name of syllabus + sections
     $scope.data = {
         'name' : $translate.instant('CREATE_SYLLABUS_DEFAULT_NAME'),
         'sections' : []
@@ -11,7 +11,16 @@ opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalIns
     for (var i = 0; i < UserService.profile.sections.length; i++) {
         var sectionUser = UserService.profile.sections[i];
         if (sectionUser.permissions.write === true) {
-            $scope.data.sections.push(sectionUser);
+            var section = angular.copy(sectionUser);
+            var syllabusList = SyllabusService.getSyllabusList();
+            for (var j = 0 ; j < syllabusList.length; j++) {
+                if ( syllabusList[j].sections.indexOf(section.id) > -1 ) {
+                    section.assignedSyllabus = syllabusList[j];
+                    break;
+                }
+            }
+
+            $scope.data.sections.push(section);
         }
     }
 

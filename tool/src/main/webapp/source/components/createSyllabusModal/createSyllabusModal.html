@@ -20,7 +20,7 @@
             <div data-ng-if="(data.sections.length > 0)">{{ 'MODAL_SECTIONS_NEW_SYLLABUS' | translate}}</div>
             <div data-ng-repeat="section in data.sections" >
                 <input type="checkbox" id="{{section.id}}" name="{{section.id}}" data-ng-model="section.checked" />
-                <label for="{{section.id}}">{{section.name}}</label>
+                <label for="{{section.id}}">{{section.name}}</label> ( {{section.assignedSyllabus.title}} )
             </div>
             <div>
                 <label for="libelle">{{ 'MODAL_LIBELLE_NEW_SYLLABUS' | translate}} : </label> <span class="mandatory"></span>
