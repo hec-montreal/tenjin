@@ -125,7 +125,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
     		currElement.setDisplayOrder(currElementMapping.getDisplayOrder());
     		
     		// Add current element to the lookup map (only needed if it's composite), or replace the dummy one that was inserted previously
-    		if (currElement instanceof SyllabusCompositeElement) {
+    		if (currElement.isComposite()) {
     			if (elementMap.containsKey(currElement.getId())) {
     				// element map had a dummy element, transfer it's children before replacing it
     				SyllabusCompositeElement uninitializedElement = (SyllabusCompositeElement)elementMap.get(currElement.getId());
@@ -226,9 +226,8 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	public List<SyllabusElementMapping> getMappingsForElement(AbstractSyllabusElement element) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SyllabusElementMapping.class);
 		dc.add(Restrictions.eq("syllabusElement", element));
-//		dc.add(Restrictions.eq("templateStructureId", templateStructureId));
-		
-		return getHibernateTemplate().findByCriteria(dc);
+
+		return getHibernateTemplate().findByCriteria(dc);		
 	}
 
 	@Override
@@ -256,13 +255,13 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 
 	@Override
 	public List<SyllabusElementMapping> getMappingsWithoutChildren(AbstractSyllabusElement syllabusElement) {
-		String s = "from SyllabusElementMapping mapping where mapping.syllabusElement.id = ? and not exists "
+		String qry = "from SyllabusElementMapping mapping where mapping.syllabusElement.id = ? and not exists "
 				+ "(from SyllabusElementMapping childMapping "
 				+ "where childMapping.syllabusId = mapping.syllabusId and "
 				+ "childMapping.syllabusElement.parentId = mapping.syllabusElement.id)";
 				
 		List<SyllabusElementMapping> mappings = getHibernateTemplate().find(
-				s, syllabusElement.getId());
+				qry, syllabusElement.getId());
 		
 		return mappings;
 	}
