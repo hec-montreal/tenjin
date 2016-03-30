@@ -106,6 +106,15 @@ public class SakaiProxyImpl implements SakaiProxy {
 		}
 	}
 
+	/**
+	 * Calls the SecurityService unlock method. This is the method you must use in order for Delegated Access to work.
+	 * Note that the SecurityService automatically handles super users.
+	 * 
+	 * @param userId		user uuid
+	 * @param function  	permission to check for
+	 * @param reference		reference to entity. The getReference() method should get you out of trouble.
+	 * @return				true if user has permission, false otherwise
+	 */
 	@Override
 	public boolean isAllowed(String userId, String function, String reference) {
 		return securityService.unlock(userId, function,  reference);
