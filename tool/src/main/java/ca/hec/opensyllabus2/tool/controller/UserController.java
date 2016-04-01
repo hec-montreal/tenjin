@@ -95,26 +95,7 @@ public class UserController {
 			entityMap.put("site", siteMap);
 			
 			// set sections
-			for (Group g : site.getGroups()) {
-				if (!g.getProviderGroupId().isEmpty()) {
-					Map<String, Object> sectionMap = new HashMap<String, Object>();
-					sectionMap.put("id", g.getId());
-					sectionMap.put("name", g.getTitle());
-					
-					// set section permissions
-					Map<String, Object> permissionsMap = new HashMap<String, Object>();
-					if (securityService.isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, g.getReference())) {
-						permissionsMap.put("read", true);
-					}
-					if (securityService.isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, g.getReference())) {
-						permissionsMap.put("write", true);
-					}
-					
-					sectionMap.put("permissions", permissionsMap);
-					sectionsList.add(sectionMap);
-				}
-			}
-			entityMap.put("sections", sectionsList);
+			entityMap.put("sections", securityService.getSections(true));
 			
 		} catch (Exception e) {
 			log.error("Site " + siteId + " could not be retrieved.");
