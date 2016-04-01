@@ -13,4 +13,9 @@
         this.profile = $dataProfile;
     };
 
+    this.getProfile = function() {
+        return this.profile;
+    };
+
+
 }]);

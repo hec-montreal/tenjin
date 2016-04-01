@@ -37,7 +37,7 @@
           </td>
           <td>
 
-            <a href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.sections" onbeforesave="managementCtrl.updateSections($data, syllabus)">
+            <a href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.sections" onbeforesave="managementCtrl.updateSections($data, syllabus)" onaftersave="managementCtrl.updateSyllabusList()">
               <!-- test -->
               {{ managementCtrl.showSections(syllabus) }}
             </a>

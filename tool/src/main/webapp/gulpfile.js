@@ -62,6 +62,7 @@ gulp.task('jslib', function() {
     './node_modules/angular/angular.js',
     './node_modules/typescript/lib/typescript.js',
     './node_modules/reflect-metadata/Reflect.js',
+    './node_modules/zone.js/dist/zone.js',
     './node_modules/angular-dynamic-locale/tmhDynamicLocale.min.js',
     './node_modules/angular-promise-extras/angular-promise-extras.js',
     './node_modules/angular-resource/angular-resource.min.js',
@@ -80,7 +81,7 @@ gulp.task('jslib', function() {
     './node_modules/angular2/es6/dev/src/testing/shims_for_IE.js',
     ])
   .pipe(concat('syllabuslib.js'))
-  .pipe(uglify())
+  // .pipe(uglify())
   .pipe(gulp.dest( './dest/lib'));
 });
 

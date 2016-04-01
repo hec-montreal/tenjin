@@ -17,6 +17,10 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
 
             this.infos = {};
             this.disableDelete = true;
+
+            var lastModifiedSyllabus;
+            var lastModifiedSyllabusBeforeUpdate;
+            var objManagement = this;
  
             //this.sections = mockup.sections;
             this.sections = [];
@@ -49,8 +53,10 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                 // Load the syllabus list (if the syllabus has not been loaded earlier)
                 // var syllabusList = SyllabusService.getSyllabusList();
                 // if ( !syllabusList  ) {
+                // 
+                this.infos.working = true;
                 loadSyllabusList().finally(function() {
-                     this.infos.working = false; 
+                     objManagement.infos.working = false; 
                 });
                 // }
             }
@@ -64,10 +70,12 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                 var modal = ModalService.createSyllabus(data);
 
                 // Traitement du résultat
-                modal.result.then(function (selectedItem) {
-                    console.debug('élément modifié');
+                modal.result.then(function ($syllabus) {
+                    // update syllabus list with last modified syllabus as param 
+                    updateSyllabusList($syllabus);
                 }, function () {
-                    console.debug('élément toujours là');
+                    // alert add syllabus ko
+                    AlertService.display('danger');
                 });    
             };
 
@@ -122,9 +130,76 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
             };
 
             this.updateSections = function($data, $syllabus) {
+                // keep a reference on the old sections
+                lastModifiedSyllabusBeforeUpdate = angular.copy($syllabus);
                 // assign sections
-                $syllabus.sections = $data;         
+                $syllabus.sections = $data;   
+                // keep a reference to the last modified syllabus (to update sections of other syllabus)
+                lastModifiedSyllabus = $syllabus;
                 return SyllabusService.saveSyl($syllabus).$promise;
+            };
+
+            var updateSyllabusList = function($syllabusModified, $oldSyllabus) {
+                // if there sections have been associated to a syllabus just before 
+                if ( $syllabusModified ) {
+   
+                    var syllabusList = SyllabusService.getSyllabusList();
+                    // 1- first check all syllabus and remove sections (present in the syllabus modified) 
+                    for ( var i = 0 ; i < syllabusList.length; i++ ) {
+                        if ( syllabusList[i].id !== $syllabusModified.id ) {
+                            for ( var j = 0 ; j < $syllabusModified.sections.length; j++ ) {
+                                var index = syllabusList[i].sections.indexOf($syllabusModified.sections[j]);
+                                if (index > -1) {
+                                    syllabusList[i].sections.splice(index, 1);
+                                }
+                            }    
+                        }
+                    }
+
+                    // 2- second add orphan sections to the shareable
+                    var commonSyllabus = SyllabusService.getCommonSyllabus();
+                    // var userProfile = UserService.getProfile();
+                    // var userArraySections = [];
+                    // for ( var section in userProfile.sections ) {
+                    //     if (userProfile.sections.hasOwnProperties(section) ) {
+                    //         userArraySections.push(section.id);
+                    //     }
+                    // }
+                    // var sectionsList = [];
+                    // for ( i = 0 ; i < syllabusList.length; i++ ) {
+                    //     sectionsList.concat(syllabusList[i].sections);
+                    // }
+
+                    // // compare the two array of sections to find which one we need to add to the common
+                    // for ( i = 0 ; i < syllabusList.length; i++ ) {
+                    //     var index = syllabusList[i].sections.indexOf($syllabusModified.sections[j]);
+                    //     if (index > -1) {
+                    //         syllabusList[i].sections.splice(index, 1);
+                    //     }
+                    // } 
+
+                    if ($oldSyllabus) { 
+                        for ( i = 0 ; i < $oldSyllabus.sections.length; i++) {
+                            if( $syllabusModified.sections.indexOf($oldSyllabus.sections[i]) === -1 ) {
+                                // if the section has disappead  from the syllabus
+                                // then add it to the common syllabus
+                                commonSyllabus.sections.push($oldSyllabus.sections[i]);
+                            }
+                        }
+                    }
+
+                }
+
+
+
+            };
+
+            this.updateSyllabusList = function() {
+                // update syllabus list with last modified syllabus as param 
+                updateSyllabusList(lastModifiedSyllabus, lastModifiedSyllabusBeforeUpdate);
+                // reset tmp variables
+                lastModifiedSyllabus = null;
+                lastModifiedSyllabusBeforeUpdate = null;
             };
 
             this.redirectToSyllabus = function($syllabusId) {

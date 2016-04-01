@@ -50,29 +50,32 @@ opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalIns
             'templateId' : (common ? common.templateId : null),
             'elements' : [],
             'locale' : 'fr_CA'
-        };
+         };
 
 
         // var savePromise = SyllabusService.saveSyl(newSyllabus);
         var savePromise = SyllabusService.saveNewSyllabus(newSyllabus);
         SyllabusService.setWorking(true);
 
+        var syllabusAdded = null;
         savePromise.$promise.then(function($data) {
             // alert add syllabus ok
             AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_SYLLABUS'));
 
             // refresh the list 
             SyllabusService.syllabusList.push($data);
+            syllabusAdded = $data;
+
         }, function ($error){
-            // alert add syllabus ko
-            AlertService.display('danger');
+            // syllabusAdded stay null
 
         }).finally(function() {
              SyllabusService.setWorking(false);
+             // close the popup
+             $uibModalInstance.close(syllabusAdded);
         });
 
-        // close the popup
-        $uibModalInstance.close('');
+        
 
     };
 
