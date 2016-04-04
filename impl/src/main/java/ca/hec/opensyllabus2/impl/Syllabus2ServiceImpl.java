@@ -85,6 +85,8 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			throw new NoSiteException();
 		}
 		
+		List<Syllabus> syllabi = this.getSyllabusList(syllabus.getSiteId(), null, true, true, "");	
+
 		// create syllabus if it doesn't exist, otherwise get it's element mappings from the database.
 		if (syllabus.getId() == null) {
 			
@@ -109,6 +111,8 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
 					createSyllabusElementMapping( syllabus.getId(), mapping.getSyllabusElement(), mapping.getDisplayOrder(), false );
 				}
+				
+				reassignSections(syllabi, null, syllabus.getSections());
 			
 				// return new created syllabus
 				return syllabus;
@@ -126,6 +130,8 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 					if (!checkSectionAssignPermissions(existingSyllabus.getSections(), syllabus.getSections())) {
 						throw new DeniedAccessException("User not allowed to assign the sections");
 					}
+
+					reassignSections(syllabi, existingSyllabus.getSections(), syllabus.getSections());
 				}
 				//update persistent object,  save handled by hibernate at end of transaction
 				existingSyllabus.copy(syllabus);
@@ -177,7 +183,6 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 					// add mappings to all syllabi if this is a common syllabus
 					if (syllabus.getCommon()) {
-						List<Syllabus> syllabi = this.getSyllabusList(syllabus.getSiteId(), null, true, true, "");
 						for (Syllabus s : syllabi) {
 							if (!s.getCommon() && 
 									(syllabusesWithExistingRubricMapping == null || 
@@ -388,4 +393,52 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return map;
 	}
 
+	private void reassignSections(List<Syllabus> syllabuses, Set<String> oldSections, Set<String> newSections) {
+		Collection<String> sectionsForCommon = null;
+		Collection<String> sectionsToUnassign = null;
+		
+		if (oldSections == null && newSections == null) {
+			log.error("both lists are null!");
+			return; // TODO : exception
+		}
+		
+		if (oldSections == null) {
+			// new syllabus, unassign all sections from their previous syllabuses
+			sectionsToUnassign = newSections;
+		} else if (newSections == null) {
+			// delete syllabus, assign all sections to the common syllabus
+			sectionsForCommon = oldSections;
+		} else {
+			// sections in oldSections but not newSections should be assigned to the common
+			sectionsForCommon = CollectionUtils.subtract(oldSections, newSections);
+			// sections in newSections but not oldSections should be unassigned wherever else they are assigned
+			sectionsToUnassign = CollectionUtils.subtract(newSections, oldSections);
+		}	
+		
+		if (sectionsForCommon != null) {
+			for (Syllabus s : syllabuses) {
+				if (s.getCommon()) {
+					assignSectionsToSyllabus(s, sectionsForCommon);
+				}
+			}
+		}
+		if (sectionsToUnassign != null) {
+			unassignSections(syllabuses, sectionsToUnassign);
+		}
+	}
+	
+	// These are called on persistent syllabuses, and so any modifications are saved at the end of the transaction
+	private void assignSectionsToSyllabus(Syllabus commonSyllabus, Collection<String> sections) {
+		for (String s : sections) {
+			commonSyllabus.getSections().add(s);
+		}
+	}
+
+	private void unassignSections(List<Syllabus> syllabuses, Collection<String> sectionsToUnassign) {
+		for (Syllabus syllabus : syllabuses) {
+			for (String sectionId : sectionsToUnassign) {
+				syllabus.getSections().remove(sectionId);
+			}
+		}
+	}
 }

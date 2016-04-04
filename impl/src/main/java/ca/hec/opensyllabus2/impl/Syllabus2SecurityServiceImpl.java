@@ -166,9 +166,11 @@ public class Syllabus2SecurityServiceImpl implements Syllabus2SecurityService {
 		if (syllabus.getCommon()) {
 			return isAllowed(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, s.getReference());
 		} else {
-			// return true if current user is the creator of the syllabus or if the user is assigned to a section
+			// return true if current user is super user or 
+			// the creator of the syllabus or if the user is assigned to a section
 			// of this syllabus
-			return syllabus.getCreatedBy().equals(sakaiProxy.getCurrentUserId()) ||
+			return sakaiProxy.isSuperUser() ||
+					syllabus.getCreatedBy().equals(sakaiProxy.getCurrentUserId()) ||
 					CollectionUtils.intersection(getArraySections(TenjinFunctions.TENJIN_FUNCTION_WRITE), syllabus.getSections()).size() > 0;
 		}
 	}
