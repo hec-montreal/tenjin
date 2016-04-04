@@ -22,6 +22,8 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
             var lastModifiedSyllabusBeforeUpdate;
             var objManagement = this;
  
+            // check differences between these 2 arrays
+
             //this.sections = mockup.sections;
             this.sections = [];
             // get user sections with write permissions
@@ -139,16 +141,34 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                 return SyllabusService.saveSyl($syllabus).$promise;
             };
 
+
+
             var updateSyllabusList = function($syllabusModified, $oldSyllabus) {
+
                 // if there sections have been associated to a syllabus just before 
                 if ( $syllabusModified ) {
    
                     var syllabusList = SyllabusService.getSyllabusList();
+
+                    var sectionsForCommon = [];
+                    var sectionsToReassign = [];
+                    // check sections differences between the old and the updated syllabus
+                    for (var i = 0 ; i < $syllabusModified.sections.length ; i++) {
+                        if( $oldSyllabus.sections.indexOf($syllabusModified.sections[i]) === -1) {
+                            sectionsToReassign.push($syllabusModified.sections[i]);
+                        }                        
+                    }
+                    for (i = 0 ; i < $oldSyllabus.sections.length ; i++) {                     
+                        if( $syllabusModified.sections.indexOf($oldSyllabus.sections[i]) === -1) {
+                            sectionsForCommon.push($oldSyllabus.sections[i]);
+                        }
+                    }
+
                     // 1- first check all syllabus and remove sections (present in the syllabus modified) 
-                    for ( var i = 0 ; i < syllabusList.length; i++ ) {
+                    for ( i = 0 ; i < syllabusList.length; i++ ) {
                         if ( syllabusList[i].id !== $syllabusModified.id ) {
-                            for ( var j = 0 ; j < $syllabusModified.sections.length; j++ ) {
-                                var index = syllabusList[i].sections.indexOf($syllabusModified.sections[j]);
+                            for ( var j = 0 ; j < sectionsToReassign.length; j++ ) {
+                                var index = syllabusList[i].sections.indexOf(sectionsToReassign[j]);
                                 if (index > -1) {
                                     syllabusList[i].sections.splice(index, 1);
                                 }
@@ -158,35 +178,9 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
 
                     // 2- second add orphan sections to the shareable
                     var commonSyllabus = SyllabusService.getCommonSyllabus();
-                    // var userProfile = UserService.getProfile();
-                    // var userArraySections = [];
-                    // for ( var section in userProfile.sections ) {
-                    //     if (userProfile.sections.hasOwnProperties(section) ) {
-                    //         userArraySections.push(section.id);
-                    //     }
-                    // }
-                    // var sectionsList = [];
-                    // for ( i = 0 ; i < syllabusList.length; i++ ) {
-                    //     sectionsList.concat(syllabusList[i].sections);
-                    // }
-
-                    // // compare the two array of sections to find which one we need to add to the common
-                    // for ( i = 0 ; i < syllabusList.length; i++ ) {
-                    //     var index = syllabusList[i].sections.indexOf($syllabusModified.sections[j]);
-                    //     if (index > -1) {
-                    //         syllabusList[i].sections.splice(index, 1);
-                    //     }
-                    // } 
-
                     if ($oldSyllabus) { 
-                        for ( i = 0 ; i < $oldSyllabus.sections.length; i++) {
-                            if( $syllabusModified.sections.indexOf($oldSyllabus.sections[i]) === -1 ) {
-                                // if the section has disappead  from the syllabus
-                                // then add it to the common syllabus
-                                commonSyllabus.sections.push($oldSyllabus.sections[i]);
-                            }
-                        }
-                    }
+                        commonSyllabus.sections = commonSyllabus.sections.concat(sectionsForCommon);
+                    } 
 
                 }
 
