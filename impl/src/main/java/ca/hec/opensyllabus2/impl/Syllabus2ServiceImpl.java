@@ -70,7 +70,17 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 		// if no syllabus, create common and add it to the list
 		if (syllabusList.isEmpty()) {
-			syllabusList.add(createCommonSyllabus(siteId));
+			Syllabus common = createCommonSyllabus(siteId);
+
+			try {
+				createOrUpdateSyllabus(common);
+			} catch (NoSyllabusException e) {
+				// should not be possible, only happens when we try to update a syllabus that doesn't exist
+				log.error("Error saving new common syllabus for site: " + siteId);
+				e.printStackTrace();
+			}
+
+			syllabusList.add(common);
 		}
 		return syllabusList;
 	}
@@ -85,7 +95,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			throw new NoSiteException();
 		}
 		
-		List<Syllabus> syllabi = this.getSyllabusList(syllabus.getSiteId(), null, true, true, "");	
+		List<Syllabus> syllabi = syllabusDao.getSyllabusList(syllabus.getSiteId(), null, true, true, "");	
 
 		// create syllabus if it doesn't exist, otherwise get it's element mappings from the database.
 		if (syllabus.getId() == null) {
@@ -118,13 +128,13 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				return syllabus;
 			}
 		} else {
+			existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false, false);
+			
 			//check permissions
-			if (!securityService.canUserUpdateSyllabus(syllabus)) {
+			if (!securityService.canUserUpdateSyllabus(existingSyllabus)) {
 				throw new DeniedAccessException("User not allowed to update the specified syllabus");
 			}			
 
-			existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false, false);
-			
 			if (existingSyllabus != syllabus) {
 				if (existingSyllabus.getSections() != syllabus.getSections()) {
 					if (!checkSectionAssignPermissions(existingSyllabus.getSections(), syllabus.getSections())) {
@@ -133,8 +143,11 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 					reassignSections(syllabi, existingSyllabus.getSections(), syllabus.getSections());
 				}
-				//update persistent object,  save handled by hibernate at end of transaction
+				
+				//update persistent object, save handled by hibernate at end of transaction
 				existingSyllabus.copy(syllabus);
+				existingSyllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
+				existingSyllabus.setLastModifiedDate(now);
 			}
 			
 			existingSyllabusElementMappings = getExistingSyllabusElementMappings(syllabus.getId());
@@ -320,14 +333,6 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				if (!g.getProviderGroupId().isEmpty()) {
 					newCommonSyllabus.getSections().add(g.getId());
 				}
-			}
-
-			try {
-				createOrUpdateSyllabus(newCommonSyllabus);
-			} catch (NoSyllabusException e) {
-				// should not be possible, only happens when we try to update a syllabus that doesn't exist
-				log.error("Error saving new common syllabus for site: " + siteId);
-				e.printStackTrace();
 			}
 		}
 		
