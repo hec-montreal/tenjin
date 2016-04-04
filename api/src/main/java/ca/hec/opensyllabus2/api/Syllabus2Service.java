@@ -34,8 +34,9 @@ public interface Syllabus2Service {
 	 * @param currentUserId Current user id
 	 * @throws NoSiteException
 	 * @throws NoSyllabusException
+	 * @throws DeniedAccessException 
 	 */
-	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, boolean commonRead, boolean commonWrite, String currentUserId) throws NoSyllabusException, NoSiteException;
+	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, boolean commonRead, boolean commonWrite, String currentUserId) throws NoSyllabusException, NoSiteException, DeniedAccessException;
 	
 	/**
 	 * Create a new syllabus or update the existing syllabus based on id

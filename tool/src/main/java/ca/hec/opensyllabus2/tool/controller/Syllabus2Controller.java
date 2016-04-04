@@ -96,7 +96,8 @@ public class Syllabus2Controller {
 	}
 
 	@RequestMapping(value = "/syllabus", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<List<Syllabus>> getSyllabusList(@RequestParam(value = "siteId", required = false) String siteId) {
+	public @ResponseBody ResponseEntity<List<Syllabus>> getSyllabusList(@RequestParam(value = "siteId", required = false) String siteId) 
+			throws DeniedAccessException, NoSyllabusException  {
 
 		List<Syllabus> syllabusList = null;
 		//Site site = null;
@@ -112,7 +113,7 @@ public class Syllabus2Controller {
 		// If user has write permission, then no need to get sections
 		if (commonPermissionWrite == false) {
 			// get sections available for the current user
-			sections = securityService.getArraySections();
+			sections = securityService.getArraySections(TenjinFunctions.TENJIN_FUNCTION_READ);
 		}
 		
 		try {

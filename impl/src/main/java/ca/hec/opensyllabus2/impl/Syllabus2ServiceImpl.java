@@ -1,21 +1,26 @@
 package ca.hec.opensyllabus2.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import lombok.Setter;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
 import ca.hec.opensyllabus2.api.SakaiProxy;
+import ca.hec.opensyllabus2.api.Syllabus2SecurityService;
 import ca.hec.opensyllabus2.api.Syllabus2Service;
 import ca.hec.opensyllabus2.api.TemplateService;
 import ca.hec.opensyllabus2.api.OsylException.DeniedAccessException;
@@ -41,6 +46,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	private SakaiProxy sakaiProxy;	
 	private Syllabus2Dao syllabusDao;
 	private TemplateService templateService;
+	private Syllabus2SecurityService securityService;
 
 	@Override
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException {
@@ -56,7 +62,8 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 	}
 
     @Override
-	public List<Syllabus> getSyllabusList(String siteId, List<String> sections,  boolean commonRead, boolean commonWrite, String currentUserId) throws NoSiteException {
+	public List<Syllabus> getSyllabusList(String siteId, List<String> sections,  boolean commonRead, boolean commonWrite, String currentUserId) 
+			throws NoSiteException, DeniedAccessException {
 		List<Syllabus> syllabusList = null;
 
 		syllabusList = syllabusDao.getSyllabusList(siteId, sections, commonRead, commonWrite, currentUserId);
@@ -71,14 +78,22 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
     @Override
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException, NoSyllabusException, DeniedAccessException {
 		Date now = new Date();
-		
-		// add permission check
-		
-		//check that site exists
-
-		// create syllabus if it doesn't exist, otherwise get it's element mappings from the database.
+		Syllabus existingSyllabus = null;
 		Map<Long, SyllabusElementMapping> existingSyllabusElementMappings = null;
+		
+		if (!sakaiProxy.siteExists(syllabus.getSiteId())) {
+			throw new NoSiteException();
+		}
+		
+		// create syllabus if it doesn't exist, otherwise get it's element mappings from the database.
 		if (syllabus.getId() == null) {
+			
+			//check permissions
+			if ((syllabus.getCommon() && !securityService.canUserCreateSyllabus(syllabus.getSiteId(), true)) ||
+					(!syllabus.getCommon() && (!securityService.canUserCreateSyllabus(syllabus.getSiteId(), false) || !checkSectionAssignPermissions(null, syllabus.getSections())))) {
+				throw new DeniedAccessException();
+			}
+			
 			syllabus.setCreatedDate(now);
 			syllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
 			syllabus.setLastModifiedDate(now);
@@ -99,8 +114,19 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				return syllabus;
 			}
 		} else {
-			Syllabus existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false, false);
+			//check permissions
+			if (!securityService.canUserUpdateSyllabus(syllabus)) {
+				throw new DeniedAccessException("User not allowed to update the specified syllabus");
+			}			
+
+			existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false, false);
+			
 			if (existingSyllabus != syllabus) {
+				if (existingSyllabus.getSections() != syllabus.getSections()) {
+					if (!checkSectionAssignPermissions(existingSyllabus.getSections(), syllabus.getSections())) {
+						throw new DeniedAccessException("User not allowed to assign the sections");
+					}
+				}
 				//update persistent object,  save handled by hibernate at end of transaction
 				existingSyllabus.copy(syllabus);
 			}
@@ -222,6 +248,28 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return syllabus;
 	}
 
+	/**
+	 * @param oldSections The existing list of sections
+	 * @param newSections The new section list to assign
+	 * @return whether or not the user is allowed to assign or unassign the sections
+	 */
+	private boolean checkSectionAssignPermissions(Set<String> oldSections, Set<String> newSections) {
+		
+		Collection<String> sectionsToCheck = null;
+		
+		if (oldSections == null && newSections == null) {
+			return false;
+		} else if (oldSections == null) {
+			sectionsToCheck = newSections;
+		} else if (newSections == null) {
+			sectionsToCheck = oldSections;
+		} else {
+			// get sections that are in one list but not the other (the user is trying to add or subtract them)
+			sectionsToCheck = CollectionUtils.disjunction(oldSections, newSections);
+		}
+		return securityService.canUserAssignSections(sectionsToCheck);
+	}
+
 	private List<Long> getSyllabusesWithElementMapping(AbstractSyllabusElement element) {
 		List<Long> syllabuses = new ArrayList<Long>();
 		List<SyllabusElementMapping> l = syllabusDao.getMappingsForElement(element);
@@ -232,7 +280,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return syllabuses;
 	}
 
-	private Syllabus createCommonSyllabus(String siteId) {
+	private Syllabus createCommonSyllabus(String siteId) throws NoSiteException, DeniedAccessException {
 		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, "fr_CA");
 		Site site = null;
 		
@@ -268,10 +316,10 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 					newCommonSyllabus.getSections().add(g.getId());
 				}
 			}
-			
+
 			try {
 				createOrUpdateSyllabus(newCommonSyllabus);
-			} catch (Exception e) {
+			} catch (NoSyllabusException e) {
 				// should not be possible, only happens when we try to update a syllabus that doesn't exist
 				log.error("Error saving new common syllabus for site: " + siteId);
 				e.printStackTrace();

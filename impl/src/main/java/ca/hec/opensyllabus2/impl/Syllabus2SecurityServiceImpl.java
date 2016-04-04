@@ -1,18 +1,22 @@
 package ca.hec.opensyllabus2.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
 import ca.hec.opensyllabus2.api.SakaiProxy;
 import ca.hec.opensyllabus2.api.Syllabus2SecurityService;
 import ca.hec.opensyllabus2.api.TenjinFunctions;
+import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import lombok.Setter;
 
 @Setter
@@ -51,8 +55,16 @@ public class Syllabus2SecurityServiceImpl implements Syllabus2SecurityService {
 	}	
 	
 	@Override
-	public List<String> getArraySections() {
+	public List<String> getArraySections(String permission) {
+		
+		if (!permission.equals(TenjinFunctions.TENJIN_FUNCTION_READ) && 
+				!permission.equals(TenjinFunctions.TENJIN_FUNCTION_WRITE)) {
+			log.error("unknown permission specified");
+			return null;
+		}
+		
 		Site site = null;
+		// TODO pass the site id as parameter
 		String siteId = sakaiProxy.getCurrentSiteId();
 		String currentUserId = sakaiProxy.getCurrentUserId();
 		
@@ -64,13 +76,11 @@ public class Syllabus2SecurityServiceImpl implements Syllabus2SecurityService {
 			for (Group g : site.getGroups()) {
 				if (!g.getProviderGroupId().isEmpty()) {
 					// if the current user have read permissions on the section
-					if (sakaiProxy.isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, g.getReference()) ) {
+					if (sakaiProxy.isAllowed(currentUserId, permission, g.getReference()) ) {
 						sectionsList.add(g.getId());
 					}
 				}
 			}
-		
-		
 		} catch (Exception e) {
 			log.error("Site " + siteId + " could not be retrieved.");
 			return null;
@@ -121,4 +131,53 @@ public class Syllabus2SecurityServiceImpl implements Syllabus2SecurityService {
 		
 		return sectionsList;
 	}	
+
+	@Override
+	public boolean canUserCreateSyllabus(String siteId, boolean common) {
+		
+		Site s;
+		try {
+			s = sakaiProxy.getSite(siteId);
+		} catch (IdUnusedException e) {
+			log.error("Site does not exist");
+			return false;
+		}
+
+		if (common) {
+			//TODO : for now, a user who can write in any section can create a common syllabus
+			return isAllowed(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, s.getReference()) ||
+					getArraySections(TenjinFunctions.TENJIN_FUNCTION_WRITE).size() > 0;
+		} else {
+			// if user can edit one or more sections, she can create syllabuses
+			return getArraySections(TenjinFunctions.TENJIN_FUNCTION_WRITE).size() > 0;
+		}
+	}
+
+	@Override
+	public boolean canUserUpdateSyllabus(Syllabus syllabus) {
+		Site s;
+		try {
+			s = sakaiProxy.getSite(syllabus.getSiteId());
+		} catch (IdUnusedException e) {
+			log.error("Site does not exist");
+			return false;
+		}
+
+		if (syllabus.getCommon()) {
+			return isAllowed(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, s.getReference());
+		} else {
+			// return true if current user is the creator of the syllabus or if the user is assigned to a section
+			// of this syllabus
+			return syllabus.getCreatedBy().equals(sakaiProxy.getCurrentUserId()) ||
+					CollectionUtils.intersection(getArraySections(TenjinFunctions.TENJIN_FUNCTION_WRITE), syllabus.getSections()).size() > 0;
+		}
+	}
+
+	@Override
+	public boolean canUserAssignSections(Collection<String> sectionsToCheck) {
+		List<String> allowedSections = getArraySections(TenjinFunctions.TENJIN_FUNCTION_WRITE);		
+		// if the user is allowed to assign everything in sectionsToCheck, subtract will leave no results
+		return CollectionUtils.subtract(sectionsToCheck, allowedSections).size() == 0;
+	}
+
 }

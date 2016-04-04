@@ -37,4 +37,6 @@ public interface SakaiProxy {
 
 	public boolean isAllowed(String userId, String function, String groupId);
 
+	public boolean siteExists(String siteId);
+
 }

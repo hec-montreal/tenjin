@@ -92,6 +92,9 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 			//syllabi = getHibernateTemplate().find(s, siteId);
 			
 			String querySections = "and ( created_by='"+ currentUserId + "' ";
+			if (commonRead) {
+				querySections += " or common = 1";
+			}
 			for (int i = 0 ; i < sections.size(); i++) {
 				querySections += " or '"+ sections.get(i) + "' in elements(syllabus.sections) ";
 			}

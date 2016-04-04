@@ -16,7 +16,8 @@
 				<property name="syllabusDao" ref="ca.hec.opensyllabus2.api.dao.Syllabus2Dao" />
 		 		<property name="templateService" ref="ca.hec.opensyllabus2.api.TemplateService" />
 		 		<property name="sakaiProxy" ref="ca.hec.opensyllabus2.api.SakaiProxy" />
-			</bean>
+		 		<property name="securityService" ref="ca.hec.opensyllabus2.api.Syllabus2SecurityService" />
+		 	</bean>
 
 		</property>
 		<property name="transactionAttributes">

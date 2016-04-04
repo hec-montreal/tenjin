@@ -1,6 +1,9 @@
 package ca.hec.opensyllabus2.api;
 
+import java.util.Collection;
 import java.util.List;
+
+import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 
 public interface Syllabus2SecurityService {
 
@@ -37,9 +40,39 @@ public interface Syllabus2SecurityService {
 
 	
 	/**
-	 * Return an array with the sections for the current user
-	 * @return
+	 * Return an array with the sections for which the current user has the given permission
+	 * from TenjinFunctions.
+	 *
+	 * @param String permission 
+	 * @return List of section ids
 	 */
-	public List<String> getArraySections();
+	public List<String> getArraySections(String permission);
+
+	/**
+	 * Return whether or not the user is allowed to create a syllabus (common or not)
+	 * in the given site
+	 *
+	 * @param String siteId
+	 * @param boolean common - true to check permission for common syllabus
+	 * @return boolean
+	 */
+	public boolean canUserCreateSyllabus(String siteId, boolean common);
+
+	/**
+	 * Return whether or not the user is allowed to update a given syllabus
+	 *
+	 * @param Syllabus syllabus
+	 * @return boolean
+	 */
+	public boolean canUserUpdateSyllabus(Syllabus syllabus);
+
+	/**
+	 * Return whether or not the user is allowed to assign or unassign all of the specified 
+	 * sections in the collection
+	 *
+	 * @param Collection<String> section ids to verify
+	 * @return boolean
+	 */
+	public boolean canUserAssignSections(Collection<String> sectionsToCheck);
 
 }

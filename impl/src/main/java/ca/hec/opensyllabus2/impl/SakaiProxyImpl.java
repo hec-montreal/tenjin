@@ -119,4 +119,13 @@ public class SakaiProxyImpl implements SakaiProxy {
 	public boolean isAllowed(String userId, String function, String reference) {
 		return securityService.unlock(userId, function,  reference);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean siteExists(String siteId) {
+		return siteService.siteExists(siteId);
+	}
+
 }
