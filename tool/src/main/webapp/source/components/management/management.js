@@ -12,6 +12,7 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
             this.syllabusService = SyllabusService;
             this.treeService = TreeService;
             this.alertService = AlertService;
+            this.userService = UserService;
             this.variables = variables;
             this.config = config;
 
@@ -21,16 +22,15 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
             var lastModifiedSyllabus;
             var lastModifiedSyllabusBeforeUpdate;
             var objManagement = this;
- 
-            // check differences between these 2 arrays
-
-            //this.sections = mockup.sections;
-            this.sections = [];
+            
+            this.userSections = []; // user sections with write permissions
+            this.allSections = []; // all sections
             // get user sections with write permissions
-            for (var i = 0; i < UserService.profile.sections.length; i++) {
-                var sectionUser = UserService.profile.sections[i];
+            for (var i = 0; i < this.userService.profile.sections.length; i++) {
+                var sectionUser = this.userService.profile.sections[i];
+                this.allSections.push(angular.copy(sectionUser));
                 if (sectionUser.permissions.write === true) {
-                    this.sections.push(angular.copy(sectionUser));
+                    this.userSections.push(angular.copy(sectionUser));
                 }
             }
 
@@ -115,7 +115,7 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
 
             this.showSections = function($syllabus) {
                 var selected = [];
-                angular.forEach(this.sections, function(s) { 
+                angular.forEach(this.allSections, function(s) { 
                   if ($syllabus.sections.indexOf(s.id) >= 0) {
                     selected.push(s.name);
                   }
@@ -133,12 +133,13 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
 
             this.updateSections = function($data, $syllabus) {
                 // keep a reference on the old sections
-                lastModifiedSyllabusBeforeUpdate = angular.copy($syllabus);
-                // assign sections
-                $syllabus.sections = $data;   
+                lastModifiedSyllabusBeforeUpdate = angular.copy($syllabus);            
                 // keep a reference to the last modified syllabus (to update sections of other syllabus)
-                lastModifiedSyllabus = $syllabus;
-                return SyllabusService.saveSyl($syllabus).$promise;
+                lastModifiedSyllabus = angular.copy($syllabus);
+                // assign sections
+                lastModifiedSyllabus.sections = $data;
+   
+                return SyllabusService.saveSyl(lastModifiedSyllabus).$promise;
             };
 
 
@@ -188,7 +189,10 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
 
             };
 
-            this.updateSyllabusList = function() {
+            this.updateSyllabusList = function($syllabus) {
+                // update syllabus
+                $syllabus = angular.copy(lastModifiedSyllabus);
+
                 // update syllabus list with last modified syllabus as param 
                 updateSyllabusList(lastModifiedSyllabus, lastModifiedSyllabusBeforeUpdate);
                 // reset tmp variables

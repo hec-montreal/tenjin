@@ -1,6 +1,13 @@
 .left-menu {
     // color: $bleu-hec;
 
+    .left-menu-section {
+        // min-height: 800px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 6px #ccc;
+    }
+
     .glyphicon {
         top: 0;
     }
@@ -42,5 +49,30 @@
         opacity: 0;
         max-height: 0;
         visibility: hidden !important;
+    }
+}
+
+
+@media (min-height: 700px) {
+
+    .left-menu {
+        // color: $bleu-hec;
+
+        .left-menu-section {
+            min-height: 600px;
+        }
+
+    }
+}
+
+@media (max-height: 699px) {
+
+    .left-menu {
+        // color: $bleu-hec;
+
+        .left-menu-section {
+            min-height: 400px;
+        }
+
     }
 }

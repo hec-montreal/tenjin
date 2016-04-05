@@ -12,7 +12,7 @@ opensyllabusApp.constant('config', {
             'type': 'document',
             'label': 'TYPE_ELEMENT_DOCUMENT'
         },
-        'hyperlink' : {
+        'hyperlink' : { 
             'type': 'hyperlink',
             'label': 'TYPE_ELEMENT_HYPERLINK'
         },

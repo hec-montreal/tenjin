@@ -1,12 +1,14 @@
 .content-panel {
-    border-left: 2px solid #ccc;
+    // border-left: 2px solid #ccc;
     min-height: 650px;
+
+    .content-panel-section {
+        padding: 20px;   
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 6px #ccc;
+    }
 }
 
-
-.content-panel-section {
-    padding: 0 10px;     
-}
 
 .angular-ui-tree-empty {
     display: none;
@@ -54,4 +56,30 @@
         padding: 0;     
     }
 
+}
+
+
+
+@media (min-height: 700px) {
+
+    .content-panel {
+        // color: $bleu-hec;
+
+        .content-panel-section {
+            min-height: 600px;
+        }
+
+    }
+}
+
+@media (max-height: 699px) {
+
+    .content-panel {
+        // color: $bleu-hec;
+
+        .content-panel-section {
+            min-height: 400px;
+        }
+
+    }
 }

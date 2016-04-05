@@ -36,9 +36,12 @@
             {{syllabus.createdBy}}
           </td>
           <td>
-
-            <a href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.sections" onbeforesave="managementCtrl.updateSections($data, syllabus)" onaftersave="managementCtrl.updateSyllabusList()">
-              <!-- test -->
+            <!-- if common syllabus and no write permission on site -->
+            <span data-ng-if="syllabus.common">
+              {{ managementCtrl.showSections(syllabus) }}
+            </span>
+            <!-- if not common syllabus or common syllabus with write permissions -->
+            <a data-ng-if="!syllabus.common" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.userSections" onbeforesave="managementCtrl.updateSections($data, syllabus)" onaftersave="managementCtrl.updateSyllabusList(syllabus)">
               {{ managementCtrl.showSections(syllabus) }}
             </a>
 
