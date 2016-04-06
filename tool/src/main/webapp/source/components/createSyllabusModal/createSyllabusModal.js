@@ -59,6 +59,9 @@ opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalIns
 
         var syllabusAdded = null;
         savePromise.$promise.then(function($data) {
+            // set write permission on the new syllabus
+            SyllabusService.setWritePermission($data);
+            
             // refresh the list 
             SyllabusService.syllabusList.push($data);
             syllabusAdded = $data;

@@ -8,29 +8,8 @@
     this.syllabusList;
     this.dirty = false;
     this.working = false;
-    
-    this.listeSections = [
-        {
-            'id' : 1,
-            'name' : 'Partageable'
-        },
-            {
-            'id' : 2,
-            'name' : 'Commun'
-        },
-        {
-            'id' : 3,
-            'name' : 'Section A'
-        },
-        {
-            'id' : 4,
-            'name' : 'Section B'
-        }
-    ];    
-    this.section = this.listeSections[0];
 
     this.showMobileMenu = false;
-
 
     this.navigation = {
         'level' : 1
@@ -122,6 +101,10 @@
 
     this.setSyllabusList = function($syllabusList) {  
         this.syllabusList = $syllabusList;
+        // set write permissions
+        for(var i = 0; i < this.syllabusList.length; i++) {
+            this.setWritePermission(this.syllabusList[i]);
+        }
     };
 
     this.getSyllabus = function() {
@@ -144,7 +127,7 @@
         return this.syllabusSaved;
     };
 
-    var setWritePermission = function($syllabus) {
+    this.setWritePermission = function($syllabus) {
         // read or write
         // 1- if write permission on site 
         // 2- or created by user
@@ -172,7 +155,7 @@
         // numérotation
         this.numerotationSyllabus(this.syllabus);
         // define write permission on current syllabus
-        setWritePermission(this.syllabus);
+        this.setWritePermission(this.syllabus);
 
         // sauvegarde d'une copie du syllabus
         this.syllabusSaved = angular.copy(this.syllabus);

@@ -153,19 +153,25 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                     var sectionsForCommon = [];
                     var sectionsToReassign = [];
                     // check sections differences between the old and the updated syllabus
-                    for (var i = 0 ; i < $syllabusModified.sections.length ; i++) {
-                        if( $oldSyllabus.sections.indexOf($syllabusModified.sections[i]) === -1) {
-                            sectionsToReassign.push($syllabusModified.sections[i]);
-                        }                        
-                    }
-                    for (i = 0 ; i < $oldSyllabus.sections.length ; i++) {                     
-                        if( $syllabusModified.sections.indexOf($oldSyllabus.sections[i]) === -1) {
-                            sectionsForCommon.push($oldSyllabus.sections[i]);
+                    // edition
+                    if( $oldSyllabus ) {
+                        for (var i = 0 ; i < $syllabusModified.sections.length ; i++) {
+                            if( $oldSyllabus.sections.indexOf($syllabusModified.sections[i]) === -1) {
+                                sectionsToReassign.push($syllabusModified.sections[i]);
+                            }                        
                         }
+                        for (i = 0 ; i < $oldSyllabus.sections.length ; i++) {                     
+                            if( $syllabusModified.sections.indexOf($oldSyllabus.sections[i]) === -1) {
+                                sectionsForCommon.push($oldSyllabus.sections[i]);
+                            }
+                        }
+                    } // creation
+                    else {
+                        sectionsToReassign = sectionsToReassign.concat($syllabusModified.sections);
                     }
 
                     // 1- first check all syllabus and remove sections (present in the syllabus modified) 
-                    for ( i = 0 ; i < syllabusList.length; i++ ) {
+                    for ( var i = 0 ; i < syllabusList.length; i++ ) {
                         if ( syllabusList[i].id !== $syllabusModified.id ) {
                             for ( var j = 0 ; j < sectionsToReassign.length; j++ ) {
                                 var index = syllabusList[i].sections.indexOf(sectionsToReassign[j]);
@@ -181,6 +187,8 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                     if ($oldSyllabus) { 
                         commonSyllabus.sections = commonSyllabus.sections.concat(sectionsForCommon);
                     } 
+
+                    // 3- remove syllabus if the user does not still have acces to it
 
                 }
 
