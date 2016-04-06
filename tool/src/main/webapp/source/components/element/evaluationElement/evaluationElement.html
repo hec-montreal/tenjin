@@ -1,9 +1,8 @@
 <div class="element-evaluation">
     <div class="titre-element element-page">
        
-        <a href="" data-ng-click="treeService.setSelectedItem(element);">{{element.$numero}} - {{element.title}}</a>
+        {{element.$numero}} - <a href="" data-ng-click="treeService.setSelectedItem(element);">{{element.title}}</a>
         <span data-ng-if="element.attributes.evalWeight"> ({{element.attributes.evalWeight}}%)</span>
-        <span class="picto-edit-inline" data-ng-click="edit(element);"></span>
         <span data-ng-if="syllabusService.syllabus.$writePermission" data-buttons-element="element" noedit="true" class="buttons-elements"></span>
 
 		<span  data-ng-if="element.attributes.evalDate && element.type === 'evaluation'" class="eval-date">{{'EVALUATION_DATE' | translate}} {{element.attributes.evalDate | date:'dd/MM/yyyy'}}</span>
