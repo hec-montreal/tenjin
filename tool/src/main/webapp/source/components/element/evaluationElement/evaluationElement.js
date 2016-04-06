@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('evaluationElement', ['TreeService', 'variables', function (TreeService, variables){
+opensyllabusApp.directive('evaluationElement', ['SyllabusService', 'TreeService', function (SyllabusService, TreeService){
     'use strict';
 
     return {
@@ -10,7 +10,8 @@ opensyllabusApp.directive('evaluationElement', ['TreeService', 'variables', func
         restrict: 'A',
         templateUrl: 'element/evaluationElement/evaluationElement.html',
         controller: function ($scope) {
-            $scope.variables = variables;
+            $scope.syllabusService = SyllabusService;
+            $scope.treeService = TreeService;
             if ($scope.element.attributes.evalDate){
                 $scope.element.attributes.evalDate =  new Date($scope.element.attributes.evalDate);
             }

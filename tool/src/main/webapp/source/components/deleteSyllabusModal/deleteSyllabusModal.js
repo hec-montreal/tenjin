@@ -25,9 +25,6 @@ opensyllabusApp.controller('DeleteSyllabusModalCtrl',  [ '$scope', '$uibModalIns
         SyllabusService.setWorking(true);
 
         deletePromise.$promise.then(function($data) {
-            // alert ajout ok
-            AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_ELEMENT'));
-
             // TODO : refresh syllabus list
 
         }, function ($error){

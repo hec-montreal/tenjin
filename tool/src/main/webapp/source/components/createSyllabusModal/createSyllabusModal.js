@@ -59,9 +59,6 @@ opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalIns
 
         var syllabusAdded = null;
         savePromise.$promise.then(function($data) {
-            // alert add syllabus ok
-            AlertService.display('success', $translate.instant('ALERT_SUCCESS_ADD_SYLLABUS'));
-
             // refresh the list 
             SyllabusService.syllabusList.push($data);
             syllabusAdded = $data;

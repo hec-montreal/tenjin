@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('contentPanelDirective', ['variables', function (variables){
+opensyllabusApp.directive('contentPanelDirective', ['SyllabusService', function (SyllabusService){
     'use strict';
 
     return {
@@ -10,7 +10,7 @@ opensyllabusApp.directive('contentPanelDirective', ['variables', function (varia
         restrict: 'A',
         templateUrl: 'element/contentPanelDirective/contentPanelDirective.html',
         controller: function ($scope) {
-            $scope.variables = variables;
+            $scope.syllabusService = SyllabusService;
         },
         link: function ($scope, $element) {
         }

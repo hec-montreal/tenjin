@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('hyperlinkElement', ['variables', function (variables){
+opensyllabusApp.directive('hyperlinkElement', [ function (){
     'use strict';
 
     return {
@@ -9,7 +9,6 @@ opensyllabusApp.directive('hyperlinkElement', ['variables', function (variables)
         restrict: 'A',
         templateUrl: 'element/hyperlinkElement/hyperlinkElement.html',
         controller: function ($scope) {
-            $scope.variables = variables;
         },
         link: function ($scope, $element) {
         }

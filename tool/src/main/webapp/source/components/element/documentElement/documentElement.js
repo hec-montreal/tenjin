@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('documentElement', ['ResourcesService', 'config' ,'$rootScope', '$translate', 'variables', function (ResourcesService, config, $rootScope, $translate, variables){
+opensyllabusApp.directive('documentElement', ['ResourcesService', 'config' ,'$rootScope', '$translate', function (ResourcesService, config, $rootScope, $translate){
     'use strict';
 
     return {
@@ -9,7 +9,6 @@ opensyllabusApp.directive('documentElement', ['ResourcesService', 'config' ,'$ro
         restrict: 'A',
         templateUrl: 'element/documentElement/documentElement.html',
         controller: function ($scope) {
-            $scope.variables = variables;
             // $rootScope.$on('RESOURCES_LOADED', this.displayResource);
             $rootScope.$on('RESOURCES_LOADED', function() {
                 $scope.loadResource();

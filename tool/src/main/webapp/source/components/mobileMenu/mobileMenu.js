@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('mobileMenu', ['$timeout', 'TreeService', 'SyllabusService', 'variables', function ($timeout, TreeService, SyllabusService, variables){
+opensyllabusApp.directive('mobileMenu', ['$timeout', 'TreeService', 'SyllabusService', function ($timeout, TreeService, SyllabusService){
     'use strict';
 
     return {
@@ -10,7 +10,6 @@ opensyllabusApp.directive('mobileMenu', ['$timeout', 'TreeService', 'SyllabusSer
         controller: function () {
             this.syllabusService = SyllabusService;
             this.treeService = TreeService;
-            this.variables = variables;
             this.showBackButton = false;
 
             this.toggleTree = function (scope) {

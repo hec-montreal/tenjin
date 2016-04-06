@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('coursElement', ['TreeService', 'variables', function (TreeService, variables){
+opensyllabusApp.directive('coursElement', ['SyllabusService', 'TreeService', function (SyllabusService, TreeService){
     'use strict';
 
     return {
@@ -9,10 +9,10 @@ opensyllabusApp.directive('coursElement', ['TreeService', 'variables', function 
         restrict: 'A',
         templateUrl: 'element/coursElement/coursElement.html',
         controller: function ($scope) {
-            $scope.variables = variables;
+            $scope.syllabusService = SyllabusService;
+            $scope.treeService = TreeService;
         },
         link: function ($scope, $element) {
-        	$scope.treeService = TreeService;
         }
 
     };

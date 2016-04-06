@@ -1,10 +1,9 @@
 ﻿	
-opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService', 'SyllabusService', 'variables', function ($scope, $timeout, TreeService, SyllabusService, variables){
+opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService', 'SyllabusService', function ($scope, $timeout, TreeService, SyllabusService){
 	'use strict';
 
     $scope.syllabusService = SyllabusService;
     $scope.treeService = TreeService;
-    $scope.variables = variables;
 
     $scope.toggleTree = function (scope) {
 		scope.toggle();

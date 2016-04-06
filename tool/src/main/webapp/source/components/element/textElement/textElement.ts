@@ -21,9 +21,12 @@ export class TextElementComponent {
 
     @Input() element: any; 
 
-    constructor( @Inject('variables') variables: variables) { 
-        this.variables = variables;
-    }
+    // Dependency injection example
+    // constructor( @Inject('variables') variables: variables) { 
+    //     this.variables = variables;
+    // }
 
+    constructor() {
+    }
 } 
 

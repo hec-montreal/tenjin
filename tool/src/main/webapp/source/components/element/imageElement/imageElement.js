@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('imageElement', [ '$rootScope', '$location', 'ResourcesService', 'variables', function ($rootScope, $location, ResourcesService, variables){
+opensyllabusApp.directive('imageElement', [ '$rootScope', '$location', 'ResourcesService', function ($rootScope, $location, ResourcesService){
     'use strict';
 
     return {
@@ -9,7 +9,6 @@ opensyllabusApp.directive('imageElement', [ '$rootScope', '$location', 'Resource
         restrict: 'A',
         templateUrl: 'element/imageElement/imageElement.html',
         controller: function ($scope) {
-            $scope.variables = variables;
 
             // $rootScope.$on('RESOURCES_LOADED', this.displayResource);
             $rootScope.$on('RESOURCES_LOADED', function() {

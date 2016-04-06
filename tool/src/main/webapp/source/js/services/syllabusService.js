@@ -1,4 +1,4 @@
-﻿opensyllabusApp.service('SyllabusService', ['$rootScope', '$resource', '$http', 'Modernizr', function ($rootScope, $resource, $http, Modernizr){
+﻿opensyllabusApp.service('SyllabusService', ['UserService' ,'$rootScope', '$resource', '$http', 'Modernizr', function (UserService, $rootScope, $resource, $http, Modernizr){
     'use strict';
 
     // this.currentSyllabusId;
@@ -86,32 +86,25 @@
         return sylProviderList.get({siteId : $siteId});
     };
 
-    this.loadSyllabusList2 =  function($siteId) {    
-        return sylProviderList.get({siteId : $siteId}).$promise.then( function($data) {
 
-        }, function($error) {
-        });
-        
-    };
+    // this.resolveSyllabusList =  function($siteId) {  
 
-    this.resolveSyllabusList =  function($siteId) {  
+    //     var objSyllabusService = this;
+    //     sylProviderList.get({siteId : $siteId}).$promise.then( function($data) {
+    //         console.log("resolve!");
+    //         objSyllabusService.setSyllabusList($data);
 
-        var objSyllabusService = this;
-        sylProviderList.get({siteId : $siteId}).$promise.then( function($data) {
-            console.log("resolve!");
-            objSyllabusService.setSyllabusList($data);
+    //         if($data.length === 1) { // only the common syllabus
+    //             console.log("redirect home");
+    //         }
+    //         // $deferred.resolve();
 
-            if($data.length === 1) { // only the common syllabus
-                console.log("redirect home");
-            }
-            // $deferred.resolve();
+    //     }, function($error){
+    //         // erreur load syllabus list
+    //         // AlertService.display('danger');
+    //     });
 
-        }, function($error){
-            // erreur load syllabus list
-            // AlertService.display('danger');
-        });
-
-    };
+    // };
 
     this.loadTemplate = function() {
         return templateProvider.get();
@@ -151,15 +144,41 @@
         return this.syllabusSaved;
     };
 
+    var setWritePermission = function($syllabus) {
+        // read or write
+        // 1- if write permission on site 
+        // 2- or created by user
+        // 3- or write permission on one section of the syllabus
+        var sectionsSyllabus = $syllabus.sections;
+        var sectionsWrite = UserService.getSectionsWrite();
+        var sectionWritePresent = false;
+        for (var i = 0; i < sectionsWrite.length; i++) {
+            if (sectionsSyllabus.indexOf(sectionsWrite[i].id) > -1) {
+                sectionWritePresent = true;
+                break;
+            }
+        }
+        if (UserService.profile.site.permissions.write !== true &&
+            $syllabus.createdBy !== UserService.profile.userId &&
+            !sectionWritePresent) {
+            $syllabus.$writePermission = false;
+        } else {
+            $syllabus.$writePermission = true;
+        }
+    };
+
     this.setSyllabus = function($syllabus) {      
         this.syllabus = $syllabus;
         // numérotation
         this.numerotationSyllabus(this.syllabus);
+        // define write permission on current syllabus
+        setWritePermission(this.syllabus);
 
         // sauvegarde d'une copie du syllabus
         this.syllabusSaved = angular.copy(this.syllabus);
         this.dirty = false;
     };
+
 
     this.getTemplate = function() {
         return this.template;
@@ -207,11 +226,11 @@
     var isSyllabusElement = function($object) {
         //syllabus does not have parent
         return typeof($object.templateId) === "undefined";
-    }
+    };
 
     this.isSyllabusElement = function($object) {
         return isSyllabusElement($object);
-    }
+    };
 
     var addElementToSyllabus = function($rootTree, $parent, $element, $position) {
 

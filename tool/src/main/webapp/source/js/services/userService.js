@@ -17,5 +17,10 @@
         return this.profile;
     };
 
+    this.getSectionsWrite = function() {
+        return this.profile.sections.filter( function($section) {
+            return $section.permissions.write === true;
+        });
+    };
 
 }]);

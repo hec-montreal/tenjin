@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'variables', 'config', 'mockup', function ($timeout, $translate, TreeService, SyllabusService, AlertService, ModalService, UserService, variables, config, mockup){
+opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', 'mockup', function ($timeout, $translate, TreeService, SyllabusService, AlertService, ModalService, UserService, config, mockup){
     'use strict';
 
     return {
@@ -13,7 +13,6 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
             this.treeService = TreeService;
             this.alertService = AlertService;
             this.userService = UserService;
-            this.variables = variables;
             this.config = config;
 
             this.infos = {};

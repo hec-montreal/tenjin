@@ -2,13 +2,13 @@
 <section class="content-panel-section" data-ng-controller='ContentPanelCtrl'>
 
     <!-- Menu ajout -->
-    <div data-ng-if="variables.mode === 'edition'">
+    <div data-ng-if="syllabusService.syllabus.$writePermission">
         <div id="menu-ajout" data-add-element-menu="treeService.selectedItem"  class="container-menu-ajout"></div> 
         <!-- <add-element-menu id="menu-ajout" [element]="treeService.selectedItem"  class="container-menu-ajout"></div>  -->
-    </div>
+    </div> 
 
     <!-- Titre -->
-    <div class='titre' > 
+    <div class='titre' >  
         {{treeService.selectedItem.title}}
         <span data-ng-if="treeService.selectedItem.type == 'evaluation' || treeService.selectedItem.type == 'exam'"> ({{treeService.selectedItem.attributes.evalWeight}}%)</span>
     </div> 
