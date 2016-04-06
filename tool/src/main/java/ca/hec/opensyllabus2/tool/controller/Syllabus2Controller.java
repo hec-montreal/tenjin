@@ -113,7 +113,7 @@ public class Syllabus2Controller {
 		// If user has write permission, then no need to get sections
 		if (commonPermissionWrite == false) {
 			// get sections available for the current user
-			sections = securityService.getArraySections(TenjinFunctions.TENJIN_FUNCTION_READ);
+			sections = securityService.getArraySections(siteId, TenjinFunctions.TENJIN_FUNCTION_READ);
 		}
 		
 		try {

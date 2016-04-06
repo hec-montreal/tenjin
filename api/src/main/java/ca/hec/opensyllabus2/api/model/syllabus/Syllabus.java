@@ -26,23 +26,10 @@ public class Syllabus {
     private String locale;
     private Boolean common;
     private String createdBy;
+    private String createdByName;
     private Date createdDate;
     private String lastModifiedBy;
     private Date lastModifiedDate;
     private List<AbstractSyllabusElement> elements;
     private Set<String> sections;
-    
-    public void copy(Syllabus syllabus) {
-    	this.setSiteId(syllabus.getSiteId());
-    	this.setCourseTitle(syllabus.getCourseTitle());
-    	this.setTitle(syllabus.getTitle());
-    	this.setTemplateId(syllabus.getTemplateId());
-    	this.setLocale(syllabus.getLocale());
-    	this.setCommon(syllabus.getCommon());
-    	this.setCreatedBy(syllabus.getCreatedBy());
-    	this.setCreatedDate(syllabus.getCreatedDate());
-    	this.setLastModifiedBy(syllabus.getLastModifiedBy());
-    	this.setLastModifiedDate(syllabus.getLastModifiedDate());
-    	this.setSections(syllabus.getSections());
-    }
- }
+}

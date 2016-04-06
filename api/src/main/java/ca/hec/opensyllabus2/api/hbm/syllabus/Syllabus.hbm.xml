@@ -33,6 +33,9 @@
 		<property name="createdBy" type="string">
 			<column name="CREATED_BY" not-null="true" />
 		</property>
+		<property name="createdByName" type="string">
+			<column name="CREATED_BY_NAME" not-null="true" />
+		</property>
 		<property name="createdDate" type="java.util.Date">
 			<column name="CREATED_DATE" not-null="true" />
 		</property>

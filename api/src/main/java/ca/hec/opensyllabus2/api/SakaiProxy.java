@@ -33,6 +33,8 @@ public interface SakaiProxy {
 
 	public String getCurrentUserId();
 	
+	public String getCurrentUserName();
+
 	public Site getSite(String siteId) throws IdUnusedException;
 
 	public boolean isAllowed(String userId, String function, String groupId);

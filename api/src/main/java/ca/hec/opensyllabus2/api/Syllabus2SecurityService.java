@@ -46,7 +46,7 @@ public interface Syllabus2SecurityService {
 	 * @param String permission 
 	 * @return List of section ids
 	 */
-	public List<String> getArraySections(String permission);
+	public List<String> getArraySections(String siteId, String permission);
 
 	/**
 	 * Return whether or not the user is allowed to create a syllabus (common or not)
@@ -73,6 +73,6 @@ public interface Syllabus2SecurityService {
 	 * @param Collection<String> section ids to verify
 	 * @return boolean
 	 */
-	public boolean canUserAssignSections(Collection<String> sectionsToCheck);
+	public boolean canUserAssignSections(String siteId, Collection<String> sectionsToCheck);
 
 }

@@ -13,6 +13,9 @@ import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
+import org.sakaiproject.user.api.User;
+import org.sakaiproject.user.api.UserDirectoryService;
+import org.sakaiproject.user.api.UserNotDefinedException;
 
 import ca.hec.opensyllabus2.api.SakaiProxy;
 import ca.hec.opensyllabus2.api.TenjinFunctions;
@@ -30,6 +33,7 @@ public class SakaiProxyImpl implements SakaiProxy {
 	private SecurityService securityService;
 	private AuthzGroupService groupService;
 	private FunctionManager functionManager;
+	private UserDirectoryService userDirectoryService;
 
 	public void init() {
 		
@@ -68,6 +72,19 @@ public class SakaiProxyImpl implements SakaiProxy {
 	public String getCurrentUserId() {
 		return sessionManager.getCurrentSessionUserId();
 	}
+
+	@Override
+	public String getCurrentUserName() {
+		User u = null;
+		try {
+			u = userDirectoryService.getUser(sessionManager.getCurrentSessionUserId());
+		} catch (UserNotDefinedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return u.getDisplayName();
+	}
+
 
 	/**
 	 * {@inheritDoc}

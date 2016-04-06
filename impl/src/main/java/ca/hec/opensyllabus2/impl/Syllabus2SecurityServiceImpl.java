@@ -55,7 +55,7 @@ public class Syllabus2SecurityServiceImpl implements Syllabus2SecurityService {
 	}	
 	
 	@Override
-	public List<String> getArraySections(String permission) {
+	public List<String> getArraySections(String siteId, String permission) {
 		
 		if (!permission.equals(TenjinFunctions.TENJIN_FUNCTION_READ) && 
 				!permission.equals(TenjinFunctions.TENJIN_FUNCTION_WRITE)) {
@@ -64,8 +64,6 @@ public class Syllabus2SecurityServiceImpl implements Syllabus2SecurityService {
 		}
 		
 		Site site = null;
-		// TODO pass the site id as parameter
-		String siteId = sakaiProxy.getCurrentSiteId();
 		String currentUserId = sakaiProxy.getCurrentUserId();
 		
 		List<String> sectionsList = new ArrayList<String>();
@@ -146,10 +144,10 @@ public class Syllabus2SecurityServiceImpl implements Syllabus2SecurityService {
 		if (common) {
 			//TODO : for now, a user who can write in any section can create a common syllabus
 			return isAllowed(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, s.getReference()) ||
-					getArraySections(TenjinFunctions.TENJIN_FUNCTION_WRITE).size() > 0;
+					getArraySections(siteId, TenjinFunctions.TENJIN_FUNCTION_WRITE).size() > 0;
 		} else {
 			// if user can edit one or more sections, she can create syllabuses
-			return getArraySections(TenjinFunctions.TENJIN_FUNCTION_WRITE).size() > 0;
+			return getArraySections(siteId, TenjinFunctions.TENJIN_FUNCTION_WRITE).size() > 0;
 		}
 	}
 
@@ -171,13 +169,13 @@ public class Syllabus2SecurityServiceImpl implements Syllabus2SecurityService {
 			// of this syllabus
 			return sakaiProxy.isSuperUser() ||
 					syllabus.getCreatedBy().equals(sakaiProxy.getCurrentUserId()) ||
-					CollectionUtils.intersection(getArraySections(TenjinFunctions.TENJIN_FUNCTION_WRITE), syllabus.getSections()).size() > 0;
+					CollectionUtils.intersection(getArraySections(syllabus.getSiteId(), TenjinFunctions.TENJIN_FUNCTION_WRITE), syllabus.getSections()).size() > 0;
 		}
 	}
 
 	@Override
-	public boolean canUserAssignSections(Collection<String> sectionsToCheck) {
-		List<String> allowedSections = getArraySections(TenjinFunctions.TENJIN_FUNCTION_WRITE);		
+	public boolean canUserAssignSections(String siteId, Collection<String> sectionsToCheck) {
+		List<String> allowedSections = getArraySections(siteId, TenjinFunctions.TENJIN_FUNCTION_WRITE);		
 		// if the user is allowed to assign everything in sectionsToCheck, subtract will leave no results
 		return CollectionUtils.subtract(sectionsToCheck, allowedSections).size() == 0;
 	}

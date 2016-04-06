@@ -102,12 +102,13 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			
 			//check permissions
 			if ((syllabus.getCommon() && !securityService.canUserCreateSyllabus(syllabus.getSiteId(), true)) ||
-					(!syllabus.getCommon() && (!securityService.canUserCreateSyllabus(syllabus.getSiteId(), false) || !checkSectionAssignPermissions(null, syllabus.getSections())))) {
+					(!syllabus.getCommon() && (!securityService.canUserCreateSyllabus(syllabus.getSiteId(), false) || !checkSectionAssignPermissions(syllabus.getSiteId(), null, syllabus.getSections())))) {
 				throw new DeniedAccessException();
 			}
 			
 			syllabus.setCreatedDate(now);
 			syllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
+			syllabus.setCreatedByName(sakaiProxy.getCurrentUserName());
 			syllabus.setLastModifiedDate(now);
 			syllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 			syllabusDao.save(syllabus);
@@ -137,7 +138,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 			if (existingSyllabus != syllabus) {
 				if (existingSyllabus.getSections() != syllabus.getSections()) {
-					if (!checkSectionAssignPermissions(existingSyllabus.getSections(), syllabus.getSections())) {
+					if (!checkSectionAssignPermissions(existingSyllabus.getSiteId(), existingSyllabus.getSections(), syllabus.getSections())) {
 						throw new DeniedAccessException("User not allowed to assign the sections");
 					}
 
@@ -145,9 +146,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 				}
 				
 				//update persistent object, save handled by hibernate at end of transaction
-				existingSyllabus.copy(syllabus);
-				existingSyllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
-				existingSyllabus.setLastModifiedDate(now);
+				updatePersistentSyllabusObject(existingSyllabus, syllabus);
 			}
 			
 			existingSyllabusElementMappings = getExistingSyllabusElementMappings(syllabus.getId());
@@ -266,12 +265,25 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 		return syllabus;
 	}
 
+	private void updatePersistentSyllabusObject(Syllabus existingSyllabus, Syllabus syllabus) {
+		
+    	existingSyllabus.setSiteId(syllabus.getSiteId());
+    	existingSyllabus.setCourseTitle(syllabus.getCourseTitle());
+    	existingSyllabus.setTitle(syllabus.getTitle());
+    	existingSyllabus.setTemplateId(syllabus.getTemplateId());
+    	existingSyllabus.setLocale(syllabus.getLocale());
+    	existingSyllabus.setCommon(syllabus.getCommon());
+    	existingSyllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
+    	existingSyllabus.setLastModifiedDate(new Date());
+    	existingSyllabus.setSections(syllabus.getSections());
+	}
+
 	/**
 	 * @param oldSections The existing list of sections
 	 * @param newSections The new section list to assign
 	 * @return whether or not the user is allowed to assign or unassign the sections
 	 */
-	private boolean checkSectionAssignPermissions(Set<String> oldSections, Set<String> newSections) {
+	private boolean checkSectionAssignPermissions(String siteId, Set<String> oldSections, Set<String> newSections) {
 		
 		Collection<String> sectionsToCheck = null;
 		
@@ -285,7 +297,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			// get sections that are in one list but not the other (the user is trying to add or subtract them)
 			sectionsToCheck = CollectionUtils.disjunction(oldSections, newSections);
 		}
-		return securityService.canUserAssignSections(sectionsToCheck);
+		return securityService.canUserAssignSections(siteId, sectionsToCheck);
 	}
 
 	private List<Long> getSyllabusesWithElementMapping(AbstractSyllabusElement element) {
