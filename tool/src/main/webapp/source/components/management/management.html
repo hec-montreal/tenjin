@@ -29,19 +29,19 @@
 
         <tr data-ng-repeat="syllabus in managementCtrl.syllabusService.syllabusList track by syllabus.id">
           <td>
-            <a data-ng-if="!syllabus.common" editable-text="syllabus.title" onbeforesave="managementCtrl.updateTitle($data, syllabus)">{{syllabus.title}}</a>
-            <span data-ng-if="syllabus.common">{{syllabus.title}}</span>
+            <a data-ng-if="!syllabus.common && syllabus.$writePermission" editable-text="syllabus.title" onbeforesave="managementCtrl.updateTitle($data, syllabus)">{{syllabus.title}}</a>
+            <span data-ng-if="syllabus.common || !syllabus.$writePermission">{{syllabus.title}}</span>
           </td>
-          <td>
+          <td> 
             {{syllabus.createdByName}}
           </td>
           <td>
             <!-- if common syllabus and no write permission on site -->
-            <span data-ng-if="syllabus.common">
+            <span data-ng-if="syllabus.common || !syllabus.$writePermission">
               {{ managementCtrl.showSections(syllabus) }}
             </span>
             <!-- if not common syllabus or common syllabus with write permissions -->
-            <a data-ng-if="!syllabus.common" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.userSections" onbeforesave="managementCtrl.updateSections($data, syllabus)" onaftersave="managementCtrl.updateSyllabusList(syllabus)">
+            <a data-ng-if="!syllabus.common && syllabus.$writePermission" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.userSections" onbeforesave="managementCtrl.updateSections($data, syllabus)" onaftersave="managementCtrl.updateSyllabusList(syllabus)">
               {{ managementCtrl.showSections(syllabus) }}
             </a>
 

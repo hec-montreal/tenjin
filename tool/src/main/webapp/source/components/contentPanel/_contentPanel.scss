@@ -10,14 +10,21 @@
 }
 
 
-.angular-ui-tree-empty {
-    display: none;
-}
-
 .liste-element {
     > li {
         margin-bottom: 10px;
-        border-top: 1px solid #ccc;
+        // border-top: 1px solid #ccc;
+    }
+}
+
+.liste-element-feuille {
+    > li {
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+
+        &:last-child {
+            border-bottom: none;
+        }
     }
 }
 

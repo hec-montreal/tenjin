@@ -3,8 +3,8 @@
 
     <div data-ng-switch="element.type">
     
-        <!-- Affichage boutons -->
-        <buttons-element data-ng-if="syllabusService.syllabus.$writePermission" data-element="element" data-noedit="(element.type==='rubric')" class="buttons-elements"></buttons-element>
+        <!-- Display buttons -->
+        <buttons-element data-ng-if="(syllabusService.syllabus.$writePermission && syllabusService.syllabus.common) || (syllabusService.syllabus.$writePermission && !element.common)" data-element="element" data-noedit="(element.type==='rubric')" class="buttons-elements"></buttons-element>
 
         <!-- élément de type composite --> 
         <div data-ng-switch-when="composite" data-regroupement-element="element"></div>

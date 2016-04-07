@@ -101,7 +101,7 @@
 
     this.setSyllabusList = function($syllabusList) {  
         this.syllabusList = $syllabusList;
-        // set write permissions
+        // set write permissions on each syllabus
         for(var i = 0; i < this.syllabusList.length; i++) {
             this.setWritePermission(this.syllabusList[i]);
         }

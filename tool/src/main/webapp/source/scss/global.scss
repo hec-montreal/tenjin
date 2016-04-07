@@ -80,6 +80,10 @@ body {
         min-height: 0;
     }
 
+    .angular-ui-tree-empty {
+        display: none;
+    }
+
     .angular-ui-tree-handle {
         font-weight: normal;
         cursor: move;   

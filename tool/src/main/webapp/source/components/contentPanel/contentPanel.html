@@ -23,7 +23,7 @@
             <!-- Page et Feuille -->
             <div data-content-panel-directive="item" index="$index"></div>
 
-            <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-class="{hidden: collapsed, 'liste-element': true}" data-ng-if="item.type === 'composite' || item.type === 'rubric'" >
+            <ol ui-tree-nodes="" data-ng-model="item.elements" class="liste-element liste-element-feuille" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite' || item.type === 'rubric'" >
                 <li data-ng-repeat="item in item.elements" ui-tree-node>
            
                     <div data-content-panel-directive="item" index="$index"></div>
