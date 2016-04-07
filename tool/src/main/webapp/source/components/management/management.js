@@ -146,7 +146,6 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
 
             var updateSyllabusList = function($syllabusModified, $oldSyllabus) {
 
-                // if there sections have been associated to a syllabus just before 
                 if ( $syllabusModified ) {
    
                     var syllabusList = SyllabusService.getSyllabusList();
@@ -189,8 +188,28 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                         commonSyllabus.sections = commonSyllabus.sections.concat(sectionsForCommon);
                     } 
 
-                    // 3- remove syllabus if the user does not still have acces to it
+                    // 3- remove syllabus if the user does not still have access to it
+                    var sectionsWrite = UserService.getSectionsWrite();  
 
+                    for( var i = syllabusList.length-1; i >= 0; i--) {
+
+                        var sectionsSyllabus = syllabusList[i].sections;
+                        var sectionWritePresent = false;
+                        for (var j = 0; j < sectionsWrite.length; j++) {
+                            if (sectionsSyllabus.indexOf(sectionsWrite[j].id) > -1) {
+                                sectionWritePresent = true;
+                                break;
+                            }                  
+                        }   
+
+                        if ( !UserService.profile.site.permissions.write &&
+                            !syllabusList[i].common && 
+                            syllabusList[i].createdBy !== UserService.profile.userId &&
+                            !sectionWritePresent) {
+                            // remove syllabus from the syllabus list
+                            syllabusList.splice(i, 1);
+                        }
+                    }   
                 }
 
 
