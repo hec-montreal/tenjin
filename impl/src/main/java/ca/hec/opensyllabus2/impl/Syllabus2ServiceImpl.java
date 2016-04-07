@@ -325,9 +325,9 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			newCommonSyllabus.setTemplateId(1L); 
 			newCommonSyllabus.setSiteId(siteId);
 			newCommonSyllabus.setCommon(true);
-			newCommonSyllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
+			newCommonSyllabus.setCreatedBy("Admin");
 			newCommonSyllabus.setCreatedDate(new Date());
-			newCommonSyllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
+			newCommonSyllabus.setLastModifiedBy("Admin");
 			newCommonSyllabus.setLastModifiedDate(new Date());
 			newCommonSyllabus.setCourseTitle(site.getTitle());
 
