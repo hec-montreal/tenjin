@@ -100,8 +100,9 @@ public class Syllabus2Controller {
 			throws DeniedAccessException, NoSyllabusException  {
 
 		List<Syllabus> syllabusList = null;
-		//Site site = null;
-		String currentSiteId = sakaiProxy.getCurrentSiteId();
+
+		// if site from request is null, use the context
+		siteId = (siteId != null ? siteId : sakaiProxy.getCurrentSiteId());
 		String currentUserId = sakaiProxy.getCurrentUserId();
 		
 		// get common syllabus read permission
@@ -118,7 +119,7 @@ public class Syllabus2Controller {
 		
 		try {
 			// We get the syllabus list for the current site with the sections associated to the user
-			syllabusList = osyl2Service.getSyllabusList(currentSiteId, sections, commonPermissionRead, commonPermissionWrite, currentUserId );
+			syllabusList = osyl2Service.getSyllabusList(siteId, sections, commonPermissionRead, commonPermissionWrite, currentUserId );
 
 		} catch (Exception e) {
 			e.printStackTrace();
