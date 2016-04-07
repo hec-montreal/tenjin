@@ -88,9 +88,9 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 			// get all the syllabus
 			
 			if (commonRead || commonWrite) {
-				syllabi = getHibernateTemplate().find("from Syllabus where site_id = ? ", siteId);
+				syllabi = getHibernateTemplate().find("from Syllabus where site_id = ?  order by createdDate asc", siteId);
 			} else {
-				syllabi = getHibernateTemplate().find("from Syllabus where site_id = ? and common = 0", siteId);
+				syllabi = getHibernateTemplate().find("from Syllabus where site_id = ? and common = 0 order by createdDate asc", siteId);
 			}
 
 		} else {
@@ -107,7 +107,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 			}
 			querySections += " ) ";
 
-			syllabi = getHibernateTemplate().find("from Syllabus syllabus where site_id = ? "+ querySections , siteId );
+			syllabi = getHibernateTemplate().find("from Syllabus syllabus where site_id = ? "+ querySections + " order by createdDate asc" , siteId );
 		}	
 
 		return syllabi;

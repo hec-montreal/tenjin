@@ -137,7 +137,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 			}			
 
 			if (existingSyllabus != syllabus) {
-				if (existingSyllabus.getSections() != syllabus.getSections()) {
+				if (!existingSyllabus.getSections().equals(syllabus.getSections())) {
 					if (!checkSectionAssignPermissions(existingSyllabus.getSiteId(), existingSyllabus.getSections(), syllabus.getSections())) {
 						throw new DeniedAccessException("User not allowed to assign the sections");
 					}
