@@ -83,16 +83,23 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 			return null;
 		}
 		
-		if (sections == null && commonWrite == true) {
+		if (sections == null) {
+			
 			// get all the syllabus
-			syllabi = getHibernateTemplate().find("from Syllabus where site_id = ?", siteId);
+			
+			if (commonRead || commonWrite) {
+				syllabi = getHibernateTemplate().find("from Syllabus where site_id = ? ", siteId);
+			} else {
+				syllabi = getHibernateTemplate().find("from Syllabus where site_id = ? and common = 0", siteId);
+			}
+
 		} else {
 			// TODO : construct query string
 			//String s = "from Syllabus syllabus where siteId = ? and '1c4f729a-9d95-4396-a1ae-92581d01964d' in elements(syllabus.sections)";
 			//syllabi = getHibernateTemplate().find(s, siteId);
 			
 			String querySections = "and ( created_by='"+ currentUserId + "' ";
-			if (commonRead) {
+			if (commonRead || commonWrite) {
 				querySections += " or common = 1";
 			}
 			for (int i = 0 ; i < sections.size(); i++) {

@@ -29,7 +29,8 @@
 
         <tr data-ng-repeat="syllabus in managementCtrl.syllabusService.syllabusList track by syllabus.id">
           <td>
-            <a editable-text="syllabus.title" onbeforesave="managementCtrl.updateName($data, syllabus)">{{syllabus.title}}</a>          
+            <a data-ng-if="!syllabus.common" editable-text="syllabus.title" onbeforesave="managementCtrl.updateTitle($data, syllabus)">{{syllabus.title}}</a>
+            <span data-ng-if="syllabus.common">{{syllabus.title}}</span>
           </td>
           <td>
             {{syllabus.createdByName}}

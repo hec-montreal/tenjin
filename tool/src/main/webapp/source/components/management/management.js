@@ -123,10 +123,11 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                 return selected.length ? selected.join(', ') : $translate.instant("MANAGEMENT_NO_SECTION");
             }; 
             
-            this.updateName = function($data, $syllabus) {
+            this.updateTitle = function($data, $syllabus) {
                 if ($data.length === 0 ) {
                     return $translate.instant("MANAGEMENT_ERREUR_NAME");
                 }
+                $syllabus.title = $data;
                 return SyllabusService.saveSyl($syllabus).$promise;
             };
 
