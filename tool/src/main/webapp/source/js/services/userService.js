@@ -23,4 +23,9 @@
         });
     };
 
+    this.hasWritableSection = function() {
+        var sections = this.getSectionsWrite();
+        return (sections.length > 0);
+    };
+
 }]);

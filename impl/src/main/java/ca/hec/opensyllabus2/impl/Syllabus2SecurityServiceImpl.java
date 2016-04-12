@@ -110,10 +110,14 @@ public class Syllabus2SecurityServiceImpl implements Syllabus2SecurityService {
 						Map<String, Object> permissionsMap = new HashMap<String, Object>();
 						if (isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, g.getReference())) {
 							permissionsMap.put("read", true);
+						} else {
+							permissionsMap.put("read", false);
 						}
 						if (isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, g.getReference())) {
 							permissionsMap.put("write", true);
-						}				
+						} else {
+							permissionsMap.put("write", false);
+						}
 						sectionMap.put("permissions", permissionsMap);
 					}
 					

@@ -88,19 +88,13 @@ opensyllabusApp.directive('home', ['$q', '$state', '$timeout', 'config', 'mockup
 
                     } else {
                         // check if user have sections permissions on atleast one section
-                        var profileSections = $profile.sections;
-                        if (profileSections && profileSections.length > 0) {
-
-                            for ( var i=0; i < profileSections.length ; i++) {
-                                // if user have write permission on at least one section
-                                if( profileSections[i].permissions  &&  profileSections[i].permissions.write === true) {
-                                    console.debug('Redirect mangement : Many courses outlines + write permissions on atleast one section');
-                                    return { 
-                                        'route' : 'management'
-                                    };
-                                }
-                            }
+                        if( UserService.hasWritableSection() ) {
+                            console.debug('Redirect mangement : Many courses outlines + write permissions on atleast one section');
+                            return { 
+                                'route' : 'management'
+                            };
                         }
+
 
                     }
 

@@ -1,12 +1,21 @@
 ﻿<div class="buttons">
-
     <!-- Ajout -->
     <span data-ng-if="buttonsElementCtrl.element.type === 'rubric' || buttonsElementCtrl.element.type === 'composite'" data-add-element-menu="buttonsElementCtrl.element"  class="container-menu-ajout-rubric" ></span>
+
     <!-- Edition -->
-    <span class="picto-edit" data-ng-click="!buttonsElementCtrl.syllabusService.working && buttonsElementCtrl.edit(buttonsElementCtrl.element);" data-ng-if="!(buttonsElementCtrl.noedit) && !(buttonsElementCtrl.syllabusService.template[buttonsElementCtrl.element.templateStructureId].mandatory)"></span>   
+    <span class="picto-edit" data-ng-click="!buttonsElementCtrl.disabled && buttonsElementCtrl.edit(buttonsElementCtrl.element);" data-ng-if="!buttonsElementCtrl.noedit"></span>   
+
     <!-- Drag and drop -->
-    <span ui-tree-handle data-ng-if="!(buttonsElementCtrl.syllabusService.template[buttonsElementCtrl.element.templateStructureId].mandatory)" class="tree-node tree-node-content picto-move-content"></span>
+    <span ui-tree-handle data-ng-if="!buttonsElementCtrl.nodrag" class="tree-node tree-node-content picto-move-content"></span>
+
     <!-- Suppression -->
-    <span data-ng-if="!(buttonsElementCtrl.syllabusService.template[buttonsElementCtrl.element.templateStructureId].mandatory)" class="picto-delete" data-ng-click="!buttonsElementCtrl.syllabusService.working && buttonsElementCtrl.confirmDelete(buttonsElementCtrl.element);"></span> 
- 
+<!--     <span data-ng-if="!buttonsElementCtrl.syllabusService.template[buttonsElementCtrl.element.templateStructureId].mandatory" class="picto-delete" data-ng-click="!buttonsElementCtrl.disabled && buttonsElementCtrl.confirmDelete(buttonsElementCtrl.element);"></span>  -->
+
+  <!--   <span data-ng-if="(buttonsElementCtrl.syllabusService.syllabus.common && buttonsElementCtrl.syllabusService.syllabus.$writePermission && !buttonsElementCtrl.syllabusService.template[buttonsElementCtrl.element.templateStructureId].mandatory) || (!buttonsElementCtrl.syllabusService.syllabus.common && buttonsElementCtrl.syllabusService.syllabus.$writePermission && !buttonsElementCtrl.element.common && !buttonsElementCtrl.syllabusService.template[buttonsElementCtrl.element.templateStructureId].mandatory)" class="picto-delete" data-ng-click="!buttonsElementCtrl.disabled && buttonsElementCtrl.confirmDelete(buttonsElementCtrl.element);"></span>  -->
+
+    <span data-ng-if="!buttonsElementCtrl.nodelete" data-ng-click="!buttonsElementCtrl.disabled && buttonsElementCtrl.confirmDelete(buttonsElementCtrl.element);" data-ng-class="{ 'picto-delete' : !buttonsElementCtrl.nodelete, 'picto-delete-disabled' : buttonsElementCtrl.nodelete}" data-ng-click="!buttonsElementCtrl.disabled && buttonsElementCtrl.confirmDelete(buttonsElementCtrl.element);"></span>
+    <!-- <span data-ng-if="buttonsElementCtrl.nodelete"></span> -->
+    
+
+
 </div> 

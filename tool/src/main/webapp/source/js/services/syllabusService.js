@@ -8,6 +8,7 @@
     this.syllabusList;
     this.dirty = false;
     this.working = false;
+    this.switchingSyllabus = false;
 
     this.showMobileMenu = false;
 
@@ -141,12 +142,22 @@
                 break;
             }
         }
-        if (UserService.profile.site.permissions.write !== true &&
-            $syllabus.createdBy !== UserService.profile.userId &&
-            !sectionWritePresent) {
-            $syllabus.$writePermission = false;
-        } else {
+
+        // define write permission
+        if (UserService.profile.site.permissions.write === true) {
+            // permission on all site and all syllabus
             $syllabus.$writePermission = true;
+        } else {
+            if ($syllabus.common === true) {
+                $syllabus.$writePermission = false;
+                
+            } else {
+                if ( $syllabus.createdBy === UserService.profile.userId || sectionWritePresent ){
+                    $syllabus.$writePermission = true;
+                } else {
+                    $syllabus.$writePermission = false;
+                }
+            }
         }
     };
 

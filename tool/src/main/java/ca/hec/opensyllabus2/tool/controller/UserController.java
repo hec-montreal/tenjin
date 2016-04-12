@@ -86,9 +86,13 @@ public class UserController {
 			Map<String, Object> sitePermissionsMap = new HashMap<String, Object>();
 			if (securityService.isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, site.getReference())) {
 				sitePermissionsMap.put("read", true);
+			} else {
+				sitePermissionsMap.put("read", false);
 			}
 			if (securityService.isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site.getReference())) {
 				sitePermissionsMap.put("write", true);
+			} else {
+				sitePermissionsMap.put("write", false);
 			}
 			
 			siteMap.put("permissions", sitePermissionsMap);

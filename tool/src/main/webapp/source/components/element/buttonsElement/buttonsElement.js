@@ -9,6 +9,7 @@ opensyllabusApp.directive('buttonsElement', ['ModalService', 'SyllabusService', 
         controller: function () {
 
             this.syllabusService = SyllabusService;
+            var objButtonsElements = this;
 
             this.confirmDelete = function($element) {
 
@@ -41,7 +42,10 @@ opensyllabusApp.directive('buttonsElement', ['ModalService', 'SyllabusService', 
         },
         bindToController: {
             element: '=',
-            noedit: '='
+            noedit: '=',
+            nodelete: '=',
+            nodrag: '=',
+            disabled: '='
         },
         controllerAs: 'buttonsElementCtrl'
 

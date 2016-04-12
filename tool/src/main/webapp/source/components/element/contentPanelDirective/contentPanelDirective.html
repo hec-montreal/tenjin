@@ -3,8 +3,9 @@
 
     <div data-ng-switch="element.type">
     
+
         <!-- Display buttons -->
-        <buttons-element data-ng-if="(syllabusService.syllabus.$writePermission && syllabusService.syllabus.common) || (syllabusService.syllabus.$writePermission && !element.common)" data-element="element" data-noedit="(element.type==='rubric')" class="buttons-elements"></buttons-element>
+        <buttons-element data-ng-if="syllabusService.syllabus.$writePermission" data-element="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" class="buttons-elements"></buttons-element>
 
         <!-- élément de type composite --> 
         <div data-ng-switch-when="composite" data-regroupement-element="element"></div>
