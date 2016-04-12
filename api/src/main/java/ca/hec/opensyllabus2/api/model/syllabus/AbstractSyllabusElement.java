@@ -68,6 +68,7 @@ public abstract class AbstractSyllabusElement {
     }
     
     public void copy(AbstractSyllabusElement e) {
+    	this.setId(e.getId());
     	this.setParentId(e.getParentId());
     	this.setTemplateStructureId(e.getTemplateStructureId());
     	this.setSiteId(e.getSiteId());

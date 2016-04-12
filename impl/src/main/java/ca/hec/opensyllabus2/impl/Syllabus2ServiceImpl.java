@@ -183,7 +183,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 							existingRubric.setCommon(true);
 							existingRubric.setDisplayOrder(element.getDisplayOrder());
 							existingRubric.setElements(((SyllabusRubricElement)element).getElements());
-							element = existingRubric;
+							element.copy(existingRubric);
 						}
 					}
 
