@@ -20,7 +20,7 @@
 
     <div class="buttons-list">
         <!-- MANAGEMENT --> 
-        <button data-ng-if="displayButtons.managementButton()" class="btn btn-primary button-management" type="button" ui-sref="management">{{ 'BUTTON_MANAGEMENT' | translate }}</button>
+        <button data-ng-if="displayButtons.managementButton()" class="btn btn-primary button-management hide-mobile" type="button" ui-sref="management">{{ 'BUTTON_MANAGEMENT' | translate }}</button>
         <!-- SYLLABUS -->
         <div data-ng-if="displayButtons.syllabusDropdown()" class="btn-group" uib-dropdown keyboard-nav>
             <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" data-ng-disabled="syllabusService.working" uib-dropdown-toggle>
@@ -33,7 +33,7 @@
             </ul>
         </div>
         <!-- SAVE -->
-        <span class="group-save-publish" data-ng-if="syllabusService.syllabus.$writePermission">
+        <span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$writePermission">
             <span class="container-save-working" data-ng-show="syllabusService.working">
                 <span class="picto-ajax-loader" data-ng-show="syllabusService.working"></span>
                 <span class="message-save-working">{{ 'SAVE_WORKING' | translate }}</span>
@@ -57,7 +57,7 @@
         </div>
         <div class="row row-content">
             <!-- Menu de gauche -->
-            <div data-ng-if="variables.device !== 'mobile'" data-ng-include="'leftMenu/leftMenu.html'"   class="col-sm-3 col-xs-0 pull-left left-menu" id="menu" ></div>
+            <div data-ng-if="variables.device !== 'mobile'" data-ng-include="'leftMenu/leftMenu.html'"   class="col-sm-3 hide-mobile pull-left left-menu" id="menu" ></div>
             
             <!-- Container de droite -->
             <div data-ng-include="'contentPanel/contentPanel.html'" class="col-sm-9 col-xs-12 pull-left  content-panel" id="content"></div>
