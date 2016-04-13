@@ -1,7 +1,7 @@
 <!-- Page et Feuille -->
-<div class="tree-node tree-node-content">
+<div ui-tree-handle class="tree-node tree-node-content">
 
-    <div data-ng-switch="element.type">
+    <div data-ng-switch="element.type"> 
     
 
         <!-- Display buttons -->
@@ -30,7 +30,7 @@
         <!-- élément de type référence bibliographique -->
         <div data-ng-switch-when="citation" data-biblio-element="element"></div>
         <!-- élément de type hyperlien -->
-        <div data-ng-switch-when="hyperlink" data-hyperlink-element="element"></div>
+        <hyperlink-element data-ng-switch-when="hyperlink" [element]="element"></hyperlink-element>
         <!-- élément de type image -->
         <div data-ng-switch-when="image" data-image-element="element"></div>
         <!-- élément de type video -->

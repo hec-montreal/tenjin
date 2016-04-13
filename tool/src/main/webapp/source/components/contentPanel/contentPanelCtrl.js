@@ -29,6 +29,8 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
         item: TreeService.selectedItem,
 
         accept: function(sourceNodeScope, destNodesScope, destIndex) {
+            // test
+            return true;
 
             // test si les noeuds proviennent du même arbre
             if (sourceNodeScope.treeOptions.name === destNodesScope.treeOptions.name ) {
