@@ -8,7 +8,7 @@
         </button>
         <ul uib-dropdown-menu class="liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
         <li role="menuitem" data-ng-repeat="type in syllabusService.template[element.templateStructureId].elements">
-                <a href="" data-ng-class="{ 'link-deactivated': (type.alreadyPresent===true) }" data-ng-click="!type.alreadyPresent && addElement(type)">{{ type.label | translate }}</a>
+                <a href="" data-ng-if="!type.provided" data-ng-class="{ 'link-deactivated': (type.alreadyPresent===true) }" data-ng-click="!type.alreadyPresent  && addElement(type)">{{ type.label | translate }}</a>
             </li>
         </ul>
     </div>

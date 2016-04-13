@@ -23,7 +23,7 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
 
             $scope.addElement = function($type) {
 
-                console.log("type : "+ $type.type );
+                console.dir($type);
                 $scope.isOpen = false;
 
                 // Si il s'agit d'une rubrique on l'ajoute directement
@@ -112,6 +112,7 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
                         for (var j = 0 ; j < $scope.syllabusService.template[$scope.element.templateStructureId].elements.length ; j++) {
                             // check if the rubric is already present
                             var ruleElement = $scope.syllabusService.template[$scope.element.templateStructureId].elements[j];
+
                             if ($scope.element.elements[i].type === 'rubric' && ruleElement.id === $scope.element.elements[i].templateStructureId ){
                                 $scope.syllabusService.template[$scope.element.templateStructureId].elements[j].alreadyPresent = true;
                                 break;

@@ -3,6 +3,7 @@ package ca.hec.opensyllabus2.api.model.template;
 import java.util.List;
 import java.util.Set;
 
+import ca.hec.opensyllabus2.api.model.syllabus.provider.OfficialProvider;
 import lombok.*;
 
 /**
@@ -19,6 +20,7 @@ public class TemplateStructure {
     private Boolean mandatory;
     private Boolean displayInMenu;
     private TemplateElement templateElement;
+    private OfficialProvider provider;
     private List<TemplateStructure> elements;
     private Long parentId;
 

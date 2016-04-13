@@ -19,6 +19,8 @@ import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.opensyllabus2.api.model.syllabus.provider.OfficialProvider;
+import ca.hec.opensyllabus2.api.model.template.Template;
 
 public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Dao {
 
@@ -113,11 +115,27 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		return syllabi;
 	}
 
+	private AbstractSyllabusElement getProvidedContent (AbstractSyllabusElement element){
+	    Long providerId = element.getProviderId(); 
+		//TODO: mirror provided element to syllabus element
+	    if (providerId != null){
+		OfficialProvider provider =  getHibernateTemplate().get(OfficialProvider.class, providerId);
+		if (provider != null){
+		    //Only title and description are different from the two elements
+		    element.setTitle(provider.getAbstractSyllabusElement().getTitle());
+		    element.setDescription(provider.getAbstractSyllabusElement().getDescription());
+		}
+	    }
+	    return element;
+	}
+	
 	@Override
 	public AbstractSyllabusElement getSyllabusElement(Long elementId) {
 		List<AbstractSyllabusElement> elements;
 		elements = getHibernateTemplate().find("from AbstractSyllabusElement where id = ?", elementId);
-		return elements.get(0);
+		AbstractSyllabusElement element = elements.get(0);
+		element = getProvidedContent(element);
+		return element;
 	}
 
 	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Long id, boolean hidden) {
@@ -129,6 +147,9 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 
     	for (SyllabusElementMapping currElementMapping : elementMappings) {
     		AbstractSyllabusElement currElement = currElementMapping.getSyllabusElement(); 
+    		
+    		//TODO: check if we need to move this code to the pojo to make it systematic. Fill provided content if needed
+    		currElement = getProvidedContent(currElement);
     		
     		// set the hidden property for the element (from the mapping) so it can be used in UI
     		currElement.setHidden(currElementMapping.getHidden());

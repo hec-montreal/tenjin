@@ -70,6 +70,11 @@
 			type="java.util.Date" />
 
 		<property name="lastModifiedBy" column="LAST_MODIFIED_BY" type="string" not-null="true"/>
+		
+		<property name="providerId"  type="long">
+			<column name="PROVIDER_ID" />
+		</property>
+		
 
 		<map name="attributes" table="TENJIN_SYLLABUSLELEM_ATTRIBUTE" cascade="all">
 			<key column="SYLLABUSELEMENT_ID" />

@@ -66,4 +66,6 @@
         <property name="functionManager"><ref bean="org.sakaiproject.authz.api.FunctionManager"/></property>
         <property name="userDirectoryService"><ref bean="org.sakaiproject.user.api.UserDirectoryService"/></property>
     </bean>
+    
+ 
 </beans>

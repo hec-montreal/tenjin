@@ -14,6 +14,7 @@ import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.opensyllabus2.api.model.syllabus.SyllabusTextElement;
 import ca.hec.opensyllabus2.api.model.template.Template;
 import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
 import lombok.Setter;
@@ -53,9 +54,15 @@ public class TemplateServiceImpl implements TemplateService {
 					element = new SyllabusRubricElement();
 				}
 
+				if (templateStructure.getProvider() != null){
+				    element = templateStructure.getProvider().getAbstractSyllabusElement();
+				    element.setProviderId(templateStructure.getProvider().getProvider_id());
+				}
+				
 				if (element != null) {
 					element.setDisplayOrder(i);
-					element.setTitle(templateStructure.getTemplateElement().getLabels().get(locale));
+					if (templateStructure.getProvider() == null)
+					    element.setTitle(templateStructure.getTemplateElement().getLabels().get(locale));
 					element.setTemplateStructureId(templateStructure.getId());
 					long idElement = level*1000 - i;
 					element.setId(idElement);
@@ -96,9 +103,17 @@ public class TemplateServiceImpl implements TemplateService {
 					el = new SyllabusRubricElement();
 				}
 	
+				//For the provided contents
+				if (templateStructure.getProvider() != null){
+				   el = templateStructure.getProvider().getAbstractSyllabusElement();
+				   el.setProviderId(templateStructure.getProvider().getProvider_id());
+				}
+
+				    
 				if (el != null) {
 					el.setDisplayOrder(i);
-					el.setTitle(templateStructure.getTemplateElement().getLabels().get(locale));
+					if (templateStructure.getProvider() == null)
+					    el.setTitle(templateStructure.getTemplateElement().getLabels().get(locale));
 					el.setTemplateStructureId(templateStructure.getId());
 					long idEl = idElement*1000 - i;
 					el.setId(idEl);
@@ -147,11 +162,12 @@ public class TemplateServiceImpl implements TemplateService {
 	 */
 	private void getRules(TemplateStructure structure, HashMap<String, HashMap<String, Object>> map) {
 
+	    	//TODO: ?? remove provided elements from the menu
 		if (structure!= null) {
 			HashMap<String, Object> elementObject;
 			elementObject = new HashMap<String, Object>();
 			elementObject.put("displayInMenu", structure.getDisplayInMenu());
-			elementObject.put("mandatory", structure.getMandatory());		
+			elementObject.put("mandatory", structure.getMandatory());
 			// add template structure to the main map
 			map.put(structure.getId().toString(), elementObject);
 			
@@ -171,6 +187,8 @@ public class TemplateServiceImpl implements TemplateService {
 				templateElementMap.put("id", structure.getId());
 				templateElementMap.put("type", structure.getTemplateElement().getType().getTitle());
 				templateElementMap.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
+				templateElementMap.put("provided", structure.getProvider() == null ? false:true);
+
 				// add child template element to the list of the parent element
 				elementParentList.add(templateElementMap);
 			}	

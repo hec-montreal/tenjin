@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.util.*;
 
+import ca.hec.opensyllabus2.api.model.syllabus.provider.OfficialProvider;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
@@ -56,6 +58,8 @@ public abstract class AbstractSyllabusElement {
     private String createdBy;
     private Date lastModifiedDate;
     private String lastModifiedBy;
+    
+    private Long providerId;
 
     private Map<String, String> attributes;
 
