@@ -1,5 +1,5 @@
 ﻿	
-opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService', 'SyllabusService', function ($scope, $timeout, TreeService, SyllabusService){
+opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', 'TreeService', 'SyllabusService', function ($scope, TreeService, SyllabusService){
 	'use strict';
 
     $scope.syllabusService = SyllabusService;
@@ -56,8 +56,7 @@ opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', '$timeout', 'TreeService'
         },
 
         dropped: function(event) {
-
-            // numerotation
+            // Numbering
             SyllabusService.numerotationSyllabus(SyllabusService.syllabus);
         },
 

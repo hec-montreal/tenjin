@@ -40,8 +40,8 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
 
         // RESULT
         if (result > 0) {
-
-            // On fait une copie du syllabus courant auquel on attache l'élément en cours d'ajout 
+ 
+            // We create a copy of the current syllabus and we add it the element to be added
             var data = angular.copy(SyllabusService.syllabus);
             var selectedItemId = TreeService.selectedItem.id;
             var emplacement = TreeService.selectedItem.$emplacement;
@@ -58,14 +58,14 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
                 // TreeService.setSelectedItemFromId(selectedItemId);
                 TreeService.setSelectedItemFromEmplacement(emplacement);
             }, function ($error){
-                // alert ajout ko
+                // alert add ko
                 AlertService.display('danger');
 
             }).finally(function() {
                  SyllabusService.setWorking(false);
             });
 
-            // on ferme la modale dans tous les cas
+            // We close the popup 
             $uibModalInstance.close('');
 
         }
@@ -77,7 +77,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
 
         $scope.errors = {};
 
-        // Si le formulaire associé à l'élément comprend des dates
+        // If the element form contains dates
         if ( $scope.element.$formHasDates ) {
             // CONTROLE date affichage
             if ($scope.element.availability_start_date ) {
@@ -91,7 +91,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
                 result = -1;
             }
 
-            // CONTROLE date retrait
+            // CONTROLE retire date
             if ($scope.element.hasEndDate){
                 if ($scope.element.availabilityEndDate) {
                     // convert to timestamp
@@ -112,7 +112,7 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
                 $scope.element.attributes.evalDate = $scope.element.attributes.evalDate.toString();                
             }
         }
-        // Si le formulaire associé à l'élément comprend une ressource
+        // If the element form contains a resource
         if ( $scope.element.$formHasRessource ) {
             if (!$scope.element.attributes.resourceId) {
                 $scope.errors.isErrorRessource = true;

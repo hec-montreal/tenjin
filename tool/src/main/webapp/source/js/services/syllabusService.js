@@ -1,17 +1,17 @@
-﻿opensyllabusApp.service('SyllabusService', ['UserService' ,'$rootScope', '$resource', '$http', 'Modernizr', function (UserService, $rootScope, $resource, $http, Modernizr){
+﻿opensyllabusApp.service('SyllabusService', ['UserService', '$resource', function (UserService, $resource){
     'use strict';
 
-    // this.currentSyllabusId;
     this.syllabus;
     this.syllabusSaved;
     this.template;
     this.syllabusList;
+
     this.dirty = false;
     this.working = false;
-    this.switchingSyllabus = false;
 
     this.showMobileMenu = false;
 
+    // variable used to look through the syllabus tree
     this.navigation = {
         'level' : 1
     };
@@ -25,81 +25,83 @@
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusElementProvider = $resource('v1/syllabus');
 
+    // provider create syllabus
     var sylProvider = $resource('v1/syllabus.json');
-    var sylProviderList = $resource('v1/syllabus.json', {}, {'get':{method:'GET', isArray: true}});
+    // provider get syllabus list
+    var sylProviderList = $resource('v1/syllabus.json', {}, {'get':{method:'GET', isArray: true}}); 
+    // provider get and update particular syllabus
     var sylProviderId = $resource('v1/syllabus/:id.json');
 
+
+    /**
+     * Save syllabus
+     * @param {Object} $data Syllabus data
+     * @return {Object} Promise
+     */
     this.save =  function($data) {
-        var syllabusProviderSave = $resource('v1/syllabus/'+$data.siteId+'.json');
-        return syllabusProviderSave.save($data);
-    };
-
-    this.saveSyllabus =  function() {
-        var syllabusProviderSave = $resource('v1/syllabus/'+this.syllabus.siteId+'.json');
-        return syllabusProviderSave.save(this.syllabus);
-    };
-
-    this.saveNewSyllabus =  function($syllabus) {
-        var syllabusProviderSave = $resource('v1/syllabus/'+$syllabus.siteId+'.json');
-        return syllabusProviderSave.save($syllabus);
-    };
-
-    this.saveSyl =  function($data) {
-        // if the syllabus has already an id then call a specific url
-        if($data.id) {
-            return sylProviderId.save( {id: $data.id} , $data);
+        // UPDATE: if the syllabus has already an id then call a specific url
+        if( $data.id ) {
+           return sylProviderId.save( {id: $data.id} , $data); 
         }
-
-        return sylProvider.save($data);  
+        // CREATE: if the syllabus has no id 
+        return sylProvider.save($data);
     };
 
+    /**
+     * Save current syllabus
+     * @return {Object} Promise
+     */
+    this.saveCurrent =  function() {
+        return this.save(this.syllabus);
+    };
+
+    /**
+     * Delete a list of syllabus
+     * @param {Array} $syllabusList Syllabus list to delete
+     * @return {Object} Promise
+     */
     this.deleteSyllabusList =  function($syllabusList) {
         return sylProvider.delete($syllabusList);
     };
 
+    /**
+     * Load a syllabus
+     * @param {Number} $syllabusId id of the syllabus
+     * @return {Object} Promise
+     */
     this.loadSyllabus =  function($syllabusId) {   
-        // return syllabusProvider.get();
         return sylProviderId.get({id : $syllabusId});
     };
 
+    /**
+     * Load a list of syllabus
+     * @param {String} $siteId site id
+     * @return {Object} Promise
+     */
     this.loadSyllabusList =  function($siteId) {    
         return sylProviderList.get({siteId : $siteId});
     };
 
-
-    // this.resolveSyllabusList =  function($siteId) {  
-
-    //     var objSyllabusService = this;
-    //     sylProviderList.get({siteId : $siteId}).$promise.then( function($data) {
-    //         console.log("resolve!");
-    //         objSyllabusService.setSyllabusList($data);
-
-    //         if($data.length === 1) { // only the common syllabus
-    //             console.log("redirect home");
-    //         }
-    //         // $deferred.resolve();
-
-    //     }, function($error){
-    //         // erreur load syllabus list
-    //         // AlertService.display('danger');
-    //     });
-
-    // };
-
+    /**
+     * Load the template rules
+     * @return {Object} Promise
+     */
     this.loadTemplate = function() {
         return templateProvider.get();
     };
 
-
-    this.saveElement = function($element, $parent) {
-        return syllabusElementProvider.save($element, $parent);
-    };
-
+    /**
+     * Get the syllabus list
+     * @return {Array} Syllabus list
+     */
     this.getSyllabusList = function() {
         return this.syllabusList;
     };
 
-
+    /**
+     * Set the syllabus list
+     * @param {Array} $syllabusList Syllabus list
+     */
     this.setSyllabusList = function($syllabusList) {  
         this.syllabusList = $syllabusList;
         // set write permissions on each syllabus
@@ -108,10 +110,18 @@
         }
     };
 
+    /**
+     * Get the current syllabus
+     * @return {Object} Current syllabus viewed
+     */
     this.getSyllabus = function() {
         return this.syllabus;
     };
 
+    /**
+     * Get the common syllabus from the syllabus list
+     * @return {Object} Common syllabus or undefined
+     */
     this.getCommonSyllabus = function() {
         if (this.syllabusList) {
             for (var i=0 ; i < this.syllabusList.length; i++) {
@@ -123,11 +133,15 @@
         return undefined;
     };
 
-
+    // TODO : to delete 
     this.getSyllabusSaved = function() {
         return this.syllabusSaved;
     };
 
+    /**
+     * Set the write permission flag for the syllabus (true = editable)
+     * @param {Object} $syllabus The syllabus to check write permission
+     */
     this.setWritePermission = function($syllabus) {
         // read or write
         // 1- if write permission on site 
@@ -161,71 +175,101 @@
         }
     };
 
+    /**
+     * Set the current syllabus
+     * @param {Object} $syllabus The future current syllabus
+     */
     this.setSyllabus = function($syllabus) {      
         this.syllabus = $syllabus;
-        // numérotation
+        // numbering
         this.numerotationSyllabus(this.syllabus);
         // define write permission on current syllabus
         this.setWritePermission(this.syllabus);
-
-        // sauvegarde d'une copie du syllabus
+        // save a copy
         this.syllabusSaved = angular.copy(this.syllabus);
+        // set dirty flag to false
         this.dirty = false;
     };
 
-
+    /**
+     * Get the template rules
+     * @return {Object} The template rules
+     */
     this.getTemplate = function() {
         return this.template;
     };
 
+    /**
+     * Set the template rules
+     * @param {Object} $template The template rules
+     */
     this.setTemplate = function($template) {
         this.template = $template;
     };
 
-    this.addElement = function($element, $parent) {
-        // Ajout de l'élément au plan de cours
-        $parent.elements.push($element); 
-    };
-
-    this.deleteElement = function($element, $parent) {
-
-    };
-
-
-    this.broadcastTemplateLoaded = function($template) {
-        $rootScope.$broadcast('templateLoaded');
-    };
-
+    /**
+     * Set the dirty flag
+     * @param {Boolean} $dirty Dirty flag
+     */
     this.setDirty = function($dirty) {
         this.dirty = $dirty;
     };
 
+    /**
+     * Get the value of the dirty flag
+     * @return {Boolean} Dirty flag value
+     */
     this.isDirty = function($dirty) {
         return this.dirty;
     };
 
-
+    /**
+     * Set the working flag
+     * @param {Boolean} $working Working flag value
+     */
     this.setWorking = function($working) {
         this.working = $working;
     };
 
+
+    /**
+     * Get the value of the working flag
+     * @return {Boolean} Working flag value
+     */
     this.isWorking = function($working) {
         return this.working;
     };
 
-
-    // return whether or not the provided object is a syllabus element 
-    // as opposed to the syllabus object itself (useful for recursive traversal
-    // of the syllabus)
+    /**
+     * Return whether or not the provided object is a syllabus element 
+     * as opposed to the syllabus object itself (useful for recursive traversal
+     * of the syllabus)
+     * @param {Object} $object Element
+     * @return {Boolean} True if the element is a syllabus element
+     */
     var isSyllabusElement = function($object) {
-        //syllabus does not have parent
+        // a syllabus element does not have a templateId property
         return typeof($object.templateId) === "undefined";
     };
 
+    /**
+     * Return whether or not the provided object is a syllabus element 
+     * as opposed to the syllabus object itself (useful for recursive traversal
+     * of the syllabus)
+     * @param {Object} $object Element
+     * @return {Boolean} True if the element is a syllabus element
+     */
     this.isSyllabusElement = function($object) {
         return isSyllabusElement($object);
     };
 
+    /**
+     * Add a new element to the syllabus
+     * @param {Object} $rootTree Root tree
+     * @param {Object} $parent Parent of the element
+     * @param {Object} $element Element to be inserted
+     * @param {Object} $position Position of the element in the list
+     */
     var addElementToSyllabus = function($rootTree, $parent, $element, $position) {
 
         if ($rootTree.elements) {
@@ -258,29 +302,41 @@
 
     };
 
-
+    /**
+     * Add a new element to the syllabus
+     * @param {Object} $data Syllabus root tree
+     * @param {Object} $parent Parent of the element
+     * @param {Object} $element Element to be inserted
+     * @param {Object} $position Position of the element in the list
+     */
     this.addElementToSyllabus = function($data, $parent, $element, $position) {
         addElementToSyllabus($data, $parent, $element, $position);
     };
 
+    /**
+     * Add a new rubric to the syllabus
+     * @param {Object} $rootTree Syllabus root tree
+     * @param {Object} $parent Parent of the element
+     * @param {Object} $element Element to be inserted
+     * @param {Object} $rules Template rules
+     * @return {Number} If the rubric already exists then return -1, else return 1
+     */
     var addRubricToSyllabus = function($rootTree, $parent, $element, $rules) {
-        // var results;
 
         if ($rootTree.elements) {
 
             if ($rootTree.id === $parent.id && isSyllabusElement($rootTree)) {
                 if ($rootTree.elements.length > 0) {
 
-                    // vérifie si la rubrique a déjà été insérée
+                    // Check if the rubric already exists
                     for (var i = 0; i < $rootTree.elements.length; i++) {
                         if ($rootTree.elements[i].templateStructureId === $element.templateStructureId) {
-                            // rubrique déjà présente
-                            // return -1;
+                            // Rubric already present
                             return -1;
                         }
                     }
 
-                    // vérifie où doit être insérée la rubrique
+                    // Check where the rubric must be inserted
                     var listeTemp = [];
                     var index = -1;
                     for (var i = 0 ; i < $rules.elements.length; i++) {
@@ -303,7 +359,7 @@
                         }
                     }
 
-                    // On ajoute la rubrique au plan de cours
+                    // Add the rubric to the syllabus
                     if (index !== -1) {
                         $rootTree.elements.splice(index, 0, $element);
                         return 1;
@@ -332,23 +388,28 @@
 
     };
 
-
+    /**
+     * Add a new rubric to the syllabus
+     * @param {Object} $data Syllabus root tree
+     * @param {Object} $parent Parent of the element
+     * @param {Object} $element Element to be inserted
+     * @return {Number} If the rubric already exists then return -1, else return 1
+     */
     this.addRubricToSyllabus = function($data, $parent, $element) {
-        // On récupère les règles du template de l'élément parent, 
-        // afin d'ajouter la rubrique au bon endroit
+        // We get the template rules of the parent element 
+        // to add the rubric to the right place
         var rules = this.template[$parent.templateStructureId];
-        // var index = -1;
-        // for ( var i = 0 ; i < rules.length ; i++ ) {
-        //     if ( rules[i].id === $element.templateStructureId ) {
-        //         index = i;
-        //         break;
-        //     }
-        // }
+
 
         return addRubricToSyllabus($data, $parent, $element, rules);
     };
 
-
+    /**
+     * Delete an element from the syllabus
+     * @param {Object} $data Syllabus root tree
+     * @param {Object} $parent Parent of the element
+     * @param {Object} $element Element to be deleted
+     */
     var deleteElementFromSyllabus = function($rootTree, $parent, $element) {
 
         if ($rootTree.elements) {
@@ -373,12 +434,22 @@
 
     };
 
-
+    /**
+     * Delete an element from the syllabus
+     * @param {Object} $data Syllabus root tree
+     * @param {Object} $parent Parent of the element
+     * @param {Object} $element Element to be deleted
+     */
     this.deleteElementFromSyllabus = function($data, $parent, $element) {
         deleteElementFromSyllabus($data, $parent, $element);
     };
 
-
+    /**
+     * Get the parent of an element
+     * @param {Object} $rootTree Syllabus root tree
+     * @param {Object} $element Element
+     * @return {Object} The parent element or undefined
+     */
     var getParent = function($rootTree, $element) {
         
         if ($rootTree.id === $element.parentId) {
@@ -396,10 +467,20 @@
         return undefined;
     };
 
+    /**
+     * Get the parent of an element
+     * @param {Object} $element Element
+     * @return {Object} The parent element or undefined
+     */
     this.getParent = function($element) {
         return getParent(this.syllabus, $element);
     };
 
+    /**
+     * Numbering the syllabus element (lecture, tutorial and evaluation)
+     * @param {Object} $rootTree Syllabus root tree
+     * @param {Object} $infosNumerotation Param inout with properties (nbLecture, nbTutorial, nbEvalAndExam)
+     */
     var numerotationSyllabus = function($rootTree, $infosNumerotation) {
 
         if ($rootTree.elements) {
@@ -424,7 +505,10 @@
 
     };
 
-
+    /**
+     * Numbering the syllabus element (lecture, tutorial and evaluation)
+     * @param {Object} $rootTree Syllabus root tree
+     */
     this.numerotationSyllabus = function($data) {
         var infosNumerotations = {
             'nbLecture' : 0,
@@ -435,6 +519,10 @@
         numerotationSyllabus($data, infosNumerotations);
     };
 
+    /**
+     * Mobile menu : hide all children elements
+     * @param {Object} $rootTree Syllabus root tree
+     */
     var hideAllChildren = function($rootTree) {
 
         if ($rootTree.elements) {
@@ -446,6 +534,13 @@
         }
     };
 
+    /**
+     * Mobile menu : hide all children elements
+     * @param {Object} $rootTree Syllabus root tree
+     * @param {Object} $item Current selected item
+     * @param {Object} $levelTmp Temporary level of navigation
+     * @param {Object} $navigation Final navigation level (inout param)
+     */
     var hideItems = function($rootTree, $item, $levelTmp, $navigation) {
    
         if ($rootTree.id === $item.id) {
@@ -470,20 +565,24 @@
 
     };
 
+    /**
+     * Mobile menu : hide all children elements
+     * @param {Object} $item Current selected item
+     */
     this.hideItems = function($item) {
         var tmpLevel = 1;
         hideItems(this.syllabus, $item, tmpLevel, this.navigation);
 
     };
 
+    /**
+     * Mobile menu : initialize the mobile menu and hide some items
+     */
     this.hideItemsInit = function() {
         for (var i = 0; i < this.syllabus.elements.length; i++ ) {
             this.syllabus.elements[i].$hidden = false;
             hideAllChildren(this.syllabus.elements[i]);
-        } 
+        }
     };
 
-    // this.setCurrentSyllabusId = function($syllabusId) {
-    //     this.currentSyllabusId = $syllabusId;
-    // };
 }]);

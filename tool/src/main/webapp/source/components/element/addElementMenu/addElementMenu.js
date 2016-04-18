@@ -29,15 +29,6 @@ opensyllabusApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 
                 // Si il s'agit d'une rubrique on l'ajoute directement
                 if ($type.type === "rubric") {
 
-                    // TODO : si le plan de cours est vide on le sauvegarde
-                    // var syllabus = SyllabusService.getSyllabus();
-                    // // plan de cours vide
-                    // if (!syllabus.id) {       
-                    //     // ajout de l'élément au plan de cours
-                    //     SyllabusService.addElement($scope.element, $scope.parent);
-                    //     // sauvegarde du plan de cours + l'élément en cours
-                    // }
-                    
                     // Création    
                     var element = {
                         'attributes': {},

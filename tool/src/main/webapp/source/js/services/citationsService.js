@@ -1,4 +1,4 @@
-opensyllabusApp.service('CitationsService', [ '$rootScope', '$resource', '$http', '$q','$location', 'config',  function ( $rootScope, $resource, $http, $q, $location, config){
+opensyllabusApp.service('CitationsService', [ '$resource', function ( $resource ){
     'use strict';	
 	
 	var siteCitationsProviderUri = "../../../direct/citation/list";
@@ -9,6 +9,13 @@ opensyllabusApp.service('CitationsService', [ '$rootScope', '$resource', '$http'
 		});
 	};	
 
+	
+	/**
+     * Load the citation list
+     * @param {Object} $rootTree root tree
+     * @param {Array} $resourceIds list of resource ids (inout param)
+     * @param {Array} $promises list of promises to be resolved (inout param)
+     */
 	var loadCitationLists = function($rootTree, $resourceIds, $promises ){
 		var citationList;
 		if ($rootTree.osylType === "citationList"){
@@ -22,6 +29,10 @@ opensyllabusApp.service('CitationsService', [ '$rootScope', '$resource', '$http'
 			}
 	};
 	
+	/**
+     * Get the citation list
+     * @param {Object} $rootTree root tree
+     */
 	this.getCitationLists = function($rootTree){
 		var resourceIds = [];
 		var promises = [];
@@ -33,14 +44,11 @@ opensyllabusApp.service('CitationsService', [ '$rootScope', '$resource', '$http'
 		 return promisesList;
 	};
 
-	//Add a citationList to the resources list
-	this.updateResources = function ($rootTree, $citationList){
-
-		$rootTree.resourceChildren = $citationList;
-		return $rootTree;
-
-	};
-
+	/**
+     * Update json properties for the citations
+     * @param {String} $citationListId Id of the citation list
+     * @param {Array} $citations List of citations
+     */
 	this.updateJsonProperties = function ($citationListId, $citations){
 		for ( var i=0; i< $citations.length ; i++) {
 			$citations[i].resourceId = $citationListId + '/'+$citations[i].id;

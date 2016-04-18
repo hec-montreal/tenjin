@@ -4,6 +4,10 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 	this.resources;
 	var siteResourcesProviderUri = "../../../direct/content/resources/";
 	
+	/**
+     * Get file extension
+     * @param {String} $filename Name of the file
+     */
 	var getExtension = function($filename) {
 		var fileSplit = $filename.split('.');
 		var fileExt = '';
@@ -13,6 +17,10 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 		return fileExt;
 	};
 
+	/**
+     * Get the resource type
+     * @param {Object} $resource Resource
+     */
 	var getResourceType = function($resource) {
 		var name = $resource.name;
 
@@ -40,6 +48,10 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 		return undefined;
 	};
 	
+	/**
+     * Attach a resource type to each resource (resources are contained in a tree) 
+     * @param {Object} $rootTree Root tree of the resources
+     */
 	var classifyResources = function($rootTree) {
 
 		var type = getResourceType($rootTree);
@@ -52,6 +64,10 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 
 	};
 
+	/**
+     * load resources for a given site id
+     * @param {String} $siteId Site id
+     */
 	this.loadResources = function($siteId){
 		siteResourcesProviderUri = siteResourcesProviderUri + $siteId + ".json?depth=all";
 		return $resource(siteResourcesProviderUri).get( {
@@ -59,6 +75,10 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 		});
 	};	
 
+	/**
+     * Set resources and classify them
+     * @param {Object} $resources Resources tree
+     */
 	this.setResources = function($resources){
 		this.resources = $resources;
 
@@ -66,6 +86,11 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 		classifyResources(this.resources);
 	};
 
+	/**
+     * Get resource from a resources tree and a resource id
+     * @param {Object} $rootTree Resources tree
+     * @param {String} $resourceId Resource id
+     */
 	var getResource = function($rootTree, $resourceId) {
 		
 		if ($rootTree.resourceId === $resourceId) {
@@ -84,23 +109,13 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 		return undefined;
 	};
 
+	/**
+     * Get resource from a resource id
+     * @param {String} $resourceId Resource id
+     */
 	this.getResource = function($resourceId) {
 		return getResource(this.resources, $resourceId);
 	};
 
 
-
-	
-
-//	this.documentTreeOptions = {
-//		name: "",
-//		item: documentList ,
-//		accept: function(){
-//			
-//		},
-//		dropped: function(event){
-//			
-//		},
-//	};
-//	
 }]);

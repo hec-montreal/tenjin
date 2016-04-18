@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', 'mockup', function ($timeout, $translate, TreeService, SyllabusService, AlertService, ModalService, UserService, config, mockup){
+opensyllabusApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', 'mockup', function ($timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config, mockup){
     'use strict';
 
     return {
@@ -10,7 +10,6 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
         controller: function () {
 
             this.syllabusService = SyllabusService;
-            this.treeService = TreeService;
             this.alertService = AlertService;
             this.userService = UserService;
             this.config = config;
@@ -37,8 +36,6 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
 
                 return SyllabusService.loadSyllabusList().$promise.then(function($data){
                     SyllabusService.setSyllabusList($data);
-
-                    // $rootScope.$broadcast('RESOURCES_LOADED');
 
                 }, function($error){
                     // erreur load syllabus list
@@ -67,10 +64,10 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                 // Get sections and libelle
                 var data = {};
 
-                // Création modale
+                // Create modal
                 var modal = ModalService.createSyllabus(data);
 
-                // Traitement du résultat
+                // Processing result
                 modal.result.then(function ($syllabus) {
                     // update syllabus list with last modified syllabus as param 
                     updateSyllabusList($syllabus);
@@ -89,10 +86,10 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                     }
                 }
 
-                // Création modale
+                // Create modal
                 var modal = ModalService.deleteSyllabus(syllabusList);
 
-                // Traitement du résultat
+                // Processing result
                 modal.result.then(function (selectedItem) {
                     console.debug('élément modifié');
                 }, function () {
@@ -112,6 +109,11 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                 }
             };
 
+            /**
+             * Display the sections for a syllabus
+             * @param {Object} $syllabus Syllabus
+             * @return {String} A string containing the list of the sections or no section
+             */
             this.showSections = function($syllabus) {
                 var selected = [];
                 angular.forEach(this.allSections, function(s) { 
@@ -128,7 +130,7 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                     return $translate.instant("MANAGEMENT_ERREUR_NAME");
                 }
                 $syllabus.title = $data;
-                return SyllabusService.saveSyl($syllabus).$promise;
+                return SyllabusService.save($syllabus).$promise;
             };
 
             this.updateSections = function($data, $syllabus) {
@@ -139,7 +141,7 @@ opensyllabusApp.directive('management', ['$timeout', '$translate','TreeService',
                 // assign sections
                 lastModifiedSyllabus.sections = $data;
    
-                return SyllabusService.saveSyl(lastModifiedSyllabus).$promise;
+                return SyllabusService.save(lastModifiedSyllabus).$promise;
             };
 
 

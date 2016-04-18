@@ -13,17 +13,13 @@
     <a data-nodrag data-ng-click="treeService.setSelectedItem(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }" >
       <span data-ng-if="item.type === 'evaluation' || item.type ==='exam'">{{$index+1}} - </span>
       <span data-ng-if="item.type === 'lecture' || item.type === 'tutorial'">{{item.$numero}} - </span>
-      <!-- <span data-ng-if="item.parentId === null">{{::item.title}}</span>
-      <span data-ng-if="item.parentId">{{item.title}}</span> -->
       {{item.title}}
-      <!-- <span  class="tree-node tree-node-content picto-move" data-ng-if="syllabusService.syllabus.$writePermission && item.parentId"></span>  -->
     </a> 
 
      <!-- No drag and drop for the first level element -->
     <span ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.parentId"></span>
   </span>
 
-  <!-- <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-class="{hidden: collapsed}" data-ng-if="item.elements && item.elements.length > 0 && item.elements[0].displayPage"> -->
   <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-if="item.type === 'composite'">
     <li ui-tree-handle data-ng-repeat="item in item.elements" ui-tree-node data-ng-include="'nodes_renderer.html'">
     </li>

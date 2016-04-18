@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('mobileMenu', ['$timeout', 'TreeService', 'SyllabusService', function ($timeout, TreeService, SyllabusService){
+opensyllabusApp.directive('mobileMenu', ['TreeService', 'SyllabusService', function (TreeService, SyllabusService){
     'use strict';
 
     return {
@@ -30,12 +30,12 @@ opensyllabusApp.directive('mobileMenu', ['$timeout', 'TreeService', 'SyllabusSer
 
             this.navigate = function(scope, $item) {
                 
-                var currentItemViewed = TreeService.getViewedItem();
+                var currentItemViewed = TreeService.getViewedElement();
                 // Si il n'y a aucun dernier item vu défini
                 // Ou si on clique sur l'item en cours de visualiation
-                if (typeof(currentItemViewed) === "undefined" || $item.id !== TreeService.getViewedItem().id ) {
+                if (typeof(currentItemViewed) === "undefined" || $item.id !== TreeService.getViewedElement().id ) {
 
-                    // Si il n'y a aucun élément enfant alos on referme le menu
+                    // Si il n'y a aucun élément enfant alors on referme le menu
                     if ($item.type === 'evaluation' || 
                         $item.type === 'exam' || 
                         $item.type === 'lecture' || 
@@ -47,7 +47,7 @@ opensyllabusApp.directive('mobileMenu', ['$timeout', 'TreeService', 'SyllabusSer
                                 $item.elements[0].type === "rubric") {
                         SyllabusService.showMobileMenu = false;
                     }else {
-                        TreeService.setViewedItem($item);
+                        TreeService.setViewedElement($item);
                         this.showBackButton = true;
                         SyllabusService.hideItems($item);
                     }
@@ -59,17 +59,17 @@ opensyllabusApp.directive('mobileMenu', ['$timeout', 'TreeService', 'SyllabusSer
 
             this.back = function() {
                 // récupère l'item en cours de visualisation
-                var item = TreeService.getViewedItem();
+                var item = TreeService.getViewedElement();
                 // récupère le parent de l'item en cours de visualisation
                 var itemParent = SyllabusService.getParent(item);
                 if (itemParent) {
                     // si il y a un item parent alors celui-ci devient le nouvel item en cours de visualisation
-                    TreeService.setViewedItem(itemParent);
+                    TreeService.setViewedElement(itemParent);
                     // cache tous les éléments sauf l'item sélectionné et ses enfants directs
                     SyllabusService.hideItems(itemParent);
                 } else {
                     // racine
-                    TreeService.setViewedItem(undefined);
+                    TreeService.setViewedElement(undefined);
                     // affiche les éléments de premier niveau uniquement
                     SyllabusService.hideItemsInit();
                     SyllabusService.navigation.level = 1;

@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('home', ['$q', '$state', '$timeout', 'config', 'mockup' ,'SyllabusService', 'UserService', 'AlertService', function ($q, $state, $timeout, config, mockup, SyllabusService, UserService, AlertService) {
+opensyllabusApp.directive('home', ['$q', '$state', '$timeout', 'config', 'mockup' ,'SyllabusService', 'UserService', function ($q, $state, $timeout, config, mockup, SyllabusService, UserService) {
     'use strict';
 
     return {
@@ -30,15 +30,13 @@ opensyllabusApp.directive('home', ['$q', '$state', '$timeout', 'config', 'mockup
             var loadProfileAndSyllabusList = function(){
                 return $q.allSettled([UserService.loadProfile().$promise, SyllabusService.loadSyllabusList().$promise]).then(function(data) {
 
-                    // data contient d'abord le résultat de la première requête
+                    // data first contains the result of the first request (user profile)
                     if (data[0].state === "rejected") {
                         objHome.errors.loadingProfile = true;
                     }
 
                     if (data[1].state === "rejected") {
                         objHome.errors.loadingSyllabusList = true;
-                        // erreur load syllabus list
-                        // AlertService.display('danger');
                     }
              
                     // no error during loading

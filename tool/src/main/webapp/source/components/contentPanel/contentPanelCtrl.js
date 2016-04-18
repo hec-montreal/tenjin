@@ -43,21 +43,18 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
                         if (sourceNodeScope.item.type === 'composite' && destNodesScope.item.type === 'composite')                                 {
                             return false;
                         } else {
-                            
-                            // console.log("drag and drop 1");
+
                             return true;
                         }
 
                     } else {
                         // drag and drop entre éléments
-                        // console.log("drag and drop 2");
-
 
                         return true;
                     }
 
                 } else {
-                    // console.log("drag and drop 3");
+
                     // on est à la racine
                     return true;
                 }

@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.controller('DeleteModalCtrl',  [ '$scope', '$translate', '$uibModalInstance', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', function ($scope, $translate, $uibModalInstance, parent, element, SyllabusService, TreeService, AlertService) {
+opensyllabusApp.controller('DeleteModalCtrl',  [ '$scope', '$uibModalInstance', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', function ($scope, $uibModalInstance, parent, element, SyllabusService, TreeService, AlertService) {
     'use strict';
 
     $scope.element = element;

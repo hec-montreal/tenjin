@@ -1,8 +1,12 @@
 ﻿
-opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibModal, config){
+opensyllabusApp.service('ModalService', ['$uibModal', function ($uibModal){
     'use strict';
 
-
+    /**
+     * Delete modal for an element
+     * @param {Object} $parent Parent element
+     * @param {Object} $element Element to be deleted
+     */
     this.confirmDelete = function($parent, $element) {
 
         var modalInstance = $uibModal.open({
@@ -25,7 +29,11 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
 
     };
 
-
+    /**
+     * Create modal for a new element
+     * @param {Object} $type Element type object (properties : id, type)
+     * @param {Object} $parent Parent element
+     */
     this.createElement = function($type, $parent) {
 
         var modalInstance = $uibModal.open({
@@ -50,12 +58,12 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
         return modalInstance;
     };
 
-
+    /**
+     * Edit modal for a element
+     * @param {Object} $parent Parent element
+     * @param {Object} $element Element to be updated
+     */
     this.editElement = function($parent, $element) {
-
-        // var offset = angular.element($event.target).prop('offsetLeft');
-        // var modal = angular.element(document.querySelector('.modal'));
-        // modal.css('top', offset);
 
         var modalInstance = $uibModal.open({
           animation: true,
@@ -80,32 +88,28 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
 
     };
 
-    this.createSyllabus = function($syllabus) {
-
-        // var offset = angular.element($event.target).prop('offsetLeft');
-        // var modal = angular.element(document.querySelector('.modal'));
-        // modal.css('top', offset);
+    /**
+     * Create modal for a syllabus
+     */
+    this.createSyllabus = function() {
 
         var modalInstance = $uibModal.open({
           animation: true,
           templateUrl: 'createSyllabusModal/createSyllabusModal.html',
           controller: 'CreateSyllabusModalCtrl',
           size: '',
-          backdrop: 'static',
-          resolve: {
-            data: $syllabus
-          }        
+          backdrop: 'static'       
         });
 
         return modalInstance;
 
     };
 
+    /**
+     * Delete modal for a list of syllabus
+     * @param {Array} $syllabusList List of syllabus to be deleted
+     */
     this.deleteSyllabus = function($syllabusList) {
-
-        // var offset = angular.element($event.target).prop('offsetLeft');
-        // var modal = angular.element(document.querySelector('.modal'));
-        // modal.css('top', offset);
 
         var modalInstance = $uibModal.open({
           animation: true,
@@ -114,7 +118,7 @@ opensyllabusApp.service('ModalService', ['$uibModal', 'config', function ($uibMo
           size: '',
           backdrop: 'static',
           resolve: {
-            syllabusList: { 'syllabusList':$syllabusList }
+            syllabusList: { 'syllabusList': $syllabusList }
           }        
         });
 

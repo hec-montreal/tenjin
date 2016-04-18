@@ -1,8 +1,8 @@
 ﻿
-opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalInstance', '$translate', 'SyllabusService', 'TreeService', 'AlertService', 'UserService' ,'data', 'config', 'mockup' , function ($scope, $uibModalInstance, $translate, SyllabusService, TreeService, AlertService, UserService, data, config, mockup) {
+opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalInstance', '$translate', 'SyllabusService', 'UserService' , function ($scope, $uibModalInstance, $translate, SyllabusService, UserService) {
     'use strict';
 
-    // name of syllabus + sections
+    // Init syllabus data : name of syllabus + sections
     $scope.data = {
         'name' : $translate.instant('CREATE_SYLLABUS_DEFAULT_NAME'),
         'sections' : []
@@ -24,8 +24,9 @@ opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalIns
         }
     }
 
-    // $scope.sections = angular.copy(mockup.sections);
-
+    /**
+     * Callback ok button
+     */
     $scope.ok = function () {
 
         var common = SyllabusService.getCommonSyllabus();
@@ -53,8 +54,7 @@ opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalIns
          };
 
 
-        // var savePromise = SyllabusService.saveSyl(newSyllabus);
-        var savePromise = SyllabusService.saveNewSyllabus(newSyllabus);
+        var savePromise = SyllabusService.save(newSyllabus);
         SyllabusService.setWorking(true);
 
         var syllabusAdded = null;
@@ -79,7 +79,9 @@ opensyllabusApp.controller('CreateSyllabusModalCtrl',  [ '$scope', '$uibModalIns
 
     };
 
-
+    /**
+     * Callback cancel button
+     */
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };

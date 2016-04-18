@@ -1,17 +1,12 @@
-﻿opensyllabusApp.service('TreeService', ['$timeout',  '$rootScope', 'SyllabusService', function ($timeout,  $rootScope, SyllabusService){
+﻿opensyllabusApp.service('TreeService', ['$timeout', 'SyllabusService', function ($timeout, SyllabusService){
     'use strict';
 
-   // this.selectedItem = null;
-   // this.selectedItem = { id : 12356};
-    
-   var syllabus = null;
-   
-   // Item en cours de visualisation (menu mobile)
-   this.viewedItem = undefined;
+   // Current viewed item (mobile menu)
+   this.viewedElement = undefined;
     
     /**
-     * Parcours de manière récursive les enfants de l'arbre
-     * @param {Object} $rootTree racine du sous-arbre
+     * Recursively look through the syllabus and unselect all elements
+     * @param {Object} $rootTree Root tree
      */
     var unselectTreeElements = function($rootTree) {
         if ($rootTree.elements) {
@@ -23,8 +18,8 @@
     };
 
     /**
-     * Parcours de l'arbre
-     * @param {Object} $rootTree racine de l'arbre
+     * Scan the tree and unselect all elements
+     * @param {Object} $rootTree Root tree
      */
     var unselectTree = function($rootTree) {
         console.time('select');
@@ -33,41 +28,21 @@
     };
 
 
-
     /**
-     * Parcours de l'arbre
-     * @param {Object} $rootTree racine de l'arbre
-     */
-    this.numerotationTree = function($rootTree) {
-        // console.time('select');
-        // if ($rootTree.elements) {
-        //     for (var i = 0; i < $rootTree.elements.length; i++){
-        //         $rootTree.elements[i].selected = false;
-        //         unselectTreeElements($rootTree.elements[i]);
-        //     }
-        // }
-        // console.timeEnd('select');
-    };
-
-    /**
-     * Récupère l'item sélectionné
-     * @return {Object} L'élément sélectionné
+     * Get the selected item
+     * @return {Object} The selected item
      */
     this.getSelectedItem = function(){
     	return this.selectedItem;
     };
-
-    this.initSelectedItem= function($item){
-    	this.selectedItem = $item;
-    };
-    
+ 
 
     /**
-     * Met à jour l'item sélectionné
-     * Déselectionne le précédent item sélectionné
-     * Redimensionne l'iframe
-     * @param {Object} $item Item sélectionné
-     * @param {Boolean} $firstTime Première sélection d'un élément
+     * Set the new selected item
+     * Unselect the previous selected item
+     * Resize the iframe
+     * @param {Object} $item Item selected
+     * @param {Boolean} $firstTime First time an item is selected
      */
     this.setSelectedItem = function($item, $firstTime){ 
 
@@ -78,25 +53,21 @@
                 unselectTree(SyllabusService.getSyllabus());
             }
 
-            // niveau et position
-            // ex : [2, 1, 3], dans l'arbre, 2ème élément, puis 1er élément, puis 3ème élément
+            // Level and position
+            // ex : [2, 1, 3], in the syllabus tree, 2nd element on the 1st level,
+            // then 1st element on the 2nd level, finally 3rd element on the 3rd level
             var emplacement = {
                 'emplacement' : []
             }; 
             var tmpEmplacement = {
                 'emplacement' : []
             };
-            // var emplacement = {
-            //     'niveau' : 0,
-            //     'position' : 0
-            // };
-            // var tmpLevel = 0;
-            // var tmpPosition = 0;
             var selectedItem = getItemFromId(SyllabusService.getSyllabus(), $item.id, emplacement, tmpEmplacement);
 
+            // set selected item
             this.selectedItem = $item;     
             $item.$selected = true;
-            $item.$emplacement = emplacement; // mémorise l'emplacement de l'élément
+            $item.$emplacement = emplacement; // memorize the place of the element
 
 
             $timeout(function() {
@@ -111,6 +82,12 @@
 
 	};
 
+    /**
+     * Compare two arrays and return true if there are equals
+     * @param {Array} $tab1 First array
+     * @param {Array} $tab2 Second array
+     * @param {Boolean} $tab2 Second array
+     */
     var arrayEquals = function($tab1, $tab2) {
         if ($tab1.length === $tab2.length && $tab1.length > 0) { 
             for (var i = 0; i< $tab1.length; i++) {
@@ -133,19 +110,17 @@
      * @return {Object} Returns the found element or undefined
      */
     var getItemFromEmplacement = function($rootTree, $emplacement, $tmpEmplacement) {
-        
-        // on regarde tous les éléments hormis l'élément racine
+  
+        // We look every element except the root element (which is the syllabus)
         if (SyllabusService.isSyllabusElement($rootTree) && 
             arrayEquals($emplacement.emplacement, $tmpEmplacement.emplacement) === true ) {
             return $rootTree;
         } else {
 
             if ($rootTree.elements) {
-                // $tmpLevel++ ;
                 for (var i = 0; i < $rootTree.elements.length; i++){
                     var newTmpEmplacement = { 'emplacement' : $tmpEmplacement.emplacement.slice() };
                     newTmpEmplacement.emplacement.push(i);
-                    // $tmpPosition = i;
                     var resultat = getItemFromEmplacement($rootTree.elements[i], $emplacement, newTmpEmplacement);
                     if (resultat) {
                         return resultat;
@@ -168,9 +143,7 @@
         
         // compare element id
         if ($rootTree.id === $id && SyllabusService.isSyllabusElement($rootTree)) {
-            // $emplacement.niveau = $tmpLevel;
-            // $emplacement.position = $tmpPosition;
-            $emplacement.emplacement = $tmpEmplacement.emplacement.slice();
+            $emplacement.emplacement = angular.copy($tmpEmplacement.emplacement);
             return $rootTree;
         } else {
 
@@ -192,8 +165,8 @@
     };
 
     /**
-     * Met à jour l'item sélectionné à partir d'un identifiant d'élément
-     * @param {Number} $id Identifiant de l'élément
+     * Set the selected item from a given element id
+     * @param {Number} $id Id of the element
      */
     this.setSelectedItemFromId = function($id){
         var emplacement = {
@@ -211,15 +184,13 @@
     };
 
     /**
-     * Met à jour l'item sélectionné à partir de l'emplacement de l'élément
-     * @param {Number} $emplacement Emplacement de l'élément
+     * Set the selected item from a given place
+     * @param {Number} $emplacement Place of the element
      */
     this.setSelectedItemFromEmplacement = function($emplacement){
         var tmpEmplacement = {
             'emplacement' : []
         }; 
-        // var tmpLevel = 0;
-        // var tmpPosition = 0;
         var selectedItem = getItemFromEmplacement(SyllabusService.getSyllabus(), $emplacement, tmpEmplacement);
 
         this.selectedItem = selectedItem;
@@ -227,12 +198,20 @@
         this.selectedItem.$emplacement = $emplacement;
     };
 
-    this.setViewedItem = function($item) {
-        this.viewedItem = $item;
+    /**
+     * Mobile menu : Set the viewed element
+     * @param {Object} $item Element
+     */
+    this.setViewedElement = function($element) {
+        this.viewedElement = $element;
     };
 
-    this.getViewedItem = function() {
-        return this.viewedItem;
+    /**
+     * Mobile menu : Get the viewed element
+     * @return {Object} The viewesd element
+     */
+    this.getViewedElement = function() {
+        return this.viewedElement;
     };
 
 }]);
