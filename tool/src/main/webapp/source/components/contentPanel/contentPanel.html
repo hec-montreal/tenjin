@@ -3,8 +3,8 @@
 
     <!-- Menu ajout -->
     <div data-ng-if="syllabusService.syllabus.$writePermission">
-        <div id="menu-ajout" data-add-element-menu="treeService.selectedItem"  class="container-menu-ajout"></div> 
-        <!-- <add-element-menu id="menu-ajout" [element]="treeService.selectedItem"  class="container-menu-ajout"></div>  -->
+        <!-- <div id="menu-ajout" data-add-element-menu="treeService.selectedItem"  class="container-menu-ajout"></div>  -->
+        <add-element-menu id="menu-ajout" [element]="treeService.selectedItem"  class="container-menu-ajout"></div> 
     </div> 
 
     <!-- Titre -->
@@ -20,7 +20,7 @@
       <ol ui-tree-nodes="" ng-model="treeService.selectedItem.elements" class="liste-element">
         <li ng-repeat="item in treeService.selectedItem.elements" ui-tree-node >
             
-            <!-- Page et Feuille -->
+            <!-- Page and Leaf -->
             <div data-content-panel-directive="item" index="$index"></div>
 
             <ol ui-tree-nodes="" data-ng-model="item.elements" class="liste-element liste-element-feuille" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite' || item.type === 'rubric'" >

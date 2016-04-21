@@ -4,11 +4,6 @@
     var opensyllabusApp = angular.module('opensyllabus', [ "templateModule", "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router" , "checklist-model"]);    
 }
 
-// TEST VIEWS HTML
-// var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngCkeditor", "ngFileUpload", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router" , "checklist-model"]);
-// MOCKUP sans CKEDITOR
-// var opensyllabusApp = angular.module('opensyllabus', [ "templateModule", "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router" , "checklist-model"]);
-
 opensyllabusApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function ($compileProvider, tmhDynamicLocaleProvider ) {
     'use strict';
 
@@ -86,9 +81,3 @@ opensyllabusApp.run( ['editableOptions', '$httpBackend', function(editableOption
 
 // Création du module template
 var templateModule = angular.module("templateModule", []);
-
-
-// resize frame (should be done also whenever we change content)
-// if (window.frameElement) {
-//     setMainFrameHeight(window.frameElement.id);
-// }

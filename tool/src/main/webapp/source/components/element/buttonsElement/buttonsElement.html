@@ -1,6 +1,7 @@
 ﻿<div class="buttons">
     <!-- Ajout -->
-    <span data-ng-if="buttonsElementCtrl.element.type === 'rubric' || buttonsElementCtrl.element.type === 'composite'" data-add-element-menu="buttonsElementCtrl.element"  class="container-menu-ajout-rubric" ></span>
+    <!-- <span data-ng-if="buttonsElementCtrl.element.type === 'rubric' || buttonsElementCtrl.element.type === 'composite'" data-add-element-menu="buttonsElementCtrl.element"  class="container-menu-ajout-rubric" ></span> -->
+    <add-element-menu data-ng-if="buttonsElementCtrl.element.type === 'rubric' || buttonsElementCtrl.element.type === 'composite'" [element]="buttonsElementCtrl.element"  class="container-menu-ajout-rubric" ></add-element-menu>
 
     <!-- Edition -->
     <span class="picto-edit" data-ng-click="!buttonsElementCtrl.disabled && buttonsElementCtrl.edit(buttonsElementCtrl.element);" data-ng-if="!buttonsElementCtrl.noedit"></span>   

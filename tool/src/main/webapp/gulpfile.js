@@ -1,7 +1,6 @@
 'use strict';
 
 var gulp         = require('gulp'),
-    connect      = require('gulp-connect'),
     gutil        = require('gulp-util'),
     sass         = require('gulp-ruby-sass'),
     autoprefixer = require('gulp-autoprefixer'),
@@ -20,12 +19,6 @@ gulp.task('img', function() {
   return gulp.src('./source/img/**/*')
   .pipe(gulp.dest( './dest/img'));
 });
-
-// Lib task
-// gulp.task('lib', function() {
-//   return gulp.src('./source/lib/**/*')
-//   .pipe(gulp.dest( './dest/lib'));
-// });
 
 // Locale  task
 gulp.task('locale', function() {
@@ -94,20 +87,10 @@ gulp.task('jsp', function() {
 // Template cache task
 gulp.task('viewscache', function () {
   return gulp.src(['./source/components/**/*.html'])
-  // return gulp.src(['./source/components/contentPanel/*.html', './source/components/leftMenu/*.html'])
     .pipe(templateCache({ module: 'templateModule' }))
     .pipe(gulp.dest('./source/js'));
 });
 
-// Views task
-// gulp.task('views', function() {
-//   return gulp.src('./source/components/**/*.html')
-//   .pipe(gulp.dest('./dest/views'));
-// });
-
-// gulp.task('embed', function() {
-
-// });
 
 //Ts task
 gulp.task('ts', function() {
@@ -155,13 +138,7 @@ gulp.task('tools', function() {
     .pipe(gulp.dest('./dest/tools'));
 });
 
-// gulp.task('sass', function () {
-//   return sass('./source/scss/*.scss')
-//     .on('error', sass.logError)
-//     .pipe(gulp.dest('css'));
-//     // .pipe(connect.reload());
-// });
-
+//sass task
 gulp.task('sass', function () {
   return sass('./source/components/opensyllabus/opensyllabus.scss', { sourcemap: true })
     .on('error', sass.logError)
@@ -183,7 +160,6 @@ gulp.task('copy', function () {
 // Watch our changes
 gulp.task('watch', function(){
   //html
-  gulp.watch(['*.html'], ['html']);
   gulp.watch(['./source/img/**/*'], ['img']);
   gulp.watch(['./source/js/**/*.ts', './source/components/**/*.ts'], ['ts']);
   gulp.watch(['./source/js/**/*.js', './source/components/**/*.js'], ['js']);
@@ -207,14 +183,6 @@ gulp.task('deploy-maven',['jslib', 'csslib', 'fonts', 'locale', 'img', 'jsdeploy
 });
 
 
-gulp.task('connect', function() {
-  connect.server({
-    root: ["."],
-    port: 8888,
-    livereload: true
-  });
-});
  
 // Start the tasks
-// gulp.task('default');
-gulp.task('default', ['connect', 'watch']);
+gulp.task('default', ['watch']);

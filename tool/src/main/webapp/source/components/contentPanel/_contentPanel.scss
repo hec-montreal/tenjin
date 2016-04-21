@@ -52,15 +52,15 @@
 @media(max-width: 767px) {
 
     .content-panel { 
-        border-left : none;
+        .content-panel-section {
+            padding: 0;   
+            border: none;
+            box-shadow: none;
+        }
     }
         
     ol.liste-element.ng-pristine.ng-untouched.ng-valid.ng-scope.angular-ui-tree-nodes {
         padding-left: 0;
-    }
-
-    .content-panel-section {
-        padding: 0;     
     }
 
 }

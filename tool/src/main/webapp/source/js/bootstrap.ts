@@ -10,7 +10,7 @@ opensyllabusApp.directive('textElement', adapter.downgradeNg2Component(TextEleme
 opensyllabusApp.directive('hyperlinkElement', adapter.downgradeNg2Component(HyperlinkElementComponent));
 
 // downgrade text element directive to angular 1 context
-// opensyllabusApp.directive('addElementMenu', adapter.downgradeNg2Component(AddElementComponent));
+opensyllabusApp.directive('addElementMenu', adapter.downgradeNg2Component(AddElementComponent));
 
 
 
