@@ -14,7 +14,7 @@ import {DROPDOWN_DIRECTIVES} from '../../node_modules/ng2-bootstrap/ng2-bootstra
       <!-- Single button with keyboard nav -->
       <div [ngClass]="{ 'open' : showMenuAjouter}">
           <div class="btn-group" dropdown keyboardNav="true">
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" dropdownToggle>
+            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" (click)="checkRubricsAlreadyPresent()" dropdownToggle>
               <span class="glyphicon glyphicon-plus-sign"></span>
               <span class="ajouter-libelle">Ajouter</span>
               <span class="caret"></span>
@@ -54,6 +54,7 @@ export class AddElementComponent {
         this.status = { isopen: true };
   
     }
+
 
     addElement($type) {
 
@@ -143,16 +144,16 @@ export class AddElementComponent {
         // if there are elements and the first one is a rubric ( so the others would be rubric aswell )
         if (this.element.elements) {
             // reinit
-            for (var k = 0; k < this.syllabusService.template[this.element.templateStructureId].length; k++) {
-                this.syllabusService.template[this.element.templateStructureId][k].alreadyPresent = false;
+            for (var k = 0; k < this.syllabusService.template[this.element.templateStructureId].elements.length; k++) {
+                this.syllabusService.template[this.element.templateStructureId].elements[k].alreadyPresent = false;
             }
             // mark rubric already present
             for (var i = 0; i < this.element.elements.length; i++) {
-                for (var j = 0; j < this.syllabusService.template[this.element.templateStructureId].length; j++) {
+                for (var j = 0; j < this.syllabusService.template[this.element.templateStructureId].elements.length; j++) {
                     // check if the rubric is already present
-                    var ruleElement = this.syllabusService.template[this.element.templateStructureId][j];
-                    if (ruleElement.id === this.element.elements[i].templateStructureId) {
-                        this.syllabusService.template[this.element.templateStructureId][j].alreadyPresent = true;
+                    var ruleElement = this.syllabusService.template[this.element.templateStructureId].elements[j];
+                    if (this.element.elements[i].type === 'rubric' && ruleElement.id === this.element.elements[i].templateStructureId) {
+                        this.syllabusService.template[this.element.templateStructureId].elements[j].alreadyPresent = true;
                         break;
                     }
                 }

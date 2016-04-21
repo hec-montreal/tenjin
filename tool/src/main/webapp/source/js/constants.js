@@ -1,7 +1,7 @@
 ﻿
 opensyllabusApp.constant('config', {
 
-    mockUp: true,
+    mockUp: false,
     types : {
         'text' : {
             'type': 'text',
