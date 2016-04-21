@@ -1,13 +1,13 @@
 ﻿
-opensyllabusApp.directive('coursElementForm', function (){
+opensyllabusApp.directive('courseElementForm', function (){
     'use strict';
 
     return {
         scope: {
-            element: '=coursElementForm'
+            element: '=courseElementForm'
         },
         restrict: 'A',
-        templateUrl: 'form/coursElementForm/coursElementForm.html',
+        templateUrl: 'form/courseElementForm/courseElementForm.html',
         controller: function ($scope) {
 
         },
