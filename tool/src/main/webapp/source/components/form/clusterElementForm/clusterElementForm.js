@@ -1,13 +1,13 @@
 ﻿
-opensyllabusApp.directive('regroupementElementForm', function (){
+opensyllabusApp.directive('clusterElementForm', function (){
     'use strict';
 
     return {
         scope: { 
-            element: '=regroupementElementForm'
+            element: '=clusterElementForm'
         },
         restrict: 'A',
-        templateUrl: 'form/regroupementElementForm/regroupementElementForm.html',
+        templateUrl: 'form/clusterElementForm/clusterElementForm.html',
         controller: function ($scope) {
 
             var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';

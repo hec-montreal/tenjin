@@ -56,7 +56,7 @@ export class AddElementComponent {
     }
 
     addElement($type) {
-        debugger;
+
         console.log("type : " + $type.type);
         this.isOpen = false;
 
@@ -71,8 +71,7 @@ export class AddElementComponent {
             //     SyllabusService.addElement($scope.element, $scope.parent);
             //     // sauvegarde du plan de cours + l'élément en cours
             // }
-                    
-            // Création    
+ 
             // Création    
             var element = {
                 'attributes': {},

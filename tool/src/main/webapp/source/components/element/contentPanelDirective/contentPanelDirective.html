@@ -8,7 +8,7 @@
         <buttons-element data-ng-if="syllabusService.syllabus.$writePermission" data-element="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" class="buttons-elements"></buttons-element>
 
         <!-- élément de type composite --> 
-        <div data-ng-switch-when="composite" data-regroupement-element="element"></div>
+        <div data-ng-switch-when="composite" data-cluster-element="element"></div>
         <!-- élément de type lecture -->
         <div data-ng-switch-when="lecture" data-course-element="element"></div>
         <!-- élément de type tutorial -->
@@ -59,13 +59,6 @@
 
     </div>
 
-
-
-<!--     <ol ui-tree-nodes="" data-ng-model="element.elements" data-ng-class="{hidden: collapsed, 'liste-element': true}" data-ng-if="element.type === 'composite' || element.type === 'rubric'" >
-        <li data-ng-repeat="element in element.elements" ui-tree-node>
-            <div data-content-panel-directive="element" index="index"></div>
-        </li>
-    </ol> -->
 
 </div>
 
