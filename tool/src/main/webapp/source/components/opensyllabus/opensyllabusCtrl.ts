@@ -14,6 +14,14 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
     $scope.planLoaded = false;
     $scope.templateLoaded = false;
 
+    $scope.loadingErrors = {
+        'syllabus': false,
+        'template': false,
+        'resources': false,
+        'tools': false,
+        'citations': false
+    };
+
     // check device and show mobile menu or not
     var device = $scope.responsiveService.getDevice();
     if (device === "mobile") {
@@ -83,6 +91,80 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
         // MODE CONNECTED
         // show loader
         $scope.infos.working = true;
+
+
+        var loadSyllabusTemplateResourcesTools = function($siteId, $syllabusId?) {
+            return $q.allSettled([
+                SyllabusService.loadSyllabus($syllabusId).$promise, 
+                SyllabusService.loadTemplate().$promise,
+                ResourcesService.loadResources($siteId).$promise,
+                SakaiToolsService.loadToolEntities($siteId).$promise]).then(function(data) {
+
+                // LOAD SYLLABUS
+                if (data[0].state === "fulfilled") {
+
+                    SyllabusService.setSyllabus(data[0].value);
+                    // Hide items from mobile menu
+                    SyllabusService.hideItemsInit();
+
+                } else if (data[0].state === "rejected") {
+                    if (data[0].reason.status === 404) {
+                        // load le contenu de la réponse avec statut 404: c'est un plan de cours vide
+                        SyllabusService.setSyllabus(data[0].reason.data);
+                    } else {
+                        $scope.planFailed = true;
+                    }
+                }
+
+                // LOAD TEMPLATE
+                if (data[1].state === "fulfilled") {
+                    // set template
+                    SyllabusService.setTemplate(data[1].value);
+                } else if (data[1].state === "rejected") {
+                    $scope.templateFailed = true;
+                }
+
+                // LOAD RESOURCES
+                if (data[2].state === "fulfilled") {
+                    // set resources
+                    ResourcesService.setResources(data[2].value.content_collection[0]);
+                } else if (data[2].state === "rejected") {
+                    $scope.loadingErrors.resources = true;
+                }
+
+                // LOAD SAKAI TOOLS
+                if (data[3].state === "fulfilled") {
+                    // set sakai tools               
+                    SakaiToolsService.setToolsEntities(data[3].value);
+                } else if (data[3].state === "rejected") {
+                    $scope.loadingErrors.tools = true;
+                }
+
+                if (!$scope.planFailed) {
+                    // Select the first element by default (caution : have to be done after the load of syllabus + template )
+                    if (SyllabusService.syllabus.elements.length > 0) {
+                        TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
+                    }
+
+                    // TEST INTERVAL SAUVEGARDE PLAN DE COURS
+                    // SyllabusService.startUpdateProcess(5000);
+                    // $interval( $scope.updateSyllabus, 5000);
+
+                    $timeout(function() {
+                        // anything you want can go here and will safely be run on the next digest.
+                        // resize frame (should be done also whenever we change content)
+                        if (window.frameElement) {
+                            setMainFrameHeight(window.frameElement.id);
+                        }
+                    });
+                }
+
+
+            }, function(error) {
+                console.log('erreur get syllabus');
+
+            });
+        };
 
         var loadSyllabusAndTemplate = function($syllabusId?){
             return $q.allSettled([SyllabusService.loadSyllabus($syllabusId).$promise, SyllabusService.loadTemplate().$promise]).then(function(data) {
@@ -185,16 +267,25 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
 
 
         var syllabusId = $state.params.id || -1;
+        var siteId = $scope.userService.getProfile().site.courseId;
 
-        // Load the syllabus, then the template, 
+        // Load the syllabus, then the template, the the resources
         // then the citations, then the sakai tools
-        loadSyllabusAndTemplate(syllabusId)
-        .then(loadResources)
-        .then(loadCitations)
-        .then(loadSakaiTools)
-        .finally(function() {
-            $scope.infos.working = false;
-        });
+        // loadSyllabusAndTemplate(syllabusId)
+        // .then(loadResources)
+        // .then(loadCitations)
+        // .then(loadSakaiTools)
+        // .finally(function() {
+        //     $scope.infos.working = false;
+        // });
+
+
+        loadSyllabusTemplateResourcesTools(siteId, syllabusId)
+            .then(loadCitations)
+            .finally(function() {
+                $scope.infos.working = false;
+            });
+
 
 
     }

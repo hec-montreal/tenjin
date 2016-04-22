@@ -145,7 +145,7 @@ gulp.task('sass', function () {
     .pipe(autoprefixer({
             browsers: ['last 2 versions']
         }))
-    .pipe(sourcemaps.write())
+    // .pipe(sourcemaps.write())
     .pipe(gulp.dest( './dest/css'));
 });
 
