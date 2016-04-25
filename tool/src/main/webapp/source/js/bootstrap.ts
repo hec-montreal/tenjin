@@ -16,6 +16,10 @@ opensyllabusApp.directive('addElementMenu', adapter.downgradeNg2Component(AddEle
 opensyllabusApp.directive('imageElement', adapter.downgradeNg2Component(ImageElementComponent));
 
 
+// downgrade text element directive to angular 1 context
+opensyllabusApp.directive('documentElement', adapter.downgradeNg2Component(DocumentElementComponent));
+
+
 
 // downgrade buttons element directive to angular 1 context
 // opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));

@@ -26,7 +26,7 @@
 
         <!-- <div data-dyn-attr="data-text-element" data-element="element"></div> -->
         <!-- élément de type document -->
-        <div data-ng-switch-when="document" data-document-element="element"></div>
+        <document-element data-ng-switch-when="document" [element]="element"></document-element>
         <!-- élément de type référence bibliographique -->
         <div data-ng-switch-when="citation" data-biblio-element="element"></div>
         <!-- élément de type hyperlien -->
