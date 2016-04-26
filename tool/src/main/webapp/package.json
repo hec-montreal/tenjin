@@ -32,7 +32,7 @@
     "gulp-typescript": "^2.10.0",
     "gulp-util": "^3.0.6",
     "modernizr": "^3.3.1",
-    "ng2-bootstrap": "^1.0.13",
+    "ng2-bootstrap": "1.0.13",
     "reflect-metadata": "0.1.2",
     "ts-loader": "^0.8.2",
     "tsd": "0.6.5",
