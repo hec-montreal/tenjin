@@ -11,8 +11,8 @@
             <!-- </a> -->
         </div>
         <div class="row"> 
-            <a [href]="resource.url " target="_blank" class="col-sm-3 col-xs-12 link-image">
-                <img [src]="resource.url" [alt]="element.title" [title]="element.title" />
+            <a [href]="resource.url" target="_blank" class="col-sm-3 col-xs-12 link-image">
+                <img [src]="resource.url" [alt]="(element.title != null ? element.title : '')" [title]="element.title" />
             </a> 
 
             <span [innerHTML]="element.description" class="col-sm-9 col-xs-12 comment"></span>

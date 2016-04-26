@@ -3,21 +3,24 @@
 
 var adapter = new UpgradeAdapter();
 
-// downgrade text element directive to angular 1 context
+// downgrade directive to angular 1 context
 opensyllabusApp.directive('textElement', adapter.downgradeNg2Component(TextElementComponent));
 
-// downgrade text element directive to angular 1 context
+// downgrade directive to angular 1 context
 opensyllabusApp.directive('hyperlinkElement', adapter.downgradeNg2Component(HyperlinkElementComponent));
 
-// downgrade text element directive to angular 1 context
+// downgrade directive to angular 1 context
 opensyllabusApp.directive('addElementMenu', adapter.downgradeNg2Component(AddElementComponent));
 
-// downgrade text element directive to angular 1 context
+// downgrade directive to angular 1 context
 opensyllabusApp.directive('imageElement', adapter.downgradeNg2Component(ImageElementComponent));
 
 
-// downgrade text element directive to angular 1 context
+// downgrade directive to angular 1 context
 opensyllabusApp.directive('documentElement', adapter.downgradeNg2Component(DocumentElementComponent));
+
+// downgrade directive to angular 1 context
+// opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
 
 
 
@@ -27,7 +30,7 @@ opensyllabusApp.directive('documentElement', adapter.downgradeNg2Component(Docum
 // const ButtonsElement = adapter.upgradeNg1Component('buttonsElement');
 
 // upgrade to angular 2 variables 
-adapter.upgradeNg1Provider('variables');
+adapter.upgradeNg1Provider('variables'); 
 
 // upgrade to angular 2 SyllabusService 
 adapter.upgradeNg1Provider('SyllabusService');

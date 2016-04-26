@@ -22,6 +22,8 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
         'citations': false
     };
 
+    $scope.errorLoading = false;
+
     // check device and show mobile menu or not
     var device = $scope.responsiveService.getDevice();
     if (device === "mobile") {
@@ -112,7 +114,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
                         // load le contenu de la réponse avec statut 404: c'est un plan de cours vide
                         SyllabusService.setSyllabus(data[0].reason.data);
                     } else {
-                        $scope.planFailed = true;
+                        $scope.errorLoading = true;
                     }
                 }
 
@@ -121,7 +123,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
                     // set template
                     SyllabusService.setTemplate(data[1].value);
                 } else if (data[1].state === "rejected") {
-                    $scope.templateFailed = true;
+                    $scope.errorLoading = true;
                 }
 
                 // LOAD RESOURCES
@@ -129,7 +131,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
                     // set resources
                     ResourcesService.setResources(data[2].value.content_collection[0]);
                 } else if (data[2].state === "rejected") {
-                    $scope.loadingErrors.resources = true;
+                    $scope.errorLoading = true;
                 }
 
                 // LOAD SAKAI TOOLS
@@ -137,10 +139,10 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
                     // set sakai tools               
                     SakaiToolsService.setToolsEntities(data[3].value);
                 } else if (data[3].state === "rejected") {
-                    $scope.loadingErrors.tools = true;
+                    $scope.errorLoading = true;
                 }
 
-                if (!$scope.planFailed) {
+                if (!$scope.errorLoading) {
                     // Select the first element by default (caution : have to be done after the load of syllabus + template )
                     if (SyllabusService.syllabus.elements.length > 0) {
                         TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
@@ -157,6 +159,9 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
                             setMainFrameHeight(window.frameElement.id);
                         }
                     });
+
+                } else {
+                    AlertService.display('danger');
                 }
 
 
@@ -166,59 +171,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
             });
         };
 
-        var loadSyllabusAndTemplate = function($syllabusId?){
-            return $q.allSettled([SyllabusService.loadSyllabus($syllabusId).$promise, SyllabusService.loadTemplate().$promise]).then(function(data) {
-
-                // data contient d'abord le résultat de la première requête
-                if (data[0].state === "fulfilled") {
-
-                    SyllabusService.setSyllabus(data[0].value);
-                    // Hide items from mobile menu
-                    SyllabusService.hideItemsInit();
-  
-                } else if (data[0].state === "rejected") {
-                    if (data[0].reason.status === 404) {
-                        // load le contenu de la réponse avec statut 404: c'est un plan de cours vide
-                        SyllabusService.setSyllabus(data[0].reason.data);
-                    } else {
-                        $scope.planFailed= true;
-                    }
-                }
-
-                if (data[1].state === "fulfilled") {
-                    // MOCKUP template
-                    SyllabusService.setTemplate(data[1].value);
-                } else if (data[1].state === "rejected") {
-                    $scope.templateFailed = true;
-                }
-                      
-                   
-                if ( !$scope.planFailed ) {
-                    // sélection du premier élément par défaut (attention : après chargement du plan de cours + template)
-                    if (SyllabusService.syllabus.elements.length > 0 ) {
-                        TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
-                    }
-
-                    // TEST INTERVAL SAUVEGARDE PLAN DE COURS
-                    // SyllabusService.startUpdateProcess(5000);
-                    // $interval( $scope.updateSyllabus, 5000);
-
-                    $timeout(function() {
-                        // anything you want can go here and will safely be run on the next digest.
-                        // resize frame (should be done also whenever we change content)
-                        if (window.frameElement) {
-                            setMainFrameHeight(window.frameElement.id);
-                        }
-                    });
-                }
-
-
-        	}, function(error) {
-                console.log('erreur get syllabus');
-
-       	    });
-        };
-
+        
         var loadSakaiTools = function(){
             return SakaiToolsService.loadToolEntities(SyllabusService.syllabus.siteId).$promise.then(function($data){
                 $rootScope.$broadcast('TOOLS_LOADED');

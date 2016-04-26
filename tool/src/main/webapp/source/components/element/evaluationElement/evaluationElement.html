@@ -3,7 +3,7 @@
        
         {{element.$numero}} - <a href="" data-ng-click="treeService.setSelectedItem(element);">{{element.title}}</a>
         <span data-ng-if="element.attributes.evalWeight"> ({{element.attributes.evalWeight}}%)</span>
-        <span data-ng-if="syllabusService.syllabus.$writePermission" data-buttons-element="element" noedit="true" class="buttons-elements"></span>
+        <buttons-element data-ng-if="syllabusService.syllabus.$writePermission" [element]="element" noedit="true" class="buttons-elements"></buttons-element>
 
 		<span  data-ng-if="element.attributes.evalDate && element.type === 'evaluation'" class="eval-date">{{'EVALUATION_DATE' | translate}} {{element.attributes.evalDate | date:'dd/MM/yyyy'}}</span>
         
