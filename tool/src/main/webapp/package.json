@@ -39,7 +39,7 @@
     "typescript": "^1.8.7",
     "vinyl-named": "^1.1.0",
     "webpack-stream": "^3.2.0",
-    "zone.js": "^0.6.10"
+    "zone.js": "0.6.11"
   },
   "devDependencies": {
     "gulp-uglify": "^1.5.3"
