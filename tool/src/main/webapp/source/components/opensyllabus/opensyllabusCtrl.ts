@@ -11,17 +11,6 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
     $scope.userService = UserService;
     $scope.responsiveService = ResponsiveService;
 
-    $scope.planLoaded = false;
-    $scope.templateLoaded = false;
-
-    $scope.loadingErrors = {
-        'syllabus': false,
-        'template': false,
-        'resources': false,
-        'tools': false,
-        'citations': false
-    };
-
     $scope.errorLoading = false;
 
     // check device and show mobile menu or not
@@ -131,7 +120,8 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
                     // set resources
                     ResourcesService.setResources(data[2].value.content_collection[0]);
                 } else if (data[2].state === "rejected") {
-                    $scope.errorLoading = true;
+                    // TODO : loading resources fails too much at the moment....
+                    // $scope.errorLoading = true;
                 }
 
                 // LOAD SAKAI TOOLS
