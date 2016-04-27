@@ -1,5 +1,13 @@
-﻿import {UpgradeAdapter} from 'angular2/upgrade';
-// import {TextElementComponent} from './hero-detail.component';
+﻿// import {UpgradeAdapter} from '../../node_modules/angular2/upgrade';
+import {UpgradeAdapter} from 'angular2/upgrade';
+
+import {TextElementComponent} from './element/textElement/textElement';
+import {HyperlinkElementComponent} from './element/hyperlinkElement/hyperlinkElement';
+import {AddElementComponent} from './element/addElementMenu/addElementMenu';  
+import {ImageElementComponent} from './element/imageElement/imageElement';
+import {DocumentElementComponent} from './element/documentElement/documentElement';
+import {ButtonsElementComponent} from './element/buttonsElement/buttonsElement';
+import {ClusterElementComponent} from './element/clusterElement/clusterElement';
 
 var adapter = new UpgradeAdapter();
 
@@ -17,10 +25,14 @@ opensyllabusApp.directive('imageElement', adapter.downgradeNg2Component(ImageEle
 
 
 // downgrade directive to angular 1 context
-opensyllabusApp.directive('documentElement', adapter.downgradeNg2Component(DocumentElementComponent));
+opensyllabusApp.directive('documentElement', adapter.downgradeNg2Component(DocumentElementComponent)); 
 
 // downgrade directive to angular 1 context
-// opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
+opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
+
+// downgrade directive to angular 1 context
+opensyllabusApp.directive('clusterElement', adapter.downgradeNg2Component(ClusterElementComponent));
+
 
 
 

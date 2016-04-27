@@ -3,7 +3,7 @@
 import {CORE_DIRECTIVES} from 'angular2/common';
 
 import {DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
-  
+   
 
 @Component({
     selector: 'add-element-menu',

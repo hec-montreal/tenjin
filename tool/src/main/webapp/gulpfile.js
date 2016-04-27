@@ -10,8 +10,10 @@ var gulp         = require('gulp'),
     templateCache = require('gulp-angular-templatecache'),
     // embedTemplates = require('gulp-angular-embed-templates'),
     uglify        = require('gulp-uglify'),
-    browserify    = require('gulp-browserify'),
-    ts            = require('gulp-typescript');
+    // browserify    = require('gulp-browserify'),
+    ts            = require('gulp-typescript'),
+    browserify    = require('browserify'),
+    source        = require('vinyl-source-stream');
  
 
 // Img task
@@ -94,7 +96,10 @@ gulp.task('viewscache', function () {
 
 //Ts task
 gulp.task('ts', function() {
-    return gulp.src([ 'source/js/**/*.ts', 'source/components/**/*.ts'])
+    return gulp.src([ 
+     'source/js/**/*.ts',
+     'source/components/**/*.ts'
+     ])
     // .pipe(embedTemplates())
     .pipe(ts({
       'experimentalDecorators' : true
@@ -104,26 +109,43 @@ gulp.task('ts', function() {
 
 
 //Js task
-gulp.task('js', ['viewscache'],  function() {
-    // return gulp.src([ 'source/js/**/*.js', 'source/components/**/*.js'])
-    return gulp.src([ "source/js/app.js", "source/components/**/*.js", "source/js/*.js", "source/js/services/*.js", "source/js/typescript/element/**/*.js", "source/js/typescript/opensyllabus/*.js", "source/js/typescript/bootstrap.js"  ])
-    // .pipe(embedTemplates())
+gulp.task('js', ['browserifywatch', 'viewscache'],  function() {    
+    return gulp.src([ "source/js/app.js", "source/components/**/*.js", "source/js/*.js", "source/js/services/*.js", "source/bundle.js" ])
     .pipe(concat('opensyllabus.js'))
-    .pipe(browserify({
-      insertGlobals : true
-    }))
-    .pipe(gulp.dest('./dest/js'));
+    .pipe(gulp.dest('./dest/js/'));
+});
+
+
+gulp.task('browserify', ['ts'], function () {
+  return browserify('./source/js/typescript/bootstrap.js')
+  .bundle()
+  .on('error', function(g){
+    gutil.log(g);
+  })
+  //Pass desired output filename to vinyl-source-stream
+  .pipe(source('bundle.js'))
+  .pipe(gulp.dest('./source/bundle'));
+
+});
+
+
+gulp.task('browserifywatch', function () {
+  return browserify('./source/js/typescript/bootstrap.js')
+  .bundle()
+  .on('error', function(g){
+    gutil.log(g);
+  })
+  //Pass desired output filename to vinyl-source-stream
+  .pipe(source('bundle.js'))
+  .pipe(gulp.dest('./source/bundle'));
+
 });
 
 //Js deploy task
-gulp.task('jsdeploy', ['ts', 'viewscache'], function() {
-    return gulp.src([ "source/js/app.js", "source/components/**/*.js", "source/js/*.js", "source/js/services/*.js", "source/js/typescript/element/**/*.js", "source/js/typescript/opensyllabus/*.js", "source/js/typescript/bootstrap.js"  ])
-    // .pipe(embedTemplates())
+gulp.task('jsdeploy', ['browserify', 'viewscache'], function() {    
+    return gulp.src([ "source/js/app.js", "source/components/**/*.js", "source/js/*.js", "source/js/services/*.js", "source/bundle/bundle.js" ])
     .pipe(concat('opensyllabus.js'))
-    .pipe(browserify({
-      insertGlobals : true
-    }))
-    .pipe(gulp.dest('./dest/js'));
+    .pipe(gulp.dest('./dest/js/'));
 });
 
 //web-inf task
@@ -162,7 +184,7 @@ gulp.task('watch', function(){
   //html
   gulp.watch(['./source/img/**/*'], ['img']);
   gulp.watch(['./source/js/**/*.ts', './source/components/**/*.ts'], ['ts']);
-  gulp.watch(['./source/js/**/*.js', './source/components/**/*.js'], ['js']);
+  gulp.watch(['!./source/js/bundle/bundle.js', './source/js/**/*.js', './source/components/**/*.js'], ['js']);
   gulp.watch(['./source/**/*.scss'], ['sass']);
   gulp.watch(['./source/index.jsp'], ['jsp']);
   gulp.watch(['./source/**/*.html'], ['js']); // on met les views dans un fichier js puis on lance js pour concatener le tout
@@ -173,10 +195,12 @@ gulp.task('watch', function(){
 
 
 
-gulp.task('deploy',['jslib', 'csslib', 'fonts', 'locale', 'img', 'jsdeploy', 'web-inf', 'sass', 'tools','jsp', 'copy'] , function(){
-	gutil.log('Source déployée sur tomcat!');
+gulp.task('copy-deploy',['deploy-maven'] , function(){
+  gutil.log('Source déployée sur tomcat!');
+  
+  return gulp.src(['./dest/**/*'])
+  .pipe(gulp.dest(config.tomcat));
 });
-
 
 gulp.task('deploy-maven',['jslib', 'csslib', 'fonts', 'locale', 'img', 'jsdeploy', 'web-inf', 'sass', 'tools','jsp'] , function(){
 	  gutil.log('Source déployée sur tomcat avec maven!');

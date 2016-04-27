@@ -72,7 +72,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
         var resources = mockup.resources;
         if (resources) {
             ResourcesService.setResources(mockup.resources.content_collection[0]);
-            $rootScope.$broadcast('RESOURCES_LOADED');
+            // $rootScope.$broadcast('RESOURCES_LOADED');
         }
 
         SyllabusService.working = false;
@@ -84,7 +84,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
         $scope.infos.working = true;
 
 
-        var loadSyllabusTemplateResourcesTools = function($siteId, $syllabusId?) {
+        var loadSyllabusTemplateResourcesTools = function($siteId, $syllabusId) {
             return $q.allSettled([
                 SyllabusService.loadSyllabus($syllabusId).$promise, 
                 SyllabusService.loadTemplate().$promise,
@@ -288,7 +288,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
             }
 
             // TEST INTERVAL SAUVEGARDE PLAN DE COURS
-            // SyllabusService.startUpdateProcess(5000);
+            // SyllabusService.startUpdateProcess(5000); 
             // $interval( $scope.updateSyllabus, 5000);
 
             $timeout(function() {

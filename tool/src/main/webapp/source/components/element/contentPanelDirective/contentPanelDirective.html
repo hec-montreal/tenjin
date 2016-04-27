@@ -5,11 +5,11 @@
     
 
         <!-- Display buttons -->
-        <buttons-element data-ng-if="syllabusService.syllabus.$writePermission" data-element="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" class="buttons-elements"></buttons-element>
-
+ <!--        <buttons-element data-ng-if="syllabusService.syllabus.$writePermission" data-element="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" class="buttons-elements"></buttons-element> -->
+        <buttons-element data-nodrag *ngIf="syllabusService.syllabus.$writePermission" [element]="element" [noedit]="!displayButtons.editButton()" [nodelete]="!displayButtons.deleteButton()" [nodrag]="!displayButtons.dragButton()" [disabled]="syllabusService.working" class="buttons-elements"></buttons-element>
 
         <!-- élément de type composite --> 
-        <div data-ng-switch-when="composite" data-cluster-element="element"></div>
+        <cluster-element data-ng-switch-when="composite" [element]="element"></cluster-element>
         <!-- élément de type lecture -->
         <div data-ng-switch-when="lecture" data-course-element="element"></div>
         <!-- élément de type tutorial -->
