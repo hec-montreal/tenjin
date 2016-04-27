@@ -1,8 +1,5 @@
 import {Component, Input, Inject} from 'angular2/core';
 
-// import {ButtonsElementComponent} from '../buttonsElement/buttonsElement';
-
-
 @Component({
     selector: 'cluster-element', 
     template: `
@@ -23,18 +20,12 @@ import {Component, Input, Inject} from 'angular2/core';
  
     </div> 
     `
-    // directives: [ButtonsElementComponent]
 })
 
 
 export class ClusterElementComponent {
 
     @Input() element: Object;
-
-    // Dependency injection example
-    // constructor( @Inject('variables') variables: variables) { 
-    //     this.variables = variables;
-    // }
 
     constructor( @Inject('TreeService') treeService: TreeService, @Inject('SyllabusService') syllabusService: SyllabusService) {
         this.treeService = treeService;

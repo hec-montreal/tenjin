@@ -20,7 +20,7 @@
         <div data-ng-switch-when="exam" data-evaluation-element="element" data-index="$index"></div>
 
         <!-- élément de type rubric -->
-        <div data-ng-switch-when="rubric" data-rubric-element="element"></div>
+        <rubric-element data-ng-switch-when="rubric" [element]="element"></rubric-element>
 
         <!-- élément de type texte -->
         <text-element data-ng-switch-when="text" [element]="element" ></text-element>

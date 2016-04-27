@@ -8,6 +8,7 @@ import {ImageElementComponent} from './element/imageElement/imageElement';
 import {DocumentElementComponent} from './element/documentElement/documentElement';
 import {ButtonsElementComponent} from './element/buttonsElement/buttonsElement';
 import {ClusterElementComponent} from './element/clusterElement/clusterElement';
+import {RubricElementComponent} from './element/rubricElement/rubricElement';
 
 var adapter = new UpgradeAdapter();
 
@@ -33,7 +34,8 @@ opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(Button
 // downgrade directive to angular 1 context
 opensyllabusApp.directive('clusterElement', adapter.downgradeNg2Component(ClusterElementComponent));
 
-
+// downgrade directive to angular 1 context
+opensyllabusApp.directive('rubricElement', adapter.downgradeNg2Component(RubricElementComponent));
 
 
 // downgrade buttons element directive to angular 1 context
