@@ -41,7 +41,7 @@
 
 
         <!-- élément de type lien vers outil -->
-        <div data-ng-switch-when="sakai_entity" data-tool-element="element"></div>
+        <tool-element data-ng-switch-when="sakai_entity" [element]="element"></tool-element>
 
         <div ng-switch-default>
             <!-- Affichage attributs -->

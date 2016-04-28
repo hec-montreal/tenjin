@@ -29,7 +29,7 @@ import {DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
        </div>
 
     `
-    // template: `<div>Coucou</div>`
+    // template: `<div>Coucou</div>` 
 }) 
 
 export class AddElementComponent {

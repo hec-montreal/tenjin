@@ -117,6 +117,7 @@ gulp.task('js', ['browserifywatch', 'viewscache'],  function() {
 
 
 gulp.task('browserify', ['ts'], function () {
+  // bootstrap.js is the entry point for now but at the end of the migration it should be app.js
   return browserify('./source/js/typescript/bootstrap.js')
   .bundle()
   .on('error', function(g){

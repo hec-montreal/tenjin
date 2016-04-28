@@ -9,6 +9,7 @@ import {DocumentElementComponent} from './element/documentElement/documentElemen
 import {ButtonsElementComponent} from './element/buttonsElement/buttonsElement';
 import {ClusterElementComponent} from './element/clusterElement/clusterElement';
 import {RubricElementComponent} from './element/rubricElement/rubricElement';
+import {ToolElementComponent} from './element/toolElement/toolElement';
 
 var adapter = new UpgradeAdapter();
 
@@ -37,6 +38,9 @@ opensyllabusApp.directive('clusterElement', adapter.downgradeNg2Component(Cluste
 // downgrade directive to angular 1 context
 opensyllabusApp.directive('rubricElement', adapter.downgradeNg2Component(RubricElementComponent));
 
+// downgrade directive to angular 1 context
+opensyllabusApp.directive('toolElement', adapter.downgradeNg2Component(ToolElementComponent));
+
 
 // downgrade buttons element directive to angular 1 context
 // opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
@@ -60,6 +64,9 @@ adapter.upgradeNg1Provider('AlertService');
 
 // upgrade to angular 2 ResourcesService 
 adapter.upgradeNg1Provider('ResourcesService');
+
+// upgrade to angular 2 SakaiToolsService 
+adapter.upgradeNg1Provider('SakaiToolsService');
 
 // upgrade to angular 2 config 
 adapter.upgradeNg1Provider('config');
