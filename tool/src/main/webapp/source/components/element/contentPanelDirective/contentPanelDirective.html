@@ -11,9 +11,9 @@
         <!-- élément de type composite --> 
         <cluster-element data-ng-switch-when="composite" [element]="element"></cluster-element>
         <!-- élément de type lecture -->
-        <div data-ng-switch-when="lecture" data-course-element="element"></div>
+        <course-element data-ng-switch-when="lecture" [element]="element"></course-element>
         <!-- élément de type tutorial -->
-        <div data-ng-switch-when="tutorial" data-course-element="element"></div>
+        <course-element data-ng-switch-when="tutorial" [element]="element"></course-element>
         <!-- élément de type evaluation -->
         <div data-ng-switch-when="evaluation" data-evaluation-element="element" data-index="$index"></div>
         <!-- élément de type exam -->

@@ -11,39 +11,23 @@ import {ClusterElementComponent} from './element/clusterElement/clusterElement';
 import {RubricElementComponent} from './element/rubricElement/rubricElement';
 import {ToolElementComponent} from './element/toolElement/toolElement';
 import {VideoElementComponent} from './element/videoElement/videoElement';
+import {CourseElementComponent} from './element/courseElement/courseElement';
 
 var adapter = new UpgradeAdapter();
 
-// downgrade directive to angular 1 context
+// downgrade directives to angular 1 context
 opensyllabusApp.directive('textElement', adapter.downgradeNg2Component(TextElementComponent));
-
-// downgrade directive to angular 1 context
 opensyllabusApp.directive('hyperlinkElement', adapter.downgradeNg2Component(HyperlinkElementComponent));
-
-// downgrade directive to angular 1 context
 opensyllabusApp.directive('addElementMenu', adapter.downgradeNg2Component(AddElementComponent));
-
-// downgrade directive to angular 1 context
 opensyllabusApp.directive('imageElement', adapter.downgradeNg2Component(ImageElementComponent));
-
-
-// downgrade directive to angular 1 context
 opensyllabusApp.directive('documentElement', adapter.downgradeNg2Component(DocumentElementComponent)); 
-
-// downgrade directive to angular 1 context
 opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
-
-// downgrade directive to angular 1 context
 opensyllabusApp.directive('clusterElement', adapter.downgradeNg2Component(ClusterElementComponent));
-
-// downgrade directive to angular 1 context
 opensyllabusApp.directive('rubricElement', adapter.downgradeNg2Component(RubricElementComponent));
-
-// downgrade directive to angular 1 context
 opensyllabusApp.directive('toolElement', adapter.downgradeNg2Component(ToolElementComponent));
-
-// downgrade directive to angular 1 context
 opensyllabusApp.directive('videoElement', adapter.downgradeNg2Component(VideoElementComponent));
+opensyllabusApp.directive('courseElement', adapter.downgradeNg2Component(CourseElementComponent));
+
 
 // downgrade buttons element directive to angular 1 context
 // opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));

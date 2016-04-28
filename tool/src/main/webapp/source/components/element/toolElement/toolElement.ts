@@ -6,7 +6,7 @@
     <div class="element tool">
 
          <div class="titre-element">
-            <a [href]="entity.url" target="_blank">
+            <a data-nodrag [href]="entity.url" target="_blank">
                 {{ entity.name }} 
             </a>
             <span class="tool-title">
