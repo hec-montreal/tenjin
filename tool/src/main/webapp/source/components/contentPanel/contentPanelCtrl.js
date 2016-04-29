@@ -29,17 +29,15 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
         item: TreeService.selectedItem,
 
         accept: function(sourceNodeScope, destNodesScope, destIndex) {
-            // test
-            return true;
 
-            // test si les noeuds proviennent du même arbre
+            // test if nodes come from the same tree
             if (sourceNodeScope.treeOptions.name === destNodesScope.treeOptions.name ) {
 
                 if (destNodesScope.item) {
 
                     if ( destNodesScope.item.type === 'composite' || destNodesScope.item.type === 'lecture' || destNodesScope.item.type === 'tutorial' || destNodesScope.item.type === 'evaluation' || destNodesScope.item.type === 'exam' ) {
 
-                        // on ne peut pas déplacer un composite dans un composite
+                        // a composite element can't be moved inside another composite element
                         if (sourceNodeScope.item.type === 'composite' && destNodesScope.item.type === 'composite')                                 {
                             return false;
                         } else {
@@ -48,14 +46,13 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
                         }
 
                     } else {
-                        // drag and drop entre éléments
-
+                        // drag and drop between elements
                         return true;
                     }
 
                 } else {
 
-                    // on est à la racine
+                    // root level
                     return true;
                 }
 
@@ -70,20 +67,20 @@ opensyllabusApp.controller('ContentPanelCtrl', ['$scope','$timeout', 'TreeServic
             var srcItem = event.source.nodesScope.item;
             var destItem = event.dest.nodesScope.item;
 
-            console.log('dropped');
+            // console.log('dropped');
 
-            if (srcItem && destItem && srcItem.id === destItem.id ) {
-                // ex : déplacement au sein d'une même rubrique
-                console.log("save une rubrique"); 
+            // TEST : save only some elements
+            // if (srcItem && destItem && srcItem.id === destItem.id ) {
+            //     // ex : déplacement au sein d'une même rubrique
+            //     console.log("save une rubrique"); 
 
-            } else{ 
-                // recherche ancêtre commun
-                console.log("save selected item"); 
+            // } else{ 
+            //     // recherche ancêtre commun
+            //     console.log("save selected item"); 
+            // }
 
-            }
 
-
-            // numerotation
+            // Numbering
             SyllabusService.numerotationSyllabus(SyllabusService.syllabus);
         },
 

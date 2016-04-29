@@ -3,7 +3,7 @@
 @Component({
     selector: 'rubric-element',
     template: `
-    <div class="composite">
+    <div class="composite rubric">
 
         <div class="titre-element element-page item-panel-composite"> 
             {{element.title}}

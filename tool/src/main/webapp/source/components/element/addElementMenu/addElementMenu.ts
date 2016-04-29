@@ -16,6 +16,7 @@ import {DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
           <div class="btn-group" dropdown keyboardNav="true">
             <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" (click)="checkRubricsAlreadyPresent()" dropdownToggle>
               <span class="glyphicon glyphicon-plus-sign"></span>
+              <!-- TODO : translate the label -->
               <span class="ajouter-libelle">Ajouter</span>
               <span class="caret"></span>
             </button> 
