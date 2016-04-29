@@ -16,7 +16,7 @@ import {AddElementComponent} from '../addElementMenu/addElementMenu';
         <span class="picto-edit" (click)="!disabled && edit(element);" *ngIf="!noedit"></span>   
 
         <!-- Delete -->
-        <span *ngIf="!nodelete" (click)="!disabled && confirmDelete(element);" [ngClass]="{ 'picto-delete' : !nodelete, 'picto-delete-disabled' : nodelete}" (click)="!disabled && confirmDelete(element);"></span>
+        <span *ngIf="!nodelete" (click)="!disabled && confirmDelete(element);" [ngClass]="{ 'picto-delete' : !nodelete, 'picto-delete-disabled' : nodelete}" ></span>
 
     </div> 
     `,
