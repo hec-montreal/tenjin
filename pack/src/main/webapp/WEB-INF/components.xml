@@ -52,7 +52,7 @@
 	</bean>
 	
     <bean name="ca.hec.opensyllabus2.api.SakaiProxy"
-        class="ca.hec.opensyllabus2.impl.SakaiProxyImpl" init-method="init" singleton="true">
+        class="ca.hec.opensyllabus2.impl.SakaiProxyImpl" init-method="init">
 <!--         <property name="courseManagementService"><ref bean="org.sakaiproject.coursemanagement.api.CourseManagementService"/></property> -->
 <!--         <property name="groupProvider"><ref bean="org.sakaiproject.authz.api.GroupProvider"/></property> -->
 <!--         <property name="privacyManager"><ref bean="org.sakaiproject.api.privacy.PrivacyManager"/></property> -->

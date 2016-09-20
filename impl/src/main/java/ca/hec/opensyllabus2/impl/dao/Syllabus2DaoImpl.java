@@ -36,7 +36,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		query += " order by syllabusElement.parentId, displayOrder";
 		
 		List<SyllabusElementMapping> mappings = 
-				getHibernateTemplate().find(query, syllabusId);
+				(List<SyllabusElementMapping>) getHibernateTemplate().find(query, syllabusId);
 
 		return mappings;
 	}
@@ -44,7 +44,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	@Override
 	public Syllabus getSyllabus(String siteId, String sectionId, Boolean common, boolean hidden) {
 		List<Syllabus> syllabi = 
-				getHibernateTemplate().find("from Syllabus where siteId = ? and common = ?", siteId, common);
+				(List<Syllabus>) getHibernateTemplate().find("from Syllabus where siteId = ? and common = ?", siteId, common);
 		Syllabus syllabus = syllabi.get(0);
 		syllabus.setElements(getStructuredSyllabusElements(syllabus.getId(), hidden));
 		return syllabi.get(0);
@@ -70,7 +70,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		List<Syllabus> syllabi = null;
 		
 		if (null != siteId) {
-			syllabi = getHibernateTemplate().find("from Syllabus where site_id = ? and common = ? ", siteId, true);
+			syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ? and common = ? ", siteId, true);
 		}
 		if(syllabi == null){
 			throw new NoSyllabusException();
@@ -90,9 +90,9 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 			// get all the syllabus
 			
 			if (commonRead || commonWrite) {
-				syllabi = getHibernateTemplate().find("from Syllabus where site_id = ?  order by createdDate asc", siteId);
+				syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ?  order by createdDate asc", siteId);
 			} else {
-				syllabi = getHibernateTemplate().find("from Syllabus where site_id = ? and common = 0 order by createdDate asc", siteId);
+				syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ? and common = 0 order by createdDate asc", siteId);
 			}
 
 		} else {
@@ -109,7 +109,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 			}
 			querySections += " ) ";
 
-			syllabi = getHibernateTemplate().find("from Syllabus syllabus where site_id = ? "+ querySections + " order by createdDate asc" , siteId );
+			syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus syllabus where site_id = ? "+ querySections + " order by createdDate asc" , siteId );
 		}	
 
 		return syllabi;
@@ -132,7 +132,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	@Override
 	public AbstractSyllabusElement getSyllabusElement(Long elementId) {
 		List<AbstractSyllabusElement> elements;
-		elements = getHibernateTemplate().find("from AbstractSyllabusElement where id = ?", elementId);
+		elements = (List<AbstractSyllabusElement>) getHibernateTemplate().find("from AbstractSyllabusElement where id = ?", elementId);
 		AbstractSyllabusElement element = elements.get(0);
 		element = getProvidedContent(element);
 		return element;
@@ -218,7 +218,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 	public void deleteElementAndMappings(AbstractSyllabusElement syllabusElement) {
 		
 		List<SyllabusElementMapping> mappings = 
-				getHibernateTemplate().find("from SyllabusElementMapping where syllabuselement_id = ?", syllabusElement.getId());
+				(List<SyllabusElementMapping>) getHibernateTemplate().find("from SyllabusElementMapping where syllabuselement_id = ?", syllabusElement.getId());
 		
 		getHibernateTemplate().deleteAll(mappings);
 		getHibernateTemplate().delete(syllabusElement);
@@ -231,7 +231,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		dc.add(Restrictions.eq("parentId", element.getId()));
 		dc.add(Restrictions.eq("common", false));
 		
-		List<Object> children = getHibernateTemplate().findByCriteria(dc, 0, 1);
+		List<Object> children = (List<Object>) getHibernateTemplate().findByCriteria(dc, 0, 1);
 		return children.size() > 0;
 	}
 	
@@ -241,7 +241,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		dc.add(Restrictions.eq("parentId", parentId));
 		dc.add(Restrictions.eq("templateStructureId", templateStructureId));
 		
-		List<SyllabusRubricElement> l = getHibernateTemplate().findByCriteria(dc);
+		List<SyllabusRubricElement> l = (List<SyllabusRubricElement>) getHibernateTemplate().findByCriteria(dc);
 		if (l.size() > 1) { 
 			// Error! TODO exception?
 			log.error("More than one rubric for the given parent id and template structure id! This is very bad");
@@ -258,13 +258,13 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 		DetachedCriteria dc = DetachedCriteria.forClass(SyllabusElementMapping.class);
 		dc.add(Restrictions.eq("syllabusElement", element));
 
-		return getHibernateTemplate().findByCriteria(dc);		
+		return (List<SyllabusElementMapping>) getHibernateTemplate().findByCriteria(dc);		
 	}
 
 	@Override
 	public SyllabusElementMapping addMappingToEndOfList(Long syllabusId, AbstractSyllabusElement element) {
 		
-		List<Integer> maxOrderArray = getHibernateTemplate().find(
+		List<Integer> maxOrderArray = (List<Integer>) getHibernateTemplate().find(
 				"select max(displayOrder) from SyllabusElementMapping mapping, AbstractSyllabusElement elem "
 				+ "where syllabusId = ? and elem.parentId = ?",
 				syllabusId, element.getParentId());
@@ -291,7 +291,7 @@ public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Da
 				+ "where childMapping.syllabusId = mapping.syllabusId and "
 				+ "childMapping.syllabusElement.parentId = mapping.syllabusElement.id)";
 				
-		List<SyllabusElementMapping> mappings = getHibernateTemplate().find(
+		List<SyllabusElementMapping> mappings = (List<SyllabusElementMapping>) getHibernateTemplate().find(
 				qry, syllabusElement.getId());
 		
 		return mappings;

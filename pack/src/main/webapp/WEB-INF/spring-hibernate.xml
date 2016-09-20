@@ -33,8 +33,7 @@
 			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
 			<bean
-				class="ca.hec.opensyllabus2.impl.dao.Syllabus2DaoImpl"
-				singleton="true" >
+				class="ca.hec.opensyllabus2.impl.dao.Syllabus2DaoImpl">
 
 				<property name="sessionFactory">
 					<ref
@@ -55,7 +54,7 @@
 		<property name="transactionManager"
 			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
-			<bean class="ca.hec.opensyllabus2.impl.dao.TemplateDaoImpl" singleton="true">
+			<bean class="ca.hec.opensyllabus2.impl.dao.TemplateDaoImpl">
 				<property name="sessionFactory">
 					<ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
 				</property>
