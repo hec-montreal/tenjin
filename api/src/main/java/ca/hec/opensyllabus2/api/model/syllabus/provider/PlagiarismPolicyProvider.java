@@ -49,7 +49,7 @@ public class PlagiarismPolicyProvider extends OfficialProvider{
     //TODO: put a securityAdvisor to access to content
     //mysql     public final String CONFIGURATION_File = "/group/8ed156b7-8043-48ce-85ea-6a000347a917/providers/plagiarismPolicy/plagiarismPolicy.properties";
     // Oracle
-    public final String CONFIGURATION_File = "/group/3aadaed6-64d4-4320-82d3-a55a0aec2944/plagiarismProvider/plagiarismPolicy.properties";
+    public final String CONFIGURATION_File = "/group/tenjin/plagiarismProvider/plagiarismPolicy.properties";
     private ResourceBundle bundle ;
     private String getPolicyContent(){
    	String content = null;
