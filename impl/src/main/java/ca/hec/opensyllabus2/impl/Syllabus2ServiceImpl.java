@@ -342,7 +342,7 @@ public class Syllabus2ServiceImpl implements Syllabus2Service {
 
 			newCommonSyllabus.setSections(new HashSet<String>());
 			for (Group g : site.getGroups()) {
-				if (!g.getProviderGroupId().isEmpty()) {
+				if (g.getProviderGroupId() != null && !g.getProviderGroupId().isEmpty()) {
 					newCommonSyllabus.getSections().add(g.getId());
 				}
 			}
