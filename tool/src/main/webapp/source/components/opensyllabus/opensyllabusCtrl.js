@@ -224,7 +224,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
 
 
         loadSyllabusTemplateResourcesTools(siteId, syllabusId)
-            .then(loadCitations)
+            //.then(loadCitations)
             .finally(function() {
                 $scope.infos.working = false;
             });

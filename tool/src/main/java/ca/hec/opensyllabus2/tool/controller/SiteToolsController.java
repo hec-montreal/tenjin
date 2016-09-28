@@ -22,7 +22,6 @@ package ca.hec.opensyllabus2.tool.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,43 +33,16 @@ import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import javax.annotation.PostConstruct;
-
 import lombok.Setter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.util.ResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import ca.hec.opensyllabus2.api.Syllabus2Service;
 
 /**
  *
@@ -86,7 +58,8 @@ public class SiteToolsController {
 	public final String BLOCKED_FORUM_TOPIC = "forum_topic";
 	
 	public final String BLOCKED_TOPIC = "topic";
-	@Setter
+
+    @Setter
 	@Autowired
 	private SessionManager sessionManager;
     	
@@ -102,7 +75,7 @@ public class SiteToolsController {
 	@Autowired
 	private EntityBroker entityBroker;
 	
-        @RequestMapping(value = "/{siteId}", method = RequestMethod.GET)
+	 @RequestMapping(value = "/{siteId}", method = RequestMethod.GET)
         public @ResponseBody Map<String, Object> getSiteToolsElements(
     	    @PathVariable String siteId) {
     	String currentUserId = sessionManager.getCurrentSessionUserId();

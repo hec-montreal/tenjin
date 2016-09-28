@@ -2,7 +2,7 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
     'use strict';	
 	
 	this.resources;
-	var siteResourcesProviderUri = "../../../direct/content/resources/";
+	var siteResourcesProviderUri = "resources/";
 	
 	/**
      * Get file extension
