@@ -55,10 +55,10 @@
         </div>
         <div class="row row-content">
             <!-- Menu de gauche -->
-            <div data-ng-if="variables.device !== 'mobile'" data-ng-include="'leftMenu/leftMenu.html'"   class="col-sm-3 hide-mobile pull-left left-menu" id="menu" ></div>
+            <div data-ng-if="variables.device !== 'mobile'" data-ng-include="'leftMenu/leftMenu.html'"   class="col-sm-3 col-md-3 hide-mobile pull-left left-menu" id="menu" ></div>
             
             <!-- Container de droite -->
-            <div data-ng-include="'contentPanel/contentPanel.html'" class="col-sm-9 col-xs-12 pull-left  content-panel" id="content"></div>
+            <div data-ng-include="'contentPanel/contentPanel.html'" class="col-sm-9 col-xs-12 col-md-9 pull-left  content-panel" id="contentPanel"></div>
         </div>
     </div>
     
