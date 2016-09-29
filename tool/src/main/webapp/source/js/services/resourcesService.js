@@ -70,7 +70,7 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
      */
 	this.loadResources = function($siteId){
 		siteResourcesProviderUri = siteResourcesProviderUri + $siteId + ".json?depth=all";
-		return $resource(siteResourcesProviderUri).get( {
+		return $resource(siteResourcesProviderUri).query( {
 			nocache:{}
 		});
 	};	

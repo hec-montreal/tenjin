@@ -1,7 +1,7 @@
 opensyllabusApp.service('CitationsService', [ '$resource', function ( $resource ){
     'use strict';	
 	
-	var siteCitationsProviderUri = "../../../direct/citation/list";
+	var siteCitationsProviderUri = "../../../../../direct/citation/list";
 	
 	var load = function($citationListId){
 		return $resource(siteCitationsProviderUri + $citationListId + ".json").get( {

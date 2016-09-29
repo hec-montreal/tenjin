@@ -118,7 +118,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
                 // LOAD RESOURCES
                 if (data[2].state === "fulfilled") {
                     // set resources
-                    ResourcesService.setResources(data[2].value.content_collection[0]);
+                    ResourcesService.setResources(data[2].value[0]);
                 } else if (data[2].state === "rejected") {
                     // TODO : loading resources fails too much at the moment....
                     // $scope.errorLoading = true;
@@ -224,7 +224,7 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
 
 
         loadSyllabusTemplateResourcesTools(siteId, syllabusId)
-            //.then(loadCitations)
+            .then(loadCitations)
             .finally(function() {
                 $scope.infos.working = false;
             });
