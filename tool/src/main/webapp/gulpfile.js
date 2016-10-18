@@ -2,7 +2,7 @@
 
 var gulp         = require('gulp'),
     gutil        = require('gulp-util'),
-    sass         = require('gulp-ruby-sass'),
+    sass         = require("gulp-sass"),
     autoprefixer = require('gulp-autoprefixer'),
     concat       = require('gulp-concat'),
     config       = require('./config.json'),
@@ -163,13 +163,9 @@ gulp.task('tools', function() {
 
 //sass task
 gulp.task('sass', function () {
-  return sass('./source/components/opensyllabus/opensyllabus.scss', { sourcemap: true })
-    .on('error', sass.logError)
-    .pipe(autoprefixer({
-            browsers: ['last 2 versions']
-        }))
-    // .pipe(sourcemaps.write())
-    .pipe(gulp.dest( './dest/css'));
+  return gulp.src('./source/components/opensyllabus/opensyllabus.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./dest/css'));
 });
 
 
