@@ -19,7 +19,7 @@
  *
  ******************************************************************************/
 
-package ca.hec.opensyllabus2.tool.controller;
+package ca.hec.tenjin.tool.controller;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -60,7 +60,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ca.hec.opensyllabus2.api.SakaiProxy;
+import ca.hec.tenjin.api.SakaiProxy;
 
 /**
  * Methods from https://github.com/ox-it/wl-entitybroker.

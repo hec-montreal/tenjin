@@ -1,10 +1,10 @@
-package ca.hec.opensyllabus2.api.model.syllabus;
+package ca.hec.tenjin.api.model.syllabus;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import ca.hec.opensyllabus2.api.model.syllabus.provider.OfficialProvider;
+import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

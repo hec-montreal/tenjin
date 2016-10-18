@@ -1,10 +1,10 @@
-package ca.hec.opensyllabus2.api.model.syllabus;
+package ca.hec.tenjin.api.model.syllabus;
 
 import lombok.Data;
 
 import java.util.*;
 
-import ca.hec.opensyllabus2.api.model.syllabus.provider.OfficialProvider;
+import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

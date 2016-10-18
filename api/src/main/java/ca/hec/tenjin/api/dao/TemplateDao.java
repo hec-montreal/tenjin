@@ -18,11 +18,11 @@
  * limitations under the License.
  *
  ******************************************************************************/
-package ca.hec.opensyllabus2.api.dao;
+package ca.hec.tenjin.api.dao;
 
 import org.sakaiproject.exception.IdUnusedException;
 
-import ca.hec.opensyllabus2.api.model.template.Template;
+import ca.hec.tenjin.api.model.template.Template;
 
 /**
  *

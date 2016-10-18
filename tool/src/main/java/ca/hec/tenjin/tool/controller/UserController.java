@@ -19,10 +19,10 @@
  *
  ******************************************************************************/
 
-package ca.hec.opensyllabus2.tool.controller;
+package ca.hec.tenjin.tool.controller;
 
-import ca.hec.opensyllabus2.api.SakaiProxy;
-import ca.hec.opensyllabus2.api.TenjinFunctions;
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.TenjinFunctions;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +43,7 @@ import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.tool.api.SessionManager;
 
-import ca.hec.opensyllabus2.api.Syllabus2SecurityService;
+import ca.hec.tenjin.api.Syllabus2SecurityService;
 
 @Controller
 @RequestMapping(value ="v1")

@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.tool.controller;
+package ca.hec.tenjin.tool.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;

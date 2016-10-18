@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.api.OsylException;
+package ca.hec.tenjin.api.OsylException;
 
 import lombok.Data;
 

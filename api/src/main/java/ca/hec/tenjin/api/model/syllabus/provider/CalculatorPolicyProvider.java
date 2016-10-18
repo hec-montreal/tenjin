@@ -18,9 +18,9 @@
  * limitations under the License.
  *
  ******************************************************************************/
-package ca.hec.opensyllabus2.api.model.syllabus.provider;
+package ca.hec.tenjin.api.model.syllabus.provider;
 
-import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 
 /**
  *

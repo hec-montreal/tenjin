@@ -18,7 +18,7 @@
  * limitations under the License.
  *
  ******************************************************************************/
-package ca.hec.opensyllabus2.api.model.template;
+package ca.hec.tenjin.api.model.template;
 
 import lombok.*;
 

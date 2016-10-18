@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.api.model.syllabus;
+package ca.hec.tenjin.api.model.syllabus;
 
 import java.util.ArrayList;
 import java.util.List;

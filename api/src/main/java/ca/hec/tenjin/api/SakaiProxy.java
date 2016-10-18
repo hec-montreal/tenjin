@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.api;
+package ca.hec.tenjin.api;
 
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;

@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false">
-    <class name="ca.hec.opensyllabus2.api.model.template.TemplateStructure" table="TENJIN_TEMPLATESTRUCTURE">
+    <class name="ca.hec.tenjin.api.model.template.TemplateStructure" table="TENJIN_TEMPLATESTRUCTURE">
         <id name="id" type="long">
             <column name="TEMPLATESTRUCTURE_ID" />
             <generator class="native">
@@ -22,15 +22,15 @@
         <property name="parentId"  type="long" column="PARENT_ID"/>
 
         <many-to-one name="templateElement" column="TEMPLATEELEMENT_ID"
-            class="ca.hec.opensyllabus2.api.model.template.TemplateElement"/>
+            class="ca.hec.tenjin.api.model.template.TemplateElement"/>
             
         <many-to-one name="provider" column="PROVIDER_ID" fetch="select"
-        	class="ca.hec.opensyllabus2.api.model.syllabus.provider.OfficialProvider"/>    
+        	class="ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider"/>    
 
         <list name="elements">
             <key column="PARENT_ID"/>
             <list-index column="DISPLAY_ORDER"/>
-            <one-to-many class="ca.hec.opensyllabus2.api.model.template.TemplateStructure"/>
+            <one-to-many class="ca.hec.tenjin.api.model.template.TemplateStructure"/>
         </list>
     </class>
 </hibernate-mapping>

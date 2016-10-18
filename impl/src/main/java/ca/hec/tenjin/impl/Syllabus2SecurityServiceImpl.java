@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.impl;
+package ca.hec.tenjin.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,10 +13,10 @@ import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
-import ca.hec.opensyllabus2.api.SakaiProxy;
-import ca.hec.opensyllabus2.api.Syllabus2SecurityService;
-import ca.hec.opensyllabus2.api.TenjinFunctions;
-import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.Syllabus2SecurityService;
+import ca.hec.tenjin.api.TenjinFunctions;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import lombok.Setter;
 
 @Setter

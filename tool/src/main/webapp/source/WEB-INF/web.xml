@@ -5,17 +5,17 @@
 	 xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	 version="2.4">
 
-	<display-name>sakai.opensyllabus2</display-name>
+	<display-name>sakai.tenjin</display-name>
 	<description> The description of the tool will be added to a later date</description>
 
 <!--	<context-param>
 		<param-name>resourceurlbase</param-name>
-		<param-value>/opensyllabus2-tool/</param-value>
+		<param-value>/tenjin-tool/</param-value>
 	</context-param> -->
 
 	<!--  This application's servlet class -->
 	<servlet>
-		<servlet-name>sakai.opensyllabus2</servlet-name>
+		<servlet-name>sakai.tenjin</servlet-name>
 	    <servlet-class>uk.ac.cam.caret.sakai.WebappToolServlet</servlet-class>
 	    <init-param>
 	      	<param-name>main-page</param-name>
@@ -36,7 +36,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>sakai.request</filter-name>
-		<servlet-name>sakai.opensyllabus2</servlet-name>
+		<servlet-name>sakai.tenjin</servlet-name>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>

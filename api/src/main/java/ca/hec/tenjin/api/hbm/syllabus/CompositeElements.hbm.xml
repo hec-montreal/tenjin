@@ -2,25 +2,25 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="ca.hec.opensyllabus2.api.hbm.syllabus" default-lazy="false" default-cascade="none">
+<hibernate-mapping package="ca.hec.tenjin.api.hbm.syllabus" default-lazy="false" default-cascade="none">
 	<subclass
-		name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement"
-		extends="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement">
+		name="ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement"
+		extends="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement">
 	</subclass>
 
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement"
+			extends="ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement">
 	</subclass>
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusEvaluationElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusEvaluationElement"
+			extends="ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement">
 	</subclass>
-		<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusExamElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
+		<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusExamElement"
+			extends="ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement">
 	</subclass>
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusLectureElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusLectureElement"
+			extends="ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement">
 	</subclass>
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusTutorialElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusTutorialElement"
+			extends="ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement">
 	</subclass>
 </hibernate-mapping>

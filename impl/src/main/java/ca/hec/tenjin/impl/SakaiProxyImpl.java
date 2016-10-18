@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.impl;
+package ca.hec.tenjin.impl;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
-import ca.hec.opensyllabus2.api.SakaiProxy;
-import ca.hec.opensyllabus2.api.TenjinFunctions;
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.TenjinFunctions;
 import lombok.Setter;
 
 @Setter

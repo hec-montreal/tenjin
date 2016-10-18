@@ -1,11 +1,11 @@
-package ca.hec.opensyllabus2.api;
+package ca.hec.tenjin.api;
 
 import java.util.List;
 
-import ca.hec.opensyllabus2.api.OsylException.DeniedAccessException;
-import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
-import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
-import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.OsylException.DeniedAccessException;
+import ca.hec.tenjin.api.OsylException.NoSiteException;
+import ca.hec.tenjin.api.OsylException.NoSyllabusException;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
 
 /**
  * An interface to abstract all Syllabus related methods.

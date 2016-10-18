@@ -1,9 +1,9 @@
-package ca.hec.opensyllabus2.api.model.template;
+package ca.hec.tenjin.api.model.template;
 
 import java.util.List;
 import java.util.Set;
 
-import ca.hec.opensyllabus2.api.model.syllabus.provider.OfficialProvider;
+import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
 import lombok.*;
 
 /**

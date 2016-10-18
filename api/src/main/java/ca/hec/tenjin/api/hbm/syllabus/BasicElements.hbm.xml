@@ -2,29 +2,29 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="ca.hec.opensyllabus2.api.hbm.syllabus" default-lazy="false" default-cascade="none">
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusTextElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement">
+<hibernate-mapping package="ca.hec.tenjin.api.hbm.syllabus" default-lazy="false" default-cascade="none">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusTextElement"
+			extends="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement">
 	</subclass>
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusCitationElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusCitationElement"
+			extends="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement">
 	</subclass>
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusContactInfoElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusContactInfoElement"
+			extends="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement">
 	</subclass>
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusDocumentElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusDocumentElement"
+			extends="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement">
 	</subclass>
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusHyperlinkElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusHyperlinkElement"
+			extends="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement">
 	</subclass>
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusImageElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusImageElement"
+			extends="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement">
 	</subclass>
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusSakaiToolElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusSakaiToolElement"
+			extends="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement">
 	</subclass>
-	<subclass name="ca.hec.opensyllabus2.api.model.syllabus.SyllabusVideoElement"
-			extends="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.SyllabusVideoElement"
+			extends="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement">
 	</subclass>
 </hibernate-mapping>

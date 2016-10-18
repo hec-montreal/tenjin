@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.impl.dao;
+package ca.hec.tenjin.impl.dao;
 
 import java.util.List;
 
@@ -8,10 +8,10 @@ import org.hibernate.Hibernate;
 import org.sakaiproject.exception.IdUnusedException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import ca.hec.opensyllabus2.api.dao.*;
-import ca.hec.opensyllabus2.api.model.template.Template;
-import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
-import ca.hec.opensyllabus2.api.model.syllabus.provider.*;
+import ca.hec.tenjin.api.dao.*;
+import ca.hec.tenjin.api.model.template.Template;
+import ca.hec.tenjin.api.model.template.TemplateStructure;
+import ca.hec.tenjin.api.model.syllabus.provider.*;
 
 public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao {
 

@@ -18,15 +18,15 @@
  * limitations under the License.
  *
  ******************************************************************************/
-package ca.hec.opensyllabus2.api.dao;
+package ca.hec.tenjin.api.dao;
 
 import java.util.List;
 
-import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
-import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.tenjin.api.OsylException.NoSyllabusException;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
+import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 
 /**
  *

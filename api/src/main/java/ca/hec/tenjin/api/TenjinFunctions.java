@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.api;
+package ca.hec.tenjin.api;
 
 public interface TenjinFunctions {
 

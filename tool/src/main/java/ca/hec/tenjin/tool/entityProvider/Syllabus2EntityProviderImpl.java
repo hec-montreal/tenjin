@@ -1,4 +1,4 @@
-//package ca.hec.opensyllabus2.tool.entityProvider;
+//package ca.hec.tenjin.tool.entityProvider;
 //
 //
 //import java.io.Writer;
@@ -25,9 +25,9 @@
 //import org.sakaiproject.entitybroker.entityprovider.search.Search;
 //import org.sakaiproject.entitybroker.util.AbstractEntityProvider;
 //
-//import ca.hec.opensyllabus2.api.Syllabus2Service;
-//import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
-//import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
+//import ca.hec.tenjin.api.Syllabus2Service;
+//import ca.hec.tenjin.api.OsylException.NoSyllabusException;
+//import ca.hec.tenjin.api.model.syllabus.Syllabus;
 //
 //public class Syllabus2EntityProviderImpl extends
 //AbstractEntityProvider implements CoreEntityProvider, AutoRegisterEntityProvider, RESTful{

@@ -1,11 +1,11 @@
-package ca.hec.opensyllabus2.api;
+package ca.hec.tenjin.api;
 
 import java.util.HashMap;
 
 import org.sakaiproject.exception.IdUnusedException;
 
-import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
-import ca.hec.opensyllabus2.api.model.template.Template;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.template.Template;
 
 /**
  * An interface to abstract all Template related operations

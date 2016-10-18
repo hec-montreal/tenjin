@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.impl;
+package ca.hec.tenjin.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,15 +8,15 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.sakaiproject.exception.IdUnusedException;
 
-import ca.hec.opensyllabus2.api.TemplateService;
-import ca.hec.opensyllabus2.api.dao.TemplateDao;
-import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusTextElement;
-import ca.hec.opensyllabus2.api.model.template.Template;
-import ca.hec.opensyllabus2.api.model.template.TemplateStructure;
+import ca.hec.tenjin.api.TemplateService;
+import ca.hec.tenjin.api.dao.TemplateDao;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusTextElement;
+import ca.hec.tenjin.api.model.template.Template;
+import ca.hec.tenjin.api.model.template.TemplateStructure;
 import lombok.Setter;
 
 public class TemplateServiceImpl implements TemplateService {

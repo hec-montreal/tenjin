@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false">
-    <class name="ca.hec.opensyllabus2.api.model.template.TemplateElement" table="TENJIN_TEMPLATEELEMENT">
+    <class name="ca.hec.tenjin.api.model.template.TemplateElement" table="TENJIN_TEMPLATEELEMENT">
         <id name="id" type="long">
             <column name="TEMPLATEELEMENT_ID" />
             <generator class="native">
@@ -16,6 +16,6 @@
 			<element column="label" type="string" />
 	    </map>
         <many-to-one name="type" column="TEMPLATEELEMENTTYPE_ID"
-            class="ca.hec.opensyllabus2.api.model.template.TemplateElementType"/>
+            class="ca.hec.tenjin.api.model.template.TemplateElementType"/>
     </class>
 </hibernate-mapping>

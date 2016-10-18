@@ -18,7 +18,7 @@
  * limitations under the License.
  *
  ******************************************************************************/
-package ca.hec.opensyllabus2.api.model.syllabus.provider;
+package ca.hec.tenjin.api.model.syllabus.provider;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,8 +34,8 @@ import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.exception.ServerOverloadException;
 import org.sakaiproject.exception.TypeException;
 
-import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusTextElement;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusTextElement;
 
 /**
  *

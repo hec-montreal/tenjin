@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="ca.hec.opensyllabus2.api.model.syllabus"
+<hibernate-mapping package="ca.hec.tenjin.api.model.syllabus"
 	default-lazy="false" default-cascade="none">
 	<class
 		name="SyllabusElementMapping"
@@ -19,7 +19,7 @@
 			<column name="SYLLABUS_ID" />
 		</property>
 
-		<many-to-one name="syllabusElement" class="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement" not-null="true">
+		<many-to-one name="syllabusElement" class="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement" not-null="true">
 			<column name="SYLLABUSELEMENT_ID" />	
 		</many-to-one>
 

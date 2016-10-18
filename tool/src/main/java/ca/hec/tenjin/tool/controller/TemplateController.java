@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.tool.controller;
+package ca.hec.tenjin.tool.controller;
 
 import java.util.HashMap;
 
@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
-import ca.hec.opensyllabus2.api.TemplateService;
-import ca.hec.opensyllabus2.api.model.template.Template;
+import ca.hec.tenjin.api.TemplateService;
+import ca.hec.tenjin.api.model.template.Template;
 
 @Controller
 @RequestMapping(value ="v1/template")

@@ -4,7 +4,7 @@
           "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false">
-	<class name="ca.hec.opensyllabus2.api.model.template.Template" table="TENJIN_TEMPLATE">
+	<class name="ca.hec.tenjin.api.model.template.Template" table="TENJIN_TEMPLATE">
 		<id name="id" type="long" column="TEMPLATE_ID">
 	    	<generator class="native">
                  <param name="sequence">TEMPLATE_ID_SEQ</param>
@@ -16,7 +16,7 @@
 		<list name="elements">
 			<key column="TEMPLATE_ID"/>
 			<list-index column="DISPLAY_ORDER"/>
-			<one-to-many class="ca.hec.opensyllabus2.api.model.template.TemplateStructure"/>
+			<one-to-many class="ca.hec.tenjin.api.model.template.TemplateStructure"/>
 		</list>
      </class>
 </hibernate-mapping>

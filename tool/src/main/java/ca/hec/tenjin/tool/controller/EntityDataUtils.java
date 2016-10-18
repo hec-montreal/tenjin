@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.tool.controller;
+package ca.hec.tenjin.tool.controller;
 
 import java.util.Collections;
 import java.util.HashSet;

@@ -2,10 +2,10 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="ca.hec.opensyllabus2.api.model.syllabus"
+<hibernate-mapping package="ca.hec.tenjin.api.model.syllabus"
 	default-lazy="false" default-cascade="none">
 	<class
-		name="ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement"
+		name="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement"
 		table="TENJIN_SYLLABUSELEMENT" discriminator-value="0">
 
 		<id name="id" type="long">

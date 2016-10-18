@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.impl;
+package ca.hec.tenjin.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,19 +19,19 @@ import org.apache.log4j.Logger;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
-import ca.hec.opensyllabus2.api.SakaiProxy;
-import ca.hec.opensyllabus2.api.Syllabus2SecurityService;
-import ca.hec.opensyllabus2.api.Syllabus2Service;
-import ca.hec.opensyllabus2.api.TemplateService;
-import ca.hec.opensyllabus2.api.OsylException.DeniedAccessException;
-import ca.hec.opensyllabus2.api.OsylException.NoSiteException;
-import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
-import ca.hec.opensyllabus2.api.dao.Syllabus2Dao;
-import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement;
-import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.Syllabus2SecurityService;
+import ca.hec.tenjin.api.Syllabus2Service;
+import ca.hec.tenjin.api.TemplateService;
+import ca.hec.tenjin.api.OsylException.DeniedAccessException;
+import ca.hec.tenjin.api.OsylException.NoSiteException;
+import ca.hec.tenjin.api.OsylException.NoSyllabusException;
+import ca.hec.tenjin.api.dao.Syllabus2Dao;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
+import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 
 /**
  * Implementation of {@link Syllabus2Service}

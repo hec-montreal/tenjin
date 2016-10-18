@@ -10,7 +10,7 @@
 		   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 <!-- <context:annotation-config /> -->
-	<context:component-scan base-package="ca.hec.opensyllabus2.tool.controller" />
+	<context:component-scan base-package="ca.hec.tenjin.tool.controller" />
 	<mvc:annotation-driven >
 		<mvc:message-converters>
         	<!-- Jackson converter for HTTP messages -->

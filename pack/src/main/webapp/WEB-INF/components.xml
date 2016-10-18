@@ -5,18 +5,18 @@
 	<!-- import the hibernate related beans -->
 	<import resource="spring-hibernate.xml" />
 
-	<bean id="ca.hec.opensyllabus2.api.Syllabus2Service"
+	<bean id="ca.hec.tenjin.api.Syllabus2Service"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 
 		<property name="transactionManager"
 			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
-			<bean class="ca.hec.opensyllabus2.impl.Syllabus2ServiceImpl">
+			<bean class="ca.hec.tenjin.impl.Syllabus2ServiceImpl">
 				<!-- API injection -->
-				<property name="syllabusDao" ref="ca.hec.opensyllabus2.api.dao.Syllabus2Dao" />
-		 		<property name="templateService" ref="ca.hec.opensyllabus2.api.TemplateService" />
-		 		<property name="sakaiProxy" ref="ca.hec.opensyllabus2.api.SakaiProxy" />
-		 		<property name="securityService" ref="ca.hec.opensyllabus2.api.Syllabus2SecurityService" />
+				<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.Syllabus2Dao" />
+		 		<property name="templateService" ref="ca.hec.tenjin.api.TemplateService" />
+		 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+		 		<property name="securityService" ref="ca.hec.tenjin.api.Syllabus2SecurityService" />
 		 	</bean>
 
 		</property>
@@ -28,15 +28,15 @@
 
 	</bean>
 
-	<bean id="ca.hec.opensyllabus2.api.TemplateService"
+	<bean id="ca.hec.tenjin.api.TemplateService"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 
 		<property name="transactionManager"
 			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
-			<bean class="ca.hec.opensyllabus2.impl.TemplateServiceImpl">
+			<bean class="ca.hec.tenjin.impl.TemplateServiceImpl">
 				<!-- API injection -->
-		 		<property name="templateDao" ref="ca.hec.opensyllabus2.api.dao.TemplateDao" />
+		 		<property name="templateDao" ref="ca.hec.tenjin.api.dao.TemplateDao" />
 			</bean>
 		</property>
 		<property name="transactionAttributes">
@@ -46,13 +46,13 @@
 		</property>
 	</bean>
 
-	<bean id="ca.hec.opensyllabus2.api.Syllabus2SecurityService"
-		class="ca.hec.opensyllabus2.impl.Syllabus2SecurityServiceImpl">
- 		<property name="sakaiProxy" ref="ca.hec.opensyllabus2.api.SakaiProxy" />
+	<bean id="ca.hec.tenjin.api.Syllabus2SecurityService"
+		class="ca.hec.tenjin.impl.Syllabus2SecurityServiceImpl">
+ 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 	</bean>
 	
-    <bean name="ca.hec.opensyllabus2.api.SakaiProxy"
-        class="ca.hec.opensyllabus2.impl.SakaiProxyImpl" init-method="init">
+    <bean name="ca.hec.tenjin.api.SakaiProxy"
+        class="ca.hec.tenjin.impl.SakaiProxyImpl" init-method="init">
 <!--         <property name="courseManagementService"><ref bean="org.sakaiproject.coursemanagement.api.CourseManagementService"/></property> -->
 <!--         <property name="groupProvider"><ref bean="org.sakaiproject.authz.api.GroupProvider"/></property> -->
 <!--         <property name="privacyManager"><ref bean="org.sakaiproject.api.privacy.PrivacyManager"/></property> -->

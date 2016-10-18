@@ -3,7 +3,7 @@
       "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
           "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="ca.hec.opensyllabus2.api.model.syllabus.provider" 	default-lazy="false" >
+<hibernate-mapping package="ca.hec.tenjin.api.model.syllabus.provider" 	default-lazy="false" >
 	<class name="OfficialProvider" table="TENJIN_PROVIDER">
 		<id name="provider_id" type="long" column="PROVIDER_ID">
 	    	<generator class="native">

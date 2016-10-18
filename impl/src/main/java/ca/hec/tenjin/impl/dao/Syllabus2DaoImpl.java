@@ -1,4 +1,4 @@
-package ca.hec.opensyllabus2.impl.dao;
+package ca.hec.tenjin.impl.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,15 +12,15 @@ import org.hibernate.criterion.Restrictions;
 import org.sakaiproject.exception.IdUnusedException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import ca.hec.opensyllabus2.api.OsylException.NoSyllabusException;
-import ca.hec.opensyllabus2.api.dao.*;
-import ca.hec.opensyllabus2.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusCompositeElement;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.opensyllabus2.api.model.syllabus.SyllabusRubricElement;
-import ca.hec.opensyllabus2.api.model.syllabus.provider.OfficialProvider;
-import ca.hec.opensyllabus2.api.model.template.Template;
+import ca.hec.tenjin.api.OsylException.NoSyllabusException;
+import ca.hec.tenjin.api.dao.*;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
+import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
+import ca.hec.tenjin.api.model.template.Template;
 
 public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Dao {
 

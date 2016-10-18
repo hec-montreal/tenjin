@@ -1,9 +1,9 @@
-package ca.hec.opensyllabus2.api;
+package ca.hec.tenjin.api;
 
 import java.util.Collection;
 import java.util.List;
 
-import ca.hec.opensyllabus2.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
 
 public interface Syllabus2SecurityService {
 
