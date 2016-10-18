@@ -1,4 +1,4 @@
-<div data-ng-controller="OpensyllabusCtrl">
+<div data-ng-controller="OpensyllabusCtrl" class="portletBody">
 
     <div class="loader-container" data-ng-show="infos.working"> 
         <div class="loader"></div>
@@ -43,15 +43,17 @@
 
         
         <!-- MOBILE MENU BUTTON -->
-        <button type="button" data-ng-if="displayButtons.displayMobileMenu()" class="btn btn-primary mobile-menu-button" data-ng-model="syllabusService.showMobileMenu" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-            Menu
-        </button>
+         <span class="hide-desktop show-mobile" data-ng-if="displayButtons.displayMobileMenu()">
+            <button type="button" class="btn btn-primary mobile-menu-button" data-ng-model="syllabusService.showMobileMenu" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+                Menu
+            </button>
+        </span>
     </div>
 
     <div data-ng-if="!errorLoading">
         <div data-ng-show="syllabusService.showMobileMenu">
             <!-- Menu mobile -->
-            <mobile-menu></mobile-menu>
+            <mobile-menu class="hide-desktop show-mobile"></mobile-menu>
         </div>
         <div class="row row-content">
             <!-- Menu de gauche -->
