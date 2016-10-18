@@ -25,7 +25,7 @@
 </head>
 <body id="body" class="portletBody container-fluid body-syllabus"> 
 
-	<div ui-view></div>
+	<div id="tenjin" ui-view></div>
 
 	<!-- NODES MODULES -->
 	<!-- <script src="/opensyllabus2-tool/node_modules/angular/angular.js"></script> 

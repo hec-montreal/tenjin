@@ -1,14 +1,8 @@
-﻿<div class="element-form text-form"> 
-
-    <!-- Titre -->
-    <label for="male" class="label-text-title">{{ 'FORM_TITRE' | translate }}</label>
-    <input type="text" name="title" data-ng-model="element.title" class="input-text-title" />
-
+﻿<div class="element-form text-form">
     <!-- Description --> 
-    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
+    <div class="label-text-description">{{ 'FORM_CONTENT' | translate }}</div>
     <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description" required></textarea>
 
     <!-- Buttons form --> 
     <div data-buttons-form="element"></div>
-
 </div>
