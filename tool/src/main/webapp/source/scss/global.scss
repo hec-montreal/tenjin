@@ -306,6 +306,22 @@ body {
             display: none;
         }
 
+        .show-mobile {
+            display: inline;
+        }
+
+
     }
 
+}
+
+@media (min-width: 992px) {
+
+    body {
+
+        .hide-desktop {
+            display: none;
+        }
+
+    }
 }
