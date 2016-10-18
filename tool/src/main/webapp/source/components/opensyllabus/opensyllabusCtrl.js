@@ -14,13 +14,15 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
     $scope.errorLoading = false;
 
     // check device and show mobile menu or not
-    var device = $scope.responsiveService.getDevice();
-    if (device === "mobile") {
-        $scope.syllabusService.showMobileMenu = true;
-    } else if (device === "desktop") {
-        $scope.syllabusService.showMobileMenu = false;
-    }
-
+    var mobileMenu = function() {
+        var device = $scope.responsiveService.getDevice();
+        if (device === "mobile") {
+            $scope.syllabusService.showMobileMenu = true;
+        } else if (device === "desktop") {
+            $scope.syllabusService.showMobileMenu = false;
+        }
+        return $scope.syllabusService.showMobileMenu;
+    };
 
     var localePromise = tmhDynamicLocale.set('fr');
     localePromise.then( function($ok) {
@@ -36,7 +38,11 @@ opensyllabusApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeou
         },
         syllabusDropdown: function() {
             return $scope.userService.hasWritableSection();
-        }    
+        },
+        displayMobileMenu: function() {
+            return mobileMenu();
+        }  
+
     };
 
 

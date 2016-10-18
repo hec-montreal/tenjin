@@ -43,7 +43,7 @@
 
         
         <!-- MOBILE MENU BUTTON -->
-        <button type="button" class="btn btn-primary mobile-menu-button" data-ng-model="syllabusService.showMobileMenu" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+        <button type="button" data-ng-if="displayButtons.displayMobileMenu()" class="btn btn-primary mobile-menu-button" data-ng-model="syllabusService.showMobileMenu" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
             Menu
         </button>
     </div>
