@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <registration>
 	<tool id="sakai.tenjin"
-		title="OpenSyllabus 2 tool"
-		description="This description is set in the tenjin tool registration file, found in the webapp/tools directory">
+		title="Tenjin"
+		description="Tenjin Course Outliner tool">
 
 		<category name="course" />
-      	<category name="project" />
+	      	<category name="project" />
 
 		<configuration name="functions.require" />
 		<configuration name="height" value="auto" />
