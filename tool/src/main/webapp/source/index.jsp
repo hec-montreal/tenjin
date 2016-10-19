@@ -10,7 +10,7 @@
 
 	<link rel="stylesheet" href="/tenjin-tool/lib/css/bootstrap.css"/>
 
-	<link rel="stylesheet" href="/tenjin-tool/css/opensyllabus.css"/>  
+	<link rel="stylesheet" href="/tenjin-tool/css/tenjin.css"/>  
 	<link rel="stylesheet" href="/tenjin-tool/lib/css/angular-ui-tree.min.css">   
 
 	<!--<script src="/tenjin-tool/lib/jquery/jquery-2.1.3.min.js"></script> -->
@@ -62,7 +62,7 @@
 	<!-- <script src="/tenjin-tool/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script> -->
 
 	<!-- SCRIPTS OPENSYLLABUS -->
-	<script src="/tenjin-tool/js/opensyllabus.js"></script>
+	<script src="/tenjin-tool/js/tenjin.js"></script>
 	
 	
 

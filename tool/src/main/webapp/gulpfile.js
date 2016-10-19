@@ -111,7 +111,7 @@ gulp.task('ts', function() {
 //Js task
 gulp.task('js', ['browserifywatch', 'viewscache'],  function() {    
     return gulp.src([ "source/js/app.js", "source/components/**/*.js", "source/js/*.js", "source/js/services/*.js", "source/bundle.js" ])
-    .pipe(concat('opensyllabus.js'))
+    .pipe(concat('tenjin.js'))
     .pipe(gulp.dest('./dest/js/'));
 });
 
@@ -145,7 +145,7 @@ gulp.task('browserifywatch', function () {
 //Js deploy task
 gulp.task('jsdeploy', ['browserify', 'viewscache'], function() {    
     return gulp.src([ "source/js/app.js", "source/components/**/*.js", "source/js/*.js", "source/js/services/*.js", "source/bundle/bundle.js" ])
-    .pipe(concat('opensyllabus.js'))
+    .pipe(concat('tenjin.js'))
     .pipe(gulp.dest('./dest/js/'));
 });
 
@@ -163,7 +163,7 @@ gulp.task('tools', function() {
 
 //sass task
 gulp.task('sass', function () {
-  return gulp.src('./source/components/opensyllabus/opensyllabus.scss')
+  return gulp.src('./source/components/tenjin/tenjin.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./dest/css'));
 });
