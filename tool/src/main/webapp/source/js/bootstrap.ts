@@ -60,5 +60,5 @@ adapter.upgradeNg1Provider('config');
 // tenjinApp.directive('buttonsElements', adapter.upgradeNg1Component(TextElementComponent));
 
 
-adapter.bootstrap(document.body, ['opensyllabus']);
+adapter.bootstrap(document.body, ['tenjin']);
 
