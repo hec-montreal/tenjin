@@ -6,7 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<title>OpenSyllabus 2</title>
+	<title>Tenjin</title>
 
 	<link rel="stylesheet" href="/tenjin-tool/lib/css/bootstrap.css"/>
 
@@ -61,7 +61,7 @@
 	<!-- <script src="/tenjin-tool/node_modules/es6-shim/es6-shim.js"></script> -->
 	<!-- <script src="/tenjin-tool/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script> -->
 
-	<!-- SCRIPTS OPENSYLLABUS -->
+	<!-- SCRIPTS TENJIN -->
 	<script src="/tenjin-tool/js/tenjin.js"></script>
 	
 	

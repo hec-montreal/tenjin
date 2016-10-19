@@ -1,5 +1,5 @@
 ﻿// loader les donnees du plan de cours
-tenjinApp.controller('OpensyllabusCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'ResponsiveService', 'config', 'mockup', '$translate', 'AlertService', 'tmhDynamicLocale', function($rootScope, $scope, $timeout, $q, $state, SyllabusService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, ResponsiveService, config, mockup, $translate, AlertService, tmhDynamicLocale) {
+tenjinApp.controller('TenjinCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'ResponsiveService', 'config', 'mockup', '$translate', 'AlertService', 'tmhDynamicLocale', function($rootScope, $scope, $timeout, $q, $state, SyllabusService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, ResponsiveService, config, mockup, $translate, AlertService, tmhDynamicLocale) {
 
 	'use strict';
 
