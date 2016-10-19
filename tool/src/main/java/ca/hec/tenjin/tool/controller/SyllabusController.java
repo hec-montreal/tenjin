@@ -74,7 +74,7 @@ public class SyllabusController {
 	@Setter
 	@Getter
 	@Autowired
-	private SyllabusService osyl2Service = null;
+	private SyllabusService syllabusService = null;
 	
 	@Setter
 	@Autowired
@@ -119,7 +119,7 @@ public class SyllabusController {
 		
 		try {
 			// We get the syllabus list for the current site with the sections associated to the user
-			syllabusList = osyl2Service.getSyllabusList(siteId, sections, commonPermissionRead, commonPermissionWrite, currentUserId );
+			syllabusList = syllabusService.getSyllabusList(siteId, sections, commonPermissionRead, commonPermissionWrite, currentUserId );
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,20 +132,20 @@ public class SyllabusController {
 	@RequestMapping(value = "/syllabus", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 
-		return osyl2Service.createOrUpdateSyllabus(syllabus);
+		return syllabusService.createOrUpdateSyllabus(syllabus);
 
 	}
 	
 	@RequestMapping(value = "/syllabus/{syllabusId}", method = RequestMethod.GET)
 	public @ResponseBody Syllabus getSyllabus(@PathVariable Long syllabusId) throws NoSyllabusException {
 
-		return osyl2Service.getSyllabus(syllabusId);
+		return syllabusService.getSyllabus(syllabusId);
 	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 
-			return osyl2Service.createOrUpdateSyllabus(syllabus);
+			return syllabusService.createOrUpdateSyllabus(syllabus);
 	}
 	
 	@ExceptionHandler(NoSiteException.class)

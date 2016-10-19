@@ -36,10 +36,10 @@
 //	
 //	public final static String ENTITY_PREFIX = "tenjin";
 //	
-//	private SyllabusService osyl2Service;
+//	private SyllabusService syllabusService;
 //	
-//	public void setOsyl2Service(SyllabusService osyl2Service) {
-//		this.osyl2Service = osyl2Service;
+//	public void setSyllabusService(SyllabusService syllabusService) {
+//		this.syllabusService = syllabusService;
 //	}
 //
 //	public String getEntityPrefix() {
@@ -127,7 +127,7 @@
 //		final String refId = ref.getId();
 //		Syllabus syllabus = null;
 //		try {
-//		    syllabus = osyl2Service.getShareableSyllabus(refId);
+//		    syllabus = syllabusService.getShareableSyllabus(refId);
 //		} catch (NoSyllabusException e) {
 //		    e.printStackTrace();
 //		}
