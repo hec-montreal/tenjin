@@ -3,7 +3,7 @@
     <h3 class="modal-title">{{'MODALE_DELETE_CONFIRM_TITLE' | translate}}</h3>
 </div>
 <div class="modal-body">
-    {{'MODALE_DELETE_CONFIRM_MESSAGE' | translate}} "{{element.title}}"? 
+    {{'MODALE_DELETE_CONFIRM_MESSAGE' | translate}} <span ng-if="!!element.title && element.title.length > 0">"{{element.title}}"</span>? 
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
