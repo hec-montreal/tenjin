@@ -55,7 +55,7 @@ tenjinApp.service('ResourcesService', [ '$rootScope', '$resource', '$http', '$lo
 	var classifyResources = function($rootTree) {
 
 		var type = getResourceType($rootTree);
-		$rootTree.osylType= type;
+		$rootTree.type= type;
 
 		for ( var i = 0 ; i < $rootTree.resourceChildren.length ; i++) {
 			classifyResources($rootTree.resourceChildren[i]);

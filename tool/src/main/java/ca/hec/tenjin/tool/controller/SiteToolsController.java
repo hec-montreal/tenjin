@@ -116,7 +116,7 @@ public class SiteToolsController {
 			    entityMap.put("url",
 				    ServerConfigurationService.getServerUrl()
 					    + "/direct" + ent);
-			    entityMap.put("osylType", "sakai_entity");
+			    entityMap.put("type", "sakai_entity");
 			    entityMap.put("tool", provider.toUpperCase());
 			    entityList.add(entityMap);
 			}
@@ -132,7 +132,7 @@ public class SiteToolsController {
 			}
 
 			resourceFolder.put("name", provider.toUpperCase());
-			resourceFolder.put("osylType", "folder");
+			resourceFolder.put("type", "folder");
 			resourceFolder.put("resourceChildren", entityList);
 			resourceChildren.add(resourceFolder);
 
