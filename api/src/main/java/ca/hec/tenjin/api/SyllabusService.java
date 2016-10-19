@@ -2,9 +2,9 @@ package ca.hec.tenjin.api;
 
 import java.util.List;
 
-import ca.hec.tenjin.api.OsylException.DeniedAccessException;
-import ca.hec.tenjin.api.OsylException.NoSiteException;
-import ca.hec.tenjin.api.OsylException.NoSyllabusException;
+import ca.hec.tenjin.api.exception.DeniedAccessException;
+import ca.hec.tenjin.api.exception.NoSiteException;
+import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 
 /**

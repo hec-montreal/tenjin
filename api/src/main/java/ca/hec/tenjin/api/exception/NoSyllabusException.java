@@ -1,3 +1,9 @@
+package ca.hec.tenjin.api.exception;
+
+import lombok.Data;
+
+import org.springframework.http.HttpStatus;
+
 /******************************************************************************
  * $Id: $
  ******************************************************************************
@@ -17,23 +23,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- ******************************************************************************/
-package ca.hec.tenjin.api.OsylException;
-
-import org.springframework.http.HttpStatus;
+ *****************************************************************************/
 
 /**
  *
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
  */
-public class NoSiteException extends  SyllabusException {
+@Data
+public class NoSyllabusException extends SyllabusException {
 
-    //TODO: may need to put better message
-    public NoSiteException() {
-	super(HttpStatus.BAD_REQUEST);
-	this.setHttpStatus(HttpStatus.BAD_REQUEST);
+	private Long syllabusId;
+
+    public NoSyllabusException (){
+    	super(HttpStatus.NOT_FOUND);
     }
 
-}
+    public NoSyllabusException(Long syllabusId) {
+    	super(HttpStatus.NOT_FOUND);
+		this.syllabusId = syllabusId;
+	}
 
+
+
+}

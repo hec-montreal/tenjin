@@ -22,7 +22,7 @@ package ca.hec.tenjin.api.dao;
 
 import java.util.List;
 
-import ca.hec.tenjin.api.OsylException.NoSyllabusException;
+import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;

@@ -12,7 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import org.sakaiproject.exception.IdUnusedException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import ca.hec.tenjin.api.OsylException.NoSyllabusException;
+import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.dao.*;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;

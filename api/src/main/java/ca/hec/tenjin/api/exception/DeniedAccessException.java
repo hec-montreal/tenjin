@@ -18,7 +18,7 @@
  * limitations under the License.
  *
  ******************************************************************************/
-package ca.hec.tenjin.api.OsylException;
+package ca.hec.tenjin.api.exception;
 
 import org.springframework.http.HttpStatus;
 

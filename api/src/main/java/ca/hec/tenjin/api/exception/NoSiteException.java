@@ -18,13 +18,7 @@
  * limitations under the License.
  *
  ******************************************************************************/
-package ca.hec.tenjin.api.OsylException;
-
-
-import java.util.HashMap;
-import java.util.Map;
-
-import lombok.Data;
+package ca.hec.tenjin.api.exception;
 
 import org.springframework.http.HttpStatus;
 
@@ -33,28 +27,13 @@ import org.springframework.http.HttpStatus;
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
  */
-@Data
-public class SyllabusException extends Exception{
+public class NoSiteException extends  SyllabusException {
 
-    private HttpStatus httpStatus;
-    private int code;
-    private String message;
-    
-    public SyllabusException(HttpStatus httpStatus){
-	this.httpStatus = httpStatus;
-	this.code = httpStatus.value();
-	this.message = httpStatus.getReasonPhrase();
+    //TODO: may need to put better message
+    public NoSiteException() {
+	super(HttpStatus.BAD_REQUEST);
+	this.setHttpStatus(HttpStatus.BAD_REQUEST);
     }
-    
-    public SyllabusException(String message) {
-		super(message);
-	}
 
-	public Map<String, Object> toJSON(){
-	Map<String, Object> json = new HashMap<String,Object>();
-	json.put("code", httpStatus.value());
-	json.put("message", httpStatus.getReasonPhrase());
-	return json;
-    }
 }
 

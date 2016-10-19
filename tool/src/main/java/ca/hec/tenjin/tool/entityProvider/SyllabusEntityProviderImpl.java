@@ -26,7 +26,7 @@
 //import org.sakaiproject.entitybroker.util.AbstractEntityProvider;
 //
 //import ca.hec.tenjin.api.SyllabusService;
-//import ca.hec.tenjin.api.OsylException.NoSyllabusException;
+//import ca.hec.tenjin.api.exception.NoSyllabusException;
 //import ca.hec.tenjin.api.model.syllabus.Syllabus;
 //
 //public class SyllabusEntityProviderImpl extends
