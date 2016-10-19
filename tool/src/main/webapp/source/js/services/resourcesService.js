@@ -1,4 +1,4 @@
-opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http', '$location', 'config',   function ( $rootScope, $resource, $http, $location, config){
+tenjinApp.service('ResourcesService', [ '$rootScope', '$resource', '$http', '$location', 'config',   function ( $rootScope, $resource, $http, $location, config){
     'use strict';	
 	
 	this.resources;

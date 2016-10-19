@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.config( ['$translateProvider', function($translateProvider) {
+tenjinApp.config( ['$translateProvider', function($translateProvider) {
     'use strict';
 
     $translateProvider.useSanitizeValueStrategy('escape');

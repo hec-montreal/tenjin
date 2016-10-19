@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.controller('DeleteSyllabusModalCtrl',  [ '$scope', '$uibModalInstance', 'SyllabusService', 'AlertService', 'syllabusList' , function ($scope, $uibModalInstance, SyllabusService, AlertService, syllabusList) {
+tenjinApp.controller('DeleteSyllabusModalCtrl',  [ '$scope', '$uibModalInstance', 'SyllabusService', 'AlertService', 'syllabusList' , function ($scope, $uibModalInstance, SyllabusService, AlertService, syllabusList) {
     'use strict';
 
     // get the list of syllabus to be deleted

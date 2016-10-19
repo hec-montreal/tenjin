@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('hyperlinkElementForm', function (){
+tenjinApp.directive('hyperlinkElementForm', function (){
     'use strict';
 
     return {

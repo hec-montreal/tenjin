@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('documentElementForm', ['config', '$translate' ,  function (config, $translate){
+tenjinApp.directive('documentElementForm', ['config', '$translate' ,  function (config, $translate){
     'use strict';
 
     return {

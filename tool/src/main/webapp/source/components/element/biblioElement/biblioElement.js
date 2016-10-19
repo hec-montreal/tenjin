@@ -1,5 +1,5 @@
 
-opensyllabusApp.directive('biblioElement',['ResourcesService', function (ResourcesService){
+tenjinApp.directive('biblioElement',['ResourcesService', function (ResourcesService){
     'use strict';
 
     return {

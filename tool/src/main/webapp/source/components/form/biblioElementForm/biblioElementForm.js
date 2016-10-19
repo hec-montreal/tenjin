@@ -1,5 +1,5 @@
 
-opensyllabusApp.directive('biblioElementForm', ['config', '$translate' ,  function (config, $translate){
+tenjinApp.directive('biblioElementForm', ['config', '$translate' ,  function (config, $translate){
     'use strict';
 
     return {

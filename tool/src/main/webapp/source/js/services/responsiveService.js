@@ -1,4 +1,4 @@
-﻿opensyllabusApp.service('ResponsiveService', ['Modernizr', function (Modernizr){
+﻿tenjinApp.service('ResponsiveService', ['Modernizr', function (Modernizr){
     'use strict';
 
 

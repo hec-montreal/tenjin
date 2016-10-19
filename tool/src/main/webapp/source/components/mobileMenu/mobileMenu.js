@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('mobileMenu', ['TreeService', 'SyllabusService', function (TreeService, SyllabusService){
+tenjinApp.directive('mobileMenu', ['TreeService', 'SyllabusService', function (TreeService, SyllabusService){
     'use strict';
 
     return {

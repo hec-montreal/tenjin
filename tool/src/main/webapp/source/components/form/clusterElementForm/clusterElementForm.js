@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('clusterElementForm', function (){
+tenjinApp.directive('clusterElementForm', function (){
     'use strict';
 
     return {

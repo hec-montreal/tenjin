@@ -1,4 +1,4 @@
-﻿opensyllabusApp.service('TreeService', ['$timeout', 'SyllabusService', function ($timeout, SyllabusService){
+﻿tenjinApp.service('TreeService', ['$timeout', 'SyllabusService', function ($timeout, SyllabusService){
     'use strict';
 
    // Current viewed item (mobile menu)

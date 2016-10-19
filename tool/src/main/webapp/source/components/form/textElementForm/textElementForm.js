@@ -1,4 +1,4 @@
-﻿opensyllabusApp.directive('textElementForm', function() {
+﻿tenjinApp.directive('textElementForm', function() {
     'use strict';
 
     return {

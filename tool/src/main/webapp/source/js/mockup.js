@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.constant('mockup', {
+tenjinApp.constant('mockup', {
 
     // status | 1 : "Initial", 2: "Brouillon", 3: "Publié", 4: "Non attribué", 
     // STATUS_INITIAL

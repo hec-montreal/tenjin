@@ -1,10 +1,10 @@
 ﻿if (typeof CKEDITOR !== "undefined") {
-    var opensyllabusApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize", "ngAnimate", "templateModule", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngCkeditor", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router", "checklist-model"]);
+    var tenjinApp = angular.module('opensyllabus', [ "ngResource" , "ngSanitize", "ngAnimate", "templateModule", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "ngCkeditor", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router", "checklist-model"]);
 } else {
-    var opensyllabusApp = angular.module('opensyllabus', [ "templateModule", "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router" , "checklist-model"]);    
+    var tenjinApp = angular.module('opensyllabus', [ "templateModule", "ngResource" , "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker" , "xeditable", "pascalprecht.translate", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router" , "checklist-model"]);    
 }
 
-opensyllabusApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function ($compileProvider, tmhDynamicLocaleProvider ) {
+tenjinApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function ($compileProvider, tmhDynamicLocaleProvider ) {
     'use strict';
 
     // use this in production to improve performance
@@ -15,7 +15,7 @@ opensyllabusApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function
 }]);
 
 
-opensyllabusApp.config(function($stateProvider, $urlRouterProvider) {
+tenjinApp.config(function($stateProvider, $urlRouterProvider) {
     'use strict';
     //
     // For any unmatched url, redirect to /state1
@@ -72,7 +72,7 @@ opensyllabusApp.config(function($stateProvider, $urlRouterProvider) {
     });
 });
 
-opensyllabusApp.run( ['editableOptions', '$httpBackend', function(editableOptions, $httpBackend) { 
+tenjinApp.run( ['editableOptions', '$httpBackend', function(editableOptions, $httpBackend) { 
     'use strict';
     
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'

@@ -1,4 +1,4 @@
-opensyllabusApp.service('CitationsService', [ '$resource', function ( $resource ){
+tenjinApp.service('CitationsService', [ '$resource', function ( $resource ){
     'use strict';	
 	
 	var siteCitationsProviderUri = "../../../../../direct/citation/list";

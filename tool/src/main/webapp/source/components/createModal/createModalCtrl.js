@@ -1,4 +1,4 @@
-﻿opensyllabusApp.controller('CreateModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'type', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', 'config', function($scope, $uibModalInstance, $translate, type, parent, element, SyllabusService, TreeService, AlertService, config) {
+﻿tenjinApp.controller('CreateModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'type', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', 'config', function($scope, $uibModalInstance, $translate, type, parent, element, SyllabusService, TreeService, AlertService, config) {
     'use strict';
 
     $scope.parent = parent;

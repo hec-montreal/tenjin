@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('evaluationElement', ['SyllabusService', 'TreeService', function (SyllabusService, TreeService){
+tenjinApp.directive('evaluationElement', ['SyllabusService', 'TreeService', function (SyllabusService, TreeService){
     'use strict';
 
     return {

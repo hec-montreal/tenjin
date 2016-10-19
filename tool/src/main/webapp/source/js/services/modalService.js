@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.service('ModalService', ['$uibModal', function ($uibModal){
+tenjinApp.service('ModalService', ['$uibModal', function ($uibModal){
     'use strict';
 
     /**

@@ -15,20 +15,20 @@ import {CourseElementComponent} from './element/courseElement/courseElement';
 var adapter = new UpgradeAdapter();
 
 // downgrade directives to angular 1 context
-opensyllabusApp.directive('textElement', adapter.downgradeNg2Component(TextElementComponent));
-opensyllabusApp.directive('hyperlinkElement', adapter.downgradeNg2Component(HyperlinkElementComponent));
-opensyllabusApp.directive('addElementMenu', adapter.downgradeNg2Component(AddElementComponent));
-opensyllabusApp.directive('imageElement', adapter.downgradeNg2Component(ImageElementComponent));
-opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
-opensyllabusApp.directive('clusterElement', adapter.downgradeNg2Component(ClusterElementComponent));
-opensyllabusApp.directive('rubricElement', adapter.downgradeNg2Component(RubricElementComponent));
-opensyllabusApp.directive('toolElement', adapter.downgradeNg2Component(ToolElementComponent));
-opensyllabusApp.directive('videoElement', adapter.downgradeNg2Component(VideoElementComponent));
-opensyllabusApp.directive('courseElement', adapter.downgradeNg2Component(CourseElementComponent));
+tenjinApp.directive('textElement', adapter.downgradeNg2Component(TextElementComponent));
+tenjinApp.directive('hyperlinkElement', adapter.downgradeNg2Component(HyperlinkElementComponent));
+tenjinApp.directive('addElementMenu', adapter.downgradeNg2Component(AddElementComponent));
+tenjinApp.directive('imageElement', adapter.downgradeNg2Component(ImageElementComponent));
+tenjinApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
+tenjinApp.directive('clusterElement', adapter.downgradeNg2Component(ClusterElementComponent));
+tenjinApp.directive('rubricElement', adapter.downgradeNg2Component(RubricElementComponent));
+tenjinApp.directive('toolElement', adapter.downgradeNg2Component(ToolElementComponent));
+tenjinApp.directive('videoElement', adapter.downgradeNg2Component(VideoElementComponent));
+tenjinApp.directive('courseElement', adapter.downgradeNg2Component(CourseElementComponent));
 
 
 // downgrade buttons element directive to angular 1 context
-// opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
+// tenjinApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
 
 // const ButtonsElement = adapter.upgradeNg1Component('buttonsElement');
 
@@ -57,7 +57,7 @@ adapter.upgradeNg1Provider('SakaiToolsService');
 adapter.upgradeNg1Provider('config');
 
 // downgrade text element directive to angular 1 context
-// opensyllabusApp.directive('buttonsElements', adapter.upgradeNg1Component(TextElementComponent));
+// tenjinApp.directive('buttonsElements', adapter.upgradeNg1Component(TextElementComponent));
 
 
 adapter.bootstrap(document.body, ['opensyllabus']);

@@ -1,4 +1,4 @@
-﻿opensyllabusApp.directive('contactElementForm', ['$translate', function ($translate){
+﻿tenjinApp.directive('contactElementForm', ['$translate', function ($translate){
     'use strict';
 
     return {

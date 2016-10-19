@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('home', ['$q', '$state', '$timeout', 'config', 'mockup' ,'SyllabusService', 'UserService', function ($q, $state, $timeout, config, mockup, SyllabusService, UserService) {
+tenjinApp.directive('home', ['$q', '$state', '$timeout', 'config', 'mockup' ,'SyllabusService', 'UserService', function ($q, $state, $timeout, config, mockup, SyllabusService, UserService) {
     'use strict';
 
     return {

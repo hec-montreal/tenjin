@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('contentPanelDirective', ['SyllabusService', function (SyllabusService){
+tenjinApp.directive('contentPanelDirective', ['SyllabusService', function (SyllabusService){
     'use strict';
 
     return {

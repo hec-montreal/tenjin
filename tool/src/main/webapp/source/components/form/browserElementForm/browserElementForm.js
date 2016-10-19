@@ -1,4 +1,4 @@
-opensyllabusApp.directive('browserElementForm', ['SakaiToolsService','ResourcesService', function ( SakaiToolsService, ResourcesService){
+tenjinApp.directive('browserElementForm', ['SakaiToolsService','ResourcesService', function ( SakaiToolsService, ResourcesService){
     'use strict';
 
     return {
