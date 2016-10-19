@@ -1,0 +1,62 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	   http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/mvc
+		   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+<!-- <context:annotation-config /> -->
+	<context:component-scan base-package="ca.hec.tenjin.tool.controller" />
+	<mvc:annotation-driven >
+		<mvc:message-converters>
+        	<!-- Jackson converter for HTTP messages -->
+        	<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+            	<property name="objectMapper" ref="jacksonObjectMapper" />
+        	</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    	<property name="targetObject" ref="jacksonObjectMapper" />
+    	<property name="targetMethod" value="configure" />
+    	<property name="arguments">
+        	<list>
+            	<value type="com.fasterxml.jackson.databind.DeserializationFeature">FAIL_ON_UNKNOWN_PROPERTIES</value>
+            	<value>false</value>
+        	</list>
+    	</property>
+	</bean>
+
+<!--
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="suffix" value=".jsp" />
+		<property name="order">
+			<value>1</value>
+		</property>
+	</bean>
+
+
+	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
+		<property name="location">
+			<value>/WEB-INF/spring-views.xml</value>
+		</property>
+		<property name="order">
+			<value>0</value>
+		</property>
+	</bean>
+	-->
+<!--
+	do we need this?
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+-->
+</beans>

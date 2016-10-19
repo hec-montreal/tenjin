@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<registration>
+	<tool id="sakai.tenjin"
+		title="Tenjin"
+		description="Tenjin Course Outliner tool">
+
+		<category name="course" />
+	      	<category name="project" />
+
+		<configuration name="functions.require" />
+		<configuration name="height" value="auto" />
+
+    </tool>
+</registration>
+

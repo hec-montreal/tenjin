@@ -1,4 +1,4 @@
-﻿opensyllabusApp.service('SyllabusService', ['UserService', '$resource', function (UserService, $resource){
+﻿tenjinApp.service('SyllabusService', ['UserService', '$resource', function (UserService, $resource){
     'use strict';
 
     this.syllabus;

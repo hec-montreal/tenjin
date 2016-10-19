@@ -1,4 +1,4 @@
-opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalService', function ($anchorScroll, $location, ModalService){
+tenjinApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalService', function ($anchorScroll, $location, ModalService){
     'use strict';
 
     return {

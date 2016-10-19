@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('courseElementForm', function (){
+tenjinApp.directive('courseElementForm', function (){
     'use strict';
 
     return {

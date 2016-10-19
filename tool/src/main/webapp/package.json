@@ -1,7 +1,7 @@
 {
-  "name": "opensyllabus",
+  "name": "tenjin",
   "version": "1.0.0",
-  "description": "Plan de cours",
+  "description": "Tenjin Course Outliner",
   "main": "gulpfile.js",
   "preinstall": "npm i tsd",
   "dependencies": {
@@ -44,6 +44,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Johan JULIEN",
+  "author": "HEC Montreal",
   "license": "ISC"
 }

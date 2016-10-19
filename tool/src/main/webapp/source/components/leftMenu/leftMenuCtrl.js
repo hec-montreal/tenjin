@@ -1,5 +1,5 @@
 ﻿	
-opensyllabusApp.controller('LeftMenuCtrl', [ '$scope', 'TreeService', 'SyllabusService', function ($scope, TreeService, SyllabusService){
+tenjinApp.controller('LeftMenuCtrl', [ '$scope', 'TreeService', 'SyllabusService', function ($scope, TreeService, SyllabusService){
 	'use strict';
 
     $scope.syllabusService = SyllabusService;

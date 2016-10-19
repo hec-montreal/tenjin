@@ -1,4 +1,4 @@
-﻿opensyllabusApp.directive('contactElement', [ function (){
+﻿tenjinApp.directive('contactElement', [ function (){
     'use strict';
 
     return {

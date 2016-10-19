@@ -1,5 +1,5 @@
 
-opensyllabusApp.directive('loader', ['SyllabusService', function (SyllabusService){
+tenjinApp.directive('loader', ['SyllabusService', function (SyllabusService){
     'use strict';
 
     return {

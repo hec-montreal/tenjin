@@ -1,4 +1,4 @@
-opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http', '$location', 'config',   function ( $rootScope, $resource, $http, $location, config){
+tenjinApp.service('ResourcesService', [ '$rootScope', '$resource', '$http', '$location', 'config',   function ( $rootScope, $resource, $http, $location, config){
     'use strict';	
 	
 	this.resources;
@@ -55,7 +55,7 @@ opensyllabusApp.service('ResourcesService', [ '$rootScope', '$resource', '$http'
 	var classifyResources = function($rootTree) {
 
 		var type = getResourceType($rootTree);
-		$rootTree.osylType= type;
+		$rootTree.type= type;
 
 		for ( var i = 0 ; i < $rootTree.resourceChildren.length ; i++) {
 			classifyResources($rootTree.resourceChildren[i]);

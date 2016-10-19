@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('videoElementForm', ['$sce', function ($sce){
+tenjinApp.directive('videoElementForm', ['$sce', function ($sce){
     'use strict';
 
     return {

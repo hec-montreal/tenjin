@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.constant('config', {
+tenjinApp.constant('config', {
 
     mockUp: false,
     types : {
@@ -113,5 +113,5 @@ opensyllabusApp.constant('config', {
 });
 
 
-opensyllabusApp.constant("Modernizr", Modernizr);
+tenjinApp.constant("Modernizr", Modernizr);
 

@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', 'mockup', function ($timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config, mockup){
+tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', 'mockup', function ($timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config, mockup){
     'use strict';
 
     return {

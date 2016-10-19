@@ -1,5 +1,5 @@
 
-opensyllabusApp.directive('evaluationattrElement', function (){
+tenjinApp.directive('evaluationattrElement', function (){
     'use strict';
 
     return {

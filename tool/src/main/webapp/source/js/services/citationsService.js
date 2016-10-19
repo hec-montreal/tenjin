@@ -1,4 +1,4 @@
-opensyllabusApp.service('CitationsService', [ '$resource', function ( $resource ){
+tenjinApp.service('CitationsService', [ '$resource', function ( $resource ){
     'use strict';	
 	
 	var siteCitationsProviderUri = "../../../../../direct/citation/list";
@@ -18,7 +18,7 @@ opensyllabusApp.service('CitationsService', [ '$resource', function ( $resource 
      */
 	var loadCitationLists = function($rootTree, $resourceIds, $promises ){
 		var citationList;
-		if ($rootTree.osylType === "citationList"){
+		if ($rootTree.type === "citationList"){
 			citationList = load($rootTree.resourceId);
 			$promises.push(citationList.$promise);
 			$resourceIds.push($rootTree.resourceId);
@@ -52,7 +52,7 @@ opensyllabusApp.service('CitationsService', [ '$resource', function ( $resource 
 	this.updateJsonProperties = function ($citationListId, $citations){
 		for ( var i=0; i< $citations.length ; i++) {
 			$citations[i].resourceId = $citationListId + '/'+$citations[i].id;
-			$citations[i].osylType = 'citation';
+			$citations[i].type = 'citation';
 			$citations[i].name = $citations[i].values.title + ' (' + $citations[i].type + ')';
 		}
 		return $citations;

@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.service('AlertService', ['$translate',  function ($translate){
+tenjinApp.service('AlertService', ['$translate',  function ($translate){
     'use strict';
 
     var alerts = {

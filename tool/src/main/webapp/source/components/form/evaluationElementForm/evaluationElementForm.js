@@ -1,5 +1,5 @@
 
-opensyllabusApp.directive('evaluationElementForm',  function (){
+tenjinApp.directive('evaluationElementForm',  function (){
     'use strict';
 
     return {

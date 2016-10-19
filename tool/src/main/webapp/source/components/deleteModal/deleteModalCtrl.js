@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.controller('DeleteModalCtrl',  [ '$scope', '$uibModalInstance', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', function ($scope, $uibModalInstance, parent, element, SyllabusService, TreeService, AlertService) {
+tenjinApp.controller('DeleteModalCtrl',  [ '$scope', '$uibModalInstance', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', function ($scope, $uibModalInstance, parent, element, SyllabusService, TreeService, AlertService) {
     'use strict';
 
     $scope.element = element;

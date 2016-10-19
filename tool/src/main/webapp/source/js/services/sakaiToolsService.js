@@ -1,4 +1,4 @@
-opensyllabusApp.service('SakaiToolsService', ['$rootScope', '$resource', function ( $rootScope, $resource){
+tenjinApp.service('SakaiToolsService', ['$rootScope', '$resource', function ( $rootScope, $resource){
     'use strict';	
 	
 	var toolsEntities = null;

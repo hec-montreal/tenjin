@@ -1,5 +1,5 @@
 ﻿
-opensyllabusApp.directive('imageElementForm', function (){
+tenjinApp.directive('imageElementForm', function (){
     'use strict';
 
     return {
