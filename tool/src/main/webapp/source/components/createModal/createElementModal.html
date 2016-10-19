@@ -1,21 +1,15 @@
-
-<form data-ng-submit="ok()"> 
-
+<form data-ng-submit="ok()" novalidate> 
     <div class="modal-header">
         <h3 class="modal-title">{{title}} "{{ type.label }}"</h3>
+    </div>
 
-    </div> 
+    <div class="modal-body errors" ng-if="!!validationErrors && validationErrors.length > 0">
+        <div ng-repeat="e in validationErrors">
+            {{e.message}}
+        </div>
+    </div>
 
     <div class="modal-body">
- 
-        <div class="errors"> 
-            <ul>
-                <li data-ng-show="errors.isErrorDateDebut">{{ 'ERROR_FORMAT_DATE_DEBUT' | translate}}</li>
-                <li data-ng-show="errors.isErrorDateRetrait">{{ 'ERROR_FORMAT_DATE_RETRAIT' | translate}}</li>
-                <li data-ng-show="errors.isErrorRessource">{{ 'ERROR_RESSOURCE' | translate}}</li>
-            </ul>
-        </div> 
-
         <div data-ng-switch="type.type">
              <!-- élément de type texte -->
             <div data-ng-switch-when="text" data-text-element-form="element"></div>
@@ -50,6 +44,5 @@
     <div class="modal-footer">
         <input class="btn btn-primary" type="submit" value="OK"/> 
         <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
-    </div> 
-    
+    </div>
 </form>

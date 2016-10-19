@@ -1,21 +1,19 @@
-﻿
-opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', '$translate', 'type', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', 'config' , function ($scope, $uibModalInstance, $translate, type, parent, element, SyllabusService, TreeService, AlertService, config) {
+﻿opensyllabusApp.controller('CreateModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'type', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', 'config', function($scope, $uibModalInstance, $translate, type, parent, element, SyllabusService, TreeService, AlertService, config) {
     'use strict';
 
-    $scope.parent = parent; 
-    
+    $scope.parent = parent;
+
     // Modification
     if (element) {
         $scope.type = {
-            'label' : $translate.instant(config.types[element.type].label),
-            'type' : element.type
+            'label': $translate.instant(config.types[element.type].label),
+            'type': element.type
         };
 
         $scope.element = angular.copy(element);
         $scope.mode = "edition";
         $scope.title = $translate.instant('MODALE_EDIT_ELEMENT_TITLE');
     } else {
-        
         // Creation
         $scope.type = type;
 
@@ -28,19 +26,14 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
             'availability_start_date': new Date(),
             'common': SyllabusService.syllabus.common
         };
+
         $scope.title = $translate.instant('MODALE_CREATE_ELEMENT_TITLE');
-
     }
- 
 
-    $scope.ok = function () {
+    $scope.ok = function() {
+        var errors = $scope.validateElement();
 
-        // CHECK ELEMENT
-        var result = $scope.checkElement($scope.element.type);
-
-        // RESULT
-        if (result > 0) {
- 
+        if (errors.length <= 0) {
             // We create a copy of the current syllabus and we add it the element to be added
             var data = angular.copy(SyllabusService.syllabus);
             var selectedItemId = TreeService.selectedItem.id;
@@ -52,85 +45,93 @@ opensyllabusApp.controller('CreateModalCtrl',  [ '$scope', '$uibModalInstance', 
             SyllabusService.setWorking(true);
 
             savePromise.$promise.then(function($data) {
-    
                 SyllabusService.setSyllabus($data);
                 // refresh the reference of the selected item and refresh the right panel
                 // TreeService.setSelectedItemFromId(selectedItemId);
                 TreeService.setSelectedItemFromEmplacement(emplacement);
-            }, function ($error){
+            }, function($error) {
                 // alert add ko
                 AlertService.display('danger');
 
             }).finally(function() {
-                 SyllabusService.setWorking(false);
+                SyllabusService.setWorking(false);
             });
 
             // We close the popup 
             $uibModalInstance.close('');
-
+        } else {
+            $scope.validationErrors = errors;
         }
     };
 
 
-    $scope.checkElement = function() {
-        var result = 1;
+    $scope.validateElement = function() {
+        // Get element validation function
+        var validationFn = $scope.element.validate;
+        var ret = [];
 
-        $scope.errors = {};
+        // If the validation function exists
+        if (!!validationFn) {
+            ret = validationFn.call($scope.element);
+        }
 
-        // If the element form contains dates
-        if ( $scope.element.$formHasDates ) {
-            // CONTROLE date affichage
-            if ($scope.element.availability_start_date ) {
+        // Common fields to validate
+        // Dates
+        if ($scope.element.hasDatesInterval) {
+            if ($scope.element.availability_start_date) {
                 // convert to timestamp
-                if ( Object.prototype.toString.call($scope.element.availability_start_date) === '[object Date]' ) {
+                if (Object.prototype.toString.call($scope.element.availability_start_date) === '[object Date]') {
                     $scope.element.availability_start_date = $scope.element.availability_start_date.getTime();
                 }
-
-            } else {       
-                $scope.errors.isErrorDateDebut = true;
-                result = -1;
+            } else {
+                ret.push({
+                    field: "availability_start_date",
+                    message: "ERROR_FORMAT_DATE_DEBUT"
+                });
             }
 
-            // CONTROLE retire date
-            if ($scope.element.hasEndDate){
+            if ($scope.element.hasEndDate) {
                 if ($scope.element.availabilityEndDate) {
                     // convert to timestamp
-                    if ( Object.prototype.toString.call($scope.element.availabilityEndDate) === '[object Date]' ) {
+                    if (Object.prototype.toString.call($scope.element.availabilityEndDate) === '[object Date]') {
                         $scope.element.availabilityEndDate = $scope.element.availabilityEndDate.getTime();
                     }
 
-                } else {       
-                    $scope.errors.isErrorDateRetrait = true;
-                    result = -1;
+                    if ($scope.element.availability_start_date > $scope.element.availabilityEndDate) {
+                        ret.push({
+                            field: "availabilityEndDate",
+                            message: "ERROR_START_DATE_GREATER"
+                        });
+                    }
+                } else {
+                    ret.push({
+                        field: "availabilityEndDate",
+                        message: "ERROR_FORMAT_DATE_RETRAIT"
+                    });
                 }
             }
         }
 
-        //CHECK evaluation date
-        if ($scope.element.type === 'evaluation'){
-            if ($scope.element.attributes.evalDate){
-                $scope.element.attributes.evalDate = $scope.element.attributes.evalDate.toString();                
-            }
-        }
         // If the element form contains a resource
-        if ( $scope.element.$formHasRessource ) {
+        if ($scope.element.$formHasRessource) {
             if (!$scope.element.attributes.resourceId) {
-                $scope.errors.isErrorRessource = true;
-                result = -1;
+                ret.push({
+                    field: "resource",
+                    message: "ERROR_RESSOURCE"
+                });
             }
         }
 
-        return result;
+        // Assign messages from localization
+        for (var i = 0; i < ret.length; i++) {
+            ret[i].message = $translate.instant(ret[i].message);
+        }
+
+        return ret;
     };
 
-    $scope.cancel = function () {
+    $scope.cancel = function() {
         $uibModalInstance.dismiss('cancel');
     };
 
 }]);
-
- 
-
-
-
-

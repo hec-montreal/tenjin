@@ -8,8 +8,10 @@
         scope: true,
         restrict: 'A',
         templateUrl: 'form/contactElementForm/contactElementForm.html', 
+
         controller: function ($scope) {
             var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';
+            
             // setup editor options
             $scope.editorOptionsDisponibilite = {
                 language: 'fr',
@@ -52,6 +54,19 @@
             $scope.selectedTitle = function ( $option){
                 $scope.element.attributes.contactTitle = $option.name;
             };
+
+            $scope.element.validate = function() {
+                var ret = [];
+
+                if (!this.description || this.description.length <= 0) {
+                    ret.push({
+                        field: "description",
+                        message: "ERROR_CONTENT_MANDATORY"
+                    });
+                }
+
+                return ret;
+            }
         }        
     };
 

@@ -46,6 +46,7 @@ opensyllabusApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalSe
             });
 
             $scope.open = function($event) {
+                console.log("OPEN");
                 $scope.status.opened = true;
                 $scope.element.$formHasDates = true;
                 $scope.element.availability_start_date = new Date();
