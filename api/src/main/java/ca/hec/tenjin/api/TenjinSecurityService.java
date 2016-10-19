@@ -5,7 +5,7 @@ import java.util.List;
 
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 
-public interface Syllabus2SecurityService {
+public interface TenjinSecurityService {
 
 	/**
 	 * This user has all the rights in an syllabus or template 

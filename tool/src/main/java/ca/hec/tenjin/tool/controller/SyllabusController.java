@@ -27,8 +27,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.Syllabus2SecurityService;
-import ca.hec.tenjin.api.Syllabus2Service;
+import ca.hec.tenjin.api.TenjinSecurityService;
+import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.OsylException.DeniedAccessException;
 import ca.hec.tenjin.api.OsylException.NoSiteException;
@@ -69,12 +69,12 @@ import ca.hec.tenjin.api.model.template.TemplateStructure;
  */
 @Controller
 @RequestMapping(value = "v1")
-public class Syllabus2Controller {
+public class SyllabusController {
 
 	@Setter
 	@Getter
 	@Autowired
-	private Syllabus2Service osyl2Service = null;
+	private SyllabusService osyl2Service = null;
 	
 	@Setter
 	@Autowired
@@ -82,16 +82,16 @@ public class Syllabus2Controller {
 
 	@Setter
 	@Autowired
-	private Syllabus2SecurityService securityService = null; 
+	private TenjinSecurityService securityService = null; 
 
 	private ResourceLoader msgs = null;
 
-	private static Log log = LogFactory.getLog(Syllabus2Controller.class);
+	private static Log log = LogFactory.getLog(SyllabusController.class);
 
 	@PostConstruct
 	public void init() {
 		// retrieve ui and co messages
-		msgs = new ResourceLoader("openSyllabus2");
+		msgs = new ResourceLoader("tenjin");
 
 	}
 

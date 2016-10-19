@@ -20,13 +20,13 @@ import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
 import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.Syllabus2SecurityService;
-import ca.hec.tenjin.api.Syllabus2Service;
+import ca.hec.tenjin.api.TenjinSecurityService;
+import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TemplateService;
 import ca.hec.tenjin.api.OsylException.DeniedAccessException;
 import ca.hec.tenjin.api.OsylException.NoSiteException;
 import ca.hec.tenjin.api.OsylException.NoSyllabusException;
-import ca.hec.tenjin.api.dao.Syllabus2Dao;
+import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
@@ -34,19 +34,19 @@ import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 
 /**
- * Implementation of {@link Syllabus2Service}
+ * Implementation of {@link SyllabusService}
  *
  *
  */
 @Setter 
-public class Syllabus2ServiceImpl implements Syllabus2Service {
+public class SyllabusServiceImpl implements SyllabusService {
 
-	private static final Logger log = Logger.getLogger(Syllabus2ServiceImpl.class);
+	private static final Logger log = Logger.getLogger(SyllabusServiceImpl.class);
 
 	private SakaiProxy sakaiProxy;	
-	private Syllabus2Dao syllabusDao;
+	private SyllabusDao syllabusDao;
 	private TemplateService templateService;
-	private Syllabus2SecurityService securityService;
+	private TenjinSecurityService securityService;
 
 	@Override
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException {

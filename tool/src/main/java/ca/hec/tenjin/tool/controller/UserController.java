@@ -43,7 +43,7 @@ import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.tool.api.SessionManager;
 
-import ca.hec.tenjin.api.Syllabus2SecurityService;
+import ca.hec.tenjin.api.TenjinSecurityService;
 
 @Controller
 @RequestMapping(value ="v1")
@@ -61,7 +61,7 @@ public class UserController {
 	
 	@Setter
 	@Autowired
-	private Syllabus2SecurityService securityService = null; 
+	private TenjinSecurityService securityService = null; 
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> getUser() {

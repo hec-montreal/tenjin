@@ -33,7 +33,7 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
  */
-public interface Syllabus2Dao {
+public interface SyllabusDao {
 
 	/**
 	 * Retrieve a syllabus by id

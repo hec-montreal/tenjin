@@ -25,20 +25,20 @@
 //import org.sakaiproject.entitybroker.entityprovider.search.Search;
 //import org.sakaiproject.entitybroker.util.AbstractEntityProvider;
 //
-//import ca.hec.tenjin.api.Syllabus2Service;
+//import ca.hec.tenjin.api.SyllabusService;
 //import ca.hec.tenjin.api.OsylException.NoSyllabusException;
 //import ca.hec.tenjin.api.model.syllabus.Syllabus;
 //
-//public class Syllabus2EntityProviderImpl extends
+//public class SyllabusEntityProviderImpl extends
 //AbstractEntityProvider implements CoreEntityProvider, AutoRegisterEntityProvider, RESTful{
 //
-//	private Log log = LogFactory.getLog(Syllabus2EntityProviderImpl.class);
+//	private Log log = LogFactory.getLog(SyllabusEntityProviderImpl.class);
 //	
-//	public final static String ENTITY_PREFIX = "openSyllabus2";
+//	public final static String ENTITY_PREFIX = "tenjin";
 //	
-//	private Syllabus2Service osyl2Service;
+//	private SyllabusService osyl2Service;
 //	
-//	public void setOsyl2Service(Syllabus2Service osyl2Service) {
+//	public void setOsyl2Service(SyllabusService osyl2Service) {
 //		this.osyl2Service = osyl2Service;
 //	}
 //

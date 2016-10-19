@@ -8,7 +8,7 @@
 	<!-- Use the Sakai session factory, pre-configured, instead of a local one
 	we are adding our HBM files to the Sakai session factory instead of creating
 	our own copy of it -->
-	<bean id="org.sakaiproject.springframework.orm.hibernate.impl.AdditionalHibernateMappingsImpl.OpenSyllabus2"
+	<bean id="org.sakaiproject.springframework.orm.hibernate.impl.AdditionalHibernateMappingsImpl.Tenjin"
 		class="org.sakaiproject.springframework.orm.hibernate.impl.AdditionalHibernateMappingsImpl">
 		<property name="mappingResources">
 			<list>
@@ -26,14 +26,14 @@
 		</property>
 	</bean>
 
-	<bean id="ca.hec.tenjin.api.dao.Syllabus2Dao"
+	<bean id="ca.hec.tenjin.api.dao.SyllabusDao"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 
 		<property name="transactionManager"
 			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
 			<bean
-				class="ca.hec.tenjin.impl.dao.Syllabus2DaoImpl">
+				class="ca.hec.tenjin.impl.dao.SyllabusDaoImpl">
 
 				<property name="sessionFactory">
 					<ref

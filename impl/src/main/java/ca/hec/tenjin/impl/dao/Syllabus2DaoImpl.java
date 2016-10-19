@@ -22,9 +22,9 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
 import ca.hec.tenjin.api.model.template.Template;
 
-public class Syllabus2DaoImpl extends HibernateDaoSupport implements Syllabus2Dao {
+public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao {
 
-	private Log log = LogFactory.getLog(Syllabus2DaoImpl.class);
+	private Log log = LogFactory.getLog(SyllabusDaoImpl.class);
 
 	@Override
 	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden) {

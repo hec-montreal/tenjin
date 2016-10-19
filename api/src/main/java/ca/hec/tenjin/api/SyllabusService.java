@@ -13,7 +13,7 @@ import ca.hec.tenjin.api.model.syllabus.Syllabus;
  * @author Curtis van Osch (curtis.van-osch@hec.ca)
  *
  */
-public interface Syllabus2Service {
+public interface SyllabusService {
 
 	/**
 	 * Retrieves the syllabus associated to a specific section and sectionId.

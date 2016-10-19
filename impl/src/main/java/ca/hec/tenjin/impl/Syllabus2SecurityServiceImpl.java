@@ -14,17 +14,17 @@ import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
 import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.Syllabus2SecurityService;
+import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import lombok.Setter;
 
 @Setter
-public class Syllabus2SecurityServiceImpl implements Syllabus2SecurityService {
+public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 	
 	private SakaiProxy sakaiProxy;
 
-	private static Log log = LogFactory.getLog(Syllabus2SecurityServiceImpl.class);
+	private static Log log = LogFactory.getLog(TenjinSecurityServiceImpl.class);
 	
 	@Override
 	public boolean isSuperUser(String userId) {

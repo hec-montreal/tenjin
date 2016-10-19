@@ -5,18 +5,18 @@
 	<!-- import the hibernate related beans -->
 	<import resource="spring-hibernate.xml" />
 
-	<bean id="ca.hec.tenjin.api.Syllabus2Service"
+	<bean id="ca.hec.tenjin.api.SyllabusService"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 
 		<property name="transactionManager"
 			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
-			<bean class="ca.hec.tenjin.impl.Syllabus2ServiceImpl">
+			<bean class="ca.hec.tenjin.impl.SyllabusServiceImpl">
 				<!-- API injection -->
-				<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.Syllabus2Dao" />
+				<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
 		 		<property name="templateService" ref="ca.hec.tenjin.api.TemplateService" />
 		 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
-		 		<property name="securityService" ref="ca.hec.tenjin.api.Syllabus2SecurityService" />
+		 		<property name="securityService" ref="ca.hec.tenjin.api.TenjinSecurityService" />
 		 	</bean>
 
 		</property>
@@ -46,8 +46,8 @@
 		</property>
 	</bean>
 
-	<bean id="ca.hec.tenjin.api.Syllabus2SecurityService"
-		class="ca.hec.tenjin.impl.Syllabus2SecurityServiceImpl">
+	<bean id="ca.hec.tenjin.api.TenjinSecurityService"
+		class="ca.hec.tenjin.impl.TenjinSecurityServiceImpl">
  		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 	</bean>
 	
