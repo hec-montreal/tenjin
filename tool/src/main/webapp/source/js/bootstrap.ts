@@ -5,7 +5,6 @@ import {TextElementComponent} from './element/textElement/textElement';
 import {HyperlinkElementComponent} from './element/hyperlinkElement/hyperlinkElement';
 import {AddElementComponent} from './element/addElementMenu/addElementMenu';  
 import {ImageElementComponent} from './element/imageElement/imageElement';
-import {DocumentElementComponent} from './element/documentElement/documentElement';
 import {ButtonsElementComponent} from './element/buttonsElement/buttonsElement';
 import {ClusterElementComponent} from './element/clusterElement/clusterElement';
 import {RubricElementComponent} from './element/rubricElement/rubricElement';
@@ -20,7 +19,6 @@ opensyllabusApp.directive('textElement', adapter.downgradeNg2Component(TextEleme
 opensyllabusApp.directive('hyperlinkElement', adapter.downgradeNg2Component(HyperlinkElementComponent));
 opensyllabusApp.directive('addElementMenu', adapter.downgradeNg2Component(AddElementComponent));
 opensyllabusApp.directive('imageElement', adapter.downgradeNg2Component(ImageElementComponent));
-opensyllabusApp.directive('documentElement', adapter.downgradeNg2Component(DocumentElementComponent)); 
 opensyllabusApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
 opensyllabusApp.directive('clusterElement', adapter.downgradeNg2Component(ClusterElementComponent));
 opensyllabusApp.directive('rubricElement', adapter.downgradeNg2Component(RubricElementComponent));
