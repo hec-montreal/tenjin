@@ -101,7 +101,53 @@ tenjinApp.constant('config', {
             'id' : 9,
             'name' : 'DOCUMENT_TYPE_PEDAGOGIQUE'
         }
-    ],   
+    ],
+    hyperlinkTypes: [
+        {
+            'id': -1,
+            'name': 'HYPERLINK_TYPE_DEFAULT'
+        },
+        {
+            'id': 1,
+            'name': 'HYPERLINK_TYPE_VIDEO'
+        },
+        {
+            'id': 2,
+            'name': 'HYPERLINK_TYPE_ARTICLE'
+        },
+        {
+            'id': 3,
+            'name': 'HYPERLINK_TYPE_NEWS_ARTICLE'
+        },
+        {
+            'id': 4,
+            'name': 'HYPERLINK_TYPE_CASE'
+        },
+        {
+            'id': 5,
+            'name': 'HYPERLINK_TYPE_REPORT'
+        },
+        {
+            'id': 6,
+            'name': 'HYPERLINK_TYPE_DATA'
+        },
+        {
+            'id': 7,
+            'name': 'HYPERLINK_TYPE_POLL'
+        },
+        {
+            'id': 8,
+            'name': 'HYPERLINK_TYPE_WEB'
+        },
+        {
+            'id': 9,
+            'name': 'HYPERLINK_TYPE_SIMULATION'
+        },
+        {
+            'id': 10,
+            'name': 'HYPERLINK_TYPE_SOFTWARE'
+        }
+    ],
     extensionsImage: ['jpg', 'gif', 'png'],
     statusLabel : {
         1 : "STATUS_INITIAL",
