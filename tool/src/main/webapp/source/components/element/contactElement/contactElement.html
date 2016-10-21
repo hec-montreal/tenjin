@@ -1,31 +1,22 @@
 <div class="element contact-info">
 
 	<div class="titre-element"> 
-        <span class="contact-firstname">{{element.attributes.contactFirstName}}</span> 
-        <span class="contact-lastname">{{element.attributes.contactLastName}}</span>
+        <span class="contact-firstname">{{element.attributes.contactInfoFirstName}}</span> 
+        <span class="contact-lastname">{{element.attributes.contactInfoLastName}}</span>
     </div>
-	<div data-ng-if="element.attributes.contactTitle" class="contact-title">{{element.attributes.contactTitle}}</div>
-	<div data-ng-if="element.attributes.contactEmail" class="contact-email">
-		<a href="mailto:{{element.attributes.contactEmail}}">{{element.attributes.contactEmail}} </a>
+	<div data-ng-if="element.attributes.contactInfoTitle" class="contact-title">{{element.attributes.contactInfoTitle}}</div>
+	<div data-ng-if="element.attributes.contactInfoEmail" class="contact-email">
+		<a href="mailto:{{element.attributes.contactInfoEmail}}">{{element.attributes.contactInfoEmail}} </a>
 	</div>
-	<!-- TODO: voir si nécessaire de formatter le numéro de  -->
-	<div data-ng-if="element.attributes.contactTelephone" class="contact-tel">{{element.attributes.contactTelephone}}</div>
-	<!-- TODO: internationaliser la valeur bureau -->
-	<div data-ng-if="element.attributes.contactBureau" class="contact-officeroom"> {{'CONTACT_OFFICEROOM' | translate}}: {{element.attributes.contactBureau}}</div> 
+	<!-- TODO: should we validate/format the phone number?  -->
+	<div data-ng-if="element.attributes.contactInfoTelephone" class="contact-tel">{{element.attributes.contactInfoTelephone}}</div>
 
-    <div class="contact-disponibilite" data-ng-if="element.attributes.disponibilites" >
+	<div data-ng-if="element.attributes.contactInfoOfficeRoom" class="contact-officeroom"> {{'CONTACT_OFFICEROOM' | translate}}: {{element.attributes.contactInfoOfficeRoom}}</div> 
+
+    <div class="contact-disponibilite" data-ng-if="element.attributes.contactInfoAvailability" >
     	<span>{{'CONTACT_AVAILABILITY' | translate}}:</span>
-    	<span ng-bind-html="element.attributes.disponibilites"> </span>
+    	<span ng-bind-html="element.attributes.contactInfoAvailability"> </span>
     </div>
     
     <div class="contact-description" data-ng-if="element.description" ng-bind-html="element.description"></div>
-    	
-    <div class="infos">
-        <span data-ng-class="{ 'picto-important' : ( element.attributes.contactImportant === 'true') }" title="Important"></span>
-        <span data-ng-class="{ 'picto-hec' : ( element.attributes.contactDiffusion === 'hec' ), 'picto-public' : ( element.attributes.contactDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
-        <span data-ng-class="{ 'picto-hidden' : ( element.attributes.contactHidden === 'true') }" title="Visible"></span>     
-    </div>
-
-
-
 </div>

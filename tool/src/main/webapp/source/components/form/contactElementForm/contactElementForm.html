@@ -2,30 +2,30 @@
     
     <div class="container-contact">
         <div class="row row-content">
-            <!-- Prénom -->
+            <!-- First Name -->
             <div class="col-md-2">
                 <label for="prenom">
                     {{ 'FORM_DOCUMENT_PRENOM' | translate }} <span class="mandatory"></span> 
                 </label>
             </div>
             <div class="col-md-4">
-                <input type="text" name="prenom" id="prenom" data-ng-model="element.attributes.contactFirstName" required />
+                <input type="text" name="prenom" id="prenom" data-ng-model="element.attributes.contactInfoFirstName" required />
             </div>
 
-            <!-- Nom -->
+            <!-- Name -->
              <div class="col-md-2">
                 <label for="nom">
                     {{ 'FORM_DOCUMENT_NOM' | translate }} <span class="mandatory"></span> 
                 </label>
             </div>
             <div class="col-md-4">       
-                <input type="text" name="nom" id="nom" data-ng-model="element.attributes.contactLastName" required />
+                <input type="text" name="nom" id="nom" data-ng-model="element.attributes.contactInfoLastName" required />
             </div>
         </div>
 
         
         <div class="row row-content">
-            <!-- Titre -->
+            <!-- Title -->
             <div class="col-md-2">
                 <label for="select-titre">
                     {{ 'FORM_DOCUMENT_TITRE' | translate }}
@@ -39,46 +39,44 @@
         </div>
 
         <div class="row row-content">
-            <!-- Téléphone -->
+            <!-- Telephone Number -->
             <div class="col-md-2">
                 <label for="telephone">
                     {{ 'FORM_DOCUMENT_TELEPHONE' | translate }}
                 </label>
             </div>
             <div class="col-md-4">
-                <input type="text" name="telephone" id="telephone" data-ng-model="element.attributes.contactTelephone" />
+                <input type="text" name="telephone" id="telephone" data-ng-model="element.attributes.contactInfoTelephone" />
             </div>
-            <!-- Courriel -->
+            <!-- Email -->
             <div class="col-md-2">
                 <label for="courriel">
                     {{ 'FORM_DOCUMENT_COURRIEL' | translate }}
                 </label>
             </div>
             <div class="col-md-4">
-                <input type="email" name="courriel" id="courriel" data-ng-model="element.attributes.contactEmail" />
+                <input type="text" name="courriel" id="courriel" data-ng-model="element.attributes.contactInfoEmail" />
             </div>
         </div>
 
         <div class="row row-content">
-            <!-- Bureau -->
+            <!-- Office Room -->
             <div class="col-md-2">
                 <label for="bureau">
                     {{ 'FORM_DOCUMENT_BUREAU' | translate }}
                 </label>
             </div>
             <div class="col-md-4">
-                <input type="text" name="bureau" id="bureau" data-ng-model="element.attributes.contactBureau" />
+                <input type="text" name="bureau" id="bureau" data-ng-model="element.attributes.contactInfoOfficeRoom" />
             </div>
         </div>
     </div>
 
-    <!-- Disponibilités -->
-    <div class="label-text-description">{{ 'FORM_DOCUMENT_DISPONIBILITES' | translate }}</div>
-    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptionsDisponibilite" data-ng-model="element.attributes.disponibilites" required></textarea>
+    <!-- Availability -->
+    <div class="label-text-availability">{{ 'FORM_DOCUMENT_DISPONIBILITES' | translate }}</div>
+    <textarea id="availability-textarea" cols="30" rows="10" ckeditor="editorOptionsDisponibilite" data-ng-model="element.attributes.contactInfoAvailability"></textarea>
 
     <!-- Description --> 
     <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
-    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptionsCommentaire" data-ng-model="element.description" required></textarea>
-
-
+    <textarea id="description-textarea" cols="30" rows="10" ckeditor="editorOptionsCommentaire" data-ng-model="element.description"></textarea>
 </div>
