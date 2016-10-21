@@ -317,8 +317,9 @@ body {
 }
 
 .tenjinElementModal {
-    input[type='text'] {
+    input[type='text'], input[type='email'] {
         border: 1px solid #d6d6d6;
+        padding: 3px;
     }
 
     label {

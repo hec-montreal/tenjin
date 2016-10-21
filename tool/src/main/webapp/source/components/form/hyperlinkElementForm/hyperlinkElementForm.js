@@ -42,6 +42,13 @@
                     });
                 }
 
+                // Add protocol if not present
+                var protocolRegex = /:\/\//g;
+
+                if (!this.attributes.hyperlinkUrl.match(protocolRegex)) {
+                    this.attributes.hyperlinkUrl = config.defaultHyperlinkProtocol + "://" + this.attributes.hyperlinkUrl;
+                }
+
                 return ret;
             };
         },

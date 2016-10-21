@@ -1,21 +1,22 @@
-﻿
-tenjinApp.constant('config', {
-
+﻿tenjinApp.constant('config', {
     mockUp: false,
-    types : {
-        'text' : {
+
+    defaultHyperlinkProtocol: "http",
+
+    types: {
+        'text': {
             'type': 'text',
             'label': 'TYPE_ELEMENT_TEXTE'
         },
-        'document' : {
+        'document': {
             'type': 'document',
             'label': 'TYPE_ELEMENT_DOCUMENT'
         },
-        'hyperlink' : { 
+        'hyperlink': {
             'type': 'hyperlink',
             'label': 'TYPE_ELEMENT_HYPERLINK'
         },
-        'image' : {
+        'image': {
             'type': 'image',
             'label': 'TYPE_ELEMENT_IMAGE'
         },
@@ -27,23 +28,23 @@ tenjinApp.constant('config', {
             'type': 'contact_info',
             'label': 'TYPE_ELEMENT_CONTACT'
         },
-        'citation' : {
+        'citation': {
             'type': 'citation',
             'label': 'TYPE_ELEMENT_CITATION'
         },
-        'sakai_entity' : {
+        'sakai_entity': {
             'type': 'sakai_entity',
             'label': 'TYPE_ELEMENT_SAKAIENTITY'
         },
-        'evaluation' : { 
+        'evaluation': {
             'type': 'evaluation',
             'label': 'TYPE_ELEMENT_EVALUATION'
         },
-        'exam' : { 
+        'exam': {
             'type': 'evaluation',
             'label': 'TYPE_ELEMENT_EXAM'
         },
-        'composite' : {
+        'composite': {
             'type': 'composite',
             'label': 'TYPE_ELEMENT_COMPOSITE'
         },
@@ -60,104 +61,80 @@ tenjinApp.constant('config', {
             'label': ''
         },
     },
-    documentTypes: [
-        {
-            'id' : -1,
-            'name' : 'DOCUMENT_TYPE_DEFAULT' 
-        },
-        {
-            'id' : 1,
-            'name' : 'DOCUMENT_TYPE_PRESENTATION'
-        },
-        {
-            'id' : 2,
-            'name' : 'DOCUMENT_TYPE_EXERCICE'
-        },
-        {
-            'id' : 3,
-            'name' : 'DOCUMENT_TYPE_SOLUTION'
-        },
-        {
-            'id' : 4,
-            'name' : 'DOCUMENT_TYPE_CAS'
-        },
-        {
-            'id' : 5,
-            'name' : 'DOCUMENT_TYPE_RAPPORT'
-        },
-        {
-            'id' : 6,
-            'name' : 'DOCUMENT_TYPE_DONNEES'
-        },
-        {
-            'id' : 7,
-            'name' : 'DOCUMENT_TYPE_LIVRE'
-        },
-        {
-            'id' : 8,
-            'name' : 'DOCUMENT_TYPE_OLDEXAMEN'
-        },
-        {
-            'id' : 9,
-            'name' : 'DOCUMENT_TYPE_PEDAGOGIQUE'
-        }
-    ],
-    hyperlinkTypes: [
-        {
-            'id': -1,
-            'name': 'HYPERLINK_TYPE_DEFAULT'
-        },
-        {
-            'id': 1,
-            'name': 'HYPERLINK_TYPE_VIDEO'
-        },
-        {
-            'id': 2,
-            'name': 'HYPERLINK_TYPE_ARTICLE'
-        },
-        {
-            'id': 3,
-            'name': 'HYPERLINK_TYPE_NEWS_ARTICLE'
-        },
-        {
-            'id': 4,
-            'name': 'HYPERLINK_TYPE_CASE'
-        },
-        {
-            'id': 5,
-            'name': 'HYPERLINK_TYPE_REPORT'
-        },
-        {
-            'id': 6,
-            'name': 'HYPERLINK_TYPE_DATA'
-        },
-        {
-            'id': 7,
-            'name': 'HYPERLINK_TYPE_POLL'
-        },
-        {
-            'id': 8,
-            'name': 'HYPERLINK_TYPE_WEB'
-        },
-        {
-            'id': 9,
-            'name': 'HYPERLINK_TYPE_SIMULATION'
-        },
-        {
-            'id': 10,
-            'name': 'HYPERLINK_TYPE_SOFTWARE'
-        }
-    ],
+    documentTypes: [{
+        'id': -1,
+        'name': 'DOCUMENT_TYPE_DEFAULT'
+    }, {
+        'id': 1,
+        'name': 'DOCUMENT_TYPE_PRESENTATION'
+    }, {
+        'id': 2,
+        'name': 'DOCUMENT_TYPE_EXERCICE'
+    }, {
+        'id': 3,
+        'name': 'DOCUMENT_TYPE_SOLUTION'
+    }, {
+        'id': 4,
+        'name': 'DOCUMENT_TYPE_CAS'
+    }, {
+        'id': 5,
+        'name': 'DOCUMENT_TYPE_RAPPORT'
+    }, {
+        'id': 6,
+        'name': 'DOCUMENT_TYPE_DONNEES'
+    }, {
+        'id': 7,
+        'name': 'DOCUMENT_TYPE_LIVRE'
+    }, {
+        'id': 8,
+        'name': 'DOCUMENT_TYPE_OLDEXAMEN'
+    }, {
+        'id': 9,
+        'name': 'DOCUMENT_TYPE_PEDAGOGIQUE'
+    }],
+    hyperlinkTypes: [{
+        'id': -1,
+        'name': 'HYPERLINK_TYPE_DEFAULT'
+    }, {
+        'id': 1,
+        'name': 'HYPERLINK_TYPE_VIDEO'
+    }, {
+        'id': 2,
+        'name': 'HYPERLINK_TYPE_ARTICLE'
+    }, {
+        'id': 3,
+        'name': 'HYPERLINK_TYPE_NEWS_ARTICLE'
+    }, {
+        'id': 4,
+        'name': 'HYPERLINK_TYPE_CASE'
+    }, {
+        'id': 5,
+        'name': 'HYPERLINK_TYPE_REPORT'
+    }, {
+        'id': 6,
+        'name': 'HYPERLINK_TYPE_DATA'
+    }, {
+        'id': 7,
+        'name': 'HYPERLINK_TYPE_POLL'
+    }, {
+        'id': 8,
+        'name': 'HYPERLINK_TYPE_WEB'
+    }, {
+        'id': 9,
+        'name': 'HYPERLINK_TYPE_SIMULATION'
+    }, {
+        'id': 10,
+        'name': 'HYPERLINK_TYPE_SOFTWARE'
+    }],
     extensionsImage: ['jpg', 'gif', 'png'],
-    statusLabel : {
-        1 : "STATUS_INITIAL",
-        2 : "STATUS_BROUILLON",
-        3 : "STATUS_PUBLIE",
-        4 : "STATUS_NON_ATTRIBUE"
+    statusLabel: {
+        1: "STATUS_INITIAL",
+        2: "STATUS_BROUILLON",
+        3: "STATUS_PUBLIE",
+        4: "STATUS_NON_ATTRIBUE"
     }
-    
+
 });
 
 
 tenjinApp.constant("Modernizr", Modernizr);
-
