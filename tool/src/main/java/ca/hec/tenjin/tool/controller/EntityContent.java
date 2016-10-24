@@ -5,11 +5,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.Data;
-
 import org.sakaiproject.time.api.Time;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
 
 @Data
 public class EntityContent {
@@ -25,7 +25,9 @@ public class EntityContent {
 		@JsonProperty private String size;
 		@JsonProperty private String url;
 		@JsonProperty private String priority;
-			
+		@JsonProperty private Boolean publicAccess;
+		@JsonProperty private Boolean copyright;
+
 		@JsonProperty private Time created;
 		@JsonProperty private Time modified;
 		@JsonProperty private Time release;
@@ -45,6 +47,7 @@ public class EntityContent {
 		public Map<String, Object> getProperties() {
 			return properties;
 		}
+		
 		public void setProperty(String key, Object value) {
 			properties.put(key, value);
 		}
@@ -55,5 +58,4 @@ public class EntityContent {
 			}
 			return false;
 		}
-	
 }

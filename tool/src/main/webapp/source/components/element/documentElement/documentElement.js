@@ -1,4 +1,4 @@
-tenjinApp.directive('documentElement', ['config', '$translate', 'ResourcesService' ,function (config, $translate, ResourcesService){
+tenjinApp.directive('documentElement', ['config', '$translate', 'ResourcesService', function(config, $translate, ResourcesService) {
     'use strict';
 
     return {
@@ -7,10 +7,17 @@ tenjinApp.directive('documentElement', ['config', '$translate', 'ResourcesServic
         },
         restrict: 'A',
         templateUrl: 'element/documentElement/documentElement.html',
-        controller: function ($scope) {
-          // Get ressources informations
+
+        controller: function($scope) {
+            // Get ressources informations
             $scope.resource = ResourcesService.getResource($scope.element.attributes.resourceId);
- 
+
+            var documentTypeId = $scope.element.attributes.docType;
+
+            if (documentTypeId) {
+                $scope.documentTypeId = parseInt(documentTypeId, 10);
+            }
+
             // si le type du document est retrouvé alors on cherche le libellé associé
             if ($scope.element.attributes.docType) {
                 for (var i = 0; i < config.documentTypes.length; i++) {
@@ -22,9 +29,9 @@ tenjinApp.directive('documentElement', ['config', '$translate', 'ResourcesServic
             }
 
         },
-        link: function ($scope, $element) {
+        link: function($scope, $element) {
 
-         }
+        }
 
     };
 

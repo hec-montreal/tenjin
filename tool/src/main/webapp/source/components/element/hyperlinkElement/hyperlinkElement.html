@@ -1,20 +1,23 @@
-<div class="element document">
+<div class="element hyperlink"> 
+    <div class="titre-element">
+        <a data-nodrag href="{{element.attributes.hyperlinkUrl}}" target="_blank">
+            {{ (element.title ? element.title : element.attributes.hyperlinkUrl) }}
+        </a>
 
-   <div class="titre-element">
-        <a href="{{resource.url}}" target="_blank">
-            {{ element.title || resource.name }} 
-        </a> <span ng-if="documentTypeId !== -1" class="resource-type">[{{ documentType }}]</span> 
-    </div>
-    <div class="titre-fichier">
-        ({{ resource.name }})
+        <span ng-if="hyperlinkTypeId !== -1" class="link-type">
+            [{{ hyperlinkType }}] 
+        </span> 
     </div>
 
+    <div class="url-lien">
+        ({{ element.attributes.hyperlinkUrl }}) 
+    </div>
+    
     <div data-ng-if="element.description" ng-bind-html="element.description" class="comment"></div>
 
     <div class="infos">
         <span ngClass="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
         <span ngClass="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
         <span ngClass="{ 'picto-hidden' : ( element.attributes.docHidden === 'true') }" title="Visible"></span>     
-    </div> 
-
+    </div>
 </div>

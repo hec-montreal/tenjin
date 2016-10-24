@@ -112,16 +112,6 @@
             }
         }
 
-        // If the element form contains a resource
-        if ($scope.element.$formHasRessource) {
-            if (!$scope.element.attributes.resourceId) {
-                ret.push({
-                    field: "resource",
-                    message: "ERROR_RESSOURCE"
-                });
-            }
-        }
-
         // Assign messages from localization
         for (var i = 0; i < ret.length; i++) {
             ret[i].message = $translate.instant(ret[i].message);

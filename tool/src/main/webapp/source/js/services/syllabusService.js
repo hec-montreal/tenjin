@@ -275,7 +275,7 @@
         if ($rootTree.elements) {
 
             if ($rootTree.id === $parent.id && isSyllabusElement($rootTree)) {
-                // si l'élément existe déjà on le supprime et on le remplace (modification)
+                // If the element already exists, replace it (update)
                 var modification = false;
                 for (var i = 0; i < $rootTree.elements.length; i++){
                     if ($rootTree.elements[i].id === $element.id) {
@@ -285,7 +285,7 @@
                         break;
                     }
                 }   
-                // ajout    
+                // add element
                 if (!modification) {
                     $rootTree.elements.push($element);                
                 } 

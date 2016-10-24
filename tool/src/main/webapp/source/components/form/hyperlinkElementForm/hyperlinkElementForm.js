@@ -25,10 +25,7 @@
 
             $scope.selectType = function($type) {
                 $scope.currentType = $type;
-
-                if ($scope.currentType.id !== -1) {
-                    $scope.element.attributes.hyperlinkType = $scope.currentType.id;
-                }
+                $scope.element.attributes.hyperlinkType = $scope.currentType.id;
             };
 
             // Validation
@@ -40,13 +37,13 @@
                         field: "hyperlinkUrl",
                         message: "ERROR_URL_MANDATORY"
                     });
-                }
+                } else {
+                    // Add protocol if not present
+                    var protocolRegex = /:\/\//g;
 
-                // Add protocol if not present
-                var protocolRegex = /:\/\//g;
-
-                if (!this.attributes.hyperlinkUrl.match(protocolRegex)) {
-                    this.attributes.hyperlinkUrl = config.defaultHyperlinkProtocol + "://" + this.attributes.hyperlinkUrl;
+                    if (!this.attributes.hyperlinkUrl.match(protocolRegex)) {
+                        this.attributes.hyperlinkUrl = config.defaultHyperlinkProtocol + "://" + this.attributes.hyperlinkUrl;
+                    }
                 }
 
                 return ret;

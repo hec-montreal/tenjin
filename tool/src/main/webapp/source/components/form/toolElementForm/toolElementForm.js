@@ -28,26 +28,21 @@ tenjinApp.directive('toolElementForm', ['config', '$translate' , function (confi
                    $scope.element.attributes.docType = $scope.currentType.id; 
                 }
             };
-        },
-        link: function ($scope, $element) {
 
-        // Récupération du type de document
-            if ($scope.element.attributes.docType) { 
+            // Validation
+            $scope.element.validate = function() {
+                var ret = [];
 
-                for (var i=0 ; i < config.documentTypes.length; i++) {
-                    if (parseInt($scope.element.attributes.docType) === config.documentTypes[i].id ) {
-                        $scope.currentType = config.documentTypes[i];
-                        break;
-                    }
+                if (!$scope.element.attributes.sakaiToolId) {
+                    ret.push({
+                        field: "sakai_tool",
+                        message: "ERROR_SAKAI_TOOL"
+                    });
                 }
 
-            } else {
-                $scope.currentType = $scope.config.documentTypes[0];
+                return ret;
             }
-            
-            $scope.element.$formHasRessource  = true;
         }
-
     };
 
 }]);

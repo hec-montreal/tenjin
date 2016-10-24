@@ -37,7 +37,7 @@ export class ToolElementComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.entity = this.sakaiToolsService.getEntity(this.element.attributes.resourceId);
+        this.entity = this.sakaiToolsService.getEntity(this.element.attributes.sakaiToolId);
     }
 
 }

@@ -2,7 +2,6 @@
 import {UpgradeAdapter} from 'angular2/upgrade';
 
 import {TextElementComponent} from './element/textElement/textElement';
-import {HyperlinkElementComponent} from './element/hyperlinkElement/hyperlinkElement';
 import {AddElementComponent} from './element/addElementMenu/addElementMenu';  
 import {ButtonsElementComponent} from './element/buttonsElement/buttonsElement';
 import {ClusterElementComponent} from './element/clusterElement/clusterElement';
@@ -15,7 +14,6 @@ var adapter = new UpgradeAdapter();
 
 // downgrade directives to angular 1 context
 tenjinApp.directive('textElement', adapter.downgradeNg2Component(TextElementComponent));
-tenjinApp.directive('hyperlinkElement', adapter.downgradeNg2Component(HyperlinkElementComponent));
 tenjinApp.directive('addElementMenu', adapter.downgradeNg2Component(AddElementComponent));
 tenjinApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
 tenjinApp.directive('clusterElement', adapter.downgradeNg2Component(ClusterElementComponent));
