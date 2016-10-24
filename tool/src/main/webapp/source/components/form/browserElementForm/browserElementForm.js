@@ -30,7 +30,13 @@ tenjinApp.directive('browserElementForm', ['SakaiToolsService','ResourcesService
             $scope.setSelectedResource = function($item) {
                 // $scope.selectedResource = $item;
                 $scope.element.$selectedResource = $item;
-                $scope.element.attributes.resourceId = $item.resourceId;
+                if ($scope.type === "sakai_entity") {
+                    $scope.element.attributes.sakaiToolId = $item.resourceId;    
+                }
+                else {
+                    $scope.element.attributes.resourceId = $item.resourceId;
+                }
+                
                 console.log('set selected resource');
             };
 
@@ -40,18 +46,16 @@ tenjinApp.directive('browserElementForm', ['SakaiToolsService','ResourcesService
 
             var ressource;
             if ($scope.element.attributes.resourceId) {
-                if ($scope.element.type === "sakai_entity"){
-                    ressource = SakaiToolsService.getEntity($scope.element.attributes.resourceId);
-                }
-                else {
-                    ressource = ResourcesService.getResource($scope.element.attributes.resourceId);
-                }
-                
-                if (ressource) {
-                        $scope.element.$selectedResource = ressource;
-                    }
-                }
+                ressource = ResourcesService.getResource($scope.element.attributes.resourceId);
             }
+            else if ($scope.element.attributes.sakaiToolId) {
+                ressource = SakaiToolsService.getEntity($scope.element.attributes.sakaiToolId);
+            }
+
+            if (ressource) {
+                $scope.element.$selectedResource = ressource;
+            }
+        }
 
        
 
