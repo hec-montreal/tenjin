@@ -40,13 +40,14 @@ public class EntityDataUtils {
 	 * @return An EntityContent matching the supplied entity.
 	 */
 	public static EntityContent getResourceDetails(ContentEntity entity) {
-
 		EntityContent tempRd = new EntityContent();
-
+		
 		ResourceProperties properties = entity.getProperties();
-		Iterator propertyNames = properties.getPropertyNames();
+		Iterator<String> propertyNames = properties.getPropertyNames();
+		
 		while (propertyNames.hasNext()) {
-			String key = (String) propertyNames.next();
+			String key = propertyNames.next();
+			
 			if (!directPropertyNames.contains(key)) {
 				String value = properties.getProperty(key);
 				if (null != value) {
@@ -56,33 +57,24 @@ public class EntityDataUtils {
 		}
 
 		tempRd.setResourceId(entity.getId());
-		tempRd.setName(properties
-				.getPropertyFormatted(ResourceProperties.PROP_DISPLAY_NAME));
-		tempRd.setDescription(properties
-				.getProperty(ResourceProperties.PROP_DESCRIPTION));
-		tempRd.setCreator(properties
-				.getProperty(ResourceProperties.PROP_CREATOR));
-
-		tempRd.setModifiedBy(properties
-				.getProperty(ResourceProperties.PROP_MODIFIED_BY));
-		tempRd.setMimeType(properties
-				.getProperty(ResourceProperties.PROP_CONTENT_TYPE));
-		tempRd.setPriority(properties
-				.getProperty(ResourceProperties.PROP_CONTENT_PRIORITY));
-		tempRd.setSize(properties
-				.getProperty(ResourceProperties.PROP_CONTENT_LENGTH));
+		tempRd.setName(properties.getPropertyFormatted(ResourceProperties.PROP_DISPLAY_NAME));
+		tempRd.setDescription(properties.getProperty(ResourceProperties.PROP_DESCRIPTION));
+		tempRd.setCreator(properties.getProperty(ResourceProperties.PROP_CREATOR));
+		tempRd.setModifiedBy(properties.getProperty(ResourceProperties.PROP_MODIFIED_BY));
+		tempRd.setMimeType(properties.getProperty(ResourceProperties.PROP_CONTENT_TYPE));
+		tempRd.setPriority(properties.getProperty(ResourceProperties.PROP_CONTENT_PRIORITY));
+		tempRd.setSize(properties.getProperty(ResourceProperties.PROP_CONTENT_LENGTH));
 		tempRd.setReference(entity.getReference());
 		tempRd.setType(entity.getResourceType());
 		tempRd.setUrl(entity.getUrl());
 		tempRd.setRelease(entity.getReleaseDate());
 		tempRd.setRetract(entity.getRetractDate());
 		tempRd.setHidden(entity.isHidden());
+		tempRd.setPublicAccess(null);
+	
 		try {
-			tempRd.setCreated(properties
-					.getTimeProperty(ResourceProperties.PROP_CREATION_DATE));
-			tempRd.setModified(properties
-					.getTimeProperty(ResourceProperties.PROP_MODIFIED_DATE));
-
+			tempRd.setCreated(properties.getTimeProperty(ResourceProperties.PROP_CREATION_DATE));
+			tempRd.setModified(properties.getTimeProperty(ResourceProperties.PROP_MODIFIED_DATE));
 		} catch (EntityPropertyNotDefinedException e) {
 			log.warn("Failed to get property on " + entity.getId(), e);
 		} catch (EntityPropertyTypeException e) {

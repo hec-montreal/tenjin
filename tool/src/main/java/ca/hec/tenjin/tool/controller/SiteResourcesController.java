@@ -29,15 +29,12 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import lombok.Setter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.authz.api.AuthzGroupService;
 import org.sakaiproject.content.api.ContentCollection;
 import org.sakaiproject.content.api.ContentEntity;
 import org.sakaiproject.content.api.ContentHostingService;
@@ -57,10 +54,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ca.hec.tenjin.api.SakaiProxy;
+import lombok.Setter;
 
 /**
  * Methods from https://github.com/ox-it/wl-entitybroker.
@@ -135,7 +130,16 @@ public class SiteResourcesController {
 			// If the user isn't allowed to see this we return null.
 			return null;
 		}
+		
 		EntityContent tempRd = EntityDataUtils.getResourceDetails(entity);
+		
+		// Set the resource public access flag
+		tempRd.setPublicAccess(contentHostingService.isRoleView(entity.getId(), AuthzGroupService.ANON_ROLE));
+
+		// Set the copyright flag		
+		String copyright = (String) tempRd.getProperties().get(ResourceProperties.PROP_COPYRIGHT_CHOICE);
+		
+		tempRd.setCopyright(copyright != null && copyright.equals("rights.IHoldCopyright"));
 		
 		// If it's a collection recurse down into it.
 		if ((requestedDepth > currentDepth) && entity.isCollection()) {

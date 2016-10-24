@@ -28,7 +28,25 @@
     <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
     <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
 
-    <!-- Buttons form --> 
-    <div data-buttons-form="element"></div>
+    <div class="readonly-props">
+        <div><strong>{{ 'DATA_MODIFIABLE_IN_RESOURCES' | translate }}</strong></div>
 
+        <div>
+            <span class="prop">{{ 'COPYRIGHT_STATUS' | translate }}:</span>
+            <span ng-if="!!element.$selectedResource">{{ (element.$selectedResource.copyright ? 'COPYRIGHT_I_HOLD' : 'COPYRIGHT_UNDEFINED') | translate }}</span>
+        </div>
+
+        <div>
+            <span class="prop">{{ 'VISIBILITY' | translate }}:</span> 
+            <span ng-if="!!element.$selectedResource">{{ (element.$selectedResource.publicAccess ? 'VISIBILITY_PUBLIC' : 'VISIBILITY_STUDENTS') | translate }}</span>
+        </div>
+        
+        <div ng-if="!!element.$selectedResource.release">
+            <span class="prop">{{ 'FORM_DATE_AFFICHAGE_DEBUT' | translate }}:</span> {{element.$selectedResource.release.display}}
+        </div>
+        
+        <div ng-if="!!element.$selectedResource.retract">
+            <span class="prop">{{ 'FORM_DATE_AFFICHAGE_FIN' | translate }}:</span> {{element.$selectedResource.retract.display}}
+        </div>
+    </div>
 </div>

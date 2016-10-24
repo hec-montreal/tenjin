@@ -40,13 +40,13 @@
                         field: "hyperlinkUrl",
                         message: "ERROR_URL_MANDATORY"
                     });
-                }
+                } else {
+                    // Add protocol if not present
+                    var protocolRegex = /:\/\//g;
 
-                // Add protocol if not present
-                var protocolRegex = /:\/\//g;
-
-                if (!this.attributes.hyperlinkUrl.match(protocolRegex)) {
-                    this.attributes.hyperlinkUrl = config.defaultHyperlinkProtocol + "://" + this.attributes.hyperlinkUrl;
+                    if (!this.attributes.hyperlinkUrl.match(protocolRegex)) {
+                        this.attributes.hyperlinkUrl = config.defaultHyperlinkProtocol + "://" + this.attributes.hyperlinkUrl;
+                    }
                 }
 
                 return ret;

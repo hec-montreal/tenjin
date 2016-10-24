@@ -61,37 +61,99 @@
             'label': ''
         },
     },
+
     documentTypes: [{
         'id': -1,
         'name': 'DOCUMENT_TYPE_DEFAULT'
     }, {
         'id': 1,
-        'name': 'DOCUMENT_TYPE_PRESENTATION'
+        'name': 'DOCUMENT_TYPE_CONFERENCE_ACT'
     }, {
         'id': 2,
-        'name': 'DOCUMENT_TYPE_EXERCICE'
+        'name': 'DOCUMENT_TYPE_OLD_EXAM'
     }, {
         'id': 3,
-        'name': 'DOCUMENT_TYPE_SOLUTION'
+        'name': 'DOCUMENT_TYPE_ARTICLE'
     }, {
         'id': 4,
-        'name': 'DOCUMENT_TYPE_CAS'
+        'name': 'DOCUMENT_TYPE_ARTICLE_NEWS'
     }, {
         'id': 5,
-        'name': 'DOCUMENT_TYPE_RAPPORT'
+        'name': 'DOCUMENT_TYPE_ARTICLE_SCIENCE'
     }, {
         'id': 6,
-        'name': 'DOCUMENT_TYPE_DONNEES'
+        'name': 'DOCUMENT_TYPE_ARTICLE_PROFESSIONAL'
     }, {
         'id': 7,
-        'name': 'DOCUMENT_TYPE_LIVRE'
+        'name': 'DOCUMENT_TYPE_ARTICLE_UNPUBLISHED'
     }, {
         'id': 8,
-        'name': 'DOCUMENT_TYPE_OLDEXAMEN'
+        'name': 'DOCUMENT_TYPE_AUDIO'
     }, {
         'id': 9,
-        'name': 'DOCUMENT_TYPE_PEDAGOGIQUE'
+        'name': 'DOCUMENT_TYPE_CASE'
+    }, {
+        'id': 10,
+        'name': 'DOCUMENT_TYPE_BOOK_CHAPTER'
+    }, {
+        'id': 11,
+        'name': 'DOCUMENT_TYPE_SLIDES'
+    }, {
+        'id': 12,
+        'name': 'DOCUMENT_TYPE_PEDAGOGIC'
+    }, {
+        'id': 13,
+        'name': 'DOCUMENT_TYPE_DATA'
+    }, {
+        'id': 14,
+        'name': 'DOCUMENT_TYPE_POLL'
+    }, {
+        'id': 15,
+        'name': 'DOCUMENT_TYPE_EXERCISE'
+    }, {
+        'id': 16,
+        'name': 'DOCUMENT_TYPE_IMAGE'
+    }, {
+        'id': 17,
+        'name': 'DOCUMENT_TYPE_BOOK'
+    }, {
+        'id': 18,
+        'name': 'DOCUMENT_TYPE_SOFTWARE'
+    }, {
+        'id': 19,
+        'name': 'DOCUMENT_TYPE_REPORT'
+    }, {
+        'id': 20,
+        'name': 'DOCUMENT_TYPE_REPORT_ANNUAL'
+    }, {
+        'id': 21,
+        'name': 'DOCUMENT_TYPE_REPORT_CONSULTANT'
+    }, {
+        'id': 22,
+        'name': 'DOCUMENT_TYPE_REPORT_ORGANIZATION'
+    }, {
+        'id': 23,
+        'name': 'DOCUMENT_TYPE_REPORT_GOV'
+    }, {
+        'id': 24,
+        'name': 'DOCUMENT_TYPE_GAME'
+    }, {
+        'id': 25,
+        'name': 'DOCUMENT_TYPE_WEBSITE'
+    }, {
+        'id': 26,
+        'name': 'DOCUMENT_TYPE_SOLUTION'
+    }, {
+        'id': 27,
+        'name': 'DOCUMENT_TYPE_THESIS'
+    }, {
+        'id': 28,
+        'name': 'DOCUMENT_TYPE_VIDEO'
+    }, {
+        'id': 29,
+        'name': 'DOCUMENT_TYPE_OTHER'
     }],
+
     hyperlinkTypes: [{
         'id': -1,
         'name': 'HYPERLINK_TYPE_DEFAULT'
@@ -126,14 +188,15 @@
         'id': 10,
         'name': 'HYPERLINK_TYPE_SOFTWARE'
     }],
+
     extensionsImage: ['jpg', 'gif', 'png'],
+
     statusLabel: {
         1: "STATUS_INITIAL",
         2: "STATUS_BROUILLON",
         3: "STATUS_PUBLIE",
         4: "STATUS_NON_ATTRIBUE"
     }
-
 });
 
 
