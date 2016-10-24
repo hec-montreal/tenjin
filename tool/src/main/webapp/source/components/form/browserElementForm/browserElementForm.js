@@ -1,4 +1,4 @@
-tenjinApp.directive('browserElementForm', ['SakaiToolsService', 'ResourcesService', function(SakaiToolsService, ResourcesService) {
+tenjinApp.directive('browserElementForm', ['SakaiToolsService','ResourcesService', function ( SakaiToolsService, ResourcesService){
     'use strict';
 
     return {
@@ -8,46 +8,57 @@ tenjinApp.directive('browserElementForm', ['SakaiToolsService', 'ResourcesServic
         },
         restrict: 'A',
         templateUrl: 'form/browserElementForm/browserElementForm.html',
-        controller: function($scope) {
-            if ($scope.type === "sakai_entity") {
+        controller: function ($scope) {
+            if ($scope.type === "sakai_entity"){
                 $scope.resources = SakaiToolsService.getToolEntities();
-            } else {
+            }
+            else{
                 $scope.resources = ResourcesService.resources;
             }
 
-            $scope.browserOptions = {
+            $scope.browserOptions  = {
                 name: "browserTree",
                 accept: function(sourceNodeScope, destNodesScope, destIndex) {
                     return false;
                 },
             };
 
-            $scope.toggleTree = function(scope) {
+            $scope.toggleTree = function(scope){
                 scope.toggle();
             };
 
             $scope.setSelectedResource = function($item) {
-                console.log($item);
-
+                // $scope.selectedResource = $item;
                 $scope.element.$selectedResource = $item;
-                $scope.element.attributes.resourceId = $item.resourceId;
+                if ($scope.type === "sakai_entity") {
+                    $scope.element.attributes.sakaiToolId = $item.resourceId;    
+                }
+                else {
+                    $scope.element.attributes.resourceId = $item.resourceId;
+                }
+                
+                console.log('set selected resource');
             };
+
+
         },
+        link: function ($scope, $element) {
 
-        link: function($scope, $element) {
             var ressource;
-
             if ($scope.element.attributes.resourceId) {
-                if ($scope.element.type === "sakai_entity") {
-                    ressource = SakaiToolsService.getEntity($scope.element.attributes.resourceId);
-                } else {
-                    ressource = ResourcesService.getResource($scope.element.attributes.resourceId);
-                }
+                ressource = ResourcesService.getResource($scope.element.attributes.resourceId);
+            }
+            else if ($scope.element.attributes.sakaiToolId) {
+                ressource = SakaiToolsService.getEntity($scope.element.attributes.sakaiToolId);
+            }
 
-                if (ressource) {
-                    $scope.element.$selectedResource = ressource;
-                }
+            if (ressource) {
+                $scope.element.$selectedResource = ressource;
             }
         }
+
+       
+
     };
+
 }]);
