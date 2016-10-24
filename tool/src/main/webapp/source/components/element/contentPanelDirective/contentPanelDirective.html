@@ -2,7 +2,6 @@
 <div ui-tree-handle class="tree-node tree-node-content">
 
     <div data-ng-switch="element.type"> 
-    
 
         <!-- Display buttons -->
  <!--        <buttons-element data-ng-if="syllabusService.syllabus.$writePermission" data-element="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" class="buttons-elements"></buttons-element> -->
@@ -32,10 +31,11 @@
         <div data-ng-switch-when="citation" data-biblio-element="element"></div>
         
         <!-- élément de type hyperlien -->
-        <hyperlink-element data-ng-switch-when="hyperlink" data-hyperlink-element="element"></document-element>
+        <hyperlink-element data-ng-switch-when="hyperlink" data-hyperlink-element="element"></hyperlink-element>
 
         <!-- élément de type image -->
         <image-element data-ng-switch-when="image" data-image-element="element"></image-element>
+        
         <!-- élément de type video -->
         <video-element data-ng-switch-when="video" [element]="element"></video-element>
         <!-- élément de type contactInfo -->

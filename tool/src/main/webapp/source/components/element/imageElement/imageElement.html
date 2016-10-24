@@ -1,23 +1,15 @@
 <div class="element image"> 
 
-        <div class="titre-element">
-            <a href="{{resource.url}}" target="_blank"> 
-                {{ element.title || resource.name }}
-             </a>
-        </div>
-        <div class="row"> 
-            <a href="{{resource.url}}" target="_blank" class="col-sm-3 col-xs-12 link-image">
-                <img src="{{resource.url}}" alt="({{element.title}} != null ? {{element.title}} : '')" title="element.title" />
-            </a> 
-
-            <span data-ng-if="element.description" ng-bind-html="element.description" class="col-sm-9 col-xs-12 comment"></span>
-        </div>
-
-        
-        <div class="infos">
-            <span [ngClass]="{ 'picto-important' : ( element.attributes.imageImportant === 'true') }" title="Important"></span>
-            <span [ngClass]="{ 'picto-hec' : ( element.attributes.imageDiffusion === 'hec' ), 'picto-public' : ( element.attributes.imageDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
-            <span [ngClass]="{ 'picto-hidden' : ( element.attributes.imageHidden === 'true') }" title="Visible"></span>     
-        </div> 
-
+    <div class="titre-element">
+        <a href="{{resource.url}}" target="_blank"> 
+            {{ element.title || resource.name }}
+         </a>
     </div>
+    <div class="row"> 
+        <a href="{{resource.url}}" target="_blank" class="col-sm-3 col-xs-12 link-image">
+            <img src="{{resource.url}}" alt="({{element.title}} != null ? {{element.title}} : '')" title="element.title" />
+        </a> 
+
+        <span data-ng-if="element.description" ng-bind-html="element.description" class="col-sm-9 col-xs-12 comment"></span>
+    </div>
+</div>
