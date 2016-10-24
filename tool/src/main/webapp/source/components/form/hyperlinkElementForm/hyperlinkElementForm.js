@@ -25,10 +25,7 @@
 
             $scope.selectType = function($type) {
                 $scope.currentType = $type;
-
-                if ($scope.currentType.id !== -1) {
-                    $scope.element.attributes.hyperlinkType = $scope.currentType.id;
-                }
+                $scope.element.attributes.hyperlinkType = $scope.currentType.id;
             };
 
             // Validation
