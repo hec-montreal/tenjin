@@ -9,19 +9,19 @@ tenjinApp.directive('documentElement', ['config', '$translate', 'ResourcesServic
         templateUrl: 'element/documentElement/documentElement.html',
 
         controller: function($scope) {
-            // Get ressources informations
-            $scope.resource = ResourcesService.getResource($scope.element.attributes.resourceId);
+            // Get resource details
+            $scope.resource = ResourcesService.getResource($scope.element.attributes.documentId);
 
-            var documentTypeId = $scope.element.attributes.docType;
+            var documentTypeId = $scope.element.attributes.documentType;
 
             if (documentTypeId) {
                 $scope.documentTypeId = parseInt(documentTypeId, 10);
             }
 
-            // si le type du document est retrouvé alors on cherche le libellé associé
-            if ($scope.element.attributes.docType) {
+            // Retrieve the label for the document type id
+            if ($scope.element.attributes.documentType) {
                 for (var i = 0; i < config.documentTypes.length; i++) {
-                    if (parseInt($scope.element.attributes.docType) === config.documentTypes[i].id) {
+                    if (parseInt($scope.element.attributes.documentType) === config.documentTypes[i].id) {
                         $scope.documentType = $translate.instant(config.documentTypes[i].name);
                         break;
                     }

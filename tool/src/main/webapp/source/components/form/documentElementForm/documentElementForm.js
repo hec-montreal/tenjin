@@ -23,15 +23,15 @@
 
             $scope.selectType = function($type) {
                 $scope.currentType = $type;
-                $scope.element.attributes.docType = $scope.currentType.id;
+                $scope.element.attributes.documentType = $scope.currentType.id;
             };
         },
 
         link: function($scope, $element) {
-            // Récupération du type de document
-            if ($scope.element.attributes.docType) {
+            // Retrieve the document type for the given document type id
+            if ($scope.element.attributes.documentType) {
                 for (var i = 0; i < config.documentTypes.length; i++) {
-                    if (parseInt($scope.element.attributes.docType) === config.documentTypes[i].id) {
+                    if (parseInt($scope.element.attributes.documentType) === config.documentTypes[i].id) {
                         $scope.currentType = config.documentTypes[i];
                         break;
                     }
@@ -40,8 +40,6 @@
             } else {
                 $scope.currentType = $scope.config.documentTypes[0];
             }
-
-            $scope.element.$formHasRessource = true;
         }
     };
 }]);

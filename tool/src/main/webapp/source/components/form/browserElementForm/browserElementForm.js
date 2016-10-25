@@ -40,7 +40,7 @@ tenjinApp.directive('browserElementForm', ['SakaiToolsService','ResourcesService
                     $scope.element.attributes.citationId = $item.resourceId;
                 }
                 else if ($scope.type === "document") {
-                    $scope.element.attributes.resourceId = $item.resourceId;
+                    $scope.element.attributes.documentId = $item.resourceId;
                 }
                 else {
                     console.error('unrecognized type in setSelectedResource');
@@ -54,8 +54,8 @@ tenjinApp.directive('browserElementForm', ['SakaiToolsService','ResourcesService
         link: function ($scope, $element) {
 
             var resource;
-            if ($scope.element.attributes.resourceId) {
-                resource = ResourcesService.getResource($scope.element.attributes.resourceId);
+            if ($scope.element.attributes.documentId) {
+                resource = ResourcesService.getResource($scope.element.attributes.documentId);
             }
             else if ($scope.element.attributes.imageId) {
                 resource = ResourcesService.getResource($scope.element.attributes.imageId);
@@ -69,6 +69,9 @@ tenjinApp.directive('browserElementForm', ['SakaiToolsService','ResourcesService
 
             if (resource) {
                 $scope.element.$selectedResource = resource;
+            }
+            else {
+                console.error('no resource located');
             }
         }
     };
