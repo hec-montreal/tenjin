@@ -3,9 +3,9 @@
     <div class="titre-element element-page">
        
         {{element.$numero}} - <a href="" data-ng-click="treeService.setSelectedItem(element);">{{element.title}}</a>
-        <span data-ng-if="element.attributes.evalWeight"> ({{element.attributes.evalWeight}}%)</span>
+        <span data-ng-if="element.attributes.evaluationWeight"> ({{element.attributes.evaluationWeight}}%)</span>
 
-		<span  data-ng-if="element.attributes.evalDate && element.type === 'evaluation'" class="eval-date">{{'EVALUATION_DATE' | translate}} {{element.attributes.evalDate | date:'dd/MM/yyyy'}}</span>
+		<span  data-ng-if="element.attributes.evaluationDate" class="eval-date">{{'EVALUATION_DATE' | translate}} {{element.attributes.evaluationDate | date:'dd/MM/yyyy'}}</span>
         
         <div data-evaluationattr-element="element"></div>
  

@@ -37,7 +37,7 @@ tenjinApp.directive('evaluationElementForm',  function (){
         },
         link: function ($scope, $element) {
             
-          $scope.element.attributes.evalType = $scope.typelabel;
+          $scope.element.attributes.evaluationType = $scope.typelabel;
             
         }
 

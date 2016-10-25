@@ -12,8 +12,8 @@ tenjinApp.directive('evaluationElement', ['SyllabusService', 'TreeService', func
         controller: function ($scope) {
             $scope.syllabusService = SyllabusService;
             $scope.treeService = TreeService;
-            if ($scope.element.attributes.evalDate){
-                $scope.element.attributes.evalDate =  new Date($scope.element.attributes.evalDate);
+            if ($scope.element.attributes.evaluationDate){
+                $scope.element.attributes.evaluationDate =  new Date($scope.element.attributes.evaluationDate);
             }
         },
         link: function ($scope, $element) {
