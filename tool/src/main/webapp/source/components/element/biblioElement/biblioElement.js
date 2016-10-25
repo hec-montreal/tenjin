@@ -11,7 +11,7 @@ tenjinApp.directive('biblioElement',['ResourcesService', function (ResourcesServ
         controller: function ($scope) {
         },
         link: function ($scope, $element) {
-            $scope.citation = ResourcesService.getResource($scope.element.attributes.resourceId);
+            $scope.citation = ResourcesService.getResource($scope.element.attributes.citationId);
             $scope.element.title ="Citation";
            
         	$scope.dot = ".";
