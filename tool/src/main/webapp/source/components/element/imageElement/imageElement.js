@@ -11,7 +11,7 @@ tenjinApp.directive('imageElement', ['ResourcesService', function(ResourcesServi
         templateUrl: 'element/imageElement/imageElement.html',
 
         controller: function($scope) {
-            $scope.resource = ResourcesService.getResource($scope.element.attributes.resourceId);
+            $scope.resource = ResourcesService.getResource($scope.element.attributes.imageId);
         },
 
         link: function($scope, $element) {
