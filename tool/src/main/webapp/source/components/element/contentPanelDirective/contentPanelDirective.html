@@ -9,24 +9,29 @@
 
         <!-- élément de type composite --> 
         <cluster-element data-ng-switch-when="composite" [element]="element"></cluster-element>
+
         <!-- élément de type lecture -->
-        <course-element data-ng-switch-when="lecture" [element]="element"></course-element>
+        <course-element data-ng-switch-when="lecture" data-course-element="element"></course-element>
+
         <!-- élément de type tutorial -->
-        <course-element data-ng-switch-when="tutorial" [element]="element"></course-element>
+        <course-element data-ng-switch-when="tutorial" data-course-element="element"></course-element>
+
         <!-- élément de type evaluation -->
         <div data-ng-switch-when="evaluation" data-evaluation-element="element" data-index="$index"></div>
+        
         <!-- élément de type exam -->
         <div data-ng-switch-when="exam" data-exam-element="element" data-index="$index"></div>
 
         <!-- élément de type rubric -->
-        <rubric-element data-nodrag data-ng-switch-when="rubric" [element]="element"></rubric-element>
+        <rubric-element data-nodrag data-ng-switch-when="rubric" data-rubric-element="element"></rubric-element>
 
         <!-- élément de type texte -->
-        <text-element data-ng-switch-when="text" [element]="element" ></text-element>
+        <text-element data-ng-switch-when="text" data-text-element="element"></text-element>
 
         <!-- <div data-dyn-attr="data-text-element" data-element="element"></div> -->
         <!-- élément de type document -->
         <document-element data-ng-switch-when="document" data-document-element="element"></document-element>
+
         <!-- élément de type référence bibliographique -->
         <div data-ng-switch-when="citation" data-biblio-element="element"></div>
         
@@ -37,10 +42,10 @@
         <image-element data-ng-switch-when="image" data-image-element="element"></image-element>
         
         <!-- élément de type video -->
-        <video-element data-ng-switch-when="video" [element]="element"></video-element>
+        <video-element data-ng-switch-when="video" data-video-element="element"></video-element>
+
         <!-- élément de type contactInfo -->
         <div data-ng-switch-when="contact_info" data-contact-element="element"></div>
-
 
         <!-- élément de type lien vers outil -->
         <tool-element data-ng-switch-when="sakai_entity" [element]="element"></tool-element>

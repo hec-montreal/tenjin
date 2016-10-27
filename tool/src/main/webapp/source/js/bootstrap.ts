@@ -5,23 +5,15 @@ import {TextElementComponent} from './element/textElement/textElement';
 import {AddElementComponent} from './element/addElementMenu/addElementMenu';  
 import {ButtonsElementComponent} from './element/buttonsElement/buttonsElement';
 import {ClusterElementComponent} from './element/clusterElement/clusterElement';
-import {RubricElementComponent} from './element/rubricElement/rubricElement';
 import {ToolElementComponent} from './element/toolElement/toolElement';
-import {VideoElementComponent} from './element/videoElement/videoElement';
-import {CourseElementComponent} from './element/courseElement/courseElement';
 
 var adapter = new UpgradeAdapter();
 
 // downgrade directives to angular 1 context
-tenjinApp.directive('textElement', adapter.downgradeNg2Component(TextElementComponent));
 tenjinApp.directive('addElementMenu', adapter.downgradeNg2Component(AddElementComponent));
 tenjinApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
 tenjinApp.directive('clusterElement', adapter.downgradeNg2Component(ClusterElementComponent));
-tenjinApp.directive('rubricElement', adapter.downgradeNg2Component(RubricElementComponent));
 tenjinApp.directive('toolElement', adapter.downgradeNg2Component(ToolElementComponent));
-tenjinApp.directive('videoElement', adapter.downgradeNg2Component(VideoElementComponent));
-tenjinApp.directive('courseElement', adapter.downgradeNg2Component(CourseElementComponent));
-
 
 // downgrade buttons element directive to angular 1 context
 // tenjinApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
