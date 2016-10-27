@@ -1,18 +1,16 @@
 package ca.hec.tenjin.tool.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.exception.IdUnusedException;
-import org.sakaiproject.site.api.Site;
 import org.sakaiproject.util.ResourceLoader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,25 +19,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 
 import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TenjinFunctions;
+import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
-
-import ca.hec.tenjin.api.model.template.Template;
-import ca.hec.tenjin.api.model.template.TemplateStructure;
+import lombok.Getter;
+import lombok.Setter;
 
 /******************************************************************************
  * $Id: $
@@ -75,14 +65,14 @@ public class SyllabusController {
 	@Getter
 	@Autowired
 	private SyllabusService syllabusService = null;
-	
-	@Setter
-	@Autowired
-	private SakaiProxy sakaiProxy;	
 
 	@Setter
 	@Autowired
-	private TenjinSecurityService securityService = null; 
+	private SakaiProxy sakaiProxy;
+
+	@Setter
+	@Autowired
+	private TenjinSecurityService securityService = null;
 
 	private ResourceLoader msgs = null;
 
@@ -96,30 +86,29 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<List<Syllabus>> getSyllabusList(@RequestParam(value = "siteId", required = false) String siteId) 
-			throws DeniedAccessException, NoSyllabusException  {
+	public @ResponseBody ResponseEntity<List<Syllabus>> getSyllabusList(@RequestParam(value = "siteId", required = false) String siteId) throws DeniedAccessException, NoSyllabusException {
 
 		List<Syllabus> syllabusList = null;
 
 		// if site from request is null, use the context
 		siteId = (siteId != null ? siteId : sakaiProxy.getCurrentSiteId());
 		String currentUserId = sakaiProxy.getCurrentUserId();
-		
+
 		// get common syllabus read permission
-		boolean commonPermissionRead = securityService.isAllowedCommon(currentUserId,  TenjinFunctions.TENJIN_FUNCTION_READ);
-		boolean commonPermissionWrite = securityService.isAllowedCommon(currentUserId,  TenjinFunctions.TENJIN_FUNCTION_WRITE);
-		
-		
+		boolean commonPermissionRead = securityService.isAllowedCommon(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ);
+		boolean commonPermissionWrite = securityService.isAllowedCommon(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE);
+
 		List<String> sections = null;
 		// If user has write permission, then no need to get sections
 		if (commonPermissionWrite == false) {
 			// get sections available for the current user
 			sections = securityService.getArraySections(siteId, TenjinFunctions.TENJIN_FUNCTION_READ);
 		}
-		
+
 		try {
-			// We get the syllabus list for the current site with the sections associated to the user
-			syllabusList = syllabusService.getSyllabusList(siteId, sections, commonPermissionRead, commonPermissionWrite, currentUserId );
+			// We get the syllabus list for the current site with the sections
+			// associated to the user
+			syllabusList = syllabusService.getSyllabusList(siteId, sections, commonPermissionRead, commonPermissionWrite, currentUserId);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,14 +117,19 @@ public class SyllabusController {
 		return new ResponseEntity<List<Syllabus>>(syllabusList, HttpStatus.OK);
 
 	}
-	
+
 	@RequestMapping(value = "/syllabus", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException {
-
 		return syllabusService.createOrUpdateSyllabus(syllabus);
-
 	}
 	
+	@RequestMapping(value = "/syllabus/{ids}/delete", method = RequestMethod.GET)
+	public void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
+		for (Long id : syllabusId) {
+			syllabusService.deleteSyllabus(id);
+		}
+	}
+
 	@RequestMapping(value = "/syllabus/{syllabusId}", method = RequestMethod.GET)
 	public @ResponseBody Syllabus getSyllabus(@PathVariable Long syllabusId) throws NoSyllabusException {
 
@@ -145,9 +139,9 @@ public class SyllabusController {
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 
-			return syllabusService.createOrUpdateSyllabus(syllabus);
+		return syllabusService.createOrUpdateSyllabus(syllabus);
 	}
-	
+
 	@ExceptionHandler(NoSiteException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public @ResponseBody Object handleNoSiteException(NoSiteException ex) {
@@ -158,9 +152,9 @@ public class SyllabusController {
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public @ResponseBody String handleNoSyllabusException(NoSyllabusException ex) {
 		return ex.getLocalizedMessage();
-	} 
+	}
 
-	@ExceptionHandler(DeniedAccessException.class) 
+	@ExceptionHandler(DeniedAccessException.class)
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 	public @ResponseBody String handleDeniedAccessException(DeniedAccessException ex) {
 		return ex.getLocalizedMessage();

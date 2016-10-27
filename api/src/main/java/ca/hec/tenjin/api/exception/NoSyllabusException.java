@@ -1,8 +1,8 @@
 package ca.hec.tenjin.api.exception;
 
-import lombok.Data;
-
 import org.springframework.http.HttpStatus;
+
+import lombok.Data;
 
 /******************************************************************************
  * $Id: $
@@ -43,7 +43,4 @@ public class NoSyllabusException extends SyllabusException {
     	super(HttpStatus.NOT_FOUND);
 		this.syllabusId = syllabusId;
 	}
-
-
-
 }

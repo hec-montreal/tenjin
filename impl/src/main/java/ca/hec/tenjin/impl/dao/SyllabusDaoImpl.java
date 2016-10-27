@@ -9,23 +9,22 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.sakaiproject.exception.IdUnusedException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.dao.*;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
-import ca.hec.tenjin.api.model.template.Template;
 
 public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao {
 
 	private Log log = LogFactory.getLog(SyllabusDaoImpl.class);
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden) {
 		String query = "from SyllabusElementMapping mapping where syllabusId = ?";
@@ -41,10 +40,11 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return mappings;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Syllabus getSyllabus(String siteId, String sectionId, Boolean common, boolean hidden) {
 		List<Syllabus> syllabi = 
-				(List<Syllabus>) getHibernateTemplate().find("from Syllabus where siteId = ? and common = ?", siteId, common);
+				(List<Syllabus>) getHibernateTemplate().find("from Syllabus where siteId = ? and common = ? and deleted = false", siteId, common);
 		Syllabus syllabus = syllabi.get(0);
 		syllabus.setElements(getStructuredSyllabusElements(syllabus.getId(), hidden));
 		return syllabi.get(0);
@@ -58,6 +58,10 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 			throw new NoSyllabusException(id);
 		}
 		
+		if(syllabus.getDeleted()) {
+			throw new NoSyllabusException(id);
+		}
+		
 		if (retrieveElements) {
 			syllabus.setElements(getStructuredSyllabusElements(id, hidden));
 		}
@@ -65,12 +69,13 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return syllabus;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Syllabus getCommonSyllabus(String siteId) throws NoSyllabusException {
 		List<Syllabus> syllabi = null;
 		
 		if (null != siteId) {
-			syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ? and common = ? ", siteId, true);
+			syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ? and common = ? and deleted = false", siteId, true);
 		}
 		if(syllabi == null){
 			throw new NoSyllabusException();
@@ -78,6 +83,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return syllabi.get(0);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, boolean commonRead, boolean commonWrite, String currentUserId ) {
 		List<Syllabus> syllabi;
@@ -90,9 +96,9 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 			// get all the syllabus
 			
 			if (commonRead || commonWrite) {
-				syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ?  order by createdDate asc", siteId);
+				syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ? and deleted = false order by createdDate asc", siteId);
 			} else {
-				syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ? and common = 0 order by createdDate asc", siteId);
+				syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ? and common = 0 and deleted = false order by createdDate asc", siteId);
 			}
 
 		} else {
@@ -109,7 +115,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 			}
 			querySections += " ) ";
 
-			syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus syllabus where site_id = ? "+ querySections + " order by createdDate asc" , siteId );
+			syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus syllabus where site_id = ? and deleted = false "+ querySections + " order by createdDate asc" , siteId );
 		}	
 
 		return syllabi;
@@ -129,6 +135,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	    return element;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public AbstractSyllabusElement getSyllabusElement(Long elementId) {
 		List<AbstractSyllabusElement> elements;
@@ -206,14 +213,26 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	}
 	
 	@Override
-	public void delete(Object o) {
+	public void deleteSyllabusObject(Object o) {		
 		try {
-			getHibernateTemplate().delete(o);
+			getHibernateTemplate().delete(o);		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void softDeleteSyllabus(Syllabus syllabus)
+	{
+		syllabus.setDeleted(true);
+		
+		try {
+			getHibernateTemplate().update(syllabus);		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteElementAndMappings(AbstractSyllabusElement syllabusElement) {
 		
@@ -225,6 +244,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean elementHasNonCommonChildren(AbstractSyllabusElement element) {
 		DetachedCriteria dc = DetachedCriteria.forClass(AbstractSyllabusElement.class);
@@ -235,6 +255,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return children.size() > 0;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public SyllabusRubricElement getRubric(Long parentId, Long templateStructureId) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SyllabusRubricElement.class);
@@ -253,6 +274,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<SyllabusElementMapping> getMappingsForElement(AbstractSyllabusElement element) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SyllabusElementMapping.class);
@@ -261,6 +283,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return (List<SyllabusElementMapping>) getHibernateTemplate().findByCriteria(dc);		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public SyllabusElementMapping addMappingToEndOfList(Long syllabusId, AbstractSyllabusElement element) {
 		
@@ -284,6 +307,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return mapping;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<SyllabusElementMapping> getMappingsWithoutChildren(AbstractSyllabusElement syllabusElement) {
 		String qry = "from SyllabusElementMapping mapping where mapping.syllabusElement.id = ? and not exists "

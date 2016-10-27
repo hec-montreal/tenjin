@@ -1,4 +1,4 @@
-﻿tenjinApp.service('SyllabusService', ['UserService', '$resource', function (UserService, $resource){
+﻿tenjinApp.service('SyllabusService', ['UserService', '$resource', function(UserService, $resource) {
     'use strict';
 
     this.syllabus;
@@ -13,35 +13,43 @@
 
     // variable used to look through the syllabus tree
     this.navigation = {
-        'level' : 1
+        'level': 1
     };
 
-    //
-    // var syllabusProviderSave = $resource('v1/syllabus');
-
-    //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var templateProvider = $resource('v1/template/1/rules.json');
 
-    //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var syllabusElementProvider = $resource('v1/syllabus');
 
-    // provider create syllabus
     var sylProvider = $resource('v1/syllabus.json');
+
     // provider get syllabus list
-    var sylProviderList = $resource('v1/syllabus.json', {}, {'get':{method:'GET', isArray: true}}); 
+    var sylProviderList = $resource('v1/syllabus.json', {}, {
+        'get': {
+            method: 'GET',
+            isArray: true
+        }
+    });
+
     // provider get and update particular syllabus
     var sylProviderId = $resource('v1/syllabus/:id.json');
 
+    var sylDeleteProvider = $resource('v1/syllabus/:ids/delete.json', {}, {
+        'delete': {
+            method: 'GET'
+        }
+    });
 
     /**
      * Save syllabus
      * @param {Object} $data Syllabus data
      * @return {Object} Promise
      */
-    this.save =  function($data) {
+    this.save = function($data) {
         // UPDATE: if the syllabus has already an id then call a specific url
-        if( $data.id ) {
-           return sylProviderId.save( {id: $data.id} , $data); 
+        if ($data.id) {
+            return sylProviderId.save({
+                id: $data.id
+            }, $data);
         }
         // CREATE: if the syllabus has no id 
         return sylProvider.save($data);
@@ -51,7 +59,7 @@
      * Save current syllabus
      * @return {Object} Promise
      */
-    this.saveCurrent =  function() {
+    this.saveCurrent = function() {
         return this.save(this.syllabus);
     };
 
@@ -60,8 +68,35 @@
      * @param {Array} $syllabusList Syllabus list to delete
      * @return {Object} Promise
      */
-    this.deleteSyllabusList =  function($syllabusList) {
-        return sylProvider.delete($syllabusList);
+    this.deleteSyllabusList = function($syllabusList) {
+        var idList = [];
+        var newSyllabusList = [];
+
+        for (var i = 0; i < $syllabusList.length; i++) {
+            idList.push($syllabusList[i].id);
+        }
+
+        for (var i = 0; i < this.syllabusList.length; i++) {
+            var keep = true;
+
+            for (var j = 0; j < idList.length; j++) {
+                if (this.syllabusList[i].id === idList[j]) {
+                    keep = false;
+
+                    break;
+                }
+            }
+
+            if (keep) {
+                newSyllabusList.push(this.syllabusList[i]);
+            }
+        }
+
+        this.syllabusList = newSyllabusList;
+
+        return sylDeleteProvider.delete({
+            'ids': idList
+        });
     };
 
     /**
@@ -69,8 +104,10 @@
      * @param {Number} $syllabusId id of the syllabus
      * @return {Object} Promise
      */
-    this.loadSyllabus =  function($syllabusId) {   
-        return sylProviderId.get({id : $syllabusId});
+    this.loadSyllabus = function($syllabusId) {
+        return sylProviderId.get({
+            id: $syllabusId
+        });
     };
 
     /**
@@ -78,8 +115,10 @@
      * @param {String} $siteId site id
      * @return {Object} Promise
      */
-    this.loadSyllabusList =  function($siteId) {    
-        return sylProviderList.get({siteId : $siteId});
+    this.loadSyllabusList = function($siteId) {
+        return sylProviderList.get({
+            siteId: $siteId
+        });
     };
 
     /**
@@ -102,10 +141,10 @@
      * Set the syllabus list
      * @param {Array} $syllabusList Syllabus list
      */
-    this.setSyllabusList = function($syllabusList) {  
+    this.setSyllabusList = function($syllabusList) {
         this.syllabusList = $syllabusList;
         // set write permissions on each syllabus
-        for(var i = 0; i < this.syllabusList.length; i++) {
+        for (var i = 0; i < this.syllabusList.length; i++) {
             this.setWritePermission(this.syllabusList[i]);
         }
     };
@@ -124,7 +163,7 @@
      */
     this.getCommonSyllabus = function() {
         if (this.syllabusList) {
-            for (var i=0 ; i < this.syllabusList.length; i++) {
+            for (var i = 0; i < this.syllabusList.length; i++) {
                 if (this.syllabusList[i].common === true) {
                     return this.syllabusList[i];
                 }
@@ -164,9 +203,9 @@
         } else {
             if ($syllabus.common === true) {
                 $syllabus.$writePermission = false;
-                
+
             } else {
-                if ( $syllabus.createdBy === UserService.profile.userId || sectionWritePresent ){
+                if ($syllabus.createdBy === UserService.profile.userId || sectionWritePresent) {
                     $syllabus.$writePermission = true;
                 } else {
                     $syllabus.$writePermission = false;
@@ -179,7 +218,7 @@
      * Set the current syllabus
      * @param {Object} $syllabus The future current syllabus
      */
-    this.setSyllabus = function($syllabus) {      
+    this.setSyllabus = function($syllabus) {
         this.syllabus = $syllabus;
         // numbering
         this.numerotationSyllabus(this.syllabus);
@@ -277,25 +316,25 @@
             if ($rootTree.id === $parent.id && isSyllabusElement($rootTree)) {
                 // If the element already exists, replace it (update)
                 var modification = false;
-                for (var i = 0; i < $rootTree.elements.length; i++){
+                for (var i = 0; i < $rootTree.elements.length; i++) {
                     if ($rootTree.elements[i].id === $element.id) {
                         // modification
                         $rootTree.elements[i] = $element;
                         modification = true;
                         break;
                     }
-                }   
+                }
                 // add element
                 if (!modification) {
-                    $rootTree.elements.push($element);                
-                } 
+                    $rootTree.elements.push($element);
+                }
 
             } else {
-                
-                for (var i = 0; i < $rootTree.elements.length; i++){
-                    addElementToSyllabus($rootTree.elements[i], $parent, $element, $position); 
+
+                for (var i = 0; i < $rootTree.elements.length; i++) {
+                    addElementToSyllabus($rootTree.elements[i], $parent, $element, $position);
                 }
-            
+
             }
 
         }
@@ -339,20 +378,20 @@
                     // Check where the rubric must be inserted
                     var listeTemp = [];
                     var index = -1;
-                    for (var i = 0 ; i < $rules.elements.length; i++) {
+                    for (var i = 0; i < $rules.elements.length; i++) {
                         for (var j = 0; j < $rootTree.elements.length; j++) {
                             if ($rules.elements[i].id === $rootTree.elements[j].templateStructureId) {
                                 listeTemp.push($rootTree.elements[j]);
                                 break;
-                            }  
+                            }
                         }
 
                         if ($rules.elements[i].id === $element.templateStructureId) {
-                            listeTemp.push($element);               
+                            listeTemp.push($element);
                         }
                     }
 
-                    for (var i = 0 ; i < listeTemp.length; i++ ){
+                    for (var i = 0; i < listeTemp.length; i++) {
                         if (listeTemp[i].templateStructureId === $element.templateStructureId) {
                             index = i;
                             break;
@@ -369,17 +408,17 @@
                 } else {
                     $rootTree.elements.push($element);
                     return 1;
-                }       
+                }
 
             } else {
-                
-                for (var i = 0; i < $rootTree.elements.length; i++){
-                    var results = addRubricToSyllabus($rootTree.elements[i], $parent, $element, $rules); 
-                    if (results === -1 ) {
+
+                for (var i = 0; i < $rootTree.elements.length; i++) {
+                    var results = addRubricToSyllabus($rootTree.elements[i], $parent, $element, $rules);
+                    if (results === -1) {
                         return results;
                     }
                 }
-            
+
             }
 
         }
@@ -414,20 +453,20 @@
 
         if ($rootTree.elements) {
 
-            if ($rootTree.id === $parent.id && isSyllabusElement($rootTree)) { 
+            if ($rootTree.id === $parent.id && isSyllabusElement($rootTree)) {
                 // si l'élément existe déjà on le supprime et on le remplace
-                for (var i = 0; i < $rootTree.elements.length; i++){
+                for (var i = 0; i < $rootTree.elements.length; i++) {
                     if ($rootTree.elements[i].id === $element.id) {
                         $rootTree.elements.splice(i, 1);
                     }
-                }   
-  
-            } else {
-                
-                for (var i = 0; i < $rootTree.elements.length; i++){
-                    deleteElementFromSyllabus($rootTree.elements[i], $parent, $element); 
                 }
-            
+
+            } else {
+
+                for (var i = 0; i < $rootTree.elements.length; i++) {
+                    deleteElementFromSyllabus($rootTree.elements[i], $parent, $element);
+                }
+
             }
 
         }
@@ -451,13 +490,13 @@
      * @return {Object} The parent element or undefined
      */
     var getParent = function($rootTree, $element) {
-        
+
         if ($rootTree.id === $element.parentId) {
             return $rootTree;
         } else {
             if ($rootTree.elements) {
-                for (var i = 0; i < $rootTree.elements.length; i++){
-                    var resultat = getParent($rootTree.elements[i], $element); 
+                for (var i = 0; i < $rootTree.elements.length; i++) {
+                    var resultat = getParent($rootTree.elements[i], $element);
                     if (resultat) {
                         return resultat;
                     }
@@ -485,9 +524,9 @@
 
         if ($rootTree.elements) {
 
-            for (var i = 0; i < $rootTree.elements.length; i++){
+            for (var i = 0; i < $rootTree.elements.length; i++) {
 
-                if($rootTree.elements[i].type === "lecture") {
+                if ($rootTree.elements[i].type === "lecture") {
                     $infosNumerotation.nbLecture++;
                     $rootTree.elements[i].$numero = $infosNumerotation.nbLecture;
                 } else if ($rootTree.elements[i].type === "tutorial") {
@@ -495,9 +534,9 @@
                     String.fromCharCode('65');
                     $rootTree.elements[i].$numero = String.fromCharCode(64 + $infosNumerotation.nbTutorial);
                 } else if ($rootTree.elements[i].type === "evaluation" || $rootTree.elements[i].type === "exam") {
-                    $rootTree.elements[i].$numero =$infosNumerotation.nbEvalAndExam++;
+                    $rootTree.elements[i].$numero = $infosNumerotation.nbEvalAndExam++;
                 }
-                numerotationSyllabus($rootTree.elements[i], $infosNumerotation); 
+                numerotationSyllabus($rootTree.elements[i], $infosNumerotation);
             }
 
 
@@ -511,8 +550,8 @@
      */
     this.numerotationSyllabus = function($data) {
         var infosNumerotations = {
-            'nbLecture' : 0,
-            'nbTutorial' : 0,
+            'nbLecture': 0,
+            'nbTutorial': 0,
             'nbEvalAndExam': 1
         };
 
@@ -526,11 +565,11 @@
     var hideAllChildren = function($rootTree) {
 
         if ($rootTree.elements) {
-            for (var i = 0; i < $rootTree.elements.length; i++ ) {
+            for (var i = 0; i < $rootTree.elements.length; i++) {
                 $rootTree.elements[i].$hidden = true;
 
                 hideAllChildren($rootTree.elements[i]);
-            }   
+            }
         }
     };
 
@@ -542,13 +581,13 @@
      * @param {Object} $navigation Final navigation level (inout param)
      */
     var hideItems = function($rootTree, $item, $levelTmp, $navigation) {
-   
+
         if ($rootTree.id === $item.id) {
             $rootTree.$hidden = false;
             $navigation.level = $levelTmp;
 
             // On affiche les enfants mais on masque les potentiels sous-enfants, etc.
-            for (var i = 0; i < $rootTree.elements.length; i++ ) {
+            for (var i = 0; i < $rootTree.elements.length; i++) {
                 $rootTree.elements[i].$hidden = false;
                 hideAllChildren($rootTree.elements[i]);
             }
@@ -557,8 +596,8 @@
 
             $levelTmp++;
             if ($rootTree.elements) {
-                for (var i = 0; i < $rootTree.elements.length; i++ ) {
-                    hideItems($rootTree.elements[i], $item, $levelTmp, $navigation); 
+                for (var i = 0; i < $rootTree.elements.length; i++) {
+                    hideItems($rootTree.elements[i], $item, $levelTmp, $navigation);
                 }
             }
         }
@@ -579,7 +618,7 @@
      * Mobile menu : initialize the mobile menu and hide some items
      */
     this.hideItemsInit = function() {
-        for (var i = 0; i < this.syllabus.elements.length; i++ ) {
+        for (var i = 0; i < this.syllabus.elements.length; i++) {
             this.syllabus.elements[i].$hidden = false;
             hideAllChildren(this.syllabus.elements[i]);
         }

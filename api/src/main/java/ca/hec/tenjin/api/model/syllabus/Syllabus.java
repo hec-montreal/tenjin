@@ -18,7 +18,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(exclude={"elements"})
 public class Syllabus {
-
 	private Long id;
     private String siteId;
     private String courseTitle;
@@ -31,6 +30,7 @@ public class Syllabus {
     private Date createdDate;
     private String lastModifiedBy;
     private Date lastModifiedDate;
+    private Boolean deleted;
     private List<AbstractSyllabusElement> elements;
     private Set<String> sections;
     private OfficialProvider provider;

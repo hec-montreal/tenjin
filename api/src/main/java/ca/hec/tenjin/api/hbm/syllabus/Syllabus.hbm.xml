@@ -3,8 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false">
-	<class name="ca.hec.tenjin.api.model.syllabus.Syllabus"
-		table="TENJIN_SYLLABUS">
+	<class name="ca.hec.tenjin.api.model.syllabus.Syllabus" table="TENJIN_SYLLABUS">
 		<id name="id" type="long">
 			<column name="SYLLABUS_ID" />
 			<generator class="native">
@@ -14,7 +13,7 @@
 		<property name="siteId" type="string">
 			<column name="SITE_ID" not-null="true" />
 		</property>
-		<!--  TODO: probably better to get this from web service -->
+		<!-- TODO: probably better to get this from web service -->
 		<property name="courseTitle" type="string">
 			<column name="COURSE_TITLE" not-null="true" />
 		</property>
@@ -45,10 +44,15 @@
 		<property name="lastModifiedDate" type="java.util.Date">
 			<column name="LAST_MODIFIED_DATE" not-null="true" />
 		</property>
+
+		<property name="deleted" type="boolean">
+			<column name="DELETED" not-null="true" />
+		</property>
+
 		<set name="sections" table="TENJIN_SYLLABUSSECTION" cascade="all">
 			<key column="SYLLABUS_ID" />
 			<element column="SECTION" type="string" />
 		</set>
-		
+
 	</class>
 </hibernate-mapping>

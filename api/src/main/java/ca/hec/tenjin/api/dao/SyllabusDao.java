@@ -110,7 +110,9 @@ public interface SyllabusDao {
 	 * 
 	 * @param Object o
 	 */
-	public void delete(Object o);
+	public void deleteSyllabusObject(Object o);
+	
+	public void softDeleteSyllabus(Syllabus syllabus);
 	
 	/**
 	 * Delete an AbstractSyllabusElement and all it's mappings

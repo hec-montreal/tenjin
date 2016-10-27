@@ -48,4 +48,12 @@ public interface SyllabusService {
 	 */
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException;
 
+	/**
+	 * Delete a syllabus
+	 * 
+	 * @param syllabus
+	 * @throws NoSyllabusException 
+	 * @throws DeniedAccessException 
+	 */
+	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException;
 }

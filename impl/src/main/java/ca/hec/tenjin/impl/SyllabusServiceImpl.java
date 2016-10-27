@@ -5,14 +5,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-
-import lombok.Setter;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
@@ -20,30 +17,31 @@ import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
 import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TemplateService;
+import ca.hec.tenjin.api.TenjinSecurityService;
+import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
+import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
+import lombok.Setter;
 
 /**
  * Implementation of {@link SyllabusService}
  *
  *
  */
-@Setter 
+@Setter
 public class SyllabusServiceImpl implements SyllabusService {
 
 	private static final Logger log = Logger.getLogger(SyllabusServiceImpl.class);
 
-	private SakaiProxy sakaiProxy;	
+	private SakaiProxy sakaiProxy;
 	private SyllabusDao syllabusDao;
 	private TemplateService templateService;
 	private TenjinSecurityService securityService;
@@ -54,16 +52,16 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		try {
 			syllabus = syllabusDao.getSyllabus(syllabusId, true, true);
+
 			return syllabus;
 		} catch (Exception e) {
-			log.warn("The syllabus " + syllabusId + " could not be retrieved because: " + e.getMessage()) ;
+			log.warn("The syllabus " + syllabusId + " could not be retrieved because: " + e.getMessage());
 			throw new NoSyllabusException();
 		}
 	}
 
-    @Override
-	public List<Syllabus> getSyllabusList(String siteId, List<String> sections,  boolean commonRead, boolean commonWrite, String currentUserId) 
-			throws NoSiteException, DeniedAccessException {
+	@Override
+	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, boolean commonRead, boolean commonWrite, String currentUserId) throws NoSiteException, DeniedAccessException {
 		List<Syllabus> syllabusList = null;
 
 		syllabusList = syllabusDao.getSyllabusList(siteId, sections, commonRead, commonWrite, currentUserId);
@@ -75,7 +73,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 			try {
 				createOrUpdateSyllabus(common);
 			} catch (NoSyllabusException e) {
-				// should not be possible, only happens when we try to update a syllabus that doesn't exist
+				// should not be possible, only happens when we try to update a
+				// syllabus that doesn't exist
 				log.error("Error saving new common syllabus for site: " + siteId);
 				e.printStackTrace();
 			}
@@ -84,57 +83,61 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 		return syllabusList;
 	}
-    
-    @Override
+
+	@Override
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException, NoSyllabusException, DeniedAccessException {
 		Date now = new Date();
 		Syllabus existingSyllabus = null;
 		Map<Long, SyllabusElementMapping> existingSyllabusElementMappings = null;
-		
+
 		if (!sakaiProxy.siteExists(syllabus.getSiteId())) {
 			throw new NoSiteException();
 		}
-		
-		List<Syllabus> syllabi = syllabusDao.getSyllabusList(syllabus.getSiteId(), null, true, true, "");	
 
-		// create syllabus if it doesn't exist, otherwise get it's element mappings from the database.
+		List<Syllabus> syllabi = syllabusDao.getSyllabusList(syllabus.getSiteId(), null, true, true, "");
+
+		// create syllabus if it doesn't exist, otherwise get it's element
+		// mappings from the database.
 		if (syllabus.getId() == null) {
-			
-			//check permissions
-			if ((syllabus.getCommon() && !securityService.canUserCreateSyllabus(syllabus.getSiteId(), true)) ||
-					(!syllabus.getCommon() && (!securityService.canUserCreateSyllabus(syllabus.getSiteId(), false) || !checkSectionAssignPermissions(syllabus.getSiteId(), null, syllabus.getSections())))) {
+
+			// check permissions
+			if ((syllabus.getCommon() && !securityService.canUserCreateSyllabus(syllabus.getSiteId(), true)) || (!syllabus.getCommon() && (!securityService.canUserCreateSyllabus(syllabus.getSiteId(), false) || !checkSectionAssignPermissions(syllabus.getSiteId(), null, syllabus.getSections())))) {
 				throw new DeniedAccessException();
 			}
-			
+
 			syllabus.setCreatedDate(now);
 			syllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
 			syllabus.setCreatedByName(sakaiProxy.getCurrentUserName());
 			syllabus.setLastModifiedDate(now);
 			syllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
+			syllabus.setDeleted(false);
+
 			syllabusDao.save(syllabus);
-			
-			// if this call is to create a non-common syllabus, copy the common's mappings and return the syllabus
-			// if it is to create the common syllabus, continue on to create the required elements
+
+			// if this call is to create a non-common syllabus, copy the
+			// common's mappings and return the syllabus
+			// if it is to create the common syllabus, continue on to create the
+			// required elements
 			if (!syllabus.getCommon()) {
 				Syllabus common = syllabusDao.getCommonSyllabus(syllabus.getSiteId());
 				existingSyllabusElementMappings = getExistingSyllabusElementMappings(common.getId());
-			
+
 				for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
-					createSyllabusElementMapping( syllabus.getId(), mapping.getSyllabusElement(), mapping.getDisplayOrder(), false );
+					createSyllabusElementMapping(syllabus.getId(), mapping.getSyllabusElement(), mapping.getDisplayOrder(), false);
 				}
-				
+
 				reassignSections(syllabi, null, syllabus.getSections());
-			
+
 				// return new created syllabus
 				return syllabus;
 			}
 		} else {
 			existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false, false);
-			
-			//check permissions
+
+			// check permissions
 			if (!securityService.canUserUpdateSyllabus(existingSyllabus)) {
 				throw new DeniedAccessException("User not allowed to update the specified syllabus");
-			}			
+			}
 
 			if (existingSyllabus != syllabus) {
 				if (!existingSyllabus.getSections().equals(syllabus.getSections())) {
@@ -144,17 +147,19 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 					reassignSections(syllabi, existingSyllabus.getSections(), syllabus.getSections());
 				}
-				
-				//update persistent object, save handled by hibernate at end of transaction
+
+				// update persistent object, save handled by hibernate at end of
+				// transaction
 				updatePersistentSyllabusObject(existingSyllabus, syllabus);
 			}
-			
+
 			existingSyllabusElementMappings = getExistingSyllabusElementMappings(syllabus.getId());
 		}
 
 		// only update this syllabus's elements if a list was specified
 		if (syllabus.getElements() != null) {
-			// add top-level elements to the search queue (breadth-first traversal)
+			// add top-level elements to the search queue (breadth-first
+			// traversal)
 			Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
 			int order = 0;
 			for (AbstractSyllabusElement element : syllabus.getElements()) {
@@ -163,26 +168,26 @@ public class SyllabusServiceImpl implements SyllabusService {
 				element.setDisplayOrder(order++);
 				searchQueue.add(element);
 			}
-	
+
 			while (!searchQueue.isEmpty()) {
 				AbstractSyllabusElement element = searchQueue.remove();
 
 				List<Long> syllabusesWithExistingRubricMapping = null;
 
-				// if the element has no id or if the id is negative, the element should be created
+				// if the element has no id or if the id is negative, the
+				// element should be created
 				if (element.getId() == null || element.getId() < 0) {
 
 					if (element.getType().equals(SyllabusRubricElement.TYPE)) {
 						// A rubric should be the same element in all syllabuses
-						SyllabusRubricElement existingRubric = 
-								syllabusDao.getRubric(element.getParentId(), element.getTemplateStructureId());
+						SyllabusRubricElement existingRubric = syllabusDao.getRubric(element.getParentId(), element.getTemplateStructureId());
 
 						syllabusesWithExistingRubricMapping = getSyllabusesWithElementMapping(existingRubric);
 
 						if (existingRubric != null) {
 							existingRubric.setCommon(true);
 							existingRubric.setDisplayOrder(element.getDisplayOrder());
-							existingRubric.setElements(((SyllabusRubricElement)element).getElements());
+							existingRubric.setElements(((SyllabusRubricElement) element).getElements());
 							element.copy(existingRubric);
 						}
 					}
@@ -196,29 +201,25 @@ public class SyllabusServiceImpl implements SyllabusService {
 					// add mappings to all syllabi if this is a common syllabus
 					if (syllabus.getCommon()) {
 						for (Syllabus s : syllabi) {
-							if (!s.getCommon() && 
-									(syllabusesWithExistingRubricMapping == null || 
-									!syllabusesWithExistingRubricMapping.contains(s.getId()))) {
+							if (!s.getCommon() && (syllabusesWithExistingRubricMapping == null || !syllabusesWithExistingRubricMapping.contains(s.getId()))) {
 
 								createSyllabusElementMapping(s.getId(), element, element.getDisplayOrder(), false);
 							}
 						}
 					}
-					
-				} else if (existingSyllabusElementMappings != null &&
-						existingSyllabusElementMappings.containsKey(element.getId())) {
-	
-					compareAndUpdateSyllabusElementMapping(
-							existingSyllabusElementMappings.get(element.getId()), element);
-	
+
+				} else if (existingSyllabusElementMappings != null && existingSyllabusElementMappings.containsKey(element.getId())) {
+
+					compareAndUpdateSyllabusElementMapping(existingSyllabusElementMappings.get(element.getId()), element);
+
 					// Remove this element from the map.
 					// Remaining elements at the end will be deleted
 					existingSyllabusElementMappings.remove(element.getId());
 				}
-	
+
 				// add this element's children to the search queue
 				if (element.isComposite()) {
-					SyllabusCompositeElement compositeElement = (SyllabusCompositeElement)element;
+					SyllabusCompositeElement compositeElement = (SyllabusCompositeElement) element;
 					if (compositeElement.getElements() != null) {
 						order = 0;
 						for (AbstractSyllabusElement child : compositeElement.getElements()) {
@@ -230,30 +231,30 @@ public class SyllabusServiceImpl implements SyllabusService {
 						}
 					}
 				}
-	
+
 				log.debug("handled node : " + element.getId() + " parent : " + element.getParentId());
 			}
-	
-			// delete the syllabus element mappings that are missing from the new syllabus
+
+			// delete the syllabus element mappings that are missing from the
+			// new syllabus
 			if (existingSyllabusElementMappings != null && !existingSyllabusElementMappings.isEmpty()) {
 				for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
 					// cannot delete common element from another syllabus
 					if (!syllabus.getCommon() && mapping.getSyllabusElement().getCommon()) {
 						throw new DeniedAccessException("Cannot delete common element from a regular syllabus");
 					}
-					
-					 
-					if (mapping.getSyllabusElement().getCommon() && 
-							mapping.getSyllabusElement().isComposite() &&
-							syllabusDao.elementHasNonCommonChildren(mapping.getSyllabusElement())) {
-						// if the element has children in any other syllabus, simply remove the mapping
+
+					if (mapping.getSyllabusElement().getCommon() && mapping.getSyllabusElement().isComposite() && syllabusDao.elementHasNonCommonChildren(mapping.getSyllabusElement())) {
+						// if the element has children in any other syllabus,
+						// simply remove the mapping
 						// keep the element and mark it non-common
 						mapping.getSyllabusElement().setCommon(false);
-						// delete each mapping for this element when there is no child
+						// delete each mapping for this element when there is no
+						// child
 						for (SyllabusElementMapping mappingWithoutChild : syllabusDao.getMappingsWithoutChildren(mapping.getSyllabusElement())) {
-							syllabusDao.delete(mappingWithoutChild);	
+							syllabusDao.deleteSyllabusObject(mappingWithoutChild);
 						}
-						
+
 					} else {
 						// delete the element and all it's mappings
 						syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
@@ -265,28 +266,50 @@ public class SyllabusServiceImpl implements SyllabusService {
 		return syllabus;
 	}
 
-	private void updatePersistentSyllabusObject(Syllabus existingSyllabus, Syllabus syllabus) {
+	@Override
+	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException {
+		Syllabus syllabus = syllabusDao.getSyllabus(syllabusId, false, false);
 		
-    	existingSyllabus.setSiteId(syllabus.getSiteId());
-    	existingSyllabus.setCourseTitle(syllabus.getCourseTitle());
-    	existingSyllabus.setTitle(syllabus.getTitle());
-    	existingSyllabus.setTemplateId(syllabus.getTemplateId());
-    	existingSyllabus.setLocale(syllabus.getLocale());
-    	existingSyllabus.setCommon(syllabus.getCommon());
-    	existingSyllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
-    	existingSyllabus.setLastModifiedDate(new Date());
-    	existingSyllabus.setSections(syllabus.getSections());
+		if (syllabus == null) {
+			throw new NoSyllabusException(syllabusId);
+		}
+
+		if (syllabus.getCommon()) {
+			throw new DeniedAccessException();
+		}
+
+		if (syllabus.getSections() != null && syllabus.getSections().size() > 0) {
+			throw new DeniedAccessException();
+		}
+		
+		syllabusDao.softDeleteSyllabus(syllabus);
+	}
+
+	private void updatePersistentSyllabusObject(Syllabus existingSyllabus, Syllabus syllabus) {
+
+		existingSyllabus.setSiteId(syllabus.getSiteId());
+		existingSyllabus.setCourseTitle(syllabus.getCourseTitle());
+		existingSyllabus.setTitle(syllabus.getTitle());
+		existingSyllabus.setTemplateId(syllabus.getTemplateId());
+		existingSyllabus.setLocale(syllabus.getLocale());
+		existingSyllabus.setCommon(syllabus.getCommon());
+		existingSyllabus.setLastModifiedBy(sakaiProxy.getCurrentUserId());
+		existingSyllabus.setLastModifiedDate(new Date());
+		existingSyllabus.setSections(syllabus.getSections());
 	}
 
 	/**
-	 * @param oldSections The existing list of sections
-	 * @param newSections The new section list to assign
-	 * @return whether or not the user is allowed to assign or unassign the sections
+	 * @param oldSections
+	 *            The existing list of sections
+	 * @param newSections
+	 *            The new section list to assign
+	 * @return whether or not the user is allowed to assign or unassign the
+	 *         sections
 	 */
 	private boolean checkSectionAssignPermissions(String siteId, Set<String> oldSections, Set<String> newSections) {
-		
+
 		Collection<String> sectionsToCheck = null;
-		
+
 		if (oldSections == null && newSections == null) {
 			return false;
 		} else if (oldSections == null) {
@@ -294,7 +317,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 		} else if (newSections == null) {
 			sectionsToCheck = oldSections;
 		} else {
-			// get sections that are in one list but not the other (the user is trying to add or subtract them)
+			// get sections that are in one list but not the other (the user is
+			// trying to add or subtract them)
 			sectionsToCheck = CollectionUtils.disjunction(oldSections, newSections);
 		}
 		return securityService.canUserAssignSections(siteId, sectionsToCheck);
@@ -313,16 +337,16 @@ public class SyllabusServiceImpl implements SyllabusService {
 	private Syllabus createCommonSyllabus(String siteId) throws NoSiteException, DeniedAccessException {
 		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, "fr_CA");
 		Site site = null;
-		
+
 		try {
 			site = sakaiProxy.getSite(siteId);
 		} catch (Exception e) {
 			log.error("Site " + siteId + " could not be retrieved.");
 			return null;
 		}
-		
+
 		if (newCommonSyllabus != null) {
-			newCommonSyllabus.setTemplateId(1L); 
+			newCommonSyllabus.setTemplateId(1L);
 			newCommonSyllabus.setSiteId(siteId);
 			newCommonSyllabus.setCommon(true);
 			newCommonSyllabus.setCreatedBy("Admin");
@@ -347,21 +371,22 @@ public class SyllabusServiceImpl implements SyllabusService {
 				}
 			}
 		}
-		
+
 		return newCommonSyllabus;
 	}
 
 	/**
-	 * Update a Persistent syllabus element mapping (including the syllabus element) 
+	 * Update a Persistent syllabus element mapping (including the syllabus
+	 * element)
 	 */
-	private void compareAndUpdateSyllabusElementMapping(SyllabusElementMapping existingElementMapping,
-			AbstractSyllabusElement newElement) {
+	private void compareAndUpdateSyllabusElementMapping(SyllabusElementMapping existingElementMapping, AbstractSyllabusElement newElement) {
 
-		//compare element from the new syllabus to what is in the database
+		// compare element from the new syllabus to what is in the database
 		AbstractSyllabusElement existingElement = existingElementMapping.getSyllabusElement();
 		if (!newElement.equals(existingElement)) {
 
-			//update persistent object,  save handled by hibernate at end of transaction
+			// update persistent object, save handled by hibernate at end of
+			// transaction
 			existingElement.copy(newElement);
 			existingElement.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 			existingElement.setLastModifiedDate(new Date());
@@ -393,14 +418,13 @@ public class SyllabusServiceImpl implements SyllabusService {
 		mapping.setSyllabusElement(syllabusElement);
 		mapping.setDisplayOrder(displayOrder);
 		mapping.setHidden(hidden);
-		
+
 		syllabusDao.save(mapping);
 		return mapping;
-		
+
 	}
-	
-	private Map<Long, SyllabusElementMapping> getExistingSyllabusElementMappings(
-			Long syllabusId) {
+
+	private Map<Long, SyllabusElementMapping> getExistingSyllabusElementMappings(Long syllabusId) {
 
 		Map<Long, SyllabusElementMapping> map = new HashMap<Long, SyllabusElementMapping>();
 		for (SyllabusElementMapping mapping : syllabusDao.getSyllabusElementMappings(syllabusId, true)) {
@@ -413,25 +437,28 @@ public class SyllabusServiceImpl implements SyllabusService {
 	private void reassignSections(List<Syllabus> syllabuses, Set<String> oldSections, Set<String> newSections) {
 		Collection<String> sectionsForCommon = null;
 		Collection<String> sectionsToUnassign = null;
-		
+
 		if (oldSections == null && newSections == null) {
 			log.error("both lists are null!");
 			return; // TODO : exception
 		}
-		
+
 		if (oldSections == null) {
-			// new syllabus, unassign all sections from their previous syllabuses
+			// new syllabus, unassign all sections from their previous
+			// syllabuses
 			sectionsToUnassign = newSections;
 		} else if (newSections == null) {
 			// delete syllabus, assign all sections to the common syllabus
 			sectionsForCommon = oldSections;
 		} else {
-			// sections in oldSections but not newSections should be assigned to the common
+			// sections in oldSections but not newSections should be assigned to
+			// the common
 			sectionsForCommon = CollectionUtils.subtract(oldSections, newSections);
-			// sections in newSections but not oldSections should be unassigned wherever else they are assigned
+			// sections in newSections but not oldSections should be unassigned
+			// wherever else they are assigned
 			sectionsToUnassign = CollectionUtils.subtract(newSections, oldSections);
-		}	
-		
+		}
+
 		if (sectionsForCommon != null) {
 			for (Syllabus s : syllabuses) {
 				if (s.getCommon()) {
@@ -443,8 +470,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 			unassignSections(syllabuses, sectionsToUnassign);
 		}
 	}
-	
-	// These are called on persistent syllabuses, and so any modifications are saved at the end of the transaction
+
+	// These are called on persistent syllabuses, and so any modifications are
+	// saved at the end of the transaction
 	private void assignSectionsToSyllabus(Syllabus commonSyllabus, Collection<String> sections) {
 		for (String s : sections) {
 			commonSyllabus.getSections().add(s);
