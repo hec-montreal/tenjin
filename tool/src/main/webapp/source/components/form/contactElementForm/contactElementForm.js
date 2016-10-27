@@ -52,7 +52,7 @@
             };
 
             $scope.selectedTitle = function ( $option){
-                $scope.element.attributes.contactTitle = $option.name;
+                $scope.element.attributes.contactInfoTitle = $option.id;
             };
 
             $scope.element.validate = function() {
