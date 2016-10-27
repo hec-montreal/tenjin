@@ -2,7 +2,7 @@
 
   <div >
   	<div class="row">
-    	<label for="male" class="label-text-title">{{ 'FORM_TITLE_EVALUATION' | translate }}</label>
+    	<label for="evaluationTitle" class="label-text-title">{{ 'EVALUATION_TITLE' | translate }}</label>
 	    <div class="col-md-4" >
 	    	<input type="text" name="evaluationTitle" data-ng-model="element.title" class="input-text-title" />
 		</div>
@@ -11,7 +11,7 @@
 	<br>
 	<div class="row">
 	    <div class="col-md-4">
-	    	<label for="male" class="label-text-title">{{ 'FORM_PONDERATION_EVALUATION' | translate }}</label>
+	    	<label for="evaluationWeight" class="label-text-title">{{ 'EVALUATION_WEIGHT' | translate }}</label>
 	    </div>
 	    <div class="col-md-4">
 	    	<input type="text" name="evaluationWeight" data-ng-model="element.attributes.evaluationWeight" />
@@ -21,11 +21,11 @@
 	<br>
 	<div class="row">
 	    <div class="col-md-4">
-	    	<label for="male" class="label-text-title">{{ 'EVALUATION_DATE' | translate }}</label>
+	    	<label for="evaluationDate" class="label-text-title">{{ 'EVALUATION_DATE' | translate }}</label>
 	    </div>
 	    <div class="col-md-8" >
 	    	<p class="input-group" >
-		    	<input type="text" class="form-control" show-weeks="false" uib-datepicker-popup="dd-MM-yyyy" data-ng-model="element.attributes.evaluationDate" is-open="statusDateEval.opened" 
+		    	<input type="text" id="evaluationDate" class="form-control" show-weeks="false" uib-datepicker-popup="dd-MM-yyyy" data-ng-model="element.attributes.evaluationDate" is-open="statusDateEval.opened" 
 		    	today-text="{{ 'CALENDAR_TODAY' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" />
 		      	<span class="input-group-btn">
 		      		<button type="button" class="btn btn-default" data-ng-click="openDateEval($event)">
@@ -38,7 +38,7 @@
 	 </div>
 	 <div class="row">
 	    <div class="col-md-4">
-	    	<label for="male" class="label-text-title">{{ 'EVALUATION_LOCATION' | translate }}</label>
+	    	<label class="label-text-title">{{ 'EVALUATION_LOCATION' | translate }}</label>
 	    </div>
 	    <div class="col-md-4">
 	    	<table>
@@ -61,7 +61,7 @@
 	<br>
 	<div class="row">
 	    <div class="col-md-4">
-	    	<label for="male" class="label-text-title">{{ 'EVALUATION_TERMS' | translate }}</label>
+	    	<label class="label-text-title">{{ 'EVALUATION_TERMS' | translate }}</label>
 	    </div>
 	    <div class="col-md-4">
 	    	<table>
@@ -84,7 +84,7 @@
 	<br>
 	<div class="row">
 	    <div class="col-md-4">
-	    	<label for="male" class="label-text-title">{{ 'EVALUATION_SUBMISSION_TYPE' | translate }}</label>
+	    	<label class="label-text-title">{{ 'EVALUATION_SUBMISSION_TYPE' | translate }}</label>
 	    </div>
 	    <div class="col-md-4">
 	    	<table>
@@ -107,7 +107,7 @@
 	<br>
 	<div class="row">
 	    <div class="col-md-4">
-	    	<label for="male" class="label-text-title">{{ 'EVALUATION_ASSESSMENT_TYPE' | translate }}</label>
+	    	<label class="label-text-title">{{ 'EVALUATION_ASSESSMENT_TYPE' | translate }}</label>
 	    </div>
 	    <div class="col-md-4">
 	    	<div class="row">
