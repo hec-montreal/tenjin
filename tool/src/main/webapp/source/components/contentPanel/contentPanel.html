@@ -10,7 +10,8 @@
     <!-- Titre -->
     <div class='titre' >  
         {{treeService.selectedItem.title}}
-        <span data-ng-if="treeService.selectedItem.type == 'evaluation' || treeService.selectedItem.type == 'exam'"> ({{treeService.selectedItem.attributes.evaluationWeight}}%)</span>
+        <span data-ng-if="treeService.selectedItem.type == 'evaluation'"> ({{treeService.selectedItem.attributes.evaluationWeight}}%)</span>
+        <span data-ng-if="treeService.selectedItem.type == 'exam'"> ({{treeService.selectedItem.attributes.examWeight}}%)</span>
     </div> 
     <div data-ng-if="treeService.selectedItem.type == 'evaluation' || treeService.selectedItem.type == 'exam'"> <div data-evaluationattr-element="treeService.selectedItem"></div></div>
 

@@ -1,0 +1,130 @@
+<div class="element-form"> 
+
+  <div >
+  	<div class="row">
+	    <div class="col-md-4" data-ng-switch on="element.type">
+	    	<label for="examTitle" class="label-text-title" ng-switch-when="exam">{{ 'FORM_TITLE_EXAM' | translate }}</label>
+	    </div>
+	    <div class="col-md-4" >
+	    	<input type="text" name="examTitle" data-ng-model="element.title" class="input-text-title" />
+		</div>
+		<div class="col-md-4">  </div>
+	</div>
+	<br>
+	<div class="row">
+	    <div class="col-md-4">
+	    	<label for="male" class="label-text-title">{{ 'FORM_EXAM_WEIGHT' | translate }}</label>
+	    </div>
+	    <div class="col-md-4">
+	    	<input type="text" name="examWeight" data-ng-model="element.attributes.examWeight" />
+		</div>
+	    <div class="col-md-4">% </div>
+	</div>
+	<br>
+	<div class="row">
+	    <div class="col-md-4">
+	    	<label for="male" class="label-text-title">{{ 'EXAM_DATE' | translate }}</label>
+	    </div>
+	    <div class="col-md-8" >
+	    	<p class="input-group" >
+		    	<input type="text" class="form-control" show-weeks="false" uib-datepicker-popup="dd-MM-yyyy" data-ng-model="element.attributes.examDate" is-open="statusDateEval.opened" 
+		    	today-text="{{ 'CALENDAR_TODAY' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" />
+		      	<span class="input-group-btn">
+		      		<button type="button" class="btn btn-default" data-ng-click="openDateEval($event)">
+	                	<i class="glyphicon glyphicon-calendar" ></i>
+	            	</button>
+	            </span>
+	   		</p>
+ 		  <br>  
+   		</div>
+	 </div>
+	 <div class="row">
+	    <div class="col-md-4">
+	    	<label for="male" class="label-text-title">{{ 'EXAM_LOCATION' | translate }}</label>
+	    </div>
+	    <div class="col-md-4">
+	    	<table>
+		    	<tr>
+				    <td>
+				    	<input type="checkbox" name="evalInClass" data-ng-model="element.attributes.examInClass" 
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_INCLASS' | translate }}
+				    </td>
+				</tr>
+				<tr>
+				    <td>
+				    	<input type="checkbox" name="evalAtHome" data-ng-model="element.attributes.examAtHome"
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_ATHOME' | translate }}
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<br>
+	<div class="row">
+	    <div class="col-md-4">
+	    	<label for="male" class="label-text-title">{{ 'EXAM_TERMS' | translate }}</label>
+	    </div>
+	    <div class="col-md-4">
+	    	<table>
+		    	<tr>
+				    <td>
+				    	<input type="checkbox" name="evalOral" data-ng-model="element.attributes.examOral" 
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_ORAL' | translate }}
+				    </td>
+				</tr>
+				<tr>
+				    <td>
+				    	<input type="checkbox" name="evalWritten" data-ng-model="element.attributes.examWritten"
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_WRITTEN' | translate }}
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<br>
+	<div class="row">
+	    <div class="col-md-4">
+	    	<label for="male" class="label-text-title">{{ 'EXAM_SUBMISSION_TYPE' | translate }}</label>
+	    </div>
+	    <div class="col-md-4">
+	    	<table>
+		    	<tr>
+				    <td>
+				    	<input type="checkbox" name="evalPaper" data-ng-model="element.attributes.examPaper"
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_PAPER' | translate }}
+				    </td>
+				</tr>
+				<tr>
+				    <td>
+				    	<input type="checkbox" name="evalElectronic" data-ng-model="element.attributes.examElectronic"
+				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_ELECTRONIC' | translate }}
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<br>
+	<div class="row">
+	    <div class="col-md-4">
+	    	<label for="male" class="label-text-title">{{ 'EXAM_ASSESSMENT_TYPE' | translate }}</label>
+	    </div>
+	    <div class="col-md-4">
+	    	<div class="row">
+				    <div class="col-md-12">
+				    	<input type="radio" name="evalMode" data-ng-model="element.attributes.examMode" value="individual"> {{ 'EXAM_INDIVIDUAL' | translate }}
+				    </div>
+				    <div class="col-md-12">
+				    	<input type="radio" name="evalMode" data-ng-model="element.attributes.examMode" value="team"> {{ 'EXAM_TEAM' | translate }}
+					</div>
+				</div>
+		</div>
+	 	<div class="col-md-4"></div>
+	 </div>	
+	</div>  
+    <!-- Buttons form --> 
+    <div data-buttons-form="element"></div>
+
+</div>

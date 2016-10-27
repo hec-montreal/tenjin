@@ -2,10 +2,7 @@
 
   <div >
   	<div class="row">
-	    <div class="col-md-4" data-ng-switch on="element.type">
-	    	<label for="male" class="label-text-title" ng-switch-when="evaluation">{{ 'FORM_TITRE_EVALUATION' | translate }}</label>
-	    	<label for="male" class="label-text-title" ng-switch-when="exam">{{ 'FORM_TITRE_EXAM' | translate }}</label>
-	    </div>
+    	<label for="male" class="label-text-title">{{ 'FORM_TITLE_EVALUATION' | translate }}</label>
 	    <div class="col-md-4" >
 	    	<input type="text" name="evaluationTitle" data-ng-model="element.title" class="input-text-title" />
 		</div>
