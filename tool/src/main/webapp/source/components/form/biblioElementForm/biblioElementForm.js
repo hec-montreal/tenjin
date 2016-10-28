@@ -22,6 +22,19 @@ tenjinApp.directive('biblioElementForm', ['config', '$translate' ,  function (co
 
             $scope.config = config; 
 
+            // Validation
+            $scope.element.validate = function() {
+                var ret = [];
+
+                if (!$scope.element.attributes.citationId) {
+                    ret.push({
+                        field: "citation",
+                        message: "ERROR_MISSING_CITATION"
+                    });
+                }
+
+                return ret;
+            }
         },
         link: function ($scope, $element) {
             
