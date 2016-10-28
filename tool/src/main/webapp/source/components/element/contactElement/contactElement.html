@@ -4,7 +4,7 @@
         <span class="contact-firstname">{{element.attributes.contactInfoFirstName}}</span> 
         <span class="contact-lastname">{{element.attributes.contactInfoLastName}}</span>
     </div>
-	<div data-ng-if="element.attributes.contactInfoTitle" class="contact-title">{{element.attributes.contactInfoTitle}}</div>
+	<div data-ng-if="element.attributes.contactInfoTitle" class="contact-title">{{ title }}</div>
 	<div data-ng-if="element.attributes.contactInfoEmail" class="contact-email">
 		<a href="mailto:{{element.attributes.contactInfoEmail}}">{{element.attributes.contactInfoEmail}} </a>
 	</div>
