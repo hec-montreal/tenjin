@@ -58,10 +58,16 @@
             $scope.element.validate = function() {
                 var ret = [];
 
-                if (!this.description || this.description.length <= 0) {
+                if (!this.attributes.contactInfoFirstName || this.attributes.contactInfoFirstName.length <= 0) {
                     ret.push({
-                        field: "description",
-                        message: "ERROR_CONTENT_MANDATORY"
+                        field: "contactInfoFirstName",
+                        message: "ERROR_MISSING_CONTACTINFO_FIRSTNAME"
+                    });
+                }
+                if (!this.attributes.contactInfoLastName || this.attributes.contactInfoLastName.length <= 0) {
+                    ret.push({
+                        field: "contactInfoLastName",
+                        message: "ERROR_MISSING_CONTACTINFO_LASTNAME"
                     });
                 }
 
