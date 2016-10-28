@@ -25,6 +25,20 @@
                 $scope.currentType = $type;
                 $scope.element.attributes.documentType = $scope.currentType.id;
             };
+
+            // Validation
+            $scope.element.validate = function() {
+                var ret = [];
+
+                if (!$scope.element.attributes.documentId) {
+                    ret.push({
+                        field: "document",
+                        message: "ERROR_MISSING_DOCUMENT"
+                    });
+                }
+
+                return ret;
+            }
         },
 
         link: function($scope, $element) {
