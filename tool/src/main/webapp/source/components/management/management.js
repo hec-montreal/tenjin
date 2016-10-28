@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', 'mockup', function($timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config, mockup) {
+﻿tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config',  function($timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config) {
     'use strict';
 
     return {
