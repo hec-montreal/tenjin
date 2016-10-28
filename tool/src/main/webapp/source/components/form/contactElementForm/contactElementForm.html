@@ -27,14 +27,20 @@
         <div class="row row-content">
             <!-- Title -->
             <div class="col-md-2">
-                <label for="select-titre">
-                    {{ 'CONTACTINFO_TITLE' | translate }}
-                </label>
+                <div class="label-text-type">{{ 'CONTACTINFO_TITLE' | translate }}</div>
             </div>
             <div class="col-md-4">
-                <select name="select-titre" id="select-titre" class="select-titre"
-                  ng-options="option.name for option in data.availableOptions track by option.id"
-                  ng-model="data.selectedOption" data-ng-click="selectedTitle(data.selectedOption)"></select>
+                <div class="btn-group" uib-dropdown keyboard-nav>
+                    <button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
+                        <span class="ajouter-libelle">{{currentTitle.name | translate }}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu class="liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                        <li role="menuitem" data-ng-repeat="title in config.contactInfoTitles">
+                        <a href="" data-ng-click="selectTitle(title)">{{::title.name | translate }}</a> 
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 

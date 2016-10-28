@@ -1,6 +1,4 @@
 ﻿tenjinApp.constant('config', {
-    mockUp: false,
-
     defaultHyperlinkProtocol: "http",
 
     types: {
@@ -187,6 +185,53 @@
     }, {
         'id': 10,
         'name': 'HYPERLINK_TYPE_SOFTWARE'
+    }],
+
+    contactInfoTitles: [{
+        'id': -1,
+        'name': 'FORM_CONTACT_TITLE_DEFAULT'
+    },{
+        'id': 1,
+        'name': 'FORM_CONTACT_TITLE_ATTACHE'
+    },{
+        'id': 2,
+        'name': 'FORM_CONTACT_TITLE_CHARGE_ENS'
+    },{
+        'id': 3,
+        'name': 'FORM_CONTACT_TITLE_CHARGE_COURS'
+    },{
+        'id': 4,
+        'name': 'FORM_CONTACT_TITLE_ETUDIANT'
+    },{
+        'id': 5,
+        'name': 'FORM_CONTACT_TITLE_MAITRE'
+    },{
+        'id': 6,
+        'name': 'FORM_CONTACT_TITLE_PROF_ADJOINT'
+    },{
+        'id': 7,
+        'name': 'FORM_CONTACT_TITLE_PROF_AFFILIE'
+    },{
+        'id': 8,
+        'name': 'FORM_CONTACT_TITLE_PROF_AGREGE'
+    },{
+        'id': 9,
+        'name': 'FORM_CONTACT_TITLE_PROF_ASSOCIE'
+    },{
+        'id': 10,
+        'name': 'FORM_CONTACT_TITLE_PROF_HONORAIRE'
+    },{
+        'id': 11,
+        'name': 'FORM_CONTACT_TITLE_PROF_INVITE'
+    },{
+        'id': 12,
+        'name': 'FORM_CONTACT_TITLE_PROF_TITULAIRE'
+    },{
+        'id': 13,
+        'name': 'FORM_CONTACT_TITLE_SECRETAIRE'
+    },{
+        'id': 14,
+        'name': 'FORM_CONTACT_TITLE_STAGIAIRE'
     }],
 
     extensionsImage: ['jpg', 'gif', 'png'],
