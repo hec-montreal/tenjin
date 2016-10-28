@@ -20,6 +20,19 @@ tenjinApp.directive('imageElementForm', function (){
                 removePlugins: 'elementspath,resize'
             };
             
+            // Validation
+            $scope.element.validate = function() {
+                var ret = [];
+
+                if (!$scope.element.attributes.imageId) {
+                    ret.push({
+                        field: "image",
+                        message: "ERROR_MISSING_IMAGE"
+                    });
+                }
+
+                return ret;
+            }
 
         },
         link: function ($scope, $element) {
