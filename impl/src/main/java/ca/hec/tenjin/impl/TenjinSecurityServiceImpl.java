@@ -99,7 +99,7 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 			site = sakaiProxy.getSite(siteId);
 			
 			for (Group g : site.getGroups()) {
-				if (!g.getProviderGroupId().isEmpty()) {
+				if (g.getProviderGroupId()!= null && !g.getProviderGroupId().isEmpty()) {
 					Map<String, Object> sectionMap = new HashMap<String, Object>();
 					sectionMap.put("id", g.getId());
 					sectionMap.put("name", g.getTitle());
