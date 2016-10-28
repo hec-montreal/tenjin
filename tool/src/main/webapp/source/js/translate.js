@@ -90,7 +90,6 @@ tenjinApp.config( ['$translateProvider', function($translateProvider) {
         EXAM_INDIVIDUAL: "Individual",
         EXAM_TEAM: "Team",
         EXAM_TYPE: "Evaluation type: ",
-        REF_BIBLIO_RECUPERE: "",
         EXAM_TERMS: "Term: ",
         EXAM_SUBMISSION_TYPE: "Submission: ",
         EXAM_ASSESSMENT_TYPE: "Work mode: ",
