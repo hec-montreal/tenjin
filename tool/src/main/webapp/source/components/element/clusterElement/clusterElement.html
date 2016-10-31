@@ -1,0 +1,15 @@
+<div class="composite">    
+
+    <div class="titre-element element-page item-panel-composite">
+
+
+        <a data-nodrag ng-click="treeService.setSelectedItem(element)">{{element.title}}</a>
+
+        <div ng-if="!element.description" >
+            <a data-nodrag class="link-description" >Ajouter une description</a>
+        </div>  
+
+        <div ng-if="element.description" ng-bind-html="element.description" class="comment"></div> 
+ 
+    </div> 
+</div> 

@@ -79,9 +79,9 @@
 
                 // Processing result
                 modal.result.then(function(selectedItem) {
-                    console.log("Sel: " + selectedItem);
+
                 }, function() {
-                    console.debug('élément toujours là');
+
                 });
             };
 

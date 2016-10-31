@@ -1,0 +1,13 @@
+<div class="btn-group {{showMenuAjouter ? 'open' : ''}}" uib-dropdown keyboard-nav>
+	<button type="button" class="btn" uib-dropdown-toggle ng-click="checkRubricsAlreadyPresent()">
+		<span class="glyphicon glyphicon-plus-sign"></span>
+		<span class="ajouter-libelle">Ajouter</span>
+		<span class="caret"></span>
+	</button>
+
+    <ul uib-dropdown-menu class="liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">		
+		<li role="menuitem" ng-repeat="type in syllabusService.template[element.templateStructureId].elements" ng-if="!type.provided">
+			<a data-type="{{type}}" href="javascript:void(0);" class="{{type.alreadyPresent === true ? 'link-deactivated' : ''}}" ng-click="addElement(type)">{{ type.label }}</a>			
+		</li>
+    </ul>
+</div>

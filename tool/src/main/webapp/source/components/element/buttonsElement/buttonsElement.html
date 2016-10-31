@@ -1,0 +1,10 @@
+<div class="buttons">
+    <!-- Add -->
+    <add-element-menu ng-if="element.type === 'rubric' || element.type === 'composite'" data-add-element-menu="element"  class="container-menu-ajout-rubric" ></add-element-menu>
+
+    <!-- Edition -->
+    <span ng-if="!noedit" class="picto-edit" ng-click="!disabled && edit(element);"></span>   
+
+    <!-- Delete -->
+    <span ng-if="!nodelete" ng-click="!disabled && confirmDelete(element);" class="{{nodelete ? 'picto-delete-disabled' : 'picto-delete'}}"></span>
+</div> 

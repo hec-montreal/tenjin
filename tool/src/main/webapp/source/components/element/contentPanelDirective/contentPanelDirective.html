@@ -5,8 +5,8 @@
 
         <!-- Display buttons -->
  <!--        <buttons-element data-ng-if="syllabusService.syllabus.$writePermission" data-element="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" class="buttons-elements"></buttons-element> -->
-        <buttons-element data-nodrag *ngIf="syllabusService.syllabus.$writePermission" [element]="element" [noedit]="!displayButtons.editButton()" [nodelete]="!displayButtons.deleteButton()" [nodrag]="!displayButtons.dragButton()" [disabled]="syllabusService.working" class="buttons-elements"></buttons-element>
-
+        <buttons-element data-ng-if="syllabusService.syllabus.$writePermission" data-buttons-element="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" class="buttons-elements"></buttons-element>
+       
         <!-- élément de type composite --> 
         <cluster-element data-ng-switch-when="composite" [element]="element"></cluster-element>
 
@@ -48,7 +48,7 @@
         <div data-ng-switch-when="contact_info" data-contact-element="element"></div>
 
         <!-- élément de type lien vers outil -->
-        <tool-element data-ng-switch-when="sakai_entity" [element]="element"></tool-element>
+        <tool-element data-ng-switch-when="sakai_entity" data-tool-element="element"></tool-element>
 
         <div ng-switch-default>
             <!-- Affichage attributs -->

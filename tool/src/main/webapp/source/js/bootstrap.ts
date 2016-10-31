@@ -1,19 +1,7 @@
 ﻿// import {UpgradeAdapter} from '../../node_modules/angular2/upgrade';
 import {UpgradeAdapter} from 'angular2/upgrade';
 
-import {TextElementComponent} from './element/textElement/textElement';
-import {AddElementComponent} from './element/addElementMenu/addElementMenu';  
-import {ButtonsElementComponent} from './element/buttonsElement/buttonsElement';
-import {ClusterElementComponent} from './element/clusterElement/clusterElement';
-import {ToolElementComponent} from './element/toolElement/toolElement';
-
 var adapter = new UpgradeAdapter();
-
-// downgrade directives to angular 1 context
-tenjinApp.directive('addElementMenu', adapter.downgradeNg2Component(AddElementComponent));
-tenjinApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
-tenjinApp.directive('clusterElement', adapter.downgradeNg2Component(ClusterElementComponent));
-tenjinApp.directive('toolElement', adapter.downgradeNg2Component(ToolElementComponent));
 
 // downgrade buttons element directive to angular 1 context
 // tenjinApp.directive('buttonsElement', adapter.downgradeNg2Component(ButtonsElementComponent));
@@ -49,4 +37,3 @@ adapter.upgradeNg1Provider('config');
 
 
 adapter.bootstrap(document.body, ['tenjin']);
-
