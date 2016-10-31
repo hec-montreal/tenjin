@@ -13,11 +13,11 @@ tenjinApp.directive('examElementForm',  function (){
 
         },
         link: function ($scope, $element) {
-            
-          $scope.element.attributes.examType = $scope.typelabel;
-            
+          
+          if (!$scope.element.attributes.examType) {
+              $scope.element.attributes.examType = $scope.typelabel;
+          }  
         }
-
     };
 
 });
