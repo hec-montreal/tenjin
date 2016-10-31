@@ -192,46 +192,46 @@
         'name': 'FORM_CONTACT_TITLE_DEFAULT'
     },{
         'id': 1,
-        'name': 'FORM_CONTACT_TITLE_ATTACHE'
+        'name': 'FORM_CONTACT_TITLE_FULLTIMEFACULTYLECTURER'
     },{
         'id': 2,
-        'name': 'FORM_CONTACT_TITLE_CHARGE_ENS'
+        'name': 'FORM_CONTACT_TITLE_PARTTIMELECTURER'
     },{
         'id': 3,
-        'name': 'FORM_CONTACT_TITLE_CHARGE_COURS'
+        'name': 'FORM_CONTACT_TITLE_PARTTIMEFACULTYLECTURER'
     },{
         'id': 4,
-        'name': 'FORM_CONTACT_TITLE_ETUDIANT'
+        'name': 'FORM_CONTACT_TITLE_STUDENT'
     },{
         'id': 5,
-        'name': 'FORM_CONTACT_TITLE_MAITRE'
+        'name': 'FORM_CONTACT_TITLE_FULLTIMELECTURER'
     },{
         'id': 6,
-        'name': 'FORM_CONTACT_TITLE_PROF_ADJOINT'
+        'name': 'FORM_CONTACT_TITLE_ASSISTANTPROFESSOR'
     },{
         'id': 7,
-        'name': 'FORM_CONTACT_TITLE_PROF_AFFILIE'
+        'name': 'FORM_CONTACT_TITLE_AFFILIATEDPROFESSOR'
     },{
         'id': 8,
-        'name': 'FORM_CONTACT_TITLE_PROF_AGREGE'
+        'name': 'FORM_CONTACT_TITLE_ASSOCIATEPROFESSOR'
     },{
         'id': 9,
-        'name': 'FORM_CONTACT_TITLE_PROF_ASSOCIE'
+        'name': 'FORM_CONTACT_TITLE_ADJUNCTPROFESSOR'
     },{
         'id': 10,
-        'name': 'FORM_CONTACT_TITLE_PROF_HONORAIRE'
+        'name': 'FORM_CONTACT_TITLE_HONORARYPROFESSOR'
     },{
         'id': 11,
-        'name': 'FORM_CONTACT_TITLE_PROF_INVITE'
+        'name': 'FORM_CONTACT_TITLE_GUESTPROFESSOR'
     },{
         'id': 12,
-        'name': 'FORM_CONTACT_TITLE_PROF_TITULAIRE'
+        'name': 'FORM_CONTACT_TITLE_PROFESSOR'
     },{
         'id': 13,
-        'name': 'FORM_CONTACT_TITLE_SECRETAIRE'
+        'name': 'FORM_CONTACT_TITLE_SECRETARY'
     },{
         'id': 14,
-        'name': 'FORM_CONTACT_TITLE_STAGIAIRE'
+        'name': 'FORM_CONTACT_TITLE_TRAINEE'
     }],
 
     extensionsImage: ['jpg', 'gif', 'png'],
