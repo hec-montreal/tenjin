@@ -59,12 +59,12 @@ tenjinApp.directive('addElementMenu', ["ModalService", "SyllabusService", "TreeS
 
                         $scope.syllabusService.setWorking(true);
 
-                        savePromise.$promise.then(($data) => {
+                        savePromise.$promise.then(function($data) {
                             $scope.syllabusService.setSyllabus($data);
                             $scope.treeService.setSelectedItemFromEmplacement(emplacement);
-                        }, ($error) => {
+                        }, function ($error) {
                             $scope.alertService.display('danger');
-                        }).finally(() => {
+                        }).finally(function () {
                             $scope.syllabusService.setWorking(false);
                         });
 
