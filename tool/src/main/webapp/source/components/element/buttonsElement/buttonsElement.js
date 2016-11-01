@@ -28,6 +28,19 @@ tenjinApp.directive('buttonsElement', ["ModalService", "SyllabusService", functi
                 }, function() {
                     // 
                 });
+            };
+
+            $scope.edit = function($element) {
+                var parent = this.syllabusService.getParent($element);
+                // Creation modal
+                var modal = this.modalService.editElement(parent, $element);
+
+                // Processing result
+                modal.result.then(function(selectedItem) {
+                    // console.debug('element modified');
+                }, function() {
+                    // 
+                });
             }
         },
 
