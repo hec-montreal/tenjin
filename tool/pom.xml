@@ -212,12 +212,12 @@
 			</execution>
 
 		     <execution>
-			    <id>gulp build </id>
+			    <id>gulp build</id>
 			    <goals>
-			        <goal>gulp </goal>
+			        <goal>gulp</goal>
 			    </goals>
 			    <configuration>
-			        <arguments>deploy-maven</arguments>
+			        <arguments>deploy</arguments>
 			    </configuration>
 			</execution>
 

@@ -4,10 +4,8 @@
 target
 velocity.log
 tool/src/main/webapp/dest
+tool/src/main/webapp/build
 tool/src/main/webapp/node/
 tool/src/main/webapp/node_modules/
 tool/src/main/webapp/opensyllabus2.sublime-project
-tool/src/main/webapp/source/bundle/
-tool/src/main/webapp/source/js/templates.js
-tool/src/main/webapp/source/js/typescript/
 tool/src/main/webapp/config.json

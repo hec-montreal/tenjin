@@ -14,7 +14,6 @@ tenjinApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function($comp
     tmhDynamicLocaleProvider.localeLocationPattern('/tenjin-tool/lib/locale/angular-locale_{{locale}}-ca.js');
 }]);
 
-
 tenjinApp.config(function($stateProvider, $urlRouterProvider) {
     'use strict';
     //

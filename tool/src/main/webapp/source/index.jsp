@@ -1,7 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<!-- PREPARE TO USE NGBINDHTML FOR FUTURE VIEW OF CKEEDITOR TEXT (ANGULAR-SANITIZE.JS) -->
 <!DOCTYPE html>
-<html lang="fr_CA" > 
+<html lang="fr_CA"> 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,15 +16,29 @@
 
 	<!-- include sakai scripts (for resizing frame, etc). includes ckeditor -->
 	<%= request.getAttribute("sakai.html.head.js") %>  
+
 <!-- include skin/tool.css and tool_base.css --> 
 	<!-- <%= request.getAttribute("sakai.html.head") %> -->
 	<!-- <%= request.getAttribute("sakai.html.head.css.skin") %> -->
 	<!-- a good example is bootstrap.jsp in roster2! -->
+	<!-- SCRIPTS ALL LIBRAIRIES CONCAT -->
+	<script src="/tenjin-tool/lib/tenjinlib.js"></script> 
+
+<!-- SCRIPTS TENJIN -->
+	<script src="/tenjin-tool/js/tenjin.js"></script>
+
+
+
+
+	<!-- <script src="/tenjin-tool/node_modules/es6-shim/es6-shim.js"></script> -->
+	<!-- <script src="/tenjin-tool/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script> -->
+
+	
 <!--  -->
 </head>
 <body id="body" class="portletBody container-fluid body-syllabus"> 
 
-	<div id="tenjin" ui-view></div>
+	<div id="tenjin" ng-app="tenjin" ui-view></div>
 
 	<!-- NODES MODULES -->
 	<!-- <script src="/tenjin-tool/node_modules/angular/angular.js"></script> 
@@ -54,15 +67,7 @@
 	<!-- SCRIPTS LANGAGE -->
 	<!-- <script src="/tenjin-tool/node_modules/angular-i18n/angular-locale_fr-fr.js"></script> -->
 
-	<!-- SCRIPTS ALL LIBRAIRIES CONCAT -->
-	<script src="/tenjin-tool/lib/syllabuslib.js"></script> 
 
-
-	<!-- <script src="/tenjin-tool/node_modules/es6-shim/es6-shim.js"></script> -->
-	<!-- <script src="/tenjin-tool/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script> -->
-
-	<!-- SCRIPTS TENJIN -->
-	<script src="/tenjin-tool/js/tenjin.js"></script>
 	
 	
 
