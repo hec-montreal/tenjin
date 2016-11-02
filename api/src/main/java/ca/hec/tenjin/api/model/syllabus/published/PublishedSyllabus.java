@@ -1,4 +1,4 @@
-package ca.hec.tenjin.api.model.syllabus;
+package ca.hec.tenjin.api.model.syllabus.published;
 
 import java.util.Date;
 import java.util.List;
@@ -9,7 +9,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
-*
+* A class to represent a published syllabus, equivalent to a regular Syllabus but with
+* PublishedSyllabusElements in the element list instead
+* 
+* The hibernate mapping for this object is for the same table as Syllabus (TENJIN_SYLLABUS) but read-only.
+* 
 * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
 * @author <a href="mailto:curtis.van-osch@hec.ca">Curtis van Osch</a>
 * @version $Id: $
@@ -17,7 +21,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(exclude={"elements"})
-public class Syllabus {
+public class PublishedSyllabus {
 	private Long id;
     private String siteId;
     private String courseTitle;
@@ -32,7 +36,7 @@ public class Syllabus {
     private Date lastModifiedDate;
     private Boolean deleted;
     private Boolean published;
-    private List<AbstractSyllabusElement> elements;
+    private List<AbstractPublishedSyllabusElement> elements;
     private Set<String> sections;
     private OfficialProvider provider;
 }

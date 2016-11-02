@@ -22,12 +22,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusService;
+import ca.hec.tenjin.api.PublishService;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -65,6 +67,10 @@ public class SyllabusController {
 	@Getter
 	@Autowired
 	private SyllabusService syllabusService = null;
+
+	@Setter
+	@Autowired
+	private PublishService publishService = null;
 
 	@Setter
 	@Autowired
@@ -134,6 +140,12 @@ public class SyllabusController {
 	public @ResponseBody Syllabus getSyllabus(@PathVariable Long syllabusId) throws NoSyllabusException {
 
 		return syllabusService.getSyllabus(syllabusId);
+	}
+
+	@RequestMapping(value = "/published_syllabus/{syllabusId}", method = RequestMethod.GET)
+	public @ResponseBody PublishedSyllabus getPublishedSyllabus(@PathVariable Long syllabusId) throws NoSyllabusException {
+
+		return publishService.getPublishedSyllabus(syllabusId);
 	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
