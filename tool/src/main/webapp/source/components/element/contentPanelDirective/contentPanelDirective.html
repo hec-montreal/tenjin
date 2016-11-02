@@ -8,7 +8,7 @@
         <buttons-element data-ng-if="syllabusService.syllabus.$writePermission" data-buttons-element="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" class="buttons-elements"></buttons-element>
        
         <!-- élément de type composite --> 
-        <cluster-element data-ng-switch-when="composite" [element]="element"></cluster-element>
+        <cluster-element data-ng-switch-when="composite" data-cluster-element="element"></cluster-element>
 
         <!-- élément de type lecture -->
         <course-element data-ng-switch-when="lecture" data-course-element="element"></course-element>
