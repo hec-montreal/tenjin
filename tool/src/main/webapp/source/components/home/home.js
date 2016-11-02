@@ -1,23 +1,23 @@
-﻿
-tenjinApp.directive('home', ['$q', '$state', '$timeout', 'config', 'SyllabusService', 'UserService', function ($q, $state, $timeout, config, SyllabusService, UserService) {
+﻿tenjinApp.directive('home', ['$q', '$state', '$timeout', 'config', 'SyllabusService', 'UserService', function($q, $state, $timeout, config, SyllabusService, UserService) {
     'use strict';
 
     return {
-        scope: {
-        },
-        restrict: 'E',
-        templateUrl: 'home/home.html',
-        controller: function () {
+        scope: {},
 
+        restrict: 'E',
+
+        templateUrl: 'home/home.html',
+
+        controller: function() {
             var objHome = this;
 
             this.errors = {
-                'loadingProfile' : false,
-                'loadingSyllabusList' : false,
+                'loadingProfile': false,
+                'loadingSyllabusList': false,
                 'redirectionError': false
             };
-            
-            this.loading = true;  
+
+            this.loading = true;
 
             $timeout(function() {
                 // anything you want can go here and will safely be run on the next digest.
@@ -27,7 +27,7 @@ tenjinApp.directive('home', ['$q', '$state', '$timeout', 'config', 'SyllabusServ
                 }
             });
 
-            var loadProfileAndSyllabusList = function(){
+            var loadProfileAndSyllabusList = function() {
                 return $q.allSettled([UserService.loadProfile().$promise, SyllabusService.loadSyllabusList().$promise]).then(function(data) {
 
                     // data first contains the result of the first request (user profile)
@@ -38,10 +38,10 @@ tenjinApp.directive('home', ['$q', '$state', '$timeout', 'config', 'SyllabusServ
                     if (data[1].state === "rejected") {
                         objHome.errors.loadingSyllabusList = true;
                     }
-             
+
                     // no error during loading
                     // TODO : if ( data[0].state === "fulfilled" && data[1].state === "fulfilled") {
-                    if ( data[0].state === "fulfilled" && data[1].state === "fulfilled") {
+                    if (data[0].state === "fulfilled" && data[1].state === "fulfilled") {
                         // set user profile
                         var profile = data[0].value;
                         UserService.setProfile(profile);
@@ -56,7 +56,7 @@ tenjinApp.directive('home', ['$q', '$state', '$timeout', 'config', 'SyllabusServ
                             $state.go(redirectionInfos.route, redirectionInfos.params);
                         } else {
                             // TODO : Error
-                            objHome.errors.redirectionError = true; 
+                            objHome.errors.redirectionError = true;
                         }
 
                     }
@@ -64,32 +64,32 @@ tenjinApp.directive('home', ['$q', '$state', '$timeout', 'config', 'SyllabusServ
                 });
             };
 
-
             var getRedirection = function($profile, $syllabusList) {
-
                 // if there is only 1 course outline (the common in this case) then go to /syllabus
                 if ($syllabusList.length === 1) {
                     console.debug('Redirect syllabus : Only 1 course outline');
-                    return { 
-                        'route' : 'syllabus',
-                        'params' : { 'id' : $syllabusList[0].id }
+                    return {
+                        'route': 'syllabus',
+                        'params': {
+                            'id': $syllabusList[0].id
+                        }
                     };
 
                 } else if ($syllabusList.length > 1) {
                     // more than 1 course outline and wirte permission on site
                     // mainly secretary or coordinator
-                    if($profile.site.permissions.write === true) {
+                    if ($profile.site.permissions.write === true) {
                         console.debug('Redirect mangement : Many courses outlines + write permissions on site');
-                        return { 
-                            'route' : 'management'
+                        return {
+                            'route': 'management'
                         };
 
                     } else {
                         // check if user have sections permissions on atleast one section
-                        if( UserService.hasWritableSection() ) {
+                        if (UserService.hasWritableSection()) {
                             console.debug('Redirect mangement : Many courses outlines + write permissions on atleast one section');
-                            return { 
-                                'route' : 'management'
+                            return {
+                                'route': 'management'
                             };
                         }
 
@@ -101,20 +101,15 @@ tenjinApp.directive('home', ['$q', '$state', '$timeout', 'config', 'SyllabusServ
                 return null;
             };
 
-
             // load profile and syllabus list            
             loadProfileAndSyllabusList().finally(function() {
                 // end of loading
-                objHome.loading = false;     
+                objHome.loading = false;
             });
-       
-
         },
+
         controllerAs: 'homeCtrl',
-        bindToController: {
-        }
 
+        bindToController: {}
     };
-
 }]);
-

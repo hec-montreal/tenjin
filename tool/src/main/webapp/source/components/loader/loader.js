@@ -1,21 +1,20 @@
-
-tenjinApp.directive('loader', ['SyllabusService', function (SyllabusService){
+tenjinApp.directive('loader', ['SyllabusService', function(SyllabusService) {
     'use strict';
 
     return {
-        scope: {
-        },
+        scope: {},
+
         restrict: 'E',
+
         templateUrl: 'loader/loader.html',
-        controller: function () {
+
+        controller: function() {
             this.syllabusService = SyllabusService;
 
         },
+
         controllerAs: 'loaderCtrl',
-        bindToController: {
-        }
 
+        bindToController: {}
     };
-
 }]);
-

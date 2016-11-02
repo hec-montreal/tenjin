@@ -4,22 +4,22 @@
         <div class="row row-content">
             <!-- First Name -->
             <div class="col-md-2">
-                <label for="prenom">
+                <label for="firstName">
                     {{ 'CONTACTINFO_FIRSTNAME' | translate }} <span class="mandatory"></span> 
                 </label>
             </div>
             <div class="col-md-4">
-                <input type="text" name="prenom" id="prenom" data-ng-model="element.attributes.contactInfoFirstName" required />
+                <input type="text" name="firstName" id="firstName" data-ng-model="element.attributes.contactInfoFirstName" required />
             </div>
 
             <!-- Name -->
              <div class="col-md-2">
-                <label for="nom">
+                <label for="name">
                     {{ 'CONTACTINFO_LASTNAME' | translate }} <span class="mandatory"></span> 
                 </label>
             </div>
             <div class="col-md-4">       
-                <input type="text" name="nom" id="nom" data-ng-model="element.attributes.contactInfoLastName" required />
+                <input type="text" name="name" id="name" data-ng-model="element.attributes.contactInfoLastName" required />
             </div>
         </div>
 
@@ -32,10 +32,10 @@
             <div class="col-md-4">
                 <div class="btn-group" uib-dropdown keyboard-nav>
                     <button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
-                        <span class="ajouter-libelle">{{currentTitle.name | translate }}</span>
+                        <span class="add-label">{{currentTitle.name | translate }}</span>
                         <span class="caret"></span>
                     </button>
-                    <ul uib-dropdown-menu class="liste-menu-ajout" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+                    <ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
                         <li role="menuitem" data-ng-repeat="title in config.contactInfoTitles">
                         <a href="" data-ng-click="selectTitle(title)">{{::title.name | translate }}</a> 
                         </li>
@@ -56,24 +56,24 @@
             </div>
             <!-- Email -->
             <div class="col-md-2">
-                <label for="courriel">
+                <label for="email">
                     {{ 'CONTACTINFO_EMAIL' | translate }}
                 </label>
             </div>
             <div class="col-md-4">
-                <input type="text" name="courriel" id="courriel" data-ng-model="element.attributes.contactInfoEmail" />
+                <input type="text" name="email" id="email" data-ng-model="element.attributes.contactInfoEmail" />
             </div>
         </div>
 
         <div class="row row-content">
             <!-- Office Room -->
             <div class="col-md-2">
-                <label for="bureau">
+                <label for="office">
                     {{ 'CONTACTINFO_OFFICEROOM' | translate }}
                 </label>
             </div>
             <div class="col-md-4">
-                <input type="text" name="bureau" id="bureau" data-ng-model="element.attributes.contactInfoOfficeRoom" />
+                <input type="text" name="office" id="office" data-ng-model="element.attributes.contactInfoOfficeRoom" />
             </div>
         </div>
     </div>

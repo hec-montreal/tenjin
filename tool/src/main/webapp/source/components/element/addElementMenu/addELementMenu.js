@@ -20,19 +20,8 @@ tenjinApp.directive('addElementMenu', ["ModalService", "SyllabusService", "TreeS
             $scope.addElement = function($type) {
                 $scope.isOpen = false;
 
-                // Si il s'agit d'une rubrique on l'ajoute directement
+                // If the type is rubric, add now
                 if ($type.type === "rubric") {
-
-                    // TODO : si le plan de cours est vide on le sauvegarde
-                    // var syllabus = SyllabusService.getSyllabus();
-                    // // plan de cours vide
-                    // if (!syllabus.id) {       
-                    //     // ajout de l'élément au plan de cours
-                    //     SyllabusService.addElement($scope.element, $scope.parent);
-                    //     // sauvegarde du plan de cours + l'élément en cours
-                    // }
-
-                    // Création    
                     var element = {
                         'attributes': {},
                         'type': $type.type,
@@ -49,52 +38,42 @@ tenjinApp.directive('addElementMenu', ["ModalService", "SyllabusService", "TreeS
 
                     var data = angular.copy($scope.syllabusService.syllabus);
                     var selectedItemId = $scope.treeService.selectedItem.id;
-                    var emplacement = $scope.treeService.selectedItem.$emplacement;
+                    var location = $scope.treeService.selectedItem.$location;
 
                     var result = $scope.syllabusService.addRubricToSyllabus(data, $scope.element, element);
 
                     if (result > 0) {
-
                         var savePromise = $scope.syllabusService.save(data);
 
                         $scope.syllabusService.setWorking(true);
 
                         savePromise.$promise.then(function($data) {
                             $scope.syllabusService.setSyllabus($data);
-                            $scope.treeService.setSelectedItemFromEmplacement(emplacement);
-                        }, function ($error) {
+                            $scope.treeService.setSelectedItemFromLocation(location);
+                        }, function($error) {
                             $scope.alertService.display('danger');
-                        }).finally(function () {
+                        }).finally(function() {
                             $scope.syllabusService.setWorking(false);
                         });
 
-                    } else {
-                        $scope.alertService.display('danger', 'Pensez à migrer angular translate');
                     }
-
-                } // Sinon on lance une popup de création de l'élément
-                else {
-
+                } else {
                     // hide menu
-                    $scope.showMenuAjouter = false;
+                    $scope.showAddMenu = false;
 
                     // TODO : open edition popup
                     var modal = $scope.modalService.createElement($type, $scope.element);
 
-                    // Traitement du résultat
                     modal.result.then(function(createdItem) {
-                        console.debug('élément ajouté');
+
                     }, function() {
-                        console.debug('élément non ajouté');
+
                     });
                 }
             };
 
             $scope.checkRubricsAlreadyPresent = function() {
-                console.log("Check");
-
                 if ($scope.element.elements) {
-                    // reinit
                     for (var k = 0; k < $scope.syllabusService.template[$scope.element.templateStructureId].elements.length; k++) {
                         $scope.syllabusService.template[$scope.element.templateStructureId].elements[k].alreadyPresent = false;
                     }
@@ -114,12 +93,8 @@ tenjinApp.directive('addElementMenu', ["ModalService", "SyllabusService", "TreeS
             };
 
             $scope.toggleMenu = function() {
-                $scope.showMenuAjouter = $scope.showMenuAjouter === false ? true : false;
+                $scope.showAddMenu = $scope.showAddMenu === false ? true : false;
             }
-        },
-
-        link: function($scope, $element) {
-
         }
     };
 }]);

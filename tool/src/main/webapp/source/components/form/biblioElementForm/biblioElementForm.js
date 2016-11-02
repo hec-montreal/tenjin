@@ -1,15 +1,16 @@
-
-tenjinApp.directive('biblioElementForm', ['config', '$translate' ,  function (config, $translate){
+tenjinApp.directive('biblioElementForm', ['config', '$translate', function(config, $translate) {
     'use strict';
 
     return {
         scope: {
             element: '=biblioElementForm'
         },
-        restrict: 'A',
-        templateUrl: 'form/biblioElementForm/biblioElementForm.html',
-        controller: function ($scope) {
 
+        restrict: 'A',
+
+        templateUrl: 'form/biblioElementForm/biblioElementForm.html',
+
+        controller: function($scope) {
             // setup editor options
             $scope.editorOptions = {
                 language: 'fr',
@@ -20,7 +21,7 @@ tenjinApp.directive('biblioElementForm', ['config', '$translate' ,  function (co
                 removePlugins: 'elementspath,resize'
             };
 
-            $scope.config = config; 
+            $scope.config = config;
 
             // Validation
             $scope.element.validate = function() {
@@ -35,12 +36,6 @@ tenjinApp.directive('biblioElementForm', ['config', '$translate' ,  function (co
 
                 return ret;
             }
-        },
-        link: function ($scope, $element) {
-            
         }
-
     };
-
 }]);
-

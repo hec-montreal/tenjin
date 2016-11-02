@@ -1,15 +1,16 @@
-﻿
-tenjinApp.directive('clusterElementForm', function (){
+﻿tenjinApp.directive('clusterElementForm', function() {
     'use strict';
 
     return {
-        scope: { 
+        scope: {
             element: '=clusterElementForm'
         },
-        restrict: 'A',
-        templateUrl: 'form/clusterElementForm/clusterElementForm.html',
-        controller: function ($scope) {
 
+        restrict: 'A',
+
+        templateUrl: 'form/clusterElementForm/clusterElementForm.html',
+
+        controller: function($scope) {
             var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';
             // setup editor options
             $scope.editorOptions = {
@@ -19,11 +20,6 @@ tenjinApp.directive('clusterElementForm', function (){
                 removePlugins: 'elementspath,resize'
             };
 
-        },
-        link: function ($scope, $element) {
         }
-
     };
-
 });
-

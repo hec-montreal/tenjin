@@ -30,14 +30,12 @@
             // TODO : refresh syllabus list
 
         }, function($error) {
-            // alert ajout ko
             AlertService.display('danger');
 
         }).finally(function() {
             SyllabusService.setWorking(false);
         });
 
-        // on ferme la modale dans tous les cas
         $uibModalInstance.close('');
 
     };

@@ -1,6 +1,4 @@
-
 <form data-ng-submit="ok()"> 
-
     <div class="modal-header">
         <h3 class="modal-title">{{ 'MODAL_TITLE_DELETE_SYLLABUS' | translate}}</h3> 
         <div>{{ 'MODAL_DESCRIPTION_DELETE_SYLLABUS' | translate}} ?</div>       
@@ -34,5 +32,4 @@
         <input data-ng-if="(syllabusToDelete.length > 0)" class="btn btn-primary" type="submit" value="OK"/> 
         <button class="btn btn-warning" type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
     </div> 
-    
 </form>

@@ -1,9 +1,11 @@
-﻿tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config',  function($timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config) {
+﻿tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', function($timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config) {
     'use strict';
 
     return {
         scope: {},
+
         restrict: 'E',
+        
         templateUrl: 'management/management.html',
 
         controller: function() {
@@ -49,7 +51,7 @@
             });
 
             this.addSyllabus = function() {
-                // Get sections and libelle
+                // Get sections and label
                 var data = {};
 
                 // Create modal

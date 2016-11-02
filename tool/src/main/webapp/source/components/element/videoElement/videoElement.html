@@ -1,6 +1,5 @@
 <div class="element video">
 	<div class="video">
-		<h1 ng-if="isIframe">IS IFRAME</h1>
 		<div class="row embed">
 			<iframe height="220" src="{{videoUrl}}" frameborder="0" allowfullscreen ng-if="isIframe" class="col-sm-3 col-xs-12"></iframe>
 			<span ng-bind-html="videoUrl" ng-if="!isIframe"></span>

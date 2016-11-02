@@ -1,13 +1,5 @@
 <script type="text/ng-template" id="nodes_renderer.html">
 
-  <!-- Display é à expand, collpase button only if there are elements -->
-<!--   <a class="btn btn-success btn-xs" data-ng-if="item.elements && item.elements.length > 0 && item.elements[0].displayPage" data-ng-click="toggleTree(this)"><span
-    class="glyphicon"
-    data-ng-class="{
-      'glyphicon-chevron-right': collapsed,
-      'glyphicon-chevron-down': !collapsed
-    }"></span></a> -->
-
   <!-- Display items composite, evaluation, exam, lecture and tutorial -->
   <span data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu">
     <a data-nodrag data-ng-click="treeService.setSelectedItem(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }" >

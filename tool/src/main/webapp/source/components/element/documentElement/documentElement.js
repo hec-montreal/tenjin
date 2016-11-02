@@ -5,7 +5,9 @@ tenjinApp.directive('documentElement', ['config', '$translate', 'ResourcesServic
         scope: {
             element: '=documentElement'
         },
+
         restrict: 'A',
+
         templateUrl: 'element/documentElement/documentElement.html',
 
         controller: function($scope) {
@@ -28,11 +30,6 @@ tenjinApp.directive('documentElement', ['config', '$translate', 'ResourcesServic
                 }
             }
 
-        },
-        link: function($scope, $element) {
-
         }
-
     };
-
 }]);

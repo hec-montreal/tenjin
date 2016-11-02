@@ -13,10 +13,6 @@ tenjinApp.directive('toolElement', ['SakaiToolsService', function(sakaiToolsServ
         controller: function($scope) {
             $scope.entity = sakaiToolsService.getEntity($scope.element.attributes.sakaiToolId);
             $scope.sakaiToolsService = sakaiToolsService;
-        },
-
-        link: function($scope, $element) {
-
         }
     };
 }]);

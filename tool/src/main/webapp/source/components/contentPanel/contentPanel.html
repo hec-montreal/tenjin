@@ -1,9 +1,9 @@
 <section class="content-panel-section" data-ng-controller='ContentPanelCtrl'>
     <div data-ng-if="syllabusService.syllabus.$writePermission">
-        <add-element-menu id="menu-ajout" data-add-element-menu="treeService.selectedItem"  class="container-menu-ajout"></add-element-menu>
+        <add-element-menu id="menu-add" data-add-element-menu="treeService.selectedItem"  class="container-menu-add"></add-element-menu>
     </div>
 
-    <div class='titre' >
+    <div class='title'>
         {{treeService.selectedItem.title}}
         <span data-ng-if="treeService.selectedItem.type == 'evaluation'"> ({{treeService.selectedItem.attributes.evaluationWeight}}%)</span>
         <span data-ng-if="treeService.selectedItem.type == 'exam'"> ({{treeService.selectedItem.attributes.examWeight}}%)</span>
@@ -17,9 +17,8 @@
         <ol ui-tree-nodes="" ng-model="treeService.selectedItem.elements" class="liste-element">
             <li ng-repeat="item in treeService.selectedItem.elements" ui-tree-node >
                 <div data-content-panel-directive="item" index="$index"></div>
-                <ol ui-tree-nodes="" data-ng-model="item.elements" class="liste-element liste-element-feuille" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite' || item.type === 'rubric'" >
+                <ol ui-tree-nodes="" data-ng-model="item.elements" class="liste-element liste-element-leaf" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite' || item.type === 'rubric'" >
                     <li data-ng-repeat="item in item.elements" ui-tree-node ui-tree-handle >
-                        
                         <div data-content-panel-directive="item" index="$index"></div>
                     </li>
                 </ol>

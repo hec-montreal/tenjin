@@ -12,10 +12,6 @@ tenjinApp.directive('textElement', function() {
 
         controller: function($scope) {
 
-        },
-
-        link: function($scope, $element) {
-
         }
     };
 });

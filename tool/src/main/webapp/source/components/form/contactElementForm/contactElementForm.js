@@ -1,16 +1,18 @@
-﻿tenjinApp.directive('contactElementForm', ['config', '$translate', function (config, $translate){
+﻿tenjinApp.directive('contactElementForm', ['config', '$translate', function(config, $translate) {
     'use strict';
 
     return {
         scope: true,
-        restrict: 'A',
-        templateUrl: 'form/contactElementForm/contactElementForm.html', 
 
-        controller: function ($scope) {
+        restrict: 'A',
+
+        templateUrl: 'form/contactElementForm/contactElementForm.html',
+
+        controller: function($scope) {
             $scope.config = config;
 
             var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';
-            
+
             // setup editor options
             $scope.editorOptionsDisponibilite = {
                 language: 'fr',
@@ -50,6 +52,7 @@
                 return ret;
             }
         },
+        
         link: function($scope, $element) {
             // Retrieve the title for the given title id
             if ($scope.element.attributes.contactInfoTitle) {
@@ -63,7 +66,7 @@
             } else {
                 $scope.currentTitle = $scope.config.contactInfoTitles[0];
             }
-        } 
+        }
     };
 
 }]);

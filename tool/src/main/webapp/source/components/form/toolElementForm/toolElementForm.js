@@ -1,15 +1,16 @@
-﻿
-tenjinApp.directive('toolElementForm', ['config', '$translate' , function (config, $translate){
+﻿tenjinApp.directive('toolElementForm', ['config', '$translate', function(config, $translate) {
     'use strict';
 
     return {
         scope: {
             element: '=toolElementForm'
         },
+
         restrict: 'A',
+
         templateUrl: 'form/toolElementForm/toolElementForm.html',
-        controller: function ($scope) {
-            
+
+        controller: function($scope) {
             // setup editor options
             $scope.editorOptions = {
                 language: 'fr',
@@ -20,12 +21,12 @@ tenjinApp.directive('toolElementForm', ['config', '$translate' , function (confi
                 removePlugins: 'elementspath,resize'
             };
 
-            $scope.config = config; 
+            $scope.config = config;
 
             $scope.selectType = function($type) {
                 $scope.currentType = $type;
                 if ($scope.currentType.id !== -1) {
-                   $scope.element.attributes.docType = $scope.currentType.id; 
+                    $scope.element.attributes.docType = $scope.currentType.id;
                 }
             };
 
@@ -44,6 +45,4 @@ tenjinApp.directive('toolElementForm', ['config', '$translate' , function (confi
             }
         }
     };
-
 }]);
-

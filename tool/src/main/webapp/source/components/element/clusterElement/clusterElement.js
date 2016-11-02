@@ -12,10 +12,6 @@ tenjinApp.directive('clusterElement', ['TreeService', function(TreeService) {
 
         controller: function($scope) {
             $scope.treeService = TreeService;
-        },
-
-        link: function($scope, $element) {
-
         }
     };
 }]);

@@ -5,7 +5,9 @@
         scope: {
             element: '=textElementForm'
         },
+
         restrict: 'A',
+
         templateUrl: 'form/textElementForm/textElementForm.html',
 
         controller: function($scope) {
@@ -32,8 +34,6 @@
 
                 return ret;
             }
-        },
-
-        link: function($scope, $element) {}
+        }
     };
 });

@@ -1,21 +1,17 @@
-﻿
-tenjinApp.directive('courseElementForm', function (){
+﻿tenjinApp.directive('courseElementForm', function() {
     'use strict';
 
     return {
         scope: {
             element: '=courseElementForm'
         },
-        restrict: 'A',
-        templateUrl: 'form/courseElementForm/courseElementForm.html',
-        controller: function ($scope) {
 
-        },
-        link: function ($scope, $element) {
+        restrict: 'A',
+
+        templateUrl: 'form/courseElementForm/courseElementForm.html',
+
+        controller: function($scope) {
 
         }
-
     };
-
 });
-

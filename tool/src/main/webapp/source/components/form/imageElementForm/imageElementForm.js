@@ -1,17 +1,18 @@
-﻿
-tenjinApp.directive('imageElementForm', function (){
+﻿tenjinApp.directive('imageElementForm', function() {
     'use strict';
 
     return {
         scope: {
             element: '=imageElementForm'
         },
+
         restrict: 'A',
+
         templateUrl: 'form/imageElementForm/imageElementForm.html',
 
-        controller: function ($scope) {
+        controller: function($scope) {
             var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';
-            
+
             // setup editor options
             $scope.editorOptions = {
                 language: 'fr',
@@ -19,7 +20,7 @@ tenjinApp.directive('imageElementForm', function (){
                 removeButtons: removeButtonsList,
                 removePlugins: 'elementspath,resize'
             };
-            
+
             // Validation
             $scope.element.validate = function() {
                 var ret = [];
@@ -35,11 +36,9 @@ tenjinApp.directive('imageElementForm', function (){
             }
 
         },
-        link: function ($scope, $element) {
+
+        link: function($scope, $element) {
 
         }
-
     };
-
 });
-

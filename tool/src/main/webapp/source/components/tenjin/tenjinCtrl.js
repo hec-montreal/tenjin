@@ -1,10 +1,9 @@
-﻿// loader les donnees du plan de cours
-tenjinApp.controller('TenjinCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'ResponsiveService', 'config', '$translate', 'AlertService', 'tmhDynamicLocale', function($rootScope, $scope, $timeout, $q, $state, SyllabusService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, ResponsiveService, config, $translate, AlertService, tmhDynamicLocale) {
+﻿tenjinApp.controller('TenjinCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'ResponsiveService', 'config', '$translate', 'AlertService', 'tmhDynamicLocale', function($rootScope, $scope, $timeout, $q, $state, SyllabusService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, ResponsiveService, config, $translate, AlertService, tmhDynamicLocale) {
 
-	'use strict';
+    'use strict';
 
     $scope.infos = {};
- 
+
     $scope.alertService = AlertService;
     $scope.syllabusService = SyllabusService;
     $scope.resourcesService = ResourcesService;
@@ -25,15 +24,15 @@ tenjinApp.controller('TenjinCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$
     };
 
     var localePromise = tmhDynamicLocale.set('fr');
-    localePromise.then( function($ok) {
+
+    localePromise.then(function($ok) {
         $translate.use('fr');
     }, function($error) {
 
-    }); 
-
+    });
 
     $scope.displayButtons = {
-        managementButton: function() {      
+        managementButton: function() {
             return $scope.userService.hasWritableSection();
         },
         syllabusDropdown: function() {
@@ -41,61 +40,33 @@ tenjinApp.controller('TenjinCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$
         },
         displayMobileMenu: function() {
             return mobileMenu();
-        }  
-
+        }
     };
 
-
     $scope.$watch('syllabusService.syllabus', function(newValue, oldValue) {
-
         var syllabusSaved = SyllabusService.getSyllabusSaved();
         if (syllabusSaved) {
-            if (angular.equals(newValue, syllabusSaved)) {    
+            if (angular.equals(newValue, syllabusSaved)) {
                 SyllabusService.setDirty(false);
-            }else {
+            } else {
                 SyllabusService.setDirty(true);
             }
         }
 
     }, true);
 
-    // mockup
     if (config.mockUp) {
-        // MODE DISCONNECTED
-        // mockup syllabus
-        SyllabusService.setSyllabus(mockup.syllabus);
-        // Masquer les items du menu sur mobile
-        SyllabusService.hideItemsInit();
-
-        // mockup template        
-        SyllabusService.setTemplate(mockup.template);    
-        // select first item
-        if (mockup.syllabus.elements.length > 0 ) {
-            mockup.syllabus.elements[0].$selected = true;
-            TreeService.setSelectedItem(mockup.syllabus.elements[0], true);  
-        }
-        // mockup ressources  
-        var resources = mockup.resources;
-        if (resources) {
-            ResourcesService.setResources(mockup.resources.content_collection[0]);
-            // $rootScope.$broadcast('RESOURCES_LOADED');
-        }
-
-        SyllabusService.working = false;
-        $scope.infos.working = false; 
 
     } else {
-        // MODE CONNECTED
-        // show loader
         $scope.infos.working = true;
-
 
         var loadSyllabusTemplateResourcesTools = function($siteId, $syllabusId) {
             return $q.allSettled([
-                SyllabusService.loadSyllabus($syllabusId).$promise, 
+                SyllabusService.loadSyllabus($syllabusId).$promise,
                 SyllabusService.loadTemplate().$promise,
                 ResourcesService.loadResources($siteId).$promise,
-                SakaiToolsService.loadToolEntities($siteId).$promise]).then(function(data) {
+                SakaiToolsService.loadToolEntities($siteId).$promise
+            ]).then(function(data) {
 
                 // LOAD SYLLABUS
                 if (data[0].state === "fulfilled") {
@@ -167,41 +138,41 @@ tenjinApp.controller('TenjinCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$
             });
         };
 
-        
-        var loadSakaiTools = function(){
-            return SakaiToolsService.loadToolEntities(SyllabusService.syllabus.siteId).$promise.then(function($data){
+
+        var loadSakaiTools = function() {
+            return SakaiToolsService.loadToolEntities(SyllabusService.syllabus.siteId).$promise.then(function($data) {
                 $rootScope.$broadcast('TOOLS_LOADED');
                 SakaiToolsService.setToolsEntities($data);
-            }, function($error){
+            }, function($error) {
                 // erreur load resources
             });
         };
-        
-        var loadResources = function (){
-        	return ResourcesService.loadResources(SyllabusService.syllabus.siteId).$promise.then(function($data){
+
+        var loadResources = function() {
+            return ResourcesService.loadResources(SyllabusService.syllabus.siteId).$promise.then(function($data) {
                 ResourcesService.setResources($data.content_collection[0]);
 
                 $rootScope.$broadcast('RESOURCES_LOADED');
 
                 // $rootScope.Scope.$countWatchers();
-            }, function($error){
+            }, function($error) {
                 // erreur load resources
             });
         };
-        
-        var loadCitations = function(){
-            var citationsLists =  CitationsService.getCitationLists(ResourcesService.resources);
-            return $q.allSettled(citationsLists.promises).then( function(data) {
+
+        var loadCitations = function() {
+            var citationsLists = CitationsService.getCitationLists(ResourcesService.resources);
+            return $q.allSettled(citationsLists.promises).then(function(data) {
                 var updatedResource, updatedResourceId;
-                for (var i = 0 ; i < data.length ; i++) {
+                for (var i = 0; i < data.length; i++) {
                     // data contient d'abord le résultat de la première requête
                     if (data[i].state === "fulfilled") {
-                       updatedResourceId = citationsLists.resourceIds[i];
-                       updatedResource = ResourcesService.getResource(updatedResourceId);
+                        updatedResourceId = citationsLists.resourceIds[i];
+                        updatedResource = ResourcesService.getResource(updatedResourceId);
 
-                       updatedResource.resourceChildren = CitationsService.updateJsonProperties(updatedResourceId, data[i].value.citations);
-                          
-                             
+                        updatedResource.resourceChildren = CitationsService.updateJsonProperties(updatedResourceId, data[i].value.citations);
+
+
                     } else if (data[i].state === "rejected") {
                         //TODO: Voir si on veut mettre plus d'informations sur le message d'erreur
                         $rootScope.$broadcast('CITATIONS_NOT_LOADED');
@@ -243,10 +214,10 @@ tenjinApp.controller('TenjinCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$
 
         if (SyllabusService.isDirty()) {
             // parcours des éléments de premier niveau pour voir lesquels sont en brouillon
-            for (var i = 0; i < $scope.syllabusService.syllabus.elements.length ; i++ ) {
+            for (var i = 0; i < $scope.syllabusService.syllabus.elements.length; i++) {
                 var element = $scope.syllabusService.syllabus.elements[i];
                 var elementSaved = $scope.syllabusService.syllabusSaved.elements[i];
-                if (!angular.equals(element, elementSaved)){
+                if (!angular.equals(element, elementSaved)) {
                     console.log("élément : " + element.title);
                     // lancer sauvegarde
                 }
@@ -256,21 +227,21 @@ tenjinApp.controller('TenjinCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$
     };
 
     $scope.save = function() {
-        
-        var results = SyllabusService.saveCurrent();        
+
+        var results = SyllabusService.saveCurrent();
         SyllabusService.setWorking(true);
         // var selectedItemId = TreeService.selectedItem.id;
-        var emplacement = TreeService.selectedItem.$emplacement;
+        var location = TreeService.selectedItem.$location;
 
-        results.$promise.then( function($data) {
-            SyllabusService.setSyllabus($data);
-             // refresh the reference of the selected item and refresh the right panel
-            // TreeService.setSelectedItemFromId(selectedItemId);
-            TreeService.setSelectedItemFromEmplacement(emplacement);
-        },
-        function($error) {
-            AlertService.display('danger');
-        }).finally( function() {
+        results.$promise.then(function($data) {
+                SyllabusService.setSyllabus($data);
+                // refresh the reference of the selected item and refresh the right panel
+                // TreeService.setSelectedItemFromId(selectedItemId);
+                TreeService.setSelectedItemFromLocation(location);
+            },
+            function($error) {
+                AlertService.display('danger');
+            }).finally(function() {
             SyllabusService.setWorking(false);
         });
 
@@ -278,36 +249,36 @@ tenjinApp.controller('TenjinCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$
 
     $scope.selectSyllabus = function($syllabus) {
 
-        var results = SyllabusService.loadSyllabus($syllabus.id);   
+        var results = SyllabusService.loadSyllabus($syllabus.id);
         // SyllabusService.setWorking(true);
         // $scope.infos.working = true;
 
-        results.$promise.then( function($data) {
-            // $scope.syllabusService.section = $section;
+        results.$promise.then(function($data) {
+                // $scope.syllabusService.section = $section;
 
-            SyllabusService.setSyllabus($data);
+                SyllabusService.setSyllabus($data);
 
-            // sélection du premier élément par défaut (attention : après chargement du plan de cours + template)
-            if ($data.elements.length > 0 ) {
-                // data[0].value.elements[0].selected = true;
-                TreeService.setSelectedItem($data.elements[0], true);
-            }
-
-            // TEST INTERVAL SAUVEGARDE PLAN DE COURS
-            // SyllabusService.startUpdateProcess(5000); 
-            // $interval( $scope.updateSyllabus, 5000);
-
-            $timeout(function() {
-                // anything you want can go here and will safely be run on the next digest.
-                // resize frame (should be done also whenever we change content)
-                if (window.frameElement) {
-                    setMainFrameHeight(window.frameElement.id);
+                // sélection du premier élément par défaut (attention : après chargement du plan de cours + template)
+                if ($data.elements.length > 0) {
+                    // data[0].value.elements[0].selected = true;
+                    TreeService.setSelectedItem($data.elements[0], true);
                 }
-            });
-        },
-        function($error) {
-            AlertService.display('danger');
-        }).finally( function() {
+
+                // TEST INTERVAL SAUVEGARDE PLAN DE COURS
+                // SyllabusService.startUpdateProcess(5000); 
+                // $interval( $scope.updateSyllabus, 5000);
+
+                $timeout(function() {
+                    // anything you want can go here and will safely be run on the next digest.
+                    // resize frame (should be done also whenever we change content)
+                    if (window.frameElement) {
+                        setMainFrameHeight(window.frameElement.id);
+                    }
+                });
+            },
+            function($error) {
+                AlertService.display('danger');
+            }).finally(function() {
             // SyllabusService.setWorking(false);
             // $scope.infos.working = false;
         });

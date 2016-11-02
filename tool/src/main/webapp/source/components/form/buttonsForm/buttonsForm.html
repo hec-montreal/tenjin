@@ -1,4 +1,3 @@
-<!-- <div data-ng-attr-id="{{ 'attribut-' + element.syllabusElement_id }}"> -->
 <div class="buttons-form"> 
     <!-- Important -->
     <div> 
@@ -6,26 +5,23 @@
         <label for="importantCheckbox">{{ 'FORM_IMPORTANT' | translate }}</label> 
     </div>
 
-    <!-- Visibilité -->
     <div>
         <input type="checkbox" name="visibility" id="visibilityCheckbox" data-ng-model="element.visibility"/>
-        <label for="visibilityCheckbox">{{ 'FORM_VISIBILITE' | translate }}</label> 
+        <label for="visibilityCheckbox">{{ 'FORM_VISIBILITY' | translate }}</label> 
     </div>
 
     <div>
-        <input id="radioNoDate" type="radio" name="affichage" class="radio-date" data-ng-model="element.hasDatesInterval" data-ng-value="false" /> <label for="radioNoDate">{{ 'FORM_AFFICHAGE_DEFAUT' | translate  }}</label>
+        <input id="radioNoDate" type="radio" name="display" class="radio-date" data-ng-model="element.hasDatesInterval" data-ng-value="false" /> <label for="radioNoDate">{{ 'FORM_DISPLAY_DEFAULT' | translate  }}</label>
     </div>
      
     <div>
-        <input id="radioDates" type="radio" name="affichage" class="radio-date" data-ng-model="element.hasDatesInterval" data-ng-value="true" /> <label for="radioDates">{{ 'FORM_AFFICHAGE_INTERVALLE' | translate  }}</label>
+        <input id="radioDates" type="radio" name="display" class="radio-date" data-ng-model="element.hasDatesInterval" data-ng-value="true" /> <label for="radioDates">{{ 'FORM_DISPLAY_INTERVAL' | translate  }}</label>
     </div>
 
     <div data-ng-show="(element.hasDatesInterval === true)" class="group-dates">
-        <!-- Date d'affichage -->
-        <div class="date-debut">
-            <span class="libelle-date-debut">{{ 'FORM_DATE_AFFICHAGE_DEBUT' | translate }} : <span class="mandatory"></span> </span>
-            <!-- TODO : calendrier -->
-            <span class="container-date-debut">
+        <div class="date-start">
+            <span class="label-date-start">{{ 'FORM_DATE_DISPLAY_START' | translate }} : <span class="mandatory"></span> </span>
+            <span class="container-date-start">
 
                 <p class="input-group">
                     <input type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.availability_start_date " is-open="status.opened" today-text="{{ 'CALENDAR_TODAY' | translate }}" now-text="{{ 'CALENDAR_NOW' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" time-text="{{ 'CALENDAR_TIME' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" required/>
@@ -38,12 +34,10 @@
           
             </span>
         </div>
-        <!-- Date de retrait -->
         <div data-ng-init=>
             <input type="checkbox" name="displayEnd" id="displayEndCheckbox" data-ng-model="element.hasEndDate" data-ng-click="updateDateRetrait($event)"/>
-            <label for="displayEndCheckbox">{{ 'FORM_DATE_AFFICHAGE_FIN' | translate }} : </label> 
-            <!-- TODO : calendrier -->
-            <span class="container-date-debut">
+            <label for="displayEndCheckbox">{{ 'FORM_DATE_DISPLAY_END' | translate }} : </label> 
+            <span class="container-date-start">
 
                 <p class="input-group">
                     <input id="input-date-retrait" type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.availabilityEndDate" is-open="statusRetrait.opened" data-ng-disabled="!element.hasEndDate" required/>
@@ -57,6 +51,4 @@
             </span>
         </div>
     <div>
-
-
 </div>

@@ -1,5 +1,4 @@
 <div class="element biblio">
-	
 	<div data-ng-switch="citation.type">
 		<div data-ng-switch-when="article">
 			<span ng-repeat="author in citation.values.creator"> 
@@ -13,7 +12,7 @@
 			<span data-ng-if="citation.values.section">{{::comma}} {{citation.values.section}}</span>
 			<span data-ng-if="citation.values.pages">{{::comma}} {{::pages}} {{citation.values.pages}}</span>				
 			<div data-ng-if="citation.values.isnIdentifier">{{'REF_BIBLIO_ISSN' | translate}} {{citation.values.isnIdentifier}}</div>				
-			<div data-ng-if="citation.values.library"><a href={{citation.values.library}}>{{'REF_BIBLIO_DISPONIBILITE' | translate}}</a></div>				
+			<div data-ng-if="citation.values.library"><a href={{citation.values.library}}>{{'REF_BIBLIO_DISPONIBILITY' | translate}}</a></div>				
 		</div>
 		<div data-ng-switch-when="book">
 			<span ng-repeat="author in citation.values.creator">

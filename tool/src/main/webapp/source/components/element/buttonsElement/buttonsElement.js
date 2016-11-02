@@ -20,32 +20,24 @@ tenjinApp.directive('buttonsElement', ["ModalService", "SyllabusService", functi
 
             $scope.confirmDelete = function($element) {
                 var parent = this.syllabusService.getParent($element);
-                // Creation modal
                 var modal = this.modalService.confirmDelete(parent, $element);
-                // Processing result
                 modal.result.then(function(selectedItem) {
-                    // console.debug('element modified');
+
                 }, function() {
-                    // 
+
                 });
             };
 
             $scope.edit = function($element) {
                 var parent = this.syllabusService.getParent($element);
-                // Creation modal
                 var modal = this.modalService.editElement(parent, $element);
 
-                // Processing result
                 modal.result.then(function(selectedItem) {
-                    // console.debug('element modified');
+
                 }, function() {
-                    // 
+
                 });
             }
-        },
-
-        link: function($scope, $element) {
-
         }
     };
 }]);

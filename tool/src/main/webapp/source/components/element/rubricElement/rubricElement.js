@@ -12,10 +12,6 @@ tenjinApp.directive('rubricElement', function() {
 
         controller: function($scope) {
 
-        },
-
-        link: function($scope, $element) {
-
         }
     };
 });

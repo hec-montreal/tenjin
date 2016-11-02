@@ -1,5 +1,5 @@
 <div class="element hyperlink"> 
-    <div class="titre-element">
+    <div class="element-title">
         <a data-nodrag href="{{element.attributes.hyperlinkUrl}}" target="_blank">
             {{ (element.title ? element.title : element.attributes.hyperlinkUrl) }}
         </a>
@@ -9,7 +9,7 @@
         </span> 
     </div>
 
-    <div class="url-lien">
+    <div class="link-url">
         ({{ element.attributes.hyperlinkUrl }}) 
     </div>
     
@@ -17,7 +17,7 @@
 
     <div class="infos">
         <span ngClass="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
-        <span ngClass="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
+        <span ngClass="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }"></span> 
         <span ngClass="{ 'picto-hidden' : ( element.attributes.docHidden === 'true') }" title="Visible"></span>     
     </div>
 </div>

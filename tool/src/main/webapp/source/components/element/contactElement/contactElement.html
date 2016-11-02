@@ -1,14 +1,15 @@
 <div class="element contact-info">
-
-	<div class="titre-element"> 
+	<div class="element-title"> 
         <span class="contact-firstname">{{element.attributes.contactInfoFirstName}}</span> 
         <span class="contact-lastname">{{element.attributes.contactInfoLastName}}</span>
     </div>
+
 	<div data-ng-if="element.attributes.contactInfoTitle" class="contact-title">{{ title }}</div>
+
 	<div data-ng-if="element.attributes.contactInfoEmail" class="contact-email">
 		<a href="mailto:{{element.attributes.contactInfoEmail}}">{{element.attributes.contactInfoEmail}} </a>
 	</div>
-	<!-- TODO: should we validate/format the phone number?  -->
+
 	<div data-ng-if="element.attributes.contactInfoTelephone" class="contact-tel">{{element.attributes.contactInfoTelephone}}</div>
 
 	<div data-ng-if="element.attributes.contactInfoOfficeRoom" class="contact-officeroom"> {{'CONTACT_OFFICEROOM' | translate}}: {{element.attributes.contactInfoOfficeRoom}}</div> 

@@ -3,7 +3,6 @@
 
     $scope.parent = parent;
 
-    // Modification
     if (element) {
         $scope.type = {
             'label': $translate.instant(config.types[element.type].label),
@@ -12,12 +11,10 @@
 
         $scope.element = angular.copy(element);
         $scope.mode = "edition";
-        $scope.title = $translate.instant('MODALE_EDIT_ELEMENT_TITLE');
+        $scope.title = $translate.instant('MODAL_EDIT_ELEMENT_TITLE');
     } else {
-        // Creation
         $scope.type = type;
 
-        // Création    
         $scope.element = {
             'attributes': {},
             'type': $scope.type.type,
@@ -27,7 +24,7 @@
             'common': SyllabusService.syllabus.common
         };
 
-        $scope.title = $translate.instant('MODALE_CREATE_ELEMENT_TITLE');
+        $scope.title = $translate.instant('MODAL_CREATE_ELEMENT_TITLE');
     }
 
     $scope.ok = function() {
@@ -37,33 +34,30 @@
             // We create a copy of the current syllabus and we add it the element to be added
             var data = angular.copy(SyllabusService.syllabus);
             var selectedItemId = TreeService.selectedItem.id;
-            var emplacement = TreeService.selectedItem.$emplacement;
+            var location = TreeService.selectedItem.$location;
 
             SyllabusService.addElementToSyllabus(data, $scope.parent, $scope.element);
 
             var savePromise = SyllabusService.save(data);
+
             SyllabusService.setWorking(true);
 
             savePromise.$promise.then(function($data) {
                 SyllabusService.setSyllabus($data);
                 // refresh the reference of the selected item and refresh the right panel
-                // TreeService.setSelectedItemFromId(selectedItemId);
-                TreeService.setSelectedItemFromEmplacement(emplacement);
+                TreeService.setSelectedItemFromLocation(location);
             }, function($error) {
-                // alert add ko
                 AlertService.display('danger');
 
             }).finally(function() {
                 SyllabusService.setWorking(false);
             });
 
-            // We close the popup 
             $uibModalInstance.close('');
         } else {
             $scope.validationErrors = errors;
         }
     };
-
 
     $scope.validateElement = function() {
         // Get element validation function
@@ -86,7 +80,7 @@
             } else {
                 ret.push({
                     field: "availability_start_date",
-                    message: "ERROR_FORMAT_DATE_DEBUT"
+                    message: "ERROR_FORMAT_DATE_START"
                 });
             }
 
@@ -106,7 +100,7 @@
                 } else {
                     ret.push({
                         field: "availabilityEndDate",
-                        message: "ERROR_FORMAT_DATE_RETRAIT"
+                        message: "ERROR_FORMAT_DATE_END"
                     });
                 }
             }
@@ -123,5 +117,4 @@
     $scope.cancel = function() {
         $uibModalInstance.dismiss('cancel');
     };
-
 }]);

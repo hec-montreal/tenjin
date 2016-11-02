@@ -5,11 +5,12 @@
         scope: {
             element: '=documentElementForm'
         },
+
         restrict: 'A',
+
         templateUrl: 'form/documentElementForm/documentElementForm.html',
 
         controller: function($scope) {
-            // setup editor options
             $scope.editorOptions = {
                 language: 'fr',
                 // uiColor: '#fff',

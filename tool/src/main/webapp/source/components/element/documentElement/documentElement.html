@@ -1,11 +1,10 @@
 <div class="element document">
-
-   <div class="titre-element">
-        <a href="{{resource.url}}" target="_blank">
-            {{ element.title || resource.name }} 
-        </a> <span ng-if="documentTypeId !== -1" class="resource-type">[{{ documentType }}]</span> 
+   <div class="element-title">
+        <a href="{{resource.url}}" target="_blank">{{ element.title || resource.name }}</a>
+        <span ng-if="documentTypeId !== -1" class="resource-type">[{{ documentType }}]</span> 
     </div>
-    <div class="titre-fichier">
+
+    <div class="file-title">
         ({{ resource.name }})
     </div>
 
