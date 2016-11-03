@@ -58,7 +58,8 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 	public List<String> getArraySections(String siteId, String permission) {
 		
 		if (!permission.equals(TenjinFunctions.TENJIN_FUNCTION_READ) && 
-				!permission.equals(TenjinFunctions.TENJIN_FUNCTION_WRITE)) {
+				!permission.equals(TenjinFunctions.TENJIN_FUNCTION_WRITE) && 
+				!permission.equals(TenjinFunctions.TENJIN_FUNCTION_PUBLISH)) {
 			log.error("unknown permission specified");
 			return null;
 		}
@@ -117,6 +118,11 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 							permissionsMap.put("write", true);
 						} else {
 							permissionsMap.put("write", false);
+						}
+						if (isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH, g.getReference())) {
+							permissionsMap.put("publish", true);
+						} else {
+							permissionsMap.put("publish", false);
 						}
 						sectionMap.put("permissions", permissionsMap);
 					}

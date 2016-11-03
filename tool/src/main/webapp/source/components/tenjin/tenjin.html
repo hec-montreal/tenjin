@@ -40,6 +40,10 @@
             </span>
             <button class="btn btn-primary" type="button" data-ng-disabled="(!syllabusService.dirty || syllabusService.working)" data-ng-click="save()">{{ 'BUTTON_SAVE' | translate }}</button>
         </span>  
+        <!-- PUBLISH -->
+        <span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$publishPermission">
+            data-ng-click="publish()">{{ 'BUTTON_PUBLISH' | translate }}</button>
+        </span>  
 
         
         <!-- MOBILE MENU BUTTON -->
