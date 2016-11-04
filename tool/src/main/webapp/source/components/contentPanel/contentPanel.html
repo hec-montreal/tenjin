@@ -9,8 +9,12 @@
         <span data-ng-if="treeService.selectedItem.type == 'exam'"> ({{treeService.selectedItem.attributes.examWeight}}%)</span>
     </div>
 
-    <div data-ng-if="treeService.selectedItem.type == 'evaluation' || treeService.selectedItem.type == 'exam'">
+    <div data-ng-if="treeService.selectedItem.type == 'evaluation'">
         <div data-evaluationattr-element="treeService.selectedItem"></div>
+    </div>
+
+    <div data-ng-if="treeService.selectedItem.type == 'exam'">
+        <div data-examattr-element="treeService.selectedItem"></div>
     </div>
 
     <div ui-tree="treeOptions" data-drag-enabled="!syllabusService.working" data-ng-model="treeService.selectedItem">
