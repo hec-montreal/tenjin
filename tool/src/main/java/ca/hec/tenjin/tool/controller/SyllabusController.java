@@ -137,6 +137,11 @@ public class SyllabusController {
 		}
 	}
 
+	@RequestMapping(value = "/syllabus/{id}/publish", method = RequestMethod.GET)
+	public @ResponseBody String publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
+		return syllabusId.toString() + " published";
+	}
+
 	@RequestMapping(value = "/syllabus/{syllabusId}", method = RequestMethod.GET)
 	public @ResponseBody AbstractSyllabus getSyllabus(
 			@PathVariable Long syllabusId, 
