@@ -1,9 +1,8 @@
 package ca.hec.tenjin.api.model.syllabus.published;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,22 +18,7 @@ import lombok.EqualsAndHashCode;
 */
 
 @Data
-@EqualsAndHashCode(exclude={"elements"})
-public class PublishedSyllabus {
-	private Long id;
-    private String siteId;
-    private String courseTitle;
-    private String title;
-    private Long templateId;
-    private String locale;
-    private Boolean common;
-    private String createdBy;
-    private String createdByName;
-    private Date createdDate;
-    private String lastModifiedBy;
-    private Date lastModifiedDate;
-    private Boolean deleted;
-    private Boolean published;
+@EqualsAndHashCode(callSuper=true, exclude={"elements"})
+public class PublishedSyllabus extends AbstractSyllabus {
     private List<AbstractPublishedSyllabusElement> elements;
-    private Set<String> sections;
 }

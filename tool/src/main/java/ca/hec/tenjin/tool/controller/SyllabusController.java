@@ -28,6 +28,7 @@ import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 import lombok.Getter;
@@ -137,15 +138,15 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/{syllabusId}", method = RequestMethod.GET)
-	public @ResponseBody Syllabus getSyllabus(@PathVariable Long syllabusId) throws NoSyllabusException {
-
-		return syllabusService.getSyllabus(syllabusId);
-	}
-
-	@RequestMapping(value = "/published_syllabus/{syllabusId}", method = RequestMethod.GET)
-	public @ResponseBody PublishedSyllabus getPublishedSyllabus(@PathVariable Long syllabusId) throws NoSyllabusException {
-
-		return publishService.getPublishedSyllabus(syllabusId);
+	public @ResponseBody AbstractSyllabus getSyllabus(
+			@PathVariable Long syllabusId, 
+			@RequestParam(required = false) boolean published) throws NoSyllabusException {
+		
+		if (published) {
+			return publishService.getPublishedSyllabus(syllabusId);			
+		} else {
+			return syllabusService.getSyllabus(syllabusId);
+		}
 	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
