@@ -39,6 +39,14 @@
         });
     };
 
+    /* Get the sections with publish permission
+     * @return {Object} Sections object
+     **/
+     this.getSectionsPublish = function() {
+        return this.profile.sections.filter( function($section) {
+            return $section.permissions.publish === true;
+        });
+    };
     /**
      * Check if atleast one section of the current user profile has a write permission to true
      * @return {Boolean} True if atleast one section has write permission

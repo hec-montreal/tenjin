@@ -208,6 +208,9 @@ tenjinApp.config( ['$translateProvider', function($translateProvider) {
         VISIBILITY: 'Visibility',
         BUTTON_PUBLISH: 'Publish',
         PUBLISH_WORKING: 'Publishing operation in progress...',
+        PUBLISHED_SYLLABUS: 'Published',
+        DRAFTED_SYLLABUS: 'Drafted',
+        NOTATTRIBUTED_SYLLABUS: 'Not attributed',
         BUTTON_OK: 'Ok',
         ADD: 'Add',
         ADD_DESCRIPTION: 'Ajouter une description'
@@ -419,6 +422,9 @@ tenjinApp.config( ['$translateProvider', function($translateProvider) {
         VISIBILITY_STUDENTS: 'Ressource limitée aux étudiants inscrits au cours',
         BUTTON_PUBLISH: 'Publier',
         PUBLISH_WORKING: 'Opération de publication en cours...',
+        PUBLISHED_SYLLABUS: 'Publié',
+        DRAFTED_SYLLABUS: 'Brouillon',
+        NOTATTRIBUTED_SYLLABUS: 'Non attribué',
         BUTTON_OK: 'Ok',
         ADD: 'Ajouter',
         ADD_DESCRIPTION: 'Ajouter une description'

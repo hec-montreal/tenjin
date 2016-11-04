@@ -41,7 +41,7 @@
 				</a>
 			</td>
 			<td>
-				{{ syllabus.status | translate }}
+				 {{managementCtrl.showStatus(syllabus.status)}}
 			</td>
 			<td>
 				<a ui-sref="syllabus({ id: syllabus.id })">{{ 'LINK_SYLLABUS' | translate }}</a>

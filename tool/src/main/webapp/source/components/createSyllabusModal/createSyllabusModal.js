@@ -60,8 +60,9 @@
         var syllabusAdded = null;
 
         savePromise.$promise.then(function($data) {
-            // set write permission on the new syllabus
+            // set write and publish permission on the new syllabus
             SyllabusService.setWritePermission($data);
+            SyllabusService.setPublishPermission($data);
 
             // refresh the list 
             SyllabusService.syllabusList.push($data);

@@ -220,6 +220,10 @@
                 return "syllabus/" + $id;
             };
 
+            this.showStatus = function ($statusId){
+                return $translate.instant(config.statusLabel[$statusId]) ;
+            };
+
             $timeout(function() {
                 // anything you want can go here and will safely be run on the next digest.
                 // resize frame (should be done also whenever we change content)
