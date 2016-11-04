@@ -2,16 +2,16 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="ca.hec.tenjin.api.model.syllabus"
+<hibernate-mapping package="ca.hec.tenjin.api.model.syllabus.published"
 	default-lazy="false" default-cascade="none">
 	<class
-		name="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement"
-		table="TENJIN_SYLLABUSELEMENT" discriminator-value="0">
+		name="ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement"
+		table="TENJIN_PUBSYLLABUSELEMENT" discriminator-value="0">
 
 		<id name="id" type="long">
-			<column name="SYLLABUSELEMENT_ID" />
+			<column name="PUBSYLLABUSELEMENT_ID" />
 			<generator class="native">
-				<param name="sequence">SYLLABUSELEMENT_ID_SEQ</param>
+				<param name="sequence">TENJIN_PUBSYLLABUSELEM_ID_SEQ</param>
 			</generator>
 		</id>
 
@@ -27,6 +27,10 @@
 			<column name="PARENT_ID" />
 		</property>
 
+		<property name="syllabusElementId" type="long">
+			<column name="SYLLABUS_ELEMENT_ID" />
+		</property>
+		
 		<property name="templateStructureId" not-null="true" type="long">
 			<column name="TEMPLATESTRUCTURE_ID" not-null="true"/>
 		</property>
@@ -51,15 +55,7 @@
 			<column name="IMPORTANT" />
 		</property>
 
-		<property name="published" type="boolean">
-			<column name="PUBLISHED" not-null="true" />
-		</property>
-		
-		<property name="hasDatesInterval" type="boolean">
-			<column name="HAS_DATES_INTERVAL" />
-		</property>
-
-		<property name="availability_start_date" column="AVAILABILITY_START_DATE"
+		<property name="availabilityStartDate" column="AVAILABILITY_START_DATE"
 			type="java.util.Date" />
 
 		<property name="availabilityEndDate" column="AVAILABILITY_END_DATE"
@@ -75,12 +71,8 @@
 
 		<property name="lastModifiedBy" column="LAST_MODIFIED_BY" type="string" not-null="true"/>
 		
-		<property name="providerId"  type="long">
-			<column name="PROVIDER_ID" />
-		</property>	
-
-		<map name="attributes" table="TENJIN_SYLLABUSELEM_ATTRIBUTE" cascade="all">
-			<key column="SYLLABUSELEMENT_ID" />
+		<map name="attributes" table="TENJIN_PUBSYLLABUSELEM_ATTR" cascade="all">
+			<key column="PUBSYLLABUSELEMENT_ID" />
 			<map-key column="name" type="string" />
 			<element column="value" type="materialized_clob" />
 		</map>

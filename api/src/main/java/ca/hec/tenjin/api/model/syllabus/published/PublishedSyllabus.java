@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -38,5 +37,4 @@ public class PublishedSyllabus {
     private Boolean published;
     private List<AbstractPublishedSyllabusElement> elements;
     private Set<String> sections;
-    private OfficialProvider provider;
 }

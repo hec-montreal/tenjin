@@ -18,6 +18,10 @@
 				<value>ca/hec/tenjin/api/hbm/syllabus/CompositeElements.hbm.xml</value>
 				<value>ca/hec/tenjin/api/hbm/syllabus/SyllabusElementMapping.hbm.xml</value>
 				<value>ca/hec/tenjin/api/hbm/syllabus/published/PublishedSyllabus.hbm.xml</value>
+				<value>ca/hec/tenjin/api/hbm/syllabus/published/AbstractPublishedSyllabusElement.hbm.xml</value>
+				<value>ca/hec/tenjin/api/hbm/syllabus/published/BasicPublishedElements.hbm.xml</value>
+				<value>ca/hec/tenjin/api/hbm/syllabus/published/CompositePublishedElements.hbm.xml</value>
+				<value>ca/hec/tenjin/api/hbm/syllabus/published/PublishedSyllabusElementMapping.hbm.xml</value>
 				<value>ca/hec/tenjin/api/hbm/template/Template.hbm.xml</value>
 				<value>ca/hec/tenjin/api/hbm/template/TemplateElement.hbm.xml</value>
 				<value>ca/hec/tenjin/api/hbm/template/TemplateStructure.hbm.xml</value>

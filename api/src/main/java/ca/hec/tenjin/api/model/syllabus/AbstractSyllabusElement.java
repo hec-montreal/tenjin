@@ -44,6 +44,7 @@ public abstract class AbstractSyllabusElement {
 	private Boolean common;
 	private Boolean publicElement;
     private Boolean important;
+    private Boolean published;
     
     // not mapped by hibernate because it's actually from SyllabusElementMapping
     private Boolean hidden;
