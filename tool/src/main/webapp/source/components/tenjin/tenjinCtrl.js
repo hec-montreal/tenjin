@@ -138,7 +138,7 @@
                 $rootScope.$broadcast('TOOLS_LOADED');
                 SakaiToolsService.setToolsEntities($data);
             }, function($error) {
-                // erreur load resources
+
             });
         };
 
@@ -150,7 +150,7 @@
 
                 // $rootScope.Scope.$countWatchers();
             }, function($error) {
-                // erreur load resources
+
             });
         };
 
