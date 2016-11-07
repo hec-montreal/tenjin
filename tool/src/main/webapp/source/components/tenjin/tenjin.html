@@ -38,6 +38,12 @@
             </span>
             <button class="btn btn-primary" type="button" data-ng-disabled="(!syllabusService.dirty || syllabusService.working)" data-ng-click="save()">{{ 'BUTTON_SAVE' | translate }}</button>
         </span>  
+        <!-- PUBLISH -->
+        <!-- TODO: ajouter la condition d'affichage -->
+        <span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$publishPermission" >
+            <!-- TODO: ajouter la condition d'activation -->
+            <button class="btn btn-primary" type="button" data-ng-click="syllabusService.publish(syllabus)">{{ 'BUTTON_PUBLISH' | translate }}</button>
+        </span>  
 
         
         <!-- MOBILE MENU BUTTON -->

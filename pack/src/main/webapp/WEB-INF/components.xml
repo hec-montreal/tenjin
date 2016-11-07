@@ -28,7 +28,26 @@
 
 	</bean>
 
-	<bean id="ca.hec.tenjin.api.TemplateService"
+	<bean id="ca.hec.tenjin.api.PublishService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+
+		<property name="transactionManager"
+			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
+		<property name="target">
+			<bean class="ca.hec.tenjin.impl.PublishServiceImpl">
+				<!-- API injection -->
+				<property name="publishedSyllabusDao" ref="ca.hec.tenjin.api.dao.PublishedSyllabusDao" />
+		 	</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="createOrUpdateSyllabus">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+
+	</bean>
+
+		<bean id="ca.hec.tenjin.api.TemplateService"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 
 		<property name="transactionManager"

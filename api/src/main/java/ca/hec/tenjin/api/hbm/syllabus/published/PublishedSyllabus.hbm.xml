@@ -3,7 +3,8 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false">
-	<class name="ca.hec.tenjin.api.model.syllabus.Syllabus" table="TENJIN_SYLLABUS">
+	<class name="ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus" 
+	    table="TENJIN_SYLLABUS">
 		<id name="id" type="long">
 			<column name="SYLLABUS_ID" />
 			<generator class="native">
@@ -50,10 +51,9 @@
 		<property name="publishedDate" type="java.util.Date">
 			<column name="PUBLISHED_DATE" />
 		</property>
-		<property name="deleted" type="boolean">
+				<property name="deleted" type="boolean">
 			<column name="DELETED" not-null="true" />
 		</property>
-
 		<set name="sections" table="TENJIN_SYLLABUSSECTION" cascade="all">
 			<key column="SYLLABUS_ID" />
 			<element column="SECTION" type="string" />

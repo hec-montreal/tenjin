@@ -390,6 +390,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 			existingElement.copy(newElement);
 			existingElement.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 			existingElement.setLastModifiedDate(new Date());
+			existingElement.setPublished(false);
 		}
 
 		// update display order and hidden
@@ -409,6 +410,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		element.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 		element.setLastModifiedDate(now);
 		element.setHidden(false);
+		element.setPublished(false);
 		syllabusDao.save(element);
 	}
 

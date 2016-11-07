@@ -22,6 +22,8 @@
 
     var sylProvider = $resource('v1/syllabus.json');
 
+    var publishSyllabusProvider = $resource('v1/syllabus/:id/publish.json');
+
     // provider get syllabus list
     var sylProviderList = $resource('v1/syllabus.json', {}, {
         'get': {
@@ -38,6 +40,12 @@
             method: 'GET'
         }
     });
+
+    this.publish = function(){
+        return publishSyllabusProvider.get({
+            id: this.syllabus.id});
+        
+    };
 
     /**
      * Save syllabus
@@ -143,9 +151,10 @@
      */
     this.setSyllabusList = function($syllabusList) {
         this.syllabusList = $syllabusList;
-        // set write permissions on each syllabus
+        // set write and publish permissions on each syllabus
         for (var i = 0; i < this.syllabusList.length; i++) {
             this.setWritePermission(this.syllabusList[i]);
+            this.setPublishPermission(this.syllabusList[i]);
         }
     };
 
@@ -214,6 +223,17 @@
         }
     };
 
+    this.setPublishPermission= function ($syllabus){
+        //true if the user has publih permission in the section
+        //associated to the published syllabus
+        //or created the syllabus
+        //TODO PLUG PUBLISH PERMISSION LOGIC
+        if ($syllabus.sections.length > 0 || $syllabus.common === true)
+            $syllabus.$publishPermission = true;
+        else    
+            $syllabus.$publishPermission = false;
+         return $syllabus.$publishPermission; 
+    };
     /**
      * Set the current syllabus
      * @param {Object} $syllabus The future current syllabus
@@ -224,6 +244,8 @@
         this.numerotationSyllabus(this.syllabus);
         // define write permission on current syllabus
         this.setWritePermission(this.syllabus);
+        //check publish permission on syllabus
+        this.setPublishPermission(this.syllabus);
         // save a copy
         this.syllabusSaved = angular.copy(this.syllabus);
         // set dirty flag to false

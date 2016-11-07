@@ -225,7 +225,7 @@
         });
 
     };
-
+   
     $scope.selectSyllabus = function($syllabus) {
 
         var results = SyllabusService.loadSyllabus($syllabus.id);

@@ -237,10 +237,9 @@
     extensionsImage: ['jpg', 'gif', 'png'],
 
     statusLabel: {
-        1: "STATUS_INITIAL",
-        2: "STATUS_DRAFT",
-        3: "STATUS_PUBLISHED",
-        4: "STATUS_NOT_ATTRIBUTED"
+        1: "PUBLISHED_SYLLABUS",
+        2: "DRAFTED_SYLLABUS",
+        3: "NOTATTRIBUTED_SYLLABUS"
     }
 });
 

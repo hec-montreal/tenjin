@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ca.hec.tenjin.api.hbm.syllabus.published" default-lazy="false" default-cascade="none">
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedTextElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement">
+	</subclass>
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement">
+	</subclass>
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedContactInfoElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement">
+	</subclass>
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedDocumentElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement">
+	</subclass>
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedHyperlinkElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement">
+	</subclass>
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedImageElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement">
+	</subclass>
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedSakaiToolElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement">
+	</subclass>
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedVideoElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement">
+	</subclass>
+</hibernate-mapping>

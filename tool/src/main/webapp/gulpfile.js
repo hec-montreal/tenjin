@@ -57,7 +57,8 @@ gulp.task("js:lib", function() {
 			"./source/lib/xeditable/xeditable.min.js",
 			"./source/lib/ng-ckeditor-master/ng-ckeditor.js",
 			"./source/lib/modernizr/modernizr-custom.js",
-			"./node_modules/es6-shim/es6-shim.js"
+			"./node_modules/es6-shim/es6-shim.js",
+			"./node_modules/angular-i18n/angular-locale_fr-ca.js"
 		])
 		.pipe(concat("tenjinlib.js"))
 		.pipe(gulp.dest("./dest/lib"));

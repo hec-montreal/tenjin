@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ca.hec.tenjin.api.hbm.syllabus.published" default-lazy="false" default-cascade="none">
+	<subclass
+		name="ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement"
+		extends="ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement">
+	</subclass>
+
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedRubricElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement">
+	</subclass>
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedEvaluationElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement">
+	</subclass>
+		<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedExamElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement">
+	</subclass>
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedLectureElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement">
+	</subclass>
+	<subclass name="ca.hec.tenjin.api.model.syllabus.published.PublishedTutorialElement"
+			extends="ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement">
+	</subclass>
+</hibernate-mapping>
