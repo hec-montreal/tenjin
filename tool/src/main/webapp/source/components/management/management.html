@@ -18,7 +18,8 @@
 			<th>{{ 'TABLE_NAME' | translate }}</th>
 			<th>{{ 'TABLE_AUTHOR' | translate }}</th>
 			<th>{{ 'TABLE_SECTIONS' | translate }}</th>
-			<th>{{ 'TABLE_STATUS' | translate }}</th>
+			<th>{{ 'TABLE_LAST_PUBLISHED_DATE' | translate }}</th>
+			<th>{{ 'TABLE_LAST_MODIFICATION_DATE' | translate }}</th>
 			<th> </th>
 			<th class="th-select"> </th>
 		</tr>
@@ -41,7 +42,17 @@
 				</a>
 			</td>
 			<td>
-				 {{managementCtrl.showStatus(syllabus.status)}}
+				<span data-ng-if="syllabus.publishedDate">
+					{{syllabus.publishedDate | date:'longDate'}}
+				</span>	
+				<span data-ng-if="!syllabus.publishedDate">
+					{{ 'DRAFTED_SYLLABUS' | translate }}
+				</span>	
+			</td>
+			<td>
+				<span data-ng-if="syllabus.lastModifiedDate">
+					{{syllabus.lastModifiedDate | date:'longDate'}}
+				</span>
 			</td>
 			<td>
 				<a ui-sref="syllabus({ id: syllabus.id })">{{ 'LINK_SYLLABUS' | translate }}</a>
