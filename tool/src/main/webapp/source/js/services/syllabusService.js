@@ -228,9 +228,11 @@
         //associated to the published syllabus
         //or created the syllabus
         //TODO PLUG PUBLISH PERMISSION LOGIC
-        $syllabus.$publishPermission = true;
-        $syllabus.status = 2;
-        return $syllabus.$publishPermission; 
+        if ($syllabus.sections.length > 0 || $syllabus.common === true)
+            $syllabus.$publishPermission = true;
+        else    
+            $syllabus.$publishPermission = false;
+         return $syllabus.$publishPermission; 
     };
     /**
      * Set the current syllabus
@@ -242,6 +244,8 @@
         this.numerotationSyllabus(this.syllabus);
         // define write permission on current syllabus
         this.setWritePermission(this.syllabus);
+        //check publish permission on syllabus
+        this.setPublishPermission(this.syllabus);
         // save a copy
         this.syllabusSaved = angular.copy(this.syllabus);
         // set dirty flag to false
