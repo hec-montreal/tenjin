@@ -4,7 +4,7 @@
     types: {
         'text': {
             'type': 'text',
-            'label': 'TYPE_ELEMENT_TEXTE'
+            'label': 'TYPE_ELEMENT_TEXT'
         },
         'document': {
             'type': 'document',
@@ -238,9 +238,9 @@
 
     statusLabel: {
         1: "STATUS_INITIAL",
-        2: "STATUS_BROUILLON",
-        3: "STATUS_PUBLIE",
-        4: "STATUS_NON_ATTRIBUE"
+        2: "STATUS_DRAFT",
+        3: "STATUS_PUBLISHED",
+        4: "STATUS_NOT_ATTRIBUTED"
     }
 });
 

@@ -14,10 +14,10 @@
     </div>
 
     <div ui-tree="treeOptions" data-drag-enabled="!syllabusService.working" data-ng-model="treeService.selectedItem">
-        <ol ui-tree-nodes="" ng-model="treeService.selectedItem.elements" class="liste-element">
+        <ol ui-tree-nodes="" ng-model="treeService.selectedItem.elements" class="list-element">
             <li ng-repeat="item in treeService.selectedItem.elements" ui-tree-node >
                 <div data-content-panel-directive="item" index="$index"></div>
-                <ol ui-tree-nodes="" data-ng-model="item.elements" class="liste-element liste-element-leaf" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite' || item.type === 'rubric'" >
+                <ol ui-tree-nodes="" data-ng-model="item.elements" class="list-element list-element-leaf" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite' || item.type === 'rubric'" >
                     <li data-ng-repeat="item in item.elements" ui-tree-node ui-tree-handle >
                         <div data-content-panel-directive="item" index="$index"></div>
                     </li>

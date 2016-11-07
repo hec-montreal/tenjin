@@ -45,8 +45,8 @@
 			<span data-ng-if="citation.values.year">{{::openParenthesis}}{{citation.values.year}}{{::closeParenthesis}}</span>			
 			<span data-ng-if="citation.values.title" class="biblio-boldTitle">{{::dot}} {{citation.values.title}}</span>			
 			<span data-ng-if="citation.values.siteTitle">{{::comma}} {{citation.values.siteTitle}}</span>	
-			<span data-ng-if="citation.values.date" >{{::dot}} {{'REF_BIBLIO_RECUPERE' | translate}} {{citation.values.date}}</span>
-			<span data-ng-if="citation.values.url">{{'REF_BIBLIO_DE' | translate}}  {{citation.values.url}}</span>
+			<span data-ng-if="citation.values.date" >{{::dot}} {{'REF_BIBLIO_FROM' | translate}} {{citation.values.date}}</span>
+			<span data-ng-if="citation.values.url">{{'REF_BIBLIO_FROM2' | translate}}  {{citation.values.url}}</span>
 		</div>
 		<div data-ng-switch-when="proceed">
 			<span ng-repeat="author in citation.values.creator">

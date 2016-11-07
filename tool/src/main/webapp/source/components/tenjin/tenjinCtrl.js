@@ -77,7 +77,6 @@
 
                 } else if (data[0].state === "rejected") {
                     if (data[0].reason.status === 404) {
-                        // load le contenu de la réponse avec statut 404: c'est un plan de cours vide
                         SyllabusService.setSyllabus(data[0].reason.data);
                     } else {
                         $scope.errorLoading = true;
@@ -115,10 +114,6 @@
                         TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
                     }
 
-                    // TEST INTERVAL SAUVEGARDE PLAN DE COURS
-                    // SyllabusService.startUpdateProcess(5000);
-                    // $interval( $scope.updateSyllabus, 5000);
-
                     $timeout(function() {
                         // anything you want can go here and will safely be run on the next digest.
                         // resize frame (should be done also whenever we change content)
@@ -133,7 +128,6 @@
 
 
             }, function(error) {
-                console.log('erreur get syllabus');
 
             });
         };
@@ -165,7 +159,6 @@
             return $q.allSettled(citationsLists.promises).then(function(data) {
                 var updatedResource, updatedResourceId;
                 for (var i = 0; i < data.length; i++) {
-                    // data contient d'abord le résultat de la première requête
                     if (data[i].state === "fulfilled") {
                         updatedResourceId = citationsLists.resourceIds[i];
                         updatedResource = ResourcesService.getResource(updatedResourceId);
@@ -174,13 +167,11 @@
 
 
                     } else if (data[i].state === "rejected") {
-                        //TODO: Voir si on veut mettre plus d'informations sur le message d'erreur
                         $rootScope.$broadcast('CITATIONS_NOT_LOADED');
                     }
                 }
 
             }, function(error) {
-                console.log('erreur get citations');
 
             });
         };
@@ -188,16 +179,6 @@
 
         var syllabusId = $state.params.id || -1;
         var siteId = $scope.userService.getProfile().site.courseId;
-
-        // Load the syllabus, then the template, the the resources
-        // then the citations, then the sakai tools
-        // loadSyllabusAndTemplate(syllabusId)
-        // .then(loadResources)
-        // .then(loadCitations)
-        // .then(loadSakaiTools)
-        // .finally(function() {
-        //     $scope.infos.working = false;
-        // });
 
 
         loadSyllabusTemplateResourcesTools(siteId, syllabusId)
@@ -213,13 +194,11 @@
     $scope.updateSyllabus = function() {
 
         if (SyllabusService.isDirty()) {
-            // parcours des éléments de premier niveau pour voir lesquels sont en brouillon
             for (var i = 0; i < $scope.syllabusService.syllabus.elements.length; i++) {
                 var element = $scope.syllabusService.syllabus.elements[i];
                 var elementSaved = $scope.syllabusService.syllabusSaved.elements[i];
                 if (!angular.equals(element, elementSaved)) {
-                    console.log("élément : " + element.title);
-                    // lancer sauvegarde
+
                 }
             }
 
@@ -258,15 +237,10 @@
 
                 SyllabusService.setSyllabus($data);
 
-                // sélection du premier élément par défaut (attention : après chargement du plan de cours + template)
                 if ($data.elements.length > 0) {
                     // data[0].value.elements[0].selected = true;
                     TreeService.setSelectedItem($data.elements[0], true);
                 }
-
-                // TEST INTERVAL SAUVEGARDE PLAN DE COURS
-                // SyllabusService.startUpdateProcess(5000); 
-                // $interval( $scope.updateSyllabus, 5000);
 
                 $timeout(function() {
                     // anything you want can go here and will safely be run on the next digest.

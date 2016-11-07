@@ -31,18 +31,18 @@ tenjinApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalService'
                 startingDay: 1
             };
 
-            $scope.statusRetrait = {
+            $scope.statusEnd = {
                 opened: false
             };
 
-            $scope.$watch('isDateRetrait', function() {
-                if (!$scope.isDateRetrait) {
-                    $scope.element.dtRetrait = null;
+            $scope.$watch('isDateEnd', function() {
+                if (!$scope.isDateEnd) {
+                    $scope.element.dtEnd = null;
                 }
 
-                var inputRetrait = angular.element(document.getElementById('input-date-retrait'));
+                var inputEnd = angular.element(document.getElementById('input-date-end'));
 
-                inputRetrait.prop('required');
+                inputEnd.prop('required');
 
             });
 
@@ -58,15 +58,15 @@ tenjinApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalService'
                 return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
             };
 
-            $scope.openRetrait = function($event) {
-                $scope.statusRetrait.opened = true;
+            $scope.openEnd = function($event) {
+                $scope.statusEnd.opened = true;
                 $scope.element.$formHasDates = true;
                 $scope.element.$hasEndDate = true;
                 $scope.element.availabilityEndDate = new Date();
 
             };
 
-            $scope.updateDateRetrait = function($event) {
+            $scope.updateDateEnd = function($event) {
                 $scope.element.availabilityEndDate = "";
             };
         },

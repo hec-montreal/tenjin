@@ -5,8 +5,6 @@
     </div>
 
     <div class="main-errors">
-        <!-- <uib-alert data-ng-if="planFailed" class="myalert" type="danger">{{ 'ERROR_PLAN_COURS' | translate }}</uib-alert> -->
-
         <!-- <uib-alert data-ng-if="(!planFailed && templateFailed)" class="myalert" type="danger">{{ 'ERROR_TEMPLATE' | translate }}</uib-alert> -->
 
         <uib-alert data-ng-if="alertService.isVisible('danger')" class="myalert" type="danger" close="alertService.closeAlert('danger')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('danger')}}</uib-alert>

@@ -9,13 +9,13 @@
 }
 
 
-.liste-element {
+.list-element {
     > li {
         margin-bottom: 10px;
     }
 }
 
-.liste-element-leaf {
+.list-element-leaf {
     > li {
         margin-bottom: 10px;
         border-bottom: 1px solid #ccc;
@@ -55,7 +55,7 @@
         }
     }
         
-    ol.liste-element.ng-pristine.ng-untouched.ng-valid.ng-scope.angular-ui-tree-nodes {
+    ol.list-element.ng-pristine.ng-untouched.ng-valid.ng-scope.angular-ui-tree-nodes {
         padding-left: 0;
     }
 }

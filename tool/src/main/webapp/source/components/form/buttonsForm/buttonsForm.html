@@ -35,14 +35,14 @@
             </span>
         </div>
         <div data-ng-init=>
-            <input type="checkbox" name="displayEnd" id="displayEndCheckbox" data-ng-model="element.hasEndDate" data-ng-click="updateDateRetrait($event)"/>
+            <input type="checkbox" name="displayEnd" id="displayEndCheckbox" data-ng-model="element.hasEndDate" data-ng-click="updateDateEnd($event)"/>
             <label for="displayEndCheckbox">{{ 'FORM_DATE_DISPLAY_END' | translate }} : </label> 
             <span class="container-date-start">
 
                 <p class="input-group">
-                    <input id="input-date-retrait" type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.availabilityEndDate" is-open="statusRetrait.opened" data-ng-disabled="!element.hasEndDate" required/>
+                    <input id="input-date-end" type="text" class="form-control" datetime-picker="dd-MMMM-yyyy HH:mm" data-ng-model="element.availabilityEndDate" is-open="statusEnd.opened" data-ng-disabled="!element.hasEndDate" required/>
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" data-ng-click="openRetrait($event)" data-ng-disabled="!element.hasEndDate">
+                        <button type="button" class="btn btn-default" data-ng-click="openEnd($event)" data-ng-disabled="!element.hasEndDate">
                             <i class="glyphicon glyphicon-calendar" ></i>
                         </button>
                     </span>

@@ -376,23 +376,23 @@
                     }
 
                     // Check where the rubric must be inserted
-                    var listeTemp = [];
+                    var listTemp = [];
                     var index = -1;
                     for (var i = 0; i < $rules.elements.length; i++) {
                         for (var j = 0; j < $rootTree.elements.length; j++) {
                             if ($rules.elements[i].id === $rootTree.elements[j].templateStructureId) {
-                                listeTemp.push($rootTree.elements[j]);
+                                listTemp.push($rootTree.elements[j]);
                                 break;
                             }
                         }
 
                         if ($rules.elements[i].id === $element.templateStructureId) {
-                            listeTemp.push($element);
+                            listTemp.push($element);
                         }
                     }
 
-                    for (var i = 0; i < listeTemp.length; i++) {
-                        if (listeTemp[i].templateStructureId === $element.templateStructureId) {
+                    for (var i = 0; i < listTemp.length; i++) {
+                        if (listTemp[i].templateStructureId === $element.templateStructureId) {
                             index = i;
                             break;
                         }
