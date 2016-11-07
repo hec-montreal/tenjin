@@ -44,7 +44,12 @@
 		<property name="lastModifiedDate" type="java.util.Date">
 			<column name="LAST_MODIFIED_DATE" not-null="true" />
 		</property>
-
+		<property name="publishedBy" type="string">
+			<column name="PUBLISHED_BY" />
+		</property>
+		<property name="publishedDate" type="java.util.Date">
+			<column name="PUBLISHED_DATE" />
+		</property>
 		<property name="deleted" type="boolean">
 			<column name="DELETED" not-null="true" />
 		</property>

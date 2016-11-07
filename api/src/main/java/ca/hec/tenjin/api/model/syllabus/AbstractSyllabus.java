@@ -29,8 +29,9 @@ public class AbstractSyllabus {
     private Date createdDate;
     private String lastModifiedBy;
     private Date lastModifiedDate;
+    private String publishedBy;
+    private Date publishedDate;
     private Boolean deleted;
-    private Boolean published;
     private Set<String> sections;
     private OfficialProvider provider;
 }
