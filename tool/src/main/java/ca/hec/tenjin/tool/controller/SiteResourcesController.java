@@ -139,7 +139,7 @@ public class SiteResourcesController {
 		// Set the copyright flag		
 		String copyright = (String) tempRd.getProperties().get(ResourceProperties.PROP_COPYRIGHT_CHOICE);
 		
-		tempRd.setCopyright(copyright != null && copyright.equals("rights.IHoldCopyright"));
+		tempRd.setCopyright(copyright != null && (copyright.equals("rights.IHoldCopyright") || copyright.equals("rights.SaviaStatement")));
 		
 		// If it's a collection recurse down into it.
 		if ((requestedDepth > currentDepth) && entity.isCollection()) {

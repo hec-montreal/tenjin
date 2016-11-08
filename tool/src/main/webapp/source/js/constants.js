@@ -65,126 +65,31 @@
         'name': 'DOCUMENT_TYPE_DEFAULT'
     }, {
         'id': 1,
-        'name': 'DOCUMENT_TYPE_CONFERENCE_ACT'
-    }, {
-        'id': 2,
-        'name': 'DOCUMENT_TYPE_OLD_EXAM'
-    }, {
-        'id': 3,
-        'name': 'DOCUMENT_TYPE_ARTICLE'
-    }, {
-        'id': 4,
-        'name': 'DOCUMENT_TYPE_ARTICLE_NEWS'
-    }, {
-        'id': 5,
-        'name': 'DOCUMENT_TYPE_ARTICLE_SCIENCE'
-    }, {
-        'id': 6,
-        'name': 'DOCUMENT_TYPE_ARTICLE_PROFESSIONAL'
-    }, {
-        'id': 7,
-        'name': 'DOCUMENT_TYPE_ARTICLE_UNPUBLISHED'
-    }, {
-        'id': 8,
-        'name': 'DOCUMENT_TYPE_AUDIO'
-    }, {
-        'id': 9,
-        'name': 'DOCUMENT_TYPE_CASE'
-    }, {
-        'id': 10,
-        'name': 'DOCUMENT_TYPE_BOOK_CHAPTER'
-    }, {
-        'id': 11,
         'name': 'DOCUMENT_TYPE_SLIDES'
     }, {
-        'id': 12,
-        'name': 'DOCUMENT_TYPE_PEDAGOGIC'
-    }, {
-        'id': 13,
-        'name': 'DOCUMENT_TYPE_DATA'
-    }, {
-        'id': 14,
-        'name': 'DOCUMENT_TYPE_POLL'
-    }, {
-        'id': 15,
+        'id': 2,
         'name': 'DOCUMENT_TYPE_EXERCISE'
     }, {
-        'id': 16,
-        'name': 'DOCUMENT_TYPE_IMAGE'
-    }, {
-        'id': 17,
-        'name': 'DOCUMENT_TYPE_BOOK'
-    }, {
-        'id': 18,
-        'name': 'DOCUMENT_TYPE_SOFTWARE'
-    }, {
-        'id': 19,
-        'name': 'DOCUMENT_TYPE_REPORT'
-    }, {
-        'id': 20,
-        'name': 'DOCUMENT_TYPE_REPORT_ANNUAL'
-    }, {
-        'id': 21,
-        'name': 'DOCUMENT_TYPE_REPORT_CONSULTANT'
-    }, {
-        'id': 22,
-        'name': 'DOCUMENT_TYPE_REPORT_ORGANIZATION'
-    }, {
-        'id': 23,
-        'name': 'DOCUMENT_TYPE_REPORT_GOV'
-    }, {
-        'id': 24,
-        'name': 'DOCUMENT_TYPE_GAME'
-    }, {
-        'id': 25,
-        'name': 'DOCUMENT_TYPE_WEBSITE'
-    }, {
-        'id': 26,
+        'id': 3,
         'name': 'DOCUMENT_TYPE_SOLUTION'
     }, {
-        'id': 27,
-        'name': 'DOCUMENT_TYPE_THESIS'
-    }, {
-        'id': 28,
-        'name': 'DOCUMENT_TYPE_VIDEO'
-    }, {
-        'id': 29,
-        'name': 'DOCUMENT_TYPE_OTHER'
-    }],
-
-    hyperlinkTypes: [{
-        'id': -1,
-        'name': 'HYPERLINK_TYPE_DEFAULT'
-    }, {
-        'id': 1,
-        'name': 'HYPERLINK_TYPE_VIDEO'
-    }, {
-        'id': 2,
-        'name': 'HYPERLINK_TYPE_ARTICLE'
-    }, {
-        'id': 3,
-        'name': 'HYPERLINK_TYPE_NEWS_ARTICLE'
-    }, {
         'id': 4,
-        'name': 'HYPERLINK_TYPE_CASE'
+        'name': 'DOCUMENT_TYPE_CASE'
     }, {
         'id': 5,
-        'name': 'HYPERLINK_TYPE_REPORT'
+        'name': 'DOCUMENT_TYPE_REPORT'
     }, {
         'id': 6,
-        'name': 'HYPERLINK_TYPE_DATA'
+        'name': 'DOCUMENT_TYPE_DATA'
     }, {
         'id': 7,
-        'name': 'HYPERLINK_TYPE_POLL'
+        'name': 'DOCUMENT_TYPE_BOOK_CHAPTER'
     }, {
         'id': 8,
-        'name': 'HYPERLINK_TYPE_WEB'
+        'name': 'DOCUMENT_TYPE_OLD_EXAM'
     }, {
         'id': 9,
-        'name': 'HYPERLINK_TYPE_SIMULATION'
-    }, {
-        'id': 10,
-        'name': 'HYPERLINK_TYPE_SOFTWARE'
+        'name': 'DOCUMENT_TYPE_PEDAGOGIC'
     }],
 
     contactInfoTitles: [{

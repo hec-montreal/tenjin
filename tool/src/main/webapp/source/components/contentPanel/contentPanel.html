@@ -17,7 +17,7 @@
         <div data-examattr-element="treeService.selectedItem"></div>
     </div>
 
-    <div ui-tree="treeOptions" data-drag-enabled="!syllabusService.working" data-ng-model="treeService.selectedItem">
+    <div ui-tree="treeOptions" data-drag-enabled="true" data-ng-model="treeService.selectedItem">
         <ol ui-tree-nodes="" ng-model="treeService.selectedItem.elements" class="list-element">
             <li ng-repeat="item in treeService.selectedItem.elements" ui-tree-node >
                 <div data-content-panel-directive="item" index="$index"></div>

@@ -28,7 +28,7 @@
 
     <!-- <div ui-tree data-drag-enabled="true"> -->
     <!-- <div ui-tree="treeOptions" data-drag-enabled="false"> -->
-    <div ui-tree="treeOptions" data-drag-enabled="( syllabusService.syllabus.$writePermission && !syllabusService.working )">
+    <div ui-tree="treeOptions" data-drag-enabled="true">
 
       <ol ui-tree-nodes="" ng-model="syllabusService.syllabus.elements">
         <li data-ng-repeat="item in syllabusService.syllabus.elements" ui-tree-node ng-include="'nodes_renderer.html'"></li>          
