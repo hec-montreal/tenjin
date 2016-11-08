@@ -4,7 +4,6 @@ var gulp = require("gulp"),
 	concat = require("gulp-concat"),
 	templateCache = require("gulp-angular-templatecache"),
 	sass = require("gulp-sass"),
-	config = require("./config.json"),
 	gutil = require("gulp-util");
 
 // Images
@@ -114,7 +113,7 @@ gulp.task("deploy", ["build", "deploy:tomcat"]);
 
 gulp.task("deploy:tomcat", function () {
 	return gulp.src(["./dest/**/*"])
-			.pipe(gulp.dest(config.tomcat));
+			.pipe(gulp.dest(process.env.CATALINA_HOME));
 });
 
 // Watch
