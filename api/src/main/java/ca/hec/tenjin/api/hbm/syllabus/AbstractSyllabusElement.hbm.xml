@@ -51,10 +51,14 @@
 			<column name="IMPORTANT" />
 		</property>
 
-		<property name="published" type="boolean">
-			<column name="PUBLISHED" not-null="true" />
+		<property name="equalsPublished" type="boolean">
+			<column name="EQUALS_PUBLISHED" not-null="true" />
 		</property>
 		
+		<property name="publishedId" type="long">
+			<column name="PUBLISHED_ID" />
+		</property>
+				
 		<property name="hasDatesInterval" type="boolean">
 			<column name="HAS_DATES_INTERVAL" />
 		</property>

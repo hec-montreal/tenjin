@@ -6,6 +6,7 @@ import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 
 /**
  * An interface to abstract all Syllabus related methods.
@@ -56,4 +57,12 @@ public interface SyllabusService {
 	 * @throws DeniedAccessException 
 	 */
 	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException;
+
+	/**
+	 * retrieve the SyllabusElementMappings for a syllabus 
+	 * 
+	 * @param syllabusId
+	 * @param hidden - should hidden mappings be included
+	 */
+	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden);
 }

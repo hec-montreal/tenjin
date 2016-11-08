@@ -1,7 +1,6 @@
 package ca.hec.tenjin.api.model.syllabus;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
@@ -16,6 +15,7 @@ import lombok.EqualsAndHashCode;
 */
 
 @Data
+@EqualsAndHashCode
 public class AbstractSyllabus {
 	private Long id;
     private String siteId;

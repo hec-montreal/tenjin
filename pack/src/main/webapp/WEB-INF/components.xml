@@ -37,7 +37,9 @@
 			<bean class="ca.hec.tenjin.impl.PublishServiceImpl">
 				<!-- API injection -->
 				<property name="publishedSyllabusDao" ref="ca.hec.tenjin.api.dao.PublishedSyllabusDao" />
-		 	</bean>
+				<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
+				<property name="SyllabusService" ref="ca.hec.tenjin.api.SyllabusService" />
+			</bean>
 		</property>
 		<property name="transactionAttributes">
 			<props>

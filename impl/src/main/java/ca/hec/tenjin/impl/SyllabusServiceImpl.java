@@ -83,7 +83,12 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 		return syllabusList;
 	}
-
+	
+	@Override
+	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden) {
+		return syllabusDao.getSyllabusElementMappings(syllabusId, hidden);
+	}
+	
 	@Override
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException, NoSyllabusException, DeniedAccessException {
 		Date now = new Date();
@@ -390,7 +395,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 			existingElement.copy(newElement);
 			existingElement.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 			existingElement.setLastModifiedDate(new Date());
-			existingElement.setPublished(false);
+			existingElement.setEqualsPublished(false);
 		}
 
 		// update display order and hidden
@@ -410,7 +415,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		element.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 		element.setLastModifiedDate(now);
 		element.setHidden(false);
-		element.setPublished(false);
+		element.setEqualsPublished(false);
 		syllabusDao.save(element);
 	}
 

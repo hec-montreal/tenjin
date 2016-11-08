@@ -36,7 +36,6 @@ public abstract class AbstractPublishedSyllabusElement {
 
 	private Long id;
 	private Long parentId;
-	private Long syllabusElementId;
 	private Long templateStructureId;
 	private String siteId;
 

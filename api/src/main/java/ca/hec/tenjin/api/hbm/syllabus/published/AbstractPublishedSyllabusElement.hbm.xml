@@ -27,10 +27,6 @@
 			<column name="PARENT_ID" />
 		</property>
 
-		<property name="syllabusElementId" type="long">
-			<column name="SYLLABUS_ELEMENT_ID" />
-		</property>
-		
 		<property name="templateStructureId" not-null="true" type="long">
 			<column name="TEMPLATESTRUCTURE_ID" not-null="true"/>
 		</property>

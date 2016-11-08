@@ -20,4 +20,6 @@ public interface PublishService {
 	 */
 	public PublishedSyllabus getPublishedSyllabus(Long syllabusId) throws NoSyllabusException;
 
+	boolean publishSyllabus(Long syllabusId) throws NoSyllabusException;
+
 }
