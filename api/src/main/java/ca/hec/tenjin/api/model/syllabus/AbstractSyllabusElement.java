@@ -92,7 +92,7 @@ public abstract class AbstractSyllabusElement {
     	this.setCreatedBy(e.getCreatedBy());
     	this.setLastModifiedDate(e.getLastModifiedDate());
     	this.setLastModifiedBy(e.getLastModifiedBy());
-    	this.setAttributes(e.getAttributes());
+    	this.setAttributes(new HashMap<String, String>(e.getAttributes()));
     	this.setHasDatesInterval(e.getHasDatesInterval());
     }
 }
