@@ -92,49 +92,84 @@
         'name': 'DOCUMENT_TYPE_PEDAGOGIC'
     }],
 
+    hyperlinkTypes: [{
+        'id': -1,
+        'name': 'HYPERLINK_TYPE_DEFAULT'
+    }, {
+        'id': 1,
+        'name': 'HYPERLINK_TYPE_VIDEO'
+    }, {
+        'id': 2,
+        'name': 'HYPERLINK_TYPE_ARTICLE'
+    }, {
+        'id': 3,
+        'name': 'HYPERLINK_TYPE_NEWS_ARTICLE'
+    }, {
+        'id': 4,
+        'name': 'HYPERLINK_TYPE_CASE'
+    }, {
+        'id': 5,
+        'name': 'HYPERLINK_TYPE_REPORT'
+    }, {
+        'id': 6,
+        'name': 'HYPERLINK_TYPE_DATA'
+    }, {
+        'id': 7,
+        'name': 'HYPERLINK_TYPE_POLL'
+    }, {
+        'id': 8,
+        'name': 'HYPERLINK_TYPE_WEB'
+    }, {
+        'id': 9,
+        'name': 'HYPERLINK_TYPE_SIMULATION'
+    }, {
+        'id': 10,
+        'name': 'HYPERLINK_TYPE_SOFTWARE'
+    }],
+
     contactInfoTitles: [{
         'id': -1,
         'name': 'FORM_CONTACT_TITLE_DEFAULT'
-    },{
+    }, {
         'id': 1,
         'name': 'FORM_CONTACT_TITLE_FULLTIMEFACULTYLECTURER'
-    },{
+    }, {
         'id': 2,
         'name': 'FORM_CONTACT_TITLE_PARTTIMELECTURER'
-    },{
+    }, {
         'id': 3,
         'name': 'FORM_CONTACT_TITLE_PARTTIMEFACULTYLECTURER'
-    },{
+    }, {
         'id': 4,
         'name': 'FORM_CONTACT_TITLE_STUDENT'
-    },{
+    }, {
         'id': 5,
         'name': 'FORM_CONTACT_TITLE_FULLTIMELECTURER'
-    },{
+    }, {
         'id': 6,
         'name': 'FORM_CONTACT_TITLE_ASSISTANTPROFESSOR'
-    },{
+    }, {
         'id': 7,
         'name': 'FORM_CONTACT_TITLE_AFFILIATEDPROFESSOR'
-    },{
+    }, {
         'id': 8,
         'name': 'FORM_CONTACT_TITLE_ASSOCIATEPROFESSOR'
-    },{
+    }, {
         'id': 9,
         'name': 'FORM_CONTACT_TITLE_ADJUNCTPROFESSOR'
-    },{
+    }, {
         'id': 10,
         'name': 'FORM_CONTACT_TITLE_HONORARYPROFESSOR'
-    },{
+    }, {
         'id': 11,
         'name': 'FORM_CONTACT_TITLE_GUESTPROFESSOR'
-    },{
+    }, {
         'id': 12,
         'name': 'FORM_CONTACT_TITLE_PROFESSOR'
-    },{
+    }, {
         'id': 13,
         'name': 'FORM_CONTACT_TITLE_SECRETARY'
-    },{
+    }, {
         'id': 14,
         'name': 'FORM_CONTACT_TITLE_TRAINEE'
     }],
@@ -147,6 +182,5 @@
         3: "NOTATTRIBUTED_SYLLABUS"
     }
 });
-
 
 tenjinApp.constant("Modernizr", Modernizr);
