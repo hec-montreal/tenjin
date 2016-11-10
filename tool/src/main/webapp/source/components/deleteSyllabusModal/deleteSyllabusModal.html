@@ -1,12 +1,12 @@
 <form data-ng-submit="ok()"> 
     <div class="modal-header">
         <h3 class="modal-title">{{ 'MODAL_TITLE_DELETE_SYLLABUS' | translate}}</h3> 
-        <div>{{ 'MODAL_DESCRIPTION_DELETE_SYLLABUS' | translate}} ?</div>       
+        <div data-ng-if="(syllabusToDelete.length > 0)">{{ 'MODAL_DESCRIPTION_DELETE_SYLLABUS' | translate}} ?</div>       
     </div>
 
     <div class="modal-body">
-        <div>
-            <div data-ng-if="(syllabusToDelete.length > 0)">
+        <div data-ng-if="(syllabusToDelete.length > 0)">
+            <div>
                 <div>{{ 'DELETE_SYLLABUS_OK' | translate }} : </div>
 
                 <ul>
@@ -17,14 +17,18 @@
             </div>
 
             <div data-ng-if="(syllabusNotToDelete.length > 0)">
-             <div>{{ 'DELETE_SYLLABUS_OK' | translate }} : </div>
+                <div>{{ 'SOME_INVALID_SYLLABUS_TO_DELETE' | translate }} : </div>
+
                 <ul>
                     <li data-ng-repeat="syllabus in syllabusNotToDelete">
                     {{syllabus.title}}
                     </li>
                 <ul>
             </div>
+        </div>
 
+        <div data-ng-if="(syllabusToDelete.length <= 0)">
+            {{'NO_VALID_SYLLABUS_TO_DELETE' | translate}}
         </div>
     </div>
 

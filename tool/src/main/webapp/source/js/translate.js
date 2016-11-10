@@ -220,7 +220,9 @@ tenjinApp.config( ['$translateProvider', function($translateProvider) {
         PUBLISH_CANCEL_BUTTON_LABEL: 'Annuler',
         BUTTON_OK: 'Ok',
         ADD: 'Add',
-        ADD_DESCRIPTION: 'Ajouter une description'
+        ADD_DESCRIPTION: 'Ajouter une description',
+        NO_VALID_SYLLABUS_TO_DELETE: 'Les plans de cours sélectionnés contiennent des sections et ne peuvent être supprimés',
+        SOME_INVALID_SYLLABUS_TO_DELETE: 'Les plans de cours suivants contiennent des sections et ne peuvent être supprimés'
     })
     .translations('fr', {
         MENU_LABEL: 'Menu du cours',
@@ -441,7 +443,9 @@ tenjinApp.config( ['$translateProvider', function($translateProvider) {
         NOTATTRIBUTED_SYLLABUS: 'Non attribué',
         BUTTON_OK: 'Ok',
         ADD: 'Ajouter',
-        ADD_DESCRIPTION: 'Ajouter une description'
+        ADD_DESCRIPTION: 'Ajouter une description',
+        NO_VALID_SYLLABUS_TO_DELETE: 'Les plans de cours sélectionnés contiennent des sections et ne peuvent être supprimés',
+        SOME_INVALID_SYLLABUS_TO_DELETE: 'Les plans de cours suivants contiennent des sections et ne peuvent être supprimés'
     });
 
      $translateProvider.preferredLanguage('fr');
