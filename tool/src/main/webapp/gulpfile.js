@@ -18,7 +18,9 @@ gulp.task("css", ["css:lib", "css:fonts", "css:sass"]);
 gulp.task("css:lib", function() {
 	return gulp.src([
 			"./source/lib/bootstrap/css/bootstrap.css",
-			"./source/lib/angular-ui-tree/angular-ui-tree.min.css"
+			"./source/lib/angular-ui-tree/angular-ui-tree.min.css",
+			"./node_modules/ng-dialog/css/ngDialog.css",
+			"./node_modules/ng-dialog/css/ngDialog-theme-default.css"
 		])
 		.pipe(gulp.dest("./dest/lib/css"));
 });
@@ -57,7 +59,8 @@ gulp.task("js:lib", function() {
 			"./source/lib/ng-ckeditor-master/ng-ckeditor.js",
 			"./source/lib/modernizr/modernizr-custom.js",
 			"./node_modules/es6-shim/es6-shim.js",
-			"./node_modules/angular-i18n/angular-locale_fr-ca.js"
+			"./node_modules/angular-i18n/angular-locale_fr-ca.js",
+			"./node_modules/ng-dialog/js/ngDialog.min.js"
 		])
 		.pipe(concat("tenjinlib.js"))
 		.pipe(gulp.dest("./dest/lib"));

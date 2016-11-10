@@ -1,4 +1,4 @@
-﻿tenjinApp.service('SyllabusService', ['UserService', '$resource', function(UserService, $resource) {
+﻿tenjinApp.service('SyllabusService', ['AlertService', 'UserService', '$resource', '$translate', function(AlertService, UserService, $resource, $translate) {
     'use strict';
 
     this.syllabus;
@@ -43,7 +43,12 @@
 
     this.publish = function(){
         return publishSyllabusProvider.get({
-            id: this.syllabus.id});
+            id: this.syllabus.id}).$promise.then(function($data) {
+                           var publishedSyllabus = $data;
+                            AlertService.display('success', $translate.instant('PUBLISHED_SYLLABUS'));
+                        }, function($error) {
+                            AlertService.display('danger');
+                        });
         
     };
 

@@ -12,6 +12,8 @@
 	<link rel="stylesheet" href="/tenjin-tool/css/tenjin.css"/>  
 	<link rel="stylesheet" href="/tenjin-tool/lib/css/angular-ui-tree.min.css">   
 
+	<link rel="stylesheet" href="/tenjin-tool/lib/css/ngDialog.css"/>
+	<link rel="stylesheet" href="/tenjin-tool/lib/css/ngDialog-theme-default.css"/>
 	<!--<script src="/tenjin-tool/lib/jquery/jquery-2.1.3.min.js"></script> -->
 
 	<!-- include sakai scripts (for resizing frame, etc). includes ckeditor -->

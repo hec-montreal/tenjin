@@ -29,7 +29,8 @@
 		"gulp-sourcemaps": "1.6.0",
 		"gulp-typescript": "2.13.0",
 		"gulp-util": "3.0.7",
-		"modernizr": "3.3.1"
+		"modernizr": "3.3.1",
+		"ng-dialog" : "0.6.4"
 	},
 
 	"author": "HEC Montreal",

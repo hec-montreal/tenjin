@@ -1,7 +1,7 @@
 ﻿if (typeof CKEDITOR !== "undefined") {
-    var tenjinApp = angular.module('tenjin', ["ngResource", "ngSanitize", "ngAnimate", "templateModule", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker", "xeditable", "pascalprecht.translate", "ngCkeditor", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router", "checklist-model"]);
+    var tenjinApp = angular.module('tenjin', ["ngResource", "ngSanitize", "ngAnimate", "templateModule", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker", "xeditable", "pascalprecht.translate", "ngCkeditor", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router", "checklist-model", "ngDialog"]);
 } else {
-    var tenjinApp = angular.module('tenjin', ["templateModule", "ngResource", "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker", "xeditable", "pascalprecht.translate", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router", "checklist-model"]);
+    var tenjinApp = angular.module('tenjin', ["templateModule", "ngResource", "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker", "xeditable", "pascalprecht.translate", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router", "checklist-model", "ngDialog"]);
 }
 
 tenjinApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function($compileProvider, tmhDynamicLocaleProvider) {
@@ -13,6 +13,7 @@ tenjinApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function($comp
     // TODO : Change url for production
     tmhDynamicLocaleProvider.localeLocationPattern('/tenjin-tool/lib/locale/angular-locale_{{locale}}-ca.js');
 }]);
+
 
 tenjinApp.config(function($stateProvider, $urlRouterProvider) {
     'use strict';

@@ -1,0 +1,23 @@
+<div class="publish-dialog">
+	<p class="publish-header ">
+	    {{ 'PUBLISH_TITLE_LABEL' | translate }} "{{getSyllabusTitle()}}"
+	</p>
+	<p class="underline"/>
+	<p  class="last-publish-date" data-ng-if="hasPublicationDate()">
+		{{ 'PUBLISH_LAST_PUBLISH_LABEL' | translate }} {{syllabusService.syllabus.publishedDate | date:'longDate'}}
+	</p>
+	<p class="published-sections">
+		{{ 'PUBLISH_MODIFIED_SECTIONS_LABEL' | translate }} {{syllabusService.syllabus.publishedDate | date:'longDate'}}
+	</p>
+	<ul  clas >
+        <li class="published-section" data-ng-repeat="section in getSections()">
+            {{section.name}}
+        </li> 
+    </ul>
+
+
+	<p class= "group-publish-cancel">
+	    <button class="btn" data-ng-click="closeThisDialog()">{{ 'PUBLISH_CANCEL_BUTTON_LABEL' | translate }}</button>
+	    <button class="btn" data-ng-click="publish()">{{ 'BUTTON_PUBLISH' | translate }}</button>
+	</p>
+</div>
