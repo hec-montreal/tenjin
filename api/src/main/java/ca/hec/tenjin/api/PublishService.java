@@ -1,7 +1,6 @@
 package ca.hec.tenjin.api;
 
 import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 
 /**
@@ -13,13 +12,20 @@ import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 public interface PublishService {
 
 	/**
-	 * Retrieves the syllabus associated to a specific section and sectionId.
-	 * @param courseId
-	 * @return
+	 * Retrieves the published syllabus by it's id
+	 * 
+	 * @param syllabusId
+	 * @return the PublishedSyllabus element
 	 * @throws NoSyllabusException
 	 */
 	public PublishedSyllabus getPublishedSyllabus(Long syllabusId) throws NoSyllabusException;
 
-	boolean publishSyllabus(Long syllabusId) throws NoSyllabusException;
+	/**
+	 * Publish the syllabus with the given id
+	 * 
+	 * @param syllabusId
+	 * @throws NoSyllabusException
+	 */
+	public void publishSyllabus(Long syllabusId) throws NoSyllabusException;
 
 }

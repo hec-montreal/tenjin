@@ -161,5 +161,12 @@ public interface SyllabusDao {
 	 * @return List<SyllabusElementMapping> The mappings that have no children
 	 */
 	public List<SyllabusElementMapping> getMappingsWithoutChildren(AbstractSyllabusElement syllabusElement);
+
+	/**
+	 * Update a persistent object in the database  
+	 * 
+	 * @param Object o - The object to update
+	 */
+	public void update(Object o);
 }
 

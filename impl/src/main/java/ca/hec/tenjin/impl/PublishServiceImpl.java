@@ -1,6 +1,5 @@
 package ca.hec.tenjin.impl;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -13,6 +12,7 @@ import ca.hec.tenjin.api.PublishService;
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusDao;
+import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
@@ -60,22 +60,28 @@ public class PublishServiceImpl implements PublishService {
 	
 	@Setter 
 	SyllabusService syllabusService;
+
+	@Setter 
+	SakaiProxy sakaiProxy;
 	
 	@Override
 	public PublishedSyllabus getPublishedSyllabus(Long syllabusId) throws NoSyllabusException {
-		return publishedSyllabusDao.getPublishedSyllabus(syllabusId);
+		return publishedSyllabusDao.getPublishedSyllabus(syllabusId, true);
 	}
 
 	@Override
 	@Transactional
-	public boolean publishSyllabus(Long syllabusId) throws NoSyllabusException {
+	public void publishSyllabus(Long syllabusId) throws NoSyllabusException {
 		
 		Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
 		//List<SyllabusElementMapping> mappings = syllabusService.getSyllabusElementMappings(syllabusId, false);
+
+		if (syllabus.getPublishedDate() != null) {
+			publishedSyllabusDao.deletePublishedSyllabus(syllabusId);
+		}
 		
 		// add top-level elements to the search queue (breadth-first traversal)
 		Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
-//		int order = 0;
 		for (AbstractSyllabusElement element : syllabus.getElements()) {			
 			searchQueue.add(element);
 		}
@@ -83,9 +89,27 @@ public class PublishServiceImpl implements PublishService {
 		// a map to keep track of the new parent ids
 		HashMap<Long, Long> parentIdMap = new HashMap<Long, Long>();
 		
-		
 		while (!searchQueue.isEmpty()) {
 			AbstractSyllabusElement element = searchQueue.remove();
+			
+			// add this element's children to the search queue
+			if (element.isComposite()) {
+				SyllabusCompositeElement compositeElement = (SyllabusCompositeElement) element;
+				if (compositeElement.getElements() != null) {
+					for (AbstractSyllabusElement child : compositeElement.getElements()) {
+						searchQueue.add(child);						
+					}
+				}
+			}
+
+			if (syllabus.getCommon() != element.getCommon()) {
+
+				// this will only work if the common is published! (otherwise we should handle common elements but not set publish date on the common)
+				parentIdMap.put(element.getId(), element.getPublishedId());
+
+				// only publish common elements for common syllabus
+				continue;
+			}
 			
 			AbstractPublishedSyllabusElement elementToPublish = getPublishedElement(element);
 			
@@ -96,12 +120,13 @@ public class PublishServiceImpl implements PublishService {
 			}
 			
 			syllabusDao.save(elementToPublish);
-
+			
+			// add the new element's id to the map so we can use it later
 			parentIdMap.put(element.getId(), elementToPublish.getId());
 
 			element.setPublishedId(elementToPublish.getId());
 			element.setEqualsPublished(true);			
-//			syllabusDao.save(element); This creates a new element!
+			syllabusDao.update(element);
 			
 			// create/update mapping
 			List<SyllabusElementMapping> existingMappings = syllabusDao.getMappingsForElement(element);
@@ -113,28 +138,12 @@ public class PublishServiceImpl implements PublishService {
 				publishedMapping.setDisplayOrder(mapping.getDisplayOrder());
 			
 				syllabusDao.save(publishedMapping);
-			}
-			
-			// add this element's children to the search queue
-			if (element.isComposite()) {
-				SyllabusCompositeElement compositeElement = (SyllabusCompositeElement) element;
-				if (compositeElement.getElements() != null) {
-//					order = 0;
-					for (AbstractSyllabusElement child : compositeElement.getElements()) {
-						// correct parent id, site id and display order
-//						child.setDisplayOrder(order++);
-
-						searchQueue.add(child);
-						
-					}
-				}
-			}
+			}			
 		}
 		
 		syllabus.setPublishedDate(new Date());
-//		syllabus.setPublishedBy(sakaiProxy.getCurrentUserId());
-
-		return true;
+		syllabus.setPublishedBy(sakaiProxy.getCurrentUserId());
+		syllabusDao.update(syllabus);
 	}
 
 	private AbstractPublishedSyllabusElement getPublishedElement(AbstractSyllabusElement syllabusElement) {
@@ -176,5 +185,4 @@ public class PublishServiceImpl implements PublishService {
 		publishedElement.setId(null);
 		return publishedElement;
 	}
-
 }

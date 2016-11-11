@@ -30,7 +30,6 @@ import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -138,12 +137,21 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/{id}/publish", method = RequestMethod.GET)
-	public @ResponseBody String publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
+	public ResponseEntity<String> publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 		
-		if (publishService.publishSyllabus(syllabusId))
-			return syllabusId.toString() + " published";
-		else 
-			return "error";
+		try {
+			publishService.publishSyllabus(syllabusId);
+		}
+//		catch (Exception e) {
+//			return new ResponseEntity<String>(
+//					"Common syllabus must be published first",
+//					HttpStatus.FORBIDDEN);
+//		}
+		catch (Exception e) {
+			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/syllabus/{syllabusId}", method = RequestMethod.GET)

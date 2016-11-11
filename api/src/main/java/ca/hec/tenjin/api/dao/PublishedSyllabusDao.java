@@ -37,7 +37,16 @@ public interface PublishedSyllabusDao {
 	 * @return The syllabus, and it's organized sub-elements
 	 * @throws NoSyllabusException 
 	 */
-	public PublishedSyllabus getPublishedSyllabus(Long id) throws NoSyllabusException;
+	public PublishedSyllabus getPublishedSyllabus(Long id, boolean includeElements) throws NoSyllabusException;
+		
+	/**
+	 * Delete a published syllabus by it's id
+	 * 
+	 * @param Long syllabus id
+	 * @throws NoSyllabusException 
+	 */
+	public void deletePublishedSyllabus(Long syllabusId) throws NoSyllabusException;
+	
 
 }
 

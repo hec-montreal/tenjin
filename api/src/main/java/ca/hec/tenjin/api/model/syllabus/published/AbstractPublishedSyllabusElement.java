@@ -4,8 +4,6 @@ import lombok.Data;
 
 import java.util.*;
 
-//import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;

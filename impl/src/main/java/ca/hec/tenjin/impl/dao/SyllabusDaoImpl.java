@@ -213,6 +213,15 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	}
 	
 	@Override
+	public void update(Object o) {
+		try {
+			getHibernateTemplate().update(o);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
 	public void deleteSyllabusObject(Object o) {		
 		try {
 			getHibernateTemplate().delete(o);		

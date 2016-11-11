@@ -17,17 +17,16 @@ import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabusElementMappin
 public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements PublishedSyllabusDao {
 
 	@Override
-	public PublishedSyllabus getPublishedSyllabus(Long id) throws NoSyllabusException {
+	public PublishedSyllabus getPublishedSyllabus(Long id, boolean includeElements) throws NoSyllabusException {
 		PublishedSyllabus syllabus = getHibernateTemplate().get(PublishedSyllabus.class, id);
-		if (syllabus == null) {
+
+		if (syllabus == null || syllabus.getDeleted() || syllabus.getPublishedDate() == null) {
 			throw new NoSyllabusException(id);
 		}
 		
-		if(syllabus.getDeleted()) {
-			throw new NoSyllabusException(id);
+		if (includeElements) {
+			syllabus.setElements(getStructuredPublishedSyllabusElements(id));
 		}
-		
-		syllabus.setElements(getStructuredPublishedSyllabusElements(id));
 		
 		return syllabus;
 	}
@@ -86,15 +85,36 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
     	return structuredElements;
 	}
 
-	private List<PublishedSyllabusElementMapping> getPublishedSyllabusElementMappings(Long id) {
+	private List<PublishedSyllabusElementMapping> getPublishedSyllabusElementMappings(Long syllabusId) {
 		String query = "from PublishedSyllabusElementMapping mapping where syllabusId = ?";
 		// these must be ordered by display order for each parent id for getStructuredPublishedSyllabusElements()
 		query += " order by publishedSyllabusElement.parentId, displayOrder";
 		
 		List<PublishedSyllabusElementMapping> mappings = 
-				(List<PublishedSyllabusElementMapping>) getHibernateTemplate().find(query, id);
+				(List<PublishedSyllabusElementMapping>) getHibernateTemplate().find(query, syllabusId);
 
 		return mappings;
+	}
+	
+	public void deletePublishedSyllabus(Long syllabusId) throws NoSyllabusException {
+		PublishedSyllabus syllabus = getPublishedSyllabus(syllabusId, false);
+		
+		if (syllabus.getCommon()) {
+			List<AbstractPublishedSyllabusElement> elements = 
+					(List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("from AbstractPublishedSyllabusElement where site_id = ? and common = ?", syllabus.getSiteId(), true);
+
+			// delete all common elements and all their mappings for the given site
+			getHibernateTemplate().bulkUpdate("delete from PublishedSyllabusElementMapping where pubsyllabuselement_id in (select id from AbstractPublishedSyllabusElement where site_id = ? and common = ?)", syllabus.getSiteId(), true);
+			getHibernateTemplate().deleteAll(elements);			
+		} 
+		else {
+			List<AbstractPublishedSyllabusElement> elements = 
+			(List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("select elem from PublishedSyllabusElementMapping mapping, AbstractPublishedSyllabusElement elem where syllabus_id = ? and common = ?", syllabus.getId(), false);
+			
+			// delete all non-common elements and their mappings for the given syllabus
+			getHibernateTemplate().bulkUpdate("delete from PublishedSyllabusElementMapping where syllabus_id = ? and pubsyllabuselement_id in (select id from AbstractPublishedSyllabusElement where site_id = ? and common = ?)", syllabus.getId(), syllabus.getSiteId(), false);
+			getHibernateTemplate().deleteAll(elements);
+		}
 	}
 
 }
