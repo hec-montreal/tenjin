@@ -294,6 +294,22 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public SyllabusElementMapping getMappingForSyllabusAndElement(Long syllabusId, Long elementId) {
+		List<SyllabusElementMapping> mappings = 
+				(List<SyllabusElementMapping>) getHibernateTemplate().find("from SyllabusElementMapping where syllabus_id = ? and syllabuselement_id = ?", 
+						syllabusId, elementId);
+
+		if (mappings.size() == 1) {
+			return mappings.get(0);
+		} else if (mappings.size() > 1) {
+			log.error("more than 1 syllabus element mapping in syllabus "+syllabusId+" for element "+elementId);
+		}
+
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
 	public SyllabusElementMapping addMappingToEndOfList(Long syllabusId, AbstractSyllabusElement element) {
 		
 		List<Integer> maxOrderArray = (List<Integer>) getHibernateTemplate().find(

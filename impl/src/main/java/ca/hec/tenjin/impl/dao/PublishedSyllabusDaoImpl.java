@@ -31,6 +31,11 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		return syllabus;
 	}
 
+	@Override
+	public AbstractPublishedSyllabusElement getPublishedElement(Long id) {
+		return getHibernateTemplate().get(AbstractPublishedSyllabusElement.class, id);
+	}
+
 	private List<AbstractPublishedSyllabusElement> getStructuredPublishedSyllabusElements(Long id) {
 		List<PublishedSyllabusElementMapping> elementMappings = this.getPublishedSyllabusElementMappings(id);
 		
@@ -85,6 +90,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
     	return structuredElements;
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<PublishedSyllabusElementMapping> getPublishedSyllabusElementMappings(Long syllabusId) {
 		String query = "from PublishedSyllabusElementMapping mapping where syllabusId = ?";
 		// these must be ordered by display order for each parent id for getStructuredPublishedSyllabusElements()
@@ -96,6 +102,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		return mappings;
 	}
 	
+	@SuppressWarnings({ "unchecked" })
 	public void deletePublishedSyllabus(Long syllabusId) throws NoSyllabusException {
 		PublishedSyllabus syllabus = getPublishedSyllabus(syllabusId, false);
 		
@@ -108,11 +115,13 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			getHibernateTemplate().deleteAll(elements);			
 		} 
 		else {
+			// retrieve the elements to delete (non-common elements mapped to this syllabus)
 			List<AbstractPublishedSyllabusElement> elements = 
-					(List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("select elem from PublishedSyllabusElementMapping mapping, AbstractPublishedSyllabusElement elem where syllabus_id = ? and common = ?", syllabus.getId(), false);
+					(List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("select mapping.publishedSyllabusElement from PublishedSyllabusElementMapping mapping where mapping.syllabusId = ? and mapping.publishedSyllabusElement.common = ?", syllabus.getId(), false);
 			
-			// delete all non-common elements and their mappings for the given syllabus
-			getHibernateTemplate().bulkUpdate("delete from PublishedSyllabusElementMapping where syllabus_id = ? and pubsyllabuselement_id in (select id from AbstractPublishedSyllabusElement where site_id = ? and common = ?)", syllabus.getId(), syllabus.getSiteId(), false);
+			// delete all mappings for this syllabus and it's published elements
+			getHibernateTemplate().bulkUpdate("delete from PublishedSyllabusElementMapping where syllabus_id = ?", syllabus.getId());
+			
 			getHibernateTemplate().deleteAll(elements);
 		}
 	}

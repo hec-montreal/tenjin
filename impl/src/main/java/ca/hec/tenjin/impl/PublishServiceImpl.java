@@ -6,6 +6,8 @@ import java.util.Queue;
 import java.util.HashMap;
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.hec.tenjin.api.PublishService;
@@ -32,6 +34,7 @@ import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabusElementMappin
 import ca.hec.tenjin.api.model.syllabus.published.PublishedTextElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedTutorialElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedVideoElement;
+import ca.hec.tenjin.impl.dao.SyllabusDaoImpl;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCitationElement;
@@ -52,6 +55,7 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusVideoElement;
 import lombok.Setter;
 
 public class PublishServiceImpl implements PublishService {
+	private Log log = LogFactory.getLog(PublishServiceImpl.class);
 
 	@Setter
 	PublishedSyllabusDao publishedSyllabusDao;
@@ -76,15 +80,15 @@ public class PublishServiceImpl implements PublishService {
 		
 		Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
 		
-		// throw an exception if the common syllabus for this one is not published
+		// throw an exception if the common syllabus is not published
 		if (!syllabus.getCommon()) {
 			Syllabus commonSyllabus = syllabusService.getCommonSyllabus(syllabus.getSiteId());
 			if (commonSyllabus != null && commonSyllabus.getPublishedDate() == null) {
 				throw new NoPublishedSyllabusException(commonSyllabus.getId());
 			}
 		}
-		//List<SyllabusElementMapping> mappings = syllabusService.getSyllabusElementMappings(syllabusId, false);
 
+		// if the syllabus has been published before, delete the published version
 		if (syllabus.getPublishedDate() != null) {
 			publishedSyllabusDao.deletePublishedSyllabus(syllabusId);
 		}
@@ -111,9 +115,23 @@ public class PublishServiceImpl implements PublishService {
 				}
 			}
 
-			if (syllabus.getCommon() != element.getCommon()) {
+			// If we are publishing a personalised syllabus, don't publish the common elements
+			if (!syllabus.getCommon() && element.getCommon()) {
+				
+				// retrieve the mapping for this element so we can publish it
+				SyllabusElementMapping mapping = 
+						syllabusDao.getMappingForSyllabusAndElement(syllabus.getId(), element.getId());
+								
+				if (mapping != null && element.getPublishedId() != null) {
+					// we assume the common elements are already published
+					AbstractPublishedSyllabusElement publishedElement = 
+							publishedSyllabusDao.getPublishedElement(element.getPublishedId());
 
-				// this will only work if the common is published! (TODO? otherwise we should handle common elements but not set publish date on the common)
+					publishMapping(mapping, publishedElement);
+				} else {
+					log.error("No mapping exists for syllabus "+syllabus.getId()+" and element "+element.getId());
+				}
+
 				// add common elements to the parent Id map so personal elements can be added as children
 				parentIdMap.put(element.getId(), element.getPublishedId());
 
@@ -121,34 +139,24 @@ public class PublishServiceImpl implements PublishService {
 				continue;
 			}
 			
-			AbstractPublishedSyllabusElement elementToPublish = getPublishedElement(element);
-			
-			// fix the parent id
-			Long oldParentId = elementToPublish.getParentId(); 
-			if (oldParentId != null) {
-				elementToPublish.setParentId(parentIdMap.get(oldParentId));
-			}
-			
-			syllabusDao.save(elementToPublish);
+			AbstractPublishedSyllabusElement elementToPublish = publishElement(element, parentIdMap.get(element.getParentId()));
 			
 			// add the new element's id to the map so we can use it later
 			parentIdMap.put(element.getId(), elementToPublish.getId());
 
+			// Update existing element
 			element.setPublishedId(elementToPublish.getId());
 			element.setEqualsPublished(true);			
 			syllabusDao.update(element);
 			
-			// create/update mapping
+			// create mapping for published element
 			List<SyllabusElementMapping> existingMappings = syllabusDao.getMappingsForElement(element);
 			
 			for (SyllabusElementMapping mapping : existingMappings) {
-				PublishedSyllabusElementMapping publishedMapping = new PublishedSyllabusElementMapping();
-				publishedMapping.setSyllabusId(mapping.getSyllabusId());
-				publishedMapping.setPublishedSyllabusElement(elementToPublish);
-				publishedMapping.setDisplayOrder(mapping.getDisplayOrder());
+				publishMapping(mapping, elementToPublish);
+			}
 			
-				syllabusDao.save(publishedMapping);
-			}			
+			// TODO: update parentId for non-common elements.
 		}
 		
 		syllabus.setPublishedDate(new Date());
@@ -156,11 +164,22 @@ public class PublishServiceImpl implements PublishService {
 		syllabusDao.update(syllabus);
 	}
 
-	private AbstractPublishedSyllabusElement getPublishedElement(AbstractSyllabusElement syllabusElement) {
+	private void publishMapping(SyllabusElementMapping mapping, AbstractPublishedSyllabusElement publishedElement) {
+		if (!mapping.getHidden()) {
+			PublishedSyllabusElementMapping publishedMapping = new PublishedSyllabusElementMapping();
+			publishedMapping.setSyllabusId(mapping.getSyllabusId());
+			publishedMapping.setPublishedSyllabusElement(publishedElement);
+			publishedMapping.setDisplayOrder(mapping.getDisplayOrder());
+	
+			syllabusDao.save(publishedMapping);
+		}
+	}
+
+	private AbstractPublishedSyllabusElement publishElement(AbstractSyllabusElement syllabusElement, Long newParentId) {
 		
 		AbstractPublishedSyllabusElement publishedElement = null;
 		
-		// TODO could probly make this more dynamic
+		// TODO could probably make this more dynamic
 		if (syllabusElement instanceof SyllabusCitationElement) {
 			publishedElement = new PublishedCitationElement();
 		} else if (syllabusElement instanceof SyllabusCompositeElement) {
@@ -193,6 +212,10 @@ public class PublishServiceImpl implements PublishService {
 		
 		publishedElement.copy(syllabusElement);
 		publishedElement.setId(null);
+		publishedElement.setParentId(newParentId);
+		
+		syllabusDao.save(publishedElement);
+
 		return publishedElement;
 	}
 }

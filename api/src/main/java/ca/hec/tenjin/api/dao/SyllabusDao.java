@@ -168,5 +168,8 @@ public interface SyllabusDao {
 	 * @param Object o - The object to update
 	 */
 	public void update(Object o);
+
+
+	public SyllabusElementMapping getMappingForSyllabusAndElement(Long syllabusId, Long elementId);
 }
 

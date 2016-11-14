@@ -21,6 +21,7 @@
 package ca.hec.tenjin.api.dao;
 
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 
 /**
@@ -40,13 +41,21 @@ public interface PublishedSyllabusDao {
 	public PublishedSyllabus getPublishedSyllabus(Long id, boolean includeElements) throws NoSyllabusException;
 		
 	/**
-	 * Delete a published syllabus by it's id
+	 * Delete a published syllabus by it's id.  If it's the common syllabus for the site, 
+	 * delete all the common elements and all their mappings.  Otherwise delete all mappings for the syllabus and 
+	 * it's non-common elements.
 	 * 
 	 * @param Long syllabus id
 	 * @throws NoSyllabusException 
 	 */
 	public void deletePublishedSyllabus(Long syllabusId) throws NoSyllabusException;
-	
 
+	/**
+	 * Retrieve a published syllabus element by id
+	 * 
+	 * @param Long id
+	 * @return The syllabus element
+	 */
+	public AbstractPublishedSyllabusElement getPublishedElement(Long id);
 }
 
