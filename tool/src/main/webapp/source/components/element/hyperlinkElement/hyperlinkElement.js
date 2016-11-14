@@ -15,6 +15,8 @@ tenjinApp.directive('hyperlinkElement', ['config', '$translate', function(config
 
             if (hyperlinkType) {
                 $scope.hyperlinkTypeId = parseInt(hyperlinkType, 10);
+            } else {
+                $scope.hyperlinkTypeId = -1;
             }
 
             if ($scope.element.attributes.hyperlinkType) {
@@ -25,7 +27,6 @@ tenjinApp.directive('hyperlinkElement', ['config', '$translate', function(config
                     }
                 }
             }
-
         }
     };
 }]);

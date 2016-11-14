@@ -221,8 +221,8 @@ tenjinApp.config( ['$translateProvider', function($translateProvider) {
         BUTTON_OK: 'Ok',
         ADD: 'Add',
         ADD_DESCRIPTION: 'Ajouter une description',
-        NO_VALID_SYLLABUS_TO_DELETE: 'Les plans de cours sélectionnés contiennent des sections et ne peuvent être supprimés',
-        SOME_INVALID_SYLLABUS_TO_DELETE: 'Les plans de cours suivants contiennent des sections et ne peuvent être supprimés'
+        NO_VALID_SYLLABUS_TO_DELETE: 'Un ou des plans de cours sélectionnés sont associés à des sections. Veuillez les dissocier afin de pouvoir les supprimer.',
+        SOME_INVALID_SYLLABUS_TO_DELETE: 'Un ou des plans de cours sélectionnés sont associés à des sections. Veuillez les dissocier afin de pouvoir les supprimer.'
     })
     .translations('fr', {
         MENU_LABEL: 'Menu du cours',
@@ -444,8 +444,8 @@ tenjinApp.config( ['$translateProvider', function($translateProvider) {
         BUTTON_OK: 'Ok',
         ADD: 'Ajouter',
         ADD_DESCRIPTION: 'Ajouter une description',
-        NO_VALID_SYLLABUS_TO_DELETE: 'Les plans de cours sélectionnés contiennent des sections et ne peuvent être supprimés',
-        SOME_INVALID_SYLLABUS_TO_DELETE: 'Les plans de cours suivants contiennent des sections et ne peuvent être supprimés'
+        NO_VALID_SYLLABUS_TO_DELETE: 'Un ou des plans de cours sélectionnés sont associés à des sections. Veuillez les dissocier afin de pouvoir les supprimer.',
+        SOME_INVALID_SYLLABUS_TO_DELETE: 'Un ou des plans de cours sélectionnés sont associés à des sections. Veuillez les dissocier afin de pouvoir les supprimer.'
     });
 
      $translateProvider.preferredLanguage('fr');
