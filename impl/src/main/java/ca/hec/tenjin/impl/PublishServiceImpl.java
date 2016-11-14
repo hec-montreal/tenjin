@@ -13,6 +13,7 @@ import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
@@ -71,9 +72,17 @@ public class PublishServiceImpl implements PublishService {
 
 	@Override
 	@Transactional
-	public void publishSyllabus(Long syllabusId) throws NoSyllabusException {
+	public void publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException {
 		
 		Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
+		
+		// throw an exception if the common syllabus for this one is not published
+		if (!syllabus.getCommon()) {
+			Syllabus commonSyllabus = syllabusService.getCommonSyllabus(syllabus.getSiteId());
+			if (commonSyllabus != null && commonSyllabus.getPublishedDate() == null) {
+				throw new NoPublishedSyllabusException(commonSyllabus.getId());
+			}
+		}
 		//List<SyllabusElementMapping> mappings = syllabusService.getSyllabusElementMappings(syllabusId, false);
 
 		if (syllabus.getPublishedDate() != null) {
@@ -104,7 +113,8 @@ public class PublishServiceImpl implements PublishService {
 
 			if (syllabus.getCommon() != element.getCommon()) {
 
-				// this will only work if the common is published! (otherwise we should handle common elements but not set publish date on the common)
+				// this will only work if the common is published! (TODO? otherwise we should handle common elements but not set publish date on the common)
+				// add common elements to the parent Id map so personal elements can be added as children
 				parentIdMap.put(element.getId(), element.getPublishedId());
 
 				// only publish common elements for common syllabus

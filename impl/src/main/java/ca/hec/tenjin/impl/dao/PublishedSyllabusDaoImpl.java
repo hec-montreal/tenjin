@@ -109,7 +109,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		} 
 		else {
 			List<AbstractPublishedSyllabusElement> elements = 
-			(List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("select elem from PublishedSyllabusElementMapping mapping, AbstractPublishedSyllabusElement elem where syllabus_id = ? and common = ?", syllabus.getId(), false);
+					(List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("select elem from PublishedSyllabusElementMapping mapping, AbstractPublishedSyllabusElement elem where syllabus_id = ? and common = ?", syllabus.getId(), false);
 			
 			// delete all non-common elements and their mappings for the given syllabus
 			getHibernateTemplate().bulkUpdate("delete from PublishedSyllabusElementMapping where syllabus_id = ? and pubsyllabuselement_id in (select id from AbstractPublishedSyllabusElement where site_id = ? and common = ?)", syllabus.getId(), syllabus.getSiteId(), false);

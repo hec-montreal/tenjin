@@ -22,16 +22,28 @@ package ca.hec.tenjin.api.exception;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.Getter;
+
 /**
  *
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
  */
 public class NoPublishedSyllabusException extends SyllabusException{
+	
+	@Getter
+	Long syllabusId;
 
     public NoPublishedSyllabusException( ){
 	super(HttpStatus.PRECONDITION_FAILED);
 	this.setHttpStatus(HttpStatus.PRECONDITION_FAILED);
+    }
+
+    public NoPublishedSyllabusException(Long syllabusId){
+    	super(HttpStatus.PRECONDITION_FAILED);
+    	this.setHttpStatus(HttpStatus.PRECONDITION_FAILED);
+    	
+    	this.syllabusId = syllabusId;
     }
 }
 

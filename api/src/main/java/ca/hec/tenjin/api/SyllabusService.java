@@ -18,11 +18,22 @@ public interface SyllabusService {
 
 	/**
 	 * Retrieves the syllabus associated to a specific section and sectionId.
-	 * @param courseId
-	 * @return
-	 * @throws NoSyllabusException
+	 * 
+	 * @param syllabusId
+	 * @return Syllabus - the syllabus object with elements
+	 * @throws NoSyllabusException - no syllabus exists for the given id
 	 */
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException;
+
+	/**
+	 * Retrieves the common syllabus for a site (without elements).
+	 * 
+	 * @param siteId
+	 * 
+	 * @return Syllabus - the syllabus object with or without the elements
+	 * @throws NoSyllabusException
+	 */
+	public Syllabus getCommonSyllabus(String siteId) throws NoSyllabusException;
 
 	/**
 	 * Retrieve the syllabus list for the current user in the active site

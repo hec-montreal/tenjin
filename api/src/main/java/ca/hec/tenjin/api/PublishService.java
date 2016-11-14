@@ -1,5 +1,6 @@
 package ca.hec.tenjin.api;
 
+import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 
@@ -26,6 +27,6 @@ public interface PublishService {
 	 * @param syllabusId
 	 * @throws NoSyllabusException
 	 */
-	public void publishSyllabus(Long syllabusId) throws NoSyllabusException;
+	public void publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException;
 
 }

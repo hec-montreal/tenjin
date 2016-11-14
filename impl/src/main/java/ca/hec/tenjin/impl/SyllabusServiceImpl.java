@@ -61,6 +61,11 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	@Override
+	public Syllabus getCommonSyllabus(String siteId) throws NoSyllabusException {
+		return syllabusDao.getCommonSyllabus(siteId);
+	}
+	
+	@Override
 	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, boolean commonRead, boolean commonWrite, String currentUserId) throws NoSiteException, DeniedAccessException {
 		List<Syllabus> syllabusList = null;
 

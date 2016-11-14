@@ -26,6 +26,7 @@ import ca.hec.tenjin.api.PublishService;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
+import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
@@ -118,6 +119,7 @@ public class SyllabusController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new ResponseEntity<List<Syllabus>>(syllabusList, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		return new ResponseEntity<List<Syllabus>>(syllabusList, HttpStatus.OK);
@@ -142,13 +144,10 @@ public class SyllabusController {
 		try {
 			publishService.publishSyllabus(syllabusId);
 		}
-//		catch (Exception e) {
-//			return new ResponseEntity<String>(
-//					"Common syllabus must be published first",
-//					HttpStatus.FORBIDDEN);
-//		}
-		catch (Exception e) {
-			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		catch (NoPublishedSyllabusException e) {
+			return new ResponseEntity<String>(
+					msgs.getString("tenjin.error.commonSyllabusUnpublished"),
+					HttpStatus.FORBIDDEN);
 		}
 		
 		return new ResponseEntity<String>(HttpStatus.OK);
@@ -175,19 +174,19 @@ public class SyllabusController {
 	@ExceptionHandler(NoSiteException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public @ResponseBody Object handleNoSiteException(NoSiteException ex) {
-		return "Specified site does not exist";
+		return msgs.getString("tenjin.error.siteDoesNotExist");
 	}
 
 	@ExceptionHandler(NoSyllabusException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public @ResponseBody String handleNoSyllabusException(NoSyllabusException ex) {
-		return ex.getLocalizedMessage();
+		return msgs.getString("tenjin.error.syllabusDoesNotExist");
 	}
 
 	@ExceptionHandler(DeniedAccessException.class)
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 	public @ResponseBody String handleDeniedAccessException(DeniedAccessException ex) {
-		return ex.getLocalizedMessage();
+		return msgs.getString("tenjin.error.unauthorized");
 	}
 
 }
