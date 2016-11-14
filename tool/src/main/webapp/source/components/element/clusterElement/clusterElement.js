@@ -2,9 +2,7 @@ tenjinApp.directive('clusterElement', ['TreeService', function(TreeService) {
     'use strict';
 
     return {
-        scope: {
-            element: '=clusterElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

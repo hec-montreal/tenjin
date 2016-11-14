@@ -1,9 +1,9 @@
-tenjinApp.directive('buttonsElement', ["ModalService", "SyllabusService", function(ModalService, SyllabusService) {
+tenjinApp.directive('elementButtons', ["ModalService", "SyllabusService", function(ModalService, SyllabusService) {
     'use strict';
 
     return {
         scope: {
-            element: '=buttonsElement',
+            element: '=elementButtons',
             noedit: '=noedit',
             nodelete: '=nodelete',
             nodrag: '=nodrag',
@@ -12,7 +12,7 @@ tenjinApp.directive('buttonsElement', ["ModalService", "SyllabusService", functi
 
         restrict: 'A',
 
-        templateUrl: 'element/buttonsElement/buttonsElement.html',
+        templateUrl: 'elementButtons/elementButtons.html',
 
         controller: function($scope) {
             $scope.modalService = ModalService;

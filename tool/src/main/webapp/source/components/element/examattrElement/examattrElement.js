@@ -2,9 +2,7 @@ tenjinApp.directive('examattrElement', function() {
     'use strict';
 
     return {
-        scope: {
-            element: '=examattrElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

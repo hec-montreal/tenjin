@@ -2,9 +2,7 @@ tenjinApp.directive('courseElement', ["TreeService", function(TreeService) {
     'use strict';
 
     return {
-        scope: {
-            element: '=courseElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

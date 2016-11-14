@@ -176,19 +176,33 @@
             });
         };
 
-
         var syllabusId = $state.params.id || -1;
-        var siteId = $scope.userService.getProfile().site.courseId;
+        var profile = $scope.userService.getProfile()
 
+        var loadFn = function(profile) {
+            var siteId = profile.site.courseId;
 
-        loadSyllabusTemplateResourcesTools(siteId, syllabusId)
-            .then(loadCitations)
-            .finally(function() {
-                $scope.infos.working = false;
+            loadSyllabusTemplateResourcesTools(siteId, syllabusId)
+                .then(loadCitations)
+                .finally(function() {
+                    $scope.infos.working = false;
+                });
+        };
+
+        if (!profile) {
+            $q.allSettled([UserService.loadProfile().$promise, SyllabusService.loadSyllabusList().$promise]).then(function(data) {
+                $scope.userService.setProfile(data[0].value);
+                $scope.syllabusService.setSyllabusList(data[1].value);
+
+                loadFn($scope.userService.getProfile());
             });
 
+            $scope.userService.loadProfile().$promise.then(function(data) {
 
-
+            });
+        } else {
+            loadFn(profile);
+        }
     }
 
     $scope.updateSyllabus = function() {
@@ -225,7 +239,7 @@
         });
 
     };
-   
+
     $scope.selectSyllabus = function($syllabus) {
 
         var results = SyllabusService.loadSyllabus($syllabus.id);

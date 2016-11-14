@@ -2,9 +2,7 @@ tenjinApp.directive('hyperlinkElement', ['config', '$translate', function(config
     'use strict';
 
     return {
-        scope: {
-            element: '=hyperlinkElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

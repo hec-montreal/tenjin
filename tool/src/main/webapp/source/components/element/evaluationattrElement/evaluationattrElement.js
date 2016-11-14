@@ -2,9 +2,7 @@ tenjinApp.directive('evaluationattrElement', function() {
     'use strict';
 
     return {
-        scope: {
-            element: '=evaluationattrElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

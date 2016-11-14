@@ -2,10 +2,7 @@
     'use strict';
 
     return {
-        scope: {
-            element: '=examElement',
-            index: '='
-        },
+        scope: true,
 
         restrict: 'A',
 

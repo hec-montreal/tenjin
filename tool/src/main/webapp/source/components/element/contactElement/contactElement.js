@@ -2,9 +2,7 @@
     'use strict';
 
     return {
-        scope: {
-            element: '=contactElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

@@ -2,9 +2,7 @@ tenjinApp.directive('biblioElement', ['ResourcesService', function(ResourcesServ
     'use strict';
 
     return {
-        scope: {
-            element: '=biblioElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

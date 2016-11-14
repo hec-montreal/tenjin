@@ -2,9 +2,7 @@ tenjinApp.directive('textElement', function() {
     'use strict';
 
     return {
-        scope: {
-            element: '=textElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

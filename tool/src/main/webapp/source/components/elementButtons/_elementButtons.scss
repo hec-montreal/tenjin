@@ -1,0 +1,39 @@
+.element-buttons {
+    float: right;
+    margin-left: 10px;
+    margin-top: 10px;
+    
+    .picto-edit {
+        margin-right: 10px;
+    }
+
+    .picto-delete {
+        margin-right: 10px;
+    }
+
+
+    .container-menu-ajout-rubric {
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: top;
+
+        .btn {
+            border: none;
+            background-color: initial;
+            padding: 0 2px;
+            color: #000;
+        }
+
+        .add-label {
+            display: none;
+        }
+
+        .glyphicon-plus-sign {
+            font-size: 20px;
+        }
+
+        .caret {
+            display: none;
+        }
+    }
+}

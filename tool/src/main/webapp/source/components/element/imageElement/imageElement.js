@@ -2,9 +2,7 @@ tenjinApp.directive('imageElement', ['ResourcesService', function(ResourcesServi
     'use strict';
 
     return {
-        scope: {
-            element: '=imageElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

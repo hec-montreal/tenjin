@@ -2,9 +2,7 @@ tenjinApp.directive('toolElement', ['SakaiToolsService', function(sakaiToolsServ
     'use strict';
 
     return {
-        scope: {
-            element: '=toolElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

@@ -2,10 +2,7 @@
     'use strict';
 
     return {
-        scope: {
-            element: '=evaluationElement',
-            index: '='
-        },
+        scope: true,
 
         restrict: 'A',
 

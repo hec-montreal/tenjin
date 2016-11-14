@@ -1,4 +1,4 @@
-﻿tenjinApp.service('UserService', ['$resource', function ($resource){
+﻿tenjinApp.service('UserService', ['$resource', function($resource) {
     'use strict';
 
     //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
@@ -34,7 +34,11 @@
      * @return {Object} Sections object 
      */
     this.getSectionsWrite = function() {
-        return this.profile.sections.filter( function($section) {
+        if (!this.profile) {
+            return [];
+        }
+
+        return this.profile.sections.filter(function($section) {
             return $section.permissions.write === true;
         });
     };
@@ -42,8 +46,8 @@
     /* Get the sections with publish permission
      * @return {Object} Sections object
      **/
-     this.getSectionsPublish = function() {
-        return this.profile.sections.filter( function($section) {
+    this.getSectionsPublish = function() {
+        return this.profile.sections.filter(function($section) {
             return $section.permissions.publish === true;
         });
     };

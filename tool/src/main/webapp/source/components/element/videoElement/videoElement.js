@@ -2,9 +2,7 @@ tenjinApp.directive('videoElement', function() {
     'use strict';
 
     return {
-        scope: {
-            element: '=videoElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

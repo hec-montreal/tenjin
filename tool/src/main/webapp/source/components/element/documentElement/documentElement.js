@@ -2,9 +2,7 @@ tenjinApp.directive('documentElement', ['config', '$translate', 'ResourcesServic
     'use strict';
 
     return {
-        scope: {
-            element: '=documentElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

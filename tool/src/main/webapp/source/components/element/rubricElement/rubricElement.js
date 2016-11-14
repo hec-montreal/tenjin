@@ -2,9 +2,7 @@ tenjinApp.directive('rubricElement', function() {
     'use strict';
 
     return {
-        scope: {
-            element: '=rubricElement'
-        },
+        scope: true,
 
         restrict: 'A',
 

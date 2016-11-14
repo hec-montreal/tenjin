@@ -8,7 +8,7 @@ tenjinApp.directive('addElementMenu', ["ModalService", "SyllabusService", "TreeS
 
         restrict: 'A',
 
-        templateUrl: 'element/addElementMenu/addElementMenu.html',
+        templateUrl: 'addElementMenu/addElementMenu.html',
 
         controller: function($scope) {
             $scope.modalService = ModalService;
