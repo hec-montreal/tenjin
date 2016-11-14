@@ -2,11 +2,14 @@ package ca.hec.tenjin.tool.controller;
 
 import java.util.HashMap;
 
+import javax.annotation.PostConstruct;
+
 import lombok.Setter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.util.ResourceLoader;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +29,18 @@ public class TemplateController {
 
 	private static Log log = LogFactory.getLog(TemplateController.class);
 
+	private ResourceLoader msgs = null;
+	
 	@Setter
 	@Autowired
 	private TemplateService templateService = null;
+	
+	@PostConstruct
+	public void init() {
+		// retrieve ui and co messages
+		msgs = new ResourceLoader("tenjin");
+
+	}	
 
 	@RequestMapping(value = "/{templateId}", method = RequestMethod.GET)
 	public @ResponseBody Template getTemplate(@PathVariable Long templateId) throws IdUnusedException {
@@ -42,8 +54,8 @@ public class TemplateController {
 
 	@ExceptionHandler(IdUnusedException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public void handleResourceNotFoundException(IdUnusedException ex)
+	public @ResponseBody String handleResourceNotFoundException(IdUnusedException ex)
 	{
-	    log.warn("user requested a resource which didn't exist", ex);
+	    return msgs.getString("tenjin.error.templateDoesNotExist");
 	}
 }
