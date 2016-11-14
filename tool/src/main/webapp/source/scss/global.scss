@@ -243,8 +243,21 @@ body {
         margin-left: 30%;
         margin-top: 250px;
     }
+
 }
 
+// Loader
+.publish-dialog-loader-container {
+    position: fixed;
+ 
+    .publish-dialog-loader{
+        background: url('/tenjin-tool/img/desktop/loader.gif') no-repeat;
+        width: 200px;
+        height: 200px;
+        margin-left: 100%;
+        margin-top: 50%;
+    }
+}
 
 @media (max-width: 767px) {
 

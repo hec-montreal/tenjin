@@ -25,3 +25,26 @@
     bottom: 8px;
     right: 16px;
 }
+
+.publishing-loader-container{
+	width: 100px;
+    height: 80px;
+    line-height: 35px;
+    position: fixed;
+    background-color: #fff;
+    bottom: -40px;
+    right: 100px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    // transition: all .3s ease-in-out;
+    text-align: center;
+    border: 1px solid #777;
+    border-bottom: 0;
+
+    &.show {
+        // transition: all .3s ease-in-out;
+        bottom: 0;
+    }
+
+}

@@ -7,17 +7,23 @@
 		{{ 'PUBLISH_LAST_PUBLISH_LABEL' | translate }} {{syllabusService.syllabus.publishedDate | date:'longDate'}}
 	</p>
 	<p class="published-sections">
-		{{ 'PUBLISH_MODIFIED_SECTIONS_LABEL' | translate }} {{syllabusService.syllabus.publishedDate | date:'longDate'}}
+		{{ 'PUBLISH_MODIFIED_SECTIONS_LABEL' | translate }} 
 	</p>
 	<ul  clas >
         <li class="published-section" data-ng-repeat="section in getSections()">
-            {{section.name}}
+            {{section}}
         </li> 
     </ul>
-
+	<!--TODO: afficher les elements modifies
+    	<p class="modified-pages">
+		{{ 'PUBLISH_MODIFIED_PAGES_LABEL' | translate }} 
+	</p>
+	-->
 
 	<p class= "group-publish-cancel">
 	    <button class="btn" data-ng-click="closeThisDialog()">{{ 'PUBLISH_CANCEL_BUTTON_LABEL' | translate }}</button>
 	    <button class="btn" data-ng-click="publish()">{{ 'BUTTON_PUBLISH' | translate }}</button>
 	</p>
+
 </div>
+
