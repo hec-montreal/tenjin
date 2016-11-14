@@ -116,7 +116,7 @@ gulp.task("deploy", ["build", "deploy:tomcat"]);
 
 gulp.task("deploy:tomcat", function () {
 	return gulp.src(["./dest/**/*"])
-			.pipe(gulp.dest(process.env.CATALINA_HOME));
+			.pipe(gulp.dest(process.env.CATALINA_HOME+"/webapps/tenjin-tool"));
 });
 
 // Watch
