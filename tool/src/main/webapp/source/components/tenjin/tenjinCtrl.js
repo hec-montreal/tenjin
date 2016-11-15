@@ -196,10 +196,7 @@
 
                 loadFn($scope.userService.getProfile());
             });
-
-            $scope.userService.loadProfile().$promise.then(function(data) {
-
-            });
+            
         } else {
             loadFn(profile);
         }
