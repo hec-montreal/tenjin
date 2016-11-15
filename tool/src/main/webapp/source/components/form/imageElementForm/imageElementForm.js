@@ -35,10 +35,6 @@
                 return ret;
             }
 
-        },
-
-        link: function($scope, $element) {
-
         }
     };
 });
