@@ -63,7 +63,7 @@
 			<column name="HAS_DATES_INTERVAL" />
 		</property>
 
-		<property name="availability_start_date" column="AVAILABILITY_START_DATE"
+		<property name="availabilityStartDate" column="AVAILABILITY_START_DATE"
 			type="java.util.Date" />
 
 		<property name="availabilityEndDate" column="AVAILABILITY_END_DATE"

@@ -54,7 +54,7 @@ public abstract class AbstractSyllabusElement {
     
     private Boolean hasDatesInterval;
     
-    private Date availability_start_date;
+    private Date availabilityStartDate;
     private Date availabilityEndDate;
 
     private Date createdDate;
@@ -86,7 +86,7 @@ public abstract class AbstractSyllabusElement {
     	this.setImportant(e.getImportant());
     	this.setDisplayOrder(e.getDisplayOrder());
     	this.setHidden(e.getHidden());
-    	this.setAvailability_start_date(e.getAvailability_start_date());
+    	this.setAvailabilityStartDate(e.getAvailabilityStartDate());
     	this.setAvailabilityEndDate(e.getAvailabilityEndDate());
     	this.setCreatedDate(e.getCreatedDate());
     	this.setCreatedBy(e.getCreatedBy());

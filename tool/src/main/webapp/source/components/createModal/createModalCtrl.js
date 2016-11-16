@@ -20,7 +20,7 @@
             'type': $scope.type.type,
             'parentId': $scope.parent.id,
             'templateStructureId': $scope.type.id,
-            'availability_start_date': new Date(),
+            'availabilityStartDate': new Date(),
             'common': SyllabusService.syllabus.common
         };
 
@@ -72,14 +72,14 @@
         // Common fields to validate
         // Dates
         if ($scope.element.hasDatesInterval) {
-            if ($scope.element.availability_start_date) {
+            if ($scope.element.availabilityStartDate) {
                 // convert to timestamp
-                if (Object.prototype.toString.call($scope.element.availability_start_date) === '[object Date]') {
-                    $scope.element.availability_start_date = $scope.element.availability_start_date.getTime();
+                if (Object.prototype.toString.call($scope.element.availabilityStartDate) === '[object Date]') {
+                    $scope.element.availabilityStartDate = $scope.element.availabilityStartDate.getTime();
                 }
             } else {
                 ret.push({
-                    field: "availability_start_date",
+                    field: "availabilityStartDate",
                     message: "ERROR_FORMAT_DATE_START"
                 });
             }
@@ -91,7 +91,7 @@
                         $scope.element.availabilityEndDate = $scope.element.availabilityEndDate.getTime();
                     }
 
-                    if ($scope.element.availability_start_date > $scope.element.availabilityEndDate) {
+                    if ($scope.element.availabilityStartDate > $scope.element.availabilityEndDate) {
                         ret.push({
                             field: "availabilityEndDate",
                             message: "ERROR_START_DATE_GREATER"

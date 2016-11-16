@@ -27,7 +27,7 @@ tenjinApp.directive('addElementMenu', ["ModalService", "SyllabusService", "TreeS
                         'type': $type.type,
                         'parentId': $scope.element.id,
                         'templateStructureId': $type.id,
-                        'availability_start_date': Date.now(),
+                        'availabilityStartDate': Date.now(),
                         'title': $type.label,
                         'important': false,
                         'publicElement': true,

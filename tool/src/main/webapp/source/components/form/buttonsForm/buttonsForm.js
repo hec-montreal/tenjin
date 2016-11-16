@@ -50,7 +50,7 @@ tenjinApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalService'
             $scope.open = function($event) {
                 $scope.status.opened = true;
                 $scope.element.$formHasDates = true;
-                $scope.element.availability_start_date = new Date();
+                $scope.element.availabilityStartDate = new Date();
             };
 
 
