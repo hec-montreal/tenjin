@@ -1,5 +1,6 @@
 package ca.hec.tenjin.api;
 
+import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;
 
@@ -40,5 +41,7 @@ public interface SakaiProxy {
 	public boolean isAllowed(String userId, String function, String groupId);
 
 	public boolean siteExists(String siteId);
+
+	public ContentResource getResource(String string);
 
 }

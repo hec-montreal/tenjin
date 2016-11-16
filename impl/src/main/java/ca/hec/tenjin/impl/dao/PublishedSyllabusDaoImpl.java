@@ -1,20 +1,36 @@
 package ca.hec.tenjin.impl.dao;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
+import java.util.TimeZone;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.content.api.ContentResource;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedDocumentElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabusElementMapping;
+import lombok.Setter;
 
 public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements PublishedSyllabusDao {
+	private Log log = LogFactory.getLog(PublishedSyllabusDaoImpl.class);
+	
+	@Setter 
+	SakaiProxy sakaiProxy;
 
 	@Override
 	public PublishedSyllabus getPublishedSyllabus(Long id, boolean includeElements) throws NoSyllabusException {
@@ -45,8 +61,10 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
     	for (PublishedSyllabusElementMapping currElementMapping : elementMappings) {
     		AbstractPublishedSyllabusElement currElement = currElementMapping.getPublishedSyllabusElement(); 
 
-    		// TODO skip hidden elements and check dates
-    		// (hidden elements won't even have a published mapping)
+    		// Skip elements whose dates make them unavailable
+    		if (!isElementAvailable(currElement)) {
+    			continue;
+    		}
 
     		currElement.setDisplayOrder(currElementMapping.getDisplayOrder());
     		
@@ -90,6 +108,45 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
     	return structuredElements;
 	}
 
+	private boolean isElementAvailable(AbstractPublishedSyllabusElement element) {
+
+		Map<String, String> attributes = null;
+		
+		if (element instanceof PublishedDocumentElement) {
+			attributes = element.getAttributes();
+			
+			ContentResource resource = sakaiProxy.getResource(attributes.get("documentId"));
+			if (resource != null && resource.isAvailable()) {
+				return true;
+			} 
+		} 
+		else if (element instanceof PublishedCitationElement) {
+			attributes = element.getAttributes();
+			String citationId = attributes.get("citationId");
+			String citationListId = citationId.substring(0, citationId.lastIndexOf('/'));
+			
+			ContentResource citationList = sakaiProxy.getResource(citationListId);
+			if (citationList != null && citationList.isAvailable()) {
+				return true;
+			} 
+		} 
+		else {
+			Date now = new Date();
+			Date startDate = null;
+			Date endDate = null;
+
+			startDate = element.getAvailabilityStartDate();
+			endDate = element.getAvailabilityEndDate();
+
+			if ((startDate == null || now.after(startDate)) &&
+					(endDate == null || now.before(endDate))) {
+				
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@SuppressWarnings("unchecked")
 	private List<PublishedSyllabusElementMapping> getPublishedSyllabusElementMappings(Long syllabusId) {
 		String query = "from PublishedSyllabusElementMapping mapping where syllabusId = ?";
@@ -126,6 +183,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<AbstractPublishedSyllabusElement> getChildPublishedElements(Long elementId) {
 		List<AbstractPublishedSyllabusElement> elements = 
 				(List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("from AbstractPublishedSyllabusElement where parent_id = ?", elementId);

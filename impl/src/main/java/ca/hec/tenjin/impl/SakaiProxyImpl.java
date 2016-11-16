@@ -7,8 +7,12 @@ import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.authz.api.AuthzGroupService;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.authz.api.SecurityService;
+import org.sakaiproject.content.api.ContentHostingService;
+import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.event.api.EventTrackingService;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.exception.PermissionException;
+import org.sakaiproject.exception.TypeException;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.SessionManager;
@@ -34,6 +38,7 @@ public class SakaiProxyImpl implements SakaiProxy {
 	private AuthzGroupService groupService;
 	private FunctionManager functionManager;
 	private UserDirectoryService userDirectoryService;
+	private ContentHostingService contentHostingService;
 
 	public void init() {
 		
@@ -147,6 +152,16 @@ public class SakaiProxyImpl implements SakaiProxy {
 	@Override
 	public boolean siteExists(String siteId) {
 		return siteService.siteExists(siteId);
+	}
+
+	@Override
+	public ContentResource getResource(String resourceId) {
+		try {
+			return contentHostingService.getResource(resourceId);
+		} catch (PermissionException | IdUnusedException | TypeException e) {
+			log.error("Error retrieving resource: " + resourceId);
+		}
+		return null;
 	}
 
 }
