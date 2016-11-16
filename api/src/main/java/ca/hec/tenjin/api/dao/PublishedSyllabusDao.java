@@ -20,6 +20,8 @@
  ******************************************************************************/
 package ca.hec.tenjin.api.dao;
 
+import java.util.List;
+
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
@@ -57,5 +59,13 @@ public interface PublishedSyllabusDao {
 	 * @return The syllabus element
 	 */
 	public AbstractPublishedSyllabusElement getPublishedElement(Long id);
+
+	/**
+	 * Retrieve the list of published elements that are children of the element with the given id 
+	 * 
+	 * @param Long elementId
+	 * @return The list of syllabus elements that are children of the element with the given id 
+	 */
+	public List<AbstractPublishedSyllabusElement> getChildPublishedElements(Long elementId);
 }
 

@@ -125,5 +125,12 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			getHibernateTemplate().deleteAll(elements);
 		}
 	}
+	
+	public List<AbstractPublishedSyllabusElement> getChildPublishedElements(Long elementId) {
+		List<AbstractPublishedSyllabusElement> elements = 
+				(List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("from AbstractPublishedSyllabusElement where parent_id = ?", elementId);
+		
+		return elements;		
+	}
 
 }
