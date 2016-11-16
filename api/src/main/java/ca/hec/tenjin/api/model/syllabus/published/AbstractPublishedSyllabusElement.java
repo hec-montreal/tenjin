@@ -83,7 +83,7 @@ public abstract class AbstractPublishedSyllabusElement {
     	this.setAttributes(new HashMap<String, String>(e.getAttributes()));
     	
     	// only copy availability dates if they are activated
-    	if (e.getHasDatesInterval()) {
+    	if (e.getHasDatesInterval() != null && e.getHasDatesInterval()) {
         	this.setAvailabilityStartDate(e.getAvailabilityStartDate());
         	this.setAvailabilityEndDate(e.getAvailabilityEndDate());
     	}	
