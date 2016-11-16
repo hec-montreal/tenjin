@@ -76,13 +76,17 @@ public abstract class AbstractPublishedSyllabusElement {
     	this.setPublicElement(e.getPublicElement());
     	this.setImportant(e.getImportant());
     	this.setDisplayOrder(e.getDisplayOrder());
-    	this.setAvailabilityStartDate(e.getAvailabilityStartDate());
-    	this.setAvailabilityEndDate(e.getAvailabilityEndDate());
     	this.setCreatedDate(e.getCreatedDate());
     	this.setCreatedBy(e.getCreatedBy());
     	this.setLastModifiedDate(e.getLastModifiedDate());
     	this.setLastModifiedBy(e.getLastModifiedBy());
     	this.setAttributes(new HashMap<String, String>(e.getAttributes()));
+    	
+    	// only copy availability dates if they are activated
+    	if (e.getHasDatesInterval()) {
+        	this.setAvailabilityStartDate(e.getAvailabilityStartDate());
+        	this.setAvailabilityEndDate(e.getAvailabilityEndDate());
+    	}	
     }
 }
 
