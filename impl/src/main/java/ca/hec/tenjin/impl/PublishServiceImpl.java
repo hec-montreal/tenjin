@@ -99,8 +99,8 @@ public class PublishServiceImpl implements PublishService {
 			searchQueue.add(element);
 		}
 		
-		// a map to keep track of the new parent ids
-		HashMap<Long, Long> parentIdMap = new HashMap<Long, Long>();
+		// a map to look up the new published id based on the unpublished id
+		HashMap<Long, Long> publishedIdMap = new HashMap<Long, Long>();
 		
 		while (!searchQueue.isEmpty()) {
 			AbstractSyllabusElement element = searchQueue.remove();
@@ -118,7 +118,7 @@ public class PublishServiceImpl implements PublishService {
 			// If we are publishing a personalised syllabus, don't publish the common elements
 			if (!syllabus.getCommon() && element.getCommon()) {
 				
-				// retrieve the mapping for this element so we can publish it
+				// If this is not a common syllabus, retrieve the mapping for this element so we can publish it for this syllabus
 				SyllabusElementMapping mapping = 
 						syllabusDao.getMappingForSyllabusAndElement(syllabus.getId(), element.getId());
 								
@@ -133,18 +133,19 @@ public class PublishServiceImpl implements PublishService {
 				}
 
 				// add common elements to the parent Id map so personal elements can be added as children
-				parentIdMap.put(element.getId(), element.getPublishedId());
+				publishedIdMap.put(element.getId(), element.getPublishedId());
 
 				// only publish common elements for common syllabus
 				continue;
 			}
 			
-			AbstractPublishedSyllabusElement elementToPublish = publishElement(element, parentIdMap.get(element.getParentId()));
+			AbstractPublishedSyllabusElement elementToPublish = publishElement(element, publishedIdMap.get(element.getParentId()));
 			
 			// add the new element's id to the map so we can use it later
-			parentIdMap.put(element.getId(), elementToPublish.getId());
+			publishedIdMap.put(element.getId(), elementToPublish.getId());
 
 			// Update existing element
+			Long oldPublishedId = element.getPublishedId();
 			element.setPublishedId(elementToPublish.getId());
 			element.setEqualsPublished(true);			
 			syllabusDao.update(element);
@@ -156,7 +157,14 @@ public class PublishServiceImpl implements PublishService {
 				publishMapping(mapping, elementToPublish);
 			}
 			
-			// TODO: update parentId for non-common elements.
+			if (syllabus.getCommon() && oldPublishedId != null) {
+				// Update parentId for previously published child elements
+				List<AbstractPublishedSyllabusElement> childPublishedElements = publishedSyllabusDao.getChildPublishedElements(oldPublishedId);
+				for (AbstractPublishedSyllabusElement elem : childPublishedElements) {
+					elem.setParentId(elementToPublish.getId());
+					syllabusDao.update(elem);
+				}
+			}			
 		}
 		
 		syllabus.setPublishedDate(new Date());
