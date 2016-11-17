@@ -1,10 +1,10 @@
-﻿tenjinApp.service('SyllabusService', ['AlertService', 'UserService', '$resource', '$translate', function(AlertService, UserService, $resource, $translate) {
+﻿tenjinApp.service('SyllabusService', ['AlertService', 'UserService', '$resource', '$translate', '$q', function(AlertService, UserService, $resource, $translate, $q) {
     'use strict';
 
-    this.syllabus;
-    this.syllabusSaved;
-    this.template;
-    this.syllabusList;
+    this.syllabus = null;
+    this.syllabusSaved = null;
+    this.template = null;
+    this.syllabusList = null;
 
     this.dirty = false;
     this.working = false;
@@ -41,15 +41,16 @@
         }
     });
 
-    this.publish = function(){
+    this.publish = function() {
         return publishSyllabusProvider.get({
-            id: this.syllabus.id}).$promise.then(function($data) {
-                           var publishedSyllabus = $data;
-                            AlertService.display('success', $translate.instant('PUBLISHED_SYLLABUS'));
-                        }, function($error) {
-                            AlertService.display('danger');
-                        });
-        
+            id: this.syllabus.id
+        }).$promise.then(function($data) {
+            var publishedSyllabus = $data;
+            AlertService.display('success', $translate.instant('PUBLISHED_SYLLABUS'));
+        }, function($error) {
+            AlertService.display('danger');
+        });
+
     };
 
     /**
@@ -123,15 +124,21 @@
         });
     };
 
-    /**
-     * Load a list of syllabus
-     * @param {String} $siteId site id
-     * @return {Object} Promise
-     */
-    this.loadSyllabusList = function($siteId) {
-        return sylProviderList.get({
-            siteId: $siteId
+    this.loadSyllabusList = function() {
+        var tthis = this;
+        var def = $q.defer();
+
+        sylProviderList.get().$promise.then(function(data) {
+            tthis.setSyllabusList(data);
+
+            console.log("Syllabus list loaded");
+
+            def.resolve(data);
+        }, function(reason) {
+            def.reject(reason);
         });
+
+        return def.promise;
     };
 
     /**
@@ -154,8 +161,9 @@
      * Set the syllabus list
      * @param {Array} $syllabusList Syllabus list
      */
-    this.setSyllabusList = function($syllabusList) {
-        this.syllabusList = $syllabusList;
+    this.setSyllabusList = function(syllabusList) {
+        this.syllabusList = syllabusList;
+
         // set write and publish permissions on each syllabus
         for (var i = 0; i < this.syllabusList.length; i++) {
             this.setWritePermission(this.syllabusList[i]);
@@ -195,14 +203,15 @@
      * Set the write permission flag for the syllabus (true = editable)
      * @param {Object} $syllabus The syllabus to check write permission
      */
-    this.setWritePermission = function($syllabus) {
+    this.setWritePermission = function(syllabus) {
         // read or write
         // 1- if write permission on site 
         // 2- or created by user
         // 3- or write permission on one section of the syllabus
-        var sectionsSyllabus = $syllabus.sections;
+        var sectionsSyllabus = syllabus.sections;
         var sectionsWrite = UserService.getSectionsWrite();
         var sectionWritePresent = false;
+
         for (var i = 0; i < sectionsWrite.length; i++) {
             if (sectionsSyllabus.indexOf(sectionsWrite[i].id) > -1) {
                 sectionWritePresent = true;
@@ -210,41 +219,41 @@
             }
         }
 
-        // define write permission
-        if (UserService.profile.site.permissions.write === true) {
-            // permission on all site and all syllabus
-            $syllabus.$writePermission = true;
-        } else {
-            if ($syllabus.common === true) {
-                $syllabus.$writePermission = false;
+        var profile = UserService.getProfile();
 
+        // define write permission
+        if (profile.site.permissions.write === true) {
+            syllabus.$writePermission = true;
+        } else {
+            if (syllabus.common === true) {
+                $yllabus.$writePermission = false;
             } else {
-                if ($syllabus.createdBy === UserService.profile.userId || sectionWritePresent) {
-                    $syllabus.$writePermission = true;
+                if (syllabus.createdBy === profile.userId || sectionWritePresent) {
+                    syllabus.$writePermission = true;
                 } else {
-                    $syllabus.$writePermission = false;
+                    syllabus.$writePermission = false;
                 }
             }
         }
     };
 
-    this.setPublishPermission= function ($syllabus){
-        //true if the user has publih permission in the section
-        //associated to the published syllabus
-        //or created the syllabus
-        //TODO PLUG PUBLISH PERMISSION LOGIC
-        if ($syllabus.sections.length > 0 || $syllabus.common === true)
-            $syllabus.$publishPermission = true;
-        else    
-            $syllabus.$publishPermission = false;
-         return $syllabus.$publishPermission; 
+    this.setPublishPermission = function(syllabus) {
+        if (syllabus.sections.length > 0 || syllabus.common === true) {
+            syllabus.$publishPermission = true;
+        } else {
+            syllabus.$publishPermission = false;
+        }
+
+        return syllabus.$publishPermission;
     };
+
     /**
      * Set the current syllabus
      * @param {Object} $syllabus The future current syllabus
      */
-    this.setSyllabus = function($syllabus) {
-        this.syllabus = $syllabus;
+    this.setSyllabus = function(syllabus) {
+        this.syllabus = syllabus;
+
         // numbering
         this.numerotationSyllabus(this.syllabus);
         // define write permission on current syllabus

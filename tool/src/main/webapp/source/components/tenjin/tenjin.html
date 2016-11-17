@@ -1,76 +1,9 @@
-<div data-ng-controller="TenjinCtrl" class="portletBody">
+<div id="tenjin">
+	<div class="global-loader" ng-show="globalLoading"> 
 
-    <div class="loader-container" data-ng-show="infos.working"> 
-        <div class="loader"></div>
-    </div>
+	</div>
 
-    <div class="main-errors">
-        <!-- <uib-alert data-ng-if="(!planFailed && templateFailed)" class="myalert" type="danger">{{ 'ERROR_TEMPLATE' | translate }}</uib-alert> -->
-
-        <uib-alert data-ng-if="alertService.isVisible('danger')" class="myalert" type="danger" close="alertService.closeAlert('danger')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('danger')}}</uib-alert>
-
-        <!-- <uib-alert data-ng-if="alertService.isVisible('success')" class="myalert" type="success" close="alertService.closeAlert('success')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('success')}}</uib<-alert> -->
-    </div>
-
-    <h1 data-ng-class="{ 'title-dirty' : syllabusService.dirty }" ng-cloak>
-        {{::syllabusService.syllabus.courseTitle}}
-    </h1> 
-
-    <div class="buttons-list">
-        <!-- MANAGEMENT --> 
-        <button data-ng-if="displayButtons.managementButton()" class="btn btn-primary button-management hide-mobile" type="button" ui-sref="management">{{ 'BUTTON_MANAGEMENT' | translate }}</button>
-        <!-- SYLLABUS -->
-        <div data-ng-if="displayButtons.syllabusDropdown()" class="btn-group" uib-dropdown keyboard-nav>
-            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" data-ng-disabled="syllabusService.working" uib-dropdown-toggle>
-                <span class="add-label">{{syllabusService.syllabus.title}}</span> <span class="caret"></span> 
-            </button>
-            <ul uib-dropdown-menu class="list-menu-add-left" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                <li role="menuitem" data-ng-repeat="syllabus in syllabusService.syllabusList">
-                    <a href="" data-ng-click="selectSyllabus(syllabus)">{{::syllabus.title }}</a> 
-                </li> 
-            </ul>
-        </div>
-        <!-- SAVE -->
-        <span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$writePermission">
-            <span class="container-save-working" data-ng-show="syllabusService.working">
-                <span class="picto-ajax-loader" data-ng-show="syllabusService.working"></span>
-                <span class="message-save-working">{{ 'SAVE_WORKING' | translate }}</span>
-            </span>
-            <button class="btn btn-primary" type="button" data-ng-disabled="(!syllabusService.dirty || syllabusService.working)" data-ng-click="save()">{{ 'BUTTON_SAVE' | translate }}</button>
-        </span>  
-        <!-- PUBLISH -->
-        <!-- TODO: ajouter la condition d'affichage -->
-        <span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$publishPermission" >
-            <!-- TODO: ajouter la condition d'activation 
-            <button class="btn btn-primary" type="button" data-ng-click="syllabusService.publish(syllabus)">{{ 'BUTTON_PUBLISH' | translate }}</button>-->
-            <button class="btn btn-primary" data-ng-controller= "PublishCtrl" type="button" data-ng-click="openPublishDialog()"> {{ 'BUTTON_PUBLISH' | translate }} </button>
-        </span>  
-
-        
-        <!-- MOBILE MENU BUTTON -->
-         <span class="hide-desktop show-mobile" data-ng-if="displayButtons.displayMobileMenu()">
-            <button type="button" class="btn btn-primary mobile-menu-button" data-ng-model="syllabusService.showMobileMenu" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-                Menu
-            </button>
-        </span>
-    </div>
-
-    <div data-ng-if="!errorLoading">
-        <div data-ng-show="syllabusService.showMobileMenu">
-            <!-- Menu mobile -->
-            <mobile-menu class="hide-desktop show-mobile"></mobile-menu>
-        </div>
-        <div class="row row-content">
-            <!-- Menu de gauche -->
-            <div data-ng-if="variables.device !== 'mobile'" data-ng-include="'leftMenu/leftMenu.html'"   class="col-sm-3 col-md-3 hide-mobile pull-left left-menu" id="menu" ></div>
-            
-            <!-- Container de droite -->
-            <div data-ng-include="'contentPanel/contentPanel.html'" class="col-sm-9 col-xs-12 col-md-9 pull-left  content-panel" id="contentPanel"></div>
-        </div>
-    </div>
-    
-    <!-- Loader feeback user when saving or deleting elements -->
-    <loader></loader>
-    
-
+	<div id="view" ui-view ng-show="!globalLoading">
+		
+	</div>
 </div>

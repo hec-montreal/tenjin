@@ -1,50 +1,54 @@
-﻿if (typeof CKEDITOR !== "undefined") {
-    var tenjinApp = angular.module('tenjin', ["ngResource", "ngSanitize", "ngAnimate", "templateModule", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker", "xeditable", "pascalprecht.translate", "ngCkeditor", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router", "checklist-model", "ngDialog"]);
-} else {
-    var tenjinApp = angular.module('tenjin', ["templateModule", "ngResource", "ngSanitize", "ngAnimate", "ui.tree", "ui.bootstrap", "ui.bootstrap.datetimepicker", "xeditable", "pascalprecht.translate", "tmh.dynamicLocale", "ngPromiseExtras", "ui.router", "checklist-model", "ngDialog"]);
-}
-
-tenjinApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function($compileProvider, tmhDynamicLocaleProvider) {
+﻿(function() {
     'use strict';
 
-    // use this in production to improve performance
-    // $compileProvider.debugInfoEnabled(false);
+    // Template module
+    var templateModule = angular.module('templateModule', []);
 
-    // TODO : Change url for production
-    tmhDynamicLocaleProvider.localeLocationPattern('/tenjin-tool/lib/locale/angular-locale_{{locale}}-ca.js');
-}]);
+    templateModule.config(function($sceDelegateProvider) {
+        $sceDelegateProvider.resourceUrlWhitelist(['**']);
+    });
 
+    // App module
+    var tenjinApp = angular.module('tenjin', [
+        'ngResource',
+        'ngSanitize',
+        'ngAnimate',
+        'templateModule',
+        'ui.tree',
+        'ui.bootstrap',
+        'ui.bootstrap.datetimepicker',
+        'xeditable',
+        'pascalprecht.translate',
+        'ngCkeditor',
+        'ngPromiseExtras',
+        'ui.router',
+        'checklist-model',
+        'ngDialog',
+        'tmh.dynamicLocale'
+    ]);
 
-tenjinApp.config(function($stateProvider, $urlRouterProvider) {
-    'use strict';
+    tenjinApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function($compileProvider, tmhDynamicLocaleProvider) {
+        tmhDynamicLocaleProvider.localeLocationPattern('/tenjin-tool/lib/locale/angular-locale_{{locale}}-ca.js');
+    }]);
 
-    $urlRouterProvider.otherwise("/home");
+    tenjinApp.config(function($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/home');
 
-    $stateProvider
-        .state('home', {
-            url: "/home",
-            template: "<home></home>"
-        })
-        .state('management', {
-            url: "/management",
-            template: "<management></management>"
-        })
-        .state('syllabus', {
-            url: "/syllabus/:id",
-            templateUrl: "tenjin/tenjin.html"
-        });
-});
+        $stateProvider
+            .state('home', {
+                url: '/home',
+                template: '<home></home>'
+            })
+            .state('management', {
+                url: '/management',
+                template: '<management></management>'
+            })
+            .state('syllabus', {
+                url: '/syllabus/:id',
+                templateUrl: 'syllabus/syllabus.html'
+            });
+    });
 
-tenjinApp.run(['editableOptions', '$httpBackend', function(editableOptions, $httpBackend) {
-    'use strict';
-
-    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-
-}]);
-
-// Création du module template
-var templateModule = angular.module("templateModule", []);
-
-templateModule.config(function($sceDelegateProvider) {
-    $sceDelegateProvider.resourceUrlWhitelist(["**"]);
-});
+    window.templateModule = templateModule;
+    window.tenjinApp = tenjinApp;
+})();

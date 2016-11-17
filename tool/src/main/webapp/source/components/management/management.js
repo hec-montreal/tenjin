@@ -1,239 +1,221 @@
 ﻿tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', function($timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config) {
-    'use strict';
+	'use strict';
 
-    return {
-        scope: {},
+	return {
+		scope: true,
 
-        restrict: 'E',
-        
-        templateUrl: 'management/management.html',
+		restrict: 'E',
 
-        controller: function() {
-            this.syllabusService = SyllabusService;
-            this.alertService = AlertService;
-            this.userService = UserService;
-            this.config = config;
+		templateUrl: 'management/management.html',
 
-            this.infos = {};
-            this.disableDelete = true;
+		controller: function($scope) {
+			this.addSyllabus = function() {
+				// Get sections and label
+				var data = {};
 
-            var lastModifiedSyllabus;
-            var lastModifiedSyllabusBeforeUpdate;
-            var objManagement = this;
+				// Create modal
+				var modal = ModalService.createSyllabus(data);
 
-            this.userSections = []; // user sections with write permissions
-            this.allSections = []; // all sections
+				// Processing result
+				modal.result.then(function($syllabus) {
+					// update syllabus list with last modified syllabus as param 
+					updateSyllabusList($syllabus);
+				}, function() {
+					// alert add syllabus ko
+					AlertService.display('danger');
+				});
+			};
 
-            // get user sections with write permissions
-            for (var i = 0; i < this.userService.profile.sections.length; i++) {
-                var sectionUser = this.userService.profile.sections[i];
-                this.allSections.push(angular.copy(sectionUser));
-                if (sectionUser.permissions.write === true) {
-                    this.userSections.push(angular.copy(sectionUser));
-                }
-            }
+			this.deleteSyllabus = function() {
+				var syllabusList = [];
 
-            var loadSyllabusList = function() {
-                return SyllabusService.loadSyllabusList().$promise.then(function($data) {
-                    SyllabusService.setSyllabusList($data);
+				for (var i = 0; i < this.syllabusService.syllabusList.length; i++) {
+					if (this.syllabusService.syllabusList[i].checked === true) {
+						syllabusList.push(this.syllabusService.syllabusList[i]);
+					}
+				}
 
-                }, function($error) {
-                    // erreur load syllabus list
-                    AlertService.display('danger');
-                });
-            };
+				// Create modal
+				var modal = ModalService.deleteSyllabus(syllabusList);
 
+				// Processing result
+				modal.result.then(function(selectedItem) {
 
-            this.infos.working = true;
+				}, function() {
 
-            loadSyllabusList().finally(function() {
-                objManagement.infos.working = false;
-            });
+				});
+			};
 
-            this.addSyllabus = function() {
-                // Get sections and label
-                var data = {};
+			this.enableDelete = function() {
+				this.disableDelete = true;
 
-                // Create modal
-                var modal = ModalService.createSyllabus(data);
+				// if a syllabus is checked then the delete button should be enabled
+				for (var i = 0; i < this.syllabusService.syllabusList.length; i++) {
+					if (this.syllabusService.syllabusList[i].checked === true) {
+						this.disableDelete = false;
+					}
+				}
+			};
 
-                // Processing result
-                modal.result.then(function($syllabus) {
-                    // update syllabus list with last modified syllabus as param 
-                    updateSyllabusList($syllabus);
-                }, function() {
-                    // alert add syllabus ko
-                    AlertService.display('danger');
-                });
-            };
+			/**
+			 * Display the sections for a syllabus
+			 * @param {Object} $syllabus Syllabus
+			 * @return {String} A string containing the list of the sections or no section
+			 */
+			this.showSections = function($syllabus) {
+				var selected = [];
+				angular.forEach(this.allSections, function(s) {
+					if ($syllabus.sections.indexOf(s.id) >= 0) {
+						selected.push(s.name);
+					}
+				});
 
-            this.deleteSyllabus = function() {
-                var syllabusList = [];
+				return selected.length ? selected.join(', ') : $translate.instant("MANAGEMENT_NO_SECTION");
+			};
 
-                for (var i = 0; i < this.syllabusService.syllabusList.length; i++) {
-                    if (this.syllabusService.syllabusList[i].checked === true) {
-                        syllabusList.push(this.syllabusService.syllabusList[i]);
-                    }
-                }
+			this.updateTitle = function($data, $syllabus) {
+				if ($data.length === 0) {
+					return $translate.instant("MANAGEMENT_ERREUR_NAME");
+				}
+				$syllabus.title = $data;
+				return SyllabusService.save($syllabus).$promise;
+			};
 
-                // Create modal
-                var modal = ModalService.deleteSyllabus(syllabusList);
+			this.updateSections = function($data, $syllabus) {
+				// keep a reference on the old sections
+				lastModifiedSyllabusBeforeUpdate = angular.copy($syllabus);
+				// keep a reference to the last modified syllabus (to update sections of other syllabus)
+				lastModifiedSyllabus = angular.copy($syllabus);
+				// assign sections
+				lastModifiedSyllabus.sections = $data;
 
-                // Processing result
-                modal.result.then(function(selectedItem) {
+				return SyllabusService.save(lastModifiedSyllabus).$promise;
+			};
 
-                }, function() {
+			var updateSyllabusList = function($syllabusModified, $oldSyllabus) {
+				if ($syllabusModified) {
+					var syllabusList = SyllabusService.getSyllabusList();
 
-                });
-            };
+					var sectionsForCommon = [];
+					var sectionsToReassign = [];
+					// check sections differences between the old and the updated syllabus
+					// edition
+					if ($oldSyllabus) {
+						for (var i = 0; i < $syllabusModified.sections.length; i++) {
+							if ($oldSyllabus.sections.indexOf($syllabusModified.sections[i]) === -1) {
+								sectionsToReassign.push($syllabusModified.sections[i]);
+							}
+						}
+						for (i = 0; i < $oldSyllabus.sections.length; i++) {
+							if ($syllabusModified.sections.indexOf($oldSyllabus.sections[i]) === -1) {
+								sectionsForCommon.push($oldSyllabus.sections[i]);
+							}
+						}
+					} // creation
+					else {
+						sectionsToReassign = sectionsToReassign.concat($syllabusModified.sections);
+					}
 
+					// 1- first check all syllabus and remove sections (present in the syllabus modified) 
+					for (var i = 0; i < syllabusList.length; i++) {
+						if (syllabusList[i].id !== $syllabusModified.id) {
+							for (var j = 0; j < sectionsToReassign.length; j++) {
+								var index = syllabusList[i].sections.indexOf(sectionsToReassign[j]);
+								if (index > -1) {
+									syllabusList[i].sections.splice(index, 1);
+								}
+							}
+						}
+					}
 
-            this.enableDelete = function() {
-                this.disableDelete = true;
+					// 2- second add orphan sections to the shareable
+					var commonSyllabus = SyllabusService.getCommonSyllabus();
+					if ($oldSyllabus) {
+						commonSyllabus.sections = commonSyllabus.sections.concat(sectionsForCommon);
+					}
 
-                // if a syllabus is checked then the delete button should be enabled
-                for (var i = 0; i < this.syllabusService.syllabusList.length; i++) {
-                    if (this.syllabusService.syllabusList[i].checked === true) {
-                        this.disableDelete = false;
-                    }
-                }
-            };
+					// 3- remove syllabus if the user does not still have access to it
+					var sectionsWrite = UserService.getSectionsWrite();
 
-            /**
-             * Display the sections for a syllabus
-             * @param {Object} $syllabus Syllabus
-             * @return {String} A string containing the list of the sections or no section
-             */
-            this.showSections = function($syllabus) {
-                var selected = [];
-                angular.forEach(this.allSections, function(s) {
-                    if ($syllabus.sections.indexOf(s.id) >= 0) {
-                        selected.push(s.name);
-                    }
-                });
+					for (var i = syllabusList.length - 1; i >= 0; i--) {
 
-                return selected.length ? selected.join(', ') : $translate.instant("MANAGEMENT_NO_SECTION");
-            };
+						var sectionsSyllabus = syllabusList[i].sections;
+						var sectionWritePresent = false;
+						for (var j = 0; j < sectionsWrite.length; j++) {
+							if (sectionsSyllabus.indexOf(sectionsWrite[j].id) > -1) {
+								sectionWritePresent = true;
+								break;
+							}
+						}
 
-            this.updateTitle = function($data, $syllabus) {
-                if ($data.length === 0) {
-                    return $translate.instant("MANAGEMENT_ERREUR_NAME");
-                }
-                $syllabus.title = $data;
-                return SyllabusService.save($syllabus).$promise;
-            };
+						if (!UserService.profile.site.permissions.write &&
+							!syllabusList[i].common &&
+							syllabusList[i].createdBy !== UserService.profile.userId &&
+							!sectionWritePresent) {
+							// remove syllabus from the syllabus list
+							syllabusList.splice(i, 1);
+						}
+					}
+				}
+			};
 
-            this.updateSections = function($data, $syllabus) {
-                // keep a reference on the old sections
-                lastModifiedSyllabusBeforeUpdate = angular.copy($syllabus);
-                // keep a reference to the last modified syllabus (to update sections of other syllabus)
-                lastModifiedSyllabus = angular.copy($syllabus);
-                // assign sections
-                lastModifiedSyllabus.sections = $data;
+			this.updateSyllabusList = function($syllabus) {
+				// update syllabus
+				$syllabus = angular.copy(lastModifiedSyllabus);
 
-                return SyllabusService.save(lastModifiedSyllabus).$promise;
-            };
+				// update syllabus list with last modified syllabus as param 
+				updateSyllabusList(lastModifiedSyllabus, lastModifiedSyllabusBeforeUpdate);
+				// reset tmp variables
+				lastModifiedSyllabus = null;
+				lastModifiedSyllabusBeforeUpdate = null;
+			};
 
-            var updateSyllabusList = function($syllabusModified, $oldSyllabus) {
-                if ($syllabusModified) {
-                    var syllabusList = SyllabusService.getSyllabusList();
+			this.redirectToSyllabus = function($syllabusId) {
+				SyllabusService.setCurrentSyllabusId($syllabusId);
+			};
 
-                    var sectionsForCommon = [];
-                    var sectionsToReassign = [];
-                    // check sections differences between the old and the updated syllabus
-                    // edition
-                    if ($oldSyllabus) {
-                        for (var i = 0; i < $syllabusModified.sections.length; i++) {
-                            if ($oldSyllabus.sections.indexOf($syllabusModified.sections[i]) === -1) {
-                                sectionsToReassign.push($syllabusModified.sections[i]);
-                            }
-                        }
-                        for (i = 0; i < $oldSyllabus.sections.length; i++) {
-                            if ($syllabusModified.sections.indexOf($oldSyllabus.sections[i]) === -1) {
-                                sectionsForCommon.push($oldSyllabus.sections[i]);
-                            }
-                        }
-                    } // creation
-                    else {
-                        sectionsToReassign = sectionsToReassign.concat($syllabusModified.sections);
-                    }
+			this.getSyllabusRoute = function($id) {
+				return "syllabus/" + $id;
+			};
 
-                    // 1- first check all syllabus and remove sections (present in the syllabus modified) 
-                    for (var i = 0; i < syllabusList.length; i++) {
-                        if (syllabusList[i].id !== $syllabusModified.id) {
-                            for (var j = 0; j < sectionsToReassign.length; j++) {
-                                var index = syllabusList[i].sections.indexOf(sectionsToReassign[j]);
-                                if (index > -1) {
-                                    syllabusList[i].sections.splice(index, 1);
-                                }
-                            }
-                        }
-                    }
+			this.showStatus = function($statusId) {
+				return $translate.instant(config.statusLabel[$statusId]);
+			};
 
-                    // 2- second add orphan sections to the shareable
-                    var commonSyllabus = SyllabusService.getCommonSyllabus();
-                    if ($oldSyllabus) {
-                        commonSyllabus.sections = commonSyllabus.sections.concat(sectionsForCommon);
-                    }
+			this.syllabusService = SyllabusService;
+			this.alertService = AlertService;
+			this.config = config;
 
-                    // 3- remove syllabus if the user does not still have access to it
-                    var sectionsWrite = UserService.getSectionsWrite();
+			this.infos = {};
+			this.disableDelete = true;
 
-                    for (var i = syllabusList.length - 1; i >= 0; i--) {
+			var lastModifiedSyllabus;
+			var lastModifiedSyllabusBeforeUpdate;
+			var objManagement = this;
 
-                        var sectionsSyllabus = syllabusList[i].sections;
-                        var sectionWritePresent = false;
-                        for (var j = 0; j < sectionsWrite.length; j++) {
-                            if (sectionsSyllabus.indexOf(sectionsWrite[j].id) > -1) {
-                                sectionWritePresent = true;
-                                break;
-                            }
-                        }
+			this.userSections = []; // user sections with write permissions
+			this.allSections = []; // all sections
 
-                        if (!UserService.profile.site.permissions.write &&
-                            !syllabusList[i].common &&
-                            syllabusList[i].createdBy !== UserService.profile.userId &&
-                            !sectionWritePresent) {
-                            // remove syllabus from the syllabus list
-                            syllabusList.splice(i, 1);
-                        }
-                    }
-                }
-            };
+			var tthis = this;
 
-            this.updateSyllabusList = function($syllabus) {
-                // update syllabus
-                $syllabus = angular.copy(lastModifiedSyllabus);
+			$scope.$watch('baseDataLoaded', function() {
+				if ($scope.baseDataLoaded) {
+					// get user sections with write permissions
+					for (var i = 0; i < UserService.getProfile().sections.length; i++) {
+						var sectionUser = UserService.getProfile().sections[i];
 
-                // update syllabus list with last modified syllabus as param 
-                updateSyllabusList(lastModifiedSyllabus, lastModifiedSyllabusBeforeUpdate);
-                // reset tmp variables
-                lastModifiedSyllabus = null;
-                lastModifiedSyllabusBeforeUpdate = null;
-            };
+						tthis.allSections.push(angular.copy(sectionUser));
 
-            this.redirectToSyllabus = function($syllabusId) {
-                SyllabusService.setCurrentSyllabusId($syllabusId);
-            };
+						if (sectionUser.permissions.write === true) {
+							tthis.userSections.push(angular.copy(sectionUser));
+						}
+					}
+				}
+			});
+		},
 
-            this.getSyllabusRoute = function($id) {
-                return "syllabus/" + $id;
-            };
+		controllerAs: 'managementCtrl',
 
-            this.showStatus = function ($statusId){
-                return $translate.instant(config.statusLabel[$statusId]) ;
-            };
-
-            $timeout(function() {
-                // anything you want can go here and will safely be run on the next digest.
-                // resize frame (should be done also whenever we change content)
-                if (window.frameElement) {
-                    setMainFrameHeight(window.frameElement.id);
-                }
-            });
-
-        },
-        controllerAs: 'managementCtrl',
-        bindToController: {}
-    };
+		bindToController: {}
+	};
 }]);

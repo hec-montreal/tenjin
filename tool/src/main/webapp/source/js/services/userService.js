@@ -1,16 +1,23 @@
-﻿tenjinApp.service('UserService', ['$resource', function($resource) {
+﻿tenjinApp.service('UserService', ['$resource', '$q', function($resource, $q) {
     'use strict';
 
-    //TODO: la verification du nom du param (et de la validité du param ?) se fera sur le cote client
     var userProvider = $resource('v1/user.json');
 
-
-    /**
-     * load the user profile
-     * @return {Object} Promise
-     */
     this.loadProfile = function() {
-        return userProvider.get();
+        var tthis = this;
+        var def = $q.defer();
+
+        userProvider.get().$promise.then(function(data) {
+            tthis.profile = data;
+
+            console.log("Profile loaded");
+
+            def.resolve(data);
+        }, function(reason) {
+            def.reject(reason);
+        });
+
+        return def.promise;
     };
 
     /**
@@ -33,12 +40,14 @@
      * Get sections with write permissions
      * @return {Object} Sections object 
      */
-    this.getSectionsWrite = function() {
-        if (!this.profile) {
+    this.getSectionsWrite = function(profile) {
+        var p = !profile ? this.profile : profile;
+
+        if (!p) {
             return [];
         }
 
-        return this.profile.sections.filter(function($section) {
+        return p.sections.filter(function($section) {
             return $section.permissions.write === true;
         });
     };
@@ -51,6 +60,7 @@
             return $section.permissions.publish === true;
         });
     };
+
     /**
      * Check if atleast one section of the current user profile has a write permission to true
      * @return {Boolean} True if atleast one section has write permission
@@ -59,5 +69,4 @@
         var sections = this.getSectionsWrite();
         return (sections.length > 0);
     };
-
 }]);

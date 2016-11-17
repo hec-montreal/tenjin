@@ -1,38 +1,13 @@
-@import '../../scss/variables';
-@import '../../scss/global';
-@import '../../scss/icones';
-// @import '../../scss/btn';
+#tenjin {
+	width: 100%;
+	padding-top: 50px;
+}
 
-@import '../leftMenu/leftMenu';
-@import '../contentPanel/contentPanel';
-@import '../mobileMenu/mobileMenu';
-@import '../management/management';
-@import '../home/home';
-@import '../loader/loader';
-@import '../elementButtons/elementButtons';
-
-@import '../element/element';
-@import '../element/biblioElement/biblioElement';
-@import '../element/contactElement/contactElement';
-@import '../element/evaluationElement/evaluationElement';
-@import '../element/examElement/examElement';
-@import '../element/imageElement/imageElement';
-@import '../element/videoElement/videoElement';
-@import '../element/rubricElement/rubricElement';
-
-@import '../../scss/modal/modal';
-@import '../../scss/xeditable/xeditable';
-
-@import '../form/elementForm';
-@import '../form/textElementForm/textElementForm';
-@import '../form/documentElementForm/documentElementForm';
-@import '../form/contactElementForm/contactElementForm';
-@import '../form/hyperlinkElementForm/hyperlinkElementForm';
-@import '../form/evaluationElementForm/evaluationElementForm';
-@import '../form/examElementForm/examElementForm';
-@import '../form/browserElementForm/browserElementForm';
-@import '../form/buttonsForm/buttonsForm';
-@import '../form/imageElementForm/imageElementForm';
-
-@import '../alert/alert';
-@import '../publish/publish';
+.global-loader {
+	background: url('/tenjin-tool/img/desktop/loader.gif') no-repeat;
+	width: 100px;
+	height: 100px;
+	background-size: 100px;
+	margin-left: auto;
+	margin-right: auto;
+}

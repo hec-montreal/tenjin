@@ -1,115 +1,27 @@
-﻿tenjinApp.directive('home', ['$q', '$state', '$timeout', 'config', 'SyllabusService', 'UserService', function($q, $state, $timeout, config, SyllabusService, UserService) {
+﻿tenjinApp.directive('home', ['$state', 'TenjinService', function($state, TenjinService) {
     'use strict';
 
     return {
-        scope: {},
+        scope: true,
 
         restrict: 'E',
 
         templateUrl: 'home/home.html',
 
-        controller: function() {
-            var objHome = this;
+        controller: function($scope) {
+            var tthis = this;
 
-            this.errors = {
-                'loadingProfile': false,
-                'loadingSyllabusList': false,
-                'redirectionError': false
-            };
+            $scope.$watch('baseDataLoaded', function() {
+                if ($scope.baseDataLoaded) {
+                    var redirectionInfos = TenjinService.dispatchUser();
 
-            this.loading = true;
-
-            $timeout(function() {
-                // anything you want can go here and will safely be run on the next digest.
-                // resize frame (should be done also whenever we change content)
-                if (window.frameElement) {
-                    setMainFrameHeight(window.frameElement.id);
+                    if (redirectionInfos) {
+                        $state.go(redirectionInfos.route, redirectionInfos.params);
+                    }
                 }
-            });
-
-            var loadProfileAndSyllabusList = function() {
-                return $q.allSettled([UserService.loadProfile().$promise, SyllabusService.loadSyllabusList().$promise]).then(function(data) {
-
-                    // data first contains the result of the first request (user profile)
-                    if (data[0].state === "rejected") {
-                        objHome.errors.loadingProfile = true;
-                    }
-
-                    if (data[1].state === "rejected") {
-                        objHome.errors.loadingSyllabusList = true;
-                    }
-
-                    // no error during loading
-                    // TODO : if ( data[0].state === "fulfilled" && data[1].state === "fulfilled") {
-                    if (data[0].state === "fulfilled" && data[1].state === "fulfilled") {
-                        // set user profile
-                        var profile = data[0].value;
-                        UserService.setProfile(profile);
-                        // set syllabus list
-                        var syllabusList = data[1].value;
-                        SyllabusService.setSyllabusList(syllabusList);
-
-                        // get redirection rules
-                        var redirectionInfos = getRedirection(profile, syllabusList);
-                        // redirect
-                        if (redirectionInfos) {
-                            $state.go(redirectionInfos.route, redirectionInfos.params);
-                        } else {
-                            // TODO : Error
-                            objHome.errors.redirectionError = true;
-                        }
-
-                    }
-
-                });
-            };
-
-            var getRedirection = function($profile, $syllabusList) {
-                // if there is only 1 course outline (the common in this case) then go to /syllabus
-                if ($syllabusList.length === 1) {
-                    console.debug('Redirect syllabus : Only 1 course outline');
-                    return {
-                        'route': 'syllabus',
-                        'params': {
-                            'id': $syllabusList[0].id
-                        }
-                    };
-
-                } else if ($syllabusList.length > 1) {
-                    // more than 1 course outline and wirte permission on site
-                    // mainly secretary or coordinator
-                    if ($profile.site.permissions.write === true) {
-                        console.debug('Redirect mangement : Many courses outlines + write permissions on site');
-                        return {
-                            'route': 'management'
-                        };
-
-                    } else {
-                        // check if user have sections permissions on atleast one section
-                        if (UserService.hasWritableSection()) {
-                            console.debug('Redirect mangement : Many courses outlines + write permissions on atleast one section');
-                            return {
-                                'route': 'management'
-                            };
-                        }
-
-
-                    }
-
-                }
-
-                return null;
-            };
-
-            // load profile and syllabus list            
-            loadProfileAndSyllabusList().finally(function() {
-                // end of loading
-                objHome.loading = false;
             });
         },
 
-        controllerAs: 'homeCtrl',
-
-        bindToController: {}
+        controllerAs: 'homeCtrl'
     };
 }]);
