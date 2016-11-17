@@ -50,7 +50,7 @@
             'title': $scope.data.name,
             'common': false,
             'templateId': (common ? common.templateId : null),
-            'elements': [],
+            'elements': null,
             'locale': 'fr_CA'
         };
 
