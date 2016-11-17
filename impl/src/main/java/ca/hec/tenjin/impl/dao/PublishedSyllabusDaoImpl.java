@@ -66,6 +66,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
     			continue;
     		}
 
+    		// TODO?: correct the displayOrder in case there are hidden/unavailable elements (otherwise some numbers are skipped in the order)
     		currElement.setDisplayOrder(currElementMapping.getDisplayOrder());
     		
     		// Add current element to the lookup map (only needed if it's composite), or replace the dummy one that was inserted previously
