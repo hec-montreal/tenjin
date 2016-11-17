@@ -122,17 +122,24 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	}
 
 	private AbstractSyllabusElement getProvidedContent (AbstractSyllabusElement element){
-	    Long providerId = element.getProviderId(); 
+		Long providerId = element.getProviderId(); 
+
 		//TODO: mirror provided element to syllabus element
-	    if (providerId != null){
-		OfficialProvider provider =  getHibernateTemplate().get(OfficialProvider.class, providerId);
-		if (provider != null){
-		    //Only title and description are different from the two elements
-		    element.setTitle(provider.getAbstractSyllabusElement().getTitle());
-		    element.setDescription(provider.getAbstractSyllabusElement().getDescription());
+		if (providerId != null) {
+			OfficialProvider provider =  getHibernateTemplate().get(OfficialProvider.class, providerId);
+
+			if (provider != null) {
+				AbstractSyllabusElement providedElement = provider.getAbstractSyllabusElement();
+				// Override title, description, public, important and attributes with the provided values.
+				element.setTitle(providedElement.getTitle());
+				element.setDescription(providedElement.getDescription());
+				element.setPublicElement(providedElement.getPublicElement());
+				element.setImportant(providedElement.getImportant());
+				element.setAttributes(new HashMap<String, String>(providedElement.getAttributes()));
+			}
 		}
-	    }
-	    return element;
+
+		return element;
 	}
 	
 	@SuppressWarnings("unchecked")
