@@ -11,14 +11,24 @@ tenjinApp.controller('PublishCtrl', ['$scope', '$translate', 'ngDialog', 'UserSe
 		$scope.publishing=true;
 		ngDialog.close();
 		ngDialog.openConfirm({ 
-         	template: '<div class="publish-dialog-loader-container"><div class="publish-dialog-loader"></div></div>',
-    		plain: true,
+         	template: 'publish/publishing.html',
           	className: 'ngdialog-theme-default',
-          	height: 400,
-          	width: 600,
+          	height: 300,
+          	width: 400,
            	controller: 'PublishCtrl'  });
   
-  		//return SyllabusService.publish();
+  	    SyllabusService.publish().$promise.then(function($data) {
+           var publishedSyllabus = $data;
+           ngDialog.close();
+           ngDialog.openConfirm({ 
+          	template: 'publish/postPublish.html',
+          	height: 300,
+          	width: 400,
+           	controller: 'PublishCtrl'  });
+        
+        }, function($error) {
+            AlertService.display('danger');
+        });;
   	};
 
   	$scope.hasPublicationDate = function(){
@@ -30,10 +40,10 @@ tenjinApp.controller('PublishCtrl', ['$scope', '$translate', 'ngDialog', 'UserSe
 
     $scope.openPublishDialog= function(){
          ngDialog.openConfirm({ 
-         	template: 'publish/publish.html',
+         	template: 'publish/prePublish.html',
           	className: 'ngdialog-theme-default',
-          	height: 400,
-          	width: 600,
+          	height: 300,
+          	width: 400,
            	controller: 'PublishCtrl'  });
         
     };

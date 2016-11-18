@@ -43,13 +43,7 @@
 
     this.publish = function() {
         return publishSyllabusProvider.get({
-            id: this.syllabus.id
-        }).$promise.then(function($data) {
-            var publishedSyllabus = $data;
-            AlertService.display('success', $translate.instant('PUBLISHED_SYLLABUS'));
-        }, function($error) {
-            AlertService.display('danger');
-        });
+            id: this.syllabus.id})
 
     };
 

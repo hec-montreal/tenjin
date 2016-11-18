@@ -25,8 +25,6 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
         item: TreeService.selectedItem,
 
         accept: function(sourceNodeScope, destNodesScope, destIndex) {
-            console.log("accept: " + destIndex);
-
             // test if nodes come from the same tree
             if (sourceNodeScope.treeOptions.name === destNodesScope.treeOptions.name) {
                 if (destNodesScope.item) {
