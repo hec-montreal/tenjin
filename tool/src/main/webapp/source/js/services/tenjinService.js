@@ -42,5 +42,8 @@ tenjinApp.service("TenjinService", ["$q", "$state", "UserService", "SyllabusServ
 		}
 
 		return ret;
-	}
+	};
+
+	window.UserService = UserService;
+	window.SyllabusService = SyllabusService;
 }]);
