@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import ca.hec.tenjin.api.PublishService;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusService;
-import ca.hec.tenjin.api.PublishService;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
@@ -31,6 +31,7 @@ import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -94,10 +95,9 @@ public class SyllabusController {
 
 	@RequestMapping(value = "/syllabus", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Syllabus>> getSyllabusList(@RequestParam(value = "siteId", required = false) String siteId) throws DeniedAccessException, NoSyllabusException {
-
 		List<Syllabus> syllabusList = null;
 
-		// if site from request is null, use the context
+		// If site from request is null, use the context
 		siteId = (siteId != null ? siteId : sakaiProxy.getCurrentSiteId());
 		String currentUserId = sakaiProxy.getCurrentUserId();
 
@@ -123,14 +123,26 @@ public class SyllabusController {
 		}
 
 		return new ResponseEntity<List<Syllabus>>(syllabusList, HttpStatus.OK);
+	}
 
+	@RequestMapping(value = "/syllabus/published", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<List<PublishedSyllabus>> getPublishedSyllabusList(@RequestParam(value = "siteId", required = false) String siteId) {
+		List<PublishedSyllabus> ret = null;
+
+		if (siteId == null) {
+			siteId = sakaiProxy.getCurrentSiteId();
+		}
+
+		ret = publishService.getPublishedSyllabusList(siteId);
+
+		return new ResponseEntity<List<PublishedSyllabus>>(ret, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/syllabus", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 		return syllabusService.createOrUpdateSyllabus(syllabus);
 	}
-	
+
 	@RequestMapping(value = "/syllabus/{ids}/delete", method = RequestMethod.GET)
 	public void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 		for (Long id : syllabusId) {
@@ -140,26 +152,19 @@ public class SyllabusController {
 
 	@RequestMapping(value = "/syllabus/{id}/publish", method = RequestMethod.GET)
 	public ResponseEntity<String> publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
-		
 		try {
 			publishService.publishSyllabus(syllabusId);
+		} catch (NoPublishedSyllabusException e) {
+			return new ResponseEntity<String>(msgs.getString("tenjin.error.commonSyllabusUnpublished"), HttpStatus.FORBIDDEN);
 		}
-		catch (NoPublishedSyllabusException e) {
-			return new ResponseEntity<String>(
-					msgs.getString("tenjin.error.commonSyllabusUnpublished"),
-					HttpStatus.FORBIDDEN);
-		}
-		
+
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/syllabus/{syllabusId}", method = RequestMethod.GET)
-	public @ResponseBody AbstractSyllabus getSyllabus(
-			@PathVariable Long syllabusId, 
-			@RequestParam(required = false) boolean published) throws NoSyllabusException {
-		
+	public @ResponseBody AbstractSyllabus getSyllabus(@PathVariable Long syllabusId, @RequestParam(required = false) boolean published) throws NoSyllabusException {
 		if (published) {
-			return publishService.getPublishedSyllabus(syllabusId);			
+			return publishService.getPublishedSyllabus(syllabusId);
 		} else {
 			return syllabusService.getSyllabus(syllabusId);
 		}
@@ -167,7 +172,6 @@ public class SyllabusController {
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException {
-
 		return syllabusService.createOrUpdateSyllabus(syllabus);
 	}
 

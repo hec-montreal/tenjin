@@ -43,6 +43,15 @@ public interface PublishedSyllabusDao {
 	public PublishedSyllabus getPublishedSyllabus(Long id, boolean includeElements) throws NoSyllabusException;
 		
 	/**
+	 * Retrieve a published syllabus by id with it's structured elements
+	 * 
+	 * @param Long id
+	 * @return The syllabus, and it's organized sub-elements
+	 * @throws NoSyllabusException 
+	 */
+	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId);
+	
+	/**
 	 * Delete a published syllabus by it's id.  If it's the common syllabus for the site, 
 	 * delete all the common elements and all their mappings.  Otherwise delete all mappings for the syllabus and 
 	 * it's non-common elements.
