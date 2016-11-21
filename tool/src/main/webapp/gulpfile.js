@@ -33,7 +33,7 @@ gulp.task("css:fonts", function() {
 });
 
 gulp.task("css:sass", function() {
-	return gulp.src("./source/components/syllabus/syllabus.scss")
+	return gulp.src("./source/scss/tenjin.scss")
 		.pipe(sass().on("error", sass.logError))
 		.pipe(gulp.dest("./dest/css"));
 });

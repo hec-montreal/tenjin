@@ -1,0 +1,37 @@
+@import './variables';
+@import './global';
+@import './icones';
+@import './modal/modal';
+@import './xeditable/xeditable';
+
+@import '../components/leftMenu/leftMenu';
+@import '../components/contentPanel/contentPanel';
+@import '../components/mobileMenu/mobileMenu';
+@import '../components/management/management';
+@import '../components/home/home';
+@import '../components/loader/loader';
+@import '../components/elementButtons/elementButtons';
+@import '../components/tenjin/tenjin';
+
+@import '../components/element/element';
+@import '../components/element/biblioElement/biblioElement';
+@import '../components/element/contactElement/contactElement';
+@import '../components/element/evaluationElement/evaluationElement';
+@import '../components/element/examElement/examElement';
+@import '../components/element/imageElement/imageElement';
+@import '../components/element/videoElement/videoElement';
+@import '../components/element/rubricElement/rubricElement';
+
+@import '../components/form/elementForm';
+@import '../components/form/textElementForm/textElementForm';
+@import '../components/form/documentElementForm/documentElementForm';
+@import '../components/form/contactElementForm/contactElementForm';
+@import '../components/form/hyperlinkElementForm/hyperlinkElementForm';
+@import '../components/form/evaluationElementForm/evaluationElementForm';
+@import '../components/form/examElementForm/examElementForm';
+@import '../components/form/browserElementForm/browserElementForm';
+@import '../components/form/buttonsForm/buttonsForm';
+@import '../components/form/imageElementForm/imageElementForm';
+
+@import '../components/alert/alert';
+@import '../components/publish/publish';
