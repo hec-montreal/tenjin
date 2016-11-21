@@ -125,8 +125,22 @@
 		return def.promise;
 	};
 
-	this.loadPublishedSyllabusList = function() {
+	this.loadPublishedSyllabus = function(id) {
+		var tthis = this;
 		var def = $q.defer();
+
+		$http({
+			method: 'GET',
+			url: 'v1/syllabus/' + id + '.json?published=true'
+		}).then(function(response) {
+			tthis.setSyllabus(response.data);
+
+			def.resolve(tthis.getSyllabus());
+		}, function(reason) {
+			def.reject(reason);
+		});
+
+		return def.promise;
 	};
 
 	this.loadSyllabusList = function() {
@@ -136,7 +150,25 @@
 		sylProviderList.get().$promise.then(function(data) {
 			tthis.setSyllabusList(data);
 
-			def.resolve(data);
+			def.resolve(tthis.getSyllabusList());
+		}, function(reason) {
+			def.reject(reason);
+		});
+
+		return def.promise;
+	};
+
+	this.loadPublishedSyllabusList = function() {
+		var tthis = this;
+		var def = $q.defer();
+
+		$http({
+			method: 'GET',
+			url: 'v1/syllabus/published.json'
+		}).then(function(response) {
+			tthis.setSyllabusList(response.data);
+
+			def.resolve(tthis.getSyllabusList());
 		}, function(reason) {
 			def.reject(reason);
 		});
@@ -243,7 +275,7 @@
 			syllabus.$writePermission = true;
 		} else {
 			if (syllabus.common === true) {
-				$yllabus.$writePermission = false;
+				syllabus.$writePermission = false;
 			} else {
 				if (syllabus.createdBy === profile.userId || sectionWritePresent) {
 					syllabus.$writePermission = true;

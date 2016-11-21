@@ -14,7 +14,12 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 			dataToLoad.push(SyllabusService.loadTemplate());
 			dataToLoad.push(ResourcesService.loadResources(siteId));
 			dataToLoad.push(SakaiToolsService.loadToolEntities(siteId));
-			dataToLoad.push(SyllabusService.loadSyllabusList());
+
+			if (UserService.isStudent()) {
+				dataToLoad.push(SyllabusService.loadPublishedSyllabusList());
+			} else {
+				dataToLoad.push(SyllabusService.loadSyllabusList());
+			}
 
 			$q.allSettled(dataToLoad).then(function() {
 				// Finally load the citations
@@ -34,7 +39,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 
 					// Everything is loaded
 					def.resolve();
-					
+
 				}).catch(function(e) {
 					def.reject(e);
 				});

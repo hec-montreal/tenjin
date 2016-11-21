@@ -34,8 +34,7 @@
             <button class="btn btn-primary" type="button" data-ng-disabled="(!syllabusService.dirty || syllabusService.working)" data-ng-click="save()">{{ 'BUTTON_SAVE' | translate }}</button>
         </span>  
         <!-- PUBLISH -->
-        <!-- TODO: ajouter la condition d'affichage -->
-        <span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$publishPermission" >
+        <span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$writePermission && syllabusService.syllabus.$publishPermission" >
             <!-- TODO: ajouter la condition d'activation 
             <button class="btn btn-primary" type="button" data-ng-click="syllabusService.publish(syllabus)">{{ 'BUTTON_PUBLISH' | translate }}</button>-->
             <button class="btn btn-primary" data-ng-controller= "PublishCtrl" type="button" data-ng-click="openPublishDialog()"> {{ 'BUTTON_PUBLISH' | translate }} </button>

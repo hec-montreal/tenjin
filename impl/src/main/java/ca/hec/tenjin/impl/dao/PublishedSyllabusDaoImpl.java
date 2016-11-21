@@ -46,7 +46,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId) {
-		return (List<PublishedSyllabus>) getHibernateTemplate().find("from PublishedSyllabus where site_id = ? and deleted = false", siteId);
+		return (List<PublishedSyllabus>) getHibernateTemplate().find("from PublishedSyllabus where site_id = ? and publishedDate <> null and deleted = false", siteId);
 	}
 
 	@Override

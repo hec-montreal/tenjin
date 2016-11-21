@@ -6,7 +6,7 @@
 
         restrict: 'E',
 
-        templateUrl: 'home/home.html',
+        template: '<section class="home"></section>',
 
         controller: function($scope) {
             var tthis = this;
