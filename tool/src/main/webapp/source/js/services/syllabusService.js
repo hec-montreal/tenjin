@@ -606,11 +606,8 @@
 	 * @param {Object} $infosNumerotation Param inout with properties (nbLecture, nbTutorial, nbEvalAndExam)
 	 */
 	var numerotationSyllabus = function($rootTree, $infosNumerotation) {
-
 		if ($rootTree.elements) {
-
 			for (var i = 0; i < $rootTree.elements.length; i++) {
-
 				if ($rootTree.elements[i].type === "lecture") {
 					$infosNumerotation.nbLecture++;
 					$rootTree.elements[i].$numero = $infosNumerotation.nbLecture;
@@ -621,12 +618,10 @@
 				} else if ($rootTree.elements[i].type === "evaluation" || $rootTree.elements[i].type === "exam") {
 					$rootTree.elements[i].$numero = $infosNumerotation.nbEvalAndExam++;
 				}
+
 				numerotationSyllabus($rootTree.elements[i], $infosNumerotation);
 			}
-
-
 		}
-
 	};
 
 	/**

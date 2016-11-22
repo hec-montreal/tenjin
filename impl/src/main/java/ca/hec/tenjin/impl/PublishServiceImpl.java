@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 import org.apache.commons.logging.Log;
@@ -17,6 +18,7 @@ import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.UnknownElementTypeException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCitationElement;
@@ -56,6 +58,28 @@ import lombok.Setter;
 public class PublishServiceImpl implements PublishService {
 	private Log log = LogFactory.getLog(PublishServiceImpl.class);
 
+	// Elements -> PublishedElement mapping
+	static final Map<String, Class<?>> ELEMENTS_PUBLICATION_MAPPING;
+	
+	static {
+		ELEMENTS_PUBLICATION_MAPPING = new HashMap<>();
+		
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusCitationElement.class.getName(), PublishedCitationElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusCompositeElement.class.getName(), PublishedCompositeElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusContactInfoElement.class.getName(), PublishedContactInfoElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusDocumentElement.class.getName(), PublishedDocumentElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusEvaluationElement.class.getName(), PublishedEvaluationElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusExamElement.class.getName(), PublishedExamElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusHyperlinkElement.class.getName(), PublishedHyperlinkElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusImageElement.class.getName(), PublishedImageElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusLectureElement.class.getName(), PublishedLectureElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusRubricElement.class.getName(), PublishedRubricElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusSakaiToolElement.class.getName(), PublishedSakaiToolElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusTextElement.class.getName(), PublishedTextElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusTutorialElement.class.getName(), PublishedTutorialElement.class);
+		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusVideoElement.class.getName(), PublishedVideoElement.class);
+	}
+	
 	@Setter
 	PublishedSyllabusDao publishedSyllabusDao;
 
@@ -80,7 +104,7 @@ public class PublishServiceImpl implements PublishService {
 
 	@Override
 	@Transactional
-	public void publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException {
+	public void publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException {
 
 		Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
 
@@ -189,39 +213,19 @@ public class PublishServiceImpl implements PublishService {
 		}
 	}
 
-	private AbstractPublishedSyllabusElement publishElement(AbstractSyllabusElement syllabusElement, Long newParentId) {
+	private AbstractPublishedSyllabusElement publishElement(AbstractSyllabusElement syllabusElement, Long newParentId) throws UnknownElementTypeException {
 
 		AbstractPublishedSyllabusElement publishedElement = null;
-
-		// TODO could probably make this more dynamic
-		if (syllabusElement instanceof SyllabusCitationElement) {
-			publishedElement = new PublishedCitationElement();
-		} else if (syllabusElement instanceof SyllabusCompositeElement) {
-			publishedElement = new PublishedCompositeElement();
-		} else if (syllabusElement instanceof SyllabusContactInfoElement) {
-			publishedElement = new PublishedContactInfoElement();
-		} else if (syllabusElement instanceof SyllabusDocumentElement) {
-			publishedElement = new PublishedDocumentElement();
-		} else if (syllabusElement instanceof SyllabusEvaluationElement) {
-			publishedElement = new PublishedEvaluationElement();
-		} else if (syllabusElement instanceof SyllabusExamElement) {
-			publishedElement = new PublishedExamElement();
-		} else if (syllabusElement instanceof SyllabusHyperlinkElement) {
-			publishedElement = new PublishedHyperlinkElement();
-		} else if (syllabusElement instanceof SyllabusImageElement) {
-			publishedElement = new PublishedImageElement();
-		} else if (syllabusElement instanceof SyllabusLectureElement) {
-			publishedElement = new PublishedLectureElement();
-		} else if (syllabusElement instanceof SyllabusRubricElement) {
-			publishedElement = new PublishedRubricElement();
-		} else if (syllabusElement instanceof SyllabusSakaiToolElement) {
-			publishedElement = new PublishedSakaiToolElement();
-		} else if (syllabusElement instanceof SyllabusTextElement) {
-			publishedElement = new PublishedTextElement();
-		} else if (syllabusElement instanceof SyllabusTutorialElement) {
-			publishedElement = new PublishedTutorialElement();
-		} else if (syllabusElement instanceof SyllabusVideoElement) {
-			publishedElement = new PublishedVideoElement();
+		Class<?> publishedElementClass = ELEMENTS_PUBLICATION_MAPPING.get(syllabusElement.getClass().getName());
+		
+		if(publishedElementClass == null) {
+			throw new UnknownElementTypeException("Element with type " + syllabusElement.getClass().getName() + " has no known published mapping");
+		}
+		
+		try	{
+			publishedElement = (AbstractPublishedSyllabusElement) publishedElementClass.newInstance();
+		} catch(Exception e) {
+			throw new UnknownElementTypeException("Cannot instantiate published element of type " + publishedElementClass.getName());
 		}
 
 		publishedElement.copy(syllabusElement);

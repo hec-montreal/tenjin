@@ -26,9 +26,9 @@ import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
-import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.SyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
@@ -154,7 +154,7 @@ public class SyllabusController {
 	public ResponseEntity<String> publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 		try {
 			publishService.publishSyllabus(syllabusId);
-		} catch (NoPublishedSyllabusException e) {
+		} catch (SyllabusException e) {
 			return new ResponseEntity<String>(msgs.getString("tenjin.error.commonSyllabusUnpublished"), HttpStatus.FORBIDDEN);
 		}
 

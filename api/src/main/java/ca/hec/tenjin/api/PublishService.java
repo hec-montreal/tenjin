@@ -4,6 +4,7 @@ import java.util.List;
 
 import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.UnknownElementTypeException;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 
 /**
@@ -37,7 +38,8 @@ public interface PublishService {
 	 * 
 	 * @param syllabusId
 	 * @throws NoSyllabusException
+	 * @throws UnknownElementTypeException 
 	 */
-	public void publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException;
+	public void publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException;
 
 }
