@@ -43,8 +43,12 @@
                 url: '/management',
                 template: '<management></management>'
             })
-            .state('syllabus', {
+            .state('syllabus-edit', {
                 url: '/syllabus/:id',
+                templateUrl: 'syllabus/syllabus.html'
+            })
+            .state('syllabus-published', {
+                url: '/syllabus',
                 templateUrl: 'syllabus/syllabus.html'
             });
     });

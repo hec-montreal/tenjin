@@ -126,13 +126,13 @@
 		return def.promise;
 	};
 
-	this.loadPublishedSyllabus = function(id) {
+	this.loadPublishedSyllabus = function() {
 		var tthis = this;
 		var def = $q.defer();
 
 		$http({
 			method: 'GET',
-			url: 'v1/syllabus/' + id + '.json?published=true'
+			url: 'v1/syllabus/published.json'
 		}).then(function(response) {
 			tthis.setSyllabus(response.data);
 
@@ -607,11 +607,8 @@
 	 * @param {Object} $infosNumerotation Param inout with properties (nbLecture, nbTutorial, nbEvalAndExam)
 	 */
 	var numerotationSyllabus = function($rootTree, $infosNumerotation) {
-
 		if ($rootTree.elements) {
-
 			for (var i = 0; i < $rootTree.elements.length; i++) {
-
 				if ($rootTree.elements[i].type === "lecture") {
 					$infosNumerotation.nbLecture++;
 					$rootTree.elements[i].$numero = $infosNumerotation.nbLecture;
@@ -622,12 +619,10 @@
 				} else if ($rootTree.elements[i].type === "evaluation" || $rootTree.elements[i].type === "exam") {
 					$rootTree.elements[i].$numero = $infosNumerotation.nbEvalAndExam++;
 				}
+
 				numerotationSyllabus($rootTree.elements[i], $infosNumerotation);
 			}
-
-
 		}
-
 	};
 
 	/**

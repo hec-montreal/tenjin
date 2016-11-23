@@ -1,40 +1,30 @@
-<script type="text/ng-template" id="nodes_renderer.html">
+<!-- Node renderer -->
+<script type="text/ng-template" id="node-renderer.html">
+	<!-- Display items composite, evaluation, exam, lecture and tutorial -->
+	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu">
+		<a data-nodrag data-ng-click="treeService.setSelectedItem(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }">
+			<span data-ng-if="item.type === 'evaluation' || item.type ==='exam'">{{$index + 1}}&nbsp;-&nbsp;</span>
+			<span data-ng-if="item.type === 'lecture' || item.type === 'tutorial'">{{item.$numero}}&nbsp;-&nbsp;</span>
+			{{item.title}}
+		</a>
 
-  <!-- Display items composite, evaluation, exam, lecture and tutorial -->
-  <span data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu">
-    <a data-nodrag data-ng-click="treeService.setSelectedItem(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }" >
-      <span data-ng-if="item.type === 'evaluation' || item.type ==='exam'">{{$index+1}} - </span>
-      <span data-ng-if="item.type === 'lecture' || item.type === 'tutorial'">{{item.$numero}} - </span>
-      {{item.title}}
-    </a> 
+		<!-- No drag and drop for the first level element -->
+		<span ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.parentId"></span>
+	</div>
 
-     <!-- No drag and drop for the first level element -->
-    <span ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.parentId"></span>
-  </span>
-
-  <ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-if="item.type === 'composite'">
-    <li ui-tree-handle data-ng-repeat="item in item.elements" ui-tree-node data-ng-include="'nodes_renderer.html'">
-    </li>
-  </ol>
-
+	<ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-if="item.type === 'composite'">
+		<li ui-tree-handle data-ng-repeat="item in item.elements" ui-tree-node data-ng-include="'node-renderer.html'"></li>
+	</ol>
 </script>
 
-
 <section class="left-menu-section" data-ng-controller='LeftMenuCtrl'>  
+	<div class='title'>
+	{{ 'MENU_LABEL' | translate }}
+	</div>
 
-    <div class='title'>
-      {{ 'MENU_LABEL' | translate }}
-    </div>
-
-    <!-- <div ui-tree data-drag-enabled="true"> -->
-    <!-- <div ui-tree="treeOptions" data-drag-enabled="false"> -->
-    <div ui-tree="treeOptions" data-drag-enabled="true">
-
-      <ol ui-tree-nodes="" ng-model="syllabusService.syllabus.elements">
-        <li data-ng-repeat="item in syllabusService.syllabus.elements" ui-tree-node ng-include="'nodes_renderer.html'"></li>          
-      </ol>
-
-    </div>
-
-
+	<div ui-tree="treeOptions" data-drag-enabled="true">
+		<ol ui-tree-nodes="" ng-model="syllabusService.syllabus.elements">
+			<li data-ng-repeat="item in syllabusService.syllabus.elements" ui-tree-node ng-include="'node-renderer.html'"></li>          
+		</ol>
+	</div>
 </section>

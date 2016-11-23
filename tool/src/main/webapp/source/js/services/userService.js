@@ -31,10 +31,6 @@
 		return this.profile;
 	};
 
-	this.isStudent = function() {
-		return this.profile.site.permissions.read === false;
-	};
-
 	/**
 	 * Get sections with write permissions
 	 * @return {Object} Sections object 

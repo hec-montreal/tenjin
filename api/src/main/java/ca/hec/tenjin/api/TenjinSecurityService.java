@@ -2,6 +2,7 @@ package ca.hec.tenjin.api;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 
@@ -36,7 +37,7 @@ public interface TenjinSecurityService {
 	 * @param permissions Get the permissions (optional)
 	 * @return
 	 */
-	public List<Object> getSections(boolean permissions);
+	public List<Map<String, Object>> getSections(boolean permissions);
 
 	
 	/**

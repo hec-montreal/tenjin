@@ -45,8 +45,53 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId) {
-		return (List<PublishedSyllabus>) getHibernateTemplate().find("from PublishedSyllabus where site_id = ? and publishedDate <> null and deleted = false", siteId);
+	public PublishedSyllabus getPublishedSyllabusOrNull(String siteId, String sectionId) {
+		List<PublishedSyllabus> lst = (List<PublishedSyllabus>) getHibernateTemplate().find("from PublishedSyllabus where site_id = ? and publishedDate <> null and deleted = false", siteId);
+
+		if (lst.size() == 0) {
+			return null;
+		}
+
+		PublishedSyllabus ret = null;
+
+		// If sectionId is specified, try to get the published version for this
+		// section
+		if (sectionId != null && sectionId.length() > 0) {
+			for (PublishedSyllabus p : lst) {
+				for (String section : p.getSections()) {
+					if (section.equals(sectionId)) {
+						ret = p;
+
+						break;
+					}
+				}
+
+				if (ret != null) {
+					break;
+				}
+			}
+		}
+
+		// At this point, if ret is null, either no sectionId was specified or
+		// no syllabus was found for the sectionId so we try to fetch the common
+		// syllabus
+		if (ret == null) {
+			for (PublishedSyllabus p : lst) {
+				if (p.getCommon()) {
+					ret = p;
+
+					break;
+				}
+			}
+		}
+
+		if (ret != null) {
+			ret.setElements(getStructuredPublishedSyllabusElements(ret.getId()));
+		}
+
+		// If ret is still null here, no valid published syllabus was found
+
+		return ret;
 	}
 
 	@Override
@@ -118,7 +163,6 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 	}
 
 	private boolean isElementAvailable(AbstractPublishedSyllabusElement element) {
-
 		Map<String, String> attributes = null;
 
 		if (element instanceof PublishedDocumentElement) {

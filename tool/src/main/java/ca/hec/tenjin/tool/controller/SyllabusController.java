@@ -1,6 +1,7 @@
 package ca.hec.tenjin.tool.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -26,9 +27,9 @@ import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
-import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.SyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
@@ -90,7 +91,6 @@ public class SyllabusController {
 	public void init() {
 		// retrieve ui and co messages
 		msgs = new ResourceLoader("tenjin");
-
 	}
 
 	@RequestMapping(value = "/syllabus", method = RequestMethod.GET)
@@ -125,19 +125,25 @@ public class SyllabusController {
 		return new ResponseEntity<List<Syllabus>>(syllabusList, HttpStatus.OK);
 	}
 
+	/**
+	 * Returns the published syllabus for a user
+	 * 
+	 * @param siteId
+	 * @return
+	 * @throws NoSyllabusException
+	 */
 	@RequestMapping(value = "/syllabus/published", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<List<PublishedSyllabus>> getPublishedSyllabusList(@RequestParam(value = "siteId", required = false) String siteId) {
-		List<PublishedSyllabus> ret = null;
+	public @ResponseBody ResponseEntity<PublishedSyllabus> getUserPublishedSyllabus() throws NoSyllabusException {
+		List<Map<String, Object>> sections = securityService.getSections(true);
+		String sectionId = null;
 
-		if (siteId == null) {
-			siteId = sakaiProxy.getCurrentSiteId();
+		if (sections.size() > 0) {
+			sectionId = (String) sections.get(0).get("id");
 		}
 
-		ret = publishService.getPublishedSyllabusList(siteId);
-
-		return new ResponseEntity<List<PublishedSyllabus>>(ret, HttpStatus.OK);
+		return new ResponseEntity<PublishedSyllabus>(publishService.getPublishedSyllabus(sakaiProxy.getCurrentSiteId(), sectionId), HttpStatus.OK);
 	}
-
+	
 	@RequestMapping(value = "/syllabus", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 		return syllabusService.createOrUpdateSyllabus(syllabus);
@@ -154,7 +160,7 @@ public class SyllabusController {
 	public ResponseEntity<String> publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 		try {
 			publishService.publishSyllabus(syllabusId);
-		} catch (NoPublishedSyllabusException e) {
+		} catch (SyllabusException e) {
 			return new ResponseEntity<String>(msgs.getString("tenjin.error.commonSyllabusUnpublished"), HttpStatus.FORBIDDEN);
 		}
 

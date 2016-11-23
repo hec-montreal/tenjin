@@ -11,15 +11,15 @@ tenjinApp.directive('tenjin', ['TenjinService', function(TenjinService) {
 				$scope.globalLoading = true;
 			};
 
-			$scope.hideGlobalLoading = function () {
+			$scope.hideGlobalLoading = function() {
 				$scope.globalLoading = false;
 			};
 
 			$scope.baseDataLoaded = false;
-			
+
 			$scope.showGlobalLoading();
 
-			TenjinService.loadBaseData().then(function() {
+			TenjinService.loadData().then(function() {
 				$scope.baseDataLoaded = true;
 				$scope.hideGlobalLoading();
 			});
