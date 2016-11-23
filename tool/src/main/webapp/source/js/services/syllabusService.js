@@ -8,6 +8,7 @@
 
 	this.dirty = false;
 	this.working = false;
+    this.published = false;
 
 	// variable used to look through the syllabus tree
 	this.navigation = {

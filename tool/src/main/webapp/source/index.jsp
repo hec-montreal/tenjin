@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="/tenjin-tool/lib/css/ngDialog-theme-default.css"/>
 
 		<link rel="stylesheet" href="/tenjin-tool/css/tenjin.css"/>
+		
 
 		<!-- include sakai scripts (for resizing frame, etc). includes ckeditor -->
 		<%= request.getAttribute("sakai.html.head.js") %>
