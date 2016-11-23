@@ -27,7 +27,7 @@ import lombok.Setter;
 
 @Setter
 public class SakaiProxyImpl implements SakaiProxy {
-	
+
 	private Log log = LogFactory.getLog(SakaiProxyImpl.class);
 
 	private SessionManager sessionManager;
@@ -41,9 +41,9 @@ public class SakaiProxyImpl implements SakaiProxy {
 	private ContentHostingService contentHostingService;
 
 	public void init() {
-		
+
 		List<String> registered = functionManager.getRegisteredFunctions();
-		
+
 		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ)) {
 			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ, true);
 		}
@@ -55,23 +55,22 @@ public class SakaiProxyImpl implements SakaiProxy {
 			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_PUBLISH, true);
 		}
 
-
 	}
-	
+
 	/**
- 	* {@inheritDoc}
- 	*/
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isSuperUser() {
 		return securityService.isSuperUser();
 	}
 
 	/**
- 	* {@inheritDoc}
- 	*/
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void postEvent(String event,String reference,boolean modify) {
-		eventTrackingService.post(eventTrackingService.newEvent(event,reference,modify));
+	public void postEvent(String event, String reference, boolean modify) {
+		eventTrackingService.post(eventTrackingService.newEvent(event, reference, modify));
 	}
 
 	/**
@@ -85,15 +84,16 @@ public class SakaiProxyImpl implements SakaiProxy {
 	@Override
 	public String getCurrentUserName() {
 		User u = null;
+
 		try {
 			u = userDirectoryService.getUser(sessionManager.getCurrentSessionUserId());
 		} catch (UserNotDefinedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return u.getDisplayName();
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -110,16 +110,16 @@ public class SakaiProxyImpl implements SakaiProxy {
 	public String getCurrentSiteLocale() {
 
 		String siteId = toolManager.getCurrentPlacement().getContext();
-        Site currentSite = getSite(siteId);
+		Site currentSite = getSite(siteId);
 
-        if (currentSite != null) {
-            String locale = currentSite.getProperties().getProperty("locale_string");
-            if (locale != null) {
-                return locale;
-            }
-        }
+		if (currentSite != null) {
+			String locale = currentSite.getProperties().getProperty("locale_string");
+			if (locale != null) {
+				return locale;
+			}
+		}
 
-        return null;
+		return null;
 	}
 
 	@Override
@@ -133,19 +133,24 @@ public class SakaiProxyImpl implements SakaiProxy {
 	}
 
 	/**
-	 * Calls the SecurityService unlock method. This is the method you must use in order for Delegated Access to work.
-	 * Note that the SecurityService automatically handles super users.
+	 * Calls the SecurityService unlock method. This is the method you must use
+	 * in order for Delegated Access to work. Note that the SecurityService
+	 * automatically handles super users.
 	 * 
-	 * @param userId		user uuid
-	 * @param function  	permission to check for
-	 * @param reference		reference to entity. The getReference() method should get you out of trouble.
-	 * @return				true if user has permission, false otherwise
+	 * @param userId
+	 *            user uuid
+	 * @param function
+	 *            permission to check for
+	 * @param reference
+	 *            reference to entity. The getReference() method should get you
+	 *            out of trouble.
+	 * @return true if user has permission, false otherwise
 	 */
 	@Override
 	public boolean isAllowed(String userId, String function, String reference) {
-		return securityService.unlock(userId, function,  reference);
+		return securityService.unlock(userId, function, reference);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -163,5 +168,4 @@ public class SakaiProxyImpl implements SakaiProxy {
 		}
 		return null;
 	}
-
 }

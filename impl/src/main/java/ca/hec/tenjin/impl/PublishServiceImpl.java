@@ -60,10 +60,10 @@ public class PublishServiceImpl implements PublishService {
 
 	// Elements -> PublishedElement mapping
 	static final Map<String, Class<?>> ELEMENTS_PUBLICATION_MAPPING;
-	
+
 	static {
 		ELEMENTS_PUBLICATION_MAPPING = new HashMap<>();
-		
+
 		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusCitationElement.class.getName(), PublishedCitationElement.class);
 		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusCompositeElement.class.getName(), PublishedCompositeElement.class);
 		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusContactInfoElement.class.getName(), PublishedContactInfoElement.class);
@@ -79,7 +79,7 @@ public class PublishServiceImpl implements PublishService {
 		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusTutorialElement.class.getName(), PublishedTutorialElement.class);
 		ELEMENTS_PUBLICATION_MAPPING.put(SyllabusVideoElement.class.getName(), PublishedVideoElement.class);
 	}
-	
+
 	@Setter
 	PublishedSyllabusDao publishedSyllabusDao;
 
@@ -98,8 +98,14 @@ public class PublishServiceImpl implements PublishService {
 	}
 
 	@Override
-	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId) {
-		return publishedSyllabusDao.getPublishedSyllabusList(siteId);
+	public PublishedSyllabus getPublishedSyllabus(String siteId, String sectionId) throws NoSyllabusException {
+		PublishedSyllabus ret = publishedSyllabusDao.getPublishedSyllabusOrNull(siteId, sectionId);
+
+		if (ret == null) {
+			throw new NoSyllabusException();
+		}
+
+		return ret;
 	}
 
 	@Override
@@ -217,14 +223,14 @@ public class PublishServiceImpl implements PublishService {
 
 		AbstractPublishedSyllabusElement publishedElement = null;
 		Class<?> publishedElementClass = ELEMENTS_PUBLICATION_MAPPING.get(syllabusElement.getClass().getName());
-		
-		if(publishedElementClass == null) {
+
+		if (publishedElementClass == null) {
 			throw new UnknownElementTypeException("Element with type " + syllabusElement.getClass().getName() + " has no known published mapping");
 		}
-		
-		try	{
+
+		try {
 			publishedElement = (AbstractPublishedSyllabusElement) publishedElementClass.newInstance();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			throw new UnknownElementTypeException("Cannot instantiate published element of type " + publishedElementClass.getName());
 		}
 

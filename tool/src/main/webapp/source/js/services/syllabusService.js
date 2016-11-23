@@ -125,13 +125,13 @@
 		return def.promise;
 	};
 
-	this.loadPublishedSyllabus = function(id) {
+	this.loadPublishedSyllabus = function() {
 		var tthis = this;
 		var def = $q.defer();
 
 		$http({
 			method: 'GET',
-			url: 'v1/syllabus/' + id + '.json?published=true'
+			url: 'v1/syllabus/published.json'
 		}).then(function(response) {
 			tthis.setSyllabus(response.data);
 

@@ -4,17 +4,16 @@
 	// Load syllabus
 	var loadSyllabus = function(syllabusId) {
 		var def = $q.defer();
-		var promise = UserService.isStudent() ? SyllabusService.loadPublishedSyllabus(syllabusId) : SyllabusService.loadSyllabus(syllabusId);
 
-		promise.then(function() {
+		TenjinService.viewState.loadSyllabus({
+			syllabusId: syllabusId
+		}).then(function() {
 			// Set selected item
 			if (SyllabusService.syllabus.elements.length > 0) {
 				TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
 			}
 
 			def.resolve();
-		}, function(reason) {
-			def.reject(reason);
 		});
 
 		return def.promise;

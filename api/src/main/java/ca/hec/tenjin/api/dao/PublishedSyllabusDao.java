@@ -36,45 +36,51 @@ public interface PublishedSyllabusDao {
 	/**
 	 * Retrieve a published syllabus by id with it's structured elements
 	 * 
-	 * @param Long id
+	 * @param Long
+	 *            id
 	 * @return The syllabus, and it's organized sub-elements
-	 * @throws NoSyllabusException 
+	 * @throws NoSyllabusException
 	 */
 	public PublishedSyllabus getPublishedSyllabus(Long id, boolean includeElements) throws NoSyllabusException;
-		
+
 	/**
-	 * Retrieve a published syllabus by id with it's structured elements
+	 * Retreive a published syllabus for a site & section
 	 * 
-	 * @param Long id
-	 * @return The syllabus, and it's organized sub-elements
-	 * @throws NoSyllabusException 
+	 * @param siteId Site id
+	 * @param sectionId Section id (optional)
+	 * @return The syllabus, and it's organized sub-elements or null if no syllabus exists
 	 */
-	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId);
-	
+	public PublishedSyllabus getPublishedSyllabusOrNull(String siteId, String sectionId);
+
 	/**
-	 * Delete a published syllabus by it's id.  If it's the common syllabus for the site, 
-	 * delete all the common elements and all their mappings.  Otherwise delete all mappings for the syllabus and 
-	 * it's non-common elements.
+	 * Delete a published syllabus by it's id. If it's the common syllabus for
+	 * the site, delete all the common elements and all their mappings.
+	 * Otherwise delete all mappings for the syllabus and it's non-common
+	 * elements.
 	 * 
-	 * @param Long syllabus id
-	 * @throws NoSyllabusException 
+	 * @param Long
+	 *            syllabus id
+	 * @throws NoSyllabusException
 	 */
 	public void deletePublishedSyllabus(Long syllabusId) throws NoSyllabusException;
 
 	/**
 	 * Retrieve a published syllabus element by id
 	 * 
-	 * @param Long id
+	 * @param Long
+	 *            id
 	 * @return The syllabus element
 	 */
 	public AbstractPublishedSyllabusElement getPublishedElement(Long id);
 
 	/**
-	 * Retrieve the list of published elements that are children of the element with the given id 
+	 * Retrieve the list of published elements that are children of the element
+	 * with the given id
 	 * 
-	 * @param Long elementId
-	 * @return The list of syllabus elements that are children of the element with the given id 
+	 * @param Long
+	 *            elementId
+	 * @return The list of syllabus elements that are children of the element
+	 *         with the given id
 	 */
 	public List<AbstractPublishedSyllabusElement> getChildPublishedElements(Long elementId);
 }
-

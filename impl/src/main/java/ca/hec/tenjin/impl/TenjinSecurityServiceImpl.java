@@ -14,8 +14,8 @@ import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
 import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.TenjinFunctions;
+import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import lombok.Setter;
 
@@ -89,12 +89,12 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 	}	
 	
 	@Override
-	public List<Object> getSections(boolean permissions) {
+	public List<Map<String, Object>> getSections(boolean permissions) {
 		Site site = null;
 		String siteId = sakaiProxy.getCurrentSiteId();
 		String currentUserId = sakaiProxy.getCurrentUserId();
 		
-		List<Object> sectionsList = new ArrayList<Object>();
+		List<Map<String, Object>> sectionsList = new ArrayList<Map<String, Object>>();
 		
 		try {
 			site = sakaiProxy.getSite(siteId);
@@ -104,8 +104,7 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 					Map<String, Object> sectionMap = new HashMap<String, Object>();
 					sectionMap.put("id", g.getId());
 					sectionMap.put("name", g.getTitle());
-					
-					
+										
 					// set section permissions
 					if (permissions == true) {
 						Map<String, Object> permissionsMap = new HashMap<String, Object>();
