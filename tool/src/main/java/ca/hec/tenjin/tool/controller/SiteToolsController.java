@@ -26,9 +26,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.sakaiproject.announcement.api.AnnouncementChannel;
+import org.sakaiproject.announcement.api.AnnouncementMessageEdit;
+import org.sakaiproject.announcement.api.AnnouncementMessageHeaderEdit;
+import org.sakaiproject.announcement.api.AnnouncementService;
 import org.sakaiproject.component.cover.ServerConfigurationService;
 import org.sakaiproject.entitybroker.EntityBroker;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
@@ -40,6 +45,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -63,6 +69,10 @@ public class SiteToolsController {
 	@Autowired
 	private SessionManager sessionManager;
     	
+    @Setter
+    @Autowired
+    private AnnouncementService announcementService;
+    
 	@Setter
 	@Autowired
 	private ToolManager toolManager;
@@ -146,6 +156,65 @@ public class SiteToolsController {
     
     	return allTools;
         }
+	 
+	 @RequestMapping(value = "/announcement/{siteId}", method = RequestMethod.POST)
+	 public void createAnnouncement (@RequestBody Map<String, String> announcement, @PathVariable String siteId) {
+		 String title = announcement.get("title");
+		 String message = announcement.get("message");
+
+		AnnouncementChannel channel = getAnnouncementChannel(siteId);
+
+		try {
+
+			if (channel != null) {
+				AnnouncementMessageEdit messageEdit = null;
+				messageEdit = channel.addAnnouncementMessage();
+
+				if (messageEdit != null) {
+					AnnouncementMessageHeaderEdit header = messageEdit
+							.getAnnouncementHeaderEdit();
+					header.setSubject(title);
+					messageEdit.setBody(message);
+
+					header.clearGroupAccess();
+
+					channel.commitMessage(messageEdit);
+
+				}
+			} else {
+				throw new Exception("No annoucement channel available");
+
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	 
+
+	 
+	 private AnnouncementChannel getAnnouncementChannel(String siteId) {
+	    	AnnouncementChannel channel = null;
+	    	String channelId =
+	    		ServerConfigurationService.getString("channel", null);
+	    	if (channelId == null) {
+	    	    channelId =
+	    	    		org.sakaiproject.announcement.cover.AnnouncementService.channelReference(siteId,
+	    			    SiteService.MAIN_CONTAINER);
+	    	    try {
+	    		channel = announcementService.getAnnouncementChannel(channelId);
+	    	    } catch (IdUnusedException e) {
+	    		log.warn(this + "getAnnouncement:No announcement channel found");
+	    		channel = null;
+	    	    } catch (PermissionException e) {
+	    		log.warn(this
+	    			+ "getAnnouncement:Current user not authorized to deleted annc associated "
+	    			+ "with assignment. " + e.getMessage());
+	    		channel = null;
+	    	    }
+	    	}
+	    	return channel;
+	  }
 
 }
 

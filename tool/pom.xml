@@ -139,6 +139,15 @@
           <version>${sakai.jackson.version}</version>
           <scope>provided</scope>
         </dependency>
+        <dependency>
+        	<groupId>org.sakaiproject.announcement</groupId>
+        	<artifactId>sakai-announcement-api</artifactId>
+        	<version>11.2</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.sakaiproject.message</groupId>
+        	<artifactId>sakai-message-api</artifactId>
+        </dependency>
 	</dependencies>
 
 	<repositories>
