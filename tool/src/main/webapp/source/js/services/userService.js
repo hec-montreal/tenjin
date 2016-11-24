@@ -63,4 +63,14 @@
 	this.hasWritableSection = function() {
 		return this.getSectionsWrite().length > 0;
 	};
+
+	this.getSection = function(id) {
+		for (var i = 0; i < this.profile.sections.length; i++) {
+			if (this.profile.sections[i].id === id) {
+				return this.profile.sections[i];
+			}
+		}
+
+		return null;
+	};
 }]);

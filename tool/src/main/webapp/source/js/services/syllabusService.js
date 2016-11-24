@@ -8,7 +8,7 @@
 
 	this.dirty = false;
 	this.working = false;
-    this.published = false;
+	this.published = false;
 
 	// variable used to look through the syllabus tree
 	this.navigation = {
@@ -216,6 +216,14 @@
 
 		// set write and publish permissions on each syllabus
 		for (var i = 0; i < this.syllabusList.length; i++) {
+			if (this.syllabusList[i].sections.length === 1) {
+				this.syllabusList[i].instructors = UserService.getSection(this.syllabusList[i].sections[0]).instructors;
+			} else {
+				this.syllabusList[i].instructors = "";
+			}
+
+			console.log(this.syllabusList[i]);
+
 			this.setWritePermission(this.syllabusList[i]);
 			this.setPublishPermission(this.syllabusList[i]);
 		}

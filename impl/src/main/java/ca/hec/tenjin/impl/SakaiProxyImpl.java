@@ -168,4 +168,8 @@ public class SakaiProxyImpl implements SakaiProxy {
 		}
 		return null;
 	}
+
+	public User getUser(String id) throws UserNotDefinedException {
+		return userDirectoryService.getUser(id);
+	}
 }

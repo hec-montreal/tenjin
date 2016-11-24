@@ -21,7 +21,7 @@
             </button>
             <ul uib-dropdown-menu class="list-menu-add-left" role="menu" aria-labelledby="simple-btn-keyboard-nav">
                 <li role="menuitem" data-ng-repeat="syllabus in syllabusService.syllabusList">
-                    <a href="" data-ng-click="selectSyllabus(syllabus)">{{::syllabus.title }}</a> 
+                    <a href="" data-ng-click="selectSyllabus(syllabus)">{{::syllabus.title }} <span ng-if="syllabus.instructors.length > 0"> - {{::syllabus.instructors}}</span></a> 
                 </li> 
             </ul>
         </div>

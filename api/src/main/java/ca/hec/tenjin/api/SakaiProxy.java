@@ -3,6 +3,8 @@ package ca.hec.tenjin.api;
 import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;
+import org.sakaiproject.user.api.User;
+import org.sakaiproject.user.api.UserNotDefinedException;
 
 /**
  * An interface to abstract all Sakai related API calls in a central method that can be injected into our app.
@@ -43,5 +45,6 @@ public interface SakaiProxy {
 	public boolean siteExists(String siteId);
 
 	public ContentResource getResource(String string);
-
+	
+	public User getUser(String id) throws UserNotDefinedException;
 }
