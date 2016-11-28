@@ -1,6 +1,6 @@
 <div class="buttons-form"> 
     <!-- Important -->
-    <div> 
+    <div ng-show="!noimportant"> 
         <input type="checkbox" name="important" id="importantCheckbox" data-ng-model="element.important"/>
         <label for="importantCheckbox">{{ 'FORM_IMPORTANT' | translate }}</label> 
     </div>

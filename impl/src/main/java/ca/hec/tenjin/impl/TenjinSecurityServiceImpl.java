@@ -122,7 +122,7 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 					}
 
 					sectionMap.put("instructors", instructors);
-					
+
 					// set section permissions
 					if (permissions == true) {
 						Map<String, Object> permissionsMap = new HashMap<String, Object>();

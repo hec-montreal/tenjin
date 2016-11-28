@@ -1,40 +1,40 @@
 ﻿tenjinApp.directive('imageElementForm', function() {
-    'use strict';
+	'use strict';
 
-    return {
-        scope: {
-            element: '=imageElementForm'
-        },
+	return {
+		scope: {
+			element: '=imageElementForm'
+		},
 
-        restrict: 'A',
+		restrict: 'A',
 
-        templateUrl: 'form/imageElementForm/imageElementForm.html',
+		templateUrl: 'form/imageElementForm/imageElementForm.html',
 
-        controller: function($scope) {
-            var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';
+		controller: function($scope) {
+			var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';
 
-            // setup editor options
-            $scope.editorOptions = {
-                language: 'fr',
-                height: '120',
-                removeButtons: removeButtonsList,
-                removePlugins: 'elementspath,resize'
-            };
+			// setup editor options
+			$scope.editorOptions = {
+				language: 'fr',
+				height: '120',
+				removeButtons: removeButtonsList,
+				removePlugins: 'elementspath,resize'
+			};
 
-            // Validation
-            $scope.element.validate = function() {
-                var ret = [];
+			// Validation
+			$scope.element.validate = function() {
+				var ret = [];
 
-                if (!$scope.element.attributes.imageId) {
-                    ret.push({
-                        field: "image",
-                        message: "ERROR_MISSING_IMAGE"
-                    });
-                }
+				if (!$scope.element.attributes.imageId) {
+					ret.push({
+						field: "image",
+						message: "ERROR_MISSING_IMAGE"
+					});
+				}
 
-                return ret;
-            }
+				return ret;
+			}
 
-        }
-    };
+		}
+	};
 });

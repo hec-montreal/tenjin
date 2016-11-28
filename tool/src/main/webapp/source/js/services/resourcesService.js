@@ -34,7 +34,7 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 
 			if (extension) {
 				for (var i = 0; i < config.extensionsImage.length; i++) {
-					if (extension === config.extensionsImage[i]) {
+					if (extension.toLowerCase() === config.extensionsImage[i].toLowerCase()) {
 						return "image";
 					}
 				}
