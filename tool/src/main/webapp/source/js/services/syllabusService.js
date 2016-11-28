@@ -222,8 +222,6 @@
 				this.syllabusList[i].instructors = "";
 			}
 
-			console.log(this.syllabusList[i]);
-
 			this.setWritePermission(this.syllabusList[i]);
 			this.setPublishPermission(this.syllabusList[i]);
 		}

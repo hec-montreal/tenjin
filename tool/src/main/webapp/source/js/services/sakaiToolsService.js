@@ -1,46 +1,60 @@
-tenjinApp.service('SakaiToolsService', ['$rootScope', '$resource', function ( $rootScope, $resource){
-    'use strict';	
+tenjinApp.service('SakaiToolsService', ['$rootScope', '$q', '$http', function ( $rootScope, $q, $http){
+	'use strict';
 	
 	var toolsEntities = null;
 	
 	/**
-     * Load sakai tools
-     * @param {String} $siteId Site id
-     * @return {Object} Promise
-     */
-	this.loadToolEntities = function($siteId){
-		return  $resource("tools/" + $siteId + ".json").get();
+	 * Load sakai tools
+	 * @param {String} $siteId Site id
+	 * @return {Object} Promise
+	 */
+	this.loadToolEntities = function(siteId){
+		var tthis = this;
+		var def = $q.defer();
+
+		$http({
+			method: 'GET',
+			url: 'tools/' + siteId + '.json'
+		}).then(function(response) {
+			tthis.setToolsEntities(response.data);
+
+			def.resolve(tthis.getToolEntities());
+		}, function(reason) {
+			def.reject(reason);
+		});
+
+		return def.promise;
 	};	
 
 	/**
-     * Get sakai tools
-     * @return {Array} Sakai tool list
-     */
+	 * Get sakai tools
+	 * @return {Array} Sakai tool list
+	 */
 	this.getToolEntities = function(){
 		return toolsEntities;
 	};
 
 	/**
-     * Set sakai tools
-     */
+	 * Set sakai tools
+	 */
 	this.setToolsEntities = function(entitiesList){
 		toolsEntities = entitiesList;
 	};
 
 	/**
-     * Get one entity (sakai tool)
-     * @param {String} $entityId Entity id
-     */
+	 * Get one entity (sakai tool)
+	 * @param {String} $entityId Entity id
+	 */
 	this.getEntity = function ($entityId){
 		return getEntity(toolsEntities, $entityId);
 	};
 
 	/**
-     * Get one entity from the tree of sakai tools
-     * @param {Object} $rootTree Root tree
-     * @param {String} $entityId Entity id
-     * @return {Object} The found entity or undefined
-     */
+	 * Get one entity from the tree of sakai tools
+	 * @param {Object} $rootTree Root tree
+	 * @param {String} $entityId Entity id
+	 * @return {Object} The found entity or undefined
+	 */
 	var getEntity =  function($rootTree, $entityId) {
 		if ($rootTree.resourceId === $entityId) {
 			return $rootTree;
@@ -57,5 +71,4 @@ tenjinApp.service('SakaiToolsService', ['$rootScope', '$resource', function ( $r
 
 		return undefined;
 	};
-
-}]); 
+}]);

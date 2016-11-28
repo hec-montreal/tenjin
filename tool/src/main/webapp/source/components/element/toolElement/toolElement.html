@@ -5,9 +5,9 @@
         {{ entity.name }} 
         </a>
 
-        <span class="tool-title">
-        [{{ entity.tool }}]
-        </span>
+        <span ng-if="element.title.length > 0">
+            [{{ element.title }}] 
+        </span> 
     </div>
 
     <div ng-bind-html="element.description" class="comment"></div>

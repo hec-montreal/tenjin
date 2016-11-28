@@ -1,10 +1,10 @@
 ﻿<div class="element tool-form">
 
     <!-- Tool <-->
-    <label class="label-text-title">{{ 'SAKAI_TOOL_BROWSER_TITLE' | translate }} : <span class="mandatory"></span></span>  
+    <label class="label-text-title">{{ 'SAKAI_TOOL' | translate }} : <span class="mandatory"></span></span>  
     </label>
     
-    <div data-browser-element-form="element" data-type="sakai_entity"></div>
+    <div data-browser-element-form="element" data-type="sakai_entity" data-collapse-all="true"></div>
  
     <!-- Title -->
     <label class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
@@ -15,5 +15,5 @@
     <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
 
     <!-- Buttons form --> 
-    <div data-buttons-form="element"></div>
+    <div data-buttons-form="element" data-novisible="true" data-nodate="true"></div>
 </div>

@@ -5,7 +5,9 @@ tenjinApp.directive('buttonsForm', ['$anchorScroll', '$location', 'ModalService'
         scope: {
             element: '=buttonsForm',
             noedit: '=',
-            noimportant: '='
+            noimportant: '=',
+            novisible: '=',
+            nodate: '='
         },
 
         restrict: 'A',

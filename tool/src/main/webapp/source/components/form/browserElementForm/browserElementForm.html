@@ -30,14 +30,12 @@
 
 </script>
 
-
 <div class="container-browser-element">
-
   <div class="browser-element" ui-tree="browserOptions" data-drag-enabled="false" data-nodrop-enabled="true" browserElement>
       <ol ui-tree-nodes="" ng-model="resources.resourceChildren">
-          <li ng-repeat="item in resources.resourceChildren" ui-tree-node ng-include="'browser_renderer.html'">
-             {{item.name}}
-          </li>          
+          <li ng-repeat="item in resources.resourceChildren" ui-tree-node class="toCollapse">
+             <div ng-include="'browser_renderer.html'"></div>
+          </li>
       </ol>  
   </div>
 

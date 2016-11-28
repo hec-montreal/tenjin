@@ -82,10 +82,10 @@
                         if (destNodesScope.item && destNodesScope.item.type === 'composite') {
                             // get ancestor for the source node
                             var ancetreSrc = this.getAncestor(sourceNodeScope);
-                            // console.log("ancetre src => " + ancetreSrc.item.id);
+
                             // get ancestor for the destination node
                             var ancetreDest = this.getAncestor(destNodesScope);
-                            // console.log("ancetre dest => " +ancetreDest.item.id);
+
 
                             if (sourceNodeScope.item && sourceNodeScope.item.type === 'composite') {
                                 // On peut déplacer un composite uniquement dans l'élément parent racine ( qui lui n'a pas de parent )

@@ -24,7 +24,6 @@
 				if (destNodesScope.item && destNodesScope.item.type === 'composite') {
 					// get ancestor for the source node
 					var ancestorSrc = $scope.getAncestor(sourceNodeScope);
-					// console.log("ancetre src => " + ancestorSrc.item.id);
 					// get ancestor for the destination node
 					var ancestorDest = $scope.getAncestor(destNodesScope);
 

@@ -5,16 +5,16 @@
         <label for="importantCheckbox">{{ 'FORM_IMPORTANT' | translate }}</label> 
     </div>
 
-    <div>
+    <div ng-show="!novisible">
         <input type="checkbox" name="visibility" id="visibilityCheckbox" data-ng-model="element.visibility"/>
         <label for="visibilityCheckbox">{{ 'FORM_VISIBILITY' | translate }}</label> 
     </div>
 
-    <div>
+    <div ng-show="!nodate">
         <input id="radioNoDate" type="radio" name="display" class="radio-date" data-ng-model="element.hasDatesInterval" data-ng-value="false" /> <label for="radioNoDate">{{ 'FORM_DISPLAY_DEFAULT' | translate  }}</label>
     </div>
      
-    <div>
+    <div ng-show="!nodate">
         <input id="radioDates" type="radio" name="display" class="radio-date" data-ng-model="element.hasDatesInterval" data-ng-value="true" /> <label for="radioDates">{{ 'FORM_DISPLAY_INTERVAL' | translate  }}</label>
     </div>
 

@@ -9,8 +9,6 @@
 
     // Initialize a list with syllabus which can be deleted, and another which cannot be deleted
     for (var i = 0; i < $scope.syllabusList.length; i++) {
-        console.log($scope.syllabusList[i]);      
-
         if ($scope.syllabusList[i].sections.length === 0) {
             $scope.syllabusToDelete.push($scope.syllabusList[i]);
         } else if ($scope.syllabusList[i].sections.length > 0) {
