@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('CreateSyllabusModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'SyllabusService', 'UserService', function($scope, $uibModalInstance, $translate, SyllabusService, UserService) {
+﻿tenjinApp.controller('CreateSyllabusModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'SyllabusService',  'UserService', function($scope, $uibModalInstance, $translate, SyllabusService, UserService) {
     'use strict';
 
     // Init syllabus data : name of syllabus + sections
@@ -62,7 +62,6 @@
         savePromise.$promise.then(function($data) {
             // set write and publish permission on the new syllabus
             SyllabusService.setWritePermission($data);
-            SyllabusService.setPublishPermission($data);
 
             // refresh the list 
             SyllabusService.syllabusList.push($data);

@@ -8,7 +8,6 @@
 
 	this.dirty = false;
 	this.working = false;
-	this.published = false;
 
 	// variable used to look through the syllabus tree
 	this.navigation = {
@@ -19,7 +18,6 @@
 
 	var sylProvider = $resource('v1/syllabus.json');
 
-	var publishSyllabusProvider = $resource('v1/syllabus/:id/publish.json');
 
 	// provider get syllabus list
 	var sylProviderList = $resource('v1/syllabus.json', {}, {
@@ -38,11 +36,6 @@
 		}
 	});
 
-	this.publish = function() {
-		return publishSyllabusProvider.get({
-			id: this.syllabus.id
-		});
-	};
 
 	/**
 	 * Save syllabus
@@ -126,48 +119,12 @@
 		return def.promise;
 	};
 
-	this.loadPublishedSyllabus = function() {
-		var tthis = this;
-		var def = $q.defer();
-
-		$http({
-			method: 'GET',
-			url: 'v1/syllabus/published.json'
-		}).then(function(response) {
-			tthis.setSyllabus(response.data);
-
-			def.resolve(tthis.getSyllabus());
-		}, function(reason) {
-			def.reject(reason);
-		});
-
-		return def.promise;
-	};
-
 	this.loadSyllabusList = function() {
 		var tthis = this;
 		var def = $q.defer();
 
 		sylProviderList.get().$promise.then(function(data) {
 			tthis.setSyllabusList(data);
-
-			def.resolve(tthis.getSyllabusList());
-		}, function(reason) {
-			def.reject(reason);
-		});
-
-		return def.promise;
-	};
-
-	this.loadPublishedSyllabusList = function() {
-		var tthis = this;
-		var def = $q.defer();
-
-		$http({
-			method: 'GET',
-			url: 'v1/syllabus/published.json'
-		}).then(function(response) {
-			tthis.setSyllabusList(response.data);
 
 			def.resolve(tthis.getSyllabusList());
 		}, function(reason) {
@@ -214,7 +171,7 @@
 	this.setSyllabusList = function(syllabusList) {
 		this.syllabusList = syllabusList;
 
-		// set write and publish permissions on each syllabus
+		// set write permissions on each syllabus
 		for (var i = 0; i < this.syllabusList.length; i++) {
 			if (this.syllabusList[i].sections.length === 1) {
 				this.syllabusList[i].instructors = UserService.getSection(this.syllabusList[i].sections[0]).instructors;
@@ -223,7 +180,6 @@
 			}
 
 			this.setWritePermission(this.syllabusList[i]);
-			this.setPublishPermission(this.syllabusList[i]);
 		}
 	};
 
@@ -293,15 +249,6 @@
 		}
 	};
 
-	this.setPublishPermission = function(syllabus) {
-		if (syllabus.sections.length > 0 || syllabus.common === true) {
-			syllabus.$publishPermission = true;
-		} else {
-			syllabus.$publishPermission = false;
-		}
-
-		return syllabus.$publishPermission;
-	};
 
 	/**
 	 * Set the current syllabus
@@ -314,8 +261,6 @@
 		this.numerotationSyllabus(this.syllabus);
 		// define write permission on current syllabus
 		this.setWritePermission(this.syllabus);
-		//check publish permission on syllabus
-		this.setPublishPermission(this.syllabus);
 		// save a copy
 		this.syllabusSaved = angular.copy(this.syllabus);
 		// set dirty flag to false
