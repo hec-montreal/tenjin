@@ -1,29 +1,38 @@
 <link rel="stylesheet" href="/tenjin-tool/css/syllabus.css"/>
 <div class="publish-dialog">
 	<div class="publish-header">
-	    {{ 'PUBLISH_TITLE_LABEL' | translate }} "{{getSyllabusTitle()}}"
+	    {{ 'PUBLISH_TITLE_LABEL' | translate }} {{syllabus.title}}
 	</div>
 	<p class="underline"/>
-	<div  class="last-publish-date" data-ng-if="hasPublicationDate()">
-		{{ 'PUBLISH_LAST_PUBLISH_LABEL' | translate }} {{syllabusService.syllabus.publishedDate | date:'longDate'}}
+	<div data-ng-if="publishService.isCommonSyllabusPublished()">
+		<div  class="last-publish-date" data-ng-if="hasPublicationDate()">
+			{{ 'PUBLISH_LAST_PUBLISH_LABEL' | translate }} {{syllabus.publishedDate | date:'longDate'}}
+		</div>
+		<div class="published-sections">
+			{{ 'PUBLISH_MODIFIED_SECTIONS_LABEL' | translate }} 
+		</div>
+		<!--<ul  class="" >
+		    <li class="published-section" data-ng-repeat="section in publishService.getSections()">
+		        {{section}}
+		    </li> 
+		</ul>
+		-->
+		 <div uib-accordion-group class="panel-default modified-pages" >
+			 <uib-accordion-heading>
+		        <i class="pull-left glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>{{ 'PUBLISH_MODIFIED_PAGES_LABEL' | translate }}
+		      </uib-accordion-heading>
+		      <li data-ng-repeat="page in publishService.getChanges()">
+		      	<ul> {{page}}</ul>
+		      </li>
+		 </div>
 	</div>
-	<div class="published-sections">
-		{{ 'PUBLISH_MODIFIED_SECTIONS_LABEL' | translate }} 
+	<div data-ng-if="!publishService.isCommonSyllabusPublished()">
+			{{ 'PUBLISH_CHECK_COMMON' | translate }}
 	</div>
-	<ul  class="" >
-        <li class="published-section" data-ng-repeat="section in getSections()">
-            {{section}}
-        </li> 
-    </ul>
-	
-    <div class="modified-pages">
-		{{ 'PUBLISH_MODIFIED_PAGES_LABEL' | translate }} 
-	</div>
-	
-
 	<div class= "group-publish-cancel">
-	    <button class="btn" data-ng-click="closeThisDialog()">{{ 'PUBLISH_CANCEL_BUTTON_LABEL' | translate }}</button>
-	    <button class="btn" data-ng-click="publish()">{{ 'BUTTON_PUBLISH' | translate }}</button>
+	    <button class="btn " data-ng-click="closeThisDialog()">{{ 'PUBLISH_CANCEL_BUTTON_LABEL' | translate }}</button>
+	    <button class="btn " data-ng-if="publishService.isCommonSyllabusPublished()" data-ng-click="publish()">{{ 'BUTTON_PUBLISH' | translate }}</button>
 	</div>
 
+	
 </div>

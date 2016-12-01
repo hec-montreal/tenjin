@@ -4,13 +4,13 @@
 	<div data-ng-if="ngDialogData.published">
 		<div class= "publish-result">{{ 'PUBLISH_SUCCESS' | translate }}</div>
 		<div class="publish-checkbox">
-			<input type="checkbox" data-ng-click="openAnnouncement()" >{{ 'PUBLISH_ANNOUNCEMENT' | translate }}</input>
+			<input type="checkbox" data-ng-model="announcement" data-ng-change="openAnnouncement(announcement)" >{{ 'PUBLISH_ANNOUNCEMENT' | translate }}</input>
 		</div>
 	</div>
 	<div data-ng-if="!ngDialogData.published">
 		<div class= "publish-result">{{ 'PUBLISH_FAILURE' | translate }}</div>
 	</div>
-	<div data-ng-if="announcement">
+	<div data-ng-show="announcement">
 		<div >{{ 'PUBLISH_ANNOUNCEMENT_INFO' | translate }}</div>
 		<div >{{ 'PUBLISH_ANNOUNCEMENT_TITLE' | translate }}</div>
 		<input type="text" id= "announcement-title" data-ng-model="announcementTitle" />

@@ -1,63 +1,43 @@
-tenjinApp.controller('PublishCtrl', ['$scope', '$resource', '$translate', 'ngDialog', 'UserService', 'SyllabusService',  function($scope, $resource, $translate,  ngDialog, UserService, SyllabusService) {
+tenjinApp.controller('PublishCtrl', [ '$scope', '$translate', 'ngDialog', 'PublishService', function($scope, $translate, ngDialog, PublishService) {
     'use strict';
+    
+    $scope.publishService = PublishService;
+    $scope.syllabus = $scope.publishService.getActiveSyllabus();
+
     $scope.publishing = false;
     $scope.announcement = false;
     $scope.publicationSuccess = false;
     $scope.announcementTitle = $translate.instant('ANNOUNCEMENT_TITLE');
     $scope.announcementMessage = $translate.instant('ANNOUNCEMENT_MESSAGE');
-    var announcementProviderId = $resource('tools/announcement/:id.json');
-    var lastPublished = SyllabusService.syllabus.publishedDate;
+     var prePublishDialog;
+    var postPublishDialog;
     $scope.position = 0;
     $scope.pages = [];
 
-    $scope.syllabusService = SyllabusService;
- 	
-  	$scope.closePublishDialog = function(){
-  		if ($scope.announcement){
-  			var title = angular.element(document.getElementById('announcement-title'))[0].value;
-  			var message = angular.element(document.getElementById('announcement-message'))[0].value; 
-  		
-  			var announcement= {"title":  title, "message": message};
-  			// announcementProviderId.save({
-     //            id: SyllabusService.syllabus.siteId}, announcement);
-  		}
-   		ngDialog.close();
- 	};
+    if ($scope.syllabus){
+    var lastPublished = $scope.syllabus.publishedDate;
+   $scope.elements = $scope.syllabus.elements;
+ }
 
-	$scope.publish = function(){
-		$scope.publishing=true;
-		ngDialog.close();
-		ngDialog.openConfirm({ 
-         	template: 'publish/publishing.html',
-          	className: 'ngdialog-theme-default',
-          	height: 500,
-          	width: 600,
-           	controller: 'PublishCtrl',
-           	closeByEscape: false,
-           	closeByDocument: false 
-        });  
-  	    SyllabusService.publish().$promise.then(function($data) {
+    $scope.startPublish = function(){
+        $scope.publishService.prePublishDialog();
+    };
+
+  	$scope.publish = function(){
+      ngDialog.close();
+      $scope.publishService.working=true;
+      $scope.publishService.publishingDialog();
+      $scope.publishService.publish().$promise.then(
+         function($data){
+           $scope.publishService.working=false;
            ngDialog.close();
-           ngDialog.openConfirm({ 
-           		template: 'publish/postPublish.html',
-           		height: 500,
-           		width: 600,
-           		data: {
-           			published: true,
-           			publishedSyllabus: $data
-           		},
-           		controller: 'PublishCtrl',
-           		closeByEscape: false,
-           		closeByDocument: false
-           		  });
-        
-        }, function($error) {
-            $scope.publicationSuccess = false;
-        });
+           $scope.publishService.postPublishDialog($data);
+     });
   	};
 
+
   	$scope.hasPublicationDate = function(){
-  		if (SyllabusService.syllabus.publishedDate){
+      if ($scope.syllabus.publishedDate){
   			return true;
   		}
   		else{
@@ -65,59 +45,22 @@ tenjinApp.controller('PublishCtrl', ['$scope', '$resource', '$translate', 'ngDia
   		}
   	};
 
-    $scope.openPublishDialog= function(){
-         ngDialog.openConfirm({ 
-         	template: 'publish/prePublish.html',
-          	className: 'ngdialog-theme-default',
-          	height: 500,
-          	width: 600,
-           	controller: 'PublishCtrl'  });
-        
+    $scope.closePublishDialog= function(){
+      if($scope.announcement){
+        var title = angular.element(document.getElementById('announcement-title'))[0].value;
+        var message = angular.element(document.getElementById('announcement-message'))[0].value; 
+        $scope.publishService.createAnnouncement(title, message);
+     }
+      ngDialog.close();
     };
 
-	$scope.getSections = function(){
-		var sections = [];
-		if (SyllabusService.syllabus.common){
-			var usedSections = UserService.getSectionsPublish();
-			for (var i=0; i < usedSections.length; i++){
-				sections[i] = usedSections[i].name;	
-			}
-			
-		}else{	
-			sections = SyllabusService.syllabus.sections;
-		}
-  		return sections;
+  	$scope.openAnnouncement = function($announcement){
+  		$scope.announcement = $announcement;
   	};
 
-  	$scope.openAnnouncement = function(){
-  		if($scope.announcement){
-  			$scope.announcement = false;
-  		}
-  		else{
-  			$scope.announcement =true;
-  		}
-  	};
 
   	$scope.hasSucceeded = function(){
   		return $scope.publicationSuccess;
   	};
 
-  	$scope.getModifiedPages = function($elements, $position, $pages){
-  		
-  		var element;
-  		var page;
-
-  		for (var i=0; i < $elements.length;i++)	{
-  			element = $elements[i];
-  			if (element.elements){
-  				$pages[$position] = element.title;
-  				$position++;
-  			}
-  			else{
-  				getModifiedPages(element.elements, $position, $pages);
-  			}
-		}
-
-		return $pages;
-  	};
 }]);
