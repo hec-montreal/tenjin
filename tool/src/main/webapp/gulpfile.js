@@ -54,13 +54,14 @@ gulp.task("js:lib", function() {
 			"./node_modules/angular-translate/dist/angular-translate.min.js",
 			"./node_modules/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js",
 			"./node_modules/angular-ui-router/release/angular-ui-router.min.js",
+			"./node_modules/es6-shim/es6-shim.js",
+			"./node_modules/angular-i18n/angular-locale_fr-ca.js",
+			"./node_modules/ng-dialog/js/ngDialog.min.js",
+			"./node_modules/js-base64/base64.js",
 			"./source/lib/angular-ui/ui-bootstrap-custom-tpls-1.1.0.js",
 			"./source/lib/xeditable/xeditable.min.js",
 			"./source/lib/ng-ckeditor-master/ng-ckeditor.js",
-			"./source/lib/modernizr/modernizr-custom.js",
-			"./node_modules/es6-shim/es6-shim.js",
-			"./node_modules/angular-i18n/angular-locale_fr-ca.js",
-			"./node_modules/ng-dialog/js/ngDialog.min.js"
+			"./source/lib/modernizr/modernizr-custom.js"
 		])
 		.pipe(concat("tenjinlib.js"))
 		.pipe(gulp.dest("./dest/lib"));

@@ -3,7 +3,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 
 	var loadCitations = function(data, citationsLists) {
 		var def = $q.defer();
-		var citationsLists = CitationsService.getCitationLists(ResourcesService.resources);
+		var citationsLists = CitationsService.loadCitationLists(ResourcesService.resources);
 
 		$q.allSettled(citationsLists.promises).then(function(data) {
 			var updatedResource, updatedResourceId;
