@@ -6,7 +6,7 @@
         'glyphicon-chevron-right': collapsed,
         'glyphicon-chevron-down': !collapsed
       }"></span></a>
-        {{::item.name | translate}}
+        FOLDER {{::item.name | translate}}
     </span>
 
     <span data-ng-if="item.type === 'citationList' && type === 'citation'" class="folder">
@@ -16,11 +16,11 @@
         'glyphicon-chevron-right': collapsed,
         'glyphicon-chevron-down': !collapsed
       }"></span></a>
-        {{::item.name}}
+        CITATION {{::item.name}}
     </span>
 
     <span data-ng-if="item.type === type" data-ng-click="setSelectedResource(item)" class="select-resource" data-ng-class="{'item-selected': (element.$selectedResource.resourceId === item.resourceId) }" >
-        {{::item.name}}
+        TYPE {{::item.name}}
     </span>
 
    <ol ui-tree-nodes="" data-ng-model="item.resourceChildren" data-ng-class="{hidden: collapsed}">

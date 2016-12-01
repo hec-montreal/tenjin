@@ -1,0 +1,85 @@
+<div class="element reference">
+	<div data-ng-switch="citation.type">
+		<div data-ng-switch-when="article">
+			<span ng-repeat="author in citation.values.creator"> 
+                {{author}}
+            </span>
+			<span data-ng-if="citation.values.year">{{::openParenthesis}}{{citation.values.year}}{{::closeParenthesis}}</span>			
+			<span data-ng-if="citation.values.title">{{::dot}} {{::leftAngleQuote}}{{citation.values.title}}{{::rightAngleQuote}}</span>	
+			<span data-ng-if="citation.values.sourceTitle" class="reference-italicTitle">{{::comma}}{{citation.values.sourceTitle}}</span>			
+			<span data-ng-if="citation.values.volume">{{::comma}} {{::volume}}{{citation.values.volume}}</span>
+			<span data-ng-if="citation.values.issue">{{::comma}} {{::issue}} {{citation.values.issue}}</span>				
+			<span data-ng-if="citation.values.section">{{::comma}} {{citation.values.section}}</span>
+			<span data-ng-if="citation.values.pages">{{::comma}} {{::pages}} {{citation.values.pages}}</span>				
+			<div data-ng-if="citation.values.isnIdentifier">{{'REF_BIBLIO_ISSN' | translate}} {{citation.values.isnIdentifier}}</div>				
+			<div data-ng-if="citation.values.library"><a href={{citation.values.library}}>{{'REF_BIBLIO_DISPONIBILITY' | translate}}</a></div>				
+		</div>
+		<div data-ng-switch-when="book">
+			<span ng-repeat="author in citation.values.creator">
+                {{author}}
+            </span>
+			<span data-ng-if="citation.values.year">{{::openParenthesis}}{{citation.values.year}}{{::closeParenthesis}}</span>			
+			<span data-ng-if="citation.values.title" class="reference-boldTitle">{{::dot}} {{citation.values.title}}</span>	
+			<span data-ng-if="citation.values.edition">{{::comma}} {{citation.values.edition}} {{::edition}}</span>
+			<span data-ng-if="citation.values.publisher">{{::comma}} {{citation.values.publisher}}</span>
+			<span data-ng-if="citation.values.editor">{{::comma}} {{citation.values.editor}}</span>				
+			<span data-ng-if="citation.values.pages">{{citation.values.pages}} {{::pages}}</span>				
+		</div>
+		<div data-ng-switch-when="bookSection">
+			<span ng-repeat="author in citation.values.creator">
+                {{author}}
+            </span>
+			<span data-ng-if="citation.values.year">{{::openParenthesis}}{{citation.values.year}}{{::closeParenthesis}}</span>			
+			<span data-ng-if="citation.values.sectionTitle">{{::dot}} {{::leftAngleQuote}} {{citation.values.sectionTitle}}{{::rightAngleQuote}}</span>	
+			<span data-ng-if="citation.values.title" class="reference-boldTitle">{{::comma}} {{citation.values.title}}</span>	
+			<span data-ng-if="citation.values.volume">{{::comma}} {{::volume}}{{citation.values.volume}}</span>
+			<span data-ng-if="citation.values.editor">{{::comma}} {{citation.values.editor}}</span>				
+			<span data-ng-if="citation.values.pages">{{::comma}} {{::pages}} {{citation.values.pages}}</span>										
+			<div data-ng-if="citation.values.isnIdentifier">{{'REF_BIBLIO_ISBN' | translate}} {{citation.values.isnIdentifier}}</div>				
+			<div data-ng-if="citation.values.url"><a href={{citation.values.url}}>{{citation.values.url}}</a></div>				
+		</div>
+		<div data-ng-switch-when="webPage">
+			<span ng-repeat="author in citation.values.creator">
+                {{author}}
+            </span>
+			<span data-ng-if="citation.values.year">{{::openParenthesis}}{{citation.values.year}}{{::closeParenthesis}}</span>			
+			<span data-ng-if="citation.values.title" class="reference-boldTitle">{{::dot}} {{citation.values.title}}</span>			
+			<span data-ng-if="citation.values.siteTitle">{{::comma}} {{citation.values.siteTitle}}</span>	
+			<span data-ng-if="citation.values.date" >{{::dot}} {{'REF_BIBLIO_FROM' | translate}} {{citation.values.date}}</span>
+			<span data-ng-if="citation.values.url">{{'REF_BIBLIO_FROM2' | translate}}  {{citation.values.url}}</span>
+		</div>
+		<div data-ng-switch-when="proceed">
+			<span ng-repeat="author in citation.values.creator">
+                {{author}}
+            </span>
+			<span data-ng-if="citation.values.year">{{::dot}} {{::openParenthesis}}{{citation.values.year}}{{::closeParenthesis}}</span>			
+			<span data-ng-if="citation.values.title">{{::dot}} {{::leftAngleQuote}}{{citation.values.title}}{{::rightAngleQuote}}</span>
+			<span data-ng-if="citation.values.proceedTitle"  class="reference-boldTitle">{{::comma}} {{citation.values.proceedTitle}}</span>				
+		</div>
+		<div data-ng-switch-when="report">
+			<span ng-repeat="author in citation.values.creator">
+                {{author}}
+            </span>
+			<span data-ng-if="citation.values.year"> {{::openParenthesis}}{{citation.values.year}}{{::closeParenthesis}}</span>			
+			<span data-ng-if="citation.values.title" class="reference-boldTitle">{{::dot}} {{citation.values.title}}</span>
+			<span data-ng-if="citation.values.publisher">{{::comma}} {{citation.values.publisher}}</span>				
+			<span data-ng-if="citation.values.publicationLocation">{{::comma}} {{citation.values.publicationLocation}}</span>				
+			<span data-ng-if="citation.values.pages">{{citation.values.pages}} {{::pages}}</span>			
+			<div data-ng-if="citation.values.isnIdentifier">{{'REF_BIBLIO_ISBN' | translate}} {{citation.values.isnIdentifier}}</div>				
+			<div data-ng-if="citation.values.url"><a href={{citation.values.url}}>{{citation.values.url}}</a></div>				
+
+		</div>
+		<div data-ng-switch-default>
+			<div  data-ng-if="citation.values.title">{{citation.values.title}}</div>		
+			<div  data-ng-if="citation.values.uri"><a href={{citation.values.uri}>{{citation.values.uri}}</a></div>		
+		</div>		
+	</div>
+
+
+	<div class="infos">
+		<span data-ng-class="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
+		<span data-ng-class="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
+		<span data-ng-class="{ 'picto-hidden' : ( element.attributes.docHidden === 'true') }" title="Visible"></span>     
+	</div>
+
+</div>
