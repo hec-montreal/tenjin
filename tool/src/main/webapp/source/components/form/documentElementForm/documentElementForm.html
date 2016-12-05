@@ -1,52 +1,48 @@
-
 <div class="element-form document-form"> 
-    <!-- Ressource <-->
-	<label class="label-text-title">{{ 'RESOURCE_BROWSER_TITLE' | translate }} : <span class="mandatory"></span></span>  
-    </label>
-    
-    <div data-browser-element-form="element" data-type="document"></div>
+	<!-- Resource -->
+	<resource-browser data-element="element" data-type="document"></resource-browser>
+	
+	<!-- Title -->
+	<labelP class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
+	<input type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
+	
+	<!-- Type -->
+	<div class="label-text-type">{{ 'FORM_DOCUMENT_TYPE' | translate }}</div>
+	<div class="btn-group" uib-dropdown keyboard-nav>
+		<button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
+			<span class="add-label">{{currentType.name | translate }}</span>
+			<span class="caret"></span>
+		</button>
+		<ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+			<li role="menuitem" data-ng-repeat="type in config.documentTypes">
+				<a href="" data-ng-click="selectType(type)">{{::type.name | translate }}</a> 
+			</li>
+		</ul>
+	</div>
 
-    <!-- Title -->
-    <labelP class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
-    <input type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
-    
-    <!-- Type -->
-    <div class="label-text-type">{{ 'FORM_DOCUMENT_TYPE' | translate }}</div>
-    <div class="btn-group" uib-dropdown keyboard-nav>
-        <button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
-            <span class="add-label">{{currentType.name | translate }}</span>
-            <span class="caret"></span>
-        </button>
-        <ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-            <li role="menuitem" data-ng-repeat="type in config.documentTypes">
-                <a href="" data-ng-click="selectType(type)">{{::type.name | translate }}</a> 
-            </li>
-        </ul>
-    </div> 
-  
-    <!-- Description --> 
-    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
-    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
+	<!-- Description --> 
+	<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
+	<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
 
-    <div class="readonly-props">
-        <div><strong>{{ 'DATA_MODIFIABLE_IN_RESOURCES' | translate }}</strong></div>
+	<div class="readonly-props">
+		<div><strong>{{ 'DATA_MODIFIABLE_IN_RESOURCES' | translate }}</strong></div>
 
-        <div>
-            <span class="prop">{{ 'COPYRIGHT_STATUS' | translate }}:</span>
-            <span ng-if="!!element.$selectedResource">{{ (element.$selectedResource.copyright ? 'COPYRIGHT_I_HOLD' : 'COPYRIGHT_UNDEFINED') | translate }}</span>
-        </div>
+		<div>
+			<span class="prop">{{ 'COPYRIGHT_STATUS' | translate }}:</span>
+			<span ng-if="!!element.$selectedResource">{{ (element.$selectedResource.copyright ? 'COPYRIGHT_I_HOLD' : 'COPYRIGHT_UNDEFINED') | translate }}</span>
+		</div>
 
-        <div>
-            <span class="prop">{{ 'VISIBILITY' | translate }}:</span> 
-            <span ng-if="!!element.$selectedResource">{{ (element.$selectedResource.publicAccess ? 'VISIBILITY_PUBLIC' : 'VISIBILITY_STUDENTS') | translate }}</span>
-        </div>
-        
-        <div ng-if="!!element.$selectedResource.release">
-            <span class="prop">{{ 'FORM_DATE_DISPLAY_START' | translate }}:</span> {{element.$selectedResource.release.display}}
-        </div>
-        
-        <div ng-if="!!element.$selectedResource.retract">
-            <span class="prop">{{ 'FORM_DATE_DISPLAY_END' | translate }}:</span> {{element.$selectedResource.retract.display}}
-        </div>
-    </div>
+		<div>
+			<span class="prop">{{ 'VISIBILITY' | translate }}:</span> 
+			<span ng-if="!!element.$selectedResource">{{ (element.$selectedResource.publicAccess ? 'VISIBILITY_PUBLIC' : 'VISIBILITY_STUDENTS') | translate }}</span>
+		</div>
+		
+		<div ng-if="!!element.$selectedResource.release">
+			<span class="prop">{{ 'FORM_DATE_DISPLAY_START' | translate }}:</span> {{element.$selectedResource.release.display}}
+		</div>
+		
+		<div ng-if="!!element.$selectedResource.retract">
+			<span class="prop">{{ 'FORM_DATE_DISPLAY_END' | translate }}:</span> {{element.$selectedResource.retract.display}}
+		</div>
+	</div>
 </div>

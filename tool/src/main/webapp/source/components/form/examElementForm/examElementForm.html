@@ -1,42 +1,41 @@
 <div class="element-form"> 
-
   <div >
-  	<div class="row">
-	    <div class="col-md-4">
-	    	<label for="examTitle" class="label-text-title">{{ 'EXAM_TITLE' | translate }}</label>
-	    </div>
-	    <div class="col-md-4" >
-	    	<input type="text" name="examTitle" data-ng-model="element.title" class="input-text-title" />
+	<div class="row">
+		<div class="col-md-4">
+			<label for="examTitle" class="label-text-title">{{ 'EXAM_TITLE' | translate }}</label>
+		</div>
+		<div class="col-md-4" >
+			<input type="text" name="examTitle" data-ng-model="element.title" class="input-text-title" />
 		</div>
 		<div class="col-md-4">  </div>
 	</div>
 	<br>
 	<div class="row">
-	    <div class="col-md-4">
-	    	<label class="label-text-title">{{ 'EXAM_WEIGHT' | translate }}</label>
-	    </div>
-	    <div class="col-md-4">
-	    	<input type="text" name="examWeight" data-ng-model="element.attributes.examWeight" />
+		<div class="col-md-4">
+			<label class="label-text-title">{{ 'EXAM_WEIGHT' | translate }}</label>
 		</div>
-	    <div class="col-md-4">% </div>
+		<div class="col-md-4">
+			<input type="text" name="examWeight" data-ng-model="element.attributes.examWeight" />
+		</div>
+		<div class="col-md-4">% </div>
 	</div>
 	<br>
 	 <div class="row">
-	    <div class="col-md-4">
-	    	<label class="label-text-title">{{ 'EXAM_LOCATION' | translate }}</label>
-	    </div>
-	    <div class="col-md-4">
-	    	<table>
-		    	<tr>
-				    <td>
-				    	<input type="checkbox" name="evalInClass" data-ng-model="element.attributes.examInClass" 
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_INCLASS' | translate }}
-				    </td>
+		<div class="col-md-4">
+			<label class="label-text-title">{{ 'EXAM_LOCATION' | translate }}</label>
+		</div>
+		<div class="col-md-4">
+			<table>
+				<tr>
+					<td>
+						<input type="checkbox" name="evalInClass" data-ng-model="element.attributes.examInClass" 
+						ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_INCLASS' | translate }}
+					</td>
 				</tr>
 				<tr>
-				    <td>
-				    	<input type="checkbox" name="evalAtHome" data-ng-model="element.attributes.examAtHome"
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_ATHOME' | translate }}
+					<td>
+						<input type="checkbox" name="evalAtHome" data-ng-model="element.attributes.examAtHome"
+						ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_ATHOME' | translate }}
 					</td>
 				</tr>
 			</table>
@@ -45,21 +44,21 @@
 	</div>
 	<br>
 	<div class="row">
-	    <div class="col-md-4">
-	    	<label class="label-text-title">{{ 'EXAM_TERMS' | translate }}</label>
-	    </div>
-	    <div class="col-md-4">
-	    	<table>
-		    	<tr>
-				    <td>
-				    	<input type="checkbox" name="evalOral" data-ng-model="element.attributes.examOral" 
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_ORAL' | translate }}
-				    </td>
+		<div class="col-md-4">
+			<label class="label-text-title">{{ 'EXAM_TERMS' | translate }}</label>
+		</div>
+		<div class="col-md-4">
+			<table>
+				<tr>
+					<td>
+						<input type="checkbox" name="evalOral" data-ng-model="element.attributes.examOral" 
+						ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_ORAL' | translate }}
+					</td>
 				</tr>
 				<tr>
-				    <td>
-				    	<input type="checkbox" name="evalWritten" data-ng-model="element.attributes.examWritten"
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_WRITTEN' | translate }}
+					<td>
+						<input type="checkbox" name="evalWritten" data-ng-model="element.attributes.examWritten"
+						ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_WRITTEN' | translate }}
 					</td>
 				</tr>
 			</table>
@@ -68,21 +67,21 @@
 	</div>
 	<br>
 	<div class="row">
-	    <div class="col-md-4">
-	    	<label class="label-text-title">{{ 'EXAM_SUBMISSION_TYPE' | translate }}</label>
-	    </div>
-	    <div class="col-md-4">
-	    	<table>
-		    	<tr>
-				    <td>
-				    	<input type="checkbox" name="evalPaper" data-ng-model="element.attributes.examPaper"
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_PAPER' | translate }}
-				    </td>
+		<div class="col-md-4">
+			<label class="label-text-title">{{ 'EXAM_SUBMISSION_TYPE' | translate }}</label>
+		</div>
+		<div class="col-md-4">
+			<table>
+				<tr>
+					<td>
+						<input type="checkbox" name="evalPaper" data-ng-model="element.attributes.examPaper"
+						ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_PAPER' | translate }}
+					</td>
 				</tr>
 				<tr>
-				    <td>
-				    	<input type="checkbox" name="evalElectronic" data-ng-model="element.attributes.examElectronic"
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_ELECTRONIC' | translate }}
+					<td>
+						<input type="checkbox" name="evalElectronic" data-ng-model="element.attributes.examElectronic"
+						ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_ELECTRONIC' | translate }}
 					</td>
 				</tr>
 			</table>
@@ -91,23 +90,22 @@
 	</div>
 	<br>
 	<div class="row">
-	    <div class="col-md-4">
-	    	<label class="label-text-title">{{ 'EXAM_ASSESSMENT_TYPE' | translate }}</label>
-	    </div>
-	    <div class="col-md-4">
-	    	<div class="row">
-				    <div class="col-md-12">
-				    	<input type="radio" name="evalMode" data-ng-model="element.attributes.examMode" value="individual"> {{ 'EXAM_INDIVIDUAL' | translate }}
-				    </div>
-				    <div class="col-md-12">
-				    	<input type="radio" name="evalMode" data-ng-model="element.attributes.examMode" value="team"> {{ 'EXAM_TEAM' | translate }}
+		<div class="col-md-4">
+			<label class="label-text-title">{{ 'EXAM_ASSESSMENT_TYPE' | translate }}</label>
+		</div>
+		<div class="col-md-4">
+			<div class="row">
+					<div class="col-md-12">
+						<input type="radio" name="evalMode" data-ng-model="element.attributes.examMode" value="individual"> {{ 'EXAM_INDIVIDUAL' | translate }}
+					</div>
+					<div class="col-md-12">
+						<input type="radio" name="evalMode" data-ng-model="element.attributes.examMode" value="team"> {{ 'EXAM_TEAM' | translate }}
 					</div>
 				</div>
 		</div>
-	 	<div class="col-md-4"></div>
-	 </div>	
-	</div>  
-    <!-- Buttons form --> 
-    <div data-buttons-form="element"></div>
+		<div class="col-md-4"></div>
+	 </div>
+	</div>
 
+	<element-common-attributes data-element="element"></element-common-attributes>
 </div>

@@ -1,36 +1,34 @@
 ﻿<div class="element-form form-hyperlink"> 
 
-    <!-- URL -->
-    <div>
-        <label class="label-text-url">{{ 'FORM_URL' | translate }} <span class="mandatory"></label>
-        <input type="text" name="hyperlink" data-ng-model="element.attributes.hyperlinkUrl" class="input-text-title" required/>
-    </div>
+	<!-- URL -->
+	<div>
+		<label class="label-text-url">{{ 'FORM_URL' | translate }} <span class="mandatory"></label>
+		<input type="text" name="hyperlink" data-ng-model="element.attributes.hyperlinkUrl" class="input-text-title" required/>
+	</div>
 
-    <!-- Title -->
-    <div class="container-title">
-        <label class="label-text-title">{{ 'FORM_TITLE' | translate }}</span></label>
-        <input type="text" name="title" data-ng-model="element.title" class="input-text-title" placeholder="{{element.attributes.hyperlinkUrl}}" />
-    </div>
+	<!-- Title -->
+	<div class="container-title">
+		<label class="label-text-title">{{ 'FORM_TITLE' | translate }}</span></label>
+		<input type="text" name="title" data-ng-model="element.title" class="input-text-title" placeholder="{{element.attributes.hyperlinkUrl}}" />
+	</div>
 
-    <!-- Type -->
-    <div class="label-text-type">{{ 'FORM_DOCUMENT_TYPE' | translate }}</div>
-    <div class="btn-group" uib-dropdown keyboard-nav>
-        <button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
-            <span class="add-label">{{currentType.name | translate }}</span>
-            <span class="caret"></span>
-        </button>
-        <ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-            <li role="menuitem" data-ng-repeat="type in config.hyperlinkTypes">
-                <a href="" data-ng-click="selectType(type)">{{::type.name | translate }}</a> 
-            </li>
-        </ul>
-    </div>
+	<!-- Type -->
+	<div class="label-text-type">{{ 'FORM_DOCUMENT_TYPE' | translate }}</div>
+	<div class="btn-group" uib-dropdown keyboard-nav>
+		<button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
+			<span class="add-label">{{currentType.name | translate }}</span>
+			<span class="caret"></span>
+		</button>
+		<ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+			<li role="menuitem" data-ng-repeat="type in config.hyperlinkTypes">
+				<a href="" data-ng-click="selectType(type)">{{::type.name | translate }}</a> 
+			</li>
+		</ul>
+	</div>
 
-    <!-- Description --> 
-    <div class="label-text-description" style="margin-top: 10px;">{{ 'FORM_DESCRIPTION' | translate }}</div>
-    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description" required></textarea>
+	<!-- Description --> 
+	<div class="label-text-description" style="margin-top: 10px;">{{ 'FORM_DESCRIPTION' | translate }}</div>
+	<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description" required></textarea>
 
-    <!-- Buttons form --> 
-    <div data-buttons-form="element"></div>
-
+	<element-common-attributes data-element="element"></element-common-attributes>
 </div>

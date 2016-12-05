@@ -1,13 +1,23 @@
 <div class="element-form reference-form"> 
-    <!-- Citation <-->
-	<label class="label-text-title">{{ 'CITATION_BROWSER_TITLE' | translate }} : <span class="mandatory"></span></label>
-    
-    <div data-browser-element-form="element" data-type="citation"></div>
+	<resource-browser data-element="element" data-type="citation" data-title="'CITATION_BROWSER_TITLE' | translate"></resource-browser>
+	
+	<!-- Type -->
+	<div class="label-text-type">{{ 'FORM_REFERENCE_TYPE' | translate }}</div>
+	<div class="btn-group" uib-dropdown keyboard-nav>
+		<button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
+			<span class="add-label">{{currentType.name | translate }}</span>
+			<span class="caret"></span>
+		</button>
+		<ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+			<li role="menuitem" data-ng-repeat="type in config.referenceTypes">
+				<a href="" data-ng-click="selectType(type)">{{::type.name | translate }}</a> 
+			</li>
+		</ul>
+	</div>
 
-    <!-- Description  --> 
-    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
-    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
+	<!-- Description  --> 
+	<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
+	<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
 
-    <!-- Buttons form --> 
-    <div data-buttons-form="element"></div>
+	<element-common-attributes data-element="element"></element-common-attributes>
 </div>

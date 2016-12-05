@@ -127,6 +127,68 @@
 		'name': 'HYPERLINK_TYPE_SOFTWARE'
 	}],
 
+	referenceTypes: [{
+		'id': -1,
+		'name': 'REFERENCE_TYPE_DEFAULT'
+	}, {
+		'id': 1,
+		'name': 'REFERENCE_TYPE_BOOK'
+	}, {
+		'id': 2,
+		'name': 'REFERENCE_TYPE_BOOK_CHAPTER'
+	}, {
+		'id': 3,
+		'name': 'REFERENCE_TYPE_CASE'
+	}, {
+		'id': 4,
+		'name': 'REFERENCE_TYPE_ARTICLE'
+	}, {
+		'id': 5,
+		'name': 'REFERENCE_TYPE_ARTICLE_NEWS'
+	}, {
+		'id': 6,
+		'name': 'REFERENCE_TYPE_SLIDES'
+	}, {
+		'id': 7,
+		'name': 'REFERENCE_TYPE_EXERCISE'
+	}, {
+		'id': 8,
+		'name': 'REFERENCE_TYPE_SOLUTION'
+	}, {
+		'id': 9,
+		'name': 'REFERENCE_TYPE_REPORT'
+	}, {
+		'id': 10,
+		'name': 'REFERENCE_TYPE_DATA'
+	}, {
+		'id': 11,
+		'name': 'REFERENCE_TYPE_PEDAGOGIC'
+	}, {
+		'id': 12,
+		'name': 'REFERENCE_TYPE_POLL'
+	}, {
+		'id': 13,
+		'name': 'REFERENCE_TYPE_OLD_EXAM'
+	}, {
+		'id': 14,
+		'name': 'REFERENCE_TYPE_WEBSITE'
+	}, {
+		'id': 15,
+		'name': 'REFERENCE_TYPE_AUDIO'
+	}, {
+		'id': 16,
+		'name': 'REFERENCE_TYPE_VIDEO'
+	}, {
+		'id': 18,
+		'name': 'REFERENCE_TYPE_SIMULATION'
+	}, {
+		'id': 19,
+		'name': 'REFERENCE_TYPE_SOFTWARE'
+	}, {
+		'id': 20,
+		'name': 'REFERENCE_TYPE_OTHER'
+	}],
+
 	contactInfoTitles: [{
 		'id': -1,
 		'name': 'FORM_CONTACT_TITLE_DEFAULT'

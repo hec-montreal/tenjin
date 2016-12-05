@@ -23,7 +23,7 @@ tenjinApp.directive('documentElement', ['config', '$translate', 'ResourcesServic
             // Retrieve the label for the document type id
             if ($scope.element.attributes.documentType) {
                 for (var i = 0; i < config.documentTypes.length; i++) {
-                    if (parseInt($scope.element.attributes.documentType) === config.documentTypes[i].id) {
+                    if (parseInt($scope.element.attributes.documentType, 10) === config.documentTypes[i].id) {
                         $scope.documentType = $translate.instant(config.documentTypes[i].name);
                         break;
                     }

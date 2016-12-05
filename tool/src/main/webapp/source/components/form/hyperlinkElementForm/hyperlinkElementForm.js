@@ -54,7 +54,7 @@
             // Récupération du type de document
             if ($scope.element.attributes.hyperlinkType) {
                 for (var i = 0; i < config.hyperlinkTypes.length; i++) {
-                    if (parseInt($scope.element.attributes.hyperlinkType) === config.hyperlinkTypes[i].id) {
+                    if (parseInt($scope.element.attributes.hyperlinkType, 10) === config.hyperlinkTypes[i].id) {
                         $scope.currentType = config.hyperlinkTypes[i];
 
                         break;

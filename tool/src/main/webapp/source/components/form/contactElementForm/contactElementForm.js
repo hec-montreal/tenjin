@@ -57,7 +57,7 @@
             // Retrieve the title for the given title id
             if ($scope.element.attributes.contactInfoTitle) {
                 for (var i = 0; i < config.contactInfoTitles.length; i++) {
-                    if (parseInt($scope.element.attributes.contactInfoTitle) === config.contactInfoTitles[i].id) {
+                    if (parseInt($scope.element.attributes.contactInfoTitle, 10) === config.contactInfoTitles[i].id) {
                         $scope.currentTitle = config.contactInfoTitles[i];
                         break;
                     }

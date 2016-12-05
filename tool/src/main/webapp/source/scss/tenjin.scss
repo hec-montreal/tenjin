@@ -10,7 +10,9 @@
 @import '../components/management/management';
 @import '../components/loader/loader';
 @import '../components/elementButtons/elementButtons';
+@import '../components/elementCommonAttributes/elementCommonAttributes';
 @import '../components/tenjin/tenjin';
+@import '../components/resourceBrowser/resourceBrowser';
 
 @import '../components/element/element';
 @import '../components/element/referenceElement/referenceElement';
@@ -28,8 +30,6 @@
 @import '../components/form/hyperlinkElementForm/hyperlinkElementForm';
 @import '../components/form/evaluationElementForm/evaluationElementForm';
 @import '../components/form/examElementForm/examElementForm';
-@import '../components/form/browserElementForm/browserElementForm';
-@import '../components/form/buttonsForm/buttonsForm';
 @import '../components/form/imageElementForm/imageElementForm';
 
 @import '../components/alert/alert';

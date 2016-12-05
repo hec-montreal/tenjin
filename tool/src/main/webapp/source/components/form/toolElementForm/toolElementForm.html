@@ -1,19 +1,13 @@
 ﻿<div class="element tool-form">
+	<resource-browser data-element="element" data-type="sakai_entity" data-collapse-all="true" data-title="'SAKAI_TOOL' | translate"></resource-browser>
 
-    <!-- Tool <-->
-    <label class="label-text-title">{{ 'SAKAI_TOOL' | translate }} : <span class="mandatory"></span></span>  
-    </label>
-    
-    <div data-browser-element-form="element" data-type="sakai_entity" data-collapse-all="true"></div>
- 
-    <!-- Title -->
-    <label class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
-    <input type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
-  
-    <!-- Description  --> 
-    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
-    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
+	<!-- Title -->
+	<label class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
+	<input type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
 
-    <!-- Buttons form --> 
-    <div data-buttons-form="element" data-novisible="true" data-nodate="true"></div>
+	<!-- Description  -->
+	<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
+	<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
+
+	<element-common-attributes data-element="element" data-novisible="true" data-nodate="true"></element-common-attributes>
 </div>

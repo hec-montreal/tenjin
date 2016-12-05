@@ -1,16 +1,15 @@
 ﻿<div class="element-form"> 
 
-    <!-- URL or Embed -->
-    <div>
-        <label class="label-text-url">{{ 'FORM_URL_EMBED' | translate }} <span class="mandatory"></label>
-        <input type="text" name="url" data-ng-model="element.attributes.videoUrl" class="input-text-title" required/>
-    </div>
+	<!-- URL or Embed -->
+	<div>
+		<label class="label-text-url">{{ 'FORM_URL_EMBED' | translate }} <span class="mandatory"></label>
+		<input type="text" name="url" data-ng-model="element.attributes.videoUrl" class="input-text-title" required/>
+	</div>
 
 
-    <!-- Description -->
-    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
-    <textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description" required></textarea> 
+	<!-- Description -->
+	<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
+	<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description" required></textarea> 
 
-    <!-- Buttons form --> 
-    <div data-buttons-form="element"></div>
+	<element-common-attributes data-element="element"></element-common-attributes>
 </div>
