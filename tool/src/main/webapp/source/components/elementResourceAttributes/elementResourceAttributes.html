@@ -1,0 +1,21 @@
+<div class="readonly-props">
+	<div><strong>{{ 'DATA_MODIFIABLE_IN_RESOURCES' | translate }}</strong></div>
+
+	<div>
+		<span class="prop">{{ 'COPYRIGHT_STATUS' | translate }}:</span>
+		<span ng-if="!!resource">{{ (resource.copyright ? 'COPYRIGHT_I_HOLD' : 'COPYRIGHT_UNDEFINED') | translate }}</span>
+	</div>
+
+	<div>
+		<span class="prop">{{ 'VISIBILITY' | translate }}:</span> 
+		<span ng-if="!!resource">{{ (resource.publicAccess ? 'VISIBILITY_PUBLIC' : 'VISIBILITY_STUDENTS') | translate }}</span>
+	</div>
+	
+	<div ng-if="!!resource.release">
+		<span class="prop">{{ 'FORM_DATE_DISPLAY_START' | translate }}:</span> {{resource.release.display}}
+	</div>
+	
+	<div ng-if="!!resource.retract">
+		<span class="prop">{{ 'FORM_DATE_DISPLAY_END' | translate }}:</span> {{resource.retract.display}}
+	</div>
+</div>

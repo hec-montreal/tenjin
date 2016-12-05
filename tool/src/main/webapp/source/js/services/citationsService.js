@@ -4,8 +4,9 @@ tenjinApp.service('CitationsService', ['$q', '$http', function($q, $http) {
 	/**
 	 * Load a citation list
 	 */
-	var _loadCitationList = function(citationListId) {
+	var _loadCitationList = function(citationList) {
 		var tthis = this;
+		var citationListId = citationList.resourceId;
 		var def = $q.defer();
 
 		// Strip the starting '/' from the id
@@ -19,6 +20,8 @@ tenjinApp.service('CitationsService', ['$q', '$http', function($q, $http) {
 			method: 'get',
 			url: '/direct/citation/list-b64/' + b64Path + '.json'
 		}).then(function(response) {
+			_processCitations(citationList, response.data.citations);
+
 			def.resolve(response.data);
 		}, function(reason) {
 			def.reject(reason);
@@ -27,12 +30,18 @@ tenjinApp.service('CitationsService', ['$q', '$http', function($q, $http) {
 		return def.promise;
 	};
 
+	var _processCitations = function (citationList, citations) {
+		for (var i = 0; i < citations.length; i++) {
+			citations[i].parent = citationList;
+		}
+	}
+
 	/*
 	 * Recursivly load citation lists in a resource tree
 	 */
 	var _loadCitationLists = function(rootTree, resourceIds, promises) {
 		if (rootTree.type === 'citationList') {
-			promises.push(_loadCitationList(rootTree.resourceId));
+			promises.push(_loadCitationList(rootTree));
 
 			resourceIds.push(rootTree.resourceId);
 		} else {

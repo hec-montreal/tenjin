@@ -57,6 +57,8 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 		rootTree.type = type;
 
 		for (var i = 0; i < rootTree.resourceChildren.length; i++) {
+			rootTree.resourceChildren[i].parent = rootTree;
+			
 			classifyResources(rootTree.resourceChildren[i]);
 		}
 	};
