@@ -1,7 +1,8 @@
 <div class="readonly-props">
 	<div><strong>{{ 'DATA_MODIFIABLE_IN_RESOURCES' | translate }}</strong></div>
 
-	<div>
+	<div ng-if="!nocopyright">
+		<h1>{{nocopyright}}</h1>
 		<span class="prop">{{ 'COPYRIGHT_STATUS' | translate }}:</span>
 		<span ng-if="!!resource">{{ (resource.copyright ? 'COPYRIGHT_I_HOLD' : 'COPYRIGHT_UNDEFINED') | translate }}</span>
 	</div>

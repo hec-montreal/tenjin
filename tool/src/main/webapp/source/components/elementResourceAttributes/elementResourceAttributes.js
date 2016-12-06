@@ -3,7 +3,8 @@ tenjinApp.directive('elementResourceAttributes', [function() {
 
 	return {
 		scope: {
-			resource: '='
+			resource: '=',
+			nocopyright: '='
 		},
 
 		restrict: 'E',
@@ -15,7 +16,8 @@ tenjinApp.directive('elementResourceAttributes', [function() {
 		},
 
 		link: function($scope) {
-
+			console.log("NO COPY: ");
+			console.log($scope.nocopyright);
 		}
 	};
 }]);
