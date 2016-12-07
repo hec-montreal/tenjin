@@ -21,6 +21,7 @@
 			<li><input id="chkLibraryLink" type="checkbox" name="activateLibraryLink" data-ng-model="element.attributes.activateLibraryLink" data-ng-true-value="'true'" /> <label for="chkLibraryLink">{{ 'ACTIVATE_LIBRARY_LINK' | translate  }}</label></li>
 			<li><input id="chkCoopLink" type="checkbox" name="activateCoopLink" data-ng-model="element.attributes.activateCoopLink" data-ng-true-value="'true'" /> <label for="chkCoopLink">{{ 'ACTIVATE_COOP_LINK' | translate  }}</label></li>
 			<li><input id="chkOtherLink" type="checkbox" name="activateOtherLink" data-ng-model="element.attributes.activateOtherLink" data-ng-true-value="'true'" /> <label for="chkOtherLink">{{ 'ACTIVATE_OTHER_LINK' | translate  }}</label></li>
+			<li data-ng-if="element.attributes.activateOtherLink == 'true'"><input type="text" name="otherLinkUrl" data-ng-model="element.attributes.otherLinkurl" /></li>
 		</ul>
 	</div>
 

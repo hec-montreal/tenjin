@@ -1,14 +1,14 @@
 <div class="element tool">
 
-    <div class="element-title">
-        <a data-nodrag href="{{entity.url}}" target="_blank">
-        {{ entity.name }} 
-        </a>
+	<div class="element-title">
+		<a ng-if="!element.title || element.title.length == 0" data-nodrag href="{{entity.url}}" target="_blank">
+			{{entity.name}} 
+		</a>
 
-        <span ng-if="element.title.length > 0">
-            [{{ element.title }}] 
-        </span> 
-    </div>
+		<a ng-if="element.title && element.title.length > 0" data-nodrag href="{{entity.url}}" target="_blank">
+			{{element.title}}
+		</a>
+	</div>
 
-    <div ng-bind-html="element.description" class="comment"></div>
+	<div ng-bind-html="element.description" class="comment"></div>
 </div>
