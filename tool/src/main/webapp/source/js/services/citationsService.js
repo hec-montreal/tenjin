@@ -32,7 +32,7 @@ tenjinApp.service('CitationsService', ['$q', '$http', function($q, $http) {
 
 	var _processCitations = function (citationList, citations) {
 		for (var i = 0; i < citations.length; i++) {
-			citations[i].parent = citationList;
+			citations[i].parentId = citationList.resourceId;
 		}
 	}
 

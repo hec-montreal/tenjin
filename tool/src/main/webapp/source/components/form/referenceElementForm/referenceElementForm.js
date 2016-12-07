@@ -1,9 +1,10 @@
-tenjinApp.directive('referenceElementForm', ['config', '$translate', function(config, $translate) {
+tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$translate', function(config, ResourcesService, $translate) {
 	'use strict';
 
 	return {
 		scope: {
-			element: '=referenceElementForm'
+			element: '=referenceElementForm',
+			mode: '='
 		},
 
 		restrict: 'A',
@@ -22,6 +23,7 @@ tenjinApp.directive('referenceElementForm', ['config', '$translate', function(co
 			};
 
 			$scope.config = config;
+			$scope.ResourcesService = ResourcesService;
 
 			$scope.selectType = function($type) {
 				$scope.currentType = $type;
@@ -34,8 +36,8 @@ tenjinApp.directive('referenceElementForm', ['config', '$translate', function(co
 
 				if (!$scope.element.attributes.citationId) {
 					ret.push({
-						field: "citation",
-						message: "ERROR_MISSING_CITATION"
+						field: 'citation',
+						message: 'ERROR_MISSING_CITATION'
 					});
 				}
 
@@ -43,7 +45,12 @@ tenjinApp.directive('referenceElementForm', ['config', '$translate', function(co
 			}
 		},
 
-		link: function($scope, $element) {
+		link: function($scope) {
+			if ($scope.mode === 'creation') {
+				console.log("Setting activateLibraryLink");
+				$scope.element.attributes.activateLibraryLink = 'true';
+			}
+
 			// Retrieve the reference type for the given reference type id
 			if ($scope.element.attributes.referenceType) {
 				for (var i = 0; i < config.referenceTypes.length; i++) {

@@ -33,9 +33,6 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 			};
 
 			$scope.setSelectedResource = function($item) {
-				console.log('Browser selected resource:');
-				console.log($item);
-
 				$scope.element.$selectedResource = $item;
 
 				if ($scope.type === 'sakai_entity') {

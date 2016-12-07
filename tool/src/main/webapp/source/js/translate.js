@@ -256,7 +256,10 @@
 		ADD_DESCRIPTION: 'Ajouter une description',
 		NO_VALID_SYLLABUS_TO_DELETE: 'Un ou des plans de cours sélectionnés sont associés à des sections. Veuillez les dissocier afin de pouvoir les supprimer.',
 		SOME_INVALID_SYLLABUS_TO_DELETE: 'Un ou des plans de cours sélectionnés sont associés à des sections. Veuillez les dissocier afin de pouvoir les supprimer.',
-		SAKAI_TOOL: 'Sakai Tool'
+		SAKAI_TOOL: 'Sakai Tool',
+		ACTIVATE_LIBRARY_LINK: 'Activate library link',
+		ACTIVATE_COOP_LINK: 'Activate coop link',
+		ACTIVATE_OTHER_LINK: 'Activate other link'
 	}).translations('fr', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -513,7 +516,10 @@
 		ADD_DESCRIPTION: 'Ajouter une description',
 		NO_VALID_SYLLABUS_TO_DELETE: 'Un ou des plans de cours sélectionnés sont associés à des sections. Veuillez les dissocier afin de pouvoir les supprimer.',
 		SOME_INVALID_SYLLABUS_TO_DELETE: 'Un ou des plans de cours sélectionnés sont associés à des sections. Veuillez les dissocier afin de pouvoir les supprimer.',
-		SAKAI_TOOL: 'Outil Sakai'
+		SAKAI_TOOL: 'Outil Sakai',
+		ACTIVATE_LIBRARY_LINK: 'Activer le lien vers la bibliothèque',
+		ACTIVATE_COOP_LINK: 'Activater le lien vers la Coop',
+		ACTIVATE_OTHER_LINK: 'Activer un autre lien'
 	});
 
 	$translateProvider.preferredLanguage('fr');

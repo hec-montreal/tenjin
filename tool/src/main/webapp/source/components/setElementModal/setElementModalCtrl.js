@@ -12,7 +12,7 @@
 		};
 
 		$scope.element = angular.copy(element);
-		$scope.mode = "edition";
+		$scope.mode = 'edition';
 		$scope.title = $translate.instant('MODAL_EDIT_ELEMENT_TITLE');
 	} else {
 		// Create mode
@@ -27,6 +27,7 @@
 			'common': SyllabusService.syllabus.common
 		};
 
+		$scope.mode = 'creation';
 		$scope.title = $translate.instant('MODAL_CREATE_ELEMENT_TITLE');
 	}
 
@@ -82,8 +83,8 @@
 				}
 			} else {
 				ret.push({
-					field: "availabilityStartDate",
-					message: "ERROR_FORMAT_DATE_START"
+					field: 'availabilityStartDate',
+					message: 'ERROR_FORMAT_DATE_START'
 				});
 			}
 
@@ -96,14 +97,14 @@
 
 					if ($scope.element.availabilityStartDate > $scope.element.availabilityEndDate) {
 						ret.push({
-							field: "availabilityEndDate",
-							message: "ERROR_START_DATE_GREATER"
+							field: 'availabilityEndDate',
+							message: 'ERROR_START_DATE_GREATER'
 						});
 					}
 				} else {
 					ret.push({
-						field: "availabilityEndDate",
-						message: "ERROR_FORMAT_DATE_END"
+						field: 'availabilityEndDate',
+						message: 'ERROR_FORMAT_DATE_END'
 					});
 				}
 			}
