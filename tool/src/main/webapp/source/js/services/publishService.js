@@ -140,31 +140,45 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 
 
 	this.getChanges = function(){
+		pages=[];
+		position = 0;
+		page =[];
+
 		
+
 		return getModifiedPages(syllabusService.syllabus.elements);
+
+
 	};
 
-	var parent = "";
-  	var getModifiedPages = function($elements){
+	var parent = 0;
+  	var page =[];
+ 	var getModifiedPages = function($elements){
   		
   		
   		var element;
-  		var page;
-
+ 
   		for (var i=0; i < $elements.length;i++)	{
   			element = $elements[i];
   			if (!element.elements){
   				if(element.title){
-  				position++;
-  					pages[position] = element.title + " " + parent;
-  				}
+  					position++;
+  					page [parent+1] = element.title;
+  					pages[position] = page;
+  					console.log (position + " " + page);
+ 				}
   			}
   			else{
-  				parent += element.title; 
-  				getModifiedPages(element.elements);
+				parent += 1; 
+				page[parent] = element.title;
+   				getModifiedPages(element.elements);
   			}
+  			
 		}
-		 					parent = "";
+		if (parent > 0 ){
+			page = page.slice(0, parent);
+			parent -= 1;
+		}
  
 		return pages;
   	};

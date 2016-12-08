@@ -6,25 +6,25 @@
 	<p class="underline"/>
 	<div data-ng-if="publishService.isCommonSyllabusPublished()">
 		<div  class="last-publish-date" data-ng-if="hasPublicationDate()">
-			{{ 'PUBLISH_LAST_PUBLISH_LABEL' | translate }} {{syllabus.publishedDate | date:'longDate'}}
+			{{ 'PUBLISH_LAST_PUBLISH_LABEL' | translate }} {{syllabus.publishedDate | date:'d MMMM y h:mm:ss a'}}
 		</div>
 		<div class="published-sections">
 			{{ 'PUBLISH_MODIFIED_SECTIONS_LABEL' | translate }} 
 		</div>
-		<!--<ul  class="" >
+		<ul  class="" >
 		    <li class="published-section" data-ng-repeat="section in publishService.getSections()">
 		        {{section}}
 		    </li> 
 		</ul>
-		-->
-		 <div uib-accordion-group class="panel-default modified-pages" >
+		
+		 <!-- <div uib-accordion-group class="panel-default modified-pages" >
 			 <uib-accordion-heading>
-		        <i class="pull-left glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>{{ 'PUBLISH_MODIFIED_PAGES_LABEL' | translate }}
+		        <i class="pull-left glyphicon" data-ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}" data-ng-click="changedComposites = publishService.getChanges()"></i>{{ 'PUBLISH_MODIFIED_PAGES_LABEL' | translate }}
 		      </uib-accordion-heading>
-		      <li data-ng-repeat="page in publishService.getChanges()">
+		      <li data-ng-repeat="page in changedComposites track by $index">
 		      	<ul> {{page}}</ul>
 		      </li>
-		 </div>
+		 </div> -->
 	</div>
 	<div data-ng-if="!publishService.isCommonSyllabusPublished()">
 			{{ 'PUBLISH_CHECK_COMMON' | translate }}
