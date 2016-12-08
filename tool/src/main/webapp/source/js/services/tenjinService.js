@@ -1,4 +1,4 @@
-tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'ResponsiveService', function($q, $state, UserService, SyllabusService, ResourcesService, SakaiToolsService, CitationsService, ResponsiveService) {
+tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'ResponsiveService', function($q, $state, UserService, SyllabusService, ResourcesService, SakaiToolsService, CitationsService, PublishService, ResponsiveService) {
 	'use strict';
 
 	var loadCitations = function(data, citationsLists) {
@@ -101,7 +101,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 			loadSyllabus: function(ctx) {
 				var def = $q.defer();
 
-				SyllabusService.loadPublishedSyllabus().then(function() {
+				PublishService.loadPublishedSyllabus().then(function() {
 					def.resolve();
 				});
 

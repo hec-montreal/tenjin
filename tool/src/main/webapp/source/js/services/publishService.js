@@ -105,9 +105,9 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 			method: 'GET',
 			url: 'v1/syllabus/published.json'
 		}).then(function(response) {
-			tthis.setSyllabus(response.data);
+			SyllabusService.setSyllabus(response.data);
 
-			def.resolve(tthis.getSyllabus());
+			def.resolve(SyllabusService.getSyllabus());
 		}, function(reason) {
 			def.reject(reason);
 		});
@@ -123,9 +123,9 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 			method: 'GET',
 			url: 'v1/syllabus/published.json'
 		}).then(function(response) {
-			tthis.setSyllabusList(response.data);
+			SyllabusService.setSyllabusList(response.data);
 
-			def.resolve(tthis.getSyllabusList());
+			def.resolve(SyllabusService.getSyllabusList());
 		}, function(reason) {
 			def.reject(reason);
 		});
