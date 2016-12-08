@@ -15,6 +15,10 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 	
 	this.isCommonSyllabusPublished = function(){
 		var common = syllabusService.getCommonSyllabus();
+		if (syllabusService.syllabus.common){
+			return true;
+		}
+
 		if (common.publishedDate){
 			return true;
 		}
@@ -144,7 +148,7 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 		position = 0;
 		page =[];
 
-		
+
 
 		return getModifiedPages(syllabusService.syllabus.elements);
 
