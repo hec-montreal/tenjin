@@ -29,11 +29,12 @@
 			<button class="btn btn-primary" type="button" data-ng-disabled="(!syllabusService.dirty || syllabusService.working)" data-ng-click="save()">{{ 'BUTTON_SAVE' | translate }}</button>
 		</span>  
 
-		<span class="group-save-publish hide-mobile" data-ng-controller="PublishCtrl">
+		<span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$writePermission" data-ng-controller="PublishCtrl">
 			<button type="button" data-ng-click="startPublish()"> {{ 'BUTTON_PUBLISH' | translate }}
 			 </button>
 		</span>  
 		
+
 		 <span class="hide-desktop show-mobile" data-ng-if="displayButtons.displayMobileMenu()">
 			<button type="button" class="btn btn-primary mobile-menu-button" data-ng-model="syllabusService.showMobileMenu" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
 				Menu
