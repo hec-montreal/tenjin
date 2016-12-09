@@ -12,8 +12,12 @@
 			if (SyllabusService.syllabus.elements.length > 0) {
 				TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
 			}
-
 			def.resolve();
+		}, function (e) {
+			$scope.errorLoading = true;
+			AlertService.display('danger');
+
+			def.reject(e);
 		});
 
 		return def.promise;

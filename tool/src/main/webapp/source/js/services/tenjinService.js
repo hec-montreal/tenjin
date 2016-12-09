@@ -93,6 +93,8 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 					loadCitations().then(function() {
 						def.resolve();
 					});
+				}, function (e) {
+					def.reject(e);
 				});
 
 				return def.promise;
@@ -103,6 +105,8 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 
 				PublishService.loadPublishedSyllabus().then(function() {
 					def.resolve();
+				}, function (e) {
+					def.reject(e);
 				});
 
 				return def.promise;
@@ -131,6 +135,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 			tthis.viewState.loadViewData(siteId).then(function() {
 				def.resolve();
 			}).catch(function(e) {
+				console.log("Reject loadData");
 				def.reject(e);
 			});
 		}).catch(function(e) {

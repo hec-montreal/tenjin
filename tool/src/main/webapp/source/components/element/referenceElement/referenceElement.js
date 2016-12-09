@@ -1,29 +1,32 @@
 tenjinApp.directive('referenceElement', ['ResourcesService', function(ResourcesService) {
-    'use strict';
+	'use strict';
 
-    return {
-        scope: true,
+	return {
+		scope: true,
 
-        restrict: 'A',
+		restrict: 'A',
 
-        templateUrl: 'element/referenceElement/referenceElement.html',
+		templateUrl: 'element/referenceElement/referenceElement.html',
 
-        controller: function($scope) {},
+		controller: function($scope) {},
 
-        link: function($scope, $element) {
-            $scope.citation = ResourcesService.getResource($scope.element.attributes.citationId);
-            $scope.element.title = "Citation";
+		link: function($scope, $element) {
+			$scope.citation = ResourcesService.getResource($scope.element.attributes.citationId);
 
-            $scope.dot = ".";
-            $scope.comma = ',';
-            $scope.openParenthesis = '(';
-            $scope.closeParenthesis = ')';
-            $scope.leftAngleQuote = '«';
-            $scope.rightAngleQuote = '»';
-            $scope.pages = 'p.';
-            $scope.volume = 'vol.';
-            $scope.issue = 'no';
-            $scope.edition = 'ed.';
-        }
-    };
+			console.log($scope.citation);
+
+			$scope.element.title = "Citation";
+
+			$scope.dot = ".";
+			$scope.comma = ',';
+			$scope.openParenthesis = '(';
+			$scope.closeParenthesis = ')';
+			$scope.leftAngleQuote = '«';
+			$scope.rightAngleQuote = '»';
+			$scope.pages = 'p.';
+			$scope.volume = 'vol.';
+			$scope.issue = 'no';
+			$scope.edition = 'ed.';
+		}
+	};
 }]);
