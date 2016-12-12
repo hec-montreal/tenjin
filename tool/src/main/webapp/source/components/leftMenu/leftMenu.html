@@ -5,7 +5,7 @@
 		<a data-nodrag data-ng-click="treeService.setSelectedItem(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }">
 			<span data-ng-if="item.type === 'evaluation' || item.type ==='exam'">{{$index + 1}}&nbsp;-&nbsp;</span>
 			<span data-ng-if="item.type === 'lecture' || item.type === 'tutorial'">{{item.$numero}}&nbsp;-&nbsp;</span>
-			<div style="word-wrap: break-word;">{{item.title}}</div>
+			<div style="word-break: break-all;">{{item.title}}</div>
 		</a>
 
 		<!-- No drag and drop for the first level element -->

@@ -3,7 +3,7 @@
 
     // Init syllabus data : name of syllabus + sections
     $scope.data = {
-        'name': $translate.instant('CREATE_SYLLABUS_DEFAULT_NAME'),
+        'name': '',
         'sections': []
     };
 

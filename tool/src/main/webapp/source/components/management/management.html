@@ -17,11 +17,11 @@
 			<th>{{ 'TABLE_SECTIONS' | translate }}</th>
 			<th>{{ 'TABLE_LAST_PUBLISHED_DATE' | translate }}</th>
 			<th>{{ 'TABLE_LAST_MODIFICATION_DATE' | translate }}</th>
-			<th> </th>
 			<th class="th-select"> </th>
 		</tr>
 		<tr data-ng-repeat="syllabus in managementCtrl.syllabusService.syllabusList track by syllabus.id">
 			<td>
+				<a ui-sref="syllabus-edit({ id: syllabus.id })"><span class="glyphicon glyphicon-edit"></span></a>
 				<a data-ng-if="!syllabus.common && syllabus.$writePermission" editable-text="syllabus.title" onbeforesave="managementCtrl.updateTitle($data, syllabus)">{{syllabus.title}}</a>
 				<span data-ng-if="syllabus.common || !syllabus.$writePermission">{{syllabus.title}}</span>
 			</td>
@@ -50,9 +50,6 @@
 				<span data-ng-if="syllabus.lastModifiedDate">
 					{{syllabus.lastModifiedDate | date:'longDate'}}
 				</span>
-			</td>
-			<td>
-				<a ui-sref="syllabus-edit({ id: syllabus.id })">{{ 'LINK_SYLLABUS' | translate }}</a>
 			</td>
 			<td>
 				<input data-ng-if="!syllabus.common" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="managementCtrl.enableDelete()" />
