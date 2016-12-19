@@ -22,14 +22,11 @@ tenjinApp.controller('PublishCtrl', [ '$scope', '$translate', 'ngDialog', '$filt
       $scope.announcementMessage = $translate.instant('ANNOUNCEMENT_MESSAGE') + ' ' + $filter('date')
         (Date.now(), 'd MMMM y h:mm:ss a');
 
-      $scope.changedComposites = $scope.syllabus.elements.filter( function ($element){
-         return (new Date($element.lastModifiedDate) > new Date($scope.syllabus.publishedDate));});
-      console.log ($scope.changedComposites);
-
-   }
+    }
 
     $scope.startPublish = function(){
-        $scope.publishService.prePublishDialog();
+        var changedPages = $scope.publishService.getModifiedPages();
+        $scope.publishService.prePublishDialog(changedPages);
     };
 
   	$scope.publish = function(){
@@ -40,19 +37,9 @@ tenjinApp.controller('PublishCtrl', [ '$scope', '$translate', 'ngDialog', '$filt
       $scope.publishService.publish().$promise.then(
          function($data){
             $scope.publishService.working=false;
-          ngDialog.close();
-           $scope.publishService.postPublishDialog($data);
+            ngDialog.close();
+            $scope.publishService.postPublishDialog($data);
      });
-  	};
-
-
-  	$scope.hasPublicationDate = function(){
-      if ($scope.syllabus.publishedDate){
-  			return true;
-  		}
-  		else{
-  			return false;
-  		}
   	};
 
     $scope.closePublishDialog= function(){
@@ -73,4 +60,11 @@ tenjinApp.controller('PublishCtrl', [ '$scope', '$translate', 'ngDialog', '$filt
   		return $scope.publicationSuccess;
   	};
 
+    $scope.collapseAll = function () {
+        $scope.$broadcast('angular-ui-tree:collapse-all');
+    };
+
+    $scope.expandAll = function () {
+        $scope.$broadcast('angular-ui-tree:expand-all');
+    };
 }]);

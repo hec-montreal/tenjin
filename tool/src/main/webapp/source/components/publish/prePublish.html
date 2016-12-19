@@ -1,13 +1,18 @@
-<link rel="stylesheet" href="/tenjin-tool/css/syllabus.css"/>
+
+<link rel="stylesheet" href="/tenjin-tool/lib/css/bootstrap.css"/>
+
 <div class="publish-dialog">
 	<div class="publish-header">
 	    {{ 'PUBLISH_TITLE_LABEL' | translate }} {{syllabus.title}}
 	</div>
 	<p class="underline"/>
 	<div data-ng-if="publishService.isCommonSyllabusPublished()">
-		<div  class="last-publish-date" data-ng-if="hasPublicationDate()">
+		<!-- Show last publication date -->
+		<div  class="last-publish-date" data-ng-if="syllabus.publishedDate">
 			{{ 'PUBLISH_LAST_PUBLISH_LABEL' | translate }} {{syllabus.publishedDate | date:'d MMMM y h:mm:ss a'}}
 		</div>
+
+		<!-- Show sections affected -->
 		<div class="published-sections">
 			{{ 'PUBLISH_MODIFIED_SECTIONS_LABEL' | translate }} 
 		</div>
@@ -16,16 +21,30 @@
 		        {{section}}
 		    </li> 
 		</ul>
+		<div>
 		
-		 <!-- <div uib-accordion-group class="panel-default modified-pages" >
-			 <uib-accordion-heading>
-		        <i class="pull-left glyphicon" data-ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}" data-ng-click="changedComposites = publishService.getChanges()"></i>{{ 'PUBLISH_MODIFIED_PAGES_LABEL' | translate }}
-		      </uib-accordion-heading>
-		      <li data-ng-repeat="page in changedComposites track by $index">
-		      	<ul> {{page}}</ul>
-		      </li>
-		 </div> -->
+		<!--Show modified pages: We do not show the list of modifications if the course has never been published. 
+			We might end up listong all the course outline.   -->
+		<div data-ng-if="syllabus.publishedDate">
+			<a data-ng-click="collapsed = !collapsed">
+				<span class="glyphicon" data-ng-class="{
+		          'glyphicon-chevron-right': collapsed,
+		          'glyphicon-chevron-down': !collapsed}">
+		        </span>
+		       {{'PUBLISH_MODIFIED_PAGES_LABEL' | translate }} 
+		    </a>
+			<div class= "modified-pages"
+	            <div ui-tree id="tree-root" data-ng-show="!collapsed">
+	                <ol ui-tree-nodes="" ng-model="ngDialogData.changedSyllabusPages">
+	                    <li ng-repeat="node in ngDialogData.changedSyllabusPages" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+	                </ol>
+	            </div>
+	        </div>
+	    </div>
+
+
 	</div>
+	<!-- Show a message to let user know he must publish the common -->
 	<div data-ng-if="!publishService.isCommonSyllabusPublished()">
 			{{ 'PUBLISH_CHECK_COMMON' | translate }}
 	</div>
@@ -36,3 +55,14 @@
 
 	
 </div>
+
+
+ <script type="text/ng-template" id="nodes_renderer.html">
+    <div class="tree-node tree-node-content">
+        {{node.title}}
+    </div>
+    <ol ui-tree-nodes="" ng-model="node.elements">
+        <li ng-repeat="node in node.elements" ui-tree-node data-nodrag  data-nodrop data-ng-if="node.elements && node.type !== 'composite'" ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+</script>

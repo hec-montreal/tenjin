@@ -16,8 +16,14 @@
     border-width: thin;
 }
 
-.published-sections .modified-pages{
+.published-sections {
     margin-top: 30px;
+}
+
+.modified-pages{
+    width: 100%;
+    height: 90px;
+    overflow-y: scroll;
 }
 
 .last-publish-date{

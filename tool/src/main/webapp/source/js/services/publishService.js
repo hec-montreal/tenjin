@@ -7,7 +7,6 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 
 	var syllabusService = SyllabusService;
 	var position = 0;
-	var pages = [];
 	this.working = false;
 
 	
@@ -66,11 +65,15 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 	};
 
 
-	this.prePublishDialog = function($publishedSyllabus){
+	this.prePublishDialog = function($changedPages){
+		console.log($changedPages);
         ngDialog.openConfirm({ 
 	   		template: 'publish/prePublish.html',
 	   		height: 500,
-	   		width: 600,
+	   		data: {
+	   			changedSyllabusPages: $changedPages
+	   		},
+			width: 600,
 	   		controller: 'PublishCtrl',
   	  });
 
@@ -138,54 +141,23 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 		if ((syllabus.$writePermission) && (syllabus.sections.length > 0 || syllabus.common === true)) {
 			syllabus.$publishPermission = true;
 		}else{
-		syllabus.$publishPermission = false;
+			syllabus.$publishPermission = false;
 		}
 	};
 
 
-	this.getChanges = function(){
-		pages=[];
-		position = 0;
-		page =[];
+	this.getModifiedPages = function(){
+		var syllabus = syllabusService.syllabus;
+  		var changedPages = (syllabus.elements).filter(function changed($element) {
+            if (!$element.elements) {
+                return $element.lastModifiedDate > syllabus.publishedDate;
+            } else {
+                return ($element.elements = $element.elements.filter(changed)).length;
+            }
+        });
+        return changedPages;
 
-
-
-		return getModifiedPages(syllabusService.syllabus.elements);
-
-
-	};
-
-	var parent = 0;
-  	var page =[];
- 	var getModifiedPages = function($elements){
-  		
-  		
-  		var element;
- 
-  		for (var i=0; i < $elements.length;i++)	{
-  			element = $elements[i];
-  			if (!element.elements){
-  				if(element.title){
-  					position++;
-  					page [parent+1] = element.title;
-  					pages[position] = page;
-  					console.log (position + " " + page);
- 				}
-  			}
-  			else{
-				parent += 1; 
-				page[parent] = element.title;
-   				getModifiedPages(element.elements);
-  			}
-  			
-		}
-		if (parent > 0 ){
-			page = page.slice(0, parent);
-			parent -= 1;
-		}
- 
-		return pages;
-  	};
+    };
 
 
 }
