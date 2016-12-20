@@ -12,28 +12,31 @@ gulp.task("images", function() {
 		.pipe(gulp.dest("./dest/img"));
 });
 
-// Css
-gulp.task("css", ["css:lib", "css:fonts", "css:sass"]);
+// Style
+gulp.task("style", ["style:lib", "style:fonts", "style:sass"]);
 
-gulp.task("css:lib", function() {
+gulp.task("style:lib", function() {
 	return gulp.src([
 			"./source/lib/bootstrap/css/bootstrap.css",
 			"./source/lib/angular-ui-tree/angular-ui-tree.min.css",
+			"./source/lib/angular-ui-tree/angular-ui-tree.custom.css",
+			"./source/lib/xeditable/xeditable.custom.css",
 			"./node_modules/ng-dialog/css/ngDialog.css",
 			"./node_modules/ng-dialog/css/ngDialog-theme-default.css"
 		])
 		.pipe(gulp.dest("./dest/lib/css"));
 });
 
-gulp.task("css:fonts", function() {
+gulp.task("style:fonts", function() {
 	return gulp.src([
-			"./source/lib/bootstrap/fonts/*"
+			"./source/lib/bootstrap/fonts/*",
+			"./source/style/fonts/*"
 		])
 		.pipe(gulp.dest("./dest/lib/fonts"));
 });
 
-gulp.task("css:sass", function() {
-	return gulp.src("./source/scss/tenjin.scss")
+gulp.task("style:sass", function() {
+	return gulp.src("./source/style/tenjin.scss")
 		.pipe(sass().on("error", sass.logError))
 		.pipe(gulp.dest("./dest/css"));
 });
@@ -110,7 +113,7 @@ gulp.task("web:tools", function() {
 });
 
 // Build
-gulp.task("build", ["images", "css", "js", "web"]);
+gulp.task("build", ["images", "style", "js", "web"]);
 
 // Deploy
 gulp.task("deploy", ["build", "deploy:tomcat"]);
@@ -124,7 +127,7 @@ gulp.task("deploy:tomcat", function () {
 gulp.task("watch", function() {
 	gulp.watch(["./source/img/**/*"], ["images"]);
 
-	gulp.watch(["./source/**/*.scss"], ["css:sass"]);
+	gulp.watch(["./source/**/*.scss"], ["style:sass"]);
 
 	gulp.watch(["./source/**/*.js"], ["js:app"]);
 	gulp.watch(["./source/**/*.html"], ["js:app"]);

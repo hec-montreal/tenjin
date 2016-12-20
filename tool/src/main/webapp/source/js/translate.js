@@ -101,6 +101,7 @@
 		REF_BIBLIO_FROM2: 'FROM',
 		REF_BIBLIO_ISSN: 'ISSN:',
 		REF_BIBLIO_ISBN: 'ISBN:',
+		ERROR: 'Error',
 		ERROR_FORMAT_DATE_START: 'The format of the diffusion date is invalid',
 		ERROR_FORMAT_DATE_END: 'The format of the ending date is invalid',
 		ERROR_SAKAI_TOOL: 'A tool must be selected',
@@ -259,7 +260,8 @@
 		SAKAI_TOOL: 'Sakai Tool',
 		ACTIVATE_LIBRARY_LINK: 'Activate library link',
 		ACTIVATE_COOP_LINK: 'Activate coop link',
-		ACTIVATE_OTHER_LINK: 'Activate other link'
+		ACTIVATE_OTHER_LINK: 'Activate other link',
+		SYLLABUS_NOT_AVAILABLE: 'Syllabus is not available yet'
 	}).translations('fr', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -366,6 +368,7 @@
 		CONTACT_AVAILABILITY: 'Disponibilité',
 		REF_BIBLIO_ISSN: 'ISSN:',
 		REF_BIBLIO_ISBN: 'ISBN:',
+		ERROR: 'Erreur',
 		ERROR_FORMAT_DATE_START: 'Le format de la date d\'affichage est incorrect',
 		ERROR_FORMAT_DATE_END: 'Le format de la date de retrait est incorrect',
 		ERROR_CONTENT_MANDATORY: 'Le champ contenu est obligatoire',
@@ -519,7 +522,8 @@
 		SAKAI_TOOL: 'Outil Sakai',
 		ACTIVATE_LIBRARY_LINK: 'Activer le lien vers la bibliothèque',
 		ACTIVATE_COOP_LINK: 'Activater le lien vers la Coop',
-		ACTIVATE_OTHER_LINK: 'Activer un autre lien'
+		ACTIVATE_OTHER_LINK: 'Activer un autre lien',
+		SYLLABUS_NOT_AVAILABLE: 'Le plan de cours n\'est pas disponnible'
 	});
 
 	$translateProvider.preferredLanguage('fr');

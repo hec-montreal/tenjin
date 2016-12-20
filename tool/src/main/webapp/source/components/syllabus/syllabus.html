@@ -1,63 +1,94 @@
-<div data-ng-controller="SyllabusCtrl" class="portletBody">
-	<div data-ng-if="!!errorLoading">
-	Le plan de cours n'est pas encore disponible
+<div data-ng-controller="SyllabusCtrl">
+	<div class="errors col-xs-12" ng-if="alertService.hasAlert()">
+		<div class="alert alert-{{alertService.currentAlert.type}}">
+			<strong>{{ 'ERROR' | translate }}:&nbsp;</strong>{{ alertService.currentAlert.msg }}
+		</div>
 	</div>
 
-	<div class="main-errors">
-		<uib-alert data-ng-if="alertService.isVisible('danger')" class="myalert" type="danger" close="alertService.closeAlert('danger')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('danger')}}</uib-alert>
-	</div>
+	<div id="syllabus" ng-if="syllabusLoaded">
+		<h1 class="course-title col-xs-12">
+			{{::syllabusService.syllabus.courseTitle}}
+		</h1>
 
-	<h1 data-ng-class="{ 'title-dirty' : syllabusService.dirty }" ng-cloak>
-		{{::syllabusService.syllabus.courseTitle}}
-	</h1> 
+		<div class="toolbar col-xs-12">
+			<div class="toolbar-left">
+				<!-- Management button -->
+				<button data-ng-if="displayButtons.managementButton()" ui-sref="management">
+					{{ 'BUTTON_MANAGEMENT' | translate }}
+				</button>
 
-	<div class="buttons-list">
-		<button data-ng-if="displayButtons.managementButton()" class="btn btn-primary button-management hide-mobile" type="button" ui-sref="management">{{ 'BUTTON_MANAGEMENT' | translate }}</button>
+				<!-- Groups list -->
+				<div data-ng-if="displayButtons.syllabusDropdown()" class="btn-group button-list" uib-dropdown keyboard-nav>
+					<button id="btn-group-list" class="list" data-ng-disabled="syllabusService.working" uib-dropdown-toggle>
+						<span class="add-label">{{syllabusService.syllabus.title}}</span> <span class="caret"></span> 
+					</button>
 
-		<div data-ng-if="displayButtons.syllabusDropdown()" class="btn-group" uib-dropdown keyboard-nav>
-			<button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" data-ng-disabled="syllabusService.working" uib-dropdown-toggle>
-				<span class="add-label">{{syllabusService.syllabus.title}}</span> <span class="caret"></span> 
-			</button>
-			<ul uib-dropdown-menu class="list-menu-add-left" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-				<li role="menuitem" data-ng-repeat="syllabus in syllabusService.syllabusList">
-					<a href="" data-ng-click="selectSyllabus(syllabus)">{{::syllabus.title }} <span ng-if="syllabus.instructors.length > 0"> - {{::syllabus.instructors}}</span></a> 
-				</li> 
-			</ul>
+					<ul uib-dropdown-menu class="list-menu-add-left" role="menu" aria-labelledby="btn-group-list">
+						<li role="menuitem" data-ng-repeat="syllabus in syllabusService.syllabusList">
+							<a href="" data-ng-click="selectSyllabus(syllabus)">{{::syllabus.title }} <span ng-if="syllabus.instructors.length > 0"> - {{::syllabus.instructors}}</span></a> 
+						</li> 
+					</ul>
+				</div>
+			</div>
+
+			<div class="toolbar-right">
+				<ul class="actions">
+					<li class="action" ng-click="save()">
+						<span class="glyphicon glyphicon-floppy-disk"></span> {{ 'BUTTON_SAVE' | translate }}
+					</li>
+
+					<li class="action" ng-controller="PublishCtrl" ng-click="startPublish()">
+						<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
+					</li>
+				</ul>
+			</div>
 		</div>
 
-		<span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$writePermission">
-			<span class="container-save-working" data-ng-show="syllabusService.working">
-				<span class="picto-ajax-loader" data-ng-show="syllabusService.working"></span>
-				<span class="message-save-working">{{ 'SAVE_WORKING' | translate }}</span>
-			</span>
-			<button class="btn btn-primary" type="button" data-ng-disabled="(!syllabusService.dirty || syllabusService.working)" data-ng-click="save()">{{ 'BUTTON_SAVE' | translate }}</button>
-		</span>  
+		<div class="buttons-list" style="display: none;">
+			<button data-ng-if="displayButtons.managementButton()" class="btn btn-primary button-management hide-mobile" type="button" ui-sref="management">{{ 'BUTTON_MANAGEMENT' | translate }}</button>
 
-		<span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$writePermission" data-ng-controller="PublishCtrl">
-			<button type="button" data-ng-click="startPublish()"> {{ 'BUTTON_PUBLISH' | translate }}
-			 </button>
-		</span>  
-		
+			<div data-ng-if="displayButtons.syllabusDropdown()" class="btn-group" uib-dropdown keyboard-nav>
+				<button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" data-ng-disabled="syllabusService.working" uib-dropdown-toggle>
+					<span class="add-label">{{syllabusService.syllabus.title}}</span> <span class="caret"></span> 
+				</button>
+				<ul uib-dropdown-menu class="list-menu-add-left" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+					<li role="menuitem" data-ng-repeat="syllabus in syllabusService.syllabusList">
+						<a href="" data-ng-click="selectSyllabus(syllabus)">{{::syllabus.title }} <span ng-if="syllabus.instructors.length > 0"> - {{::syllabus.instructors}}</span></a> 
+					</li> 
+				</ul>
+			</div>
 
-		 <span class="hide-desktop show-mobile" data-ng-if="displayButtons.displayMobileMenu()">
-			<button type="button" class="btn btn-primary mobile-menu-button" data-ng-model="syllabusService.showMobileMenu" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-				Menu
-			</button>
-		</span>
-	</div>
+			<span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$writePermission">
+				<span class="container-save-working" data-ng-show="syllabusService.working">
+					<span class="picto-ajax-loader" data-ng-show="syllabusService.working"></span>
+					<span class="message-save-working">{{ 'SAVE_WORKING' | translate }}</span>
+				</span>
+				<button class="btn btn-primary" type="button" data-ng-disabled="(!syllabusService.dirty || syllabusService.working)" data-ng-click="save()">{{ 'BUTTON_SAVE' | translate }}</button>
+			</span>  
 
-	<div data-ng-if="!errorLoading">
-		<div data-ng-show="syllabusService.showMobileMenu">
-			<mobile-menu class="hide-desktop show-mobile"></mobile-menu>
-		</div>
-
-		<div class="row row-content">
-			<div data-ng-if="variables.device !== 'mobile'" data-ng-include="'leftMenu/leftMenu.html'"   class="col-sm-3 col-md-3 hide-mobile pull-left left-menu" id="menu" ></div>
+			<span class="group-save-publish hide-mobile" data-ng-if="syllabusService.syllabus.$writePermission" data-ng-controller="PublishCtrl">
+				<button type="button" data-ng-click="startPublish()"> {{ 'BUTTON_PUBLISH' | translate }}
+				 </button>
+			</span>  
 			
-			<div data-ng-include="'contentPanel/contentPanel.html'" class="col-sm-9 col-xs-12 col-md-9 pull-left  content-panel" id="contentPanel"></div>
+
+			 <span class="hide-desktop show-mobile" data-ng-if="displayButtons.displayMobileMenu()">
+				<button type="button" class="btn btn-primary mobile-menu-button" data-ng-model="syllabusService.showMobileMenu" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+					Menu
+				</button>
+			</span>
+		</div>
+
+		<div data-ng-if="!errorLoading">
+			<div data-ng-show="syllabusService.showMobileMenu">
+				<mobile-menu class="hide-desktop show-mobile"></mobile-menu>
+			</div>
+
+			<div class="row row-content">
+				<div data-ng-if="variables.device !== 'mobile'" data-ng-include="'leftMenu/leftMenu.html'"   class="col-sm-3 col-md-3 hide-mobile pull-left left-menu" id="menu" ></div>
+				
+				<div data-ng-include="'contentPanel/contentPanel.html'" class="col-sm-9 col-xs-12 col-md-9 pull-left  content-panel" id="contentPanel"></div>
+			</div>
 		</div>
 	</div>
-	
-	<!-- Loader feeback user when saving or deleting elements -->
-	<loader></loader>
 </div>

@@ -1,37 +1,41 @@
-﻿
-tenjinApp.service('AlertService', ['$translate',  function ($translate){
-    'use strict';
+﻿tenjinApp.service('AlertService', ['$translate', function($translate) {
+	'use strict';
 
-    var alerts = {
-        'danger' : { type: 'danger', msg: $translate.instant('ALERT_ERROR'), visible: false },
-        'success': { type: 'success', msg: $translate.instant('ALERT_SUCCESS'), visible: false }
-    };
+	var alerts = {
+		'danger': {
+			type: 'danger',
+			msg: $translate.instant('ALERT_ERROR'),
+			visible: false
+		},
 
-    var defaultMsg = {
-        'danger' :  $translate.instant('ALERT_ERROR'),
-        'success' : $translate.instant('ALERT_SUCCESS')
-    };
+		'cannot-load-syllabus': {
+			type: 'danger',
+			msg: $translate.instant('SYLLABUS_NOT_AVAILABLE'),
+			visible: false
+		},
 
+		'success': {
+			type: 'success',
+			msg: $translate.instant('ALERT_SUCCESS'),
+			visible: false
+		}
+	};
 
-    this.closeAlert = function($type) {
-        alerts[$type].visible = false;
-    };
+	this.currentAlert = null;
 
-    this.getAlertMsg = function($type) {
-        return alerts[$type].msg;
-    };
+	this.showAlert = function(name) {
+		this.currentAlert = alerts[name];
+	}
 
-    this.isVisible = function($type) {
-        return alerts[$type].visible;
-    };
+	this.hideAlert = function(name) {
+		this.currentAlert = null;
+	}
 
-    this.setVisible = function($type) {
-        alerts[$type].visible = true;
-    };
+	this.getCurrentAlert = function() {
+		return this.currentAlert;
+	}
 
-    this.display = function($type, $msg) {    
-        alerts[$type].msg = $msg || defaultMsg[$type];
-        alerts[$type].visible = true;
-    };
-
+	this.hasAlert = function() {
+		return this.currentAlert !== null;
+	}
 }]);

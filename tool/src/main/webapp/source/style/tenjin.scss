@@ -1,17 +1,16 @@
 @import './variables';
-@import './global';
-@import './icones';
-@import './modal/modal';
-@import './xeditable/xeditable';
+@import './base';
+@import './icons';
 
+@import '../components/tenjin/tenjin';
 @import '../components/leftMenu/leftMenu';
 @import '../components/contentPanel/contentPanel';
+@import '../components/syllabus/syllabus';
 @import '../components/mobileMenu/mobileMenu';
 @import '../components/management/management';
 @import '../components/loader/loader';
 @import '../components/elementButtons/elementButtons';
 @import '../components/elementCommonAttributes/elementCommonAttributes';
-@import '../components/tenjin/tenjin';
 @import '../components/resourceBrowser/resourceBrowser';
 
 @import '../components/element/element';

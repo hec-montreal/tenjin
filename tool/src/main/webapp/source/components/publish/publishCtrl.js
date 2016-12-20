@@ -1,70 +1,68 @@
-tenjinApp.controller('PublishCtrl', [ '$scope', '$translate', 'ngDialog', '$filter', 'PublishService', function($scope, $translate, ngDialog, $filter, PublishService) {
-    'use strict';
-    
-    $scope.publishService = PublishService;
-    $scope.syllabus = $scope.publishService.getActiveSyllabus();
+tenjinApp.controller('PublishCtrl', ['$scope', '$translate', 'ngDialog', '$filter', 'PublishService', function($scope, $translate, ngDialog, $filter, PublishService) {
+	'use strict';
 
-    $scope.publishing = false;
-    $scope.announcement = false;
-    $scope.publicationSuccess = false;
-    var prePublishDialog;
-    var postPublishDialog;
-    $scope.position = 0;
-    $scope.pages = [];
-    
+	$scope.publishService = PublishService;
+	$scope.syllabus = $scope.publishService.getActiveSyllabus();
 
+	$scope.publishing = false;
+	$scope.announcement = false;
+	$scope.publicationSuccess = false;
 
-    if ($scope.syllabus){
-      $scope.elements = $scope.syllabus.elements;
-      $scope.announcementTitle = $translate.instant('ANNOUNCEMENT_TITLE');
-     
-      //Since no data in callback, the current date is considered publication date
-      $scope.announcementMessage = $translate.instant('ANNOUNCEMENT_MESSAGE') + ' ' + $filter('date')
-        (Date.now(), 'd MMMM y h:mm:ss a');
+	var prePublishDialog;
+	var postPublishDialog;
 
-    }
+	$scope.position = 0;
+	$scope.pages = [];
 
-    $scope.startPublish = function(){
-        var changedPages = $scope.publishService.getModifiedPages();
-        $scope.publishService.prePublishDialog(changedPages);
-    };
+	if ($scope.syllabus) {
+		$scope.elements = $scope.syllabus.elements;
+		$scope.announcementTitle = $translate.instant('ANNOUNCEMENT_TITLE');
 
-  	$scope.publish = function(){
-      ngDialog.close();
-      $scope.publishService.working=true;
+		//Since no data in callback, the current date is considered publication date
+		$scope.announcementMessage = $translate.instant('ANNOUNCEMENT_MESSAGE') + ' ' + $filter('date')(Date.now(), 'd MMMM y h:mm:ss a');
+	}
 
-       $scope.publishService.publishingDialog();
-      $scope.publishService.publish().$promise.then(
-         function($data){
-            $scope.publishService.working=false;
-            ngDialog.close();
-            $scope.publishService.postPublishDialog($data);
-     });
-  	};
+	$scope.startPublish = function() {
+		var changedPages = $scope.publishService.getModifiedPages();
+		$scope.publishService.prePublishDialog(changedPages);
+	};
 
-    $scope.closePublishDialog= function(){
-      if($scope.announcement){
-        var title = angular.element(document.getElementById('announcement-title'))[0].value;
-        var message = angular.element(document.getElementById('announcement-message'))[0].value; 
-        $scope.publishService.createAnnouncement(title, message);
-     }
-      ngDialog.close();
-    };
+	$scope.publish = function() {
+		ngDialog.close();
+		$scope.publishService.working = true;
 
-  	$scope.openAnnouncement = function($announcement){
-  		$scope.announcement = $announcement;
-  	};
+		$scope.publishService.publishingDialog();
+		$scope.publishService.publish().$promise.then(function($data) {
+			$scope.publishService.working = false;
+			ngDialog.close();
+			$scope.publishService.postPublishDialog($data);
+		});
+	};
+
+	$scope.closePublishDialog = function() {
+		if ($scope.announcement) {
+			var title = angular.element(document.getElementById('announcement-title'))[0].value;
+			var message = angular.element(document.getElementById('announcement-message'))[0].value;
+			$scope.publishService.createAnnouncement(title, message);
+		}
+		
+		ngDialog.close();
+	};
+
+	$scope.openAnnouncement = function($announcement) {
+		$scope.announcement = $announcement;
+	};
 
 
-  	$scope.hasSucceeded = function(){
-  		return $scope.publicationSuccess;
-  	};
+	$scope.hasSucceeded = function() {
+		return $scope.publicationSuccess;
+	};
 
-    $scope.collapseAll = function () {
-        $scope.$broadcast('angular-ui-tree:collapse-all');
-    };
+	$scope.collapseAll = function() {
+		$scope.$broadcast('angular-ui-tree:collapse-all');
+	};
 
-    $scope.expandAll = function () {
-        $scope.$broadcast('angular-ui-tree:expand-all');
-    };
+	$scope.expandAll = function() {
+		$scope.$broadcast('angular-ui-tree:expand-all');
+	};
 }]);

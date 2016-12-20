@@ -1,0 +1,15 @@
+.angular-ui-tree-placeholder {
+	border: 1px dashed #000;
+}
+.angular-ui-tree-node {
+	min-height: 0;
+}
+.angular-ui-tree-empty {
+	display: none;
+}
+.angular-ui-tree-handle {
+	font-weight: normal;
+	cursor: move;
+	min-height: auto;
+	line-height: normal;
+}

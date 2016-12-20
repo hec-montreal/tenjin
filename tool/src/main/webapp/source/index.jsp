@@ -10,6 +10,7 @@
 
 		<link rel="stylesheet" href="/tenjin-tool/lib/css/bootstrap.css"/>
 		<link rel="stylesheet" href="/tenjin-tool/lib/css/angular-ui-tree.min.css">
+		<link rel="stylesheet" href="/tenjin-tool/lib/css/angular-ui-tree.custom.css">
 		<link rel="stylesheet" href="/tenjin-tool/lib/css/ngDialog.css"/>
 		<link rel="stylesheet" href="/tenjin-tool/lib/css/ngDialog-theme-default.css"/>
 
@@ -23,9 +24,9 @@
 		<script src="/tenjin-tool/js/tenjin.js"></script>
 	</head>
 
-	<body id="body" class="portletBody container-fluid body-syllabus">
+	<body id="body" class="portletBody">
 		<!-- Tenjin app -->
-		<div id="tenjin" ng-app="tenjin">
+		<div id="tenjin" ng-app="tenjin" class="portletBody">
 			<tenjin></tenjin>
 		</div>
 	</body>

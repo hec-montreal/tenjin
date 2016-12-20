@@ -5,17 +5,24 @@
 	var loadSyllabus = function(syllabusId) {
 		var def = $q.defer();
 
+		AlertService.hideAlert();
+
 		TenjinService.viewState.loadSyllabus({
 			syllabusId: syllabusId
 		}).then(function() {
+			$scope.syllabusLoaded = true;
+			
 			// Set selected item
 			if (SyllabusService.syllabus.elements.length > 0) {
 				TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
 			}
+
 			def.resolve();
+
 		}, function (e) {
-			$scope.errorLoading = true;
-			AlertService.display('danger');
+			AlertService.showAlert('cannot-load-syllabus');
+
+			$scope.syllabusLoaded = false;
 
 			def.reject(e);
 		});

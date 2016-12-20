@@ -1,6 +1,4 @@
 .left-menu {
-    // color: $bleu-hec;
-
     word-wrap: break-word;
 
     .left-menu-section {
@@ -15,7 +13,7 @@
     }
 
     .item-selected {
-        background-color: $item-selected;
+
     }
 
     .item-composite {
@@ -59,8 +57,6 @@
 @media (min-height: 700px) {
 
     .left-menu {
-        // color: $bleu-hec;
-
         .left-menu-section {
             min-height: 600px;
         }
@@ -71,8 +67,6 @@
 @media (max-height: 699px) {
 
     .left-menu {
-        // color: $bleu-hec;
-
         .left-menu-section {
             min-height: 400px;
         }

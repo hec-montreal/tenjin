@@ -52,6 +52,8 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 					loadCitations().then(function() {
 						def.resolve();
 					});
+				}, function (e) {
+					def.reject(e);
 				});
 
 				return def.promise;
@@ -62,6 +64,8 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 
 				SyllabusService.loadSyllabus(ctx.syllabusId).then(function() {
 					def.resolve();
+				}, function (e) {
+					def.reject(e);
 				});
 
 				return def.promise;
