@@ -1,4 +1,4 @@
-tenjinApp.service('CitationsService', ['$q', '$http', function($q, $http) {
+tenjinApp.service('CitationsService', ['$q', '$http', '$translate', function($q, $http, $translate) {
 	'use strict';
 
 	/**
@@ -34,7 +34,7 @@ tenjinApp.service('CitationsService', ['$q', '$http', function($q, $http) {
 		for (var i = 0; i < citations.length; i++) {
 			citations[i].parentId = citationList.resourceId;
 		}
-	}
+	};
 
 	/*
 	 * Recursivly load citation lists in a resource tree
@@ -74,8 +74,10 @@ tenjinApp.service('CitationsService', ['$q', '$http', function($q, $http) {
 	this.updateJsonProperties = function(citationListId, citations) {
 		for (var i = 0; i < citations.length; i++) {
 			citations[i].resourceId = citationListId + '/' + citations[i].id;
+			//Move the value type of citation to another variable because needed in resource browser 
+			citations[i].citationType= citations[i].type;
 			citations[i].type = 'citation';
-			citations[i].name = citations[i].values.title + ' (' + citations[i].type + ')';
+			citations[i].name = citations[i].values.title;
 		}
 
 		return citations;
