@@ -68,13 +68,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 			},
 
 			getHomeRoute: function() {
-				if (SyllabusService.getSyllabusList().length > 1) {
-					return makeRoute('management');
-				} else {
-					return makeRoute('syllabus-edit', {
-						'id': SyllabusService.getSyllabusList()[0].id
-					});
-				}
+				return makeRoute('management');
 			}
 		},
 
