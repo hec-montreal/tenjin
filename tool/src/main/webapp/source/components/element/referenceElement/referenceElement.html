@@ -74,7 +74,15 @@
 			<div  data-ng-if="citation.values.uri"><a href={{citation.values.uri}>{{citation.values.uri}}</a></div>		
 		</div>		
 	</div>
+	<div ng-if="referenceTypeId !== -1" class="reference-type">[{{ referenceType }}]</div> 
+	
+	<div ng-if="element.attributes.activateLibraryLink" class="library-link"> 
+		<a href={{citation.values.primaryUrl}}>{{'REFERENCE_LIBRARY_LINK' | translate}}</a>
+	</div> 
 
+	<div ng-if="element.attributes.activateOtherLink" class="other-link"> 
+		<a href="element.attributes.otherLinkurl">{{'REFERENCE_OTHER_LINK' | translate}}</a>
+	</div> 
 
 	<div class="infos">
 		<span data-ng-class="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
