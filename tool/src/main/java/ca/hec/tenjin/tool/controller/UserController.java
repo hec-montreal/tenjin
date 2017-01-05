@@ -110,4 +110,14 @@ public class UserController {
 		return entityMap;
 	}
 
+
+
+	public @ResponseBody Map<String, Object> getUserProfile() {
+
+		Map<String, Object> profile = new HashMap<String, Object>();
+
+		//Can see management page if superuser - has tenjin.management.view permission - can edit at least in one section of site
+
+		return profile;
+	}
 }

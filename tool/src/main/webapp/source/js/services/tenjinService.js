@@ -152,7 +152,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 	};
 
 	this.findViewStateFromProfile = function(profile) {
-		if (profile.site.permissions.write === true) {
+		if (profile.site.permissions.write === true || UserService.getSectionsWrite(profile) !== []) {
 			return this.ViewStates.edition;
 		}
 

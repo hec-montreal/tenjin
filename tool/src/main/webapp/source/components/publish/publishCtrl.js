@@ -39,6 +39,7 @@ tenjinApp.controller('PublishCtrl', [ '$scope', '$translate', 'ngDialog', '$filt
             $scope.publishService.working=false;
             ngDialog.close();
             $scope.publishService.postPublishDialog($data);
+      //TODO: add alternative behaviour for when publication fails
      });
   	};
 
