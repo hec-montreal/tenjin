@@ -152,7 +152,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 	};
 
 	this.findViewStateFromProfile = function(profile) {
-		if (UserService.canseemanagementpage) {
+		if (profile.canseemanagementpage) {
 			return this.ViewStates.edition;
 		}
 
