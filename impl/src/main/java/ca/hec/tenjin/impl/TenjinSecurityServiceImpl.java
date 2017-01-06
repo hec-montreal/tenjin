@@ -206,4 +206,28 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 		return CollectionUtils.subtract(sectionsToCheck, allowedSections).size() == 0;
 	}
 
+    @Override
+    public boolean canAccessManagementPage(String siteId) {
+        String userId = sakaiProxy.getCurrentUserId();
+        try {
+            Site site = sakaiProxy.getSite(siteId);
+            return sakaiProxy.isSuperUser() || isAllowed(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_VIEW_MANAGER, site.getReference()) ;
+        } catch (IdUnusedException e) {
+            log.error("Site does not exist");
+            return false;
+        }
+    }
+
+    @Override
+    public boolean canSeePublishedCommon(String siteId) {
+		String userId = sakaiProxy.getCurrentUserId();
+		try {
+			Site site = sakaiProxy.getSite(siteId);
+			return sakaiProxy.isSuperUser() || isAllowed(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_READ, site.getReference()) ;
+		} catch (IdUnusedException e) {
+			log.error("Site does not exist");
+			return false;
+		}
+    }
+
 }

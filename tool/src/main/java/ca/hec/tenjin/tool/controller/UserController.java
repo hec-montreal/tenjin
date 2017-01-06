@@ -50,7 +50,13 @@ import ca.hec.tenjin.api.TenjinSecurityService;
 public class UserController {
 
 	private static Log log = LogFactory.getLog(UserController.class);
-	
+
+	/**
+	 * List all functions to be transferred in the json for the user
+	 */
+	private static String USER_CAN_SEE_PUBLISHED_COMMON = "canseepublishedcommon";
+	private static String USER_CAN_SEE_MANAGEMENT_PAGE = "canseemanagementpage";
+
 	@Setter
 	@Autowired
 	private SessionManager sessionManager;
@@ -100,7 +106,12 @@ public class UserController {
 			
 			// set sections
 			entityMap.put("sections", securityService.getSections(true));
-			
+
+			//TODO: move later to method below
+			entityMap.put(USER_CAN_SEE_MANAGEMENT_PAGE, securityService.canAccessManagementPage(siteId));
+			entityMap.put(USER_CAN_SEE_PUBLISHED_COMMON, securityService.canSeePublishedCommon(siteId));
+
+
 		} catch (Exception e) {
 			log.error("Site " + siteId + " could not be retrieved.");
 			return null;
@@ -111,12 +122,13 @@ public class UserController {
 	}
 
 
-
+	@RequestMapping(value = "/userProfile", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> getUserProfile() {
-
+		String siteId = sakaiProxy.getCurrentSiteId();
 		Map<String, Object> profile = new HashMap<String, Object>();
 
-		//Can see management page if superuser - has tenjin.management.view permission - can edit at least in one section of site
+		profile.put(USER_CAN_SEE_MANAGEMENT_PAGE, securityService.canAccessManagementPage(siteId));
+		profile.put(USER_CAN_SEE_PUBLISHED_COMMON, securityService.canSeePublishedCommon(siteId));
 
 		return profile;
 	}

@@ -55,6 +55,10 @@ public class SakaiProxyImpl implements SakaiProxy {
 			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_PUBLISH, true);
 		}
 
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_VIEW_MANAGER)) {
+		functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_VIEW_MANAGER, true);
+	}
+
 	}
 
 	/**

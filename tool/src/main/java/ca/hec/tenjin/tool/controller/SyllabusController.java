@@ -110,7 +110,10 @@ public class SyllabusController {
 		if (commonPermissionWrite == false) {
 			// get sections available for the current user
 			sections = securityService.getArraySections(siteId, TenjinFunctions.TENJIN_FUNCTION_READ);
+			sections.addAll(securityService.getArraySections(siteId, TenjinFunctions.TENJIN_FUNCTION_WRITE));
 		}
+
+		System.out.println ("Les sections " + sections);
 
 		try {
 			// We get the syllabus list for the current site with the sections

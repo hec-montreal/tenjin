@@ -184,6 +184,7 @@
 
 			this.syllabusService = SyllabusService;
 			this.alertService = AlertService;
+			this.userService = UserService;
 			this.config = config;
 
 			this.infos = {};
