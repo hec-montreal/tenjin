@@ -72,13 +72,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 			},
 
 			getHomeRoute: function() {
-				if (SyllabusService.getSyllabusList().length > 1) {
-					return makeRoute('management');
-				} else {
-					return makeRoute('syllabus-edit', {
-						'id': SyllabusService.getSyllabusList()[0].id
-					});
-				}
+				return makeRoute('management');
 			}
 		},
 
@@ -162,7 +156,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 	};
 
 	this.findViewStateFromProfile = function(profile) {
-		if (profile.site.permissions.write === true) {
+		if (profile.canseemanagementpage) {
 			return this.ViewStates.edition;
 		}
 

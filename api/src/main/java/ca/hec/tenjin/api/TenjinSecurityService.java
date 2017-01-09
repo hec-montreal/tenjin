@@ -8,6 +8,11 @@ import ca.hec.tenjin.api.model.syllabus.Syllabus;
 
 public interface TenjinSecurityService {
 
+
+	/**
+	 * Static variable used to represent the section (or users) associated to the site
+	 */
+	public static final String TENJIN_SITE_SECTION = "SITE";
 	/**
 	 * This user has all the rights in an syllabus or template 
 	 * @param userId
@@ -75,5 +80,19 @@ public interface TenjinSecurityService {
 	 * @return boolean
 	 */
 	public boolean canUserAssignSections(String siteId, Collection<String> sectionsToCheck);
+
+	/**
+	 * Check if the user has the right to see the management page: is a super user or has @see TenjinFunctions#TENJIN_FUNCTION_VIEW_MANAGER on site
+	 * @param siteId
+	 * @return true or false
+	 */
+	public boolean canAccessManagementPage(String siteId);
+
+	/**
+	 * Check if the user is allowed to see the published common course outline: is super user or has @see TenjinFunctions#TENJIN_FUNCTION_READ on site
+	 * @param siteId
+	 * @return true or false
+	 */
+	public boolean canSeePublishedCommon(String siteId);
 
 }
