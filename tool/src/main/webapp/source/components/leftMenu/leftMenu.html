@@ -1,11 +1,11 @@
 <!-- Node renderer -->
 <script type="text/ng-template" id="node-renderer.html">
 	<!-- Display items composite, evaluation, exam, lecture and tutorial -->
-	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu">
+	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" data-ng-class="['menu-item', {'item-selected': item.$selected, 'menu-item-selected': item.$selected, 'menu-item-parent': syllabusService.itemHasChildInMenu(item), 'menu-item-toplevel': !syllabusService.itemHasParentInMenu(item) }]">
 		<a data-nodrag data-ng-click="treeService.setSelectedItem(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }">
-			<span data-ng-if="item.type === 'evaluation' || item.type ==='exam'">{{$index + 1}}&nbsp;-&nbsp;</span>
-			<span data-ng-if="item.type === 'lecture' || item.type === 'tutorial'">{{item.$numero}}&nbsp;-&nbsp;</span>
-			<div style="word-break: break-all;">{{item.title}}</div>
+			<span data-ng-if="item.type === 'evaluation' || item.type ==='exam'">{{ $index + 1 }}&nbsp;-&nbsp;</span>
+			<span data-ng-if="item.type === 'lecture' || item.type === 'tutorial'">{{ item.$numero }}&nbsp;-&nbsp;</span>
+			<span style="word-break: break-all;">{{ item.title }}</span>
 		</a>
 
 		<!-- No drag and drop for the first level element -->
@@ -13,18 +13,20 @@
 	</div>
 
 	<ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-if="item.type === 'composite'">
-		<li ui-tree-handle data-ng-repeat="item in item.elements" ui-tree-node data-ng-include="'node-renderer.html'"></li>
+		<li ui-tree-handle data-ng-repeat="item in item.elements" data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" ui-tree-node data-ng-include="'node-renderer.html'"></li>
 	</ol>
 </script>
 
-<section class="left-menu-section" data-ng-controller='LeftMenuCtrl'>  
-	<div class='title'>
-	{{ 'MENU_LABEL' | translate }}
-	</div>
+<section class="left-menu" data-ng-controller='LeftMenuCtrl'>
+	<div class="inner">
+		<div class='title'>
+			<h2>{{ 'MENU_LABEL' | translate }}</h2>
+		</div>
 
-	<div ui-tree="treeOptions" data-drag-enabled="true">
-		<ol ui-tree-nodes="" ng-model="syllabusService.syllabus.elements">
-			<li data-ng-repeat="item in syllabusService.syllabus.elements" ui-tree-node data-nodrag="{{!syllabusService.syllabus.$writePermission}}" ng-include="'node-renderer.html'"></li>          
-		</ol>
+		<div class="items" ui-tree="treeOptions" data-drag-enabled="true">
+			<ol ui-tree-nodes="" ng-model="syllabusService.syllabus.elements">
+				<li data-ng-repeat="item in syllabusService.syllabus.elements" ui-tree-node data-nodrag="{{!syllabusService.syllabus.$writePermission}}" ng-include="'node-renderer.html'"></li>
+			</ol>
+		</div>
 	</div>
 </section>

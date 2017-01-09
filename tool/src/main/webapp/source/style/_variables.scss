@@ -1,10 +1,11 @@
 $tool-margin-top: 15px;
 
 $font-color-regular: #003c71;
-$font-family-regular: 'dinweb', 'arial', 'sans-serif';
+$font-family-regular: 'arial', 'sans-serif';
 $font-family-title: 'dineng', 'arial', 'sans-serif';
 
 $font-size-title: 3em;
+$font-size-title2: 1.7em;
 $font-size-alert: 1.1em;
 
 $color-alert-danger: #fdd6d9;
@@ -16,6 +17,7 @@ $color-button-hover: #005eb8;
 $font-color-button-hover: #fff;
 $color-button-active: #003c71;
 $font-color-button-active: #fff;
+$color-button-disabled: #2c2a29;
 
 $color-button-list: #eaebeb;
 $font-color-button-list: $font-color-regular;
@@ -23,3 +25,9 @@ $color-button-list-hover: #97999b;
 $font-color-button-list-hover: #fff;
 $color-button-list-active: #2c2a29;
 $font-color-button-list-active: #fff;
+
+$color-left-menu: #ebebeb;
+$font-color-left-menu: #019edf;
+$color-left-menu-active: #c1c2c4;
+$font-color-left-menu-active: $font-color-regular;
+$font-color-left-menu-composite: $font-color-regular;

@@ -1,4 +1,4 @@
-<div id="tenjin" class="container-fluid">
+<div class="container-fluid">
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="global-loader" ng-show="globalLoading"> 
@@ -7,10 +7,8 @@
 		</div>
 	</div>
 	
-	<div class="row">
-		<div id="view" ui-view ng-show="!globalLoading">
-			
-		</div>
+	<div id="view" ui-view ng-show="!globalLoading">
+		
 	</div>
 
 	<div class="bottomPadding" style="margin-bottom: 30em;"></div>

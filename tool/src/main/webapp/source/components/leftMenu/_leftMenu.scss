@@ -1,75 +1,54 @@
+// !important because sakai
 .left-menu {
-    word-wrap: break-word;
+	@include full-height;
 
-    .left-menu-section {
-        // min-height: 800px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 2px 2px 6px #ccc;
-    }
+	background-color: $color-left-menu !important;
 
-    .glyphicon {
-        top: 0;
-    }
+	.angular-ui-tree-nodes .angular-ui-tree-nodes {
+		padding: 0!important;
+	}
 
-    .item-selected {
+	.inner {
+		padding: 20px 0 0 0;
+	}
 
-    }
+	.items {
+		margin-top: 15px;
+	}
 
-    .item-composite {
-        font-weight: bold;
-    }
+	.title {
+		padding-left: 22px;
+		cursor: default;
+	}
 
-    .item-noncomposite {
-        color: #07c;
-    }
+	.menu-item {
+		cursor: pointer;
+		padding: 4px 10px 2px 40px;
+	}
 
-    .select-item {
-        display: inline-block;
-        padding: 0 5px;
-        cursor: pointer;
-    }
+	.menu-item a {
+		color: $font-color-left-menu !important;
+		font-family: $font-family-regular;
+		font-weight: normal;
+		font-size: 1.2em;
+	}
 
-    .angular-ui-tree-nodes {
-        transition: all 0.25s ease-in;
-        display: block;
-        position: relative;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        height: auto;
-        opacity: 1;
-        // max-height: 200px;
-    }
+	.menu-item-selected {
+		background-color: $color-left-menu-active !important;
+	}
 
-    .hidden {
-        transition: all 0s ease-in;
-        display: block !important;
-        height: 0;
-        opacity: 0;
-        max-height: 0;
-        visibility: hidden !important;
-    }
+	.menu-item-selected a {
+		color: $font-color-left-menu-active !important;
+	}
 
-}
+	.menu-item-parent a {
+		color: $font-color-left-menu-composite !important;
+	}
 
-
-@media (min-height: 700px) {
-
-    .left-menu {
-        .left-menu-section {
-            min-height: 600px;
-        }
-
-    }
-}
-
-@media (max-height: 699px) {
-
-    .left-menu {
-        .left-menu-section {
-            min-height: 400px;
-        }
-
-    }
+	.menu-item-toplevel a {
+		text-transform: uppercase;
+		font-family: $font-family-title;
+		font-weight: normal;
+		font-size: 1.5em;
+	}
 }

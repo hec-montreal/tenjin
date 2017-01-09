@@ -1,0 +1,78 @@
+#tenjin {
+	/* We must specify !important everywhere because sakai is using !important in their css */
+	/* Default buton */
+	button {
+		background: 0 !important;
+		border-radius: 0 !important;
+		font-size: 1.1em;
+		font-family: 'arial', 'sans-serif';
+
+		background-color: $color-button !important;
+		border-color: $color-button !important;
+		color: $font-color-button !important;
+	}
+
+	button:hover {
+		background-color: $color-button-hover !important;
+		border-color: $color-button-hover !important;
+		color: $font-color-button-hover !important;
+	}
+
+	button:active {
+		background-color: $color-button-active !important;
+		border-color: $color-button-active !important;
+		color: $font-color-button-active !important;
+	}
+
+	button:focus {
+		outline: 0;
+	}
+
+	/* Action button */
+	button.action {
+		background-color: #fff !important;
+		border-color: #fff !important;
+		color: $color-button !important;
+	}
+
+	button.action:hover {
+		color: $color-button-hover !important;
+	}
+
+	button.action:active {
+		color: $color-button-active !important;
+	}
+
+	button.action:disabled {
+		color: $color-button-disabled !important;
+	}
+
+	/* Button for a list */
+	button.list {
+		background-color: $color-button-list !important;
+		border-color: $color-button-list !important;
+		color: $font-color-button-list !important;
+	}
+
+	button.list:hover {
+		background-color: $color-button-list-hover !important;
+		border-color: $color-button-list-hover !important;
+		color: $font-color-button-list-hover !important;
+	}
+
+	button.list:active {
+		background-color: $color-button-list-active !important;
+		border-color: $color-button-list-active !important;
+		color: $font-color-button-list-active !important;
+	}
+
+	.btn-group.open .dropdown-toggle {
+		background-color: $color-button-list-active !important;
+		border-color: $color-button-list-active !important;
+		color: $font-color-button-list-active !important;		
+	}
+
+	div.button-list {
+		top: -1px;
+	}
+}

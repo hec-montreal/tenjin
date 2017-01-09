@@ -655,4 +655,22 @@
 			hideAllChildren(this.syllabus.elements[i]);
 		}
 	};
+
+	this.itemHasChildInMenu = function(item) {
+		if (!item.elements) {
+			return false;
+		}
+
+		for (var i = 0; i < item.elements.length; i++) {
+			if (this.template[item.elements[i].templateStructureId].displayInMenu) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	this.itemHasParentInMenu = function (item) {
+		return this.getParent(item) !== this.$rootTree;
+	}
 }]);
