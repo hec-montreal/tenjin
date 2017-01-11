@@ -30,8 +30,8 @@
 
 	/* Action button */
 	button.action {
-		background-color: #fff !important;
-		border-color: #fff !important;
+		background-color: $color-button-action !important;
+		border-color: $color-button-action !important;
 		color: $color-button !important;
 	}
 
@@ -74,5 +74,30 @@
 
 	div.button-list {
 		top: -1px;
+	}
+
+	/* Action button list */
+	button.action-list {
+		background-color: $color-button-action !important;
+		border-color: $color-button-action !important;
+		color: $color-button !important;
+	}
+
+	button.action-list:hover {
+		color: $color-button-hover !important;
+	}
+
+	button.action-list:active {
+		color: $color-button-active !important;
+	}
+
+	button.action-list:disabled {
+		color: $color-button-disabled !important;
+	}
+
+	.btn-group.open button.action-list.dropdown-toggle {
+		background-color: $color-button-list-active !important;
+		border-color: $color-button-list-active !important;
+		color: $font-color-button-list-active !important;		
 	}
 }

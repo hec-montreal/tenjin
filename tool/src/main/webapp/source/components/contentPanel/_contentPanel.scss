@@ -1,79 +1,36 @@
 .content-panel {
-    min-height: 650px;
+	.title {
+		padding: 20px 0 0 12px;
 
-    .content-panel-section {
-        padding: 20px;   
-        border: 1px solid #ccc;
-        box-shadow: 2px 2px 6px #ccc;
-    }
-}
+		.left {
+			float: left;
+		}
 
+		.right {
+			text-align: right;
+		}
+	}
 
-.list-element {
-    > li {
-        margin-bottom: 10px;
-    }
-}
+	.title::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
 
-.list-element-leaf {
-    > li {
-        margin-bottom: 10px;
-        border-bottom: 1px solid #ccc;
+	.list-menu-add {
+		right: 0;
+		left: auto;
+		min-width: initial;
+	}
 
-        &:last-child {
-            border-bottom: none;
-        }
-    }
-}
-
-.element-page {
-    padding: 10px;
-}
-
-.item-panel-composite {
-    padding: 10px;
-    background-color: #eee;
-}
-
-.container-menu-add {
-    float: right;
-}
-
-
-.menu-add {
-    width: 150px;
-    left: -50px;
-    min-width: initial;
-}
-
-@media(max-width: 767px) {
-    .content-panel { 
-        .content-panel-section {
-            padding: 0;   
-            border: none;
-            box-shadow: none;
-        }
-    }
-        
-    ol.list-element.ng-pristine.ng-untouched.ng-valid.ng-scope.angular-ui-tree-nodes {
-        padding-left: 0;
-    }
-}
-
-
-
-@media (min-height: 700px) {
-    .content-panel {
-        .content-panel-section {
-            min-height: 600px;
-        }
-    }
-}
-
-@media (max-height: 699px) {
-    .content-panel {
-        .content-panel-section {
-            min-height: 400px;
-        }
-    }
+	// Composite element title
+	.item-panel-composite {
+		background-color: $color-composite-title;
+		color: $font-color-composite-title;
+		padding: 10px 0 10px 12px;
+		font-family: $font-family-title;
+		font-weight: normal;
+		font-size: 1.5em;
+		text-transform: uppercase;
+	}
 }
