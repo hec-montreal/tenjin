@@ -3,6 +3,10 @@
 	background-color: transparent;
 }
 
+.element-buttons.composite .buttons {
+	padding-bottom: 0;
+}
+
 .element-add-element-menu {
 	.add-label {
 		display: none;
@@ -21,6 +25,7 @@
 
 	.buttons {
 		padding-right: 10px;
+		padding-bottom: 10px;
 		text-align: right;
 	}
 
@@ -30,7 +35,7 @@
 	}
 
 	.element-add-element-menu.alone button {
-		margin-top: 7px;
+		margin-top: 8px;
 	}
 
 	button.delete {

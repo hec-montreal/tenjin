@@ -1,12 +1,12 @@
 <div class="element document">
-   <div class="element-title">
-        <a href="{{resource.url}}" target="_blank">{{ element.title || resource.name }}</a>
-        <span ng-if="documentTypeId !== -1" class="resource-type">[{{ documentType }} - {{ documentTypeId }}]</span> 
-    </div>
+   <div class="element-title syllabus-text">
+		<a data-nodrag href="{{resource.url}}" target="_blank">{{ element.title || resource.name }}</a>
+		<span ng-if="documentTypeId !== -1" class="resource-type">[{{ documentType }} - {{ documentTypeId }}]</span> 
+	</div>
 
-    <div class="file-title">
-        ({{ resource.name }})
-    </div>
+	<div class="file-title syllabus-text">
+		({{ resource.name }})
+	</div>
 
-    <div data-ng-if="element.description" ng-bind-html="element.description" class="comment"></div>
+	<div data-ng-if="element.description" ng-bind-html="element.description" class="syllabus-text"></div>
 </div>

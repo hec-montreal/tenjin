@@ -1,15 +1,15 @@
 <div class="element image"> 
-    <div class="element-title">
-        <a href="{{resource.url}}" target="_blank"> 
-            {{ element.title || resource.name }}
-         </a>
-    </div>
-    
-    <div class="row"> 
-        <a href="{{resource.url}}" target="_blank" class="col-sm-3 col-xs-12 link-image">
-            <img ng-src="{{resource.url}}" alt="({{element.title}} != null ? {{element.title}} : '')" title="element.title" />
-        </a> 
+	<div class="element-title syllabus-text">
+		<a data-nodrag href="{{resource.url}}" target="_blank"> 
+			{{ element.title || resource.name }}
+		 </a>
+	</div>
+	
+	<div class="row"> 
+		<a href="{{resource.url}}" target="_blank" class="col-sm-3 col-xs-12 link-image">
+			<img ng-src="{{resource.url}}" alt="({{element.title}} != null ? {{element.title}} : '')" title="element.title" />
+		</a> 
 
-        <span data-ng-if="element.description" ng-bind-html="element.description" class="col-sm-9 col-xs-12 comment"></span>
-    </div>
+		<span data-ng-if="element.description" ng-bind-html="element.description" class="col-sm-9 col-xs-12 syllabus-text"></span>
+	</div>
 </div>

@@ -1,9 +1,7 @@
-<div class="composite">    
+<div class="composite">
+	<div class="element-title element-page item-panel-composite"> 
+		<span>{{element.title}}</span>
 
-    <div class="title-element element-page item-panel-composite">
-
-        <a href="" data-ng-click="treeService.setSelectedItem(element);">{{element.title}}</a>
-
-        <div ng-if="element.description" ng-bind-html="element.description" class="comment"></div> 
-    </div> 
+		<div ng-if="element.description" ng-bind-html="element.description"></div> 
+	</div>
 </div>

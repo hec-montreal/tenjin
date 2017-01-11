@@ -1,9 +1,15 @@
-.image {
-    img {
-        max-width: 100%;
-    }
-    
-    .link-image {
-        text-decoration: none; 
-    }
+#tenjin {
+	.element.image {
+		img {
+			max-width: 100%;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.element-title {
+			padding-bottom: 10px;
+		}
+	}
 }

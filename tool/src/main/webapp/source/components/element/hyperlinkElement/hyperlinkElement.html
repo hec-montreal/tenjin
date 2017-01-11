@@ -1,23 +1,21 @@
 <div class="element hyperlink"> 
-    <div class="element-title">
-        <a data-nodrag href="{{element.attributes.hyperlinkUrl}}" target="_blank">
-            {{ (element.title ? element.title : element.attributes.hyperlinkUrl) }}
-        </a>
+	<div class="element-title syllabus-text">
+		<a data-nodrag href="{{element.attributes.hyperlinkUrl}}" target="_blank">{{(element.title ? element.title : element.attributes.hyperlinkUrl)}}</a>
 
-        <span ng-if="hyperlinkTypeId !== -1" class="link-type">
-            [{{ hyperlinkType }}] 
-        </span> 
-    </div>
+		<span ng-if="hyperlinkTypeId !== -1" class="link-type">
+			&nbsp;[{{ hyperlinkType }}] 
+		</span>
+	</div>
 
-    <div class="link-url">
-        ({{ element.attributes.hyperlinkUrl }}) 
-    </div>
-    
-    <div data-ng-if="element.description" ng-bind-html="element.description" class="comment"></div>
+	<div class="link-url syllabus-text">
+		({{ element.attributes.hyperlinkUrl }}) 
+	</div>
+	
+	<div data-ng-if="element.description" ng-bind-html="element.description" class="syllabus-text"></div>
 
-    <div class="infos">
-        <span ngClass="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
-        <span ngClass="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }"></span> 
-        <span ngClass="{ 'picto-hidden' : ( element.attributes.docHidden === 'true') }" title="Visible"></span>     
-    </div>
+	<div class="infos">
+		<span ngClass="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
+		<span ngClass="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }"></span> 
+		<span ngClass="{ 'picto-hidden' : ( element.attributes.docHidden === 'true') }" title="Visible"></span>     
+	</div>
 </div>
