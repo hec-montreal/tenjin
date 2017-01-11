@@ -1,7 +1,7 @@
 <div ui-tree-handle class="tree-node tree-node-content">
 	<div data-ng-switch="element.type">
 		<!-- Display buttons -->
-		<element-buttons data-ng-if="syllabusService.syllabus.$writePermission" data-element-buttons="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" class="element-buttons"></element-buttons>
+		<element-buttons data-ng-if="syllabusService.syllabus.$writePermission" data-element-buttons="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite}]"></element-buttons>
 	   
 		<cluster-element data-ng-switch-when="composite" data-cluster-element="element"></cluster-element>
 

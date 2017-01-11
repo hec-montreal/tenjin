@@ -1,23 +1,44 @@
-.element-buttons {
+.element-buttons.composite {
 	float: right;
+	background-color: transparent;
+}
 
-	.icon-edit {
-		margin-right: 10px;
+.element-add-element-menu {
+	.add-label {
+		display: none;
 	}
 
-	.icon-delete {
-		margin-right: 10px;
+	.caret {
+		display: none;
+	}
+}
+
+.element-buttons {
+	button {
+		margin: 0;
+		padding: 0;
 	}
 
-	.element-add-element-menu {
-		font-size: 1.5em;
+	.buttons {
+		padding-right: 10px;
+		text-align: right;
+	}
 
-		.add-label {
-			display: none;
-		}
+	.element-add-element-menu button {
+		font-size: 1.5em !important;
+		margin-top: -6px;
+	}
 
-		.caret {
-			display: none;
-		}
+	.element-add-element-menu.alone button {
+		margin-top: 7px;
+	}
+
+	button.delete {
+		font-size: 1.5em !important;
+		padding-top: 10px;
+	}
+
+	button.edit {
+		font-size: 1.5em !important;
 	}
 }

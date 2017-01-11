@@ -1,11 +1,12 @@
 #tenjin {
-	/* We must specify !important everywhere because sakai is using !important in their css */
+	/* We must specify !important everywhere because sakai are using !important in their css */
 	/* Default buton */
 	button {
 		background: 0 !important;
 		border-radius: 0 !important;
 		font-size: 1.1em;
 		font-family: 'arial', 'sans-serif';
+		box-shadow: none!important;
 
 		background-color: $color-button !important;
 		border-color: $color-button !important;
@@ -99,5 +100,15 @@
 		background-color: $color-button-list-active !important;
 		border-color: $color-button-list-active !important;
 		color: $font-color-button-list-active !important;		
+	}
+
+	.no-bg button.action-list {
+		background-color: transparent !important;
+	}
+
+	.no-bg .btn-group.open button.action-list.dropdown-toggle {
+		background-color: transparent !important;
+		border-color: transparent !important;
+		color: $color-button-active !important;
 	}
 }
