@@ -1,26 +1,5 @@
 .form-contact {
-
-    // CONTACT
-    .container-contact {
-        margin-bottom: 15px;
-    }
-
-    .select-title {
-        height: 28px;
-        width: 100%;
-    }
-
-    input {
-        width: 100%;
-    }
-
-    .contact-lastname {
-        text-transform: uppercase;
-    }
-
-
-    .element-title {
-        font-weight: bold;
-    }
-
+	.container-contact, .dispo {
+		padding-bottom: 10px;
+	}
 }

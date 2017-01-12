@@ -1,13 +1,22 @@
-﻿<div class="element tool-form">
+﻿<div class="element-form tool-form">
 	<resource-browser data-element="element" data-type="sakai_entity" data-collapse-all="true" data-title="'SAKAI_TOOL' | translate"></resource-browser>
 
 	<!-- Title -->
-	<label class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
-	<input type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
-
-	<!-- Description  -->
-	<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
-	<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
+	<div class="row field">
+		<div class="col-md-2">
+			<label for="toolTitle" class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
+		</div>
+		
+		<div class="col-md-10">
+			<input id="toolTitle" type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
+		</div>
+	</div>
+	
+	<div class="field">
+		<!-- Description  -->
+		<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
+		<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
+	</div>
 
 	<element-common-attributes data-element="element" data-novisible="true" data-nodate="true"></element-common-attributes>
 </div>

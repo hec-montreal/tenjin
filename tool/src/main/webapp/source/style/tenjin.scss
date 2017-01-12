@@ -2,6 +2,7 @@
 @import './base';
 @import './buttons';
 @import './icons';
+@import './modals';
 
 @import '../components/tenjin/tenjin';
 @import '../components/leftMenu/leftMenu';
@@ -26,7 +27,6 @@
 @import '../components/element/courseElement/courseElement';
 
 @import '../components/form/elementForm';
-@import '../components/form/textElementForm/textElementForm';
 @import '../components/form/documentElementForm/documentElementForm';
 @import '../components/form/contactElementForm/contactElementForm';
 @import '../components/form/hyperlinkElementForm/hyperlinkElementForm';
@@ -36,4 +36,5 @@
 @import '../components/form/referenceElementForm/referenceElementForm';
 
 @import '../components/alert/alert';
+
 @import '../components/publish/publish';

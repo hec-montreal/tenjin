@@ -1,59 +1,59 @@
 <div class="element-form"> 
+	<div>
+		<div class="row field">
+			<div class="col-md-4">
+				<label for="evaluationTitle" class="label-text-title">{{ 'EVALUATION_TITLE' | translate }}</label>
+			</div>
 
-  <div >
-  	<div class="row">
+			<div class="col-md-8" >
+				<input type="text" name="evaluationTitle" id="evaluationTitle" data-ng-model="element.title" class="input-text-title" />
+			</div>
+		</div>
+
+		<div class="row field">
+			<div class="col-md-4">
+				<label for="evaluationWeight" class="label-text-title">{{ 'EVALUATION_WEIGHT' | translate }}&nbsp;(%)</label>
+			</div>
+
+			<div class="col-md-8">
+				<input type="text" name="evaluationWeight" id="evaluationWeight" data-ng-model="element.attributes.evaluationWeight" />
+			</div>
+		</div>
+
+		<div class="row field">
+			<div class="col-md-4">
+				<label for="evaluationDate" class="label-text-title">{{ 'EVALUATION_DATE' | translate }}</label>
+			</div>
+
+			<div class="col-md-8" >
+				<p class="input-group">
+					<input type="text" id="evaluationDate" class="form-control" show-weeks="false" uib-datepicker-popup="dd-MM-yyyy" data-ng-model="element.attributes.evaluationDate" is-open="statusDateEval.opened" today-text="{{ 'CALENDAR_TODAY' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" />
+					
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default" data-ng-click="openDateEval($event)">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+				</p>
+			</div>
+		</div>
+
+	<div class="row">
 		<div class="col-md-4">
-			<label for="evaluationTitle" class="label-text-title">{{ 'EVALUATION_TITLE' | translate }}</label>
+			<label class="label-text-title">{{ 'EVALUATION_LOCATION' | translate }}</label>
 		</div>
-	    <div class="col-md-4" >
-	    	<input type="text" name="evaluationTitle" data-ng-model="element.title" class="input-text-title" />
-		</div>
-		<div class="col-md-4">  </div>
-	</div>
-	<br>
-	<div class="row">
-	    <div class="col-md-4">
-	    	<label for="evaluationWeight" class="label-text-title">{{ 'EVALUATION_WEIGHT' | translate }}</label>
-	    </div>
-	    <div class="col-md-4">
-	    	<input type="text" name="evaluationWeight" data-ng-model="element.attributes.evaluationWeight" />
-		</div>
-	    <div class="col-md-4">% </div>
-	</div>
-	<br>
-	<div class="row">
-	    <div class="col-md-4">
-	    	<label for="evaluationDate" class="label-text-title">{{ 'EVALUATION_DATE' | translate }}</label>
-	    </div>
-	    <div class="col-md-8" >
-	    	<p class="input-group" >
-		    	<input type="text" id="evaluationDate" class="form-control" show-weeks="false" uib-datepicker-popup="dd-MM-yyyy" data-ng-model="element.attributes.evaluationDate" is-open="statusDateEval.opened" 
-		    	today-text="{{ 'CALENDAR_TODAY' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" />
-		      	<span class="input-group-btn">
-		      		<button type="button" class="btn btn-default" data-ng-click="openDateEval($event)">
-	                	<i class="glyphicon glyphicon-calendar" ></i>
-	            	</button>
-	            </span>
-	   		</p>
- 		  <br>  
-   		</div>
-	 </div>
-	 <div class="row">
-	    <div class="col-md-4">
-	    	<label class="label-text-title">{{ 'EVALUATION_LOCATION' | translate }}</label>
-	    </div>
-	    <div class="col-md-4">
-	    	<table>
-		    	<tr>
-				    <td>
-				    	<input type="checkbox" name="evalInClass" data-ng-model="element.attributes.evaluationInClass" 
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_INCLASS' | translate }}
-				    </td>
+		<div class="col-md-4">
+			<table>
+				<tr>
+					<td>
+						<input type="checkbox" name="evalInClass" id="evalInClass" data-ng-model="element.attributes.evaluationInClass" 
+						ng-true-value="'true'" ng-false-value="'false'"> <label for="evalInClass">{{ 'EVALUATION_INCLASS' | translate }}</label>
+					</td>
 				</tr>
 				<tr>
-				    <td>
-				    	<input type="checkbox" name="evalAtHome" data-ng-model="element.attributes.evaluationAtHome"
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_ATHOME' | translate }}
+					<td>
+						<input type="checkbox" name="evalAtHome" id="evalAtHome" data-ng-model="element.attributes.evaluationAtHome"
+						ng-true-value="'true'" ng-false-value="'false'"> <label for="evalAtHome">{{ 'EVALUATION_ATHOME' | translate }}</label>
 					</td>
 				</tr>
 			</table>
@@ -62,21 +62,21 @@
 	</div>
 	<br>
 	<div class="row">
-	    <div class="col-md-4">
-	    	<label class="label-text-title">{{ 'EVALUATION_TERMS' | translate }}</label>
-	    </div>
-	    <div class="col-md-4">
-	    	<table>
-		    	<tr>
-				    <td>
-				    	<input type="checkbox" name="evalOral" data-ng-model="element.attributes.evaluationOral" 
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_ORAL' | translate }}
-				    </td>
+		<div class="col-md-4">
+			<label class="label-text-title">{{ 'EVALUATION_TERMS' | translate }}</label>
+		</div>
+		<div class="col-md-4">
+			<table>
+				<tr>
+					<td>
+						<input type="checkbox" name="evalOral" id="evalOral" data-ng-model="element.attributes.evaluationOral" 
+						ng-true-value="'true'" ng-false-value="'false'"> <label for="evalOral">{{ 'EVALUATION_ORAL' | translate }}</label>
+					</td>
 				</tr>
 				<tr>
-				    <td>
-				    	<input type="checkbox" name="evalWritten" data-ng-model="element.attributes.evaluationWritten"
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_WRITTEN' | translate }}
+					<td>
+						<input type="checkbox" name="evalWritten" id="evalWritten" data-ng-model="element.attributes.evaluationWritten"
+						ng-true-value="'true'" ng-false-value="'false'"> <label for="evalWritten">{{ 'EVALUATION_WRITTEN' | translate }}</label>
 					</td>
 				</tr>
 			</table>
@@ -85,21 +85,21 @@
 	</div>
 	<br>
 	<div class="row">
-	    <div class="col-md-4">
-	    	<label class="label-text-title">{{ 'EVALUATION_SUBMISSION_TYPE' | translate }}</label>
-	    </div>
-	    <div class="col-md-4">
-	    	<table>
-		    	<tr>
-				    <td>
-				    	<input type="checkbox" name="evalPaper" data-ng-model="element.attributes.evaluationPaper"
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_PAPER' | translate }}
-				    </td>
+		<div class="col-md-4">
+			<label class="label-text-title">{{ 'EVALUATION_SUBMISSION_TYPE' | translate }}</label>
+		</div>
+		<div class="col-md-4">
+			<table>
+				<tr>
+					<td>
+						<input type="checkbox" name="evalPaper" id="evalPaper" data-ng-model="element.attributes.evaluationPaper"
+						ng-true-value="'true'" ng-false-value="'false'"> <label for="evalPaper">{{ 'EVALUATION_PAPER' | translate }}</label>
+					</td>
 				</tr>
 				<tr>
-				    <td>
-				    	<input type="checkbox" name="evalElectronic" data-ng-model="element.attributes.evaluationElectronic"
-				    	ng-true-value="'true'" ng-false-value="'false'"> {{ 'EVALUATION_ELECTRONIC' | translate }}
+					<td>
+						<input type="checkbox" name="evalElectronic" id="evalElectronic" data-ng-model="element.attributes.evaluationElectronic"
+						ng-true-value="'true'" ng-false-value="'false'"> <label for="evalElectronic">{{ 'EVALUATION_ELECTRONIC' | translate }}</label>
 					</td>
 				</tr>
 			</table>
@@ -108,20 +108,21 @@
 	</div>
 	<br>
 	<div class="row">
-	    <div class="col-md-4">
-	    	<label class="label-text-title">{{ 'EVALUATION_ASSESSMENT_TYPE' | translate }}</label>
-	    </div>
-	    <div class="col-md-4">
-	    	<div class="row">
-				    <div class="col-md-12">
-				    	<input type="radio" name="evalMode" data-ng-model="element.attributes.evaluationMode" value="individual"> {{ 'EVALUATION_INDIVIDUAL' | translate }}
-				    </div>
-				    <div class="col-md-12">
-				    	<input type="radio" name="evalMode" data-ng-model="element.attributes.evaluationMode" value="team"> {{ 'EVALUATION_TEAM' | translate }}
+		<div class="col-md-4">
+			<label class="label-text-title">{{ 'EVALUATION_ASSESSMENT_TYPE' | translate }}</label>
+		</div>
+		<div class="col-md-4">
+			<div class="row">
+					<div class="col-md-12">
+						<input id="evalModeInd" type="radio" name="evalMode" data-ng-model="element.attributes.evaluationMode" value="individual"> <label for="evalModeInd">{{ 'EVALUATION_INDIVIDUAL' | translate }}</label>
+					</div>
+
+					<div class="col-md-12">
+						<input id="evalModeTeam" type="radio" name="evalMode" data-ng-model="element.attributes.evaluationMode" value="team"> <label for="evalModeTeam">{{ 'EVALUATION_TEAM' | translate }}</label>
 					</div>
 				</div>
 		</div>
-	 	<div class="col-md-4"></div>
+		<div class="col-md-4"></div>
 	 </div>	
 	</div>
 

@@ -3,26 +3,39 @@
 	<resource-browser data-element="element" data-type="document"></resource-browser>
 	
 	<!-- Title -->
-	<labelP class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
-	<input type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
-	
+	<div class="row field">
+		<div class="col-md-2">
+			<label for="documentTitle" class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
+		</div>
+
+		<div class="col-md-10">
+			<input id="documentTitle" type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
+		</div>
+	</div>
+
 	<!-- Type -->
-	<div class="label-text-type">{{ 'FORM_DOCUMENT_TYPE' | translate }}</div>
-	<div class="btn-group" uib-dropdown keyboard-nav>
-		<button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
-			<span class="add-label">{{currentType.name | translate }}</span>
-			<span class="caret"></span>
-		</button>
-		<ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-			<li role="menuitem" data-ng-repeat="type in config.documentTypes">
-				<a href="" data-ng-click="selectType(type)">{{::type.name | translate }}</a> 
-			</li>
-		</ul>
+	<div class="field">
+		<div class="label-text-type">{{ 'FORM_DOCUMENT_TYPE' | translate }}</div>
+
+		<div class="btn-group" uib-dropdown keyboard-nav>
+			<button id="btn-section" type="button" class="list" uib-dropdown-toggle>
+				<span class="add-label">{{currentType.name | translate }}</span>
+				<span class="caret"></span>
+			</button>
+
+			<ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+				<li role="menuitem" data-ng-repeat="type in config.documentTypes">
+					<a href="" data-ng-click="selectType(type)">{{::type.name | translate }}</a> 
+				</li>
+			</ul>
+		</div>
 	</div>
 
 	<!-- Description --> 
-	<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
-	<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
+	<div class="field">
+		<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div> 
+		<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea>
+	</div>
 
 	<element-resource-attributes data-resource="element.$selectedResource"></element-resource-attributes>
 </div>

@@ -1,0 +1,25 @@
+.modal-dialog {
+	width: 700px!important;
+
+	.modal-content {
+		border-radius: 1px;
+	}
+
+	.modal-header h2 {
+		color: $font-color-regular;
+		font-size: 1.7em;
+	}
+
+	.modal-header {
+		background-color: $color-modal-title;
+		padding-bottom: 5px;
+	}
+
+	.modal-footer {
+		border: 0;
+	}
+
+	button {
+		font-size: 1em;
+	}
+}

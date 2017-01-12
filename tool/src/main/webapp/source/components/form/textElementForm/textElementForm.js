@@ -1,39 +1,39 @@
 ﻿tenjinApp.directive('textElementForm', function() {
-    'use strict';
+	'use strict';
 
-    return {
-        scope: {
-            element: '=textElementForm'
-        },
+	return {
+		scope: {
+			element: '=textElementForm'
+		},
 
-        restrict: 'A',
+		restrict: 'A',
 
-        templateUrl: 'form/textElementForm/textElementForm.html',
+		templateUrl: 'form/textElementForm/textElementForm.html',
 
-        controller: function($scope) {
-            // Setup editor options
-            var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';
+		controller: function($scope) {
+			// Setup editor options
+			var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';
 
-            $scope.editorOptions = {
-                language: 'fr',
-                height: '120',
-                removeButtons: removeButtonsList,
-                removePlugins: 'elementspath,resize'
-            };
+			$scope.editorOptions = {
+				language: 'fr',
+				height: '200',
+				removeButtons: removeButtonsList,
+				removePlugins: 'elementspath,resize'
+			};
 
-            // Validation
-            $scope.element.validate = function() {
-                var ret = [];
+			// Validation
+			$scope.element.validate = function() {
+				var ret = [];
 
-                if (!this.description || this.description.length <= 0) {
-                    ret.push({
-                        field: "description",
-                        message: "ERROR_CONTENT_MANDATORY"
-                    });
-                }
+				if (!this.description || this.description.length <= 0) {
+					ret.push({
+						field: "description",
+						message: "ERROR_CONTENT_MANDATORY"
+					});
+				}
 
-                return ret;
-            }
-        }
-    };
+				return ret;
+			}
+		}
+	};
 });

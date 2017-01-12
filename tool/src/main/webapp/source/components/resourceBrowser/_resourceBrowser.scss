@@ -1,12 +1,13 @@
 .container-browser-element {
 	margin-bottom: 10px;
+	font-size: 1.1em;
 
 	.browser-element {
-		border: 1px solid #bbb;
+		border: 1px solid #ddd;
 
 		height: 120px;
 		overflow: auto;
-		margin-bottom: 2px;  
+		margin-bottom: 5px;  
 
 		.glyphicon-chevron-right, .glyphicon-chevron-down {
 			padding-bottom: 2px;
@@ -29,5 +30,13 @@
 
 	.folder {
 		font-weight: bold;
+	}
+
+	.btn, .btn:hover, .btn:active {
+		border-color: transparent!important;
+		background-color: transparent!important;
+		color: $font-color-button-list!important;
+		font-size: 1.1em!important;
+		box-shadow: 0!important;
 	}
 }

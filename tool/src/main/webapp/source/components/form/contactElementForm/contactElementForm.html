@@ -1,88 +1,90 @@
-<div class="element-form form-contact"> 
-    
-    <div class="container-contact">
-        <div class="row row-content">
-            <!-- First Name -->
-            <div class="col-md-2">
-                <label for="firstName">
-                    {{ 'CONTACTINFO_FIRSTNAME' | translate }} <span class="mandatory"></span> 
-                </label>
-            </div>
-            <div class="col-md-4">
-                <input type="text" name="firstName" id="firstName" data-ng-model="element.attributes.contactInfoFirstName" required />
-            </div>
+<div class="element-form form-contact">
+	<div class="container-contact">
+		<div class="row row-content">
+			<div class="col-md-2">
+				<label for="firstName">
+					{{ 'CONTACTINFO_FIRSTNAME' | translate }} <span class="mandatory"></span> 
+				</label>
+			</div>
 
-            <!-- Name -->
-             <div class="col-md-2">
-                <label for="name">
-                    {{ 'CONTACTINFO_LASTNAME' | translate }} <span class="mandatory"></span> 
-                </label>
-            </div>
-            <div class="col-md-4">       
-                <input type="text" name="name" id="name" data-ng-model="element.attributes.contactInfoLastName" required />
-            </div>
-        </div>
+			<div class="col-md-4">
+				<input type="text" name="firstName" id="firstName" data-ng-model="element.attributes.contactInfoFirstName" required />
+			</div>
 
-        
-        <div class="row row-content">
-            <!-- Title -->
-            <div class="col-md-2">
-                <div class="label-text-type">{{ 'CONTACTINFO_TITLE' | translate }}</div>
-            </div>
-            <div class="col-md-4">
-                <div class="btn-group" uib-dropdown keyboard-nav>
-                    <button id="btn-section" type="button" class="btn" uib-dropdown-toggle>
-                        <span class="add-label">{{currentTitle.name | translate }}</span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                        <li role="menuitem" data-ng-repeat="title in config.contactInfoTitles">
-                        <a href="" data-ng-click="selectTitle(title)">{{::title.name | translate }}</a> 
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+			<!-- Name -->
+			 <div class="col-md-2">
+				<label for="name">
+					{{ 'CONTACTINFO_LASTNAME' | translate }} <span class="mandatory"></span> 
+				</label>
+			</div>
+			<div class="col-md-4">       
+				<input type="text" name="name" id="name" data-ng-model="element.attributes.contactInfoLastName" required />
+			</div>
+		</div>
 
-        <div class="row row-content">
-            <!-- Telephone Number -->
-            <div class="col-md-2">
-                <label for="telephone">
-                    {{ 'CONTACTINFO_TELEPHONE' | translate }}
-                </label>
-            </div>
-            <div class="col-md-4">
-                <input type="text" name="telephone" id="telephone" data-ng-model="element.attributes.contactInfoTelephone" />
-            </div>
-            <!-- Email -->
-            <div class="col-md-2">
-                <label for="email">
-                    {{ 'CONTACTINFO_EMAIL' | translate }}
-                </label>
-            </div>
-            <div class="col-md-4">
-                <input type="text" name="email" id="email" data-ng-model="element.attributes.contactInfoEmail" />
-            </div>
-        </div>
+		<div class="row row-content">
+			<!-- Title -->
+			<div class="col-md-2">
+				<div class="label-text-type">{{ 'CONTACTINFO_TITLE' | translate }}</div>
+			</div>
 
-        <div class="row row-content">
-            <!-- Office Room -->
-            <div class="col-md-2">
-                <label for="office">
-                    {{ 'CONTACTINFO_OFFICEROOM' | translate }}
-                </label>
-            </div>
-            <div class="col-md-4">
-                <input type="text" name="office" id="office" data-ng-model="element.attributes.contactInfoOfficeRoom" />
-            </div>
-        </div>
-    </div>
+			<div class="col-md-4">
+				<div class="btn-group" uib-dropdown keyboard-nav>
+					<button id="btn-section" type="button" class="list" uib-dropdown-toggle>
+						<span class="add-label">{{currentTitle.name | translate }}</span>
+						<span class="caret"></span>
+					</button>
 
-    <!-- Availability -->
-    <div class="label-text-availability">{{ 'CONTACTINFO_AVAILABILITY' | translate }}</div>
-    <textarea id="availability-textarea" cols="30" rows="10" ckeditor="editorOptionsDisponibilite" data-ng-model="element.attributes.contactInfoAvailability"></textarea>
+					<ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+						<li role="menuitem" data-ng-repeat="title in config.contactInfoTitles">
+						<a href="" data-ng-click="selectTitle(title)">{{::title.name | translate }}</a> 
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 
-    <!-- Description --> 
-    <div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
-    <textarea id="description-textarea" cols="30" rows="10" ckeditor="editorOptionsCommentaire" data-ng-model="element.description"></textarea>
+		<div class="row row-content">
+			<!-- Telephone Number -->
+			<div class="col-md-2">
+				<label for="telephone">
+					{{ 'CONTACTINFO_TELEPHONE' | translate }}
+				</label>
+			</div>
+			<div class="col-md-4">
+				<input type="text" name="telephone" id="telephone" data-ng-model="element.attributes.contactInfoTelephone" />
+			</div>
+			<!-- Email -->
+			<div class="col-md-2">
+				<label for="email">
+					{{ 'CONTACTINFO_EMAIL' | translate }}
+				</label>
+			</div>
+			<div class="col-md-4">
+				<input type="text" name="email" id="email" data-ng-model="element.attributes.contactInfoEmail" />
+			</div>
+		</div>
+
+		<div class="row row-content">
+			<!-- Office Room -->
+			<div class="col-md-2">
+				<label for="office">
+					{{ 'CONTACTINFO_OFFICEROOM' | translate }}
+				</label>
+			</div>
+			<div class="col-md-4">
+				<input type="text" name="office" id="office" data-ng-model="element.attributes.contactInfoOfficeRoom" />
+			</div>
+		</div>
+	</div>
+
+	<!-- Availability -->
+	<div class="dispo">
+		<div class="label-text-availability">{{ 'CONTACTINFO_AVAILABILITY' | translate }}</div>
+		<textarea id="availability-textarea" cols="30" rows="10" ckeditor="editorOptionsDisponibilite" data-ng-model="element.attributes.contactInfoAvailability"></textarea>
+	</div>
+
+	<!-- Description --> 
+	<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
+	<textarea id="description-textarea" cols="30" rows="10" ckeditor="editorOptionsCommentaire" data-ng-model="element.description"></textarea>
 </div>

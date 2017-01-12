@@ -1,12 +1,14 @@
-﻿<div class="modal-header">
-    <h3 class="modal-title">{{'MODAL_DELETE_CONFIRM_TITLE' | translate}}</h3>
-</div>
+﻿<div class="tenjin-modal">
+	<div class="modal-header">
+		<h3 class="modal-title">{{'MODAL_DELETE_CONFIRM_TITLE' | translate}}</h3>
+	</div>
 
-<div class="modal-body">
-    {{'MODAL_DELETE_CONFIRM_MESSAGE' | translate}} <span ng-if="!!element.title && element.title.length > 0">"{{element.title}}"</span>? 
-</div>
+	<div class="modal-body">
+		{{'MODAL_DELETE_CONFIRM_MESSAGE' | translate}} <span ng-if="!!element.title && element.title.length > 0">"{{element.title}}"</span>? 
+	</div>
 
-<div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
-</div> 
+	<div class="modal-footer">
+		<button type="button" ng-click="ok()">OK</button>
+		<button type="button" ng-click="cancel()">Annuler</button>
+	</div> 
+</div>

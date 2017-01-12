@@ -1,75 +1,42 @@
+.element-common-attributes {
+	padding-top: 15px;
+}
+
 .element-form {
-    padding: 0 10px;
+	label {
+		font-size: 1.1em;
+		font-weight: normal;
+	}
+	
+	input[type='text'] {
+		padding: 2px;
+		border: 1px solid #ddd;
+	}
 
-    label {
-        font-weight: normal;
-    }
+	.field {
+		padding-bottom: 10px;
+	}
 
-    .element-common-attributes {
-        margin-top: 20px;
-    }
+	.field:last-child {
+		padding-bottom: 0;
+	}
 
-    .bouton-date {
-        float: right;
-        height: 28px;
-        vertical-align: bottom;
-        border-bottom-left-radius: 0;
-        border-top-left-radius: 0;
-        margin-left: -5px;
-    }
+	.cke_toolbar_break {
+		clear: none!important;
+		float: none!important;
+	}
 
-    .label-date-start,
-    .container-date-start {
-        display: inline-block;
-    }
+	.row {
+		input[type='text'] {
+			width: 100%;
+		}
 
-    .container-date-start {
-        vertical-align: bottom;
-    }
+		.btn-group {
+			width: 100%;
 
-    .form-control {
-        height: 28px;
-    }
-
-    .input-group {
-        width: 250px;
-        margin-bottom: 0;
-    }
-
-    input {
-        cursor: pointer;
-    }
-
-    .datetime-picker-dropdown {
-        min-width: 270px;
-    }
-
-    .date-start {
-        margin-bottom: 10px;
-    }
-
-    .file-upload {
-        margin-bottom: 10px;
-    }
-
-    // CKEDITOR
-    .cke_toolbar_break {
-        clear: none;
-        float: none;
-    }
-}
-
-.modal-body.errors {
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f2dede;
-    color: #a94442;
-}
-
-.readonly-props {
-    margin-top: 20px;
-}
-
-.readonly-props .prop {
-    font-weight: bold;
+			button {
+				width: 100%;
+			}
+		}
+	}
 }

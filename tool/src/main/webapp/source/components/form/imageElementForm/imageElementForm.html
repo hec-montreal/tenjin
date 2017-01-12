@@ -14,12 +14,21 @@
 	</div>
 
 	<!-- Title -->
-	<label class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
-	<input type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
+	<div class="row field">
+		<div class="col-md-2">
+			<label for="imageTitle" class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
+		</div>
+
+		<div class="col-md-10">
+			<input id="imageTitle" type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
+		</div>
+	</div>
 
 	<!-- Description -->
-	<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
-	<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description" required></textarea>
-
+	<div class="field">
+		<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
+		<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description" required></textarea>
+	</div>
+	
 	<element-resource-attributes data-resource="element.$selectedResource"></element-resource-attributes>
 </div>

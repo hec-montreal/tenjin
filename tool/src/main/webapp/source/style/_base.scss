@@ -34,10 +34,13 @@ body {
 
 /* Tenjin */
 #tenjin {
+	margin-top: $tool-margin-top;
+}
+
+#tenjin, .tenjin-modal {
 	color: $font-color-regular;
 	font-family: $font-family-regular;
 	font-size: 1em;
-	margin-top: $tool-margin-top;
 
 	/* Title */
 	h1 {
