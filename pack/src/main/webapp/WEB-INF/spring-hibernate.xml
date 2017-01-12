@@ -37,7 +37,7 @@
 		<property name="transactionManager"
 			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
-			<bean
+		    <bean
 				class="ca.hec.tenjin.impl.dao.SyllabusDaoImpl">
 
 				<property name="sessionFactory">
@@ -45,7 +45,9 @@
 						bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
 				</property>
 
-			</bean>
+				<!-- API injection -->
+				<property name="publishedSyllabusDao" ref="ca.hec.tenjin.api.dao.PublishedSyllabusDao" />
+		 	</bean>
 		</property>
 		<property name="transactionAttributes">
 			<props>

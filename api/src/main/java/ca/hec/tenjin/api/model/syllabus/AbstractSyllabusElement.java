@@ -84,6 +84,8 @@ public abstract class AbstractSyllabusElement {
     	this.setCommon(e.getCommon());
     	this.setPublicElement(e.getPublicElement());
     	this.setImportant(e.getImportant());
+    	this.setPublishedId(e.getPublishedId());
+    	this.setEqualsPublished(e.getEqualsPublished());
     	this.setDisplayOrder(e.getDisplayOrder());
     	this.setHidden(e.getHidden());
     	this.setAvailabilityStartDate(e.getAvailabilityStartDate());
@@ -94,6 +96,7 @@ public abstract class AbstractSyllabusElement {
     	this.setLastModifiedBy(e.getLastModifiedBy());
     	this.setAttributes(new HashMap<String, String>(e.getAttributes()));
     	this.setHasDatesInterval(e.getHasDatesInterval());
+    	this.setProviderId(e.getProviderId());
     }
 }
 

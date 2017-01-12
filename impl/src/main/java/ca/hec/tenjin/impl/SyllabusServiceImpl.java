@@ -391,8 +391,24 @@ public class SyllabusServiceImpl implements SyllabusService {
 	 */
 	private void compareAndUpdateSyllabusElementMapping(SyllabusElementMapping existingElementMapping, AbstractSyllabusElement newElement) {
 
+		// update display order and hidden (before comparing the objects!)
+		if (existingElementMapping.getDisplayOrder() != newElement.getDisplayOrder()) {
+			existingElementMapping.setDisplayOrder(newElement.getDisplayOrder());
+		}
+		if (existingElementMapping.getHidden() != newElement.getHidden()) {
+			existingElementMapping.setHidden(newElement.getHidden());
+		}
+
 		// compare element from the new syllabus to what is in the database
 		AbstractSyllabusElement existingElement = existingElementMapping.getSyllabusElement();
+		
+		// hidden & display order come from the mapping, don't make the equals fail for them
+		existingElement.setHidden(existingElementMapping.getHidden());
+		existingElement.setDisplayOrder(existingElementMapping.getDisplayOrder());
+
+		// user may not update the publishedId
+		newElement.setPublishedId(existingElement.getPublishedId());
+
 		if (!newElement.equals(existingElement)) {
 
 			// update persistent object, save handled by hibernate at end of
@@ -401,14 +417,6 @@ public class SyllabusServiceImpl implements SyllabusService {
 			existingElement.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 			existingElement.setLastModifiedDate(new Date());
 			existingElement.setEqualsPublished(false);
-		}
-
-		// update display order and hidden
-		if (existingElementMapping.getDisplayOrder() != newElement.getDisplayOrder()) {
-			existingElementMapping.setDisplayOrder(newElement.getDisplayOrder());
-		}
-		if (existingElementMapping.getHidden() != newElement.getHidden()) {
-			existingElementMapping.setHidden(newElement.getHidden());
 		}
 	}
 

@@ -11,6 +11,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
@@ -19,11 +20,16 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
+import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
+import lombok.Setter;
 
 public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao {
 
 	private Log log = LogFactory.getLog(SyllabusDaoImpl.class);
-
+	
+	@Setter
+	private PublishedSyllabusDao publishedSyllabusDao;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden) {
@@ -46,7 +52,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		List<Syllabus> syllabi = 
 				(List<Syllabus>) getHibernateTemplate().find("from Syllabus where siteId = ? and common = ? and deleted = false", siteId, common);
 		Syllabus syllabus = syllabi.get(0);
-		syllabus.setElements(getStructuredSyllabusElements(syllabus.getId(), hidden));
+		syllabus.setElements(getStructuredSyllabusElements(syllabus, hidden));
 		return syllabi.get(0);
 	}
 	
@@ -63,7 +69,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		}
 		
 		if (retrieveElements) {
-			syllabus.setElements(getStructuredSyllabusElements(id, hidden));
+			syllabus.setElements(getStructuredSyllabusElements(syllabus, hidden));
 		}
 		
 		return syllabus;
@@ -152,15 +158,20 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return element;
 	}
 
-	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Long id, boolean hidden) {
+	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Syllabus syllabus, boolean hidden) {
 
-		List<SyllabusElementMapping> elementMappings = this.getSyllabusElementMappings(id, hidden);
+		List<SyllabusElementMapping> elementMappings = this.getSyllabusElementMappings(syllabus.getId(), hidden);
 		
 		List<AbstractSyllabusElement> structuredElements = new ArrayList<AbstractSyllabusElement>();
 		Map<Long, AbstractSyllabusElement> elementMap = new HashMap<Long, AbstractSyllabusElement>();
 
     	for (SyllabusElementMapping currElementMapping : elementMappings) {
-    		AbstractSyllabusElement currElement = currElementMapping.getSyllabusElement(); 
+    		AbstractSyllabusElement currElement = currElementMapping.getSyllabusElement();
+    		
+    		// for non-common syllabuses, skip common element if it is not published
+    		if (!syllabus.getCommon() && currElement.getCommon() && currElement.getPublishedId() == null) {
+    			continue;
+    		}
     		
     		//TODO: check if we need to move this code to the pojo to make it systematic. Fill provided content if needed
     		currElement = getProvidedContent(currElement);
@@ -200,12 +211,33 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
     				parent = ((SyllabusCompositeElement)elementMap.get(currElement.getParentId()));
     			}
     			
-    			// elements are returned ordered from the query, so we can just add them
-    			parent.getElements().add(currElement);
+				// if the common element is not equal to the published version, replace it with that one
+				if (!syllabus.getCommon() && currElement.getCommon() && !currElement.getEqualsPublished()) {
+					AbstractSyllabusElement tempElem;
+					try {
+						tempElem = currElement.getClass().newInstance();
+						tempElem.copy(currElement);
+						AbstractPublishedSyllabusElement publishedElem = publishedSyllabusDao.getPublishedElement(currElement.getPublishedId());
 
+						// overwrite these values with published data
+						// TODO : do this for availability dates, etc
+						tempElem.setTitle(publishedElem.getTitle());
+						tempElem.setAttributes(new HashMap<String, String>(publishedElem.getAttributes()));
+						tempElem.setDescription(publishedElem.getDescription());
+
+						parent.getElements().add(tempElem);
+
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+    				// elements are returned ordered from the query, so we can just add them
+    				parent.getElements().add(currElement);
+
+				}
     		}
     	}
-
     	return structuredElements;
 	}
 
