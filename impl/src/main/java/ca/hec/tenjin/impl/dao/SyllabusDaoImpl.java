@@ -220,10 +220,16 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 						AbstractPublishedSyllabusElement publishedElem = publishedSyllabusDao.getPublishedElement(currElement.getPublishedId());
 
 						// overwrite these values with published data
-						// TODO : do this for availability dates, etc
 						tempElem.setTitle(publishedElem.getTitle());
 						tempElem.setAttributes(new HashMap<String, String>(publishedElem.getAttributes()));
 						tempElem.setDescription(publishedElem.getDescription());
+						tempElem.setAvailabilityStartDate(publishedElem.getAvailabilityStartDate());
+						tempElem.setAvailabilityEndDate(publishedElem.getAvailabilityEndDate());
+						if (publishedElem.getAvailabilityStartDate() != null || publishedElem.getAvailabilityEndDate() != null) {
+							tempElem.setHasDatesInterval(true);
+						}
+						tempElem.setImportant(publishedElem.getImportant());
+						tempElem.setPublicElement(publishedElem.getPublicElement());
 
 						parent.getElements().add(tempElem);
 
