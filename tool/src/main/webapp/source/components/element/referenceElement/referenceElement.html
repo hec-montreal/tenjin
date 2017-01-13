@@ -1,6 +1,6 @@
 <div class="element reference">
-	<div data-ng-switch="citation.citationType">
-		<div data-ng-switch-when="article|unknown">
+	<div >
+		<div data-ng-if=" citation.citationType==='article'||citation.citationType==='unknown'">
 			<span ng-repeat="author in citation.values.creator"> 
                 {{author}}
             </span>
@@ -14,7 +14,7 @@
 			<div data-ng-if="citation.values.isnIdentifier">{{'REF_BIBLIO_ISSN' | translate}} {{citation.values.isnIdentifier}}</div>				
 			<div data-ng-if="citation.values.library && element.attributes.activateLibraryLink"><a href={{citation.values.library}}>{{'REF_BIBLIO_DISPONIBILITY' | translate}}</a></div>				
 		</div>
-		<div data-ng-switch-when="book">
+		<div data-ng-if="citation.citationType==='book'">
 			<span ng-repeat="author in citation.values.creator">
                 {{author}}
             </span>
@@ -25,7 +25,7 @@
 			<span data-ng-if="citation.values.editor">{{::comma}} {{citation.values.editor}}</span>				
 			<span data-ng-if="citation.values.pages">{{citation.values.pages}} {{::pages}}</span>				
 		</div>
-		<div data-ng-switch-when="bookSection|chapter">
+		<div data-ng-if="citation.citationType==='bookSection'||citation.citationType==='chapter'">
 			<span ng-repeat="author in citation.values.creator">
                 {{author}}
             </span>
@@ -38,7 +38,7 @@
 			<div data-ng-if="citation.values.isnIdentifier">{{'REF_BIBLIO_ISBN' | translate}} {{citation.values.isnIdentifier}}</div>				
 			<div data-ng-if="citation.values.url"><a href={{citation.values.url}}>{{citation.values.url}}</a></div>				
 		</div>
-		<div data-ng-switch-when="webPage|electronic">
+		<div data-ng-if="citation.citationType==='webPage'||citation.citationType==='electronic'">
 			<span ng-repeat="author in citation.values.creator">
                 {{author}}
             </span>
@@ -48,7 +48,7 @@
 			<span data-ng-if="citation.values.date" >{{::dot}} {{'REF_BIBLIO_FROM' | translate}} {{citation.values.date}}</span>
 			<span data-ng-if="citation.values.url">{{'REF_BIBLIO_FROM2' | translate}}  {{citation.values.url}}</span>
 		</div>
-		<div data-ng-switch-when="proceed">
+		<div data-ng-if="citation.citationType==='proceed'">
 			<span ng-repeat="author in citation.values.creator">
                 {{author}}
             </span>
@@ -56,7 +56,7 @@
 			<span data-ng-if="citation.values.title">{{::dot}} {{::leftAngleQuote}}{{citation.values.title}}{{::rightAngleQuote}}</span>
 			<span data-ng-if="citation.values.sourceTitle"  class="reference-boldTitle">{{::comma}} {{citation.values.sourceTitle}}</span>				
 		</div>
-		<div data-ng-switch-when="report">
+		<div data-ng-if="citation.citationType==='report' || citation.citationType==='thesis'">
 			<span ng-repeat="author in citation.values.creator">
                 {{author}}
             </span>
@@ -69,9 +69,6 @@
 			<div data-ng-if="citation.values.url"><a href={{citation.values.url}}>{{citation.values.url}}</a></div>				
 
 		</div>
-		<div data-ng-switch-default>
-			<div  data-ng-if="citation.values.title">{{citation.values.title}}</div>		
-		</div>		
 	</div>
 	<div ng-if="referenceTypeId !== -1" class="reference-type">[{{ referenceType }}]</div> 
 	
