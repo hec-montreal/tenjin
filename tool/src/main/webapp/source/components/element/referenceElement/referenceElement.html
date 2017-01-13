@@ -1,6 +1,6 @@
 <div class="element reference">
 	<div data-ng-switch="citation.citationType">
-		<div data-ng-switch-when="article">
+		<div data-ng-switch-when="article|unknown">
 			<span ng-repeat="author in citation.values.creator"> 
                 {{author}}
             </span>
@@ -25,7 +25,7 @@
 			<span data-ng-if="citation.values.editor">{{::comma}} {{citation.values.editor}}</span>				
 			<span data-ng-if="citation.values.pages">{{citation.values.pages}} {{::pages}}</span>				
 		</div>
-		<div data-ng-switch-when="bookSection">
+		<div data-ng-switch-when="bookSection|chapter">
 			<span ng-repeat="author in citation.values.creator">
                 {{author}}
             </span>
@@ -38,7 +38,7 @@
 			<div data-ng-if="citation.values.isnIdentifier">{{'REF_BIBLIO_ISBN' | translate}} {{citation.values.isnIdentifier}}</div>				
 			<div data-ng-if="citation.values.url"><a href={{citation.values.url}}>{{citation.values.url}}</a></div>				
 		</div>
-		<div data-ng-switch-when="webPage">
+		<div data-ng-switch-when="webPage|electronic">
 			<span ng-repeat="author in citation.values.creator">
                 {{author}}
             </span>
@@ -54,7 +54,7 @@
             </span>
 			<span data-ng-if="citation.values.year">{{::dot}} {{::openParenthesis}}{{citation.values.year}}{{::closeParenthesis}}</span>			
 			<span data-ng-if="citation.values.title">{{::dot}} {{::leftAngleQuote}}{{citation.values.title}}{{::rightAngleQuote}}</span>
-			<span data-ng-if="citation.values.proceedTitle"  class="reference-boldTitle">{{::comma}} {{citation.values.proceedTitle}}</span>				
+			<span data-ng-if="citation.values.sourceTitle"  class="reference-boldTitle">{{::comma}} {{citation.values.sourceTitle}}</span>				
 		</div>
 		<div data-ng-switch-when="report">
 			<span ng-repeat="author in citation.values.creator">
@@ -71,7 +71,6 @@
 		</div>
 		<div data-ng-switch-default>
 			<div  data-ng-if="citation.values.title">{{citation.values.title}}</div>		
-			<div  data-ng-if="citation.values.uri"><a href={{citation.values.uri}>{{citation.values.uri}}</a></div>		
 		</div>		
 	</div>
 	<div ng-if="referenceTypeId !== -1" class="reference-type">[{{ referenceType }}]</div> 
