@@ -1,39 +1,39 @@
-<form data-ng-submit="ok()"> 
-    <div class="modal-header">
-        <h3 class="modal-title">{{ 'MODAL_TITLE_DELETE_SYLLABUS' | translate}}</h3> 
-        <div data-ng-if="(syllabusToDelete.length > 0)">{{ 'MODAL_DESCRIPTION_DELETE_SYLLABUS' | translate}} ?</div>       
-    </div>
+<form class="tenjin-modal" data-ng-submit="ok()"> 
+	<div class="modal-header">
+		<h3 class="modal-title">{{ 'MODAL_TITLE_DELETE_SYLLABUS' | translate}}</h3> 
+		<div data-ng-if="(syllabusToDelete.length > 0)">{{ 'MODAL_DESCRIPTION_DELETE_SYLLABUS' | translate}} ?</div>       
+	</div>
 
-    <div class="modal-body">
-        <div data-ng-if="(syllabusToDelete.length > 0)">
-            <div>
-                <div>{{ 'DELETE_SYLLABUS_OK' | translate }} : </div>
+	<div class="modal-body">
+		<div data-ng-if="(syllabusToDelete.length > 0)">
+			<div>
+				<div>{{ 'DELETE_SYLLABUS_OK' | translate }} : </div>
 
-                <ul>
-                    <li data-ng-repeat="syllabus in syllabusToDelete">
-                    {{syllabus.title}}
-                    </li>
-                <ul>
-            </div>
+				<ul>
+					<li data-ng-repeat="syllabus in syllabusToDelete">
+					{{syllabus.title}}
+					</li>
+				<ul>
+			</div>
 
-            <div data-ng-if="(syllabusNotToDelete.length > 0)">
-                <div>{{ 'SOME_INVALID_SYLLABUS_TO_DELETE' | translate }} : </div>
+			<div data-ng-if="(syllabusNotToDelete.length > 0)">
+				<div>{{ 'SOME_INVALID_SYLLABUS_TO_DELETE' | translate }} : </div>
 
-                <ul>
-                    <li data-ng-repeat="syllabus in syllabusNotToDelete">
-                    {{syllabus.title}}
-                    </li>
-                <ul>
-            </div>
-        </div>
+				<ul>
+					<li data-ng-repeat="syllabus in syllabusNotToDelete">
+					{{syllabus.title}}
+					</li>
+				<ul>
+			</div>
+		</div>
 
-        <div data-ng-if="(syllabusToDelete.length <= 0)">
-            {{'NO_VALID_SYLLABUS_TO_DELETE' | translate}}
-        </div>
-    </div>
+		<div data-ng-if="(syllabusToDelete.length <= 0)">
+			{{'NO_VALID_SYLLABUS_TO_DELETE' | translate}}
+		</div>
+	</div>
 
-    <div class="modal-footer">
-        <input data-ng-if="(syllabusToDelete.length > 0)" class="btn btn-primary" type="submit" value="OK"/> 
-        <button class="btn btn-warning" type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
-    </div> 
+	<div class="modal-footer">
+		<button data-ng-if="(syllabusToDelete.length > 0)" type="submit">OK</button> 
+		<button class="btn btn-warning" type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
+	</div> 
 </form>

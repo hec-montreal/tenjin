@@ -1,27 +1,27 @@
-<form data-ng-submit="ok()" > 
-    <div class="modal-header">
-        <h3 class="modal-title">{{ 'MODAL_TITLE_NEW_SYLLABUS' | translate}}</h3> 
-        <div>{{ 'MODAL_DESCRIPTION_NEW_SYLLABUS' | translate}}</div>       
-    </div>
+<form class="tenjin-modal" data-ng-submit="ok()" > 
+	<div class="modal-header">
+		<h3 class="modal-title">{{ 'MODAL_TITLE_NEW_SYLLABUS' | translate}}</h3> 
+		<div>{{ 'MODAL_DESCRIPTION_NEW_SYLLABUS' | translate}}</div>       
+	</div>
 
-    <div class="modal-body">
-        <div>
-            <div data-ng-if="(data.sections.length > 0)">{{ 'MODAL_SECTIONS_NEW_SYLLABUS' | translate}}</div>
+	<div class="modal-body">
+		<div>
+			<div data-ng-if="(data.sections.length > 0)">{{ 'MODAL_SECTIONS_NEW_SYLLABUS' | translate}}</div>
 
-            <div data-ng-repeat="section in data.sections" >
-                <input type="checkbox" id="{{section.id}}" name="{{section.id}}" data-ng-model="section.checked" />
-                <label for="{{section.id}}">{{section.name}}</label> <span data-ng-if="section.assignedSyllabus" class="assigned-syllabus">({{section.assignedSyllabus.title}})</span>
-            </div>
+			<div data-ng-repeat="section in data.sections" >
+				<input type="checkbox" id="{{section.id}}" name="{{section.id}}" data-ng-model="section.checked" />
+				<label for="{{section.id}}">{{section.name}}</label> <span data-ng-if="section.assignedSyllabus" class="assigned-syllabus">({{section.assignedSyllabus.title}})</span>
+			</div>
 
-            <div>
-                <label for="label">{{ 'MODAL_NEW_SYLLABUS' | translate}} : </label> <span class="mandatory"></span>
-                <input type="text" id="label" class="label-syllabus" name="label" data-ng-model="data.name" required/>
-            </div>
-        </div>
-    </div>
+			<div>
+				<label for="label">{{ 'MODAL_NEW_SYLLABUS' | translate}} : </label> <span class="mandatory"></span>
+				<input type="text" id="label" class="label-syllabus" name="label" data-ng-model="data.name" required/>
+			</div>
+		</div>
+	</div>
 
-    <div class="modal-footer">
-        <input class="btn btn-primary" type="submit" value="{{'BUTTON_OK' | translate}}"/> 
-        <button class="btn btn-warning" type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
-    </div> 
+	<div class="modal-footer">
+		<button type="submit">{{'BUTTON_OK' | translate}}</button> 
+		<button type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
+	</div> 
 </form>

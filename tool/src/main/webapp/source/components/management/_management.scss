@@ -1,0 +1,65 @@
+.management {
+	a {
+		color: $color-button!important;
+	}
+	
+	table {
+		width: 100%;
+		margin-top: 20px;
+		border: 1px solid $color-management-table-header;
+		font-size: 1.1em;
+
+		th {
+			background-color: $color-management-table-header;
+		}
+
+		th, td {
+			padding: 5px;
+		}
+
+		input, a {
+			cursor: pointer;
+		}
+
+		.th-select {
+			width: 5%;
+			text-align: center;
+		}
+	}
+
+	.editable-controls {
+		padding-top: 10px;
+
+
+		input[type='text'] {
+			border-radius: 1px;
+			margin-right: 3px;
+		}
+
+		button {
+			margin: 0 5px 0 0;
+			padding: 3px;
+		}
+
+		label {
+			display: block;
+			font-weight: normal;
+
+			input[type='checkbox'] {
+				margin: 2px 5px 0 0;
+				float: left;
+			}
+
+			span {
+				display: block;
+				float: left;
+			}
+		}
+
+		label:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+	}
+}
