@@ -4,7 +4,7 @@
 			<strong>{{ 'ERROR' | translate }}:&nbsp;</strong>{{ alertService.currentAlert.msg }}
 		</div>
 	</div>
-
+	
 	<div id="syllabus" ng-if="syllabusLoaded">
 		<div class="row">
 			<h1 class="course-title col-xs-12">
@@ -43,22 +43,24 @@
 						<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
 					</button>
 
-					<button class="action" ng-if="displayButtons.displayMobileMenu()" ng-model="syllabusService.showMobileMenu" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-						<span class="glyphicon glyphicon-th-list"></span> Menu
-					</button>
+					<!-- <button class="action mobile-menu-button" ng-model="syllabusService.showMobileMenu" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+						<span class="glyphicon glyphicon-th-list"></span> {{ 'MENU' | translate }}
+					</button> -->
 				</div>
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="col-xs-12" ng-show="syllabusService.showMobileMenu">
-				<mobile-menu class="hide-desktop show-mobile"></mobile-menu>
+		<div class="row mobile-navigation-host">
+			<div class="col-xs-12">
+				<mobile-navigation></mobile-navigation>
 			</div>
 		</div>
 
 		<div class="row col-equal-height">
-			<div ng-if="variables.device !== 'mobile'" ng-include="'leftMenu/leftMenu.html'" class="left-menu-host col-sm-3 col-md-3 hide-mobile pull-left"></div>
-				
+			<div class="navigation-host col-sm-3 pull-left">
+				<navigation></navigation>
+			</div>
+
 			<div ng-include="'contentPanel/contentPanel.html'" class="col-sm-9 col-xs-12 col-md-9 pull-left" id="contentPanel"></div>
 		</div>
 	</div>

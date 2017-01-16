@@ -263,7 +263,8 @@
 		ACTIVATE_LIBRARY_LINK: 'Activate library link',
 		ACTIVATE_COOP_LINK: 'Activate coop link',
 		ACTIVATE_OTHER_LINK: 'Activate other link',
-		SYLLABUS_NOT_AVAILABLE: 'Syllabus is not available yet'
+		SYLLABUS_NOT_AVAILABLE: 'Syllabus is not available yet',
+		MENU: 'Menu'
 	}).translations('fr', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -527,7 +528,8 @@
 		ACTIVATE_LIBRARY_LINK: 'Activer le lien vers la bibliothèque',
 		ACTIVATE_COOP_LINK: 'Activater le lien vers la Coop',
 		ACTIVATE_OTHER_LINK: 'Activer un autre lien',
-		SYLLABUS_NOT_AVAILABLE: 'Le plan de cours n\'est pas disponnible'
+		SYLLABUS_NOT_AVAILABLE: 'Le plan de cours n\'est pas disponnible',
+		MENU: 'Menu'
 	});
 
 	$translateProvider.preferredLanguage('fr');

@@ -1,5 +1,7 @@
 $tool-margin-top: 15px;
 
+$mobile-width: 800px;
+
 $font-color-regular: #003c71;
 $font-family-regular: 'dinweb', 'sans-serif';
 $font-family-title: 'dineng', 'arial', 'sans-serif';
@@ -28,11 +30,15 @@ $font-color-button-list-hover: #fff;
 $color-button-list-active: #2c2a29;
 $font-color-button-list-active: #fff;
 
-$color-left-menu: #ebebeb;
-$font-color-left-menu: #019edf;
-$color-left-menu-active: #c1c2c4;
-$font-color-left-menu-active: $font-color-regular;
-$font-color-left-menu-composite: $font-color-regular;
+$color-navigation: #ebebeb;
+$font-color-navigation: #019edf;
+$color-navigation-active: #c1c2c4;
+$font-color-navigation-active: $font-color-regular;
+$font-color-navigation-composite: $font-color-regular;
+
+$color-mobile-navigation: #003c71;
+$font-color-mobile-navigation: #fff;
+$color-mobile-navigation-active: #c1c2c4;
 
 $color-composite-title: #ebebeb;
 $font-color-composite-title: $font-color-regular;

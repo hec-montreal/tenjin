@@ -1,0 +1,25 @@
+<script type="text/ng-template" id="nodes_renderer_mobile.html">
+	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu">
+		<div data-ng-click="treeService.setSelectedItem(item)" data-ng-class="['menu-item', {'item-selected': item.$selected}]">
+			<span data-ng-if="item.type === 'evaluation' || item.type ==='exam'">{{$index+1}} - </span>
+			<span data-ng-if="item.type === 'lecture' || item.type === 'tutorial'">{{item.$numero}} - </span>
+			<span>{{item.title}}</span>			
+		</div>
+	</div>
+
+	<ul data-ng-model="item.elements" data-ng-if="item.type === 'composite'">
+		<li data-ng-repeat="item in item.elements" data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" data-ng-include="'nodes_renderer_mobile.html'"></li>
+	</ul>
+</script>
+
+<section class="mobile-navigation">
+	<div class='title'>
+		<h2>{{ 'MENU_LABEL' | translate }}</h2>
+	</div>
+
+	<div class="menu-items">
+		<ul>
+			<li data-ng-repeat="item in syllabusService.syllabus.elements" ng-include="'nodes_renderer_mobile.html'"></li>          
+		</ul>
+	</div>
+</section>

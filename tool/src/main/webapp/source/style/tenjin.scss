@@ -3,12 +3,13 @@
 @import './buttons';
 @import './icons';
 @import './modals';
+@import './responsive';
 
 @import '../components/tenjin/tenjin';
-@import '../components/leftMenu/leftMenu';
+@import '../components/navigation/navigation';
 @import '../components/contentPanel/contentPanel';
 @import '../components/syllabus/syllabus';
-@import '../components/mobileMenu/mobileMenu';
+@import '../components/mobileNavigation/mobileNavigation';
 @import '../components/management/management';
 @import '../components/loader/loader';
 @import '../components/elementButtons/elementButtons';

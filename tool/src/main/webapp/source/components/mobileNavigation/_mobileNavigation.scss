@@ -1,0 +1,29 @@
+.mobile-navigation {
+	ul {
+		list-style: none;
+
+		li {
+			padding: 0;
+		}
+
+		padding: 0;
+	}
+
+	.menu-items {
+		font-size: 1.3em;
+	}
+
+	.menu-item {
+		padding: 5px 0 3px 5px;
+	}
+
+	.menu-item.item-selected {
+		background-color: $color-mobile-navigation-active;
+	}
+
+	.title {
+		background-color: $color-mobile-navigation;
+		color: $font-color-mobile-navigation;
+		padding: 5px 0 3px 10px;
+	}
+}

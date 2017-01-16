@@ -1,0 +1,11 @@
+@media (max-width: $mobile-width) {
+	.navigation-host {
+		display: none;
+	}
+}
+
+@media (min-width: $mobile-width + 1) {
+	.mobile-navigation-host {
+		display: none;
+	}
+}
