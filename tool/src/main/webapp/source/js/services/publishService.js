@@ -147,8 +147,8 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 
 
 	this.getModifiedPages = function(){
-		var syllabus = syllabusService.syllabus;
-  		var changedPages = (syllabus.elements).filter(function changed($element) {
+		var syllabus = angular.copy(syllabusService.getSyllabus);
+  		var changedPages = syllabus.elements.filter(function changed($element) {
             if (!$element.elements) {
                 return $element.lastModifiedDate > syllabus.publishedDate;
             } else {
@@ -156,9 +156,6 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
             }
         });
         return changedPages;
-
     };
-
-
 }
 ]);
