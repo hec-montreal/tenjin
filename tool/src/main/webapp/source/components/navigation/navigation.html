@@ -19,8 +19,14 @@
 
 <section class="navigation">
 	<div class="inner">
-		<div class='title'>
-			<h2>{{ 'MENU_LABEL' | translate }}</h2>
+		<div class="title">
+			<div class="title-text">
+				<h2>{{ 'MENU_LABEL' | translate }}</h2>
+			</div>
+
+			<div class="drawer">
+				<button data-ng-click="toggleDrawer()"><span class="glyphicon glyphicon-chevron-left"></span></button>
+			</div>
 		</div>
 
 		<div class="items" ui-tree="treeOptions" data-drag-enabled="true">

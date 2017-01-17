@@ -8,9 +8,14 @@
 
 		templateUrl: 'navigation/navigation.html',
 
-		controller: function ($scope) {
+		controller: function ($scope, $rootScope) {
 			$scope.syllabusService = SyllabusService;
 			$scope.treeService = TreeService;
+			$scope.closed = false;
+
+			$scope.toggleDrawer = function () {
+				$rootScope.$broadcast('navigationToggled');
+			};
 
 			$scope.getAncestor = function($node) {
 				if ($node.$parentNodeScope) {
@@ -51,7 +56,7 @@
 
 				dropped: function(event) {
 					// Numbering
-					SyllabusService.numerotationSyllabus(SyllabusService.syllabus);
+					SyllabusService.numberSyllabus(SyllabusService.syllabus);
 				}
 			}
 		}

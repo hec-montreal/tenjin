@@ -1,4 +1,4 @@
-tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'ResponsiveService', function($q, $state, UserService, SyllabusService, ResourcesService, SakaiToolsService, CitationsService, PublishService, ResponsiveService) {
+tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', function($q, $state, UserService, SyllabusService, ResourcesService, SakaiToolsService, CitationsService, PublishService) {
 	'use strict';
 
 	var loadCitations = function(data, citationsLists) {
@@ -118,8 +118,6 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 
 	this.viewState = null;
 
-	this.showMobileMenu = false;
-
 	this.loadData = function() {
 		var tthis = this;
 		var def = $q.defer();
@@ -147,12 +145,6 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 		var route = this.viewState.getHomeRoute();
 
 		$state.go(route['route'], route['params']);
-	};
-
-	this.setupMobileMenu = function() {
-		var device = ResponsiveService.getDevice(0);
-
-		this.showMobileMenu = (device === 'mobile');
 	};
 
 	this.findViewStateFromProfile = function(profile) {

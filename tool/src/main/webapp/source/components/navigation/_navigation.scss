@@ -9,7 +9,6 @@
 	}
 
 	.inner {
-		padding: 20px 0 0 0;
 		min-height: 1000px;
 	}
 
@@ -20,6 +19,25 @@
 	.title {
 		padding-left: 22px;
 		cursor: default;
+
+		.title-text {
+			float: left;
+			padding: 20px 0 0 0;
+		}
+
+		.drawer {
+			float: right;
+
+			button {
+				margin: 0;
+			}
+		}
+	}
+
+	.title:after {
+		content: '';
+		display: block;
+		clear: both;
 	}
 
 	.menu-item {

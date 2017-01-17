@@ -56,13 +56,17 @@
 		});
 	};
 
+	$scope.toggleNavigation = function () {
+		$scope.showNavigation = !$scope.showNavigation;
+	};
+
 	$scope.infos = {};
 
 	$scope.alertService = AlertService;
 	$scope.syllabusService = SyllabusService;
 	$scope.resourcesService = ResourcesService;
 	$scope.userService = UserService;
-
+	$scope.showNavigation = true;
 	$scope.errorLoading = false;
 
 	$translate.use('fr');
@@ -75,12 +79,6 @@
 
 		syllabusDropdown: function() {
 			return $scope.userService.hasWritableSection();
-		},
-
-		displayMobileMenu: function() {
-			TenjinService.setupMobileMenu();
-
-			return TenjinService.showMobileMenu;
 		}
 	};
 
@@ -106,5 +104,9 @@
 				$scope.hideGlobalLoading();
 			});
 		}
+	});
+
+	$rootScope.$on('navigationToggled', function () {
+		$scope.toggleNavigation();
 	});
 }]);

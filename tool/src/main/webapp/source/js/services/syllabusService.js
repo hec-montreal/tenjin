@@ -258,7 +258,7 @@
 		this.syllabus = syllabus;
 
 		// numbering
-		this.numerotationSyllabus(this.syllabus);
+		this.numberSyllabus(this.syllabus);
 		// define write permission on current syllabus
 		this.setWritePermission(this.syllabus);
 		// save a copy
@@ -555,23 +555,23 @@
 	/**
 	 * Numbering the syllabus element (lecture, tutorial and evaluation)
 	 * @param {Object} $rootTree Syllabus root tree
-	 * @param {Object} $infosNumerotation Param inout with properties (nbLecture, nbTutorial, nbEvalAndExam)
+	 * @param {Object} $numberingInfo Param inout with properties (nbLecture, nbTutorial, nbEvalAndExam)
 	 */
-	var numerotationSyllabus = function($rootTree, $infosNumerotation) {
+	var numberSyllabus = function($rootTree, $numberingInfo) {
 		if ($rootTree.elements) {
 			for (var i = 0; i < $rootTree.elements.length; i++) {
 				if ($rootTree.elements[i].type === "lecture") {
-					$infosNumerotation.nbLecture++;
-					$rootTree.elements[i].$numero = $infosNumerotation.nbLecture;
+					$numberingInfo.nbLecture++;
+					$rootTree.elements[i].$numero = $numberingInfo.nbLecture;
 				} else if ($rootTree.elements[i].type === "tutorial") {
-					$infosNumerotation.nbTutorial++;
+					$numberingInfo.nbTutorial++;
 					String.fromCharCode('65');
-					$rootTree.elements[i].$numero = String.fromCharCode(64 + $infosNumerotation.nbTutorial);
+					$rootTree.elements[i].$numero = String.fromCharCode(64 + $numberingInfo.nbTutorial);
 				} else if ($rootTree.elements[i].type === "evaluation" || $rootTree.elements[i].type === "exam") {
-					$rootTree.elements[i].$numero = $infosNumerotation.nbEvalAndExam++;
+					$rootTree.elements[i].$numero = $numberingInfo.nbEvalAndExam++;
 				}
 
-				numerotationSyllabus($rootTree.elements[i], $infosNumerotation);
+				numberSyllabus($rootTree.elements[i], $numberingInfo);
 			}
 		}
 	};
@@ -580,80 +580,14 @@
 	 * Numbering the syllabus element (lecture, tutorial and evaluation)
 	 * @param {Object} $rootTree Syllabus root tree
 	 */
-	this.numerotationSyllabus = function($data) {
-		var infosNumerotations = {
+	this.numberSyllabus = function($data) {
+		var numberingInfo = {
 			'nbLecture': 0,
 			'nbTutorial': 0,
 			'nbEvalAndExam': 1
 		};
 
-		numerotationSyllabus($data, infosNumerotations);
-	};
-
-	/**
-	 * Mobile menu : hide all children elements
-	 * @param {Object} $rootTree Syllabus root tree
-	 */
-	var hideAllChildren = function($rootTree) {
-
-		if ($rootTree.elements) {
-			for (var i = 0; i < $rootTree.elements.length; i++) {
-				$rootTree.elements[i].$hidden = true;
-
-				hideAllChildren($rootTree.elements[i]);
-			}
-		}
-	};
-
-	/**
-	 * Mobile menu : hide all children elements
-	 * @param {Object} $rootTree Syllabus root tree
-	 * @param {Object} $item Current selected item
-	 * @param {Object} $levelTmp Temporary level of navigation
-	 * @param {Object} $navigation Final navigation level (inout param)
-	 */
-	var hideItems = function($rootTree, $item, $levelTmp, $navigation) {
-
-		if ($rootTree.id === $item.id) {
-			$rootTree.$hidden = false;
-			$navigation.level = $levelTmp;
-
-			// On affiche les enfants mais on masque les potentiels sous-enfants, etc.
-			for (var i = 0; i < $rootTree.elements.length; i++) {
-				$rootTree.elements[i].$hidden = false;
-				hideAllChildren($rootTree.elements[i]);
-			}
-		} else {
-			$rootTree.$hidden = true;
-
-			$levelTmp++;
-			if ($rootTree.elements) {
-				for (var i = 0; i < $rootTree.elements.length; i++) {
-					hideItems($rootTree.elements[i], $item, $levelTmp, $navigation);
-				}
-			}
-		}
-
-	};
-
-	/**
-	 * Mobile menu : hide all children elements
-	 * @param {Object} $item Current selected item
-	 */
-	this.hideItems = function($item) {
-		var tmpLevel = 1;
-		hideItems(this.syllabus, $item, tmpLevel, this.navigation);
-
-	};
-
-	/**
-	 * Mobile menu : initialize the mobile menu and hide some items
-	 */
-	this.hideItemsInit = function() {
-		for (var i = 0; i < this.syllabus.elements.length; i++) {
-			this.syllabus.elements[i].$hidden = false;
-			hideAllChildren(this.syllabus.elements[i]);
-		}
+		numberSyllabus($data, numberingInfo);
 	};
 
 	this.itemHasChildInMenu = function(item) {

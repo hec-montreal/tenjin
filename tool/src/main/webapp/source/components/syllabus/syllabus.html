@@ -42,10 +42,6 @@
 					<button class="action" ng-if="syllabusService.syllabus.$writePermission" ng-click="startPublish()" ng-controller="PublishCtrl">
 						<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
 					</button>
-
-					<!-- <button class="action mobile-menu-button" ng-model="syllabusService.showMobileMenu" uib-btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
-						<span class="glyphicon glyphicon-th-list"></span> {{ 'MENU' | translate }}
-					</button> -->
 				</div>
 			</div>
 		</div>
@@ -57,11 +53,15 @@
 		</div>
 
 		<div class="row col-equal-height">
-			<div class="navigation-host col-sm-3 pull-left">
+			<div class="navigation-host col-md-3 pull-left" data-ng-if="showNavigation">
 				<navigation></navigation>
 			</div>
 
-			<div ng-include="'contentPanel/contentPanel.html'" class="col-sm-9 col-xs-12 col-md-9 pull-left" id="contentPanel"></div>
+			<div class="navigation-drawer col-md-1" data-ng-if="!showNavigation">
+				<button data-ng-click="toggleNavigation()"><span class="glyphicon glyphicon-chevron-right"></span></button>
+			</div>
+
+			<div ng-include="'contentPanel/contentPanel.html'" data-ng-class="['col-xs-12', 'pull-left', {'col-md-9': showNavigation, 'col-md-11': !showNavigation}]" id="contentPanel"></div>
 		</div>
 	</div>
 </div>

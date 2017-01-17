@@ -196,20 +196,4 @@
 		this.selectedItem.$selected = true;
 		this.selectedItem.$location = $location;
 	};
-
-	/**
-	 * Mobile menu : Set the viewed element
-	 * @param {Object} $item Element
-	 */
-	this.setViewedElement = function($element) {
-		this.viewedElement = $element;
-	};
-
-	/**
-	 * Mobile menu : Get the viewed element
-	 * @return {Object} The viewesd element
-	 */
-	this.getViewedElement = function() {
-		return this.viewedElement;
-	};
 }]);
