@@ -1,7 +1,8 @@
-tenjinApp.controller('PublishCtrl', ['$scope', '$translate', 'ngDialog', '$filter', 'PublishService', function($scope, $translate, ngDialog, $filter, PublishService) {
+tenjinApp.controller('PublishCtrl', ['$scope', '$translate', 'ngDialog', '$filter', 'SyllabusService', 'PublishService', function($scope, $translate, ngDialog, $filter, SyllabusService, PublishService) {
 	'use strict';
 
 	$scope.publishService = PublishService;
+	$scope.syllabusService = SyllabusService;
 	$scope.syllabus = $scope.publishService.getActiveSyllabus();
 
 	$scope.publishing = false;
@@ -35,6 +36,7 @@ tenjinApp.controller('PublishCtrl', ['$scope', '$translate', 'ngDialog', '$filte
 		$scope.publishService.publish().$promise.then(function($data) {
 			$scope.publishService.working = false;
 			ngDialog.close();
+			$scope.syllabusService.reloadSyllabus();
 			$scope.publishService.postPublishDialog($data);
 		});
 	};

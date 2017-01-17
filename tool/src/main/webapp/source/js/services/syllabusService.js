@@ -97,6 +97,14 @@
 	};
 
 	/**
+	 * Reload the syllabus from the backend
+	 * @return {Object} Promise
+	 */
+	this.reloadSyllabus = function() {
+		return this.loadSyllabus(this.syllabus.id);
+	}
+
+	/**
 	 * Load and set a syllabus
 	 * @param {Number} id id of the syllabus
 	 * @return {Object} Promise
