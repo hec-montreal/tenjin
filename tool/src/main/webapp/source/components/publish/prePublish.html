@@ -62,7 +62,7 @@
         {{node.title}}
     </div>
     <ol ui-tree-nodes="" ng-model="node.elements">
-        <li ng-repeat="node in node.elements" ui-tree-node data-nodrag  data-nodrop data-ng-if="node.elements && node.type !== 'composite'" ng-include="'nodes_renderer.html'">
+        <li ng-repeat="node in node.elements" ui-tree-node data-nodrag  data-nodrop data-ng-if="node.elements && node.type !== 'rubric'" ng-include="'nodes_renderer.html'">
         </li>
     </ol>
 </script>
