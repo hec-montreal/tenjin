@@ -273,7 +273,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 			}
 		}
 
-		return syllabus;
+		return getSyllabus(syllabus.getId());
 	}
 
 	@Override
