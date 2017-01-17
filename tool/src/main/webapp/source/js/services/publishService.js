@@ -66,7 +66,6 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 
 
 	this.prePublishDialog = function($changedPages){
-		console.log($changedPages);
         ngDialog.openConfirm({ 
 	   		template: 'publish/prePublish.html',
 	   		height: 500,
