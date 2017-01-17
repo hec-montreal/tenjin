@@ -23,7 +23,10 @@
 		min-width: initial;
 	}
 
-	// Composite element title
+	.listing {
+		padding: 0;
+	}
+
 	.item-panel-composite {
 		background-color: $color-composite-title;
 		color: $font-color-composite-title;
@@ -44,5 +47,20 @@
 
 	.syllabus-text {
 		font-size: 1.2em;
+	}
+
+	.element-host {
+		margin-top: 3px;
+	}
+
+	.element-host.important {
+		border: 1px solid $important-element-border-color;
+		border-width: 1px 1px 1px 8px;
+		padding-left: 4px;
+	}
+
+	.important-notice {
+		color: $important-element-border-color;
+		padding: 3px 0 0 3px;
 	}
 }
