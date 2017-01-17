@@ -58,7 +58,7 @@
 
 
  <script type="text/ng-template" id="nodes_renderer.html">
-    <div class="tree-node tree-node-content">
+    <div class="tree-node tree-node-content" data-nodrag data-nodrop>
         {{node.title}}
     </div>
     <ol ui-tree-nodes="" ng-model="node.elements">
