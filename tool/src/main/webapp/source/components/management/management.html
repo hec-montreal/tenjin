@@ -45,8 +45,9 @@
 
 			<td>
 				<span data-ng-if="syllabus.publishedDate">
-					{{syllabus.publishedDate | date:'longDate'}}
-				</span>	
+					{{syllabus.publishedDate | date: 'medium'}}
+				</span>
+
 				<span data-ng-if="!syllabus.publishedDate">
 					{{ 'DRAFTED_SYLLABUS' | translate }}
 				</span>	
@@ -54,7 +55,7 @@
 
 			<td>
 				<span data-ng-if="syllabus.lastModifiedDate">
-					{{syllabus.lastModifiedDate | date:'longDate'}}
+					{{syllabus.lastModifiedDate | date: 'medium'}}
 				</span>
 			</td>
 
