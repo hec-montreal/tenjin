@@ -31,11 +31,13 @@
                 {{author}}
             </span>
 			<span data-ng-if="citation.values.year">{{::openParenthesis}}{{citation.values.year}}{{::closeParenthesis}}</span>			
-			<span data-ng-if="citation.values.sectionTitle">{{::dot}} {{::leftAngleQuote}} {{citation.values.sectionTitle}}{{::rightAngleQuote}}</span>	
+			<span data-ng-if="citation.values.sourceTitle">{{::dot}} {{::leftAngleQuote}} {{citation.values.sourceTitle}}{{::rightAngleQuote}}</span>	
 			<span data-ng-if="citation.values.title" class="reference-boldTitle">{{::comma}} {{citation.values.title}}</span>	
 			<span data-ng-if="citation.values.volume">{{::comma}} {{::volume}}{{citation.values.volume}}</span>
+            <span data-ng-if="citation.values.publicationLocation">{{::comma}}{{citation.values.publicationLocation}}</span>
+            <span data-ng-if="citation.values.publisher">{{::comma}} {{citation.values.publisher}}</span>
 			<span data-ng-if="citation.values.editor">{{::comma}} {{citation.values.editor}}</span>				
-			<span data-ng-if="citation.values.pages">{{::comma}} {{::pages}} {{citation.values.pages}}</span>										
+			<span data-ng-if="citation.values.pages">{{::comma}} {{::pages}} {{citation.values.startPage}} - {{citation.values.endPage}}</span>										
 			<div data-ng-if="citation.values.isnIdentifier">{{'REF_BIBLIO_ISBN' | translate}} {{citation.values.isnIdentifier}}</div>				
 			<div data-ng-if="citation.values.url"><a href={{citation.values.url}}>{{citation.values.url}}</a></div>				
 		</div>
@@ -63,8 +65,8 @@
             </span>
 			<span data-ng-if="citation.values.year"> {{::openParenthesis}}{{citation.values.year}}{{::closeParenthesis}}</span>			
 			<span data-ng-if="citation.values.title" class="reference-boldTitle">{{::dot}} {{citation.values.title}}</span>
-			<span data-ng-if="citation.values.publisher">{{::comma}} {{citation.values.publisher}}</span>				
 			<span data-ng-if="citation.values.publicationLocation">{{::comma}} {{citation.values.publicationLocation}}</span>				
+			<span data-ng-if="citation.values.publisher">{{::comma}} {{citation.values.publisher}}</span>				
 			<span data-ng-if="citation.values.pages">{{citation.values.pages}} {{::pages}}</span>			
 			<div data-ng-if="citation.values.isnIdentifier">{{'REF_BIBLIO_ISBN' | translate}} {{citation.values.isnIdentifier}}</div>				
 			<div data-ng-if="citation.values.url"><a href={{citation.values.url}}>{{citation.values.url}}</a></div>				
