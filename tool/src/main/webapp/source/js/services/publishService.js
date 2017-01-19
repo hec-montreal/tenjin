@@ -1,103 +1,56 @@
-tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog', '$resource','$translate','$q', '$http',   function(UserService, SyllabusService, ngDialog, $resource, $translate, $q, $http) {
+tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog', '$resource', '$translate', '$q', '$http', function(UserService, SyllabusService, ngDialog, $resource, $translate, $q, $http) {
 	'use strict';
 
-	var publishSyllabusProvider = $resource('v1/syllabus/:id/publish.json');
-    var announcementProviderId = $resource('tools/announcement/:id.json');
- 	this.working=false;
+	var announcementProviderId = $resource('tools/announcement/:id.json');
 
-	var syllabusService = SyllabusService;
-	var position = 0;
-	this.working = false;
+	this.isCommonSyllabusPublished = function() {
+		var common = SyllabusService.getCommonSyllabus();
 
-	
-	this.published = false;
-	
-	this.isCommonSyllabusPublished = function(){
-		var common = syllabusService.getCommonSyllabus();
-		if (syllabusService.syllabus.common){
-			return true;
-		}
-
-		if (common.publishedDate){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return (!!SyllabusService.syllabus.common) || (!!common.publishedDate)
 	};
 
-	this.getActiveSyllabus = function(){
-		return  syllabusService.syllabus;
-	};
+	this.publish = function() {
+		var tthis = this;
+		var def = $q.defer();
 
-	this.publish = function(){
-		return publishSyllabusProvider.get({
-			id: syllabusService.syllabus.id
+		$http({
+			method: 'GET',
+			url: 'v1/syllabus/' + SyllabusService.syllabus.id + '/publish.json'
+		}).then(function(response) {
+			def.resolve(response.data);
+		}, function(reason) {
+			def.reject(reason);
 		});
+
+		return def.promise;
 	};
 
-	this.publishingDialog = function(){
-        ngDialog.openConfirm({ 
-	   		template: 'publish/publishing.html',
-	   		height: 500,
-	   		width: 600,
-	   		controller: 'PublishCtrl',
-	   		closeByEscape: false,
-	   		closeByDocument: false
-   	  });
-
+	this.createAnnouncement = function($title, $message) {
+		var announcement = {
+			"title": $title,
+			"message": $message
+		};
+		announcementProviderId.save({
+			id: SyllabusService.syllabus.siteId
+		}, announcement);
 	};
 
-	this.postPublishDialog = function($publishedSyllabus){
-        ngDialog.openConfirm({ 
-	   		template: 'publish/postPublish.html',
-	   		height: 500,
-	   		width: 600,
-	   		data: {
-	   			published: true,
-	   			publishedSyllabus: $publishedSyllabus
-	   		},
-	   		controller: 'PublishCtrl',
-	   		closeByEscape: false,
-	   		closeByDocument: false
-   	  });
-
-	};
-
-
-	this.prePublishDialog = function($changedPages){
-        ngDialog.openConfirm({ 
-	   		template: 'publish/prePublish.html',
-	   		height: 500,
-	   		data: {
-	   			changedSyllabusPages: $changedPages
-	   		},
-			width: 600,
-	   		controller: 'PublishCtrl',
-  	  });
-
-	};
-
-	this.createAnnouncement = function ($title, $message){
-  		var announcement= {"title": $title, "message": $message};
-  		announcementProviderId.save({
-            id: syllabusService.syllabus.siteId}, announcement);
-  
-	};
-
-	this.getSections = function(){
+	this.getSections = function() {
 		var sections = [];
-		if (syllabusService.syllabus.common){
+
+		if (SyllabusService.syllabus.common) {
 			var usedSections = UserService.getSectionsPublish();
-			for (var i=0; i < usedSections.length; i++){
-				sections[i] = usedSections[i].name;	
+
+			for (var i = 0; i < usedSections.length; i++) {
+				sections[i] = usedSections[i].name;
 			}
-			
-		}else{	
-			sections = syllabusService.syllabus.sections;
+
+		} else {
+			sections = SyllabusService.syllabus.sections;
 		}
-  		return sections;
-  	};
+
+		return sections;
+	};
 
 	this.loadPublishedSyllabus = function() {
 		var tthis = this;
@@ -139,23 +92,23 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 	this.setSyllabusPublishPermission = function(syllabus) {
 		if ((syllabus.$writePermission) && (syllabus.sections.length > 0 || syllabus.common === true)) {
 			syllabus.$publishPermission = true;
-		}else{
+		} else {
 			syllabus.$publishPermission = false;
 		}
 	};
 
+	this.getModifiedPages = function() {
+		var syllabus = angular.copy(SyllabusService.getSyllabus());
 
-	this.getModifiedPages = function(){
-		var syllabus = angular.copy(syllabusService.getSyllabus());
-  		var changedPages = syllabus.elements.filter(function changed($element) {
-            if (!$element.elements || $element.elements.length === 0) {
-                return !$element.equalsPublished;
-            } else {
-                $element.elements = $element.elements.filter(changed);
-                return $element.elements.length > 0;
-            }
-        });
-        return changedPages;
-    };
-}
-]);
+		var changedPages = syllabus.elements.filter(function changed($element) {
+			if (!$element.elements || $element.elements.length === 0) {
+				return !$element.equalsPublished;
+			} else {
+				$element.elements = $element.elements.filter(changed);
+				return $element.elements.length > 0;
+			}
+		});
+
+		return changedPages;
+	};
+}]);

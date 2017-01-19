@@ -1,0 +1,85 @@
+<div class="tenjin-modal publish-modal">
+	<div class="modal-header">
+		<h2>{{ 'PUBLISH_TITLE_LABEL' | translate }} {{syllabus.title}}</h2>
+	</div>
+
+	<div class="modal-body" data-ng-if="status === 'beforePublish'">
+		<div data-ng-if="isCommonSyllabusPublished()">
+			<div  class="last-publish-date" data-ng-if="syllabus.publishedDate">
+				{{ 'PUBLISH_LAST_PUBLISH_LABEL' | translate }} <span class="date">{{syllabus.publishedDate | date:'d MMMM y h:mm:ss a'}}</span>
+			</div>
+
+			<div class="published-sections">
+				{{ 'PUBLISH_MODIFIED_SECTIONS_LABEL' | translate }} 
+			</div>
+
+			<ul>
+				<li class="published-section" data-ng-repeat="section in sections">
+					{{section}}
+				</li> 
+			</ul>
+
+			<div>
+				<!--Show modified pages: We do not show the list of modifications if the course has never been published. 
+				We might end up listong all the course outline. -->
+				<div data-ng-if="syllabus.publishedDate">
+					<span>{{ 'PUBLISH_MODIFIED_PAGES_LABEL' | translate }}</span>
+
+					<div class="modified-pages">
+						<ul>
+							<li data-ng-repeat="page in modifiedPages">
+							{{page.title}}
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div data-ng-if="!isCommonSyllabusPublished()">
+			{{ 'PUBLISH_CHECK_COMMON' | translate }}
+		</div>
+	</div>
+
+	<div class="modal-body" data-ng-if="status === 'duringPublish'">
+		<div class="loader">
+			<img src="/tenjin-tool/img/desktop/loader.gif">
+		</div>
+	</div>
+
+	<div class="modal-body" data-ng-if="status === 'afterPublish'">
+		<div class="publish-result">
+			{{ 'PUBLISH_SUCCESS' | translate }}
+		</div>
+
+		<div>
+			<input id="doAnnounce" type="checkbox" data-ng-model="$parent.doAnnounce" />
+			<label for="doAnnounce">{{ 'PUBLISH_ANNOUNCEMENT' | translate }}</label>
+		</div>
+
+		<div class="announce" data-ng-if="$parent.doAnnounce">
+			<div class="row field">
+				<div class="col-xs-12">
+					<label for="announceTitle">{{ 'PUBLISH_ANNOUNCEMENT_TITLE' | translate }}</label>
+					<input type="text" id="announceTitle" data-ng-model="$parent.announceTitle" />
+				</div>
+			</div>
+
+			<div class="row field">
+				<div class="col-xs-12">
+					<label for="announceMessage">{{ 'PUBLISH_ANNOUNCEMENT_MESSAGE' | translate }}</label>
+					<textarea id="announceMessage" data-ng-model="$parent.announceMessage"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer" data-ng-if="status === 'beforePublish'">
+		<button data-ng-click="close()">{{ 'PUBLISH_CANCEL_BUTTON_LABEL' | translate }}</button>
+		<button data-ng-if="isCommonSyllabusPublished()" data-ng-click="publish()">{{ 'BUTTON_PUBLISH' | translate }}</button>
+	</div>
+
+	<div class="modal-footer" data-ng-if="status === 'afterPublish'">
+		<button data-ng-click="checkAnnounceAndClose()">{{ 'BUTTON_OK' | translate }}</button>
+	</div>
+</div>

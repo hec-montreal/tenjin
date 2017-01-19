@@ -118,4 +118,14 @@
 
 		return modalInstance;
 	};
+
+	this.prePublishSyllabus = function() {
+		return $uibModal.open({
+			animation: true,
+			templateUrl: 'publishModal/publishModal.html',
+			controller: 'PublishModalCtrl',
+			size: '',
+			backdrop: 'static'
+		});
+	};
 }]);

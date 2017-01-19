@@ -518,7 +518,7 @@
 		PUBLISH_ANNOUNCEMENT_TITLE: 'Titre de l\'annonce',
 		PUBLISH_ANNOUNCEMENT_MESSAGE: 'Texte de l\'annonce',
 		ANNOUNCEMENT_TITLE: 'Une nouvelle version du plan de cours est disponible',
-		ANNOUNCEMENT_MESSAGE: 'Une nouvelle version du plan de cours a été publié le ',
+		ANNOUNCEMENT_MESSAGE: 'Une nouvelle version du plan de cours a été publié le',
 		BUTTON_OK: 'Ok',
 		ADD: 'Ajouter',
 		ADD_DESCRIPTION: 'Ajouter une description',

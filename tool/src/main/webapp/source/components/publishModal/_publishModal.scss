@@ -1,0 +1,28 @@
+.publish-modal {
+	.last-publish-date {
+		margin-bottom: 10px;
+
+		.date {
+			font-weight: bold;
+		}
+	}
+
+	.publish-result {
+		margin-bottom: 10px;
+		font-weight: bold;
+	}
+
+	.announce {
+		label {
+			display: block;
+		}
+
+		input[type='text'], textarea {
+			width: 100%;
+		}
+
+		textarea {
+			height: 100px;
+		}
+	}
+}

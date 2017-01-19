@@ -47,7 +47,6 @@ tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$tra
 
 		link: function($scope) {
 			if ($scope.mode === 'creation') {
-				console.log("Setting activateLibraryLink");
 				$scope.element.attributes.activateLibraryLink = 'true';
 			}
 
