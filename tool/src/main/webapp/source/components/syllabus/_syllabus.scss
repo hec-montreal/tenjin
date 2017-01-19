@@ -14,4 +14,17 @@
 	button {
 		margin: 0;
 	}
+	
+	padding-left: 15px;
+}
+
+.toolbar-wrapper::after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.toolbar-wrapper {
+	border-bottom: 1px solid $color-navigation;
+	margin-bottom: 5px;
 }

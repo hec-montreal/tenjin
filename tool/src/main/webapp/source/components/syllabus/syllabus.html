@@ -14,34 +14,36 @@
 
 		<div class="row">
 			<div class="toolbar col-xs-12">
-				<div class="toolbar-left">
-					<!-- Management button -->
-					<button ng-if="displayButtons.managementButton()" ui-sref="management">
-						{{ 'BUTTON_MANAGEMENT' | translate }}
-					</button>
-
-					<!-- Groups list -->
-					<div ng-if="displayButtons.syllabusDropdown()" class="btn-group button-list" uib-dropdown keyboard-nav>
-						<button id="btn-group-list" class="list" ng-disabled="syllabusService.working" uib-dropdown-toggle>
-							<span class="add-label">{{syllabusService.syllabus.title}}</span> <span class="caret"></span> 
+				<div class="toolbar-wrapper">
+					<div class="toolbar-left">
+						<!-- Management button -->
+						<button ng-if="displayButtons.managementButton()" ui-sref="management">
+							{{ 'BUTTON_MANAGEMENT' | translate }}
 						</button>
 
-						<ul uib-dropdown-menu class="list-menu-add-left" role="menu" aria-labelledby="btn-group-list">
-							<li role="menuitem" ng-repeat="syllabus in syllabusService.syllabusList">
-								<a href="" ng-click="selectSyllabus(syllabus)">{{::syllabus.title }} <span ng-if="syllabus.instructors.length > 0"> - {{::syllabus.instructors}}</span></a> 
-							</li> 
-						</ul>
+						<!-- Groups list -->
+						<div ng-if="displayButtons.syllabusDropdown()" class="btn-group button-list" uib-dropdown keyboard-nav>
+							<button id="btn-group-list" class="list" ng-disabled="syllabusService.working" uib-dropdown-toggle>
+								<span class="add-label">{{syllabusService.syllabus.title}}</span> <span class="caret"></span> 
+							</button>
+
+							<ul uib-dropdown-menu class="list-menu-add-left" role="menu" aria-labelledby="btn-group-list">
+								<li role="menuitem" ng-repeat="syllabus in syllabusService.syllabusList">
+									<a href="" ng-click="selectSyllabus(syllabus)">{{::syllabus.title }} <span ng-if="syllabus.instructors.length > 0"> - {{::syllabus.instructors}}</span></a> 
+								</li> 
+							</ul>
+						</div>
 					</div>
-				</div>
 
-				<div class="toolbar-right">
-					<button class="action" ng-if="syllabusService.syllabus.$writePermission" ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
-						<span class="glyphicon glyphicon-floppy-disk"></span> {{ 'BUTTON_SAVE' | translate }}
-					</button>
+					<div class="toolbar-right">
+						<button class="action" ng-if="syllabusService.syllabus.$writePermission" ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
+							<span class="glyphicon glyphicon-floppy-disk"></span> {{ 'BUTTON_SAVE' | translate }}
+						</button>
 
-					<button class="action" ng-if="syllabusService.syllabus.$writePermission" ng-click="startPublish()">
-						<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
-					</button>
+						<button class="action" ng-if="syllabusService.syllabus.$writePermission" ng-click="startPublish()">
+							<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -57,11 +59,11 @@
 				<navigation></navigation>
 			</div>
 
-			<div class="navigation-drawer col-md-1" data-ng-if="!showNavigation">
+			<div class="navigation-drawer" data-ng-if="!showNavigation">
 				<button data-ng-click="toggleNavigation()"><span class="glyphicon glyphicon-chevron-right"></span></button>
 			</div>
 
-			<div ng-include="'contentPanel/contentPanel.html'" data-ng-class="['col-xs-12', 'pull-left', {'col-md-9': showNavigation, 'col-md-11': !showNavigation}]" id="contentPanel"></div>
+			<div ng-include="'contentPanel/contentPanel.html'" data-ng-class="['col-xs-12', 'pull-left', {'col-md-9': showNavigation, 'all-width': !showNavigation}]" id="contentPanel"></div>
 		</div>
 	</div>
 </div>
