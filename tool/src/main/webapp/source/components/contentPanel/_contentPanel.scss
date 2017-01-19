@@ -49,18 +49,19 @@
 		font-size: 1.2em;
 	}
 
-	.element-host {
-		margin: 10px 0 10px 0;
+	.element-host.no-buttons {
+		margin: 20px 0 20px 0;
 	}
 
-	.element-host.important {
+	.element-wrapper.important {
 		border: 1px solid $important-element-border-color;
 		border-width: 1px 1px 1px 8px;
 		padding-left: 4px;
+		padding-right: 4px;
 	}
 
 	.important-notice {
 		color: $important-element-border-color;
-		padding: 3px 0 0 3px;
+		padding: 3px;
 	}
 }
