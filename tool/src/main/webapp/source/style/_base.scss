@@ -80,6 +80,12 @@ body {
 		color: $font-color-alert-danger;
 	}
 
+	/* Menus */
+	.dropdown-menu a {
+		font-size: 1.1em;
+		text-decoration: none;
+	}
+
 	/* Same height columns */
 	.col-equal-height {
 		overflow: hidden;
