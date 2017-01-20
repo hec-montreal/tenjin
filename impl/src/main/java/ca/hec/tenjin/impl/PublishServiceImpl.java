@@ -110,7 +110,7 @@ public class PublishServiceImpl implements PublishService {
 
 	@Override
 	@Transactional
-	public void publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException {
+	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException {
 
 		Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
 
@@ -206,6 +206,8 @@ public class PublishServiceImpl implements PublishService {
 		syllabus.setPublishedDate(new Date());
 		syllabus.setPublishedBy(sakaiProxy.getCurrentUserId());
 		syllabusDao.update(syllabus);
+
+		return syllabus;
 	}
 
 	private void publishMapping(SyllabusElementMapping mapping, AbstractPublishedSyllabusElement publishedElement) {

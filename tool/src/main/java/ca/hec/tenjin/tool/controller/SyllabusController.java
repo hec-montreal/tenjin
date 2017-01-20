@@ -159,15 +159,16 @@ public class SyllabusController {
 		}
 	}
 
-	@RequestMapping(value = "/syllabus/{id}/publish", method = RequestMethod.GET)
-	public ResponseEntity<String> publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
+	@RequestMapping(value = "/syllabus/{id}/publish", method = RequestMethod.POST)
+	public @ResponseBody Syllabus publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
+		Syllabus syllabus = null;
 		try {
 			publishService.publishSyllabus(syllabusId);
 		} catch (SyllabusException e) {
-			return new ResponseEntity<String>(msgs.getString("tenjin.error.commonSyllabusUnpublished"), HttpStatus.FORBIDDEN);
+			//TODO: error message
 		}
 
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return (syllabus);
 	}
 
 	@RequestMapping(value = "/syllabus/{syllabusId}", method = RequestMethod.GET)

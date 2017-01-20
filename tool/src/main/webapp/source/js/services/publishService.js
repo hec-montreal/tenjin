@@ -14,7 +14,7 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 		var def = $q.defer();
 
 		$http({
-			method: 'GET',
+			method: 'POST',
 			url: 'v1/syllabus/' + SyllabusService.syllabus.id + '/publish.json'
 		}).then(function(response) {
 			def.resolve(response.data);

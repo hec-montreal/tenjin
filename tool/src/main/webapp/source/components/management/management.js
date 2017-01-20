@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', function($timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config) {
+tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', function($timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config) {
 	'use strict';
 
 	return {
@@ -213,6 +213,16 @@
 					}
 				}
 			});
+        
+         // TODO: move to routing
+         this.loadSyllabusList = function(){
+             this.syllabusService.loadSyllabusList().then(function(){
+                 
+				});
+        }
+         
+        
+        this.loadSyllabusList();
 		},
 
 		controllerAs: 'managementCtrl',
