@@ -1,21 +1,9 @@
 .contact-info {
-    .element-title {
-        font-weight: bold;
-    }
-
-    .contact-lastname {
-        text-transform: uppercase;
-    }
-
-	.contact-disponibilite{
-		display: inline-block;  
+	.element-title {
+		font-weight: bold;
 	}
-    .contact-title,
-    .contact-email,
-    .contact-tel,
-    .contact-officeroom {
-        // font-size: 11px;
-        // margin-left: 5px;
-        //padding: 0 0 2px;
-    }
+
+	div {
+		padding: 3px 0 3px 0;
+	}
 }

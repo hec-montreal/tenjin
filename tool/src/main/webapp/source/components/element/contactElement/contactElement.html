@@ -1,8 +1,8 @@
-<div class="element contact-info">
+<div class="element contact-info syllabus-text">
 	<div class="element-title"> 
-        <span class="contact-firstname">{{element.attributes.contactInfoFirstName}}</span> 
-        <span class="contact-lastname">{{element.attributes.contactInfoLastName}}</span>
-    </div>
+		<span class="contact-firstname">{{element.attributes.contactInfoFirstName}}</span> 
+		<span class="contact-lastname">{{element.attributes.contactInfoLastName}}</span>
+	</div>
 
 	<div data-ng-if="element.attributes.contactInfoTitle" class="contact-title">{{ title }}</div>
 
@@ -14,10 +14,10 @@
 
 	<div data-ng-if="element.attributes.contactInfoOfficeRoom" class="contact-officeroom"> {{'CONTACT_OFFICEROOM' | translate}}: {{element.attributes.contactInfoOfficeRoom}}</div> 
 
-    <div class="contact-disponibilite" data-ng-if="element.attributes.contactInfoAvailability" >
-    	<span>{{'CONTACT_AVAILABILITY' | translate}}:</span>
-    	<span ng-bind-html="element.attributes.contactInfoAvailability"> </span>
-    </div>
-    
-    <div class="contact-description" data-ng-if="element.description" ng-bind-html="element.description"></div>
+	<div class="contact-disponibilite" data-ng-if="element.attributes.contactInfoAvailability" >
+		<span>{{'CONTACT_AVAILABILITY' | translate}}:</span>
+		<span ng-bind-html="element.attributes.contactInfoAvailability"> </span>
+	</div>
+	
+	<div class="contact-description" data-ng-if="element.description" ng-bind-html="element.description"></div>
 </div>
