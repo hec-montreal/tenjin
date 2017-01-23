@@ -4,10 +4,12 @@ tenjinApp.directive('elementCommonAttributes', ['$anchorScroll', '$location', 'M
 	return {
 		scope: {
 			element: '=',
+			resource: '=',
 			noedit: '=',
 			noimportant: '=',
 			novisible: '=',
-			nodate: '='
+			nodate: '=',
+			nocopyright: '='
 		},
 
 		restrict: 'E',

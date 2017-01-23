@@ -1,5 +1,5 @@
 <div class="element-common-attributes"> 
-	<!-- Important -->
+	<!-- Dynamic attributes -->
 	<div ng-show="!noimportant"> 
 		<input type="checkbox" name="important" id="importantCheckbox" data-ng-model="element.important"/>
 		<label for="importantCheckbox">{{ 'FORM_IMPORTANT' | translate }}</label> 
@@ -31,10 +31,10 @@
 						</button>
 					</span>
 				</p>
-		  
 			</span>
 		</div>
-		<div data-ng-init=>
+
+		<div data-ng-init>
 			<input type="checkbox" name="displayEnd" id="displayEndCheckbox" data-ng-model="element.hasEndDate" data-ng-click="updateDateEnd($event)"/>
 			<label for="displayEndCheckbox">{{ 'FORM_DATE_DISPLAY_END' | translate }} : </label> 
 			<span class="container-date-start">
@@ -49,5 +49,29 @@
 				</p>
 			</span>
 		</div>
-	<div>
+	</div>
+
+	<!-- Resource attributes -->
+	<div class="readonly-attrs" ng-if="!!resource">
+		<div><strong>{{ 'DATA_MODIFIABLE_IN_RESOURCES' | translate }}</strong></div>
+
+		<div ng-if="!nocopyright">
+			<h1>{{nocopyright}}</h1>
+			<span class="attr">{{ 'COPYRIGHT_STATUS' | translate }}:</span>
+			<span ng-if="!!resource">{{ (resource.copyright ? 'COPYRIGHT_I_HOLD' : 'COPYRIGHT_UNDEFINED') | translate }}</span>
+		</div>
+
+		<div>
+			<span class="attr">{{ 'VISIBILITY' | translate }}:</span> 
+			<span ng-if="!!resource">{{ (resource.publicAccess ? 'VISIBILITY_PUBLIC' : 'VISIBILITY_STUDENTS') | translate }}</span>
+		</div>
+		
+		<div ng-if="!!resource.release">
+			<span class="attr">{{ 'FORM_DATE_DISPLAY_START' | translate }}:</span> {{resource.release.display}}
+		</div>
+		
+		<div ng-if="!!resource.retract">
+			<span class="attr">{{ 'FORM_DATE_DISPLAY_END' | translate }}:</span> {{resource.retract.display}}
+		</div>
+	</div>
 </div>
