@@ -1,10 +1,12 @@
 <div ui-tree-handle class="tree-node tree-node-content">
-	<div data-ng-switch="element.type" data-ng-class="['element-host', {'important': element.important, 'no-buttons': !syllabusService.syllabus.$writePermission}]">
-
-		<!-- Display buttons -->
+	<div data-ng-switch="element.type" data-ng-class="['element-host', {'important': element.important, 'no-buttons': !syllabusService.syllabus.$writePermission}]">		<!-- Display buttons -->
 		<element-buttons data-ng-if="syllabusService.syllabus.$writePermission" data-element-buttons="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite}]"></element-buttons>
 
-		<div data-ng-class="['element-wrapper', {'important': element.important}]">
+		<div data-ng-if="!element.equalsPublished" class="not-published-notice">
+			<h3>{{ 'NOT_PUBLISHED' | translate }}</h3>
+		</div>
+
+		<div data-ng-class="['element-wrapper', {'important': element.important, 'not-published': !element.equalsPublished}]">
 			<div data-ng-if="element.important" class="important-notice">
 				<h3>{{ 'FORM_IMPORTANT' | translate }}</h3>
 			</div>

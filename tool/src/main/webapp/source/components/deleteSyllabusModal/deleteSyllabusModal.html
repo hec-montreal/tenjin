@@ -1,7 +1,6 @@
 <form class="tenjin-modal" data-ng-submit="ok()"> 
 	<div class="modal-header">
-		<h3 class="modal-title">{{ 'MODAL_TITLE_DELETE_SYLLABUS' | translate}}</h3> 
-		<div data-ng-if="(syllabusToDelete.length > 0)">{{ 'MODAL_DESCRIPTION_DELETE_SYLLABUS' | translate}} ?</div>       
+		<h2>{{ 'MODAL_DESCRIPTION_DELETE_SYLLABUS' | translate}}</h2> 
 	</div>
 
 	<div class="modal-body">
@@ -34,6 +33,6 @@
 
 	<div class="modal-footer">
 		<button data-ng-if="(syllabusToDelete.length > 0)" type="submit">OK</button> 
-		<button class="btn btn-warning" type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
+		<button type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
 	</div> 
 </form>

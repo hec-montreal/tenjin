@@ -1,3 +1,4 @@
+// Tool
 $tool-margin-top: 15px;
 
 $mobile-breakpoint: 992px;
@@ -10,9 +11,11 @@ $font-size-title: 3em;
 $font-size-title2: 1.8em;
 $font-size-alert: 1.1em;
 
+// Alert
 $color-alert-danger: #fdd6d9;
 $font-color-alert-danger: #ee3241;
 
+// Buttons
 $color-button: #009fdf;
 $font-color-button: #fff;
 $color-button-hover: #005eb8;
@@ -20,9 +23,7 @@ $font-color-button-hover: #fff;
 $color-button-active: #003c71;
 $font-color-button-active: #fff;
 $color-button-disabled: #2c2a29;
-
 $color-button-action: transparent;
-
 $color-button-list: #eaebeb;
 $font-color-button-list: $font-color-regular;
 $color-button-list-hover: #97999b;
@@ -30,21 +31,24 @@ $font-color-button-list-hover: #fff;
 $color-button-list-active: #2c2a29;
 $font-color-button-list-active: #fff;
 
+// Modal
+$color-modal-title: #ebebeb;
+
+// Navigation
 $color-navigation: #ebebeb;
 $font-color-navigation: #019edf;
 $color-navigation-active: #c1c2c4;
 $font-color-navigation-active: $font-color-regular;
 $font-color-navigation-composite: $font-color-regular;
-
 $color-mobile-navigation: #003c71;
 $font-color-mobile-navigation: #fff;
 $color-mobile-navigation-active: #c1c2c4;
 
+// Syllabus
 $color-composite-title: #ebebeb;
 $font-color-composite-title: $font-color-regular;
+$border-color-important-element: #ad1aac;
+$font-color-not-published-element-notice: #777;
 
+// Management
 $color-management-table-header: #ddd;
-
-$color-modal-title: #ebebeb;
-
-$important-element-border-color: #ad1aac;

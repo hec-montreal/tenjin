@@ -40,6 +40,8 @@
 			var selectedItemId = TreeService.selectedItem.id;
 			var location = TreeService.selectedItem.$location;
 
+			$scope.element.equalsPublished = false;
+
 			SyllabusService.addElementToSyllabus(data, $scope.parent, $scope.element);
 
 			var savePromise = SyllabusService.save(data);
