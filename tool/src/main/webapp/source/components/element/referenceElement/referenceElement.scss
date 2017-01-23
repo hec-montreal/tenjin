@@ -1,18 +1,22 @@
 .reference {
-    .reference-boldTitle {
-            font-weight: bold;
-            font-style: italic;
-    }
+	.reference-boldTitle {
+		font-weight: bold;
+		font-style: italic;
+	}
 
-    .reference-italicTitle {
-            font-style: italic;
-    }
+	.reference-italicTitle {
+		font-style: italic;
+	}
 
-    .library-link .other-link {
-           // font-style: italic;
-    }
+	.library-link .other-link {
 
-    .reference-type {
-        font-weight: bold;
-    }
+	}
+
+	.reference-type {
+		font-weight: bold;
+	}
+
+	.description {
+		padding-top: 10px;
+	}
 }

@@ -83,10 +83,5 @@
 		<a href="element.attributes.otherLinkurl">{{'REFERENCE_OTHER_LINK' | translate}}</a>
 	</div> 
 
-	<div class="infos">
-		<span data-ng-class="{ 'picto-important' : ( element.attributes.docImportant === 'true') }" title="Important"></span>
-		<span data-ng-class="{ 'picto-hec' : ( element.attributes.docDiffusion === 'hec' ), 'picto-public' : ( element.attributes.docDiffusion === 'public' ) }" title="Niveau de diffusion"></span> 
-		<span data-ng-class="{ 'picto-hidden' : ( element.attributes.docHidden === 'true') }" title="Visible"></span>     
-	</div>
-
+	<div ng-if="element.description" ng-bind-html="element.description" class="description"></div>
 </div>
