@@ -120,10 +120,12 @@
 		PublishService.publish().then(function (data) {
 			PublishService.working = false;
 
-			SyllabusService.reloadSyllabus();
-
-			$rootScope.$broadcast('published', {
-				data: data
+			SyllabusService.reloadSyllabus().then(function () {
+				TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
+				
+				$rootScope.$broadcast('published', {
+					data: data
+				});
 			});
 		});
 	});
