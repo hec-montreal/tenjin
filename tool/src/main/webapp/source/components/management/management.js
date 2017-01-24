@@ -82,14 +82,56 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 			};
 
 			this.updateSections = function($data, $syllabus) {
-				// keep a reference on the old sections
-				lastModifiedSyllabusBeforeUpdate = angular.copy($syllabus);
-				// keep a reference to the last modified syllabus (to update sections of other syllabus)
-				lastModifiedSyllabus = angular.copy($syllabus);
-				// assign sections
-				lastModifiedSyllabus.sections = $data;
+				var warn = false;
+				var initialSections = $syllabus.sections;
 
-				return SyllabusService.save(lastModifiedSyllabus).$promise;
+				console.log("1");
+				console.log("$data: ");
+				console.log($data);
+				console.log("$syllabus.sections");
+				console.log($syllabus.sections);
+
+				for (var i = 0; i < $syllabus.sections.length; i++) {
+					var isIn = false;
+
+					for (var j = 0; j < $data.length; j++) {
+						if ($data[j] === $syllabus.sections[i]) {
+							isIn = true;
+							break;
+						}
+					}
+
+					if (!isIn) {
+						warn = true;
+
+						break;
+					}
+				}
+
+				var doUpdate = function () {
+					// keep a reference on the old sections
+					lastModifiedSyllabusBeforeUpdate = angular.copy($syllabus);
+					// keep a reference to the last modified syllabus (to update sections of other syllabus)
+					lastModifiedSyllabus = angular.copy($syllabus);
+					// assign sections
+					lastModifiedSyllabus.sections = $data;
+
+					return SyllabusService.save(lastModifiedSyllabus).$promise;
+				};
+
+				if (warn) {
+					// Create modal
+					var modal = ModalService.unassignSections($data);
+
+					// Processing result
+					modal.result.then(function(selectedItem) {
+						return doUpdate();
+					}, function() {
+						$syllabus.sections = initialSections;
+					});					
+				} else {
+					return doUpdate();
+				}
 			};
 
 			var updateSyllabusList = function($syllabusModified, $oldSyllabus) {
@@ -213,16 +255,15 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 					}
 				}
 			});
-        
-         // TODO: move to routing
-         this.loadSyllabusList = function(){
-             this.syllabusService.loadSyllabusList().then(function(){
-                 
+
+			// TODO: move to routing
+			this.loadSyllabusList = function() {
+				this.syllabusService.loadSyllabusList().then(function() {
+
 				});
-        }
-         
-        
-        this.loadSyllabusList();
+			}
+
+			this.loadSyllabusList();
 		},
 
 		controllerAs: 'managementCtrl',

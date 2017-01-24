@@ -119,6 +119,18 @@
 		return modalInstance;
 	};
 
+	this.unassignSections = function (sections) {
+		var modalInstance = $uibModal.open({
+			animation: true,
+			templateUrl: 'unassignSectionsModal/unassignSectionsModal.html',
+			controller: 'UnassignSectionsModalCtrl',
+			size: '',
+			backdrop: 'static'
+		});
+
+		return modalInstance;
+	};
+
 	this.prePublishSyllabus = function() {
 		return $uibModal.open({
 			animation: true,

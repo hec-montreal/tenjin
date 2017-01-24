@@ -265,7 +265,9 @@
 		ACTIVATE_OTHER_LINK: 'Activate other link',
 		SYLLABUS_NOT_AVAILABLE: 'Syllabus is not available yet',
 		MENU: 'Menu',
-		NOT_PUBLISHED: 'Not published'
+		NOT_PUBLISHED: 'Not published',
+		WARNING: 'Warning',
+		WARNING_UNSASSIGN_SECTIONS: 'Are you sure you want to unsassign these sections?'
 	}).translations('fr', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -531,7 +533,9 @@
 		ACTIVATE_OTHER_LINK: 'Activer un autre lien',
 		SYLLABUS_NOT_AVAILABLE: 'Le plan de cours n\'est pas disponnible',
 		MENU: 'Menu',
-		NOT_PUBLISHED: 'Non publié'
+		NOT_PUBLISHED: 'Non publié',
+		WARNING: 'Avertissement',
+		WARNING_UNSASSIGN_SECTIONS: 'Voulez-vous vraiment dissocier le plan de cours?'
 	});
 
 	$translateProvider.preferredLanguage('fr');
