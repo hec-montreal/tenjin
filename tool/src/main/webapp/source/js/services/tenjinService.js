@@ -1,4 +1,4 @@
-tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', function($q, $state, UserService, SyllabusService, ResourcesService, SakaiToolsService, CitationsService, PublishService) {
+tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'SyllabusService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', function($q, config, $state, UserService, SyllabusService, ResourcesService, SakaiToolsService, CitationsService, PublishService) {
 	'use strict';
 
 	var loadCitations = function(data, citationsLists) {
@@ -128,9 +128,9 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 
 		// We must load the profile before loading anything else
 		UserService.loadProfile().then(function() {
-			var siteId = UserService.getProfile().site.courseId;
-
-			tthis.viewState = tthis.findViewStateFromProfile(UserService.getProfile());
+			var siteId = UserService.getProfile().siteId;
+	
+			tthis.viewState = tthis.findViewStateFromProfile();
 
 			tthis.viewState.loadViewData(siteId).then(function() {
 				def.resolve();
@@ -150,8 +150,8 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 		$state.go(route['route'], route['params']);
 	};
 
-	this.findViewStateFromProfile = function(profile) {
-		if (profile.canseemanagementpage) {
+	this.findViewStateFromProfile = function() {
+		if (UserService.isAllowedView(config.userProfileViews[1])) {
 			return this.ViewStates.edition;
 		}
 

@@ -1,16 +1,22 @@
-<div class="management">
+
+<div class="management" data-ng-controller="ManagementCtrl">
 	<div class="row" ng-if="alertService.hasAlert()">
 		<alert data-closeable='alertService.isCurrentAlertCloseable()'></alert>
 	</div>
 
-	<div class="row" ng-if="baseDataLoaded">
+	<div class="row">
 		<div class="buttons-list col-xs-12">
-			<button type="button" data-ng-click="managementCtrl.addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
-			<button type="button" data-ng-disabled="managementCtrl.disableDelete" data-ng-click="managementCtrl.deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
+			<is-allowed data-permission="config.userProfileViews[3]">
+				<button type="button" data-ng-click="addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
+			</is-allowed>
+
+			<is-allowed data-permission="config.userProfileViews[3]">
+				<button  type="button" data-ng-disabled="disableDelete" data-ng-click="deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
+			</is-allowed>
 		</div>
 	</div>
 
-	<div class="row" ng-if="baseDataLoaded">
+	<div class="row">
 		<div class="col-xs-12">
 			<table>
 				<tr>
@@ -22,9 +28,9 @@
 					<th class="th-select"> </th>
 				</tr>
 
-				<tr data-ng-repeat="syllabus in managementCtrl.syllabusService.syllabusList track by syllabus.id">
+				<tr data-ng-repeat="syllabus in syllabusService.syllabusList track by syllabus.id">
 					<td>
-						<a class="action" data-ng-if="!syllabus.common && syllabus.$writePermission" editable-text="syllabus.title" onbeforesave="managementCtrl.updateTitle($data, syllabus)"><span class="glyphicon glyphicon-pencil"></span></a>
+						<a class="action" data-ng-if="!syllabus.common && syllabus.$writePermission" editable-text="syllabus.title" onbeforesave="updateTitle($data, syllabus)"><span class="glyphicon glyphicon-pencil"></span></a>
 						
 						<a ui-sref="syllabus-edit({ id: syllabus.id })">{{syllabus.title}}</a>
 					</td>
@@ -33,11 +39,11 @@
 
 					<td>
 						<!-- if common syllabus and no write permission on site -->
-						<span data-ng-if="syllabus.common || !syllabus.$writePermission">{{ managementCtrl.showSections(syllabus) }}</span>
+						<span data-ng-if="syllabus.common || !syllabus.$writePermission">{{ showSections(syllabus) }}</span>
 
 						<!-- if not common syllabus or common syllabus with write permissions -->
-						<a data-ng-if="!syllabus.common && syllabus.$writePermission" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.userSections" onbeforesave="managementCtrl.updateSections($data, syllabus)" onaftersave="managementCtrl.updateSyllabusList(syllabus)">
-							{{ managementCtrl.showSections(syllabus) }}
+						<a data-ng-if="!syllabus.common && syllabus.$writePermission" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in userSections" onbeforesave="updateSections($data, syllabus)" onaftersave="updateSyllabusList(syllabus)">
+							{{ showSections(syllabus) }}
 						</a>
 					</td>
 
@@ -52,7 +58,7 @@
 					</td>
 
 					<td class="th-select">
-						<input data-ng-if="!syllabus.common" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="managementCtrl.enableDelete()" />
+						<input data-ng-if="!syllabus.common" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="enableDelete()" />
 					</td>
 				</tr>
 			</table>

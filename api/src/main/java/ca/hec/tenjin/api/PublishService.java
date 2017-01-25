@@ -1,5 +1,6 @@
 package ca.hec.tenjin.api;
 
+import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.UnknownElementTypeException;
@@ -32,7 +33,7 @@ public interface PublishService {
 	 * @return
 	 * @throws NoSyllabusException
 	 */
-	public PublishedSyllabus getPublishedSyllabus(String siteId, String sectionId) throws NoSyllabusException;
+	public PublishedSyllabus getPublishedSyllabus(String siteId, String sectionId) throws NoSyllabusException, DeniedAccessException;
 
 	/**
 	 * Publish the syllabus with the given id
@@ -41,6 +42,6 @@ public interface PublishService {
 	 * @throws NoSyllabusException
 	 * @throws UnknownElementTypeException
 	 */
-	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException;
+	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, DeniedAccessException;
 
 }

@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('navigation', ['TreeService', 'SyllabusService', function (TreeService, SyllabusService) {
+﻿tenjinApp.directive('navigation', ['TreeService', 'SyllabusService', 'UserService' , function (TreeService, SyllabusService, UserService) {
 	'use strict';
 
 	return {
@@ -12,6 +12,7 @@
 			$scope.syllabusService = SyllabusService;
 			$scope.treeService = TreeService;
 			$scope.closed = false;
+			$scope.userService = UserService;
 
 			$scope.toggleDrawer = function () {
 				$rootScope.$broadcast('navigationToggled');

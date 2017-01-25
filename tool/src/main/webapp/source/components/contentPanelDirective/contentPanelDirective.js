@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('contentPanelDirective', ['SyllabusService', function(SyllabusService) {
+﻿tenjinApp.directive('contentPanelDirective', ['SyllabusService', 'UserService', function(SyllabusService, UserService) {
     'use strict';
 
     return {
@@ -13,12 +13,13 @@
 
         controller: function($scope) {
             $scope.syllabusService = SyllabusService;
+            $scope.userService = UserService;
 
             var template = $scope.syllabusService.template[$scope.element.templateStructureId];
 
             $scope.displayButtons = {
                 deleteButton: function() {
-                    return ($scope.syllabusService.syllabus.$writePermission &&
+                    return ($scope.userService.isAllowed('syllabusWrite', $scope.syllabusService.syllabus) &&
                             !$scope.syllabusService.template[$scope.element.templateStructureId].mandatory) &&
                         ($scope.syllabusService.syllabus.common ||
                             (!$scope.syllabusService.syllabus.common &&
@@ -28,10 +29,10 @@
                 editButton: function() {
                     return ($scope.element.type !== 'rubric') &&
                         (($scope.syllabusService.syllabus.common &&
-                                $scope.syllabusService.syllabus.$writePermission &&
+                                $scope.userService.isAllowed('syllabusWrite', $scope.syllabusService.syllabus) &&
                                 !$scope.syllabusService.template[$scope.element.templateStructureId].mandatory) ||
                             (!$scope.syllabusService.syllabus.common &&
-                                $scope.syllabusService.syllabus.$writePermission &&
+                                $scope.userService.isAllowed('syllabusWrite', $scope.syllabusService.syllabus) &&
                                 !$scope.element.common &&
                                 !$scope.syllabusService.template[$scope.element.templateStructureId].mandatory));
 

@@ -1,4 +1,4 @@
-﻿tenjinApp.service('SyllabusService', ['AlertService', 'UserService', '$resource', '$translate', '$q', '$http', function(AlertService, UserService, $resource, $translate, $q, $http) {
+﻿tenjinApp.service('SyllabusService', ['AlertService', '$resource', '$translate', '$q', '$http', function(AlertService, $resource, $translate, $q, $http) {
 	'use strict';
 
 	this.syllabus = null;
@@ -178,17 +178,6 @@
 	 */
 	this.setSyllabusList = function(syllabusList) {
 		this.syllabusList = syllabusList;
-
-		// set write permissions on each syllabus
-		for (var i = 0; i < this.syllabusList.length; i++) {
-			if (this.syllabusList[i].sections.length === 1) {
-				this.syllabusList[i].instructors = UserService.getSection(this.syllabusList[i].sections[0]).instructors;
-			} else {
-				this.syllabusList[i].instructors = "";
-			}
-
-			this.setWritePermission(this.syllabusList[i]);
-		}
 	};
 
 	/**
@@ -219,43 +208,6 @@
 		return this.syllabusSaved;
 	};
 
-	/**
-	 * Set the write permission flag for the syllabus (true = editable)
-	 * @param {Object} $syllabus The syllabus to check write permission
-	 */
-	this.setWritePermission = function(syllabus) {
-		// read or write
-		// 1- if write permission on site 
-		// 2- or created by user
-		// 3- or write permission on one section of the syllabus
-		var sectionsSyllabus = syllabus.sections;
-		var sectionsWrite = UserService.getSectionsWrite();
-		var sectionWritePresent = false;
-
-		for (var i = 0; i < sectionsWrite.length; i++) {
-			if (sectionsSyllabus.indexOf(sectionsWrite[i].id) > -1) {
-				sectionWritePresent = true;
-				break;
-			}
-		}
-
-		var profile = UserService.getProfile();
-
-		// define write permission
-		if (profile.site.permissions.write === true) {
-			syllabus.$writePermission = true;
-		} else {
-			if (syllabus.common === true) {
-				syllabus.$writePermission = false;
-			} else {
-				if (syllabus.createdBy === profile.userId || sectionWritePresent) {
-					syllabus.$writePermission = true;
-				} else {
-					syllabus.$writePermission = false;
-				}
-			}
-		}
-	};
 
 
 	/**
@@ -267,8 +219,6 @@
 
 		// numbering
 		this.numberSyllabus(this.syllabus);
-		// define write permission on current syllabus
-		this.setWritePermission(this.syllabus);
 		// save a copy
 		this.syllabusSaved = angular.copy(this.syllabus);
 		// set dirty flag to false
