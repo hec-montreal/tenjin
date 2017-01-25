@@ -1,22 +1,25 @@
-.myalert {
-    height: 50px;
+.errors {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 1.1em;
 
-    &.ng-enter,
-    &.ng-leave {
+	.message {
+		float: left;
+	}
 
-    }
+	.controls {
+		float: right;
+		padding-top: 4px;
+		margin-bottom: -5px;
 
-    &.ng-animate {
-        transition: all .5s ease-in-out;
-    }
+		span {
+			cursor: pointer;
+		}
+	}
 
-    &.ng-enter,
-    &.ng-leave.ng-leave-active {
-        opacity: 0;
-    }
-
-    &.ng-leave,
-    &.ng-enter.ng-enter-active {
-        opacity: 1;
-    }
+	.alert::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
 }

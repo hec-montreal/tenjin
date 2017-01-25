@@ -9,6 +9,8 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 		templateUrl: 'management/management.html',
 
 		controller: function($scope) {
+			$scope.alertService = AlertService;
+
 			this.addSyllabus = function() {
 				// Get sections and label
 				var data = {};
@@ -20,9 +22,6 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 				modal.result.then(function($syllabus) {
 					// update syllabus list with last modified syllabus as param 
 					updateSyllabusList($syllabus);
-				}, function() {
-					// alert add syllabus ko
-					AlertService.display('danger');
 				});
 			};
 
@@ -73,23 +72,19 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 				return selected.length ? selected.join(', ') : $translate.instant("MANAGEMENT_NO_SECTION");
 			};
 
-			this.updateTitle = function($data, $syllabus) {
-				if ($data.length === 0) {
+			this.updateTitle = function(data, syllabus) {
+				if (data.length === 0) {
 					return $translate.instant("MANAGEMENT_ERREUR_NAME");
 				}
-				$syllabus.title = $data;
-				return SyllabusService.save($syllabus).$promise;
+
+				syllabus.title = data;
+
+				return SyllabusService.save(syllabus);
 			};
 
 			this.updateSections = function($data, $syllabus) {
 				var warn = false;
 				var initialSections = $syllabus.sections;
-
-				console.log("1");
-				console.log("$data: ");
-				console.log($data);
-				console.log("$syllabus.sections");
-				console.log($syllabus.sections);
 
 				for (var i = 0; i < $syllabus.sections.length; i++) {
 					var isIn = false;
@@ -108,7 +103,7 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 					}
 				}
 
-				var doUpdate = function () {
+				var doUpdate = function() {
 					// keep a reference on the old sections
 					lastModifiedSyllabusBeforeUpdate = angular.copy($syllabus);
 					// keep a reference to the last modified syllabus (to update sections of other syllabus)
@@ -116,7 +111,7 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 					// assign sections
 					lastModifiedSyllabus.sections = $data;
 
-					return SyllabusService.save(lastModifiedSyllabus).$promise;
+					return SyllabusService.save(lastModifiedSyllabus);
 				};
 
 				if (warn) {
@@ -128,7 +123,7 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 						return doUpdate();
 					}, function() {
 						$syllabus.sections = initialSections;
-					});					
+					});
 				} else {
 					return doUpdate();
 				}

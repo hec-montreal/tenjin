@@ -44,19 +44,12 @@
 
 			SyllabusService.addElementToSyllabus(data, $scope.parent, $scope.element);
 
-			var savePromise = SyllabusService.save(data);
+			SyllabusService.save(data).then(function(result) {
+				SyllabusService.setSyllabus(result);
 
-			SyllabusService.setWorking(true);
-
-			savePromise.$promise.then(function($data) {
-				SyllabusService.setSyllabus($data);
-				// refresh the reference of the selected item and refresh the right panel
 				TreeService.setSelectedItemFromLocation(location);
-			}, function($error) {
-				AlertService.display('danger');
-
-			}).finally(function() {
-				SyllabusService.setWorking(false);
+			}).catch(function() {
+				AlertService.showAlert('cannotSaveSyllabus');
 			});
 
 			$uibModalInstance.close('');

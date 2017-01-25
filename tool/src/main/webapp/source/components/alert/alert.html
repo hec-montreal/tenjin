@@ -1,0 +1,11 @@
+<div class="errors col-xs-12">
+	<div class="alert alert-{{alertService.currentAlert.type}}">
+		<div class="message">
+			{{ alertService.getCurrentAlertMessage() }}
+		</div>
+
+		<div class="controls" data-ng-if="closeable">
+			<span class="glyphicon glyphicon-remove" data-ng-click="alertService.reset()"></span>
+		</div>
+	</div>
+</div>

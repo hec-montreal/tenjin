@@ -1,18 +1,16 @@
-<div ng-controller="SyllabusCtrl">
-	<div class="errors col-xs-12" ng-if="alertService.hasAlert()">
-		<div class="alert alert-{{alertService.currentAlert.type}}">
-			<strong>{{ 'ERROR' | translate }}:&nbsp;</strong>{{ alertService.currentAlert.msg }}
-		</div>
-	</div>
-	
-	<div id="syllabus" ng-if="syllabusLoaded">
+<div ng-controller="SyllabusCtrl">	
+	<div id="syllabus">
 		<div class="row">
 			<h1 class="course-title col-xs-12">
 				{{::syllabusService.syllabus.courseTitle}}
 			</h1>
 		</div>
 
-		<div class="row">
+		<div class="row" ng-if="alertService.hasAlert()">
+			<alert data-closeable='alertService.isCurrentAlertCloseable()'></alert>
+		</div>
+
+		<div class="row" ng-if="syllabusLoaded">
 			<div class="toolbar col-xs-12">
 				<div class="toolbar-wrapper">
 					<div class="toolbar-left">
@@ -48,13 +46,13 @@
 			</div>
 		</div>
 
-		<div class="row mobile-navigation-host">
+		<div class="row mobile-navigation-host" ng-if="syllabusLoaded">
 			<div class="col-xs-12">
 				<mobile-navigation></mobile-navigation>
 			</div>
 		</div>
 
-		<div class="row col-equal-height">
+		<div class="row col-equal-height" ng-if="syllabusLoaded">
 			<div class="navigation-host col-md-3 pull-left" data-ng-if="showNavigation">
 				<navigation></navigation>
 			</div>

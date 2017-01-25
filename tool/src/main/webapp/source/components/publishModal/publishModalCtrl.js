@@ -1,4 +1,4 @@
-tenjinApp.controller('PublishModalCtrl', ['$scope', '$rootScope', '$uibModalInstance', '$translate', '$filter', 'SyllabusService', 'PublishService', function($scope, $rootScope, $uibModalInstance, $translate, $filter, SyllabusService, PublishService) {
+tenjinApp.controller('PublishModalCtrl', ['$scope', '$rootScope', '$uibModalInstance', '$translate', '$filter', 'SyllabusService', 'PublishService', 'AlertService', function($scope, $rootScope, $uibModalInstance, $translate, $filter, SyllabusService, PublishService, AlertService) {
 	'use strict';
 
 	// Possible statuses:
@@ -26,9 +26,11 @@ tenjinApp.controller('PublishModalCtrl', ['$scope', '$rootScope', '$uibModalInst
 		$uibModalInstance.dismiss('cancel');
 	};
 
-	$scope.checkAnnounceAndClose = function() {
+	$scope.checkAnnouncementAndClose = function() {
 		if ($scope.doAnnounce) {
-			PublishService.createAnnouncement($scope.announceTitle, $scope.announceMessage);
+			PublishService.createAnnouncement($scope.announceTitle, $scope.announceMessage).then(function() {}, function(reason) {
+				AlertService.showAlert('cannotCreateAnnouncement');
+			});
 		}
 
 		$scope.close();

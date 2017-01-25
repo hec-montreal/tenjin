@@ -5,7 +5,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 		var def = $q.defer();
 		var citationsLists = CitationsService.loadCitationLists(ResourcesService.resources);
 
-		$q.allSettled(citationsLists.promises).then(function(data) {
+		$q.all(citationsLists.promises).then(function(data) {
 			var updatedResource, updatedResourceId;
 
 			for (var i = 0; i < data.length; i++) {
@@ -18,6 +18,8 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 			}
 
 			def.resolve();
+		}).catch(function() {
+			def.reject();
 		});
 
 		return def.promise;
@@ -47,12 +49,14 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 				dataToLoad.push(SakaiToolsService.loadToolEntities(siteId));
 				dataToLoad.push(SyllabusService.loadSyllabusList());
 
-				$q.allSettled(dataToLoad).then(function() {
+				$q.all(dataToLoad).then(function() {
 					// Finally load the citations
 					loadCitations().then(function() {
 						def.resolve();
+					}, function() {
+						def.reject();
 					});
-				}, function (e) {
+				}).catch(function(e) {
 					def.reject(e);
 				});
 
@@ -64,7 +68,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 
 				SyllabusService.loadSyllabus(ctx.syllabusId).then(function() {
 					def.resolve();
-				}, function (e) {
+				}, function(e) {
 					def.reject(e);
 				});
 
@@ -91,7 +95,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 					loadCitations().then(function() {
 						def.resolve();
 					});
-				}, function (e) {
+				}, function(e) {
 					def.reject(e);
 				});
 
@@ -103,7 +107,7 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 
 				PublishService.loadPublishedSyllabus().then(function() {
 					def.resolve();
-				}, function (e) {
+				}, function(e) {
 					def.reject(e);
 				});
 
@@ -131,7 +135,6 @@ tenjinApp.service('TenjinService', ['$q', '$state', 'UserService', 'SyllabusServ
 			tthis.viewState.loadViewData(siteId).then(function() {
 				def.resolve();
 			}).catch(function(e) {
-				console.log("Reject loadData");
 				def.reject(e);
 			});
 		}).catch(function(e) {

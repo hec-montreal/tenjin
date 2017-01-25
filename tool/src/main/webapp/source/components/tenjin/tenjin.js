@@ -1,4 +1,4 @@
-tenjinApp.directive('tenjin', ['TenjinService', function(TenjinService) {
+tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', function(TenjinService, AlertService) {
 	return {
 		restrict: 'E',
 
@@ -23,7 +23,9 @@ tenjinApp.directive('tenjin', ['TenjinService', function(TenjinService) {
 				$scope.baseDataLoaded = true;
 				$scope.hideGlobalLoading();
 			}, function () {
-				console.log("Cannot load base data");
+				$scope.hideGlobalLoading();
+
+				AlertService.showAlert('cannotLoadBaseData', false);
 			});
 		}
 	};

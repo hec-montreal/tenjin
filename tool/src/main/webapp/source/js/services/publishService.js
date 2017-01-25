@@ -1,7 +1,5 @@
-tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog', '$resource', '$translate', '$q', '$http', function(UserService, SyllabusService, ngDialog, $resource, $translate, $q, $http) {
+tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog', '$translate', '$q', '$http', function(UserService, SyllabusService, ngDialog, $translate, $q, $http) {
 	'use strict';
-
-	var announcementProviderId = $resource('tools/announcement/:id.json');
 
 	this.isCommonSyllabusPublished = function() {
 		var common = SyllabusService.getCommonSyllabus();
@@ -9,30 +7,71 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 		return (!!SyllabusService.syllabus.common) || (!!common.publishedDate)
 	};
 
+	// Web service to publish a syllabus
 	this.publish = function() {
 		var tthis = this;
-		var def = $q.defer();
+		var ret = $q.defer();
 
-		$http({
-			method: 'POST',
-			url: 'v1/syllabus/' + SyllabusService.syllabus.id + '/publish.json'
-		}).then(function(response) {
-			def.resolve(response.data);
-		}, function(reason) {
-			def.reject(reason);
+		this.working = true;
+
+		$http.post('v1/syllabus/' + SyllabusService.syllabus.id + '/publish.json', {}).success(function(data) {
+			tthis.working = false;
+
+			ret.resolve(data);
+		}).error(function(data) {
+			tthis.working = false;
+
+			ret.reject(data);
 		});
 
-		return def.promise;
+		return ret.promise;
 	};
 
-	this.createAnnouncement = function($title, $message) {
+	// Web service to create a Sakai announcement
+	this.createAnnouncement = function(title, message) {
+		var tthis = this;
+		var ret = $q.defer();
+
 		var announcement = {
-			"title": $title,
-			"message": $message
+			'title': title,
+			'message': message
 		};
-		announcementProviderId.save({
-			id: SyllabusService.syllabus.siteId
-		}, announcement);
+
+		$http.post('tools/announcement/' + SyllabusService.syllabus.siteId + '.json', announcement).success(function(data) {
+			ret.resolve(data);
+		}).error(function(data) {
+			ret.reject(data);
+		});
+
+		return ret.promise;
+	};
+
+	// Web service to load a published syllabus
+	this.loadPublishedSyllabus = function() {
+		var tthis = this;
+		var ret = $q.defer();
+
+		$http.get('v1/syllabus/published.json').success(function(data) {
+			ret.resolve(data);
+		}).error(function(data) {
+			ret.reject(data);
+		});
+
+		return ret.promise;
+	};
+
+	// Web service to load the published syllabus list
+	this.loadPublishedSyllabusList = function() {
+		var tthis = this;
+		var ret = $q.defer();
+
+		$http.get('v1/syllabus/published.json').success(function (data) {
+			ret.resolve(data);
+		}).error(function (data) {
+			ret.reject(data);
+		});
+
+		return ret.promise;
 	};
 
 	this.getSections = function() {
@@ -50,42 +89,6 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 		}
 
 		return sections;
-	};
-
-	this.loadPublishedSyllabus = function() {
-		var tthis = this;
-		var def = $q.defer();
-
-		$http({
-			method: 'GET',
-			url: 'v1/syllabus/published.json'
-		}).then(function(response) {
-			SyllabusService.setSyllabus(response.data);
-
-			def.resolve(SyllabusService.getSyllabus());
-		}, function(reason) {
-			def.reject(reason);
-		});
-
-		return def.promise;
-	};
-
-	this.loadPublishedSyllabusList = function() {
-		var tthis = this;
-		var def = $q.defer();
-
-		$http({
-			method: 'GET',
-			url: 'v1/syllabus/published.json'
-		}).then(function(response) {
-			SyllabusService.setSyllabusList(response.data);
-
-			def.resolve(SyllabusService.getSyllabusList());
-		}, function(reason) {
-			def.reject(reason);
-		});
-
-		return def.promise;
 	};
 
 	//TODO: correct once we define permissions et logic steps to publish course outline

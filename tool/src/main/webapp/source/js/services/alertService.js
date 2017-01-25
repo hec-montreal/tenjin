@@ -2,40 +2,57 @@
 	'use strict';
 
 	var alerts = {
-		'danger': {
+		'default': {
 			type: 'danger',
-			msg: $translate.instant('ALERT_ERROR'),
-			visible: false
+			message: $translate.instant('ALERT_ERROR')
 		},
 
-		'cannot-load-syllabus': {
+		'cannotLoadBaseData': {
 			type: 'danger',
-			msg: $translate.instant('SYLLABUS_NOT_AVAILABLE'),
-			visible: false
+			message: $translate.instant('ALERT_CANNOT_LOAD_BASE_DATA')
 		},
 
-		'success': {
-			type: 'success',
-			msg: $translate.instant('ALERT_SUCCESS'),
-			visible: false
+		'cannotSaveSyllabus': {
+			type: 'danger',
+			message: $translate.instant('ALERT_CANNOT_SAVE_SYLLABUS')
+		},
+
+		'cannotCreateAnnouncement': {
+			type: 'danger',
+			message: $translate.instant('ALERT_CANNOT_CREATE_ANNOUNCEMENT')
 		}
-	};
+	}
 
 	this.currentAlert = null;
-
-	this.showAlert = function(name) {
-		this.currentAlert = alerts[name];
-	}
-
-	this.hideAlert = function(name) {
-		this.currentAlert = null;
-	}
-
-	this.getCurrentAlert = function() {
-		return this.currentAlert;
-	}
+	this.currentAlertCloseable = true;
 
 	this.hasAlert = function() {
-		return this.currentAlert !== null;
+		return this.currentAlert != null;
+	};
+
+	this.isCurrentAlertCloseable = function() {
+		return this.currentAlertCloseable;
 	}
+
+	this.showAlert = function(name, closeable) {
+		if (!name) {
+			name = 'default';
+		}
+
+		if (closeable === undefined || closeable === null) {
+			this.currentAlertCloseable = true;
+		} else {
+			this.currentAlertCloseable = closeable;
+		}
+
+		this.currentAlert = alerts[name];
+	};
+
+	this.reset = function() {
+		this.currentAlert = null;
+	};
+
+	this.getCurrentAlertMessage = function() {
+		return this.currentAlert.message;
+	};
 }]);

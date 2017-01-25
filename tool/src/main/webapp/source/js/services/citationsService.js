@@ -2,12 +2,12 @@ tenjinApp.service('CitationsService', ['$q', '$http', '$translate', function($q,
 	'use strict';
 
 	/**
-	 * Load a citation list
+	 * Web service to load a citation list
 	 */
 	var _loadCitationList = function(citationList) {
 		var tthis = this;
 		var citationListId = citationList.resourceId;
-		var def = $q.defer();
+		var ret = $q.defer();
 
 		// Strip the starting '/' from the id
 		if (citationListId.charAt(0) === '/') {
@@ -16,28 +16,25 @@ tenjinApp.service('CitationsService', ['$q', '$http', '$translate', function($q,
 
 		var b64Path = Base64.encode(citationListId);
 
-		$http({
-			method: 'get',
-			url: '/direct/citation/list-b64/' + b64Path + '.json'
-		}).then(function(response) {
-			_processCitations(citationList, response.data.citations);
+		$http.get('/direct/citation/list-b64/' + b64Path + '.json').success(function(data) {
+			_processCitations(citationList, data.citations);
 
-			def.resolve(response.data);
-		}, function(reason) {
-			def.reject(reason);
+			ret.resolve(data);
+		}).error(function(data) {
+			ret.reject(data);
 		});
 
-		return def.promise;
+		return ret.promise;
 	};
 
-	var _processCitations = function (citationList, citations) {
+	var _processCitations = function(citationList, citations) {
 		for (var i = 0; i < citations.length; i++) {
 			citations[i].parentId = citationList.resourceId;
 		}
 	};
 
 	/*
-	 * Recursivly load citation lists in a resource tree
+	 * Load all citation lists
 	 */
 	var _loadCitationLists = function(rootTree, resourceIds, promises) {
 		if (rootTree.type === 'citationList') {
@@ -52,12 +49,12 @@ tenjinApp.service('CitationsService', ['$q', '$http', '$translate', function($q,
 	};
 
 	/**
-	 * Load the citation lists
+	 * Load all citation lists
 	 */
 	this.loadCitationLists = function(rootTree) {
 		var resourceIds = [];
 		var promises = [];
-
+		
 		_loadCitationLists(rootTree, resourceIds, promises);
 
 		return {
@@ -75,7 +72,7 @@ tenjinApp.service('CitationsService', ['$q', '$http', '$translate', function($q,
 		for (var i = 0; i < citations.length; i++) {
 			citations[i].resourceId = citationListId + '/' + citations[i].id;
 			//Move the value type of citation to another variable because needed in resource browser 
-			citations[i].citationType= citations[i].type;
+			citations[i].citationType = citations[i].type;
 			citations[i].type = 'citation';
 			citations[i].name = citations[i].values.title;
 		}

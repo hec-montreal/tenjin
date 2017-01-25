@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('CreateSyllabusModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'SyllabusService',  'UserService', function($scope, $uibModalInstance, $translate, SyllabusService, UserService) {
+﻿tenjinApp.controller('CreateSyllabusModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'SyllabusService', 'UserService', 'AlertService', function($scope, $uibModalInstance, $translate, SyllabusService, UserService, AlertService) {
 	'use strict';
 
 	// Init syllabus data : name of syllabus + sections
@@ -54,27 +54,19 @@
 			'locale': 'fr_CA'
 		};
 
-		var savePromise = SyllabusService.save(newSyllabus);
-		SyllabusService.setWorking(true);
-
 		var syllabusAdded = null;
 
-		savePromise.$promise.then(function($data) {
-			// set write and publish permission on the new syllabus
-			SyllabusService.setWritePermission($data);
+		SyllabusService.save(newSyllabus).then(function(data) {
+			SyllabusService.setWritePermission(data);
 
-			// refresh the list 
-			SyllabusService.syllabusList.push($data);
-			syllabusAdded = $data;
+			SyllabusService.syllabusList.push(data);
 
-		}, function($error) {
-			// syllabusAdded stay null
-
-		}).finally(function() {
-			SyllabusService.setWorking(false);
-			// close the popup
-			$uibModalInstance.close(syllabusAdded);
+			syllabusAdded = data;
+		}).catch(function(data) {
+			AlertService.showAlert('cannotSaveSyllabus');
 		});
+		
+		$uibModalInstance.close(syllabusAdded);
 	};
 
 	/**

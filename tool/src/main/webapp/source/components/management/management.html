@@ -1,68 +1,61 @@
-<section class="management">
-	<div class="main-errors">
-		<uib-alert data-ng-if="alertService.isVisible('danger')" class="myalert" type="danger" close="alertService.closeAlert('danger')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('danger')}}</uib-alert>
-		<uib-alert data-ng-if="alertService.isVisible('success')" class="myalert" type="success" close="alertService.closeAlert('success')" dismiss-on-timeout="5000">{{alertService.getAlertMsg('success')}}</uib<-alert>
+<div class="management">
+	<div class="row" ng-if="alertService.hasAlert()">
+		<alert data-closeable='alertService.isCurrentAlertCloseable()'></alert>
 	</div>
-	<div class="buttons-list">
-		<!-- CREATE -->
-		<button class="btn btn-primary" type="button" data-ng-click="managementCtrl.addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
-		<button class="btn btn-primary" type="button" data-ng-disabled="managementCtrl.disableDelete" data-ng-click="managementCtrl.deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
+
+	<div class="row" ng-if="baseDataLoaded">
+		<div class="buttons-list col-xs-12">
+			<button type="button" data-ng-click="managementCtrl.addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
+			<button type="button" data-ng-disabled="managementCtrl.disableDelete" data-ng-click="managementCtrl.deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
+		</div>
+	</div>
+
+	<div class="row" ng-if="baseDataLoaded">
+		<div class="col-xs-12">
+			<table>
+				<tr>
+					<th>{{ 'TABLE_NAME' | translate }}</th>
+					<th>{{ 'TABLE_AUTHOR' | translate }}</th>
+					<th>{{ 'TABLE_SECTIONS' | translate }}</th>
+					<th>{{ 'TABLE_LAST_PUBLISHED_DATE' | translate }}</th>
+					<th>{{ 'TABLE_LAST_MODIFICATION_DATE' | translate }}</th>
+					<th class="th-select"> </th>
+				</tr>
+
+				<tr data-ng-repeat="syllabus in managementCtrl.syllabusService.syllabusList track by syllabus.id">
+					<td>
+						<a class="action" data-ng-if="!syllabus.common && syllabus.$writePermission" editable-text="syllabus.title" onbeforesave="managementCtrl.updateTitle($data, syllabus)"><span class="glyphicon glyphicon-pencil"></span></a>
+						
+						<a ui-sref="syllabus-edit({ id: syllabus.id })">{{syllabus.title}}</a>
+					</td>
+
+					<td>{{syllabus.createdByName}}</td>
+
+					<td>
+						<!-- if common syllabus and no write permission on site -->
+						<span data-ng-if="syllabus.common || !syllabus.$writePermission">{{ managementCtrl.showSections(syllabus) }}</span>
+
+						<!-- if not common syllabus or common syllabus with write permissions -->
+						<a data-ng-if="!syllabus.common && syllabus.$writePermission" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.userSections" onbeforesave="managementCtrl.updateSections($data, syllabus)" onaftersave="managementCtrl.updateSyllabusList(syllabus)">
+							{{ managementCtrl.showSections(syllabus) }}
+						</a>
+					</td>
+
+					<td>
+						<span data-ng-if="syllabus.publishedDate">{{syllabus.publishedDate | date: 'medium'}}</span>
+
+						<span data-ng-if="!syllabus.publishedDate">{{ 'DRAFTED_SYLLABUS' | translate }}</span>
+					</td>
+
+					<td>
+						<span data-ng-if="syllabus.lastModifiedDate">{{syllabus.lastModifiedDate | date: 'medium'}}</span>
+					</td>
+
+					<td class="th-select">
+						<input data-ng-if="!syllabus.common" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="managementCtrl.enableDelete()" />
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </div>
-<div>
-	<table>
-		<tr>
-			<th>{{ 'TABLE_NAME' | translate }}</th>
-			<th>{{ 'TABLE_AUTHOR' | translate }}</th>
-			<th>{{ 'TABLE_SECTIONS' | translate }}</th>
-			<th>{{ 'TABLE_LAST_PUBLISHED_DATE' | translate }}</th>
-			<th>{{ 'TABLE_LAST_MODIFICATION_DATE' | translate }}</th>
-			<th class="th-select"> </th>
-		</tr>
-
-		<tr data-ng-repeat="syllabus in managementCtrl.syllabusService.syllabusList track by syllabus.id">
-			<td>
-				<a class="action" data-ng-if="!syllabus.common && syllabus.$writePermission" editable-text="syllabus.title" onbeforesave="managementCtrl.updateTitle($data, syllabus)"><span class="glyphicon glyphicon-pencil"></span></a>
-				
-				<a ui-sref="syllabus-edit({ id: syllabus.id })">{{syllabus.title}}</a>
-			</td>
-
-			<td>
-				{{syllabus.createdByName}}
-			</td>
-
-			<td>
-				<!-- if common syllabus and no write permission on site -->
-				<span data-ng-if="syllabus.common || !syllabus.$writePermission">
-					{{ managementCtrl.showSections(syllabus) }}
-				</span>
-
-				<!-- if not common syllabus or common syllabus with write permissions -->
-				<a data-ng-if="!syllabus.common && syllabus.$writePermission" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in managementCtrl.userSections" onbeforesave="managementCtrl.updateSections($data, syllabus)" onaftersave="managementCtrl.updateSyllabusList(syllabus)">
-					{{ managementCtrl.showSections(syllabus) }}
-				</a>
-			</td>
-
-			<td>
-				<span data-ng-if="syllabus.publishedDate">
-					{{syllabus.publishedDate | date: 'medium'}}
-				</span>
-
-				<span data-ng-if="!syllabus.publishedDate">
-					{{ 'DRAFTED_SYLLABUS' | translate }}
-				</span>	
-			</td>
-
-			<td>
-				<span data-ng-if="syllabus.lastModifiedDate">
-                    {{syllabus.lastModifiedDate | date: 'medium'}}
-				</span>
-			</td>
-
-			<td class="th-select">
-				<input data-ng-if="!syllabus.common" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="managementCtrl.enableDelete()" />
-			</td>
-		</tr>
-	</table>
-</div>
-</section>

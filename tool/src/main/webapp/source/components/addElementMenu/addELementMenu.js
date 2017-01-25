@@ -1,4 +1,4 @@
-tenjinApp.directive('addElementMenu', ["ModalService", "SyllabusService", "TreeService", "AlertService", "config", function(ModalService, SyllabusService, TreeService, AlertService, config) {
+tenjinApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeService', 'AlertService', 'config', function(ModalService, SyllabusService, TreeService, AlertService, config) {
 	'use strict';
 
 	return {
@@ -21,7 +21,7 @@ tenjinApp.directive('addElementMenu', ["ModalService", "SyllabusService", "TreeS
 				$scope.isOpen = false;
 
 				// If the type is rubric, add now
-				if ($type.type === "rubric") {
+				if ($type.type === 'rubric') {
 					var element = {
 						'attributes': {},
 						'type': $type.type,
@@ -34,7 +34,7 @@ tenjinApp.directive('addElementMenu', ["ModalService", "SyllabusService", "TreeS
 						'common': $scope.syllabusService.syllabus.common
 					};
 
-					$scope.mode = "creation";
+					$scope.mode = 'creation';
 
 					var data = angular.copy($scope.syllabusService.syllabus);
 					var selectedItemId = $scope.treeService.selectedItem.id;
@@ -43,19 +43,12 @@ tenjinApp.directive('addElementMenu', ["ModalService", "SyllabusService", "TreeS
 					var result = $scope.syllabusService.addRubricToSyllabus(data, $scope.element, element);
 
 					if (result > 0) {
-						var savePromise = $scope.syllabusService.save(data);
-
-						$scope.syllabusService.setWorking(true);
-
-						savePromise.$promise.then(function($data) {
-							$scope.syllabusService.setSyllabus($data);
-							$scope.treeService.setSelectedItemFromLocation(location);
-						}, function($error) {
-							$scope.alertService.display('danger');
-						}).finally(function() {
-							$scope.syllabusService.setWorking(false);
+						SyllabusService.save(data).then(function (result) {
+							SyllabusService.setSyllabus(result);
+							TreeService.setSelectedItemFromLocation(location);
+						}).catch(function (error) {
+							AlertService.showAlert('cannotSaveSyllabus');
 						});
-
 					}
 				} else {
 					// hide menu

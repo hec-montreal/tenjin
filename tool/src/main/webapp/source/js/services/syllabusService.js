@@ -14,11 +14,6 @@
 		'level': 1
 	};
 
-	var syllabusElementProvider = $resource('v1/syllabus');
-
-	var sylProvider = $resource('v1/syllabus.json');
-
-
 	// provider get syllabus list
 	var sylProviderList = $resource('v1/syllabus.json', {}, {
 		'get': {
@@ -26,9 +21,6 @@
 			isArray: true
 		}
 	});
-
-	// provider get and update particular syllabus
-	var sylProviderId = $resource('v1/syllabus/:id.json');
 
 	var sylDeleteProvider = $resource('v1/syllabus/:ids/delete.json', {}, {
 		'delete': {
@@ -38,18 +30,26 @@
 
 
 	/**
-	 * Save syllabus
-	 * @param {Object} $data Syllabus data
-	 * @return {Object} Promise
+	 * Web service to save a syllabus
 	 */
-	this.save = function($data) {
-		if ($data.id) {
-			return sylProviderId.save({
-				id: $data.id
-			}, $data);
-		}
-		// CREATE: if the syllabus has no id 
-		return sylProvider.save($data);
+	this.save = function(data) {
+		var tthis = this;
+		var ret = $q.defer();
+		var url = data.id ? 'v1/syllabus/' + data.id + '.json' : 'v1/syllabus.json';
+
+		this.working = true;
+
+		$http.post(url, data).success(function(data) {
+			tthis.working = false;
+
+			ret.resolve(data);
+		}).error(function(data) {
+			tthis.working = false;
+
+			ret.reject(data);
+		});
+
+		return ret.promise;
 	};
 
 	/**
@@ -612,7 +612,7 @@
 		return false;
 	}
 
-	this.itemHasParentInMenu = function (item) {
+	this.itemHasParentInMenu = function(item) {
 		return this.getParent(item) !== this.$rootTree;
 	}
 }]);

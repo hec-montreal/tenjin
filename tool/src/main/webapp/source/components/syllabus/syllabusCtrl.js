@@ -27,7 +27,7 @@
 	var loadSyllabus = function(syllabusId) {
 		var def = $q.defer();
 
-		AlertService.hideAlert();
+		AlertService.reset();
 
 		TenjinService.viewState.loadSyllabus({
 			syllabusId: syllabusId
@@ -115,10 +115,7 @@
 	});
 
 	$rootScope.$on('publish', function () {
-		PublishService.working = true;
-
 		PublishService.publish().then(function (data) {
-			PublishService.working = false;
 
 			SyllabusService.reloadSyllabus().then(function () {
 				TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);

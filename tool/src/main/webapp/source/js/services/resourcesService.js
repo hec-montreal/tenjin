@@ -1,10 +1,6 @@
 tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'config', '$q', function($rootScope, $http, $location, config, $q) {
 	'use strict';
 
-	this.resources;
-
-	var siteResourcesProviderUri = "resources/";
-
 	/**
 	 * Get file extension
 	 */
@@ -23,24 +19,24 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 	var getResourceType = function(resource) {
 		var name = resource.name;
 
-		if (resource.type === "org.sakaiproject.citation.impl.CitationList") {
-			return "citationList";
-		} else if (resource.type === "org.sakaiproject.content.types.folder") {
-			return "folder";
-		} else if (resource.type === "org.sakaiproject.content.types.TextDocumentType" || resource.type === "org.sakaiproject.content.types.HtmlDocumentType") {
-			return "document";
-		} else if (resource.type === "org.sakaiproject.content.types.fileUpload") {
+		if (resource.type === 'org.sakaiproject.citation.impl.CitationList') {
+			return 'citationList';
+		} else if (resource.type === 'org.sakaiproject.content.types.folder') {
+			return 'folder';
+		} else if (resource.type === 'org.sakaiproject.content.types.TextDocumentType' || resource.type === 'org.sakaiproject.content.types.HtmlDocumentType') {
+			return 'document';
+		} else if (resource.type === 'org.sakaiproject.content.types.fileUpload') {
 			var extension = getExtension(name);
 
 			if (extension) {
 				for (var i = 0; i < config.extensionsImage.length; i++) {
 					if (extension.toLowerCase() === config.extensionsImage[i].toLowerCase()) {
-						return "image";
+						return 'image';
 					}
 				}
-				return "document";
+				return 'document';
 			} else {
-				return "document";
+				return 'document';
 			}
 		}
 
@@ -63,31 +59,28 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 
 	/**
 	 * load resources for a given site id
-	 * @param {String} $siteId Site id
+	 * @param {String} siteId Site id
 	 */
 	this.loadResources = function(siteId) {
 		var tthis = this;
-		var def = $q.defer();
+		var ret = $q.defer();
 
-		$http({
-			method: 'GET',
-			url: siteResourcesProviderUri + siteId + ".json?depth=all"
-		}).then(function(response) {
-			var res = response.data ? response.data[0] : [];
+		$http.get('resources/' + siteId + '.json?depth=all').success(function (data) {
+			var res = data ? data[0] : [];
 
 			tthis.setResources(res);
 
-			def.resolve(tthis);
-		}, function(reason) {
-			def.reject(reason);
-		});
+			ret.resolve(tthis);
+		}).error(function (data) {
+			ret.reject(data);
+		})
 
-		return def.promise;
+		return ret.promise;
 	};
 
 	/**
 	 * Set resources and classify them
-	 * @param {Object} $resources Resources tree
+	 * @param {Object} resources Resources tree
 	 */
 	this.setResources = function(resources) {
 		this.resources = resources;
@@ -98,17 +91,16 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 
 	/**
 	 * Get resource from a resources tree and a resource id
-	 * @param {Object} $rootTree Resources tree
-	 * @param {String} $resourceId Resource id
+	 * @param {Object} rootTree Resources tree
+	 * @param {String} resourceId Resource id
 	 */
-	var getResource = function($rootTree, $resourceId) {
-
-		if ($rootTree.resourceId === $resourceId) {
-			return $rootTree;
+	var getResource = function(rootTree, resourceId) {
+		if (rootTree.resourceId === resourceId) {
+			return rootTree;
 		} else {
-			if ($rootTree.resourceChildren) {
-				for (var i = 0; i < $rootTree.resourceChildren.length; i++) {
-					var results = getResource($rootTree.resourceChildren[i], $resourceId);
+			if (rootTree.resourceChildren) {
+				for (var i = 0; i < rootTree.resourceChildren.length; i++) {
+					var results = getResource(rootTree.resourceChildren[i], resourceId);
 					if (results) {
 						return results;
 					}
@@ -121,10 +113,10 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 
 	/**
 	 * Get resource from a resource id
-	 * @param {String} $resourceId Resource id
+	 * @param {String} resourceId Resource id
 	 */
-	this.getResource = function($resourceId) {
-		return getResource(this.resources, $resourceId);
+	this.getResource = function(resourceId) {
+		return getResource(this.resources, resourceId);
 	};
 
 	this.findParent = function(resource, root) {
