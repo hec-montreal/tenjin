@@ -48,12 +48,14 @@ public class SyllabusServiceImpl implements SyllabusService {
 	@Override
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException {
 		Syllabus syllabus = null;
-
+		Site site = null;
 		try {
 			syllabus = syllabusDao.getSyllabus(syllabusId, true, true);
 
+			site = sakaiProxy.getSite(syllabus.getSiteId());
 			//throw denied access if no write permission on syllabus
-			if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus))
+			if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)
+					|| securityService.checkOnSiteGroup(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, site))
 				throw new DeniedAccessException();
 
 			return syllabus;
