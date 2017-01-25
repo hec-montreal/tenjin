@@ -4,15 +4,14 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.authz.api.AuthzGroupService;
-import org.sakaiproject.authz.api.FunctionManager;
-import org.sakaiproject.authz.api.SecurityService;
+import org.sakaiproject.authz.api.*;
 import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.event.api.EventTrackingService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.exception.TypeException;
+import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.SessionManager;
@@ -175,5 +174,12 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 	public User getUser(String id) throws UserNotDefinedException {
 		return userDirectoryService.getUser(id);
+	}
+
+	@Override
+	public Group getGroup(String groupId) throws GroupNotDefinedException {
+		AuthzGroup authzGroup = null;
+		authzGroup = groupService.getAuthzGroup(groupId);
+		return (Group) authzGroup;
 	}
 }

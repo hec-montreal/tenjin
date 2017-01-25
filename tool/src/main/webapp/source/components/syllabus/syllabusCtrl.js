@@ -13,7 +13,7 @@
 	$translate.use('fr');
 	tmhDynamicLocale.set('fr');
 
-	$scope.displayButtons = {
+	/*$scope.displayButtons = {
 		managementButton: function() {
 			return $scope.userService.hasWritableSection();
 		},
@@ -21,7 +21,7 @@
 		syllabusDropdown: function() {
 			return $scope.userService.hasWritableSection();
 		}
-	};
+	};*/
 
 	// Load syllabus
 	var loadSyllabus = function(syllabusId) {

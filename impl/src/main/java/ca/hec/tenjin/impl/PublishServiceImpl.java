@@ -7,13 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import ca.hec.tenjin.api.*;
+import ca.hec.tenjin.api.exception.DeniedAccessException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.hec.tenjin.api.PublishService;
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
@@ -92,15 +91,20 @@ public class PublishServiceImpl implements PublishService {
 	@Setter
 	SakaiProxy sakaiProxy;
 
+	@Setter
+	TenjinSecurityService securityService;
+
 	@Override
 	public PublishedSyllabus getPublishedSyllabus(Long syllabusId) throws NoSyllabusException {
 		return publishedSyllabusDao.getPublishedSyllabus(syllabusId, true);
 	}
 
 	@Override
-	public PublishedSyllabus getPublishedSyllabus(String siteId, String sectionId) throws NoSyllabusException {
+	public PublishedSyllabus getPublishedSyllabus(String siteId, String sectionId) throws NoSyllabusException, DeniedAccessException {
 		PublishedSyllabus ret = publishedSyllabusDao.getPublishedSyllabusOrNull(siteId, sectionId);
 
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_READ, ret))
+			throw new DeniedAccessException();
 		if (ret == null) {
 			throw new NoSyllabusException();
 		}
@@ -110,9 +114,13 @@ public class PublishServiceImpl implements PublishService {
 
 	@Override
 	@Transactional
-	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException {
+	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, DeniedAccessException {
 
 		Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
+
+		//throw an exception if current user does not have publish permission on the syllabus
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_PUBLISH, syllabus))
+			throw new DeniedAccessException();
 
 		// throw an exception if the common syllabus is not published
 		if (!syllabus.getCommon()) {

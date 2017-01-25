@@ -41,7 +41,7 @@
 			})
 			.state('management', {
 				url: '/management',
-				template: '<management></management>'
+				templateUrl: 'management/management.html'
 			})
 			.state('syllabus-edit', {
 				url: '/syllabus/:id',

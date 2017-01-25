@@ -1,15 +1,9 @@
-tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', function($timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config) {
+﻿tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', function($scope,$timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config) {
 	'use strict';
 
-	return {
-		scope: true,
+	
 
-		restrict: 'E',
-
-		templateUrl: 'management/management.html',
-
-		controller: function($scope) {
-			this.addSyllabus = function() {
+	$scope.addSyllabus = function() {
 				// Get sections and label
 				var data = {};
 
@@ -26,12 +20,12 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 				});
 			};
 
-			this.deleteSyllabus = function() {
+	$scope.deleteSyllabus = function() {
 				var syllabusList = [];
 
-				for (var i = 0; i < this.syllabusService.syllabusList.length; i++) {
-					if (this.syllabusService.syllabusList[i].checked === true) {
-						syllabusList.push(this.syllabusService.syllabusList[i]);
+		for (var i = 0; i < $scope.syllabusService.syllabusList.length; i++) {
+			if ($scope.syllabusService.syllabusList[i].checked === true) {
+				syllabusList.push($scope.syllabusService.syllabusList[i]);
 					}
 				}
 
@@ -46,13 +40,13 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 				});
 			};
 
-			this.enableDelete = function() {
-				this.disableDelete = true;
+	$scope.enableDelete = function() {
+		$scope.disableDelete = true;
 
 				// if a syllabus is checked then the delete button should be enabled
-				for (var i = 0; i < this.syllabusService.syllabusList.length; i++) {
-					if (this.syllabusService.syllabusList[i].checked === true) {
-						this.disableDelete = false;
+		for (var i = 0; i < $scope.syllabusService.syllabusList.length; i++) {
+			if ($scope.syllabusService.syllabusList[i].checked === true) {
+				$scope.disableDelete = false;
 					}
 				}
 			};
@@ -62,9 +56,9 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 			 * @param {Object} $syllabus Syllabus
 			 * @return {String} A string containing the list of the sections or no section
 			 */
-			this.showSections = function($syllabus) {
+	$scope.showSections = function($syllabus) {
 				var selected = [];
-				angular.forEach(this.allSections, function(s) {
+		angular.forEach($scope.allSections, function(s) {
 					if ($syllabus.sections.indexOf(s.id) >= 0) {
 						selected.push(s.name);
 					}
@@ -73,7 +67,7 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 				return selected.length ? selected.join(', ') : $translate.instant("MANAGEMENT_NO_SECTION");
 			};
 
-			this.updateTitle = function($data, $syllabus) {
+	$scope.updateTitle = function($data, $syllabus) {
 				if ($data.length === 0) {
 					return $translate.instant("MANAGEMENT_ERREUR_NAME");
 				}
@@ -81,7 +75,7 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 				return SyllabusService.save($syllabus).$promise;
 			};
 
-			this.updateSections = function($data, $syllabus) {
+	$scope.updateSections = function($data, $syllabus) {
 				var warn = false;
 				var initialSections = $syllabus.sections;
 
@@ -116,8 +110,8 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 					// assign sections
 					lastModifiedSyllabus.sections = $data;
 
-					return SyllabusService.save(lastModifiedSyllabus).$promise;
-				};
+		return SyllabusService.save(lastModifiedSyllabus).$promise;
+	};
 
 				if (warn) {
 					// Create modal
@@ -176,8 +170,9 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 						commonSyllabus.sections = commonSyllabus.sections.concat(sectionsForCommon);
 					}
 
+					//TODO - check if correct still - Awa
 					// 3- remove syllabus if the user does not still have access to it
-					var sectionsWrite = UserService.getSectionsWrite();
+					var sectionsWrite = UserService.getProfile().sectionWrite;
 
 					for (var i = syllabusList.length - 1; i >= 0; i--) {
 
@@ -190,10 +185,7 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 							}
 						}
 
-						if (!UserService.profile.site.permissions.write &&
-							!syllabusList[i].common &&
-							syllabusList[i].createdBy !== UserService.profile.userId &&
-							!sectionWritePresent) {
+						if (UserService.isAllowed('syllabusWrite')) {
 							// remove syllabus from the syllabus list
 							syllabusList.splice(i, 1);
 						}
@@ -201,7 +193,7 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 				}
 			};
 
-			this.updateSyllabusList = function($syllabus) {
+	$scope.updateSyllabusList = function($syllabus) {
 				// update syllabus
 				$syllabus = angular.copy(lastModifiedSyllabus);
 
@@ -212,62 +204,43 @@ tenjinApp.directive('management', ['$timeout', '$translate', 'SyllabusService', 
 				lastModifiedSyllabusBeforeUpdate = null;
 			};
 
-			this.redirectToSyllabus = function($syllabusId) {
+	$scope.redirectToSyllabus = function($syllabusId) {
 				SyllabusService.setCurrentSyllabusId($syllabusId);
 			};
 
-			this.getSyllabusRoute = function($id) {
+	$scope.getSyllabusRoute = function($id) {
 				return "syllabus/" + $id;
 			};
 
-			this.showStatus = function($statusId) {
+	$scope.showStatus = function($statusId) {
 				return $translate.instant(config.statusLabel[$statusId]);
 			};
 
-			this.syllabusService = SyllabusService;
-			this.alertService = AlertService;
-			this.userService = UserService;
-			this.config = config;
+	$scope.syllabusService = SyllabusService;
+	$scope.alertService = AlertService;
+	$scope.userService = UserService;
+	$scope.config = config;
 
-			this.infos = {};
-			this.disableDelete = true;
+	$scope.infos = {};
+	$scope.disableDelete = true;
 
-			var lastModifiedSyllabus;
-			var lastModifiedSyllabusBeforeUpdate;
-			var objManagement = this;
+	var lastModifiedSyllabus;
+	var lastModifiedSyllabusBeforeUpdate;
+	var objManagement = this;
 
-			this.userSections = []; // user sections with write permissions
-			this.allSections = []; // all sections
+	$scope.userSections = UserService.getProfile().sectionWrite; // user sections with write permissions
+	$scope.allSections = UserService.getProfile().sections; // all sections
 
-			var tthis = this;
+	
 
-			$scope.$watch('baseDataLoaded', function() {
-				if ($scope.baseDataLoaded) {
-					// get user sections with write permissions
-					for (var i = 0; i < UserService.getProfile().sections.length; i++) {
-						var sectionUser = UserService.getProfile().sections[i];
+	// TODO: move to routing
+	// $scope.loadSyllabusList = function() {
+	// 	this.syllabusService.loadSyllabusList().then(function() {
+	
+	// 	});
+	// };
 
-						tthis.allSections.push(angular.copy(sectionUser));
-
-						if (sectionUser.permissions.write === true) {
-							tthis.userSections.push(angular.copy(sectionUser));
-						}
-					}
-				}
-			});
-
-			// TODO: move to routing
-			this.loadSyllabusList = function() {
-				this.syllabusService.loadSyllabusList().then(function() {
-
-				});
-			}
-
-			this.loadSyllabusList();
-		},
-
-		controllerAs: 'managementCtrl',
-
-		bindToController: {}
-	};
+	// $scope.loadSyllabusList();
+	
+	
 }]);

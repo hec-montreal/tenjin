@@ -12,6 +12,7 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
  * An interface to abstract all Syllabus related methods.
  *
  * @author Curtis van Osch (curtis.van-osch@hec.ca)
+ * @author Mame Awa Diop (mame-awa.diop@hec.ca)
  *
  */
 public interface SyllabusService {
@@ -37,18 +38,16 @@ public interface SyllabusService {
 
 	/**
 	 * Retrieve the syllabus list for the current user in the active site
+	 * User must have at least a read permission on the syllabus
 	 *
 	 * @return the syllabus list for the user
 	 * @param siteId The site ID
-	 * @param sections List of the sections (optional)
-	 * @param commonRead Common read permission
-	 * @param commonWrite Common write permission
 	 * @param currentUserId Current user id
 	 * @throws NoSiteException
 	 * @throws NoSyllabusException
 	 * @throws DeniedAccessException 
 	 */
-	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, boolean commonRead, boolean commonWrite, String currentUserId) throws NoSyllabusException, NoSiteException, DeniedAccessException;
+	public List<Syllabus> getSyllabusList(String siteId,  String currentUserId)  throws NoSiteException, DeniedAccessException;
 	
 	/**
 	 * Create a new syllabus or update the existing syllabus based on id

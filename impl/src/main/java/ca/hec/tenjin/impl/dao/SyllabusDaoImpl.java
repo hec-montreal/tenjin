@@ -91,38 +91,13 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, boolean commonRead, boolean commonWrite, String currentUserId ) {
+	public List<Syllabus> getSyllabusList(String siteId) {
 		List<Syllabus> syllabi;
 		if (null == siteId) {
 			return null;
 		}
 		
-		if (sections == null) {
-			
-			// get all the syllabus
-			
-			if (commonRead || commonWrite) {
-				syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ? and deleted = false order by createdDate asc", siteId);
-			} else {
-				syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ? and common = 0 and deleted = false order by createdDate asc", siteId);
-			}
-
-		} else {
-			// TODO : construct query string
-			//String s = "from Syllabus syllabus where siteId = ? and '1c4f729a-9d95-4396-a1ae-92581d01964d' in elements(syllabus.sections)";
-			//syllabi = getHibernateTemplate().find(s, siteId);
-			
-			String querySections = "and ( created_by='"+ currentUserId + "' ";
-			if (commonRead || commonWrite) {
-				querySections += " or common = 1";
-			}
-			for (int i = 0 ; i < sections.size(); i++) {
-				querySections += " or '"+ sections.get(i) + "' in elements(syllabus.sections) ";
-			}
-			querySections += " ) ";
-
-			syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus syllabus where site_id = ? and deleted = false "+ querySections + " order by createdDate asc" , siteId );
-		}	
+		syllabi = (List<Syllabus>) getHibernateTemplate().find("from Syllabus where site_id = ? and deleted = false order by createdDate asc", siteId);
 
 		return syllabi;
 	}

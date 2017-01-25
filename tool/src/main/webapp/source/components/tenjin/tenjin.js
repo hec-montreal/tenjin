@@ -22,6 +22,7 @@ tenjinApp.directive('tenjin', ['TenjinService', function(TenjinService) {
 			TenjinService.loadData().then(function() {
 				$scope.baseDataLoaded = true;
 				$scope.hideGlobalLoading();
+
 			}, function () {
 				console.log("Cannot load base data");
 			});

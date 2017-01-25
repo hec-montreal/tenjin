@@ -1,4 +1,4 @@
-﻿tenjinApp.service('UserService', ['$q', '$http', function($q, $http) {
+﻿tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, config) {
 	'use strict';
 
 	/**
@@ -11,7 +11,7 @@
 
 		$http({
 			method: 'get',
-			url: 'v1/user.json'
+			url: 'v1/userProfile.json'
 		}).then(function(response) {
 			tthis.profile = response.data;
 
@@ -24,6 +24,69 @@
 	};
 
 	/**
+	* Permissions used to access content
+	*/
+	this.isAllowed = function(view, syllabus){
+		if (config.userProfileViews[3] === view){
+			return this.profile.sections.filter(function($syllabus){
+				return $syllabus.id === syllabus.id;}).length > 0;
+		} 
+		if (config.userProfileViews[5] === view){
+			return this.profile.syllabusRead.filter(
+				function(syllabusId){ 
+					return syllabusId ===syllabus.id;}).length > 0;
+		}
+		//Write syllabus
+		if (config.userProfileViews[6] === view){
+			return this.profile.syllabusWrite.filter(
+				function(syllabusId){ 
+					return syllabusId ===syllabus.id;}).length > 0;
+		}
+		//Publish syllabus
+		if (config.userProfileViews[7] === view){
+			return this.profile.syllabusPublish.filter(
+				function(syllabusId){ 
+					return syllabusId ===syllabus.id;}).length > 0;
+		}
+
+	};
+
+
+	/**
+	* Permissions used to access views
+	*/
+	this.isAllowedView = function(view){
+		
+		if (config.userProfileViews[1] === view){
+			return this.profile.managerView;
+		}
+
+		if (config.userProfileViews[3] === view){
+			return this.profile.sectionWrite.length > 0; 
+		} 
+		if (config.userProfileViews[5] === view){
+			return this.profile.syllabusRead.length > 0;
+		}
+
+	};
+
+	this.canEditSyllabusTitle= function(syllabus){
+		if(syllabus.common){
+			return false;
+		}
+		return this.isAllowed(config.userProfileViews[6], syllabus);
+	};
+
+	this.canEditSyllabusSection = function(syllabus){
+		return ((!syllabus.common) && (this.isAllowed(config.userProfileViews[6], syllabus)));
+	};
+
+	this.canEditSyllabus = function(syllabus){
+		return  this.isAllowed(config.userProfileViews[6], syllabus);
+	};
+
+
+	/**
 	 * Get the user profile
 	 * @return The user profile
 	 */
@@ -31,46 +94,24 @@
 		return this.profile;
 	};
 
-	/**
-	 * Get sections with write permissions
-	 * @return {Object} Sections object 
-	 */
-	this.getSectionsWrite = function(profile) {
-		var p = !profile ? this.profile : profile;
 
-		if (!p) {
-			return [];
-		}
-
-		return p.sections.filter(function($section) {
-			return $section.permissions.write === true;
+	this.getSection = function (sectionId){
+		this.profile.sectionWrite.filter(function($section){
+			return $section.id === sectionId;
 		});
 	};
 
-	/* Get the sections with publish permission
-	 * @return {Object} Sections object
-	 **/
-	this.getSectionsPublish = function() {
-		return this.profile.sections.filter(function($section) {
-			return $section.permissions.publish === true;
+//If it is in the table will always return 1
+	this.getSectionTitle = function (sectionId){
+		var filteredSection;
+		filteredSection =  this.profile.sections.filter(function($section){
+			return $section.id === sectionId;
 		});
-	};
 
-	/**
-	 * Check if atleast one section of the current user profile has a write permission to true
-	 * @return {Boolean} True if atleast one section has write permission
-	 */
-	this.hasWritableSection = function() {
-		return this.getSectionsWrite().length > 0;
-	};
-
-	this.getSection = function(id) {
-		for (var i = 0; i < this.profile.sections.length; i++) {
-			if (this.profile.sections[i].id === id) {
-				return this.profile.sections[i];
-			}
+		if (filteredSection.length ===1){
+			return filteredSection[0].name;
 		}
-
-		return null;
+		return '';
 	};
+
 }]);

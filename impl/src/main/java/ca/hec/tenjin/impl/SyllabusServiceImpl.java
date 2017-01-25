@@ -11,15 +11,14 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+import ca.hec.tenjin.api.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
+import org.sakaiproject.authz.api.GroupNotDefinedException;
+import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.SyllabusService;
-import ca.hec.tenjin.api.TemplateService;
-import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
@@ -53,6 +52,10 @@ public class SyllabusServiceImpl implements SyllabusService {
 		try {
 			syllabus = syllabusDao.getSyllabus(syllabusId, true, true);
 
+			//throw denied access if no write permission on syllabus
+			if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus))
+				throw new DeniedAccessException();
+
 			return syllabus;
 		} catch (Exception e) {
 			log.warn("The syllabus " + syllabusId + " could not be retrieved because: " + e.getMessage());
@@ -64,31 +67,49 @@ public class SyllabusServiceImpl implements SyllabusService {
 	public Syllabus getCommonSyllabus(String siteId) throws NoSyllabusException {
 		return syllabusDao.getCommonSyllabus(siteId);
 	}
-	
+
 	@Override
-	public List<Syllabus> getSyllabusList(String siteId, List<String> sections, boolean commonRead, boolean commonWrite, String currentUserId) throws NoSiteException, DeniedAccessException {
+	public List<Syllabus> getSyllabusList(String siteId, String currentUserId) throws NoSiteException, DeniedAccessException {
 		List<Syllabus> syllabusList = null;
+		List<Syllabus> finalSyllabusList = new ArrayList<Syllabus>();
+		syllabusList = syllabusDao.getSyllabusList(siteId);
+		Site site = null;
 
-		syllabusList = syllabusDao.getSyllabusList(siteId, sections, commonRead, commonWrite, currentUserId);
-
-		// if no syllabus, create common and add it to the list
-		if (syllabusList.isEmpty()) {
-			Syllabus common = createCommonSyllabus(siteId);
-
+		if (syllabusList.isEmpty())
+			return null;
+		else {
 			try {
-				createOrUpdateSyllabus(common);
-			} catch (NoSyllabusException e) {
-				// should not be possible, only happens when we try to update a
-				// syllabus that doesn't exist
-				log.error("Error saving new common syllabus for site: " + siteId);
-				e.printStackTrace();
+				site = sakaiProxy.getSite(siteId);
+			} catch (IdUnusedException e) {
+				throw new NoSiteException();
+			}
+			//remove syllabi the user does not have access to
+			for (Syllabus syllabus : syllabusList) {
+				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, syllabus) ||
+						securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site))
+					finalSyllabusList.add(syllabus);
 			}
 
-			syllabusList.add(common);
+			if (finalSyllabusList.isEmpty()) {
+				try {
+					if (securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site)) {
+						Syllabus common = createCommonSyllabus(siteId);
+						createOrUpdateSyllabus(common);
+						finalSyllabusList.add(common);
+					}
+				} catch (NoSyllabusException e) {
+					// should not be possible, only happens when we try to update a
+					// syllabus that doesn't exist
+					log.error("Error saving new common syllabus for site: " + siteId);
+					e.printStackTrace();
+				}
+
+			}
 		}
-		return syllabusList;
+
+		return finalSyllabusList;
 	}
-	
+
 	@Override
 	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden) {
 		return syllabusDao.getSyllabusElementMappings(syllabusId, hidden);
@@ -104,16 +125,36 @@ public class SyllabusServiceImpl implements SyllabusService {
 			throw new NoSiteException();
 		}
 
-		List<Syllabus> syllabi = syllabusDao.getSyllabusList(syllabus.getSiteId(), null, true, true, "");
+		// check permissions: is allowed to modify syllabus
+		if (!securityService.check(sakaiProxy.getCurrentUserId(),TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+			throw new DeniedAccessException();
+		}
+
+		// check permissions: is allowed to modify section associated to the syllabus
+		if (syllabus.getSections() != null){
+			boolean denied = true;
+			for (String sectionId: syllabus.getSections()){
+				try {
+					Group group = sakaiProxy.getGroup(sectionId);
+					if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, group)) {
+						denied = false;
+						break;
+					}
+				} catch (GroupNotDefinedException e) {
+					log.error("There is no group " + sectionId + " associated to the site" );
+				}
+			}
+			if (denied)
+				throw new DeniedAccessException();
+
+		}
+
+		List<Syllabus> syllabi = syllabusDao.getSyllabusList(syllabus.getSiteId());
 
 		// create syllabus if it doesn't exist, otherwise get it's element
 		// mappings from the database.
 		if (syllabus.getId() == null) {
 
-			// check permissions
-			if ((syllabus.getCommon() && !securityService.canUserCreateSyllabus(syllabus.getSiteId(), true)) || (!syllabus.getCommon() && (!securityService.canUserCreateSyllabus(syllabus.getSiteId(), false) || !checkSectionAssignPermissions(syllabus.getSiteId(), null, syllabus.getSections())))) {
-				throw new DeniedAccessException();
-			}
 
 			syllabus.setCreatedDate(now);
 			syllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
@@ -144,10 +185,6 @@ public class SyllabusServiceImpl implements SyllabusService {
 		} else {
 			existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false, false);
 
-			// check permissions
-			if (!securityService.canUserUpdateSyllabus(existingSyllabus)) {
-				throw new DeniedAccessException("User not allowed to update the specified syllabus");
-			}
 
 			if (existingSyllabus != syllabus) {
 				if (!existingSyllabus.getSections().equals(syllabus.getSections())) {
@@ -291,7 +328,13 @@ public class SyllabusServiceImpl implements SyllabusService {
 		if (syllabus.getSections() != null && syllabus.getSections().size() > 0) {
 			throw new DeniedAccessException();
 		}
-		
+
+		// check permissions: is allowed to modify syllabus
+		if (!securityService.check(sakaiProxy.getCurrentUserId(),TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+			throw new DeniedAccessException();
+		}
+
+
 		syllabusDao.softDeleteSyllabus(syllabus);
 	}
 
@@ -331,7 +374,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 			// trying to add or subtract them)
 			sectionsToCheck = CollectionUtils.disjunction(oldSections, newSections);
 		}
-		return securityService.canUserAssignSections(siteId, sectionsToCheck);
+		return true;
 	}
 
 	private List<Long> getSyllabusesWithElementMapping(AbstractSyllabusElement element) {

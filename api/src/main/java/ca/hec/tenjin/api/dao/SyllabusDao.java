@@ -66,7 +66,7 @@ public interface SyllabusDao {
 	 * @param String currentUserId Current user id
 	 * @return The list of syllabi associated with the site id, without their elements
 	 */
-	public List<Syllabus> getSyllabusList(String siteId, List<String> sections,  boolean commonRead, boolean commonWrite, String currentUserId);
+	public List<Syllabus> getSyllabusList(String siteId);
 	
 	/**
 	 * Retrieves the syllabus associated to a specific site, section and shareable status

@@ -101,24 +101,11 @@ public class SyllabusController {
 		siteId = (siteId != null ? siteId : sakaiProxy.getCurrentSiteId());
 		String currentUserId = sakaiProxy.getCurrentUserId();
 
-		// get common syllabus read permission
-		boolean commonPermissionRead = securityService.isAllowedCommon(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ);
-		boolean commonPermissionWrite = securityService.isAllowedCommon(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE);
-
-		List<String> sections = null;
-		// If user has write permission, then no need to get sections
-		if (commonPermissionWrite == false) {
-			// get sections available for the current user
-			sections = securityService.getArraySections(siteId, TenjinFunctions.TENJIN_FUNCTION_READ);
-			sections.addAll(securityService.getArraySections(siteId, TenjinFunctions.TENJIN_FUNCTION_WRITE));
-		}
-
-		System.out.println ("Les sections " + sections);
-
 		try {
 			// We get the syllabus list for the current site with the sections
 			// associated to the user
-			syllabusList = syllabusService.getSyllabusList(siteId, sections, commonPermissionRead, commonPermissionWrite, currentUserId);
+			syllabusList = syllabusService.getSyllabusList(siteId, currentUserId);
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -136,15 +123,14 @@ public class SyllabusController {
 	 * @throws NoSyllabusException
 	 */
 	@RequestMapping(value = "/syllabus/published", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<PublishedSyllabus> getUserPublishedSyllabus() throws NoSyllabusException {
-		List<Map<String, Object>> sections = securityService.getSections(true);
+	public @ResponseBody ResponseEntity<PublishedSyllabus> getUserPublishedSyllabus() throws NoSyllabusException, DeniedAccessException {
 		String sectionId = null;
-
+/*
 		if (sections.size() > 0) {
 			sectionId = (String) sections.get(0).get("id");
-		}
+		}*/
 
-		return new ResponseEntity<PublishedSyllabus>(publishService.getPublishedSyllabus(sakaiProxy.getCurrentSiteId(), sectionId), HttpStatus.OK);
+		return new ResponseEntity<PublishedSyllabus>(publishService.getPublishedSyllabus(sakaiProxy.getCurrentSiteId(), null), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/syllabus", method = RequestMethod.POST)
@@ -163,7 +149,7 @@ public class SyllabusController {
 	public @ResponseBody Syllabus publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
 		Syllabus syllabus = null;
 		try {
-			publishService.publishSyllabus(syllabusId);
+			syllabus = publishService.publishSyllabus(syllabusId);
 		} catch (SyllabusException e) {
 			//TODO: error message
 		}

@@ -22,13 +22,16 @@
 package ca.hec.tenjin.tool.controller;
 
 import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TenjinFunctions;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
+import ca.hec.tenjin.api.exception.DeniedAccessException;
+import ca.hec.tenjin.api.exception.NoSiteException;
+import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import org.sakaiproject.site.api.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +42,6 @@ import lombok.Setter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.tool.api.SessionManager;
 
@@ -51,20 +53,18 @@ public class UserController {
 
 	private static Log log = LogFactory.getLog(UserController.class);
 
-	/**
-	 * List all functions to be transferred in the json for the user
-	 */
-	private static String USER_CAN_SEE_PUBLISHED_COMMON = "canseepublishedcommon";
-	private static String USER_CAN_SEE_MANAGEMENT_PAGE = "canseemanagementpage";
-
 	@Setter
 	@Autowired
 	private SessionManager sessionManager;
 	
 	@Setter
 	@Autowired
-	private SakaiProxy sakaiProxy;	
-	
+	private SakaiProxy sakaiProxy;
+
+	@Setter
+	@Autowired
+	private SyllabusService syllabusService;
+
 	@Setter
 	@Autowired
 	private TenjinSecurityService securityService = null; 
@@ -90,26 +90,13 @@ public class UserController {
 			
 			// set site permissions
 			Map<String, Object> sitePermissionsMap = new HashMap<String, Object>();
-			if (securityService.isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, site.getReference())) {
-				sitePermissionsMap.put("read", true);
-			} else {
-				sitePermissionsMap.put("read", false);
-			}
-			if (securityService.isAllowed(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site.getReference())) {
-				sitePermissionsMap.put("write", true);
-			} else {
-				sitePermissionsMap.put("write", false);
-			}
+
 			
 			siteMap.put("permissions", sitePermissionsMap);
 			entityMap.put("site", siteMap);
 			
-			// set sections
-			entityMap.put("sections", securityService.getSections(true));
-
 			//TODO: move later to method below
-			entityMap.put(USER_CAN_SEE_MANAGEMENT_PAGE, securityService.canAccessManagementPage(siteId));
-			entityMap.put(USER_CAN_SEE_PUBLISHED_COMMON, securityService.canSeePublishedCommon(siteId));
+			entityMap.put("sectionProfile", getUserProfile());
 
 
 		} catch (Exception e) {
@@ -123,13 +110,120 @@ public class UserController {
 
 
 	@RequestMapping(value = "/userProfile", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getUserProfile() {
-		String siteId = sakaiProxy.getCurrentSiteId();
+	public @ResponseBody Map<String, Object> getUserProfile() throws DeniedAccessException, NoSiteException {
 		Map<String, Object> profile = new HashMap<String, Object>();
+		String currentUserId = sakaiProxy.getCurrentUserId();
+		String siteId = sakaiProxy.getCurrentSiteId();
+		Site site = null;
+		Syllabus commonSyllabus;
+		Collection<Group> usersGroup;
 
-		profile.put(USER_CAN_SEE_MANAGEMENT_PAGE, securityService.canAccessManagementPage(siteId));
-		profile.put(USER_CAN_SEE_PUBLISHED_COMMON, securityService.canSeePublishedCommon(siteId));
+
+		//Section permissions
+		List<Object> sectionRead = new ArrayList<Object>();
+		List<Object> sectionWrite = new ArrayList<Object>();
+		List<Object> sectionPublish = new ArrayList<Object>();
+		Map<String, String> section;
+
+		//Syllabus permissions
+		List<Long> syllabusRead = new ArrayList<Long>();
+		List<Long> syllabusWrite = new ArrayList<Long>();
+		List<Long> syllabusPublish = new ArrayList<Long>();
+
+
+
+		//Permissions to the site and sections
+		try {
+			site = sakaiProxy.getSite(siteId);
+
+
+			profile.put("siteId", siteId);
+			profile.put("courseTitle", site.getTitle());
+
+			profile.put("sections", getSiteSections(site));
+
+			if (securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_VIEW_MANAGER, site)){
+				profile.put("managerView", true);
+			}else{
+				profile.put("managerView", false);
+			}
+
+			//The user has permissions in the sections
+			usersGroup = site.getGroupsWithMember(currentUserId);
+			for (Group group: usersGroup){
+				if (group.getProviderGroupId() != null){
+					if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, group)) {
+						section = new HashMap<String, String>();
+						section.put("id", group.getId());
+						section.put("name", group.getTitle());
+						sectionRead.add(section);
+					}
+					if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, group)) {
+						section = new HashMap<String, String>();
+						section.put("id", group.getId());
+						section.put("name", group.getTitle());
+						sectionWrite.add(section);
+					}
+					if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH, group)) {
+						section = new HashMap<String, String>();
+						section.put("id", group.getId());
+						section.put("name", group.getTitle());
+						sectionPublish.add(section);
+					}
+				}
+			}
+
+
+
+		} catch (Exception e) {
+			log.error("Site " + siteId + " could not be retrieved: " + e.getMessage());
+			return null;
+		}
+
+		profile.put("sectionRead", sectionRead);
+		profile.put("sectionWrite", sectionWrite);
+		profile.put("sectionPublish", sectionPublish);
+
+		//Permissions to the syllabi
+		List<Syllabus> syllabusList = syllabusService.getSyllabusList(siteId, currentUserId);
+		if (syllabusList != null) {
+			for (Syllabus syllabus : syllabusList) {
+				//The user has permissions in the site
+				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, syllabus)
+						|| securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site)) {
+					syllabusRead.add(syllabus.getId());
+				}
+				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)
+						|| securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site)) {
+					syllabusWrite.add(syllabus.getId());
+				}
+				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH, syllabus)
+						|| securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site)) {
+					syllabusPublish.add(syllabus.getId());
+				}
+			}
+		}
+
+		profile.put("syllabusRead", syllabusRead);
+		profile.put("syllabusWrite", syllabusWrite);
+		profile.put("syllabusPublish", syllabusPublish);
+
 
 		return profile;
+	}
+
+	private List<Object> getSiteSections(Site site){
+		List<Object> sections = new ArrayList<Object>();
+
+		Map<String, String> section;
+		for (Group group: site.getGroups()){
+			section = new HashMap<String, String>();
+			if (group.getProviderGroupId() != null){
+				section.put("id", group.getId());
+				section.put("name", group.getTitle());
+				sections.add(section);
+			}
+		}
+		return sections;
 	}
 }

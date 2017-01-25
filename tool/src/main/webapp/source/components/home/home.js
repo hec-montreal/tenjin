@@ -11,15 +11,15 @@
         controller: function($scope) {
             var tthis = this;
 
-            $scope.$watch('baseDataLoaded', function() {
-                if ($scope.baseDataLoaded) {
-                    var redirectionInfos = TenjinService.dispatchUser();
+            // $scope.$watch('baseDataLoaded', function() {
+            //     if ($scope.baseDataLoaded) {
+            //         var redirectionInfos = TenjinService.dispatchUser();
 
-                    if (redirectionInfos) {
-                        $state.go(redirectionInfos.route, redirectionInfos.params);
-                    }
-                }
-            });
+            //         if (redirectionInfos) {
+            //             $state.go(redirectionInfos.route, redirectionInfos.params);
+            //         }
+            //     }
+            // });
         },
 
         controllerAs: 'homeCtrl'

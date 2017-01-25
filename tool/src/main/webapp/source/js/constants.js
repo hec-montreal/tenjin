@@ -17,6 +17,21 @@
                             {name: 'forms', items: ['Outdent', 'Indent']}
                         ],
 
+	ckeditorToolbarTenjin: [
+                            {
+                                name: 'basicstyles',
+                                items: ['Bold', 'Italic', 'Strike', 'Underline']
+                            },
+                            {name: 'paragraph', items: ['BulletedList', 'NumberedList', 'Blockquote']},
+                            {name: 'editing', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
+                            {name: 'links', items: ['Link', 'Unlink', 'Anchor']},
+                            '/',
+                            {
+                                name: 'styles',
+                                items: ['PasteText', 'PasteFromWord', 'RemoveFormat']
+                            },
+                            {name: 'forms', items: ['Outdent', 'Indent']}
+                        ],
 	types: {
 		'text': {
 			'type': 'text',
@@ -258,6 +273,16 @@
 		1: "PUBLISHED_SYLLABUS",
 		2: "DRAFTED_SYLLABUS",
 		3: "NOTATTRIBUTED_SYLLABUS"
+	},
+
+	userProfileViews: {
+		1: "management",
+		2: "SectionRead",
+		3: "sectionWrite",
+		4: "SectionPublish",
+		5: "syllabusRead",
+		6: "syllabusWrite",
+		7: "syllabusPublish"
 	}
 });
 
