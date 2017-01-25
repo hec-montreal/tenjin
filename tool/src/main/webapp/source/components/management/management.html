@@ -5,12 +5,12 @@
 	</div>
 	<div class="buttons-list">
 		<!-- CREATE -->
-		<authentification-element data-permission="config.userProfileViews[3]">
+		<is-allowed data-permission="config.userProfileViews[3]">
 			<button class="btn btn-primary" type="button" data-ng-click="addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
-		</authentification-element>
-		<authentification-element data-permission="config.userProfileViews[3]">
+		</is-allowed>
+		<is-allowed data-permission="config.userProfileViews[3]">
 			<button class="btn btn-primary" type="button" data-ng-disabled="disableDelete" data-ng-click="deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
-		</authentification-element>
+		</is-allowed>
 	</div>
 
 	<div>

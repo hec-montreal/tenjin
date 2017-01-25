@@ -18,14 +18,14 @@
 				<div class="toolbar-wrapper">
 					<div class="toolbar-left">
 						<!-- Management button -->
-						<is-allowed data-permission='managerView' >
+						<is-allowed data-permission="config.userProfileViews[1]" >
 							<button  ui-sref="management">
 								{{ 'BUTTON_MANAGEMENT' | translate }}
 							</button>
 						</is-allowed>
 
 						<!-- Groups list-->
-						<is-allowed data-permission='syllabusWrite' >
+						<is-allowed data-permission="config.userProfileViews[6]" >
 							<div  class="btn-group button-list" uib-dropdown keyboard-nav>
 								<button id="btn-group-list" class="list" ng-disabled="syllabusService.working" uib-dropdown-toggle>
 									<span class="add-label">{{syllabusService.syllabus.title}}</span> <span class="caret"></span> 
@@ -41,14 +41,14 @@
 					</div>
 
 					<div class="toolbar-right">
-						<is-allowed data-permission='syllabusWrite' data-syllabus= 'syllabusService.syllabus' >
+						<is-allowed data-permission="config.userProfileViews[6]" data-syllabus= "syllabusService.syllabus" >
 							<button class="action"  ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
 								<span class="glyphicon glyphicon-floppy-disk"></span> {{ 'BUTTON_SAVE' | translate }}
 							</button>
 						</is-allowed>
 
-						<is-allowed data-permission='syllabusPublish' data-syllabus= 'syllabusService.syllabus' >
-							<button class="action" ng-if="syllabusService.syllabus.$writePermission" ng-click="startPublish()">
+						<is-allowed data-permission="config.userProfileViews[7]" data-syllabus= "syllabusService.syllabus" >
+							<button class="action" ng-click="startPublish()">
 								<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
 							</button>
 						</is-allowed>
