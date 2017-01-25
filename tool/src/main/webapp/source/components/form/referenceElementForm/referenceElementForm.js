@@ -20,7 +20,6 @@ tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$tra
 				removePlugins: 'elementspath,resize'
 			};
 
-			$scope.config = config;
 			$scope.ResourcesService = ResourcesService;
 
 			$scope.selectType = function($type) {

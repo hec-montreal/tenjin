@@ -19,8 +19,6 @@
                 removePlugins: 'elementspath,resize'
             };
 
-            $scope.config = config;
-
             $scope.selectType = function($type) {
                 $scope.currentType = $type;
                 if ($scope.currentType.id !== -1) {

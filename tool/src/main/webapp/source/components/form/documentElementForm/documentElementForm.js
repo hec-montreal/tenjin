@@ -18,8 +18,6 @@
 				removePlugins: 'elementspath,resize'
 			};
 
-			$scope.config = config;
-
 			$scope.selectType = function($type) {
 				$scope.currentType = $type;
 				$scope.element.attributes.documentType = $scope.currentType.id;

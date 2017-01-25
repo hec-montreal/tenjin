@@ -219,7 +219,6 @@
 	$scope.syllabusService = SyllabusService;
 	$scope.alertService = AlertService;
 	$scope.userService = UserService;
-	$scope.config = config;
 
 	$scope.infos = {};
 	$scope.disableDelete = true;
@@ -230,17 +229,4 @@
 
 	$scope.userSections = UserService.getProfile().sectionWrite; // user sections with write permissions
 	$scope.allSections = UserService.getProfile().sections; // all sections
-
-	
-
-	// TODO: move to routing
-	// $scope.loadSyllabusList = function() {
-	// 	this.syllabusService.loadSyllabusList().then(function() {
-	
-	// 	});
-	// };
-
-	// $scope.loadSyllabusList();
-	
-	
 }]);
