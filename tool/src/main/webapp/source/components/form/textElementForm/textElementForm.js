@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('textElementForm', function() {
+﻿tenjinApp.directive('textElementForm', ['config', function(config) {
 	'use strict';
 
 	return {
@@ -11,13 +11,10 @@
 		templateUrl: 'form/textElementForm/textElementForm.html',
 
 		controller: function($scope) {
-			// Setup editor options
-			var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';
-
 			$scope.editorOptions = {
 				language: 'fr',
 				height: '200',
-				removeButtons: removeButtonsList,
+				toolbar: config.ckeditorToolbarTenjin,
 				removePlugins: 'elementspath,resize'
 			};
 
@@ -36,4 +33,4 @@
 			}
 		}
 	};
-});
+}]);

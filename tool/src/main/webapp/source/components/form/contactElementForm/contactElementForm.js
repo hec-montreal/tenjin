@@ -11,20 +11,18 @@
         controller: function($scope) {
             $scope.config = config;
 
-            var removeButtonsList = 'Maximize,Anchor,Source,PageBreak,Blockquote,NumberedList,BulletedList,Image,Table,SpecialChar,Outdent,Indent,RemoveFormat,Link,Unlink,JustifyBlock,Strike';
-
             // setup editor options
             $scope.editorOptionsDisponibilite = {
                 language: 'fr',
                 height: '120',
-                removeButtons: removeButtonsList,
+                toolbar: config.ckeditorToolbarTenjin,
                 removePlugins: 'elementspath,resize'
             };
 
             $scope.editorOptionsCommentaire = {
                 language: 'fr',
                 height: '120',
-                removeButtons: removeButtonsList,
+                toolbar: config.ckeditorToolbarTenjin,
                 removePlugins: 'elementspath,resize'
             };
 

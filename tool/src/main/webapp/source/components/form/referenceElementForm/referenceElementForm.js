@@ -15,10 +15,8 @@ tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$tra
 			// setup editor options
 			$scope.editorOptions = {
 				language: 'fr',
-				// uiColor: '#fff',
 				height: '200',
-				removeButtons: 'Maximize,Anchor,Source,PageBreak',
-				// removeButtons: removeButtonsList,
+				toolbar: config.ckeditorToolbarTenjin,
 				removePlugins: 'elementspath,resize'
 			};
 
