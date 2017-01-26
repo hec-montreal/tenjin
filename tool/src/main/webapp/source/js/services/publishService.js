@@ -91,14 +91,6 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 		return sections;
 	};
 
-	//TODO: correct once we define permissions et logic steps to publish course outline
-	this.setSyllabusPublishPermission = function(syllabus) {
-		if ((syllabus.$writePermission) && (syllabus.sections.length > 0 || syllabus.common === true)) {
-			syllabus.$publishPermission = true;
-		} else {
-			syllabus.$publishPermission = false;
-		}
-	};
 
 	this.getModifiedPages = function() {
 		var syllabus = angular.copy(SyllabusService.getSyllabus());

@@ -1,6 +1,6 @@
 <div ui-tree-handle class="tree-node tree-node-content">
-	<div data-ng-switch="element.type" data-ng-class="['element-host', {'important': element.important, 'no-buttons': !syllabusService.syllabus.$writePermission}]">		<!-- Display buttons -->
-		<element-buttons data-element-buttons="element" data-noedit="!displayButtons.editButton()" data-nodelete="!displayButtons.deleteButton()" data-nodrag="!displayButtons.dragButton()" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite}]"></element-buttons>
+	<div data-ng-switch="element.type" data-ng-class="['element-host', {'important': element.important, 'no-buttons': !UserService.isAllowed(config.userProfileViews[6], syllabusService.syllabus)}]">		<!-- Display buttons -->
+		<element-buttons data-ng-if="UserService.isAllowed(config.userProfileViews[6], syllabusService.syllabus)" data-element-buttons="element" data-noedit="UserService.isAllowed(config.userProfileViews[6], syllabusService.syllabus)" data-nodelete="!UserService.isAllowed(config.userProfileViews[6], syllabusService.syllabus)" data-nodrag="!UserService.isAllowed(config.userProfileViews[6], syllabusService.syllabus)" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite}]"></element-buttons>
 
 		<is-allowed data-permission="config.userProfileViews[3]" data-syllabus= "syllabusService.syllabus" >
 			<div data-ng-if="!element.equalsPublished && !element.composite" class="not-published-notice">
