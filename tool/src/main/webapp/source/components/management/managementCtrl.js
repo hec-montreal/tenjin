@@ -232,15 +232,12 @@
 	$scope.userService = UserService;
 	$scope.config = config;
 
-	$scope.infos = {};
 	$scope.disableDelete = true;
 
 	var lastModifiedSyllabus;
 	var lastModifiedSyllabusBeforeUpdate;
 	var objManagement = this;
 
-	$scope.$on('baseDataLoaded', function () {
-		$scope.userSections = UserService.getProfile().sectionWrite;
-		$scope.allSections = UserService.getProfile().sections;
-	});
+	$scope.userSections = UserService.getProfile().sectionWrite;
+	$scope.allSections = UserService.getProfile().sections;
 }]);

@@ -15,7 +15,7 @@
 			$scope.userService = UserService;
 
 			$scope.toggleDrawer = function () {
-				$scope.$broadcast('navigationToggled');
+				$scope.$emit('navigationToggled');
 			};
 
 			$scope.getAncestor = function($node) {

@@ -1,4 +1,4 @@
-tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', function(TenjinService, AlertService) {
+tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', '$translate','tmhDynamicLocale', function(TenjinService, AlertService, $translate, tmhDynamicLocale) {
 	return {
 		restrict: 'E',
 
@@ -7,6 +7,9 @@ tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', function(TenjinS
 		templateUrl: 'tenjin/tenjin.html',
 
 		controller: function($scope) {
+			$translate.use('fr');
+			tmhDynamicLocale.set('fr');
+
 			$scope.showGlobalLoading = function() {
 				$scope.globalLoading = true;
 			};

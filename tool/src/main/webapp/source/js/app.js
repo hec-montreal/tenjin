@@ -36,7 +36,7 @@ tenjinApp.config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider
 		.state('home', {
 			url: '/home',
-			template: '<home></home>'
+			templateUrl: 'home/home.html'
 		})
 		.state('management', {
 			url: '/management',

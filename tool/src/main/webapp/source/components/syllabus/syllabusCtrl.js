@@ -1,31 +1,19 @@
-﻿tenjinApp.controller('SyllabusCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'PublishService', 'TenjinService', 'config', '$translate', 'AlertService', 'tmhDynamicLocale', 'ModalService', function($rootScope, $scope, $timeout, $q, $state, SyllabusService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, PublishService, TenjinService, config, $translate, AlertService, tmhDynamicLocale, ModalService) {
+﻿tenjinApp.controller('SyllabusCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'PublishService', 'TenjinService', 'config', 'AlertService', 'ModalService', function($rootScope, $scope, $timeout, $q, $state, SyllabusService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, PublishService, TenjinService, config, AlertService, ModalService) {
 	'use strict';
 
-	$scope.infos = {};
-
-	$scope.alertService = AlertService;
 	$scope.syllabusService = SyllabusService;
 	$scope.resourcesService = ResourcesService;
 	$scope.userService = UserService;
+
 	$scope.showNavigation = true;
-	$scope.errorLoading = false;
-
-	$translate.use('fr');
-	tmhDynamicLocale.set('fr');
-
-	console.log("Syllabus ctrl");
 
 	// Load syllabus
 	var loadSyllabus = function(syllabusId) {
 		var ret = $q.defer();
 
-		AlertService.reset();
-
 		TenjinService.viewState.loadSyllabus({
 			syllabusId: syllabusId
 		}).then(function() {
-			console.log("Syllabus loaded");
-
 			$scope.syllabusLoaded = true;
 
 			// Set selected item
@@ -82,21 +70,11 @@
 		}
 	}, true);
 
-	$scope.$on('baseDataLoaded', function() {
-		var syllabusId = $state.params.id || -1;
-
-		$scope.showGlobalLoading();
-
-		loadSyllabus(syllabusId).finally(function() {
-			$scope.hideGlobalLoading();
-		});
-	});
-
 	$scope.$on('navigationToggled', function() {
 		$scope.toggleNavigation();
 	});
 
-	$rootScope.$on('publish', function() {
+	$scope.$on('publish', function() {
 		PublishService.publish().then(function(data) {
 			SyllabusService.reloadSyllabus().then(function() {
 				TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
@@ -106,5 +84,11 @@
 				});
 			});
 		});
+	});
+
+	$scope.showGlobalLoading();
+
+	loadSyllabus($state.params.id || -1).finally(function() {
+		$scope.hideGlobalLoading();
 	});
 }]);
