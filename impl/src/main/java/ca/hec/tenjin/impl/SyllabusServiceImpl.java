@@ -132,12 +132,12 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		// check permissions: is allowed to modify section associated to the syllabus
 		if (syllabus.getSections() != null){
-			boolean denied = true;
+			boolean denied = false;
 			for (String sectionId: syllabus.getSections()){
 				try {
 					Group group = sakaiProxy.getGroup(sectionId);
 					if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, group)) {
-						denied = false;
+						denied = true;
 						break;
 					}
 				} catch (GroupNotDefinedException e) {
