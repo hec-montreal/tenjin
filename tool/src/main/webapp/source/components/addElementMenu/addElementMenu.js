@@ -19,8 +19,6 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeS
 			$scope.addElement = function($type) {
 				$scope.isOpen = false;
 
-				console.log("Add element");
-
 				// If the type is rubric, add now
 				if ($type.type === 'rubric') {
 					var element = {
@@ -54,6 +52,8 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeS
 				} else {
 					// hide menu
 					$scope.showAddMenu = false;
+
+					console.log("Modal");
 
 					// TODO : open edition popup
 					var modal = $scope.modalService.createElement($type, $scope.element);

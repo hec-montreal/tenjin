@@ -1,27 +1,25 @@
 ﻿tenjinApp.directive('home', ['$state', 'TenjinService', function($state, TenjinService) {
-    'use strict';
+	'use strict';
 
-    return {
-        scope: true,
+	return {
+		scope: true,
 
-        restrict: 'E',
+		restrict: 'E',
 
-        template: '<section class="home"></section>',
+		template: '<section class="home"></section>',
 
-        controller: function($scope) {
-            var tthis = this;
+		controller: function($scope) {
+			var tthis = this;
 
-             $scope.$watch('baseDataLoaded', function() {
-                 if ($scope.baseDataLoaded) {
-                     var redirectionInfos = TenjinService.dispatchUser();
+			$scope.$on('baseDataLoaded', function() {
+				var redirectionInfos = TenjinService.dispatchUser();
 
-                     if (redirectionInfos) {
-                         $state.go(redirectionInfos.route, redirectionInfos.params);
-                     }
-                }
-             });
-        },
+				if (redirectionInfos) {
+					$state.go(redirectionInfos.route, redirectionInfos.params);
+				}
+			});
+		},
 
-        controllerAs: 'homeCtrl'
-    };
+		controllerAs: 'homeCtrl'
+	};
 }]);

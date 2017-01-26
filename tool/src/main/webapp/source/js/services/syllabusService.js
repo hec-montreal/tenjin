@@ -14,50 +14,63 @@
 		'level': 1
 	};
 
-	// provider get syllabus list
-	var sylProviderList = $resource('v1/syllabus.json', {}, {
-		'get': {
-			method: 'GET',
-			isArray: true
-		}
-	});
-
-	var sylDeleteProvider = $resource('v1/syllabus/:ids/delete.json', {}, {
-		'delete': {
-			method: 'GET'
-		}
-	});
-
-
-	/**
-	 * Web service to save a syllabus
-	 */
-	this.save = function(data) {
+	// Save a syllabus
+	this.save = function(syllabus) {
 		var tthis = this;
 		var ret = $q.defer();
-		var url = data.id ? 'v1/syllabus/' + data.id + '.json' : 'v1/syllabus.json';
+		var url = syllabus.id ? 'v1/syllabus/' + syllabus.id + '.json' : 'v1/syllabus.json';
 
 		this.working = true;
 
-		$http.post(url, data).success(function(data) {
-			tthis.working = false;
-
+		$http.post(url, syllabus).success(function(data) {
 			ret.resolve(data);
 		}).error(function(data) {
-			tthis.working = false;
-
 			ret.reject(data);
+		}).finally(function () {
+			tthis.working = false;
 		});
 
 		return ret.promise;
 	};
 
-	/**
-	 * Save current syllabus
-	 * @return {Object} Promise
-	 */
-	this.saveCurrent = function() {
-		return this.save(this.syllabus);
+	// Load a syllabus and set it as the current one
+	this.loadSyllabus = function(id) {
+		var tthis = this;
+		var ret = $q.defer();
+
+		this.working = true;
+
+		$http.get('v1/syllabus/' + id + '.json').success(function(data) {
+			tthis.setSyllabus(data);
+
+			ret.resolve(tthis.getSyllabus());
+		}).error(function(data) {
+			ret.reject(data);
+		}).finally(function () {
+			tthis.working = false;
+		});
+
+		return ret.promise;
+	};
+
+	// Load the list of syllabus
+	this.loadSyllabusList = function() {
+		var tthis = this;
+		var ret = $q.defer();
+
+		this.working = true;
+
+		$http.get('v1/syllabus.json').success(function (data) {
+			tthis.setSyllabusList(data);
+
+			ret.resolve(data);
+		}).error(function (data) {
+			ret.reject(data);
+		}).finally(function () {
+			tthis.working = false;
+		})
+
+		return ret.promise;
 	};
 
 	/**
@@ -91,9 +104,28 @@
 
 		this.syllabusList = newSyllabusList;
 
-		return sylDeleteProvider.delete({
-			'ids': idList
+		var tthis = this;
+		var ret = $q.defer();
+
+		this.working = true;
+
+		$http.get('v1/syllabus/' + idList.join(',') + '/delete.json').success(function(data) {
+			ret.resolve(data);
+		}).error(function (data) {
+			ret.reject(data);
+		}).finally(function () {
+			tthis.working = false;
 		});
+
+		return ret.promise;
+	};
+
+	/**
+	 * Save current syllabus
+	 * @return {Object} Promise
+	 */
+	this.saveCurrent = function() {
+		return this.save(this.syllabus);
 	};
 
 	/**
@@ -103,44 +135,6 @@
 	this.reloadSyllabus = function() {
 		return this.loadSyllabus(this.syllabus.id);
 	}
-
-	/**
-	 * Load and set a syllabus
-	 * @param {Number} id id of the syllabus
-	 * @return {Object} Promise
-	 */
-	this.loadSyllabus = function(id) {
-		var tthis = this;
-		var def = $q.defer();
-
-		$http({
-			method: 'GET',
-			url: 'v1/syllabus/' + id + '.json'
-		}).then(function(response) {
-			tthis.setSyllabus(response.data);
-
-			def.resolve(tthis.getSyllabus());
-		}, function(reason) {
-			def.reject(reason);
-		});
-
-		return def.promise;
-	};
-
-	this.loadSyllabusList = function() {
-		var tthis = this;
-		var def = $q.defer();
-
-		sylProviderList.get().$promise.then(function(data) {
-			tthis.setSyllabusList(data);
-
-			def.resolve(tthis.getSyllabusList());
-		}, function(reason) {
-			def.reject(reason);
-		});
-
-		return def.promise;
-	};
 
 	/**
 	 * Load the template rules
@@ -256,15 +250,6 @@
 	this.isDirty = function($dirty) {
 		return this.dirty;
 	};
-
-	/**
-	 * Set the working flag
-	 * @param {Boolean} $working Working flag value
-	 */
-	this.setWorking = function($working) {
-		this.working = $working;
-	};
-
 
 	/**
 	 * Get the value of the working flag

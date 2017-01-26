@@ -65,20 +65,11 @@
 	};
 
 	$scope.save = function() {
-		var results = SyllabusService.saveCurrent();
-
-		SyllabusService.setWorking(true);
-
-		var location = TreeService.selectedItem.$location;
-
-		results.$promise.then(function($data) {
-			SyllabusService.setSyllabus($data);
-
+		SyllabusService.saveCurrent().then(function(data) {
+			SyllabusService.setSyllabus(data);
 			TreeService.setSelectedItemFromLocation(location);
-		}, function($error) {
-			AlertService.display('danger');
-		}).finally(function() {
-			SyllabusService.setWorking(false);
+		}).catch(function() {
+			AlertService.showAlert('cannotSaveSyllabus');
 		});
 	};
 
@@ -98,28 +89,25 @@
 		}
 	}, true);
 
-	$scope.$watch('baseDataLoaded', function() {
-		if ($scope.baseDataLoaded) {
-			var syllabusId = $state.params.id || -1;
+	$scope.$on('baseDataLoaded', function() {
+		var syllabusId = $state.params.id || -1;
 
-			$scope.showGlobalLoading();
+		$scope.showGlobalLoading();
 
-			loadSyllabus(syllabusId).finally(function() {
-				$scope.hideGlobalLoading();
-			});
-		}
+		loadSyllabus(syllabusId).finally(function() {
+			$scope.hideGlobalLoading();
+		});
 	});
 
-	$rootScope.$on('navigationToggled', function() {
+	$scope.$on('navigationToggled', function() {
 		$scope.toggleNavigation();
 	});
 
-	$rootScope.$on('publish', function () {
-		PublishService.publish().then(function (data) {
-
-			SyllabusService.reloadSyllabus().then(function () {
+	$rootScope.$on('publish', function() {
+		PublishService.publish().then(function(data) {
+			SyllabusService.reloadSyllabus().then(function() {
 				TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
-				
+
 				$rootScope.$broadcast('published', {
 					data: data
 				});

@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', function($scope, $timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config) {
+﻿tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', '$q', function($scope, $timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config, $q) {
 	'use strict';
 
 	$scope.addSyllabus = function() {
@@ -69,7 +69,17 @@
 
 		syllabus.title = data;
 
-		return SyllabusService.save(syllabus);
+		var ret = $q.defer();
+
+		SyllabusService.save(syllabus).then(function () {
+			ret.resolve();
+		}).error(function () {
+			AlertService.showAlert('cannotSaveSyllabus');
+
+			ret.reject();
+		});
+
+		return ret.promise;
 	};
 
 	$scope.updateSections = function($data, $syllabus) {
@@ -101,7 +111,17 @@
 			// assign sections
 			lastModifiedSyllabus.sections = $data;
 
-			return SyllabusService.save(lastModifiedSyllabus);
+			var ret = $q.defer();
+
+			SyllabusService.save(lastModifiedSyllabus).then(function () {
+				ret.resolve();
+			}).error(function () {
+				AlertService.showAlert('cannotSaveSyllabus');
+
+				ret.reject();
+			});
+
+			return ret.promise;
 		};
 
 		if (warn) {
@@ -218,8 +238,8 @@
 	var lastModifiedSyllabusBeforeUpdate;
 	var objManagement = this;
 
-	$scope.$watch('baseDataLoaded', function() {
-		$scope.userSections = UserService.getProfile().sectionWrite; // user sections with write permissions
-		$scope.allSections = UserService.getProfile().sections; // all sections
+	$scope.$on('baseDataLoaded', function () {
+		$scope.userSections = UserService.getProfile().sectionWrite;
+		$scope.allSections = UserService.getProfile().sections;
 	});
 }]);

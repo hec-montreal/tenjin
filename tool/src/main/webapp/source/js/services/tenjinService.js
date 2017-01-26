@@ -2,7 +2,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 	'use strict';
 
 	var loadCitations = function(data, citationsLists) {
-		var def = $q.defer();
+		var ret = $q.defer();
 		var citationsLists = CitationsService.loadCitationLists(ResourcesService.resources);
 
 		$q.all(citationsLists.promises).then(function(data) {
@@ -17,12 +17,12 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 				}
 			}
 
-			def.resolve();
+			ret.resolve();
 		}).catch(function() {
-			def.reject();
+			ret.reject();
 		});
 
-		return def.promise;
+		return ret.promise;
 	};
 
 	var makeRoute = function(route, params) {
@@ -40,7 +40,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 	this.ViewStates = {
 		edition: {
 			loadViewData: function(siteId) {
-				var def = $q.defer();
+				var ret = $q.defer();
 				var dataToLoad = [];
 
 				// First batch of data to load
@@ -52,27 +52,27 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 				$q.all(dataToLoad).then(function() {
 					// Finally load the citations
 					loadCitations().then(function() {
-						def.resolve();
-					}, function() {
-						def.reject();
+						ret.resolve();
+					}).catch(function() {
+						ret.reject();
 					});
 				}).catch(function(e) {
-					def.reject(e);
+					ret.reject(e);
 				});
 
-				return def.promise;
+				return ret.promise;
 			},
 
 			loadSyllabus: function(ctx) {
-				var def = $q.defer();
+				var ret = $q.defer();
 
 				SyllabusService.loadSyllabus(ctx.syllabusId).then(function() {
-					def.resolve();
-				}, function(e) {
-					def.reject(e);
+					ret.resolve();
+				}).catch(function(e) {
+					ret.reject(e);
 				});
 
-				return def.promise;
+				return ret.promise;
 			},
 
 			getHomeRoute: function() {
@@ -82,7 +82,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 
 		published: {
 			loadViewData: function(siteId) {
-				var def = $q.defer();
+				var ret = $q.defer();
 				var dataToLoad = [];
 
 				// First batch of data to load
@@ -93,25 +93,27 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 				$q.allSettled(dataToLoad).then(function() {
 					// Finally load the citations
 					loadCitations().then(function() {
-						def.resolve();
+						ret.resolve();
+					}).catch(function() {
+						ret.reject();
 					});
-				}, function(e) {
-					def.reject(e);
+				}).catch(function(e) {
+					ret.reject(e);
 				});
 
-				return def.promise;
+				return ret.promise;
 			},
 
 			loadSyllabus: function(ctx) {
-				var def = $q.defer();
+				var ret = $q.defer();
 
 				PublishService.loadPublishedSyllabus().then(function() {
-					def.resolve();
-				}, function(e) {
-					def.reject(e);
+					ret.resolve();
+				}).catch(function(e) {
+					ret.reject(e);
 				});
 
-				return def.promise;
+				return ret.promise;
 			},
 
 			getHomeRoute: function() {
@@ -124,24 +126,24 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 
 	this.loadData = function() {
 		var tthis = this;
-		var def = $q.defer();
+		var ret = $q.defer();
 
 		// We must load the profile before loading anything else
 		UserService.loadProfile().then(function() {
 			var siteId = UserService.getProfile().siteId;
-	
+
 			tthis.viewState = tthis.findViewStateFromProfile();
 
 			tthis.viewState.loadViewData(siteId).then(function() {
-				def.resolve();
+				ret.resolve();
 			}).catch(function(e) {
-				def.reject(e);
+				ret.reject(e);
 			});
 		}).catch(function(e) {
-			def.reject(e);
+			ret.reject(e);
 		});
 
-		return def.promise;
+		return ret.promise;
 	};
 
 	this.dispatchUser = function() {
