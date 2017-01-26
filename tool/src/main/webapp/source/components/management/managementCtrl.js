@@ -73,7 +73,7 @@
 
 		SyllabusService.save(syllabus).then(function () {
 			ret.resolve();
-		}).error(function () {
+		}).catch(function () {
 			AlertService.showAlert('cannotSaveSyllabus');
 
 			ret.reject();
@@ -92,6 +92,7 @@
 			for (var j = 0; j < $data.length; j++) {
 				if ($data[j] === $syllabus.sections[i]) {
 					isIn = true;
+					
 					break;
 				}
 			}
@@ -115,7 +116,7 @@
 
 			SyllabusService.save(lastModifiedSyllabus).then(function () {
 				ret.resolve();
-			}).error(function () {
+			}).catch(function () {
 				AlertService.showAlert('cannotSaveSyllabus');
 
 				ret.reject();

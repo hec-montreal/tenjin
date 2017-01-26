@@ -1,4 +1,4 @@
-﻿tenjinApp.service('SyllabusService', ['AlertService', '$resource', '$translate', '$q', '$http', function(AlertService, $resource, $translate, $q, $http) {
+﻿tenjinApp.service('SyllabusService', ['AlertService', '$translate', '$q', '$http', function(AlertService, $translate, $q, $http) {
 	'use strict';
 
 	this.syllabus = null;
