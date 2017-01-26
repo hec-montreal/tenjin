@@ -4,7 +4,7 @@
 	$scope.syllabusService = SyllabusService;
 	$scope.resourcesService = ResourcesService;
 	$scope.userService = UserService;
-
+	$scope.config = config;
 	$scope.showNavigation = true;
 
 	// Load syllabus

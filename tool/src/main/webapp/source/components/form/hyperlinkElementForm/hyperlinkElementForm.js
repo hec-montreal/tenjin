@@ -11,6 +11,7 @@
         templateUrl: 'form/hyperlinkElementForm/hyperlinkElementForm.html',
 
         controller: function($scope) {
+            $scope.config = config;
             // setup editor options
             $scope.editorOptions = {
                 language: 'fr',

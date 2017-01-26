@@ -15,6 +15,7 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeS
 			$scope.syllabusService = SyllabusService;
 			$scope.treeService = TreeService;
 			$scope.alertService = AlertService;
+			$scope.config = config;
 
 			$scope.addElement = function($type) {
 				$scope.isOpen = false;

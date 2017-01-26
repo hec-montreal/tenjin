@@ -11,6 +11,8 @@
 		templateUrl: 'form/documentElementForm/documentElementForm.html',
 
 		controller: function($scope) {
+			$scope.config = config;
+			
 			$scope.editorOptions = {
 				language: 'fr',
 				height: '200',
