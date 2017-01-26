@@ -1,13 +1,13 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-xs-12">
-			<div class="global-loader" ng-show="globalLoading"> 
+			<div class="global-loader" data-ng-if="globalLoading"> 
 
 			</div>
 		</div>
 	</div>
 	
-	<div id="view" ui-view ng-show="!globalLoading">
+	<div id="view" ui-view data-ng-if="!globalLoading && baseDataLoaded">
 		
 	</div>
 </div>

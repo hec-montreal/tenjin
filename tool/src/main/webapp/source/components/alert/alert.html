@@ -1,11 +1,13 @@
-<div class="errors col-xs-12">
-	<div class="alert alert-{{alertService.currentAlert.type}}">
-		<div class="message">
-			{{ alertService.getCurrentAlertMessage() }}
-		</div>
+<div class="row" ng-if="alertService.hasAlert()">
+	<div class="errors col-xs-12">
+		<div class="alert alert-{{alertService.currentAlert.type}}">
+			<div class="message">
+				{{ alertService.getCurrentAlertMessage() }}
+			</div>
 
-		<div class="controls" data-ng-if="closeable">
-			<span class="glyphicon glyphicon-remove" data-ng-click="alertService.reset()"></span>
+			<div class="controls" data-ng-if="alertService.isCurrentAlertCloseable()">
+				<span class="glyphicon glyphicon-remove" data-ng-click="alertService.reset()"></span>
+			</div>
 		</div>
 	</div>
 </div>

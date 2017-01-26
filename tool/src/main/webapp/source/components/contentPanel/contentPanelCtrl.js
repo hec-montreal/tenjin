@@ -3,6 +3,7 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 
 	$scope.syllabusService = SyllabusService;
 	$scope.treeService = TreeService;
+	$scope.config = config;
 
 	$scope.getAncestor = function($node) {
 		if ($node.$parentNodeScope) {

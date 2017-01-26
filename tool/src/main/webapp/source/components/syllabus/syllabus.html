@@ -7,9 +7,7 @@
 			</h1>
 		</div>
 
-		<div class="row" ng-if="alertService.hasAlert()">
-			<alert data-closeable='alertService.isCurrentAlertCloseable()'></alert>
-		</div>
+		<alert></alert>
 
 		<div class="row" ng-if="syllabusLoaded">
 			<div class="toolbar col-xs-12">

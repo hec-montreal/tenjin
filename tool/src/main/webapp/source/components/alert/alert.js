@@ -2,9 +2,7 @@ tenjinApp.directive('alert', ['AlertService', function(AlertService) {
 	'use strict';
 
 	return {
-		scope: {
-			closeable: '='
-		},
+		scope: {},
 
 		restrict: 'E',
 

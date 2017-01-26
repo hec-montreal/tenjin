@@ -230,6 +230,7 @@
 	$scope.syllabusService = SyllabusService;
 	$scope.alertService = AlertService;
 	$scope.userService = UserService;
+	$scope.config = config;
 
 	$scope.infos = {};
 	$scope.disableDelete = true;

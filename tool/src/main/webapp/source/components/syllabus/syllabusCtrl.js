@@ -13,25 +13,19 @@
 	$translate.use('fr');
 	tmhDynamicLocale.set('fr');
 
-	/*$scope.displayButtons = {
-		managementButton: function() {
-			return $scope.userService.hasWritableSection();
-		},
-
-		syllabusDropdown: function() {
-			return $scope.userService.hasWritableSection();
-		}
-	};*/
+	console.log("Syllabus ctrl");
 
 	// Load syllabus
 	var loadSyllabus = function(syllabusId) {
-		var def = $q.defer();
+		var ret = $q.defer();
 
 		AlertService.reset();
 
 		TenjinService.viewState.loadSyllabus({
 			syllabusId: syllabusId
 		}).then(function() {
+			console.log("Syllabus loaded");
+
 			$scope.syllabusLoaded = true;
 
 			// Set selected item
@@ -39,17 +33,16 @@
 				TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
 			}
 
-			def.resolve();
-
-		}, function(e) {
-			AlertService.showAlert('cannot-load-syllabus');
-
+			ret.resolve();
+		}).catch(function () {
 			$scope.syllabusLoaded = false;
 
-			def.reject(e);
+			AlertService.showAlert('cannotLoadSyllabus');
+
+			ret.reject();
 		});
 
-		return def.promise;
+		return ret.promise;
 	};
 
 	$scope.selectSyllabus = function(syllabus) {
