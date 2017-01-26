@@ -179,7 +179,8 @@ public class SakaiProxyImpl implements SakaiProxy {
 	@Override
 	public Group getGroup(String groupId) throws GroupNotDefinedException {
 		AuthzGroup authzGroup = null;
-		authzGroup = groupService.getAuthzGroup(groupId);
+		//authzgroupservice.getGroup needs a regerence not an id
+		authzGroup = siteService.findGroup(groupId);
 		return (Group) authzGroup;
 	}
 }

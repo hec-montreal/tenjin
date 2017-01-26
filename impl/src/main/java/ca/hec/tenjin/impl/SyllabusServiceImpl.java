@@ -75,37 +75,34 @@ public class SyllabusServiceImpl implements SyllabusService {
 		syllabusList = syllabusDao.getSyllabusList(siteId);
 		Site site = null;
 
-		if (syllabusList.isEmpty())
-			return null;
-		else {
+		if (syllabusList.isEmpty()){
 			try {
+
 				site = sakaiProxy.getSite(siteId);
+
+				if (securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site)) {
+					Syllabus common = createCommonSyllabus(siteId);
+					createOrUpdateSyllabus(common);
+					syllabusList.add(common);
+				}
+			} catch (NoSyllabusException e) {
+				// should not be possible, only happens when we try to update a
+				// syllabus that doesn't exist
+				log.error("Error saving new common syllabus for site: " + siteId);
+				e.printStackTrace();
+
 			} catch (IdUnusedException e) {
 				throw new NoSiteException();
 			}
-			//remove syllabi the user does not have access to
-			for (Syllabus syllabus : syllabusList) {
-				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, syllabus) ||
-						securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site))
-					finalSyllabusList.add(syllabus);
-			}
-
-			if (finalSyllabusList.isEmpty()) {
-				try {
-					if (securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site)) {
-						Syllabus common = createCommonSyllabus(siteId);
-						createOrUpdateSyllabus(common);
-						finalSyllabusList.add(common);
-					}
-				} catch (NoSyllabusException e) {
-					// should not be possible, only happens when we try to update a
-					// syllabus that doesn't exist
-					log.error("Error saving new common syllabus for site: " + siteId);
-					e.printStackTrace();
-				}
-
-			}
 		}
+
+
+		//remove syllabi the user does not have access to
+		for (Syllabus syllabus : syllabusList) {
+			if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, syllabus))
+				finalSyllabusList.add(syllabus);
+		}
+
 
 		return finalSyllabusList;
 	}

@@ -37,35 +37,32 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 
 	@Override
 	public boolean check(String userId, String permission, AbstractSyllabus syllabus) {
-		if (userId == null || syllabus.getId() == null)
-			return false;
-
-
 		//if he is owner he has all permissions on the syllabus
 		if (isOwner(userId, syllabus))
 			return true;
 
-		//if he has the permission on the sections associated to the syllabus, he has it on the syllabus
-		Set<String> sectionIds = syllabus.getSections();
-		if (sectionIds != null) {
-			try {
-				Site site = sakaiProxy.getSite(syllabus.getSiteId());
+		try {
+			Site site = sakaiProxy.getSite(syllabus.getSiteId());
+			//If syllabus is common check on site
+			if (syllabus.getCommon()){
+				return checkOnSiteGroup(userId,permission, site);
+			}
 
-				//If syllabus is common check on site
-				if (syllabus.getCommon()){
-					return checkOnSiteGroup(userId,permission, site);
-				}
-
+			//if he has the permission on the sections associated to the syllabus, he has it on the syllabus
+			Set<String> sectionIds = syllabus.getSections();
+			if (sectionIds != null) {
 				for (String sectionId : sectionIds) {
 					Group group = null;
 					group = site.getGroup(sectionId);
 					if (check(userId, permission, group))
 						return true;
 				}
-			} catch (IdUnusedException e) {
-				log.warn("The site " + syllabus.getSiteId() + " does not exist");
+
 			}
+		} catch (IdUnusedException e) {
+			log.warn("The site " + syllabus.getSiteId() + " does not exist");
 		}
+
 
 		return false;
 	}
