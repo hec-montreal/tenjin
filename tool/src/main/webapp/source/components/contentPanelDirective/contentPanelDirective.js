@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('contentPanelDirective', ['SyllabusService', 'UserService', function(SyllabusService, UserService) {
+﻿tenjinApp.directive('contentPanelDirective', ['SyllabusService', 'UserService', 'config', function(SyllabusService, UserService, config) {
     'use strict';
 
     return {
@@ -14,6 +14,7 @@
         controller: function($scope) {
             $scope.syllabusService = SyllabusService;
             $scope.userService = UserService;
+            $scope.config = config;
 
             var template = $scope.syllabusService.template[$scope.element.templateStructureId];
 

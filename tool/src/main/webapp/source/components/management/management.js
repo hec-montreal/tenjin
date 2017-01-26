@@ -210,6 +210,7 @@
 	$scope.syllabusService = SyllabusService;
 	$scope.alertService = AlertService;
 	$scope.userService = UserService;
+	$scope.config = config;
 
 	$scope.infos = {};
 	$scope.disableDelete = true;
@@ -218,8 +219,6 @@
 	var lastModifiedSyllabusBeforeUpdate;
 	var objManagement = this;
 
-	$scope.$watch('baseDataLoaded', function() {
-		$scope.userSections = UserService.getProfile().sectionWrite; // user sections with write permissions
-		$scope.allSections = UserService.getProfile().sections; // all sections
-	});
+	$scope.userSections = UserService.getProfile().sectionWrite; // user sections with write permissions
+	$scope.allSections = UserService.getProfile().sections; // all sections
 }]);

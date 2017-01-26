@@ -23,7 +23,7 @@ tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', function(TenjinS
 				$scope.baseDataLoaded = true;
 				$scope.hideGlobalLoading();
 
-			}, function () {
+			}).catch (function () {
 				$scope.hideGlobalLoading();
 
 				AlertService.showAlert('cannotLoadBaseData', false);
