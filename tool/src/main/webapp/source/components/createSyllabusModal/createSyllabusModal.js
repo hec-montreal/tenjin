@@ -57,7 +57,6 @@
 		var syllabusAdded = null;
 
 		SyllabusService.save(newSyllabus).then(function(data) {
-
 			SyllabusService.syllabusList.push(data);
 
 			syllabusAdded = data;

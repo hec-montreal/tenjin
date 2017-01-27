@@ -22,7 +22,7 @@
 			}
 
 			ret.resolve();
-		}).catch(function () {
+		}).catch(function() {
 			$scope.syllabusLoaded = false;
 
 			AlertService.showAlert('cannotLoadSyllabus');
@@ -83,6 +83,8 @@
 					data: data
 				});
 			});
+		}).catch(function(data) {
+			AlertService.showAlert('cannotPublishSyllabus');
 		});
 	});
 
