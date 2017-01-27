@@ -9,8 +9,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.sakaiproject.exception.IdUnusedException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ca.hec.tenjin.api.TemplateService;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
@@ -29,6 +31,9 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	
 	@Setter
 	private PublishedSyllabusDao publishedSyllabusDao;
+	
+	@Setter
+	private TemplateService templateService;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -139,12 +144,22 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		
 		List<AbstractSyllabusElement> structuredElements = new ArrayList<AbstractSyllabusElement>();
 		Map<Long, AbstractSyllabusElement> elementMap = new HashMap<Long, AbstractSyllabusElement>();
+		
+		// Use template rules to display template pages even if they aren't published yet
+		HashMap<String, HashMap<String, Object>> templateRules = null;
+		try {
+			templateRules = templateService.getTemplateRules(syllabus.getTemplateId());
+		} catch (IdUnusedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
     	for (SyllabusElementMapping currElementMapping : elementMappings) {
     		AbstractSyllabusElement currElement = currElementMapping.getSyllabusElement();
     		
     		// for non-common syllabuses, skip common element if it is not published
-    		if (!syllabus.getCommon() && currElement.getCommon() && currElement.getPublishedId() == null) {
+    		boolean displayInMenu = (boolean) templateRules.get(currElement.getTemplateStructureId().toString()).get("displayInMenu");
+    		if (!syllabus.getCommon() && currElement.getCommon() && currElement.getPublishedId() == null && !displayInMenu) {
     			continue;
     		}
     		
@@ -187,7 +202,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
     			}
     			
 				// if the common element is not equal to the published version, replace it with that one
-				if (!syllabus.getCommon() && currElement.getCommon() && !currElement.getEqualsPublished()) {
+				if (!syllabus.getCommon() && currElement.getCommon() && !currElement.getEqualsPublished() && currElement.getPublishedId() != null) {
 					AbstractSyllabusElement tempElem;
 					try {
 						tempElem = currElement.getClass().newInstance();

@@ -47,7 +47,8 @@
 
 				<!-- API injection -->
 				<property name="publishedSyllabusDao" ref="ca.hec.tenjin.api.dao.PublishedSyllabusDao" />
-		 	</bean>
+				<property name="templateService" ref="ca.hec.tenjin.api.TemplateService" />
+			</bean>
 		</property>
 		<property name="transactionAttributes">
 			<props>

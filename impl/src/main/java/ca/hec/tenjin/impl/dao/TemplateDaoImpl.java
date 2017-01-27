@@ -30,7 +30,7 @@ public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao 
 		return t;
 	}
 	
-	
+		
 	
 	private void initProviders (List<TemplateStructure> templateStructures){
 		
