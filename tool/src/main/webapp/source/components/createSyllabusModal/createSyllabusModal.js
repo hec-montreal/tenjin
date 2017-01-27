@@ -44,7 +44,6 @@
 		// common is not loaded and templateId is null then it's not going to work
 		var newSyllabus = {
 			'id': null,
-			'courseTitle': UserService.getProfile().courseTitle,
 			'siteId': UserService.getProfile().siteId,
 			'sections': sections,
 			'title': $scope.data.name,
@@ -58,7 +57,6 @@
 		var syllabusAdded = null;
 
 		SyllabusService.save(newSyllabus).then(function(data) {
-			SyllabusService.setWritePermission(data);
 
 			SyllabusService.syllabusList.push(data);
 

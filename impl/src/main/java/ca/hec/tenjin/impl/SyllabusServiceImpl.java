@@ -116,14 +116,20 @@ public class SyllabusServiceImpl implements SyllabusService {
 	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException, NoSyllabusException, DeniedAccessException {
 		Date now = new Date();
 		Syllabus existingSyllabus = null;
+
+		Site site = null;
+
 		Map<Long, SyllabusElementMapping> existingSyllabusElementMappings = null;
 
-		if (!sakaiProxy.siteExists(syllabus.getSiteId())) {
+		try{
+			site = sakaiProxy.getSite(syllabus.getSiteId());
+		} catch (IdUnusedException e) {
 			throw new NoSiteException();
 		}
 
+
 		// check permissions: is allowed to modify syllabus
-		if (!securityService.check(sakaiProxy.getCurrentUserId(),TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+		if (syllabus.getCreatedBy()!= null && !securityService.check(sakaiProxy.getCurrentUserId(),TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
 			throw new DeniedAccessException();
 		}
 
@@ -146,14 +152,28 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		}
 
+		// check permissions: is allowed to create a syllabus
+		if (site.getGroups() != null){
+			boolean denied = false;
+			for (Group group: site.getGroups()){
+				if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, group)) {
+					denied = true;
+					break;
+				}
+			}
+			if (denied || !securityService.checkOnSiteGroup(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, site))
+				throw new DeniedAccessException();
+
+		}
+
 		List<Syllabus> syllabi = syllabusDao.getSyllabusList(syllabus.getSiteId());
 
 		// create syllabus if it doesn't exist, otherwise get it's element
 		// mappings from the database.
 		if (syllabus.getId() == null) {
 
-
 			syllabus.setCreatedDate(now);
+			syllabus.setCourseTitle(site.getTitle());
 			syllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
 			syllabus.setCreatedByName(sakaiProxy.getCurrentUserName());
 			syllabus.setLastModifiedDate(now);
