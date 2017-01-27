@@ -23,6 +23,7 @@ package ca.hec.tenjin.api.dao;
 import org.sakaiproject.exception.IdUnusedException;
 
 import ca.hec.tenjin.api.model.template.Template;
+import ca.hec.tenjin.api.model.template.TemplateStructure;
 
 /**
  *
@@ -32,5 +33,7 @@ import ca.hec.tenjin.api.model.template.Template;
 public interface TemplateDao {
 
 	public Template getTemplate(Long templateId) throws IdUnusedException;
+	
+	public TemplateStructure getTemplateStructure(Long templateStructureId) throws IdUnusedException;
 }
 

@@ -69,18 +69,6 @@ public interface SyllabusDao {
 	public List<Syllabus> getSyllabusList(String siteId);
 	
 	/**
-	 * Retrieves the syllabus associated to a specific site, section and shareable status
-	 *  TODO: implementation is incomplete (doesn't work for sectionId)
-	 * 
-	 * @param String siteId
-	 * @param String sectionId
-	 * @param Boolean shareable
-	 * @param boolean hidden - include hidden elements
-	 * @return The syllabus associated with the specified section or the shareable
-	 */
-	public Syllabus getSyllabus(String siteId, String sectionId, Boolean shareable, boolean hidden);
-
-	/**
 	 * Retrieves the syllabus element mappings for the specified syllabusId
      *  
 	 * @param String syllabusId

@@ -305,7 +305,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 				for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
 					// cannot delete common element from another syllabus
 					if (!syllabus.getCommon() && mapping.getSyllabusElement().getCommon()) {
-						throw new DeniedAccessException("Cannot delete common element from a regular syllabus");
+						// Cannot delete common element from a regular syllabus
+						continue;
 					}
 
 					if (mapping.getSyllabusElement().getCommon() && mapping.getSyllabusElement().isComposite() && syllabusDao.elementHasNonCommonChildren(mapping.getSyllabusElement())) {

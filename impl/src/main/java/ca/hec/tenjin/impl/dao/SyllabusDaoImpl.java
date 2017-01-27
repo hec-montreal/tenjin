@@ -23,6 +23,8 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
+import ca.hec.tenjin.api.model.template.TemplateElement;
+import ca.hec.tenjin.api.model.template.TemplateStructure;
 import lombok.Setter;
 
 public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao {
@@ -51,30 +53,23 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return mappings;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Syllabus getSyllabus(String siteId, String sectionId, Boolean common, boolean hidden) {
-		List<Syllabus> syllabi = 
-				(List<Syllabus>) getHibernateTemplate().find("from Syllabus where siteId = ? and common = ? and deleted = false", siteId, common);
-		Syllabus syllabus = syllabi.get(0);
-		syllabus.setElements(getStructuredSyllabusElements(syllabus, hidden));
-		return syllabi.get(0);
-	}
-	
 	@Override
 	public Syllabus getSyllabus(Long id, boolean retrieveElements, boolean hidden) throws NoSyllabusException {
 		Syllabus syllabus = getHibernateTemplate().get(Syllabus.class, id);
 		
-		if (syllabus == null) {
-			throw new NoSyllabusException(id);
-		}
-		
-		if(syllabus.getDeleted()) {
+		if (syllabus == null || syllabus.getDeleted()) {
 			throw new NoSyllabusException(id);
 		}
 		
 		if (retrieveElements) {
-			syllabus.setElements(getStructuredSyllabusElements(syllabus, hidden));
+			try {
+				syllabus.setElements(getStructuredSyllabusElements(syllabus, hidden));
+			}
+			catch (Exception e) {
+				log.error("Unable to retrieve structured syllabus elements");
+				e.printStackTrace();
+				throw new NoSyllabusException();
+			}
 		}
 		
 		return syllabus;
@@ -138,31 +133,26 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return element;
 	}
 
-	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Syllabus syllabus, boolean hidden) {
+	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Syllabus syllabus, boolean hidden) throws InstantiationException, IllegalAccessException, IdUnusedException {
 
 		List<SyllabusElementMapping> elementMappings = this.getSyllabusElementMappings(syllabus.getId(), hidden);
 		
 		List<AbstractSyllabusElement> structuredElements = new ArrayList<AbstractSyllabusElement>();
 		Map<Long, AbstractSyllabusElement> elementMap = new HashMap<Long, AbstractSyllabusElement>();
 		
-		// Use template rules to display template pages even if they aren't published yet
-		HashMap<String, HashMap<String, Object>> templateRules = null;
-		try {
-			templateRules = templateService.getTemplateRules(syllabus.getTemplateId());
-		} catch (IdUnusedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
     	for (SyllabusElementMapping currElementMapping : elementMappings) {
     		AbstractSyllabusElement currElement = currElementMapping.getSyllabusElement();
     		
-    		// for non-common syllabuses, skip common element if it is not published
-    		boolean displayInMenu = (boolean) templateRules.get(currElement.getTemplateStructureId().toString()).get("displayInMenu");
-    		if (!syllabus.getCommon() && currElement.getCommon() && currElement.getPublishedId() == null && !displayInMenu) {
+    		// for non-common syllabuses, skip common element if it is not published (and is not from the template or a rubric)
+			TemplateStructure templateStructure = templateService.getTemplateStructure(currElement.getTemplateStructureId());
+
+    		if (!syllabus.getCommon() && currElement.getCommon() && 
+    				currElement.getPublishedId() == null &&
+    				!(currElement instanceof SyllabusRubricElement) && 
+    				!templateStructure.getMandatory()) {
     			continue;
     		}
-    		
+	    		
     		//TODO: check if we need to move this code to the pojo to make it systematic. Fill provided content if needed
     		currElement = getProvidedContent(currElement);
     		
@@ -204,29 +194,24 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 				// if the common element is not equal to the published version, replace it with that one
 				if (!syllabus.getCommon() && currElement.getCommon() && !currElement.getEqualsPublished() && currElement.getPublishedId() != null) {
 					AbstractSyllabusElement tempElem;
-					try {
-						tempElem = currElement.getClass().newInstance();
-						tempElem.copy(currElement);
-						AbstractPublishedSyllabusElement publishedElem = publishedSyllabusDao.getPublishedElement(currElement.getPublishedId());
 
-						// overwrite these values with published data
-						tempElem.setTitle(publishedElem.getTitle());
-						tempElem.setAttributes(new HashMap<String, String>(publishedElem.getAttributes()));
-						tempElem.setDescription(publishedElem.getDescription());
-						tempElem.setAvailabilityStartDate(publishedElem.getAvailabilityStartDate());
-						tempElem.setAvailabilityEndDate(publishedElem.getAvailabilityEndDate());
-						if (publishedElem.getAvailabilityStartDate() != null || publishedElem.getAvailabilityEndDate() != null) {
-							tempElem.setHasDatesInterval(true);
-						}
-						tempElem.setImportant(publishedElem.getImportant());
-						tempElem.setPublicElement(publishedElem.getPublicElement());
+					tempElem = currElement.getClass().newInstance();
+					tempElem.copy(currElement);
+					AbstractPublishedSyllabusElement publishedElem = publishedSyllabusDao.getPublishedElement(currElement.getPublishedId());
 
-						parent.getElements().add(tempElem);
-
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					// overwrite these values with published data
+					tempElem.setTitle(publishedElem.getTitle());
+					tempElem.setAttributes(new HashMap<String, String>(publishedElem.getAttributes()));
+					tempElem.setDescription(publishedElem.getDescription());
+					tempElem.setAvailabilityStartDate(publishedElem.getAvailabilityStartDate());
+					tempElem.setAvailabilityEndDate(publishedElem.getAvailabilityEndDate());
+					if (publishedElem.getAvailabilityStartDate() != null || publishedElem.getAvailabilityEndDate() != null) {
+						tempElem.setHasDatesInterval(true);
 					}
+					tempElem.setImportant(publishedElem.getImportant());
+					tempElem.setPublicElement(publishedElem.getPublicElement());
+
+					parent.getElements().add(tempElem);
 				} else {
     				// elements are returned ordered from the query, so we can just add them
     				parent.getElements().add(currElement);

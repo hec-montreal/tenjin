@@ -6,6 +6,7 @@ import org.sakaiproject.exception.IdUnusedException;
 
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.template.Template;
+import ca.hec.tenjin.api.model.template.TemplateStructure;
 
 /**
  * An interface to abstract all Template related operations
@@ -38,4 +39,12 @@ public interface TemplateService {
 	 * @return
 	 */
 	public HashMap<String, HashMap<String, Object>> getTemplateRules(Long templateId) throws IdUnusedException;
+
+	/**
+	 * Retrieves a TemplateStructure by id
+	 *
+	 * @param templateStructureId
+	 * @return
+	 */
+	public TemplateStructure getTemplateStructure(Long templateStructureId) throws IdUnusedException;
 }
