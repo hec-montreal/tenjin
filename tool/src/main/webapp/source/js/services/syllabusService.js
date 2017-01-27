@@ -33,6 +33,14 @@
 		return ret.promise;
 	};
 
+	this.createSyllabus = function(syllabus){
+
+	};
+
+	this.updateSyllabus = function(syllabus){
+
+	};
+
 	// Load a syllabus and set it as the current one
 	this.loadSyllabus = function(id) {
 		var tthis = this;
@@ -148,7 +156,7 @@
 			tthis.setTemplate(data);
 
 			ret.resolve(tthis.getTemplate());
-		}).failure(function (data) {
+		}).error(function (data) {
 			ret.reject(reason);
 		});
 
