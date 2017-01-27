@@ -77,16 +77,9 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 	this.getSections = function() {
 		var sections = [];
 
-		if (SyllabusService.syllabus.common) {
-			var usedSections = UserService.getSectionsPublish();
-
-			for (var i = 0; i < usedSections.length; i++) {
-				sections[i] = usedSections[i].name;
+			for (var i = 0; i < SyllabusService.syllabus.sections.length; i++) {
+				sections[i] = UserService.getSectionTitle(SyllabusService.syllabus.sections[i]);
 			}
-
-		} else {
-			sections = SyllabusService.syllabus.sections;
-		}
 
 		return sections;
 	};

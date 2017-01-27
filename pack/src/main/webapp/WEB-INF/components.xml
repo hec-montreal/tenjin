@@ -40,6 +40,7 @@
 				<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
 				<property name="SyllabusService" ref="ca.hec.tenjin.api.SyllabusService" />
 		 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+				<property name="securityService" ref="ca.hec.tenjin.api.TenjinSecurityService" />
 			</bean>
 		</property>
 		<property name="transactionAttributes">
