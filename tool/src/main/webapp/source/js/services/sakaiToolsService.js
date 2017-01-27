@@ -10,20 +10,17 @@ tenjinApp.service('SakaiToolsService', ['$rootScope', '$q', '$http', function ( 
 	 */
 	this.loadToolEntities = function(siteId){
 		var tthis = this;
-		var def = $q.defer();
+		var ret = $q.defer();
 
-		$http({
-			method: 'GET',
-			url: 'tools/' + siteId + '.json'
-		}).then(function(response) {
-			tthis.setToolsEntities(response.data);
+		$http.get('tools/' + siteId + '.json').success(function (data) {
+			tthis.setToolsEntities(data);
 
-			def.resolve(tthis.getToolEntities());
-		}, function(reason) {
-			def.reject(reason);
-		});
+			ret.resolve(tthis.getToolEntities());
+		}).error(function (data) {
+			ret.reject(data);
+		})
 
-		return def.promise;
+		return ret.promise;
 	};	
 
 	/**

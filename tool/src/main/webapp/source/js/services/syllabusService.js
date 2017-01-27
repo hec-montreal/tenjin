@@ -142,20 +142,17 @@
 	 */
 	this.loadTemplate = function() {
 		var tthis = this;
-		var def = $q.defer();
+		var ret = $q.defer();
 
-		$http({
-			method: 'GET',
-			url: 'v1/template/1/rules.json'
-		}).then(function(response) {
-			tthis.setTemplate(response.data);
+		$http.get('v1/template/1/rules.json').success(function (data) {
+			tthis.setTemplate(data);
 
-			def.resolve(tthis.getTemplate());
-		}, function(reason) {
-			def.reject(reason);
+			ret.resolve(tthis.getTemplate());
+		}).failure(function (data) {
+			ret.reject(reason);
 		});
 
-		return def.promise;
+		return ret.promise;
 	};
 
 	/**

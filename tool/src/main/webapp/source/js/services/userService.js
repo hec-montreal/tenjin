@@ -7,20 +7,17 @@
 	 */
 	this.loadProfile = function() {
 		var tthis = this;
-		var def = $q.defer();
+		var ret = $q.defer();
 
-		$http({
-			method: 'get',
-			url: 'v1/userProfile.json'
-		}).then(function(response) {
-			tthis.profile = response.data;
+		$http.get('v1/userProfile.json').success(function (data) {
+			tthis.profile = data;
 
-			def.resolve(tthis.profile);
-		}, function(reason) {
-			def.reject(reason);
+			ret.resolve(data);
+		}).error(function (data) {
+			ret.reject(data);
 		});
 
-		return def.promise;
+		return ret.promise;
 	};
 
 	/**
@@ -48,15 +45,12 @@
 				function(syllabusId){ 
 					return syllabusId ===syllabus.id;}).length > 0;
 		}
-
 	};
-
 
 	/**
 	* Permissions used to access views
 	*/
 	this.isAllowedView = function(view){
-		
 		if (config.userProfileViews[1] === view){
 			return this.profile.managerView;
 		}
@@ -101,7 +95,7 @@
 		});
 	};
 
-//If it is in the table will always return 1
+	//If it is in the table will always return 1
 	this.getSectionTitle = function (sectionId){
 		var filteredSection;
 		filteredSection =  this.profile.sections.filter(function($section){
