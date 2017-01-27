@@ -200,5 +200,11 @@ public class TemplateServiceImpl implements TemplateService {
 
 		return;
 	}
+
+	@Override
+	public TemplateStructure getTemplateStructure(Long templateStructureId) throws IdUnusedException {
+		
+		return templateDao.getTemplateStructure(templateStructureId);
+	}
 	
 }

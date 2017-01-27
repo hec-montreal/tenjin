@@ -22,7 +22,7 @@
 		</property>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="createOrUpdateSyllabus">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
 
@@ -45,7 +45,7 @@
 		</property>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="createOrUpdateSyllabus">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
 
@@ -64,7 +64,7 @@
 		</property>
 		<property name="transactionAttributes">
 			<props>
-				<prop key="createOrUpdateSyllabus">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
 	</bean>

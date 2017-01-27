@@ -30,7 +30,7 @@ public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao 
 		return t;
 	}
 	
-	
+		
 	
 	private void initProviders (List<TemplateStructure> templateStructures){
 		
@@ -44,5 +44,16 @@ public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao 
 			if (ts.getElements() != null)
 				initProviders(ts.getElements());
 		}		
+	}
+
+	@Override
+	public TemplateStructure getTemplateStructure(Long templateStructureId) throws IdUnusedException {
+		TemplateStructure ts = getHibernateTemplate().get(TemplateStructure.class, templateStructureId);
+		
+		if (ts == null) {
+			throw new IdUnusedException(templateStructureId.toString());
+		}
+		
+		return ts;
 	}
 }
