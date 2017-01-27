@@ -29,6 +29,7 @@ import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.exception.SyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
@@ -134,7 +135,7 @@ public class SyllabusController {
 	}
 	
 	@RequestMapping(value = "/syllabus", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException {
+	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException {
 		return syllabusService.createOrUpdateSyllabus(syllabus);
 	}
 
@@ -146,7 +147,7 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/{id}/publish", method = RequestMethod.POST)
-	public @ResponseBody Syllabus publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
+	public @ResponseBody Syllabus publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException {
 		Syllabus syllabus = null;
 		try {
 			syllabus = publishService.publishSyllabus(syllabusId);
@@ -158,7 +159,7 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/{syllabusId}", method = RequestMethod.GET)
-	public @ResponseBody AbstractSyllabus getSyllabus(@PathVariable Long syllabusId, @RequestParam(required = false) boolean published) throws NoSyllabusException {
+	public @ResponseBody AbstractSyllabus getSyllabus(@PathVariable Long syllabusId, @RequestParam(required = false) boolean published) throws NoSyllabusException, DeniedAccessException, StructureSyllabusException {
 		if (published) {
 			return publishService.getPublishedSyllabus(syllabusId);
 		} else {
@@ -167,8 +168,15 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException {
+	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException {
 		return syllabusService.createOrUpdateSyllabus(syllabus);
+	}
+
+	@ExceptionHandler(StructureSyllabusException.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	public @ResponseBody Object handleStructureSyllabusException(StructureSyllabusException ex) {
+		ex.printStackTrace();
+		return null;
 	}
 
 	@ExceptionHandler(NoSiteException.class)

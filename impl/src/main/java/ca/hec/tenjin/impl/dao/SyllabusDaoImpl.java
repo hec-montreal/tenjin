@@ -16,6 +16,7 @@ import ca.hec.tenjin.api.TemplateService;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
@@ -54,22 +55,24 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	}
 
 	@Override
-	public Syllabus getSyllabus(Long id, boolean retrieveElements, boolean hidden) throws NoSyllabusException {
+	public Syllabus getSyllabus(Long id) throws NoSyllabusException {
 		Syllabus syllabus = getHibernateTemplate().get(Syllabus.class, id);
 		
 		if (syllabus == null || syllabus.getDeleted()) {
 			throw new NoSyllabusException(id);
 		}
 		
-		if (retrieveElements) {
-			try {
-				syllabus.setElements(getStructuredSyllabusElements(syllabus, hidden));
-			}
-			catch (Exception e) {
-				log.error("Unable to retrieve structured syllabus elements");
-				e.printStackTrace();
-				throw new NoSyllabusException();
-			}
+		return syllabus;
+	}
+	
+	@Override
+	public Syllabus getStructuredSyllabus(Long id) throws NoSyllabusException, StructureSyllabusException {
+		Syllabus syllabus = getSyllabus(id);
+		
+		try {
+			syllabus.setElements(getStructuredSyllabusElements(syllabus));
+		} catch (Exception e) {
+			throw new StructureSyllabusException(e);
 		}
 		
 		return syllabus;
@@ -133,9 +136,9 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return element;
 	}
 
-	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Syllabus syllabus, boolean hidden) throws InstantiationException, IllegalAccessException, IdUnusedException {
+	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Syllabus syllabus) throws InstantiationException, IllegalAccessException, IdUnusedException {
 
-		List<SyllabusElementMapping> elementMappings = this.getSyllabusElementMappings(syllabus.getId(), hidden);
+		List<SyllabusElementMapping> elementMappings = this.getSyllabusElementMappings(syllabus.getId(), true);
 		
 		List<AbstractSyllabusElement> structuredElements = new ArrayList<AbstractSyllabusElement>();
 		Map<Long, AbstractSyllabusElement> elementMap = new HashMap<Long, AbstractSyllabusElement>();

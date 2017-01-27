@@ -23,6 +23,7 @@ package ca.hec.tenjin.api.dao;
 import java.util.List;
 
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
@@ -39,13 +40,20 @@ public interface SyllabusDao {
 	 * Retrieve a syllabus by id
 	 * 
 	 * @param Long id
-	 * @param boolean retrieveElements
-	 * @param boolean hidden - if retrieveElements is true, should the hidden elements be included
-	 * @return The syllabus, and it's organized sub-elements if retrieveElements is true.
+	 * @return The syllabus object without it's elements
 	 * @throws NoSyllabusException 
 	 */
-	public Syllabus getSyllabus(Long id, boolean retrieveElements, boolean hidden) throws NoSyllabusException;
+	public Syllabus getSyllabus(Long id) throws NoSyllabusException;
 
+	/**
+	 * Retrieve a syllabus and it's structured syllabus elements  
+	 * 
+	 * @param Long id
+	 * @return The syllabus object with it's structured child elements
+	 * @throws NoSyllabusException 
+	 * @throws StructureSyllabusException 
+	 */
+	public Syllabus getStructuredSyllabus(Long id) throws NoSyllabusException, StructureSyllabusException;
 	
 	/**
 	 * Retrieves the common syllabus

@@ -5,6 +5,7 @@ import java.util.List;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 
@@ -23,8 +24,10 @@ public interface SyllabusService {
 	 * @param syllabusId
 	 * @return Syllabus - the syllabus object with elements
 	 * @throws NoSyllabusException - no syllabus exists for the given id
+	 * @throws DeniedAccessException 
+	 * @throws StructureSyllabusException 
 	 */
-	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException;
+	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, StructureSyllabusException;
 
 	/**
 	 * Retrieves the common syllabus for a site (without elements).
@@ -46,6 +49,7 @@ public interface SyllabusService {
 	 * @throws NoSiteException
 	 * @throws NoSyllabusException
 	 * @throws DeniedAccessException 
+	 * @throws StructureSyllabusException 
 	 */
 	public List<Syllabus> getSyllabusList(String siteId,  String currentUserId)  throws NoSiteException, DeniedAccessException;
 	
@@ -56,8 +60,9 @@ public interface SyllabusService {
 	 * @return the saved syllabus
 	 * @throws NoSiteException if no site is specified by the syllabus
 	 * @throws NoSyllabusException 
+	 * @throws StructureSyllabusException 
 	 */
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException;
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException;
 
 	/**
 	 * Delete a syllabus

@@ -23,6 +23,7 @@ import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
@@ -46,21 +47,16 @@ public class SyllabusServiceImpl implements SyllabusService {
 	private TenjinSecurityService securityService;
 
 	@Override
-	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException {
+	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, StructureSyllabusException {
 		Syllabus syllabus = null;
 
-		try {
-			syllabus = syllabusDao.getSyllabus(syllabusId, true, true);
+		syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
 
-			//throw denied access if no write permission on syllabus
-			if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus))
-				throw new DeniedAccessException();
+		//throw denied access if no write permission on syllabus
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus))
+			throw new DeniedAccessException();
 
-			return syllabus;
-		} catch (Exception e) {
-			log.warn("The syllabus " + syllabusId + " could not be retrieved because: " + e.getMessage());
-			throw new NoSyllabusException();
-		}
+		return syllabus;
 	}
 
 	@Override
@@ -85,14 +81,13 @@ public class SyllabusServiceImpl implements SyllabusService {
 					createOrUpdateSyllabus(common);
 					syllabusList.add(common);
 				}
-			} catch (NoSyllabusException e) {
+			} catch (IdUnusedException e) {
+				throw new NoSiteException();
+			} catch (Exception e) {
 				// should not be possible, only happens when we try to update a
 				// syllabus that doesn't exist
 				log.error("Error saving new common syllabus for site: " + siteId);
 				e.printStackTrace();
-
-			} catch (IdUnusedException e) {
-				throw new NoSiteException();
 			}
 		}
 
@@ -113,7 +108,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 	
 	@Override
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException, NoSyllabusException, DeniedAccessException {
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException, NoSyllabusException, DeniedAccessException, StructureSyllabusException {
 		Date now = new Date();
 		Syllabus existingSyllabus = null;
 
@@ -200,8 +195,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 				return syllabus;
 			}
 		} else {
-			existingSyllabus = syllabusDao.getSyllabus(syllabus.getId(), false, false);
-
+			existingSyllabus = syllabusDao.getSyllabus(syllabus.getId());
 
 			if (existingSyllabus != syllabus) {
 				if (!existingSyllabus.getSections().equals(syllabus.getSections())) {
@@ -333,7 +327,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 	@Override
 	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException {
-		Syllabus syllabus = syllabusDao.getSyllabus(syllabusId, false, false);
+		Syllabus syllabus = syllabusDao.getSyllabus(syllabusId);
 		
 		if (syllabus == null) {
 			throw new NoSyllabusException(syllabusId);
