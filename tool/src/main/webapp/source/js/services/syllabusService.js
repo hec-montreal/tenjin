@@ -34,7 +34,7 @@
 	};
 
 	this.createSyllabus = function(syllabus){
-
+		return this.save(syllabus);
 	};
 
 	this.updateSyllabus = function(syllabus){

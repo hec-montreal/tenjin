@@ -149,7 +149,7 @@ public class UserController {
 			}
 
 			//The user has permissions in the sections
-			usersGroup = site.getGroupsWithMember(currentUserId);
+			usersGroup = site.getGroups();
 			for (Group group: usersGroup){
 				if (group.getProviderGroupId() != null){
 					if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, group)) {
