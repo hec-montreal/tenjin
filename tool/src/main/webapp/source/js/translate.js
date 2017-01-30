@@ -545,7 +545,7 @@
 		MENU: 'Menu',
 		NOT_PUBLISHED: 'Non publié',
 		WARNING: 'Avertissement',
-		WARNING_UNSASSIGN_SECTIONS: 'Voulez-vous vraiment dissocier le plan de cours?'
+		WARNING_UNSASSIGN_SECTIONS: 'Voulez-vous vraiment dissocier les sections du plan de cours? La (les) section(s) seront automatiquement associée(s) au plan de cours commun.'
 	});
 
 	$translateProvider.preferredLanguage('fr');
