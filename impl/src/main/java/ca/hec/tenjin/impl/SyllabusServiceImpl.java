@@ -50,11 +50,11 @@ public class SyllabusServiceImpl implements SyllabusService {
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, StructureSyllabusException {
 		Syllabus syllabus = null;
 
-		//throw denied access if no write permission on syllabus 
+		syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
+
+		//throw denied access if no write permission on syllabus
 		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus))
 			throw new DeniedAccessException();
-
-		syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
 
 		return syllabus;
 	}
