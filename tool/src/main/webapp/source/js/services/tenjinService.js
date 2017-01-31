@@ -114,12 +114,24 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 
 			loadSyllabus: function(ctx) {
 				var ret = $q.defer();
+				var profile = UserService.getProfile();
 
-				SyllabusService.loadPublishedSyllabus().then(function() {
+				var success = function() {
 					ret.resolve();
-				}).catch(function(e) {
+				};
+				var fail = function(e) {
 					ret.reject(e);
-				});
+				};
+
+				if (profile.syllabusRead.length > 0) {
+					SyllabusService.loadPublishedSyllabus(profile.syllabusRead[0]).then(success).catch(fail);
+				} else if (profile.syllabusWrite.length > 0) {
+					SyllabusService.loadSyllabus(profile.syllabusWrite[0]).then(success).catch(fail);
+				} else {
+					console.error("No read or write access on any syllabus");
+					// TODO: AlertService instead of console?
+					ret.reject();
+				}
 
 				return ret.promise;
 			},
