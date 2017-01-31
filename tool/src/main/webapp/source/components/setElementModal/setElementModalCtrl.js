@@ -35,24 +35,10 @@
 		var errors = $scope.validateElement();
 
 		if (errors.length <= 0) {
-			// We create a copy of the current syllabus and we add it the element to be added
-			var data = angular.copy(SyllabusService.syllabus);
-			var selectedItemId = TreeService.selectedItem.id;
-			var location = TreeService.selectedItem.$location;
-
-			$scope.element.equalsPublished = false;
-
-			SyllabusService.addElementToSyllabus(data, $scope.parent, $scope.element);
-
-			SyllabusService.save(data).then(function(result) {
-				SyllabusService.setSyllabus(result);
-
-				TreeService.setSelectedItemFromLocation(location);
-			}).catch(function() {
-				AlertService.showAlert('cannotSaveSyllabus');
+			$uibModalInstance.close({
+				element: $scope.element,
+				parent: $scope.parent
 			});
-
-			$uibModalInstance.close('');
 		} else {
 			$scope.validationErrors = errors;
 		}

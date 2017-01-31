@@ -6,17 +6,18 @@
 	 * @param {Object} $parent Parent element
 	 * @param {Object} $element Element to be deleted
 	 */
-	this.confirmDelete = function($parent, $element) {
+	this.confirmDeleteElement = function($parent, $element) {
 		var modalInstance = $uibModal.open({
 			animation: true,
-			templateUrl: 'deleteModal/deleteModalContent.html',
-			controller: 'DeleteModalCtrl',
+			templateUrl: 'deleteElementModal/deleteElementModal.html',
+			controller: 'DeleteElementModalCtrl',
 			size: '',
 			backdrop: 'static',
 			resolve: {
 				parent: function() {
 					return $parent;
 				},
+
 				element: function() {
 					return $element;
 				}
@@ -80,7 +81,6 @@
 		});
 
 		return modalInstance;
-
 	};
 
 	/**

@@ -43,10 +43,10 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeS
 					var result = $scope.syllabusService.addRubricToSyllabus(data, $scope.element, element);
 
 					if (result > 0) {
-						SyllabusService.save(data).then(function (result) {
+						SyllabusService.save(data).then(function(result) {
 							SyllabusService.setSyllabus(result);
 							TreeService.setSelectedItemFromLocation(location);
-						}).catch(function (error) {
+						}).catch(function(error) {
 							AlertService.showAlert('cannotSaveSyllabus');
 						});
 					}
@@ -54,15 +54,23 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeS
 					// hide menu
 					$scope.showAddMenu = false;
 
-					console.log("Modal");
+					ModalService.createElement($type, $scope.element).result.then(function(modalData) {
+						// We create a copy of the current syllabus and we add it the element to be added
+						var data = angular.copy(SyllabusService.syllabus);
+						var selectedItemId = TreeService.selectedItem.id;
+						var location = TreeService.selectedItem.$location;
 
-					// TODO : open edition popup
-					var modal = $scope.modalService.createElement($type, $scope.element);
+						modalData.element.equalsPublished = false;
 
-					modal.result.then(function(createdItem) {
+						SyllabusService.addElementToSyllabus(data, modalData.parent, modalData.element);
 
-					}, function() {
+						SyllabusService.save(data).then(function(result) {
+							SyllabusService.setSyllabus(result);
 
+							TreeService.setSelectedItemFromLocation(location);
+						}).catch(function() {
+							AlertService.showAlert('cannotSaveSyllabus');
+						});
 					});
 				}
 			};
