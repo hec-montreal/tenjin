@@ -51,9 +51,16 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 
 		try {
 			Site site = sakaiProxy.getSite(syllabus.getSiteId());
+			
 			//If syllabus is common check on site
-			if (syllabus.getCommon()){
-				return checkOnSiteGroup(userId,permission, site);
+			if (syllabus.getCommon()) {
+				if (permission == TenjinFunctions.TENJIN_FUNCTION_READ && checkOnSiteGroup(userId, permission, site)) {
+					// if we're checking read permission and it's false for the site, we can continue on to check the sections
+					return true;
+				} else if (permission == TenjinFunctions.TENJIN_FUNCTION_WRITE) {
+					// only allow write on the common if the user has write on the site realm
+					return checkOnSiteGroup(userId, permission, site);
+				}
 			}
 
 			//if he has the permission on the sections associated to the syllabus, he has it on the syllabus
@@ -65,12 +72,10 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 					if (check(userId, permission, group))
 						return true;
 				}
-
 			}
 		} catch (IdUnusedException e) {
 			log.warn("The site " + syllabus.getSiteId() + " does not exist");
 		}
-
 
 		return false;
 	}

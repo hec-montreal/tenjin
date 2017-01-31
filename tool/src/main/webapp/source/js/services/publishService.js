@@ -46,34 +46,6 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 		return ret.promise;
 	};
 
-	// Web service to load a published syllabus
-	this.loadPublishedSyllabus = function() {
-		var tthis = this;
-		var ret = $q.defer();
-
-		$http.get('v1/syllabus/published.json').success(function(data) {
-			ret.resolve(data);
-		}).error(function(data) {
-			ret.reject(data);
-		});
-
-		return ret.promise;
-	};
-
-	// Web service to load the published syllabus list
-	this.loadPublishedSyllabusList = function() {
-		var tthis = this;
-		var ret = $q.defer();
-
-		$http.get('v1/syllabus/published.json').success(function (data) {
-			ret.resolve(data);
-		}).error(function (data) {
-			ret.reject(data);
-		});
-
-		return ret.promise;
-	};
-
 	this.getSections = function() {
 		var sections = [];
 
