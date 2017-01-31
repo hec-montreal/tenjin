@@ -81,6 +81,52 @@
 		return ret.promise;
 	};
 
+	// Web service to load a published syllabus
+	this.loadPublishedSyllabus = function(id) {
+		var tthis = this;
+		var ret = $q.defer();
+		var get_url = "";
+
+		this.working = true;
+
+		// if no id is specified, we can try and get the single published syllabus available to this user
+		if (typeof(id) === "undefined") {
+			get_url = 'v1/syllabus/published.json';
+		} else {
+			get_url = 'v1/syllabus/' + id + '.json?published=true';
+		}
+
+		$http.get(get_url).success(function(data) {
+			tthis.setSyllabus(data);
+			ret.resolve(tthis.getSyllabus());
+		}).error(function(data) {
+			ret.reject(data);
+		}).finally(function () {
+			tthis.working = false;
+		});
+
+		return ret.promise;
+
+		/*var tthis = this;
+		var ret = $q.defer();
+
+		if (typeof(id) === "undefined") {
+			$http.get('v1/syllabus/published.json').success(function(data) {
+				ret.resolve(data);
+			}).error(function(data) {
+				ret.reject(data);
+			});
+		} else {
+			$http.get('v1/syllabus/' + id + '.json?published=true').success(function(data) {
+				ret.resolve(data);
+			}).error(function(data) {
+				ret.reject(data);
+			});			
+		}
+
+		return ret.promise;*/
+	};
+
 	/**
 	 * Delete a list of syllabus
 	 * @param {Array} $syllabusList Syllabus list to delete

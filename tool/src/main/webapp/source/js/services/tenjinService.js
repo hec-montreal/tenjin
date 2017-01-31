@@ -66,11 +66,19 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 			loadSyllabus: function(ctx) {
 				var ret = $q.defer();
 
-				SyllabusService.loadSyllabus(ctx.syllabusId).then(function() {
-					ret.resolve();
-				}).catch(function(e) {
-					ret.reject(e);
-				});
+				if (UserService.getProfile().syllabusWrite.indexOf(parseInt(ctx.syllabusId)) > -1) {
+					SyllabusService.loadSyllabus(ctx.syllabusId).then(function() {
+						ret.resolve();
+					}).catch(function(e) {
+						ret.reject(e);
+					});
+				} else {
+					SyllabusService.loadPublishedSyllabus(ctx.syllabusId).then(function() {
+						ret.resolve();
+					}).catch(function(e) {
+						ret.reject(e);
+					});					
+				}
 
 				return ret.promise;
 			},
@@ -107,7 +115,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 			loadSyllabus: function(ctx) {
 				var ret = $q.defer();
 
-				PublishService.loadPublishedSyllabus().then(function() {
+				SyllabusService.loadPublishedSyllabus().then(function() {
 					ret.resolve();
 				}).catch(function(e) {
 					ret.reject(e);
