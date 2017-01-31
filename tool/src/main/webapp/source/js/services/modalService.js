@@ -119,7 +119,7 @@
 		return modalInstance;
 	};
 
-	this.unassignSections = function (sections) {
+	this.unassignSections = function(sections) {
 		var modalInstance = $uibModal.open({
 			animation: true,
 			templateUrl: 'unassignSectionsModal/unassignSectionsModal.html',

@@ -1,6 +1,6 @@
 ﻿tenjinApp.controller('DeleteSyllabusModalCtrl', ['$scope', '$uibModalInstance', 'SyllabusService', 'AlertService', 'syllabusList', function($scope, $uibModalInstance, SyllabusService, AlertService, syllabusList) {
 	'use strict';
-	
+
 	$scope.syllabusList = syllabusList.syllabusList;
 
 	$scope.syllabusToDelete = [];
@@ -16,11 +16,7 @@
 	}
 
 	$scope.ok = function() {
-		SyllabusService.deleteSyllabusList($scope.syllabusToDelete).catch(function(data) {
-			AlertService.showAlert('cannotDeleteSyllabusList');
-		});
-
-		$uibModalInstance.close('');
+		$uibModalInstance.close($scope.syllabusToDelete);
 	};
 
 	/**

@@ -33,7 +33,7 @@
 				}
 			}
 
-			SyllabusService.createSyllabus(UserService.getProfile().siteId, data.name, sections).then(function() {
+			SyllabusService.create(UserService.getProfile().siteId, data.name, sections).then(function() {
 				refresh();
 			}).catch(function() {
 				AlertService.showAlert('cannotSaveSyllabus');
@@ -50,12 +50,10 @@
 			}
 		}
 
-		// Create modal
-		var modal = ModalService.deleteSyllabus(syllabusList);
-
-		// Processing result
-		modal.result.then(function(selectedItem) {
-			refresh();
+		ModalService.deleteSyllabus(syllabusList).result.then(function(syllabusToDelete) {
+			SyllabusService.deleteSyllabusList(syllabusToDelete).catch(function(data) {
+				AlertService.showAlert('cannotDeleteSyllabusList');
+			});
 		});
 	};
 

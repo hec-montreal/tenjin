@@ -33,7 +33,7 @@
 		return ret.promise;
 	};
 
-	this.createSyllabus = function(siteId, name, sections) {
+	this.create = function(siteId, name, sections) {
 		var common = this.getCommonSyllabus();
 
 		var newSyllabus = {
@@ -48,10 +48,6 @@
 		};
 
 		return this.save(newSyllabus);
-	};
-
-	this.updateSyllabus = function(syllabus) {
-
 	};
 
 	// Load a syllabus and set it as the current one
@@ -98,46 +94,27 @@
 	this.loadPublishedSyllabus = function(id) {
 		var tthis = this;
 		var ret = $q.defer();
-		var get_url = "";
+		var getUrl = "";
 
 		this.working = true;
 
 		// if no id is specified, we can try and get the single published syllabus available to this user
 		if (typeof(id) === "undefined") {
-			get_url = 'v1/syllabus/published.json';
+			getUrl = 'v1/syllabus/published.json';
 		} else {
-			get_url = 'v1/syllabus/' + id + '.json?published=true';
+			getUrl = 'v1/syllabus/' + id + '.json?published=true';
 		}
 
-		$http.get(get_url).success(function(data) {
+		$http.get(getUrl).success(function(data) {
 			tthis.setSyllabus(data);
 			ret.resolve(tthis.getSyllabus());
 		}).error(function(data) {
 			ret.reject(data);
-		}).finally(function () {
+		}).finally(function() {
 			tthis.working = false;
 		});
 
 		return ret.promise;
-
-		/*var tthis = this;
-		var ret = $q.defer();
-
-		if (typeof(id) === "undefined") {
-			$http.get('v1/syllabus/published.json').success(function(data) {
-				ret.resolve(data);
-			}).error(function(data) {
-				ret.reject(data);
-			});
-		} else {
-			$http.get('v1/syllabus/' + id + '.json?published=true').success(function(data) {
-				ret.resolve(data);
-			}).error(function(data) {
-				ret.reject(data);
-			});			
-		}
-
-		return ret.promise;*/
 	};
 
 	/**
@@ -145,12 +122,12 @@
 	 * @param {Array} $syllabusList Syllabus list to delete
 	 * @return {Object} Promise
 	 */
-	this.deleteSyllabusList = function($syllabusList) {
+	this.deleteSyllabusList = function(syllabusListToDelete) {
 		var idList = [];
 		var newSyllabusList = [];
 
-		for (var i = 0; i < $syllabusList.length; i++) {
-			idList.push($syllabusList[i].id);
+		for (var i = 0; i < syllabusListToDelete.length; i++) {
+			idList.push(syllabusListToDelete[i].id);
 		}
 
 		for (var i = 0; i < this.syllabusList.length; i++) {
