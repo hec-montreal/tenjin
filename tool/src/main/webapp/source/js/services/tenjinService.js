@@ -9,11 +9,11 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 			var updatedResource, updatedResourceId;
 
 			for (var i = 0; i < data.length; i++) {
-				if (data[i].state === 'fulfilled') {
+				if (data[i].citations) {
 					updatedResourceId = citationsLists.resourceIds[i];
 					updatedResource = ResourcesService.getResource(updatedResourceId);
 
-					updatedResource.resourceChildren = CitationsService.updateJsonProperties(updatedResourceId, data[i].value.citations);
+					updatedResource.resourceChildren = CitationsService.updateJsonProperties(updatedResourceId, data[i].citations);
 				}
 			}
 
