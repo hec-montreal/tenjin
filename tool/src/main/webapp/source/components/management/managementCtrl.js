@@ -1,17 +1,43 @@
 ﻿tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', '$q', function($scope, $timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config, $q) {
 	'use strict';
 
+	var refresh = function() {
+		UserService.loadProfile().then(function() {
+			SyllabusService.loadSyllabusList().catch(function() {
+				AlertService.showAlert("cannotLoadBaseData");
+			});
+		}).catch(function() {
+			AlertService.showAlert("cannotLoadBaseData");
+		});
+	};
+
+	var createSyllabus = function(chosenSections) {
+		SyllabusService.save(newSyllabus).then(function(data) {
+			SyllabusService.syllabusList.push(data);
+
+			syllabusAdded = data;
+		}).catch(function(data) {
+			AlertService.showAlert('cannotSaveSyllabus');
+		});
+	};
+
+	$scope.refresh = refresh;
+
 	$scope.addSyllabus = function() {
-		// Get sections and label
-		var data = {};
+		ModalService.createSyllabus().result.then(function(data) {
+			var sections = [];
 
-		// Create modal
-		var modal = ModalService.createSyllabus(data);
+			for (var i = 0; i < data.sections.length; i++) {
+				if (data.sections[i].checked) {
+					sections.push(data.sections[i].id);
+				}
+			}
 
-		// Processing result
-		modal.result.then(function($syllabus) {
-			// update syllabus list with last modified syllabus as param 
-			updateSyllabusList($syllabus);
+			SyllabusService.createSyllabus(UserService.getProfile().siteId, data.name, sections).then(function() {
+				refresh();
+			}).catch(function() {
+				AlertService.showAlert('cannotSaveSyllabus');
+			});
 		});
 	};
 
@@ -29,9 +55,7 @@
 
 		// Processing result
 		modal.result.then(function(selectedItem) {
-
-		}, function() {
-
+			refresh();
 		});
 	};
 
@@ -53,6 +77,7 @@
 	 */
 	$scope.showSections = function($syllabus) {
 		var selected = [];
+
 		angular.forEach($scope.allSections, function(s) {
 			if ($syllabus.sections.indexOf(s.id) >= 0) {
 				selected.push(s.name);
@@ -62,8 +87,8 @@
 		return selected.length ? selected.join(', ') : $translate.instant("MANAGEMENT_NO_SECTION");
 	};
 
-	$scope.updateTitle = function($data, $syllabus) {
-		if ($data.length === 0) {
+	$scope.updateTitle = function(data, syllabus) {
+		if (data.length === 0) {
 			return $translate.instant("MANAGEMENT_ERREUR_NAME");
 		}
 
@@ -71,9 +96,11 @@
 
 		var ret = $q.defer();
 
-		SyllabusService.save(syllabus).then(function () {
+		SyllabusService.save(syllabus).then(function() {
 			ret.resolve();
-		}).catch(function () {
+
+			refresh();
+		}).catch(function() {
 			AlertService.showAlert('cannotSaveSyllabus');
 
 			ret.reject();
@@ -82,17 +109,17 @@
 		return ret.promise;
 	};
 
-	$scope.updateSections = function($data, $syllabus) {
+	$scope.updateSections = function(data, syllabus) {
 		var warn = false;
-		var initialSections = $syllabus.sections;
+		var initialSections = syllabus.sections;
 
-		for (var i = 0; i < $syllabus.sections.length; i++) {
+		for (var i = 0; i < syllabus.sections.length; i++) {
 			var isIn = false;
 
-			for (var j = 0; j < $data.length; j++) {
-				if ($data[j] === $syllabus.sections[i]) {
+			for (var j = 0; j < data.length; j++) {
+				if (data[j] === syllabus.sections[i]) {
 					isIn = true;
-					
+
 					break;
 				}
 			}
@@ -106,17 +133,19 @@
 
 		var doUpdate = function() {
 			// keep a reference on the old sections
-			lastModifiedSyllabusBeforeUpdate = angular.copy($syllabus);
+			lastModifiedSyllabusBeforeUpdate = angular.copy(syllabus);
 			// keep a reference to the last modified syllabus (to update sections of other syllabus)
-			lastModifiedSyllabus = angular.copy($syllabus);
+			lastModifiedSyllabus = angular.copy(syllabus);
 			// assign sections
-			lastModifiedSyllabus.sections = $data;
+			lastModifiedSyllabus.sections = data;
 
 			var ret = $q.defer();
 
-			SyllabusService.save(lastModifiedSyllabus).then(function () {
+			SyllabusService.save(lastModifiedSyllabus).then(function() {
 				ret.resolve();
-			}).catch(function () {
+
+				refresh();
+			}).catch(function() {
 				AlertService.showAlert('cannotSaveSyllabus');
 
 				ret.reject();
@@ -127,20 +156,20 @@
 
 		if (warn) {
 			// Create modal
-			var modal = ModalService.unassignSections($data);
+			var modal = ModalService.unassignSections(data);
 
 			// Processing result
 			modal.result.then(function(selectedItem) {
 				return doUpdate();
 			}, function() {
-				$syllabus.sections = initialSections;
+				syllabus.sections = initialSections;
 			});
 		} else {
 			return doUpdate();
 		}
 	};
 
-	var updateSyllabusList = function($syllabusModified, $oldSyllabus) {
+	/*var updateSyllabusList = function($syllabusModified, $oldSyllabus) {
 		if ($syllabusModified) {
 			var syllabusList = SyllabusService.getSyllabusList();
 
@@ -203,18 +232,19 @@
 				}
 			}
 		}
-	};
+	};*/
 
-	$scope.updateSyllabusList = function($syllabus) {
+	/*$scope.updateSyllabusList = function($syllabus) {
 		// update syllabus
 		$syllabus = angular.copy(lastModifiedSyllabus);
 
 		// update syllabus list with last modified syllabus as param 
 		updateSyllabusList(lastModifiedSyllabus, lastModifiedSyllabusBeforeUpdate);
+
 		// reset tmp variables
 		lastModifiedSyllabus = null;
 		lastModifiedSyllabusBeforeUpdate = null;
-	};
+	};*/
 
 	$scope.redirectToSyllabus = function($syllabusId) {
 		SyllabusService.setCurrentSyllabusId($syllabusId);

@@ -68,6 +68,7 @@
 		if(syllabus.common){
 			return false;
 		}
+		
 		return this.isAllowed(config.userProfileViews[6], syllabus);
 	};
 

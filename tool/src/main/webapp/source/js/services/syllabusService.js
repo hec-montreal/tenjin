@@ -26,18 +26,31 @@
 			ret.resolve(data);
 		}).error(function(data) {
 			ret.reject(data);
-		}).finally(function () {
+		}).finally(function() {
 			tthis.working = false;
 		});
 
 		return ret.promise;
 	};
 
-	this.createSyllabus = function(syllabus){
-		return this.save(syllabus);
+	this.createSyllabus = function(siteId, name, sections) {
+		var common = this.getCommonSyllabus();
+
+		var newSyllabus = {
+			'id': null,
+			'siteId': siteId,
+			'sections': sections,
+			'title': name,
+			'common': false,
+			'templateId': (common ? common.templateId : null),
+			'elements': null,
+			'locale': 'fr_CA'
+		};
+
+		return this.save(newSyllabus);
 	};
 
-	this.updateSyllabus = function(syllabus){
+	this.updateSyllabus = function(syllabus) {
 
 	};
 
@@ -54,7 +67,7 @@
 			ret.resolve(tthis.getSyllabus());
 		}).error(function(data) {
 			ret.reject(data);
-		}).finally(function () {
+		}).finally(function() {
 			tthis.working = false;
 		});
 
@@ -68,13 +81,13 @@
 
 		this.working = true;
 
-		$http.get('v1/syllabus.json').success(function (data) {
+		$http.get('v1/syllabus.json').success(function(data) {
 			tthis.setSyllabusList(data);
 
 			ret.resolve(data);
-		}).error(function (data) {
+		}).error(function(data) {
 			ret.reject(data);
-		}).finally(function () {
+		}).finally(function() {
 			tthis.working = false;
 		})
 
@@ -119,9 +132,9 @@
 
 		$http.get('v1/syllabus/' + idList.join(',') + '/delete.json').success(function(data) {
 			ret.resolve(data);
-		}).error(function (data) {
+		}).error(function(data) {
 			ret.reject(data);
-		}).finally(function () {
+		}).finally(function() {
 			tthis.working = false;
 		});
 
@@ -152,11 +165,11 @@
 		var tthis = this;
 		var ret = $q.defer();
 
-		$http.get('v1/template/1/rules.json').success(function (data) {
+		$http.get('v1/template/1/rules.json').success(function(data) {
 			tthis.setTemplate(data);
 
 			ret.resolve(tthis.getTemplate());
-		}).error(function (data) {
+		}).error(function(data) {
 			ret.reject(reason);
 		});
 
