@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', '$q', function($scope, $timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config, $q) {
+tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', '$q', function($scope, $timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config, $q) {
 	'use strict';
 
 	var refresh = function() {
@@ -157,7 +157,7 @@
 			var modal = ModalService.unassignSections(data);
 
 			// Processing result
-			modal.result.then(function(selectedItem) {
+			modal.result.then(function() {
 				return doUpdate();
 			}, function() {
 				syllabus.sections = initialSections;
