@@ -264,16 +264,6 @@
 		1: "PUBLISHED_SYLLABUS",
 		2: "DRAFTED_SYLLABUS",
 		3: "NOTATTRIBUTED_SYLLABUS"
-	},
-
-	userProfileViews: {
-		1: "management",
-		2: "SectionRead",
-		3: "sectionWrite",
-		4: "SectionPublish",
-		5: "syllabusRead",
-		6: "syllabusWrite",
-		7: "syllabusPublish"
 	}
 });
 

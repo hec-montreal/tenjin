@@ -9,7 +9,7 @@
 	this.confirmDeleteElement = function($parent, $element) {
 		var modalInstance = $uibModal.open({
 			animation: true,
-			templateUrl: 'deleteElementModal/deleteElementModal.html',
+			templateUrl: 'modals/deleteElementModal/deleteElementModal.html',
 			controller: 'DeleteElementModalCtrl',
 			size: '',
 			backdrop: 'static',
@@ -35,7 +35,7 @@
 	this.createElement = function($type, $parent) {
 		var modalInstance = $uibModal.open({
 			animation: true,
-			templateUrl: 'setElementModal/setElementModal.html',
+			templateUrl: 'modals/setElementModal/setElementModal.html',
 			controller: 'SetElementModalCtrl',
 			size: '',
 			backdrop: 'static',
@@ -63,7 +63,7 @@
 	this.editElement = function($parent, $element) {
 		var modalInstance = $uibModal.open({
 			animation: true,
-			templateUrl: 'setElementModal/setElementModal.html',
+			templateUrl: 'modals/setElementModal/setElementModal.html',
 			controller: 'SetElementModalCtrl',
 			size: '',
 			backdrop: 'static',
@@ -89,7 +89,7 @@
 	this.createSyllabus = function() {
 		var modalInstance = $uibModal.open({
 			animation: true,
-			templateUrl: 'createSyllabusModal/createSyllabusModal.html',
+			templateUrl: 'modals/createSyllabusModal/createSyllabusModal.html',
 			controller: 'CreateSyllabusModalCtrl',
 			size: '',
 			backdrop: 'static'
@@ -105,7 +105,7 @@
 	this.deleteSyllabus = function($syllabusList) {
 		var modalInstance = $uibModal.open({
 			animation: true,
-			templateUrl: 'deleteSyllabusModal/deleteSyllabusModal.html',
+			templateUrl: 'modals/deleteSyllabusModal/deleteSyllabusModal.html',
 			controller: 'DeleteSyllabusModalCtrl',
 			size: '',
 			backdrop: 'static',
@@ -119,10 +119,23 @@
 		return modalInstance;
 	};
 
+/*	this.externalImport = function() {
+		console.log('openmodal');
+		var modalInstance = $uibModal.open({
+			animation: true,
+			templateUrl: 'modals/externalImportModal/externalImportModal.html',
+			controller: 'externalImportModalCtrl',
+			size: '',
+			backdrop: 'static'
+		});
+
+		return modalInstance;
+	}
+*/
 	this.unassignSections = function(sections) {
 		var modalInstance = $uibModal.open({
 			animation: true,
-			templateUrl: 'unassignSectionsModal/unassignSectionsModal.html',
+			templateUrl: 'modals/unassignSectionsModal/unassignSectionsModal.html',
 			controller: 'UnassignSectionsModalCtrl',
 			size: '',
 			backdrop: 'static'
@@ -134,7 +147,7 @@
 	this.prePublishSyllabus = function() {
 		return $uibModal.open({
 			animation: true,
-			templateUrl: 'publishModal/publishModal.html',
+			templateUrl: 'modals/publishModal/publishModal.html',
 			controller: 'PublishModalCtrl',
 			size: '',
 			backdrop: 'static'

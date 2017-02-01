@@ -16,7 +16,7 @@ tenjinApp.directive('isAllowed', ['UserService',function(UserService) {
 			{ 
 				$element.show;
 			}else{
-				$element.hide;
+				$element.hidden = true;
 			}
 			
 		}

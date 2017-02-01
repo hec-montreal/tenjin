@@ -152,12 +152,6 @@ public class UserController {
 			usersGroup = site.getGroups();
 			for (Group group: usersGroup){
 				if (group.getProviderGroupId() != null){
-					if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, group)) {
-						section = new HashMap<String, String>();
-						section.put("id", group.getId());
-						section.put("name", group.getTitle());
-						sectionRead.add(section);
-					}
 					if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, group)) {
 						section = new HashMap<String, String>();
 						section.put("id", group.getId());
@@ -180,8 +174,7 @@ public class UserController {
 			return null;
 		}
 
-		profile.put("sectionRead", sectionRead);
-		profile.put("sectionWrite", sectionWrite);
+		profile.put("sectionAssign", sectionWrite);
 		profile.put("sectionPublish", sectionPublish);
 
 		//Permissions to the syllabi

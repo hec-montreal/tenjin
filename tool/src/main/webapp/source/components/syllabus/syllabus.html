@@ -13,40 +13,32 @@
 				<div class="toolbar-wrapper">
 					<div class="toolbar-left">
 						<!-- Management button -->
-						<is-allowed data-permission="config.userProfileViews[1]" >
-							<button  ui-sref="management">
-								{{ 'BUTTON_MANAGEMENT' | translate }}
+						<button  data-ng-show = "userService.isAllowed('management')" ui-sref="management">
+							{{ 'BUTTON_MANAGEMENT' | translate }}
+						</button>
+
+					<!-- Groups list-->
+						<div  data-ng-show = "userService.isAllowed('syllabusWrite')" class="btn-group button-list" uib-dropdown keyboard-nav>
+							<button id="btn-group-list" class="list" ng-disabled="syllabusService.working" uib-dropdown-toggle>
+								<span class="add-label">{{syllabusService.syllabus.title}}</span> <span class="caret"></span> 
 							</button>
-						</is-allowed>
 
-						<!-- Groups list-->
-						<is-allowed data-permission="config.userProfileViews[6]" >
-							<div  class="btn-group button-list" uib-dropdown keyboard-nav>
-								<button id="btn-group-list" class="list" ng-disabled="syllabusService.working" uib-dropdown-toggle>
-									<span class="add-label">{{syllabusService.syllabus.title}}</span> <span class="caret"></span> 
-								</button>
-
-								<ul uib-dropdown-menu class="list-menu-add-left" role="menu" aria-labelledby="btn-group-list">
-									<li role="menuitem" ng-repeat="syllabus in syllabusService.syllabusList">
-										<a href="" ng-click="selectSyllabus(syllabus)">{{::syllabus.title }} <span ng-if="syllabus.instructors.length > 0"> - {{::syllabus.instructors}}</span></a> 
-									</li> 
-								</ul>
-							</div>
-						</is-allowed>
+							<ul uib-dropdown-menu class="list-menu-add-left" role="menu" aria-labelledby="btn-group-list">
+								<li role="menuitem" ng-repeat="syllabus in syllabusService.syllabusList">
+									<a href="" ng-click="selectSyllabus(syllabus)">{{::syllabus.title }} <span ng-if="syllabus.instructors.length > 0"> - {{::syllabus.instructors}}</span></a> 
+								</li> 
+							</ul>
+						</div>
 					</div>
 
 					<div class="toolbar-right">
-						<is-allowed data-permission="config.userProfileViews[6]" data-syllabus= "syllabusService.syllabus" >
-							<button class="action"  ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
-								<span class="glyphicon glyphicon-floppy-disk"></span> {{ 'BUTTON_SAVE' | translate }}
-							</button>
-						</is-allowed>
+						<button data-ng-show = "userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="action"  ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
+							<span class="glyphicon glyphicon-floppy-disk"></span> {{ 'BUTTON_SAVE' | translate }}
+						</button>
 
-						<is-allowed data-permission="config.userProfileViews[7]" data-syllabus= "syllabusService.syllabus" >
-							<button class="action" ng-click="startPublish()">
-								<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
-							</button>
-						</is-allowed>
+						<button data-ng-show = "userService.isAllowed('syllabusPublish', syllabusService.syllabus)" class="action" ng-click="startPublish()">
+							<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
+						</button>
 					</div>
 				</div>
 			</div>

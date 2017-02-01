@@ -24,23 +24,23 @@
 	* Permissions used to access content
 	*/
 	this.isAllowed = function(view, syllabus){
-		if (config.userProfileViews[3] === view){
+		if ('sectionAssign' === view){
 			return this.profile.sections.filter(function($syllabus){
 				return $syllabus.id === syllabus.id;}).length > 0;
 		} 
-		if (config.userProfileViews[5] === view){
+		if ('syllabusRead' === view){
 			return this.profile.syllabusRead.filter(
 				function(syllabusId){ 
 					return syllabusId ===syllabus.id;}).length > 0;
 		}
 		//Write syllabus
-		if (config.userProfileViews[6] === view){
+		if ('syllabusWrite' === view){
 			return this.profile.syllabusWrite.filter(
 				function(syllabusId){ 
 					return syllabusId ===syllabus.id;}).length > 0;
 		}
 		//Publish syllabus
-		if (config.userProfileViews[7] === view){
+		if ('syllabusPublish' === view){
 			return this.profile.syllabusPublish.filter(
 				function(syllabusId){ 
 					return syllabusId ===syllabus.id;}).length > 0;
@@ -51,14 +51,14 @@
 	* Permissions used to access views
 	*/
 	this.isAllowedView = function(view){
-		if (config.userProfileViews[1] === view){
+		if ('management' === view){
 			return this.profile.managerView;
 		}
 
-		if (config.userProfileViews[3] === view){
-			return this.profile.sectionWrite.length > 0; 
+		if ('sectionAssign' === view){
+			return this.profile.sectionAssign.length > 0; 
 		} 
-		if (config.userProfileViews[5] === view){
+		if ('syllabusRead' === view){
 			return this.profile.syllabusRead.length > 0;
 		}
 
@@ -69,15 +69,15 @@
 			return false;
 		}
 		
-		return this.isAllowed(config.userProfileViews[6], syllabus);
+		return this.isAllowed('syllabusWrite', syllabus);
 	};
 
 	this.canEditSyllabusSection = function(syllabus){
-		return ((!syllabus.common) && (this.isAllowed(config.userProfileViews[6], syllabus)));
+		return ((!syllabus.common) && (this.isAllowed('syllabusWrite', syllabus)));
 	};
 
 	this.canEditSyllabus = function(syllabus){
-		return  this.isAllowed(config.userProfileViews[6], syllabus);
+		return  this.isAllowed('syllabusWrite', syllabus);
 	};
 
 
@@ -91,7 +91,7 @@
 
 
 	this.getSection = function (sectionId){
-		this.profile.sectionWrite.filter(function($section){
+		this.profile.sectionAssign.filter(function($section){
 			return $section.id === sectionId;
 		});
 	};
