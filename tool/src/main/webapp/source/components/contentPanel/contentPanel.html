@@ -2,34 +2,34 @@
 	<div class="title">
 		<div class="left">
 			<h2>
-				{{treeService.selectedItem.title}}
-				<span data-ng-if="treeService.selectedItem.type == 'evaluation'"> ({{treeService.selectedItem.attributes.evaluationWeight}}%)</span>
-				<span data-ng-if="treeService.selectedItem.type == 'exam'"> ({{treeService.selectedItem.attributes.examWeight}}%)</span>
+				{{treeService.selectedElement.title}}
+				<span data-ng-if="treeService.selectedElement.type == 'evaluation'"> ({{treeService.selectedElement.attributes.evaluationWeight}}%)</span>
+				<span data-ng-if="treeService.selectedElement.type == 'exam'"> ({{treeService.selectedElement.attributes.examWeight}}%)</span>
 			</h2>
 		</div>
 
 		<div class="right">
-			<add-element-menu id="menu-add" data-add-element-menu="treeService.selectedItem"  class="container-menu-add"></add-element-menu>
+			<add-element-menu id="menu-add" data-add-element-menu="treeService.selectedElement"  class="container-menu-add"></add-element-menu>
 		</div>
 
 		<div style="clear: both;"></div>
 	</div>
 
-	<div data-ng-if="treeService.selectedItem.type == 'evaluation'">
-		<div data-evaluationattr-element="treeService.selectedItem"></div>
+	<div data-ng-if="treeService.selectedElement.type == 'evaluation'">
+		<div data-evaluationattr-element="treeService.selectedElement"></div>
 	</div>
 
-	<div data-ng-if="treeService.selectedItem.type == 'exam'">
-		<div data-examattr-element="treeService.selectedItem"></div>
+	<div data-ng-if="treeService.selectedElement.type == 'exam'">
+		<div data-examattr-element="treeService.selectedElement"></div>
 	</div>
 
-	<div ui-tree="treeOptions" data-drag-enabled="true" data-ng-model="treeService.selectedItem">
-		<ol ui-tree-nodes="" ng-model="treeService.selectedItem.elements" class="list-element">
-			<li ng-repeat="item in treeService.selectedItem.elements" data-nodrag="{{!userService.canEditElement(element, syllabusService.syllabus)}}" ui-tree-node>
+	<div ui-tree="treeOptions" data-drag-enabled="true" data-ng-model="treeService.selectedElement">
+		<ol ui-tree-nodes="" ng-model="treeService.selectedElement.elements" class="list-element">
+			<li ng-repeat="item in treeService.selectedElement.elements" data-nodrag="{{!userService.canEditSyllabus(syllabusService.syllabus)}}" ui-tree-node>
 				<div data-content-panel-directive="item" index="$index"></div>
 				
 				<ol class="listing" ui-tree-nodes="" data-ng-model="item.elements" class="list-element list-element-leaf" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite' || item.type === 'rubric'" >
-					<li data-ng-repeat="item in item.elements" data-nodrag="{{!userService.canEditElement(element, syllabusService.syllabus)}}" ui-tree-node ui-tree-handle>
+					<li data-ng-repeat="item in item.elements" data-nodrag="{{!userService.canEditSyllabus(syllabusService.syllabus)}}" ui-tree-node ui-tree-handle>
 						<div data-content-panel-directive="item" index="$index"></div>
 					</li>
 				</ol>

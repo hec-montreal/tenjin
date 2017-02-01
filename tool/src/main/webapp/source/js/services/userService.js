@@ -67,15 +67,23 @@
 
 	};
 
-	this.canEditElement= function(element, syllabus){
-		if(element.common){
+	this.canEditSyllabusTitle= function(syllabus){
+		if(syllabus.common){
 			return false;
 		}
 		
 		return this.isAllowed('syllabusWrite', syllabus);
 	};
 
-	
+	this.canEditSyllabusSection = function(syllabus){
+		return ((!syllabus.common) && (this.isAllowed('syllabusWrite', syllabus)));
+	};
+
+	this.canEditSyllabus = function(syllabus){
+		return  this.isAllowed('syllabusWrite', syllabus);
+	};
+
+
 	/**
 	 * Get the user profile
 	 * @return The user profile
