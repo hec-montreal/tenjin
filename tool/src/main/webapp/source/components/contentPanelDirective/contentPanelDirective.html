@@ -1,8 +1,8 @@
 <div ui-tree-handle class="tree-node tree-node-content">
-	<div data-ng-switch="element.type" data-ng-class="['element-host', {'important': element.important, 'no-buttons': !userService.canEditSyllabus(syllabusService.syllabus)}]">		<!-- Display buttons -->
-		<element-buttons data-ng-if="userService.canEditSyllabus(syllabusService.syllabus)" data-element-buttons="element" data-noedit="!userService.canEditSyllabus(syllabusService.syllabus)" data-nodelete="!userService.canEditSyllabus(syllabusService.syllabus)" data-nodrag="!userService.canEditSyllabus(syllabusService.syllabus)" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite}]"></element-buttons>
+	<div data-ng-switch="element.type" data-ng-class="['element-host', {'important': element.important, 'no-buttons': !userService.canEditElement(element, syllabusService.syllabus)}]">		<!-- Display buttons -->
+		<element-buttons data-ng-if="userService.canEditElement(element, syllabusService.syllabus)" data-element-buttons="element" data-noedit="!userService.canEditElement(element, syllabusService.syllabus)" data-nodelete="!userService.canEditElement(element, syllabusService.syllabus)" data-nodrag="!userService.canEditElement(element, syllabusService.syllabus)" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite}]"></element-buttons>
 
-			<div data-ng-show = "userService.isAllowed('sectionAssign', syllabusService.syllabus)" data-ng-if="!element.equalsPublished && !element.composite" class="not-published-notice">
+			<div data-ng-show = "userService.isAllowed('syllabusWrite', syllabusService.syllabus)" data-ng-if="!element.equalsPublished && !element.composite" class="not-published-notice">
 				<h3>{{ 'NOT_PUBLISHED' | translate }}</h3>
 			</div>
 
