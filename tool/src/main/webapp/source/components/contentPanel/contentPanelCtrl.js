@@ -23,7 +23,7 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 
 	$scope.treeOptions = {
 		name: "contentPanelTree",
-		item: TreeService.selectedItem,
+		item: TreeService.selectedElement,
 
 		accept: function(sourceNodeScope, destNodesScope, destIndex) {
 			// test if nodes come from the same tree

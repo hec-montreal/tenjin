@@ -37,8 +37,8 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeS
 					$scope.mode = 'creation';
 
 					var data = angular.copy($scope.syllabusService.syllabus);
-					var selectedItemId = $scope.treeService.selectedItem.id;
-					var location = $scope.treeService.selectedItem.$location;
+					var selectedItemId = TreeService.selectedElement.id;
+					var location = TreeService.selectedElement.$location;
 
 					var result = $scope.syllabusService.addRubricToSyllabus(data, $scope.element, element);
 
@@ -57,8 +57,8 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeS
 					ModalService.createElement($type, $scope.element).result.then(function(modalData) {
 						// We create a copy of the current syllabus and we add it the element to be added
 						var data = angular.copy(SyllabusService.syllabus);
-						var selectedItemId = TreeService.selectedItem.id;
-						var location = TreeService.selectedItem.$location;
+						var selectedItemId = TreeService.selectedElement.id;
+						var location = TreeService.selectedElement.$location;
 
 						modalData.element.equalsPublished = false;
 

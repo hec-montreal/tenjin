@@ -11,7 +11,6 @@ tenjinApp.directive('isAllowed', ['UserService',function(UserService) {
 
 		
 		link:  function ($scope, $element, attrs) {
-			console.log ($scope.permission);
 			if (($scope.syllabus && UserService.isAllowed($scope.permission, $scope.syllabus)) ||
 				UserService.isAllowedView($scope.permission))
 			{ 

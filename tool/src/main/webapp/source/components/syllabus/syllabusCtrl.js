@@ -18,7 +18,7 @@
 
 			// Set selected item
 			if (SyllabusService.syllabus.elements.length > 0) {
-				TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
+				TreeService.selectElement(SyllabusService.syllabus.elements[0]);
 			}
 
 			ret.resolve();
@@ -46,10 +46,7 @@
 	};
 
 	$scope.save = function() {
-		SyllabusService.saveCurrent().then(function(data) {
-			SyllabusService.setSyllabus(data);
-			TreeService.setSelectedItemFromLocation(location);
-		}).catch(function() {
+		SyllabusService.saveCurrent().catch(function() {
 			AlertService.showAlert('cannotSaveSyllabus');
 		});
 	};

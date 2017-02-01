@@ -1,4 +1,4 @@
-﻿tenjinApp.service('SyllabusService', ['AlertService', '$translate', '$q', '$http', function(AlertService, $translate, $q, $http) {
+﻿tenjinApp.service('SyllabusService', ['AlertService', 'TreeService', '$translate', '$q', '$http', function(AlertService, TreeService, $translate, $q, $http) {
 	'use strict';
 
 	this.syllabus = null;
@@ -19,10 +19,15 @@
 		var tthis = this;
 		var ret = $q.defer();
 		var url = syllabus.id ? 'v1/syllabus/' + syllabus.id + '.json' : 'v1/syllabus.json';
+		var selectedElement = TreeService.findSelectedElement(syllabus);
 
 		this.working = true;
 
 		$http.post(url, syllabus).success(function(data) {
+			tthis.setSyllabus(data);
+
+			TreeService.selectElementById(selectedElement.id, tthis.getSyllabus());
+
 			ret.resolve(data);
 		}).error(function(data) {
 			ret.reject(data);

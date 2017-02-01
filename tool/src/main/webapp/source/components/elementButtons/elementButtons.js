@@ -24,7 +24,7 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'TreeS
 				ModalService.confirmDeleteElement(parent, $element).result.then(function() {
 					// We copy the current syllabus
 					var data = angular.copy(SyllabusService.syllabus);
-					var location = TreeService.selectedItem.$location;
+					var location = TreeService.selectedElement.$location;
 
 					SyllabusService.deleteElementFromSyllabus(data, parent, $element);
 
@@ -42,8 +42,8 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'TreeS
 
 				ModalService.editElement(parent, $element).result.then(function(elementData) {
 					var data = angular.copy(SyllabusService.syllabus);
-					var selectedItemId = TreeService.selectedItem.id;
-					var location = TreeService.selectedItem.$location;
+					var selectedItemId = TreeService.selectedElement.id;
+					var location = TreeService.selectedElement.$location;
 
 					elementData.element.equalsPublished = false;
 
