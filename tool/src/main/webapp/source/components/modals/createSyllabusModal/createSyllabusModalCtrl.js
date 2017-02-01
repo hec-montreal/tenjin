@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('CreateSyllabusModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'SyllabusService', 'UserService', 'AlertService', function($scope, $uibModalInstance, $translate, SyllabusService, UserService, AlertService) {
+﻿tenjinApp.controller('CreateSyllabusModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'SyllabusService', 'UserService', function($scope, $uibModalInstance, $translate, SyllabusService, UserService) {
 	'use strict';
 
 	// Init syllabus data : name of syllabus + sections

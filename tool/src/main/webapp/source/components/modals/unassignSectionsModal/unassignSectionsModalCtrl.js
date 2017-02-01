@@ -1,4 +1,4 @@
-tenjinApp.controller('UnassignSectionsModalCtrl', ['$scope', '$uibModalInstance', function($scope, $uibModalInstance, parent, element, SyllabusService, TreeService, AlertService) {
+tenjinApp.controller('UnassignSectionsModalCtrl', ['$scope', '$uibModalInstance', function($scope, $uibModalInstance) {
 	'use strict';
 
 	$scope.ok = function() {

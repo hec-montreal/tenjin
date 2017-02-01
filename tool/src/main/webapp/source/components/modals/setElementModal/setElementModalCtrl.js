@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('SetElementModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'type', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', 'config', function($scope, $uibModalInstance, $translate, type, parent, element, SyllabusService, TreeService, AlertService, config) {
+﻿tenjinApp.controller('SetElementModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'type', 'parent', 'element', 'SyllabusService', 'config', function($scope, $uibModalInstance, $translate, type, parent, element, SyllabusService, config) {
 	'use strict';
 
 	$scope.parent = parent;

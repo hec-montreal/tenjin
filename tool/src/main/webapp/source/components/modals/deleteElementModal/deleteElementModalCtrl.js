@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('DeleteElementModalCtrl', ['$scope', '$uibModalInstance', 'parent', 'element', 'SyllabusService', 'TreeService', 'AlertService', function($scope, $uibModalInstance, parent, element, SyllabusService, TreeService, AlertService) {
+﻿tenjinApp.controller('DeleteElementModalCtrl', ['$scope', '$uibModalInstance', 'parent', 'element', function($scope, $uibModalInstance, parent, element) {
 	'use strict';
 
 	$scope.element = element;

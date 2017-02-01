@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('DeleteSyllabusModalCtrl', ['$scope', '$uibModalInstance', 'SyllabusService', 'AlertService', 'syllabusList', function($scope, $uibModalInstance, SyllabusService, AlertService, syllabusList) {
+﻿tenjinApp.controller('DeleteSyllabusModalCtrl', ['$scope', '$uibModalInstance', 'syllabusList', function($scope, $uibModalInstance, syllabusList) {
 	'use strict';
 
 	$scope.syllabusList = syllabusList.syllabusList;
