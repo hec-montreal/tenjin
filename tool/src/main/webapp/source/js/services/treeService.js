@@ -31,6 +31,7 @@
 	 */
 	this.unselectAllElements = function(syllabus) {
 		this.forEachElement(syllabus, function(element) {
+			console.log("Unselecting element " + element.id);
 			element.$selected = false;
 		});
 
@@ -91,6 +92,16 @@
 	};
 
 	this.findSelectedElementPosition = function(syllabus) {
+		var ret = null;
 
+		this.forEachElement(syllabus, function(element, position) {
+			if (element.$selected) {
+				ret = position;
+
+				return true;
+			}
+		});
+
+		return ret;
 	};
 }]);

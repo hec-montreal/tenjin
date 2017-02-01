@@ -3,14 +3,9 @@
 
 	<div class="row">
 		<div class="buttons-list col-xs-12">
-			<is-allowed data-permission="'sectionAssign'">
-				<button type="button" data-ng-click="addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
-			</is-allowed>
-
-			<is-allowed data-permission="'sectionAssign'">
-				<button  type="button" data-ng-disabled="disableDelete" data-ng-click="deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
-			</is-allowed>
-		</div>
+				<button data-ng-show = "userService.isAllowedView('syllabusWrite')" type="button" data-ng-click="addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
+				<button  data-ng-show = "userService.isAllowedView('syllabusWrite')" type="button" data-ng-disabled="disableDelete" data-ng-click="deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
+			</div>
 	</div>
 
 	<div class="row">

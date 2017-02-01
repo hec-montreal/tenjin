@@ -124,42 +124,11 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 
 		// check permissions: is allowed to modify syllabus
-		if (syllabus.getCreatedBy()!= null && !securityService.check(sakaiProxy.getCurrentUserId(),TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+		if (!securityService.check(sakaiProxy.getCurrentUserId(),TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
 			throw new DeniedAccessException();
 		}
 
-		// check permissions: is allowed to modify section associated to the syllabus
-		if (syllabus.getSections() != null){
-			boolean denied = false;
-			for (String sectionId: syllabus.getSections()){
-				try {
-					Group group = sakaiProxy.getGroup(sectionId);
-					if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, group)) {
-						denied = true;
-						break;
-					}
-				} catch (GroupNotDefinedException e) {
-					log.error("There is no group " + sectionId + " associated to the site" );
-				}
-			}
-			if (denied)
-				throw new DeniedAccessException();
 
-		}
-
-		// check permissions: is allowed to create a syllabus
-		if (site.getGroups() != null){
-			boolean denied = false;
-			for (Group group: site.getGroups()){
-				if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, group)) {
-					denied = true;
-					break;
-				}
-			}
-			if (denied || !securityService.checkOnSiteGroup(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, site))
-				throw new DeniedAccessException();
-
-		}
 
 		List<Syllabus> syllabi = syllabusDao.getSyllabusList(syllabus.getSiteId());
 

@@ -61,6 +61,9 @@
 		if ('syllabusRead' === view){
 			return this.profile.syllabusRead.length > 0;
 		}
+		if ('syllabusWrite' === view){
+			return this.profile.syllabusWrite.length > 0;
+		}
 
 	};
 
