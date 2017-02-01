@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('navigation', ['TreeService', 'SyllabusService', 'UserService' , function (TreeService, SyllabusService, UserService) {
+﻿tenjinApp.directive('navigation', ['TreeService', 'SyllabusService', 'UserService', function(TreeService, SyllabusService, UserService) {
 	'use strict';
 
 	return {
@@ -8,13 +8,13 @@
 
 		templateUrl: 'navigation/navigation.html',
 
-		controller: function ($scope, $rootScope) {
+		controller: function($scope, $rootScope) {
 			$scope.syllabusService = SyllabusService;
 			$scope.treeService = TreeService;
 			$scope.closed = false;
 			$scope.userService = UserService;
 
-			$scope.toggleDrawer = function () {
+			$scope.toggleDrawer = function() {
 				$scope.$emit('navigationToggled');
 			};
 
@@ -25,6 +25,10 @@
 					return $node;
 				}
 			};
+
+			$scope.$on("syllabusService:save", function() {
+				TreeService.selectElement(TreeService.findElementByPosition(TreeService.lastSelectedPosition));
+			});
 
 			$scope.treeOptions = {
 				name: 'navigationTree',

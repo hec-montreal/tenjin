@@ -1,8 +1,9 @@
-﻿tenjinApp.service('TreeService', ['$timeout', function($timeout) {
+﻿tenjinApp.service('TreeService', ['SyllabusService', '$timeout', function(SyllabusService, $timeout) {
 	'use strict';
 
-	// Keep track of the selected element for performance
+	// Keep track of the selected element
 	this.selectedElement = null;
+	this.lastSelectedPosition = null;
 
 	this.forEachElement = function(syllabus, fn, position) {
 		if (!syllabus || !syllabus.elements) {
@@ -22,16 +23,15 @@
 				break;
 			}
 
-			this.forEachElement(element, fn, position);
+			this.forEachElement(element, fn, currentPosition);
 		}
 	};
 
 	/**
 	 * Unselect all Tree elements
 	 */
-	this.unselectAllElements = function(syllabus) {
-		this.forEachElement(syllabus, function(element) {
-			console.log("Unselecting element " + element.id);
+	this.unselectAllElements = function() {
+		this.forEachElement(SyllabusService.getSyllabus(), function(element) {
 			element.$selected = false;
 		});
 
@@ -43,15 +43,17 @@
 	 */
 	this.selectElement = function(element) {
 		this.unselectAllElements();
-		this.selectedElement = element;
 
 		element.$selected = true;
+
+		this.selectedElement = element;
+		this.lastSelectedPosition = this.findSelectedElementPosition();
 	};
 
-	this.selectElementById = function(id, syllabus) {
+	this.selectElementById = function(id) {
 		var tthis = this;
 
-		this.forEachElement(syllabus, function(element) {
+		this.forEachElement(SyllabusService.getSyllabus(), function(element) {
 			if (element.id === id) {
 				tthis.selectElement(element);
 
@@ -61,10 +63,8 @@
 		});
 	};
 
-	this.selectElementByPosition = function(position, syllabus) {
-		this.unselectAllElements();
-
-		var elementCursor = syllabus;
+	this.findElementByPosition = function(position) {
+		var elementCursor = SyllabusService.getSyllabus();
 
 		// For each position depth
 		for (var c = 0; c < position.length; c++) {
@@ -73,13 +73,13 @@
 			}
 		}
 
-		this.selectElement(elementCursor);
+		return elementCursor;
 	};
 
-	this.findSelectedElement = function(syllabus) {
+	this.findSelectedElement = function() {
 		var ret = null;
 
-		this.forEachElement(syllabus, function(element) {
+		this.forEachElement(SyllabusService.getSyllabus(), function(element) {
 			if (element.$selected) {
 				ret = element;
 
@@ -91,13 +91,14 @@
 		return ret;
 	};
 
-	this.findSelectedElementPosition = function(syllabus) {
+	this.findSelectedElementPosition = function() {
 		var ret = null;
 
-		this.forEachElement(syllabus, function(element, position) {
+		this.forEachElement(SyllabusService.getSyllabus(), function(element, position) {
 			if (element.$selected) {
 				ret = position;
 
+				// Break
 				return true;
 			}
 		});

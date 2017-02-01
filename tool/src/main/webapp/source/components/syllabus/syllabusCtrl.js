@@ -16,10 +16,7 @@
 		}).then(function() {
 			$scope.syllabusLoaded = true;
 
-			// Set selected item
-			if (SyllabusService.syllabus.elements.length > 0) {
-				TreeService.selectElement(SyllabusService.syllabus.elements[0]);
-			}
+			TreeService.selectElement(TreeService.findElementByPosition([0]));
 
 			ret.resolve();
 		}).catch(function() {
@@ -74,7 +71,7 @@
 	$scope.$on('publish', function() {
 		PublishService.publish().then(function(data) {
 			SyllabusService.reloadSyllabus().then(function() {
-				TreeService.setSelectedItem(SyllabusService.syllabus.elements[0], true);
+				TreeService.selectElement(SyllabusService.syllabus.elements[0]);
 
 				$rootScope.$broadcast('published', {
 					data: data

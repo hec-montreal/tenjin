@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="nodes_renderer_mobile.html">
 	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu">
-		<div data-ng-click="treeService.setSelectedItem(item)" data-ng-class="['menu-item', {'item-selected': item.$selected}]">
+		<div data-ng-click="treeService.selectElement(item)" data-ng-class="['menu-item', {'item-selected': item.$selected}]">
 			<span data-ng-if="item.type === 'evaluation' || item.type ==='exam'">{{$index+1}} - </span>
 			<span data-ng-if="item.type === 'lecture' || item.type === 'tutorial'">{{item.$numero}} - </span>
 			<span>{{item.title}}</span>			

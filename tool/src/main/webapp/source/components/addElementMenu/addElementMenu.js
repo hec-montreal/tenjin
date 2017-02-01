@@ -1,4 +1,4 @@
-tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusService', 'TreeService', 'AlertService', 'config', function(ModalService, UserService, SyllabusService, TreeService, AlertService, config) {
+tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusService', 'AlertService', 'config', function(ModalService, UserService, SyllabusService, AlertService, config) {
 	'use strict';
 
 	return {
@@ -14,7 +14,6 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 			$scope.modalService = ModalService;
 			$scope.syllabusService = SyllabusService;
 			$scope.userService = UserService;
-			$scope.treeService = TreeService;
 			$scope.alertService = AlertService;
 			$scope.config = config;
 
@@ -38,16 +37,10 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 					$scope.mode = 'creation';
 
 					var data = angular.copy($scope.syllabusService.syllabus);
-					var selectedItemId = TreeService.selectedElement.id;
-					var location = TreeService.selectedElement.$location;
-
 					var result = $scope.syllabusService.addRubricToSyllabus(data, $scope.element, element);
 
 					if (result > 0) {
-						SyllabusService.save(data).then(function(result) {
-							SyllabusService.setSyllabus(result);
-							TreeService.setSelectedItemFromLocation(location);
-						}).catch(function(error) {
+						SyllabusService.save(data).catch(function(error) {
 							AlertService.showAlert('cannotSaveSyllabus');
 						});
 					}
@@ -58,18 +51,12 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 					ModalService.createElement($type, $scope.element).result.then(function(modalData) {
 						// We create a copy of the current syllabus and we add it the element to be added
 						var data = angular.copy(SyllabusService.syllabus);
-						var selectedItemId = TreeService.selectedElement.id;
-						var location = TreeService.selectedElement.$location;
 
 						modalData.element.equalsPublished = false;
 
 						SyllabusService.addElementToSyllabus(data, modalData.parent, modalData.element);
 
-						SyllabusService.save(data).then(function(result) {
-							SyllabusService.setSyllabus(result);
-
-							TreeService.setSelectedItemFromLocation(location);
-						}).catch(function() {
+						SyllabusService.save(data).catch(function() {
 							AlertService.showAlert('cannotSaveSyllabus');
 						});
 					});
