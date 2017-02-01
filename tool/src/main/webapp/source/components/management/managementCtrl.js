@@ -211,15 +211,15 @@
 
 			//TODO - check if correct still - Awa
 			// 3- remove syllabus if the user does not still have access to it
-			var sectionsWrite = UserService.getProfile().sectionWrite;
+			var sectionsWrite = UserService.getProfile().sectionAssign;
 
 			for (var i = syllabusList.length - 1; i >= 0; i--) {
 
 				var sectionsSyllabus = syllabusList[i].sections;
-				var sectionWritePresent = false;
+				var sectionAssignPresent = false;
 				for (var j = 0; j < sectionsWrite.length; j++) {
 					if (sectionsSyllabus.indexOf(sectionsWrite[j].id) > -1) {
-						sectionWritePresent = true;
+						sectionAssignPresent = true;
 						break;
 					}
 				}
@@ -267,6 +267,6 @@
 	var lastModifiedSyllabusBeforeUpdate;
 	var objManagement = this;
 
-	$scope.userSections = UserService.getProfile().sectionWrite;
+	$scope.userSections = UserService.getProfile().sectionAssign;
 	$scope.allSections = UserService.getProfile().sections;
 }]);

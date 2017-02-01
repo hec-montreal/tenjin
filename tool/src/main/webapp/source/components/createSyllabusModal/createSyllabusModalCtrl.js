@@ -9,7 +9,7 @@
 
 	// Get user sections with write permissions
 	for (var i = 0; i < UserService.getProfile().sections.length; i++) {
-		var sectionUser = UserService.getProfile().sectionWrite[i];
+		var sectionUser = UserService.getProfile().sectionAssign[i];
 		var section = angular.copy(sectionUser);
 		var syllabusList = SyllabusService.getSyllabusList();
 

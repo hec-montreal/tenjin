@@ -173,7 +173,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 	};
 
 	this.findViewStateFromProfile = function() {
-		if (UserService.isAllowedView(config.userProfileViews[1])) {
+		if (UserService.isAllowedView('management')) {
 			return this.ViewStates.edition;
 		}
 
