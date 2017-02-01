@@ -1,4 +1,4 @@
-tenjinApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeService', 'AlertService', 'config', function(ModalService, SyllabusService, TreeService, AlertService, config) {
+tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusService', 'TreeService', 'AlertService', 'config', function(ModalService, UserService, SyllabusService, TreeService, AlertService, config) {
 	'use strict';
 
 	return {
@@ -13,6 +13,7 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'SyllabusService', 'TreeS
 		controller: function($scope) {
 			$scope.modalService = ModalService;
 			$scope.syllabusService = SyllabusService;
+			$scope.userService = UserService;
 			$scope.treeService = TreeService;
 			$scope.alertService = AlertService;
 			$scope.config = config;

@@ -182,16 +182,13 @@ public class UserController {
 		if (syllabusList != null) {
 			for (Syllabus syllabus : syllabusList) {
 				//The user has permissions in the site
-				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, syllabus)
-						|| securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site)) {
+				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, syllabus)) {
 					syllabusRead.add(syllabus.getId());
 				}
-				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)
-						|| securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site)) {
+				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
 					syllabusWrite.add(syllabus.getId());
 				}
-				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH, syllabus)
-						|| securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site)) {
+				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH, syllabus)) {
 					syllabusPublish.add(syllabus.getId());
 				}
 			}
