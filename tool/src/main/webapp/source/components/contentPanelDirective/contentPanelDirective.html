@@ -6,7 +6,7 @@
 			<h3>{{ 'NOT_PUBLISHED' | translate }}</h3>
 		</div>
 
-		<div data-ng-class="['element-wrapper', {'important': element.important, 'not-published': !element.equalsPublished && !element.composite}]">
+		<div data-ng-class="['element-wrapper', {'important': element.important, 'not-published': !element.equalsPublished && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus)}]">
 			<div data-ng-if="element.important" class="important-notice">
 				<h3>{{ 'FORM_IMPORTANT' | translate }}</h3>
 			</div>
