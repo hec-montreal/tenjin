@@ -31,7 +31,7 @@
 
 					<td>
 						<!-- if common syllabus and no write permission on site -->
-						<span data-ng-if="!userServicecanEditElement(element,syllabus)">{{ showSections(syllabus) }}</span>
+						<span data-ng-if="!userService.canEditElement(element,syllabus)">{{ showSections(syllabus) }}</span>
 
 						<!-- if not common syllabus or common syllabus with write permissions -->
 						<a data-ng-if="userService.canEditElement(element,syllabus)" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in userSections" onbeforesave="updateSections($data, syllabus)" onaftersave="updateSyllabusList(syllabus)">

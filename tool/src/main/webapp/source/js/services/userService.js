@@ -1,4 +1,4 @@
-﻿tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, config) {
+tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, config) {
 	'use strict';
 
 	/**
@@ -67,22 +67,13 @@
 
 	};
 
-	this.canEditSyllabusTitle= function(syllabus){
-		if(syllabus.common){
+	this.canEditElement= function(element, syllabus){
+		/*if(element.common){
 			return false;
-		}
+		}*/
 		
 		return this.isAllowed('syllabusWrite', syllabus);
 	};
-
-	this.canEditSyllabusSection = function(syllabus){
-		return ((!syllabus.common) && (this.isAllowed('syllabusWrite', syllabus)));
-	};
-
-	this.canEditSyllabus = function(syllabus){
-		return  this.isAllowed('syllabusWrite', syllabus);
-	};
-
 
 	/**
 	 * Get the user profile
