@@ -22,7 +22,7 @@
 
 				<tr data-ng-repeat="syllabus in syllabusService.syllabusList track by syllabus.id">
 					<td>
-						<a class="action" data-ng-if="userService.canEditElement(syllabus, syllabus)" editable-text="syllabus.title" onbeforesave="updateTitle($data, syllabus)"><span class="glyphicon glyphicon-pencil"></span></a>
+						<a class="action" data-ng-if="userService.canEditElement(syllabus, syllabus) && !syllabus.common" editable-text="syllabus.title" onbeforesave="updateTitle($data, syllabus)"><span class="glyphicon glyphicon-pencil"></span></a>
 						
 						<a ui-sref="syllabus-edit({ id: syllabus.id })">{{syllabus.title}}</a>
 					</td>
