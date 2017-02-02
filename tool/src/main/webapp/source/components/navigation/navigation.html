@@ -31,7 +31,7 @@
 
 		<div class="items" ui-tree="treeOptions" data-drag-enabled="true">
 			<ol ui-tree-nodes="" ng-model="syllabusService.syllabus.elements">
-				<li data-ng-repeat="item in syllabusService.syllabus.elements" ui-tree-node data-nodrag="!userServicecanEditElement(element, syllabusService.syllabus)" ng-include="'node-renderer.html'"></li>
+				<li data-ng-repeat="item in syllabusService.syllabus.elements" ui-tree-node data-nodrag="{{!userServicecanEditElement(item, syllabusService.syllabus)}}" ng-include="'node-renderer.html'"></li> 
 			</ol>
 		</div>
 	</div>
