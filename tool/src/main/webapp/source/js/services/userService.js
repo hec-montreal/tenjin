@@ -68,11 +68,11 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 	};
 
 	this.canEditElement= function(element, syllabus){
-		if(element.common){
-			return false;
+		if(element.common === syllabus.common){
+			return this.isAllowed('syllabusWrite', syllabus);
 		}
-		
-		return this.isAllowed('syllabusWrite', syllabus);
+	
+        return false;
 	};
 
 	/**
