@@ -73,6 +73,15 @@
 			SyllabusService.reloadSyllabus().then(function() {
 				TreeService.selectElement(SyllabusService.syllabus.elements[0]);
 
+				// Refresh management ui
+				UserService.loadProfile().then(function() {
+					SyllabusService.loadSyllabusList().catch(function() {
+						AlertService.showAlert("cannotLoadBaseData");
+					});
+				}).catch(function() {
+					AlertService.showAlert("cannotLoadBaseData");
+				});
+
 				$rootScope.$broadcast('published', {
 					data: data
 				});
