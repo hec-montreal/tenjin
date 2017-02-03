@@ -12,6 +12,11 @@
 			message: $translate.instant('ALERT_CANNOT_LOAD_BASE_DATA')
 		},
 
+		'noSyllabus': {
+			type: 'danger',
+			message: $translate.instant("ALERT_NO_SYLLABUS")
+		},
+
 		'cannotSaveSyllabus': {
 			type: 'danger',
 			message: $translate.instant('ALERT_CANNOT_SAVE_SYLLABUS')

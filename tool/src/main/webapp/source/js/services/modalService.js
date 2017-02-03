@@ -119,19 +119,6 @@
 		return modalInstance;
 	};
 
-/*	this.externalImport = function() {
-		console.log('openmodal');
-		var modalInstance = $uibModal.open({
-			animation: true,
-			templateUrl: 'modals/externalImportModal/externalImportModal.html',
-			controller: 'externalImportModalCtrl',
-			size: '',
-			backdrop: 'static'
-		});
-
-		return modalInstance;
-	}
-*/
 	this.unassignSections = function(sections) {
 		var modalInstance = $uibModal.open({
 			animation: true,

@@ -1,4 +1,4 @@
-tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'SyllabusService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', function($q, config, $state, UserService, SyllabusService, ResourcesService, SakaiToolsService, CitationsService, PublishService) {
+tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'SyllabusService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'AlertService', function($q, config, $state, UserService, SyllabusService, ResourcesService, SakaiToolsService, CitationsService, PublishService, AlertService) {
 	'use strict';
 
 	var loadCitations = function(data, citationsLists) {
@@ -77,7 +77,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 						ret.resolve();
 					}).catch(function(e) {
 						ret.reject(e);
-					});					
+					});
 				}
 
 				return ret.promise;
@@ -128,9 +128,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 				} else if (profile.syllabusWrite.length > 0) {
 					SyllabusService.loadSyllabus(profile.syllabusWrite[0]).then(success).catch(fail);
 				} else {
-					console.error("No read or write access on any syllabus");
-					// TODO: AlertService instead of console?
-					ret.reject();
+					return $q.reject();
 				}
 
 				return ret.promise;

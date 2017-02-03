@@ -6,6 +6,7 @@
 	$scope.userService = UserService;
 	$scope.config = config;
 	$scope.showNavigation = true;
+	$scope.alertService = AlertService;
 
 	// Load syllabus
 	var loadSyllabus = function(syllabusId) {
@@ -22,7 +23,7 @@
 		}).catch(function() {
 			$scope.syllabusLoaded = false;
 
-			AlertService.showAlert('cannotLoadSyllabus');
+			AlertService.showAlert('noSyllabus', false);
 
 			ret.reject();
 		});
