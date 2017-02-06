@@ -14,7 +14,7 @@ tenjinApp.controller('CreateSyllabusModalCtrl', ['$scope', '$uibModalInstance', 
 		var syllabusList = SyllabusService.getSyllabusList();
 
 		for (var j = 0; j < syllabusList.length; j++) {
-			if (syllabusList[j].sections.indexOf(section) > -1) {
+			if (syllabusList[j].sections.indexOf(section.id) > -1) {
 				section.assignedSyllabus = syllabusList[j];
 				break;
 			}
