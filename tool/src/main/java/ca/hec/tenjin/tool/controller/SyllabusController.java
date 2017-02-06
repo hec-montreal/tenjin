@@ -27,10 +27,12 @@ import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
+import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.exception.SyllabusException;
+import ca.hec.tenjin.api.exception.UnknownElementTypeException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
@@ -147,13 +149,10 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/{id}/publish", method = RequestMethod.POST)
-	public @ResponseBody Syllabus publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException {
+	public @ResponseBody Syllabus publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException {
 		Syllabus syllabus = null;
-		try {
-			syllabus = publishService.publishSyllabus(syllabusId);
-		} catch (SyllabusException e) {
-			//TODO: error message
-		}
+
+		syllabus = publishService.publishSyllabus(syllabusId);
 
 		return (syllabus);
 	}
@@ -170,13 +169,6 @@ public class SyllabusController {
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException {
 		return syllabusService.createOrUpdateSyllabus(syllabus);
-	}
-
-	@ExceptionHandler(StructureSyllabusException.class)
-	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-	public @ResponseBody Object handleStructureSyllabusException(StructureSyllabusException ex) {
-		ex.printStackTrace();
-		return null;
 	}
 
 	@ExceptionHandler(NoSiteException.class)
@@ -197,4 +189,10 @@ public class SyllabusController {
 		return msgs.getString("tenjin.error.unauthorized");
 	}
 
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	public @ResponseBody Object handleStructureSyllabusException(StructureSyllabusException ex) {
+		ex.printStackTrace();
+		return null;
+	}
 }
