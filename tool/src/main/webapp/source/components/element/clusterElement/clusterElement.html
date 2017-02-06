@@ -1,7 +1,7 @@
-<div class="composite">
+<div class="composite element cluster">
 	<div class="element-title element-page item-panel-composite"> 
 		<span>{{element.title}}</span>
-
-		<div ng-if="element.description" ng-bind-html="element.description"></div> 
 	</div>
+
+	<div class="description syllabus-text" ng-if="element.description" ng-bind-html="element.description"></div>
 </div>
