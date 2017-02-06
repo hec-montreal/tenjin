@@ -40,7 +40,11 @@ tenjinApp.controller('PublishModalCtrl', ['$scope', '$rootScope', '$uibModalInst
 		return PublishService.isCommonSyllabusPublished();
 	}
 
-	$rootScope.$on('published', function(data, args) {
+	$rootScope.$on('published', function() {
 		$scope.status = 'afterPublish';
+	});
+
+	$rootScope.$on('cannotPublishSyllabus', function() {
+		$scope.close();
 	});
 }]);

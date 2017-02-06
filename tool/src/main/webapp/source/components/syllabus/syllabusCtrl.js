@@ -89,6 +89,8 @@
 			});
 		}).catch(function(data) {
 			AlertService.showAlert('cannotPublishSyllabus');
+
+			$rootScope.$broadcast('cannotPublishSyllabus');
 		});
 	});
 
