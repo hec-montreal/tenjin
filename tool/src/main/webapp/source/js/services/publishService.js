@@ -14,7 +14,7 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 
 		this.working = true;
 
-		$http.post('v1/syllabus/' + SyllabusService.syllabus.id + 'wefwef' + '/publish.json', {}).success(function(data) {
+		$http.post('v1/syllabus/' + SyllabusService.syllabus.id + '/publish.json', {}).success(function(data) {
 			tthis.working = false;
 
 			ret.resolve(data);
