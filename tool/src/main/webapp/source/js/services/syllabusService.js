@@ -192,12 +192,13 @@
 		var tthis = this;
 		var ret = $q.defer();
 
+		// TODO : load template for the given syllabus
 		$http.get('v1/template/1/rules.json').success(function(data) {
 			tthis.setTemplate(data);
 
 			ret.resolve(tthis.getTemplate());
 		}).error(function(data) {
-			ret.reject(reason);
+			ret.reject(data);
 		});
 
 		return ret.promise;
