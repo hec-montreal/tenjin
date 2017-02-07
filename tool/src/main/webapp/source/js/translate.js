@@ -130,6 +130,7 @@
 		ALERT_CANNOT_DELETE_SYLLABUS_LIST: 'Cannot delete syllabus list',
 		ALERT_CANNOT_PUBLISH_SYLLABUS: 'Cannot publish syllabus',
 		ALERT_NO_SYLLABUS: 'No syllabus',
+		ALERT_IMPORT_SERVICE_UNDEFINED: 'No import service is defined',
 		CALENDAR_TODAY: 'Today',
 		CALENDAR_NOW: 'Now',
 		CALENDAR_DATE: 'Date',
@@ -273,7 +274,10 @@
 		MENU: 'Menu',
 		NOT_PUBLISHED: 'Not published',
 		WARNING: 'Warning',
-		WARNING_UNSASSIGN_SECTIONS: 'Are you sure you want to unsassign these sections?'
+		WARNING_UNSASSIGN_SECTIONS: 'Are you sure you want to unsassign these sections?',
+		BUTTON_IMPORT_SYLLABUS: 'Import Syllabus',
+		MODAL_DESCRIPTION_IMPORT_SYLLABUS: 'Import Syllabus',
+		FORM_IMPORT_SITEID: 'Original site id'
 	}).translations('fr', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -402,6 +406,7 @@
 		ALERT_CANNOT_DELETE_SYLLABUS_LIST: 'Impossible de supprimer la liste de syllabus',
 		ALERT_CANNOT_PUBLISH_SYLLABUS: 'Impossible de publier le syllabus',
 		ALERT_NO_SYLLABUS: 'Aucun syllabus disponible',
+		ALERT_IMPORT_SERVICE_UNDEFINED: 'Aucun service d\'import n\'as été défini',
 		CALENDAR_TODAY: 'Aujourd\'hui',
 		CALENDAR_NOW: 'Maintenant',
 		CALENDAR_DATE: 'Date',
@@ -547,7 +552,10 @@
 		MENU: 'Menu',
 		NOT_PUBLISHED: 'Non publié',
 		WARNING: 'Avertissement',
-		WARNING_UNSASSIGN_SECTIONS: 'Voulez-vous vraiment dissocier les sections du plan de cours? La (les) section(s) seront automatiquement associée(s) au plan de cours commun.'
+		WARNING_UNSASSIGN_SECTIONS: 'Voulez-vous vraiment dissocier les sections du plan de cours? La (les) section(s) seront automatiquement associée(s) au plan de cours commun.',
+		BUTTON_IMPORT_SYLLABUS: 'Importer un Syllabus',
+		MODAL_DESCRIPTION_IMPORT_SYLLABUS: 'Importer un Syllabus',
+		FORM_IMPORT_SITEID: 'Identifiant du site d\'origine'
 	});
 
 	$translateProvider.preferredLanguage('fr');

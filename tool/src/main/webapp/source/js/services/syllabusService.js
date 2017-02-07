@@ -54,6 +54,21 @@
 		return this.save(newSyllabus);
 	};
 
+	this.importSyllabusFromSite = function(siteId) {
+		var tthis = this;
+		var ret = $q.defer();
+		var url = 'v1/import/' + siteId + '.json';
+
+		$http.post(url, siteId).success(function(data) {
+			ret.resolve(data);
+		}).error(function(data) {
+			ret.reject(data);
+		}).finally(function() {
+			tthis.working = false;
+		})
+		return ret.promise;
+	}
+
 	// Load a syllabus and set it as the current one
 	this.loadSyllabus = function(id) {
 		var tthis = this;

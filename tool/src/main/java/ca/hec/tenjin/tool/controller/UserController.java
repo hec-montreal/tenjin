@@ -21,6 +21,7 @@
 
 package ca.hec.tenjin.tool.controller;
 
+import ca.hec.tenjin.api.ImportService;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TenjinFunctions;
@@ -64,6 +65,10 @@ public class UserController {
 	@Setter
 	@Autowired
 	private SyllabusService syllabusService;
+	
+	@Setter
+	@Autowired(required=false)
+	private ImportService importService;
 
 	@Setter
 	@Autowired
@@ -130,8 +135,6 @@ public class UserController {
 		List<Long> syllabusWrite = new ArrayList<Long>();
 		List<Long> syllabusPublish = new ArrayList<Long>();
 
-
-
 		//Permissions to the site and sections
 		try {
 			site = sakaiProxy.getSite(siteId);
@@ -147,6 +150,9 @@ public class UserController {
 			}else{
 				profile.put("managerView", false);
 			}
+
+			//Whether to allow import
+			profile.put("activateImportButton", importService != null);
 
 			//The user has permissions in the sections
 			usersGroup = site.getGroups();

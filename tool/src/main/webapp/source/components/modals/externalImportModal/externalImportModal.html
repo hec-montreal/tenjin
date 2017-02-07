@@ -1,0 +1,17 @@
+<form class="tenjin-modal" data-ng-submit="ok()"> 
+	<div class="modal-header">
+		<h2>{{ 'MODAL_DESCRIPTION_IMPORT_SYLLABUS' | translate}}</h2> 
+	</div>
+
+	<div class="modal-body">
+		<label for="siteId">
+			{{ 'FORM_IMPORT_SITEID' | translate }} <span class="mandatory"></span> 
+		</label>
+		<input type="text" name="siteId" id="siteId" data-ng-model="data.siteId" required />
+	</div>
+
+	<div class="modal-footer">
+		<button type="submit">OK</button> 
+		<button type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
+	</div> 
+</form>

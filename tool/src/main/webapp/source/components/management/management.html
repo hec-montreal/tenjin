@@ -1,9 +1,10 @@
 <div class="management" data-ng-controller="ManagementCtrl">
 	<div class="row">
 		<div class="buttons-list col-xs-12">
-				<button data-ng-show = "userService.isAllowedView('sectionAssign')" type="button" data-ng-click="addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
-				<button  data-ng-show = "userService.isAllowedView('sectionAssign')" type="button" data-ng-disabled="disableDelete" data-ng-click="deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
-			</div>
+			<button data-ng-show="userService.isAllowedView('sectionAssign')" type="button" data-ng-click="addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
+			<button data-ng-show="userService.isAllowedView('sectionAssign')" type="button" data-ng-disabled="disableDelete" data-ng-click="deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
+			<button data-ng-show="userService.isAllowedView('import') && userService.isAllowedView('sectionAssign')" type="button" data-ng-click="externalSyllabusImport()">{{ 'BUTTON_IMPORT_SYLLABUS' | translate }}</button>
+		</div>
 	</div>
 
 	<div class="row">
