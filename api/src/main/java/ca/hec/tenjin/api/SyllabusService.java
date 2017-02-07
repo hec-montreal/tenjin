@@ -8,6 +8,7 @@ import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
+import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
 
 /**
  * An interface to abstract all Syllabus related methods.
@@ -74,10 +75,43 @@ public interface SyllabusService {
 	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException;
 
 	/**
-	 * retrieve the SyllabusElementMappings for a syllabus 
+	 * Retrieve the SyllabusElementMappings for a syllabus 
 	 * 
 	 * @param syllabusId
 	 * @param hidden - should hidden mappings be included
 	 */
 	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden);
+	
+	/**
+	 * Retreive the current lock on a syllabus
+	 * 
+	 * @param syllabusId The syllabus id
+	 * @return The lock, or null if the syllabus is currently not locked
+	 */
+	public SyllabusLock getSyllabusLock(Long syllabusId);
+	
+	/**
+	 * Retrive all the locks currently owned by a user
+	 * 
+	 * @param userId The user id
+	 * @return The list of lockes currently owned by a user
+	 */
+	public List<SyllabusLock> getSyllabusLocksForUser(Long userId);
+	
+	/**
+	 * Create a lock on a syllabus
+	 * 
+	 * @param syllabusId The syllabus id
+	 * @param userId The user id
+	 * @param username The name of the user
+	 * @return The newly created lock
+	 */
+	public SyllabusLock lockSyllabus(Long syllabusId, String userId, String username);
+	
+	/**
+	 * Removes a lock on a syllabus
+	 * 
+	 * @param syllabusId The syllabus id
+	 */
+	public void unlockSyllabus(Long syllabusId);
 }

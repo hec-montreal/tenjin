@@ -11,15 +11,19 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import ca.hec.tenjin.api.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
-import org.sakaiproject.authz.api.GroupNotDefinedException;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.SyllabusService;
+import ca.hec.tenjin.api.TemplateService;
+import ca.hec.tenjin.api.TenjinFunctions;
+import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.dao.SyllabusDao;
+import ca.hec.tenjin.api.dao.SyllabusLockDao;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
@@ -28,6 +32,7 @@ import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
+import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import lombok.Setter;
 
@@ -43,6 +48,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 	private SakaiProxy sakaiProxy;
 	private SyllabusDao syllabusDao;
+	private SyllabusLockDao syllabusLockDao;
 	private TemplateService templateService;
 	private TenjinSecurityService securityService;
 
@@ -529,5 +535,40 @@ public class SyllabusServiceImpl implements SyllabusService {
 				syllabus.getSections().remove(sectionId);
 			}
 		}
+	}
+
+	@Override
+	public SyllabusLock getSyllabusLock(Long syllabusId) {
+		return syllabusLockDao.getSyllabusLockForSyllabus(syllabusId);
+	}
+
+	@Override
+	public List<SyllabusLock> getSyllabusLocksForUser(Long userId) {
+		return syllabusLockDao.getSyllabusLocksForUser(userId);
+	}
+
+	@Override
+	public SyllabusLock lockSyllabus(Long syllabusId, String userId, String username) {
+		SyllabusLock lock = new SyllabusLock();
+		
+		lock.setSyllabusId(syllabusId);
+		lock.setLastRenewalDate(new Date());
+		lock.setCreatedBy(userId);
+		lock.setCreatedByName(username);
+		
+		syllabusLockDao.save(lock);
+		
+		return lock;
+	}
+
+	@Override
+	public void unlockSyllabus(Long syllabusId) {
+		SyllabusLock lock = syllabusLockDao.getSyllabusLockForSyllabus(syllabusId);
+		
+		if(lock == null) {
+			return;
+		}
+		
+		syllabusLockDao.delete(lock);
 	}
 }

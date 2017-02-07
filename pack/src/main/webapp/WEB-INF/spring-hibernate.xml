@@ -22,6 +22,7 @@
 				<value>ca/hec/tenjin/api/hbm/syllabus/published/BasicPublishedElements.hbm.xml</value>
 				<value>ca/hec/tenjin/api/hbm/syllabus/published/CompositePublishedElements.hbm.xml</value>
 				<value>ca/hec/tenjin/api/hbm/syllabus/published/PublishedSyllabusElementMapping.hbm.xml</value>
+				<value>ca/hec/tenjin/api/hbm/syllabus/SyllabusLock.hbm.xml</value>
 				<value>ca/hec/tenjin/api/hbm/template/Template.hbm.xml</value>
 				<value>ca/hec/tenjin/api/hbm/template/TemplateElement.hbm.xml</value>
 				<value>ca/hec/tenjin/api/hbm/template/TemplateStructure.hbm.xml</value>
@@ -48,6 +49,24 @@
 				<!-- API injection -->
 				<property name="publishedSyllabusDao" ref="ca.hec.tenjin.api.dao.PublishedSyllabusDao" />
 				<property name="templateService" ref="ca.hec.tenjin.api.TemplateService" />
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="ca.hec.tenjin.api.dao.SyllabusLockDao"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"
+			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
+		<property name="target">
+			<bean class="ca.hec.tenjin.impl.dao.SyllabusLockDaoImpl">
+				<property name="sessionFactory">
+					<ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
+				</property>
 			</bean>
 		</property>
 		<property name="transactionAttributes">
