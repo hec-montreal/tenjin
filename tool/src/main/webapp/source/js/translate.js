@@ -277,7 +277,9 @@
 		WARNING_UNSASSIGN_SECTIONS: 'Are you sure you want to unsassign these sections?',
 		BUTTON_IMPORT_SYLLABUS: 'Import Syllabus',
 		MODAL_DESCRIPTION_IMPORT_SYLLABUS: 'Import Syllabus',
-		FORM_IMPORT_SITEID: 'Original site id'
+		FORM_IMPORT_SITEID: 'Original site id',
+		ELEMENT_HIDDEN_BEFORE: 'Element hidden before ',
+		ELEMENT_HIDDEN_BETWEEN: 'Element hidden before %1 and after %2'
 	}).translations('fr', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -555,7 +557,9 @@
 		WARNING_UNSASSIGN_SECTIONS: 'Voulez-vous vraiment dissocier les sections du plan de cours? La (les) section(s) seront automatiquement associée(s) au plan de cours commun.',
 		BUTTON_IMPORT_SYLLABUS: 'Importer un Syllabus',
 		MODAL_DESCRIPTION_IMPORT_SYLLABUS: 'Importer un Syllabus',
-		FORM_IMPORT_SITEID: 'Identifiant du site d\'origine'
+		FORM_IMPORT_SITEID: 'Identifiant du site d\'origine',
+		ELEMENT_HIDDEN_BEFORE: 'Element caché avant le ',
+		ELEMENT_HIDDEN_BETWEEN: 'Element caché avant le %1 et après le %2'
 	});
 
 	$translateProvider.preferredLanguage('fr');

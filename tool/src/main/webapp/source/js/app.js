@@ -1,5 +1,8 @@
 ﻿'use strict';
 
+// Configure momentjs
+window['moment-range'].extendMoment(moment);
+
 // Template module
 var templateModule = angular.module('templateModule', []);
 

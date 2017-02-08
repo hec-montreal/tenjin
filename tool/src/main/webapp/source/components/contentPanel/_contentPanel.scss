@@ -65,20 +65,16 @@
 		margin-bottom: 10px;
 	}
 
-	.element-wrapper.not-published {
+	.element-wrapper.not-published,
+	.element-wrapper.hidden-by-date {
 		opacity: 0.5;
 	}
 
-	.important-notice {
-		color: $border-color-important-element;
-		padding: 3px;
-	}
-
-	.not-published-notice {
+	.notice {
 		padding-bottom: 5px;
 	}
 
-	.not-published-notice h3 {
+	.notice h3 {
 		display: inline-block;
 		border: 1px solid $font-color-not-published-element-notice;
 		color: $font-color-not-published-element-notice;
