@@ -57,6 +57,17 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'Syl
 		});
 	};
 
+	$scope.externalSyllabusImport = function() {
+		ModalService.externalSyllabusImport().result.then(function(data) {
+			SyllabusService.importSyllabusFromSite(data.siteId).then(function() {
+				refresh();
+			}).catch(function() {
+				// TODO : Check if it is error 501, otherwise different message
+				AlertService.showAlert('importServiceUndefined');
+			});
+		});
+	};
+
 	$scope.enableDelete = function() {
 		$scope.disableDelete = true;
 

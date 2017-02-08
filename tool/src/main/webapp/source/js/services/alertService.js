@@ -35,7 +35,12 @@
 		'cannotCreateAnnouncement': {
 			type: 'danger',
 			message: $translate.instant('ALERT_CANNOT_CREATE_ANNOUNCEMENT')
-		}
+		},
+
+		'importServiceUndefined': {
+			type: 'danger',
+			message: $translate.instant('ALERT_IMPORT_SERVICE_UNDEFINED')
+		}	
 	}
 
 	this.currentAlert = null;

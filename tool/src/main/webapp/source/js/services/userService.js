@@ -54,7 +54,9 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 		if ('management' === view){
 			return this.profile.managerView;
 		}
-
+		if ('import' === view){
+			return this.profile.activateImportButton;
+		}
 		if ('sectionAssign' === view){
 			return this.profile.sectionAssign.length > 0; 
 		} 

@@ -119,6 +119,18 @@
 		return modalInstance;
 	};
 
+	this.externalSyllabusImport = function() {
+		var modalInstance = $uibModal.open({
+			animation: true,
+			templateUrl: 'modals/externalImportModal/externalImportModal.html',
+			controller: 'ExternalImportModalCtrl',
+			size: '',
+			backdrop: 'static'
+		});
+
+		return modalInstance;
+	}
+
 	this.unassignSections = function(sections) {
 		var modalInstance = $uibModal.open({
 			animation: true,
