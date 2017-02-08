@@ -2,6 +2,11 @@
 	<div data-ng-switch="element.type" data-ng-class="['element-host', {'important': element.important, 'no-buttons': !userService.canEditElement(element,syllabusService.syllabus)}]">		<!-- Display buttons -->
 		<element-buttons data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" data-element-buttons="element" data-noedit="!userService.canEditElement(element,syllabusService.syllabus)" data-nodelete="!userService.canEditElement(element,syllabusService.syllabus)" data-nodrag="!userService.canEditElement(element,syllabusService.syllabus)" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite}]"></element-buttons>
 
+		<!-- From common notice -->
+		<div data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !userService.canEditElement(element,syllabusService.syllabus) && !element.composite" class="notice from-common">
+			<h3>{{ 'FROM_COMMON' | translate }}</h3>
+		</div>
+
 		<!-- Not published notice -->
 		<div data-ng-if="!element.equalsPublished && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice not-published">
 			<h3>{{ 'NOT_PUBLISHED' | translate }}</h3>
