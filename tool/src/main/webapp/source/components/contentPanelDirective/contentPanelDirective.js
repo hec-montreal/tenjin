@@ -16,26 +16,26 @@
 			$scope.userService = UserService;
 			$scope.config = config;
 
-			var template = $scope.syllabusService.template[$scope.element.templateStructureId];
+			var template = SyllabusService.template[$scope.element.templateStructureId];
 
 			$scope.displayButtons = {
 				deleteButton: function() {
-					return ($scope.userService.isAllowed('syllabusWrite', $scope.syllabusService.syllabus) &&
-							!$scope.syllabusService.template[$scope.element.templateStructureId].mandatory) &&
-						($scope.syllabusService.syllabus.common ||
-							(!$scope.syllabusService.syllabus.common &&
+					return ($scope.userService.isAllowed('syllabusWrite', SyllabusService.syllabus) &&
+							!SyllabusService.template[$scope.element.templateStructureId].mandatory) &&
+						(SyllabusService.syllabus.common ||
+							(!SyllabusService.syllabus.common &&
 								!$scope.element.common));
 				},
 
 				editButton: function() {
 					return ($scope.element.type !== 'rubric') &&
-						(($scope.syllabusService.syllabus.common &&
-								$scope.userService.isAllowed('syllabusWrite', $scope.syllabusService.syllabus) &&
-								!$scope.syllabusService.template[$scope.element.templateStructureId].mandatory) ||
-							(!$scope.syllabusService.syllabus.common &&
-								$scope.userService.isAllowed('syllabusWrite', $scope.syllabusService.syllabus) &&
+						((SyllabusService.syllabus.common &&
+								$scope.userService.isAllowed('syllabusWrite', SyllabusService.syllabus) &&
+								!SyllabusService.template[$scope.element.templateStructureId].mandatory) ||
+							(!SyllabusService.syllabus.common &&
+								$scope.userService.isAllowed('syllabusWrite', SyllabusService.syllabus) &&
 								!$scope.element.common &&
-								!$scope.syllabusService.template[$scope.element.templateStructureId].mandatory));
+								!SyllabusService.template[$scope.element.templateStructureId].mandatory));
 
 				},
 
@@ -45,45 +45,45 @@
 			};
 
 			$scope.isElementHiddenByDate = function(element) {
-				if (!element.hasDatesInterval) {
-					return false;
+				var dates = SyllabusService.getElementVisibilityDates(element);
+
+				if (dates.usingResource) {
+					console.log("Using resource");
+					console.log(dates);
 				}
 
-				if (!element.availabilityStartDate) {
+				if (!dates.start) {
 					return false;
 				}
 
 				var now = moment();
-				var start = moment(element.availabilityStartDate);
 
-				if (!element.availabilityEndDate) {
-					return start.isAfter(now);
+				// No ending date
+				if (!dates.end) {
+					return dates.start.isAfter(now);
 				}
 
-				var end = moment(element.availabilityEndDate);
-				var range = moment.range(start, end);
+				// Between start and end
+				var range = moment.range(dates.start, dates.end);
 
 				return !range.contains(now);
 			};
 
 			$scope.getElementHiddenByDateMessage = function(element) {
-				if (!element.hasDatesInterval) {
-					return "";
-				}
-
-				if (!element.availabilityStartDate) {
-					return "";
-				}
-
+				var dates = SyllabusService.getElementVisibilityDates(element);
 				var fmt = 'YYYY-MM-DD';
 
-				if (!element.availabilityEndDate) {
-					return $translate.instant('ELEMENT_HIDDEN_BEFORE') + moment(element.availabilityStartDate).format(fmt);
+				if (!dates.start) {
+					return "";
+				}
+
+				if (!dates.end) {
+					return $translate.instant('ELEMENT_HIDDEN_BEFORE') + dates.start.format(fmt);
 				}
 
 				return $translate.instant('ELEMENT_HIDDEN_BETWEEN')
-					.replace('%1', moment(element.availabilityStartDate).format(fmt))
-					.replace('%2', moment(element.availabilityEndDate).format(fmt));
+					.replace('%1', dates.start.format(fmt))
+					.replace('%2', dates.end.format(fmt));
 			};
 		}
 	};

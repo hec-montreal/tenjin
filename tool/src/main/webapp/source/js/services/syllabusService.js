@@ -1,4 +1,4 @@
-﻿tenjinApp.service('SyllabusService', ['AlertService', '$translate', '$q', '$http', '$rootScope', function(AlertService, $translate, $q, $http, $rootScope) {
+﻿tenjinApp.service('SyllabusService', ['AlertService', 'ResourcesService', '$translate', '$q', '$http', '$rootScope', function(AlertService, ResourcesService, $translate, $q, $http, $rootScope) {
 	'use strict';
 
 	this.syllabus = null;
@@ -113,12 +113,12 @@
 	this.loadPublishedSyllabus = function(id) {
 		var tthis = this;
 		var ret = $q.defer();
-		var getUrl = "";
+		var getUrl = '';
 
 		this.working = true;
 
 		// if no id is specified, we can try and get the single published syllabus available to this user
-		if (typeof(id) === "undefined") {
+		if (typeof(id) === 'undefined') {
 			getUrl = 'v1/syllabus/published.json';
 		} else {
 			getUrl = 'v1/syllabus/' + id + '.json?published=true';
@@ -329,7 +329,7 @@
 	 */
 	var isSyllabusElement = function($object) {
 		// a syllabus element does not have a templateId property
-		return typeof($object.templateId) === "undefined";
+		return typeof($object.templateId) === 'undefined';
 	};
 
 	/**
@@ -564,14 +564,14 @@
 	var numberSyllabus = function($rootTree, $numberingInfo) {
 		if ($rootTree.elements) {
 			for (var i = 0; i < $rootTree.elements.length; i++) {
-				if ($rootTree.elements[i].type === "lecture") {
+				if ($rootTree.elements[i].type === 'lecture') {
 					$numberingInfo.nbLecture++;
 					$rootTree.elements[i].$numero = $numberingInfo.nbLecture;
-				} else if ($rootTree.elements[i].type === "tutorial") {
+				} else if ($rootTree.elements[i].type === 'tutorial') {
 					$numberingInfo.nbTutorial++;
 					String.fromCharCode('65');
 					$rootTree.elements[i].$numero = String.fromCharCode(64 + $numberingInfo.nbTutorial);
-				} else if ($rootTree.elements[i].type === "evaluation" || $rootTree.elements[i].type === "exam") {
+				} else if ($rootTree.elements[i].type === 'evaluation' || $rootTree.elements[i].type === 'exam') {
 					$rootTree.elements[i].$numero = $numberingInfo.nbEvalAndExam++;
 				}
 
@@ -606,9 +606,58 @@
 		}
 
 		return false;
-	}
+	};
 
 	this.itemHasParentInMenu = function(item) {
 		return this.getParent(item) !== this.$rootTree;
-	}
+	};
+
+	// Return the name of the resourceId in the element
+	this.findElementResourceIdName = function(element) {
+		if (element.type === 'image') {
+			return 'imageId';
+		} else if (element.type === 'document') {
+			return 'documentId';
+		}
+
+		return 'unknown';
+	};
+
+	/**
+	 * Get the visibility dates of an element
+	 */
+	this.getElementVisibilityDates = function(element) {
+		var start = null;
+		var end = null;
+		var elementResourceIdName = this.findElementResourceIdName(element);
+
+		// Use the resource to check date
+		if (elementResourceIdName !== 'unknown') {
+			var res = ResourcesService.getResource(element.attributes[elementResourceIdName]);
+
+			if (res.release) {
+				start = moment(res.release.time);
+			}
+
+			if (res.retract) {
+				end = moment(res.retract.time);
+			}
+		}
+		// Use the element date fields
+		else if (element.hasDatesInterval) {
+			if (element.availabilityStartDate) {
+				start = moment(element.availabilityStartDate);
+			}
+
+			if (element.availabilityEndDate) {
+				end = moment(element.availabilityEndDate);
+			}
+		}
+
+		return {
+			start: start,
+			end: end,
+			usingResource: !!element.$selectedResource
+		};
+	};
 }]);

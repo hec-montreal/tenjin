@@ -1,15 +1,15 @@
 tenjinApp.directive('imageElement', ['ResourcesService', function(ResourcesService) {
-    'use strict';
+	'use strict';
 
-    return {
-        scope: true,
+	return {
+		scope: true,
 
-        restrict: 'A',
+		restrict: 'A',
 
-        templateUrl: 'element/imageElement/imageElement.html',
+		templateUrl: 'element/imageElement/imageElement.html',
 
-        controller: function($scope) {
-            $scope.resource = ResourcesService.getResource($scope.element.attributes.imageId);
-        }
-    };
+		controller: function($scope) {
+			$scope.resource = ResourcesService.getResource($scope.element.attributes.imageId);
+		}
+	};
 }]);

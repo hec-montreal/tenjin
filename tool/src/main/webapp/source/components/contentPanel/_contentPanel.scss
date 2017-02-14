@@ -76,14 +76,21 @@
 
 	.notice h3 {
 		display: inline-block;
-		border: 1px solid $font-color-not-published-element-notice;
+		border: 1px dashed $font-color-not-published-element-notice;
 		color: $font-color-not-published-element-notice;
 		padding: 3px 3px 0 3px;
 		margin-bottom: 3px;
+		font-weight: normal!important;
 	}
 
-	.notice.from-common h3 {
+	.notice .glyphicon {
 		color: $color-alert-notice;
-		border-color: $color-alert-notice;
+	}
+
+	.from-common {
+		text-align: right;
+		color: $color-alert-notice;
+		padding-right: 15px;
+		font-size: 1.2em;
 	}
 }

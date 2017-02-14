@@ -559,9 +559,9 @@
 		BUTTON_IMPORT_SYLLABUS: 'Importer un Syllabus',
 		MODAL_DESCRIPTION_IMPORT_SYLLABUS: 'Importer un Syllabus',
 		FORM_IMPORT_SITEID: 'Identifiant du site d\'origine',
-		ELEMENT_HIDDEN_BEFORE: 'Element caché avant le ',
-		ELEMENT_HIDDEN_BETWEEN: 'Element caché avant le %1 et après le %2',
-		FROM_COMMON: 'Élément provenant du commun'
+		ELEMENT_HIDDEN_BEFORE: 'Caché avant le ',
+		ELEMENT_HIDDEN_BETWEEN: 'Caché avant le %1 et après le %2',
+		FROM_COMMON: 'Provenant du commun'
 	});
 
 	$translateProvider.preferredLanguage('fr');
