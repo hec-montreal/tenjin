@@ -280,7 +280,8 @@
 		FORM_IMPORT_SITEID: 'Original site id',
 		ELEMENT_HIDDEN_BEFORE: 'Element hidden before ',
 		ELEMENT_HIDDEN_BETWEEN: 'Element hidden before %1 and after %2',
-		FROM_COMMON: 'From common'
+		FROM_COMMON: 'From common',
+		DATE_TIME_FORMAT: 'yyyy-MM-dd HH:mm'
 	}).translations('fr', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -561,7 +562,8 @@
 		FORM_IMPORT_SITEID: 'Identifiant du site d\'origine',
 		ELEMENT_HIDDEN_BEFORE: 'Caché avant le ',
 		ELEMENT_HIDDEN_BETWEEN: 'Caché avant le %1 et après le %2',
-		FROM_COMMON: 'Provenant du commun'
+		FROM_COMMON: 'Provenant du commun',
+		DATE_TIME_FORMAT: 'yyyy-MM-dd HH:mm'
 	});
 
 	$translateProvider.preferredLanguage('fr');

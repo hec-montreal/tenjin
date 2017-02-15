@@ -97,4 +97,27 @@ body {
 	.col-equal-height > [class*="col-"] {
 		@include full-height;
 	}
+
+	/* Calendar */
+	button.btn-date {
+		color: #fff!important;
+		height: 34px;
+	}
+
+	.uib-daypicker tbody button {
+		background-color: #fff!important;
+		border: 0;
+	}
+
+	.uib-daypicker thead button {
+		color: #fff!important;
+	}
+
+	/* No other way to target this button? */
+	/* Sakai css + this plugin = a mess */
+	.btn-group.pull-right button {
+		color: #fff!important;
+		height: 33px;
+		font-size: 14px;
+	}
 }

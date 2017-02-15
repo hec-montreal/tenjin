@@ -30,7 +30,7 @@
 					<input type="text" id="evaluationDate" class="form-control" show-weeks="false" uib-datepicker-popup="dd-MM-yyyy" data-ng-model="element.attributes.evaluationDate" is-open="statusDateEval.opened" today-text="{{ 'CALENDAR_TODAY' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" />
 					
 					<span class="input-group-btn">
-						<button type="button" class="btn btn-default" data-ng-click="openDateEval($event)">
+						<button type="button" class="btn btn-default btn-date" data-ng-click="openDateEval($event)">
 							<i class="glyphicon glyphicon-calendar"></i>
 						</button>
 					</span>

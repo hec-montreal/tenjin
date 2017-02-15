@@ -44,23 +44,12 @@ tenjinApp.directive('elementCommonAttributes', ['$anchorScroll', '$location', 'M
 				if (!$scope.isDateEnd) {
 					$scope.element.dtEnd = null;
 				}
-
-				var inputEnd = angular.element(document.getElementById('input-date-end'));
-
-				inputEnd.prop('required');
-
 			});
 
 			$scope.open = function($event) {
 				$scope.status.opened = true;
 				$scope.element.$formHasDates = true;
 				$scope.element.availabilityStartDate = new Date();
-			};
-
-
-			// Disable weekend selection
-			$scope.disabled = function(date, mode) {
-				return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
 			};
 
 			$scope.openEnd = function($event) {

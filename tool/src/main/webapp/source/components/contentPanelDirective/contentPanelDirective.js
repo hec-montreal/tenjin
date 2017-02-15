@@ -47,11 +47,6 @@
 			$scope.isElementHiddenByDate = function(element) {
 				var dates = SyllabusService.getElementVisibilityDates(element);
 
-				if (dates.usingResource) {
-					console.log("Using resource");
-					console.log(dates);
-				}
-
 				if (!dates.start) {
 					return false;
 				}

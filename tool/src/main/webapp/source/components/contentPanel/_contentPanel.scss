@@ -67,7 +67,7 @@
 
 	.element-wrapper.not-published,
 	.element-wrapper.hidden-by-date {
-		opacity: 0.5;
+		opacity: $opacity-not-published-element;
 	}
 
 	.notice {
