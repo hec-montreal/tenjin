@@ -620,7 +620,7 @@
 			return 'documentId';
 		}
 
-		return 'unknown';
+		return null;
 	};
 
 	/**
@@ -632,7 +632,7 @@
 		var elementResourceIdName = this.findElementResourceIdName(element);
 
 		// Use the resource to check date
-		if (elementResourceIdName !== 'unknown') {
+		if (elementResourceIdName) {
 			var res = ResourcesService.getResource(element.attributes[elementResourceIdName]);
 
 			if (res.release) {
@@ -659,5 +659,17 @@
 			end: end,
 			usingResource: !!element.$selectedResource
 		};
+	};
+
+	this.isElementHiddenByResourceFlag = function(element) {
+		var elementResourceIdName = this.findElementResourceIdName(element);
+
+		if (!elementResourceIdName) {
+			return false;
+		}
+
+		var res = ResourcesService.getResource(element.attributes[elementResourceIdName]);
+
+		return res && res.hidden;
 	};
 }]);

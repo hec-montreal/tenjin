@@ -44,6 +44,10 @@
 				}
 			};
 
+			$scope.isElementHiddenByResourceFlag = function(element) {
+				return SyllabusService.isElementHiddenByResourceFlag(element);
+			};
+
 			$scope.isElementHiddenByDate = function(element) {
 				var dates = SyllabusService.getElementVisibilityDates(element);
 
