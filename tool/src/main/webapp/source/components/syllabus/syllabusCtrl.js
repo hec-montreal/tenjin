@@ -23,7 +23,7 @@
 		}).catch(function() {
 			$scope.syllabusLoaded = false;
 
-			AlertService.showAlert('noSyllabus', false);
+			AlertService.showAlert('noSyllabus');
 
 			ret.reject();
 		});

@@ -177,7 +177,4 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 
 		return this.ViewStates.published;
 	};
-
-	window.UserService = UserService;
-	window.SyllabusService = SyllabusService;
 }]);

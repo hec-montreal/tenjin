@@ -1,4 +1,4 @@
-tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', function(ModalService, SyllabusService) {
+tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'AlertService', function(ModalService, SyllabusService, AlertService) {
 	'use strict';
 
 	return {
@@ -43,8 +43,14 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', functi
 
 					SyllabusService.addElementToSyllabus(data, elementData.parent, elementData.element);
 
-					SyllabusService.save(data).catch(function() {
-						AlertService.showAlert('cannotSaveSyllabus');
+					SyllabusService.save(data).catch(function(data) {
+						if (data.lock) {
+							AlertService.showAlert('syllabusLocked', [data.lock.createdByName]);
+						} else if (data.locked) {
+							AlertService.showAlert('noSyllabusLock');
+						} else {
+							AlertService.showAlert('cannotSaveSyllabus');
+						}
 					});
 				});
 			}

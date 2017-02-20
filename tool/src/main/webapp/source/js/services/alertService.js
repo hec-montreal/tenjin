@@ -40,11 +40,21 @@
 		'importServiceUndefined': {
 			type: 'danger',
 			message: $translate.instant('ALERT_IMPORT_SERVICE_UNDEFINED')
-		}	
+		},
+
+		'noSyllabusLock': {
+			type: 'danger',
+			message: $translate.instant('ALERT_NO_LOCK'),
+		},
+
+		'syllabusLocked': {
+			type: 'danger',
+			message: $translate.instant('ALERT_LOCKED_BY')
+		}
 	}
 
 	this.currentAlert = null;
-	this.currentAlertCloseable = true;
+	this.currentAlertCloseable = false;
 
 	this.hasAlert = function() {
 		return this.currentAlert != null;
@@ -54,18 +64,22 @@
 		return this.currentAlertCloseable;
 	}
 
-	this.showAlert = function(name, closeable) {
+	this.showAlert = function(name, messageVariables) {
 		if (!name) {
 			name = 'default';
 		}
 
-		if (closeable === undefined || closeable === null) {
-			this.currentAlertCloseable = true;
-		} else {
-			this.currentAlertCloseable = closeable;
-		}
-
 		this.currentAlert = alerts[name];
+		this.currentAlert.renderedMessage = this.currentAlert.message;
+
+		// Message customization
+		if (messageVariables && messageVariables.length) {
+			for (var i = 0; i < messageVariables.length; i++) {
+				var varName = '%' + (i + 1);
+
+				this.currentAlert.renderedMessage = this.currentAlert.renderedMessage.replace(varName, messageVariables[i]);
+			}
+		}
 	};
 
 	this.reset = function() {
@@ -73,6 +87,6 @@
 	};
 
 	this.getCurrentAlertMessage = function() {
-		return this.currentAlert.message;
+		return this.currentAlert.renderedMessage;
 	};
 }]);
