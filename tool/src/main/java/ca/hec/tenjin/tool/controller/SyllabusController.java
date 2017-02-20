@@ -33,7 +33,6 @@ import ca.hec.tenjin.api.exception.SyllabusLockedException;
 import ca.hec.tenjin.api.exception.UnknownElementTypeException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 import lombok.Getter;
 import lombok.Setter;
@@ -190,8 +189,8 @@ public class SyllabusController {
 
 	@ExceptionHandler(SyllabusLockedException.class)
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
-	public @ResponseBody SyllabusLock handleSyllabusLockedException(SyllabusLockedException ex) {
-		return ex.getLock();
+	public @ResponseBody SyllabusLockedException handleSyllabusLockedException(SyllabusLockedException ex) {
+		return ex;
 	}
 	
 	@ExceptionHandler(Exception.class)

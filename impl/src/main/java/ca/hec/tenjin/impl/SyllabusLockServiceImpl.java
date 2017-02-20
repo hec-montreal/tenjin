@@ -81,17 +81,15 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 			return false;
 		}
 
-		// If the lock exists and was not created by current user, check if
-		// it has expired
-		if (!lock.getCreatedBy().equals(currentUserId)) {
-			// If The lock has expired, delete it
-			if (isLockExpired(lock)) {
-				unlockSyllabus(syllabusId);
-			} else {
-				return false;
-			}
+		// If the lock has expired, delete it and return false
+		if (isLockExpired(lock)) {
+			unlockSyllabus(syllabusId);
+
+			return false;
 		}
 
-		return true;
+		// At this point the lock exists and has not expired, so check if it
+		// belongs to user
+		return lock.getCreatedBy().equals(currentUserId);
 	}
 }
