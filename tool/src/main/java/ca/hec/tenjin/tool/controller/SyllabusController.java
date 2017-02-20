@@ -1,7 +1,6 @@
 package ca.hec.tenjin.tool.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -24,17 +23,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import ca.hec.tenjin.api.PublishService;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusService;
-import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
-import ca.hec.tenjin.api.exception.SyllabusException;
+import ca.hec.tenjin.api.exception.SyllabusLockedException;
 import ca.hec.tenjin.api.exception.UnknownElementTypeException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 import lombok.Getter;
 import lombok.Setter;
@@ -137,19 +136,19 @@ public class SyllabusController {
 	}
 	
 	@RequestMapping(value = "/syllabus", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException {
+	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {
 		return syllabusService.createOrUpdateSyllabus(syllabus);
 	}
 
 	@RequestMapping(value = "/syllabus/{ids}/delete", method = RequestMethod.GET)
-	public void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException {
+	public void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException {
 		for (Long id : syllabusId) {
 			syllabusService.deleteSyllabus(id);
 		}
 	}
 
 	@RequestMapping(value = "/syllabus/{id}/publish", method = RequestMethod.POST)
-	public @ResponseBody Syllabus publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException {
+	public @ResponseBody Syllabus publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, SyllabusLockedException {
 		Syllabus syllabus = null;
 
 		syllabus = publishService.publishSyllabus(syllabusId);
@@ -167,7 +166,7 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException {
+	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {
 		return syllabusService.createOrUpdateSyllabus(syllabus);
 	}
 
@@ -189,6 +188,12 @@ public class SyllabusController {
 		return msgs.getString("tenjin.error.unauthorized");
 	}
 
+	@ExceptionHandler(SyllabusLockedException.class)
+	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+	public @ResponseBody SyllabusLock handleSyllabusLockedException(SyllabusLockedException ex) {
+		return ex.getLock();
+	}
+	
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public @ResponseBody Object handleStructureSyllabusException(StructureSyllabusException ex) {

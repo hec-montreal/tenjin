@@ -2,11 +2,15 @@ package ca.hec.tenjin.api.model.syllabus;
 
 import java.util.Date;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode()
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class SyllabusLock {
 	private Long id;
 	private Long syllabusId;

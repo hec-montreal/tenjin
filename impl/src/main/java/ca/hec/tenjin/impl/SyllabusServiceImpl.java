@@ -18,21 +18,21 @@ import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
 import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.SyllabusLockService;
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TemplateService;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.dao.SyllabusDao;
-import ca.hec.tenjin.api.dao.SyllabusLockDao;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
+import ca.hec.tenjin.api.exception.SyllabusLockedException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import lombok.Setter;
 
@@ -48,9 +48,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 	private SakaiProxy sakaiProxy;
 	private SyllabusDao syllabusDao;
-	private SyllabusLockDao syllabusLockDao;
 	private TemplateService templateService;
 	private TenjinSecurityService securityService;
+	private SyllabusLockService syllabusLockService;
 
 	@Override
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, StructureSyllabusException {
@@ -58,7 +58,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
 
-		//throw denied access if no write permission on syllabus
+		// throw denied access if no write permission on syllabus
 		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus))
 			throw new DeniedAccessException();
 
@@ -77,7 +77,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		syllabusList = syllabusDao.getSyllabusList(siteId);
 		Site site = null;
 
-		if (syllabusList.isEmpty()){
+		if (syllabusList.isEmpty()) {
 			try {
 
 				site = sakaiProxy.getSite(siteId);
@@ -97,13 +97,11 @@ public class SyllabusServiceImpl implements SyllabusService {
 			}
 		}
 
-
-		//remove syllabi the user does not have access to
+		// remove syllabi the user does not have access to
 		for (Syllabus syllabus : syllabusList) {
 			if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, syllabus))
 				finalSyllabusList.add(syllabus);
 		}
-
 
 		return finalSyllabusList;
 	}
@@ -112,9 +110,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden) {
 		return syllabusDao.getSyllabusElementMappings(syllabusId, hidden);
 	}
-	
+
 	@Override
-	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException, NoSyllabusException, DeniedAccessException, StructureSyllabusException {
+	public Syllabus createOrUpdateSyllabus(Syllabus syllabus) throws NoSiteException, NoSyllabusException, DeniedAccessException, StructureSyllabusException, SyllabusLockedException {
 		Date now = new Date();
 		Syllabus existingSyllabus = null;
 
@@ -122,26 +120,29 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		Map<Long, SyllabusElementMapping> existingSyllabusElementMappings = null;
 
-		try{
+		try {
 			site = sakaiProxy.getSite(syllabus.getSiteId());
 		} catch (IdUnusedException e) {
 			throw new NoSiteException();
 		}
 
-
 		// check permissions: is allowed to modify syllabus
-		if (!securityService.check(sakaiProxy.getCurrentUserId(),TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
 			throw new DeniedAccessException();
 		}
 
-
+		// Check lock
+		if (syllabus.getId() != null) {
+			if (!syllabusLockService.checkIfUserHasLock(syllabus.getId(), sakaiProxy.getCurrentUserId())) {
+				throw new SyllabusLockedException(syllabusLockService.getSyllabusLock(syllabus.getId()));
+			}
+		}
 
 		List<Syllabus> syllabi = syllabusDao.getSyllabusList(syllabus.getSiteId());
 
 		// create syllabus if it doesn't exist, otherwise get it's element
 		// mappings from the database.
 		if (syllabus.getId() == null) {
-
 			syllabus.setCreatedDate(now);
 			syllabus.setCourseTitle(site.getTitle());
 			syllabus.setCreatedBy(sakaiProxy.getCurrentUserId());
@@ -301,11 +302,15 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	@Override
-	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException {
+	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, SyllabusLockedException {
 		Syllabus syllabus = syllabusDao.getSyllabus(syllabusId);
-		
+
 		if (syllabus == null) {
 			throw new NoSyllabusException(syllabusId);
+		}
+
+		if (!syllabusLockService.checkIfUserHasLock(syllabusId, sakaiProxy.getCurrentSiteId())) {
+			throw new SyllabusLockedException(syllabusLockService.getSyllabusLock(syllabusId));
 		}
 
 		if (syllabus.getCommon()) {
@@ -317,10 +322,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 
 		// check permissions: is allowed to modify syllabus
-		if (!securityService.check(sakaiProxy.getCurrentUserId(),TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
 			throw new DeniedAccessException();
 		}
-
 
 		syllabusDao.softDeleteSyllabus(syllabus);
 	}
@@ -339,10 +343,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	/**
-	 * @param oldSections
-	 *            The existing list of sections
-	 * @param newSections
-	 *            The new section list to assign
+	 * @param oldSections The existing list of sections
+	 * @param newSections The new section list to assign
 	 * @return whether or not the user is allowed to assign or unassign the
 	 *         sections
 	 */
@@ -431,8 +433,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		// compare element from the new syllabus to what is in the database
 		AbstractSyllabusElement existingElement = existingElementMapping.getSyllabusElement();
-		
-		// hidden & display order come from the mapping, don't make the equals fail for them
+
+		// hidden & display order come from the mapping, don't make the equals
+		// fail for them
 		existingElement.setHidden(existingElementMapping.getHidden());
 		existingElement.setDisplayOrder(existingElementMapping.getDisplayOrder());
 
@@ -535,40 +538,5 @@ public class SyllabusServiceImpl implements SyllabusService {
 				syllabus.getSections().remove(sectionId);
 			}
 		}
-	}
-
-	@Override
-	public SyllabusLock getSyllabusLock(Long syllabusId) {
-		return syllabusLockDao.getSyllabusLockForSyllabus(syllabusId);
-	}
-
-	@Override
-	public List<SyllabusLock> getSyllabusLocksForUser(Long userId) {
-		return syllabusLockDao.getSyllabusLocksForUser(userId);
-	}
-
-	@Override
-	public SyllabusLock lockSyllabus(Long syllabusId, String userId, String username) {
-		SyllabusLock lock = new SyllabusLock();
-		
-		lock.setSyllabusId(syllabusId);
-		lock.setLastRenewalDate(new Date());
-		lock.setCreatedBy(userId);
-		lock.setCreatedByName(username);
-		
-		syllabusLockDao.save(lock);
-		
-		return lock;
-	}
-
-	@Override
-	public void unlockSyllabus(Long syllabusId) {
-		SyllabusLock lock = syllabusLockDao.getSyllabusLockForSyllabus(syllabusId);
-		
-		if(lock == null) {
-			return;
-		}
-		
-		syllabusLockDao.delete(lock);
 	}
 }

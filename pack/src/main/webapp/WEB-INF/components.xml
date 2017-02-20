@@ -5,64 +5,76 @@
 	<!-- import the hibernate related beans -->
 	<import resource="spring-hibernate.xml" />
 
-	<bean id="ca.hec.tenjin.api.SyllabusService"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<bean id="ca.hec.tenjin.api.SyllabusService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 
-		<property name="transactionManager"
-			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
 			<bean class="ca.hec.tenjin.impl.SyllabusServiceImpl">
 				<!-- API injection -->
 				<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
-				<property name="syllabusLockDao" ref="ca.hec.tenjin.api.dao.SyllabusLockDao" />
-		 		<property name="templateService" ref="ca.hec.tenjin.api.TemplateService" />
-		 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
-		 		<property name="securityService" ref="ca.hec.tenjin.api.TenjinSecurityService" />
-		 	</bean>
-
+				<property name="templateService" ref="ca.hec.tenjin.api.TemplateService" />
+				<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+				<property name="securityService" ref="ca.hec.tenjin.api.TenjinSecurityService" />
+				<property name="syllabusLockService" ref="ca.hec.tenjin.api.SyllabusLockService" />
+			</bean>
 		</property>
+
 		<property name="transactionAttributes">
 			<props>
 				<prop key="*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
-
 	</bean>
 
-	<bean id="ca.hec.tenjin.api.PublishService"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<bean id="ca.hec.tenjin.api.SyllabusLockService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 
-		<property name="transactionManager"
-			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
+		<property name="target">
+			<bean class="ca.hec.tenjin.impl.SyllabusLockServiceImpl">
+				<!-- API injection -->
+				<property name="syllabusLockDao" ref="ca.hec.tenjin.api.dao.SyllabusLockDao" />
+			</bean>
+		</property>
+		
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="ca.hec.tenjin.api.PublishService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
+
 		<property name="target">
 			<bean class="ca.hec.tenjin.impl.PublishServiceImpl">
 				<!-- API injection -->
 				<property name="publishedSyllabusDao" ref="ca.hec.tenjin.api.dao.PublishedSyllabusDao" />
 				<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
 				<property name="SyllabusService" ref="ca.hec.tenjin.api.SyllabusService" />
-		 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+				<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 				<property name="securityService" ref="ca.hec.tenjin.api.TenjinSecurityService" />
+				<property name="syllabusLockService" ref="ca.hec.tenjin.api.SyllabusLockService" />
 			</bean>
 		</property>
+
 		<property name="transactionAttributes">
 			<props>
 				<prop key="*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>
-
 	</bean>
 
-		<bean id="ca.hec.tenjin.api.TemplateService"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<bean id="ca.hec.tenjin.api.TemplateService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 
-		<property name="transactionManager"
-			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
 			<bean class="ca.hec.tenjin.impl.TemplateServiceImpl">
 				<!-- API injection -->
-		 		<property name="templateDao" ref="ca.hec.tenjin.api.dao.TemplateDao" />
+				<property name="templateDao" ref="ca.hec.tenjin.api.dao.TemplateDao" />
 			</bean>
 		</property>
+
 		<property name="transactionAttributes">
 			<props>
 				<prop key="*">PROPAGATION_REQUIRED</prop>
@@ -70,29 +82,52 @@
 		</property>
 	</bean>
 
-	<bean id="ca.hec.tenjin.api.TenjinSecurityService"
-		class="ca.hec.tenjin.impl.TenjinSecurityServiceImpl">
- 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+	<bean id="ca.hec.tenjin.api.TenjinSecurityService" class="ca.hec.tenjin.impl.TenjinSecurityServiceImpl">
+		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+
 		<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
 	</bean>
-	
-    <bean name="ca.hec.tenjin.api.SakaiProxy"
-        class="ca.hec.tenjin.impl.SakaiProxyImpl" init-method="init">
-<!--         <property name="courseManagementService"><ref bean="org.sakaiproject.coursemanagement.api.CourseManagementService"/></property> -->
-<!--         <property name="groupProvider"><ref bean="org.sakaiproject.authz.api.GroupProvider"/></property> -->
-<!--         <property name="privacyManager"><ref bean="org.sakaiproject.api.privacy.PrivacyManager"/></property> -->
-<!--         <property name="connectionsLogic"><ref bean="org.sakaiproject.profile2.logic.ProfileConnectionsLogic"/></property> -->
-<!--         <property name="serverConfigurationService"><ref bean="org.sakaiproject.component.api.ServerConfigurationService"/></property> -->
-        <property name="securityService"><ref bean="org.sakaiproject.authz.api.SecurityService"/></property>
-        <property name="eventTrackingService"><ref bean="org.sakaiproject.event.api.EventTrackingService"/></property>
-        <property name="sessionManager"><ref bean="org.sakaiproject.tool.api.SessionManager"/></property>
-        <property name="siteService"><ref bean="org.sakaiproject.site.api.SiteService"/></property>
-        <property name="toolManager"><ref bean="org.sakaiproject.tool.api.ToolManager"/></property>
-        <property name="functionManager"><ref bean="org.sakaiproject.authz.api.FunctionManager"/></property>
-        <property name="userDirectoryService"><ref bean="org.sakaiproject.user.api.UserDirectoryService"/></property>
-        <property name="contentHostingService"><ref bean="org.sakaiproject.content.api.ContentHostingService"/></property>
-		<property name="groupService"><ref bean="org.sakaiproject.authz.api.AuthzGroupService"/></property>
-    </bean>
-    
- 
+
+	<bean name="ca.hec.tenjin.api.SakaiProxy" class="ca.hec.tenjin.impl.SakaiProxyImpl" init-method="init">
+		<!-- <property name="courseManagementService"><ref bean="org.sakaiproject.coursemanagement.api.CourseManagementService"/></property> -->
+		<!-- <property name="groupProvider"><ref bean="org.sakaiproject.authz.api.GroupProvider"/></property> -->
+		<!-- <property name="privacyManager"><ref bean="org.sakaiproject.api.privacy.PrivacyManager"/></property> -->
+		<!-- <property name="connectionsLogic"><ref bean="org.sakaiproject.profile2.logic.ProfileConnectionsLogic"/></property> -->
+		<!-- <property name="serverConfigurationService"><ref bean="org.sakaiproject.component.api.ServerConfigurationService"/></property> -->
+		<property name="securityService">
+			<ref bean="org.sakaiproject.authz.api.SecurityService" />
+		</property>
+
+		<property name="eventTrackingService">
+			<ref bean="org.sakaiproject.event.api.EventTrackingService" />
+		</property>
+
+		<property name="sessionManager">
+			<ref bean="org.sakaiproject.tool.api.SessionManager" />
+		</property>
+
+		<property name="siteService">
+			<ref bean="org.sakaiproject.site.api.SiteService" />
+		</property>
+
+		<property name="toolManager">
+			<ref bean="org.sakaiproject.tool.api.ToolManager" />
+		</property>
+
+		<property name="functionManager">
+			<ref bean="org.sakaiproject.authz.api.FunctionManager" />
+		</property>
+
+		<property name="userDirectoryService">
+			<ref bean="org.sakaiproject.user.api.UserDirectoryService" />
+		</property>
+
+		<property name="contentHostingService">
+			<ref bean="org.sakaiproject.content.api.ContentHostingService" />
+		</property>
+
+		<property name="groupService">
+			<ref bean="org.sakaiproject.authz.api.AuthzGroupService" />
+		</property>
+	</bean>
 </beans>

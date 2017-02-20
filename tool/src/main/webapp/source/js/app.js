@@ -3,6 +3,23 @@
 // Configure momentjs
 window['moment-range'].extendMoment(moment);
 
+// Util to make HTTP requests in the console
+var httputil = {
+	base: 'http://localhost:8080/portal/site/simonThreeSection/tool/bbbdee14-89d3-420e-85ac-a493251ce1d5/v1',
+
+	get: function(url) {
+		$.get(httputil.base + url, function(res) {
+			console.log(res);
+		})
+	},
+
+	post: function(url, data) {
+		$.post(httputil.base + url, data, function(res) {
+			console.log(res);
+		})
+	}
+};
+
 // Template module
 var templateModule = angular.module('templateModule', []);
 

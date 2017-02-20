@@ -7,17 +7,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import ca.hec.tenjin.api.*;
-import ca.hec.tenjin.api.exception.DeniedAccessException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import ca.hec.tenjin.api.PublishService;
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.SyllabusLockService;
+import ca.hec.tenjin.api.SyllabusService;
+import ca.hec.tenjin.api.TenjinFunctions;
+import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusDao;
+import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
+import ca.hec.tenjin.api.exception.SyllabusLockedException;
 import ca.hec.tenjin.api.exception.UnknownElementTypeException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
@@ -95,6 +101,9 @@ public class PublishServiceImpl implements PublishService {
 	@Setter
 	TenjinSecurityService securityService;
 
+	@Setter
+	SyllabusLockService syllabusLockService;
+
 	@Override
 	public PublishedSyllabus getPublishedSyllabus(Long syllabusId) throws NoSyllabusException {
 		return publishedSyllabusDao.getPublishedSyllabus(syllabusId, true);
@@ -115,11 +124,17 @@ public class PublishServiceImpl implements PublishService {
 
 	@Override
 	@Transactional
-	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, DeniedAccessException, StructureSyllabusException {
+	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, DeniedAccessException, StructureSyllabusException, SyllabusLockedException {
 
 		Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
 
-		//throw an exception if current user does not have publish permission on the syllabus
+		// Check the lock
+		if (!syllabusLockService.checkIfUserHasLock(syllabusId, sakaiProxy.getCurrentUserId())) {
+			throw new SyllabusLockedException(syllabusLockService.getSyllabusLock(syllabusId));
+		}
+
+		// throw an exception if current user does not have publish permission
+		// on the syllabus
 		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_PUBLISH, syllabus))
 			throw new DeniedAccessException();
 

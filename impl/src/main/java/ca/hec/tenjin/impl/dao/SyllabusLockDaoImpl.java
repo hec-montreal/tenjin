@@ -42,7 +42,11 @@ public class SyllabusLockDaoImpl extends HibernateDaoSupport implements Syllabus
 
 	@Override
 	public void save(SyllabusLock lock) {
-		getHibernateTemplate().save(lock);
+		if(lock.getId() == null) {
+			getHibernateTemplate().save(lock);
+		} else {
+			getHibernateTemplate().update(lock);
+		}		
 	}
 
 	@Override
