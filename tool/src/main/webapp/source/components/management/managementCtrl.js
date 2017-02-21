@@ -1,4 +1,4 @@
-tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'SyllabusService', 'AlertService', 'ModalService', 'UserService', 'config', '$q', function($scope, $timeout, $translate, SyllabusService, AlertService, ModalService, UserService, config, $q) {
+tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'SyllabusService', 'SyllabusLockService', 'AlertService', 'ModalService', 'UserService', 'config', '$q', function($scope, $timeout, $translate, SyllabusService, SyllabusLockService, AlertService, ModalService, UserService, config, $q) {
 	'use strict';
 
 	var refresh = function() {
@@ -20,6 +20,8 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'Syl
 			AlertService.showAlert('cannotSaveSyllabus');
 		});
 	};
+
+	SyllabusLockService.stopRenewLoop();
 
 	$scope.refresh = refresh;
 

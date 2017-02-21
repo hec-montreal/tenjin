@@ -53,12 +53,7 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 
 	@Override
 	public void renewSyllabusLock(SyllabusLock lock) {
-		Calendar cal = Calendar.getInstance();
-
-		cal.setTime(new Date());
-		cal.add(Calendar.MINUTE, LOCK_DELAY_MINUTES);
-
-		lock.setLastRenewalDate(cal.getTime());
+		lock.setLastRenewalDate(new Date());
 
 		syllabusLockDao.save(lock);
 	}

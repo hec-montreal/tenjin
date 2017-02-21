@@ -15,7 +15,7 @@ public class SyllabusLockDaoImpl extends HibernateDaoSupport implements Syllabus
 		SyllabusLock ret = getHibernateTemplate().get(SyllabusLock.class, id);
 
 		if (ret == null) {
-			throw new NoSyllabusLockException(id);
+			throw new NoSyllabusLockException();
 		}
 
 		return ret;

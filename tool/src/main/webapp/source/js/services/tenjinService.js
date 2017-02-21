@@ -1,4 +1,4 @@
-tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'SyllabusService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'AlertService', function($q, config, $state, UserService, SyllabusService, ResourcesService, SakaiToolsService, CitationsService, PublishService, AlertService) {
+tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'SyllabusService', 'SyllabusLockService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'AlertService', function($q, config, $state, UserService, SyllabusService, SyllabusLockService, ResourcesService, SakaiToolsService, CitationsService, PublishService, AlertService) {
 	'use strict';
 
 	var loadCitations = function(data, citationsLists) {
@@ -119,6 +119,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 				var success = function() {
 					ret.resolve();
 				};
+
 				var fail = function(e) {
 					ret.reject(e);
 				};

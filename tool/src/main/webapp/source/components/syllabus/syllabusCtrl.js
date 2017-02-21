@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('SyllabusCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', 'SyllabusService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'PublishService', 'TenjinService', 'config', 'AlertService', 'ModalService', function($rootScope, $scope, $timeout, $q, $state, SyllabusService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, PublishService, TenjinService, config, AlertService, ModalService) {
+﻿tenjinApp.controller('SyllabusCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', 'SyllabusService', 'SyllabusLockService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'PublishService', 'TenjinService', 'config', 'AlertService', 'ModalService', function($rootScope, $scope, $timeout, $q, $state, SyllabusService, SyllabusLockService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, PublishService, TenjinService, config, AlertService, ModalService) {
 	'use strict';
 
 	$scope.syllabusService = SyllabusService;
@@ -12,20 +12,38 @@
 	var loadSyllabus = function(syllabusId) {
 		var ret = $q.defer();
 
-		TenjinService.viewState.loadSyllabus({
-			syllabusId: syllabusId
-		}).then(function() {
-			$scope.syllabusLoaded = true;
+		AlertService.reset();
 
-			TreeService.selectElement(TreeService.findElementByPosition([0]));
+		SyllabusLockService.lockSyllabus(syllabusId).then(function() {
+			SyllabusLockService.startRenewLoop(syllabusId);
+		}).catch(function(e) {
+			e = e.data;
 
-			ret.resolve();
-		}).catch(function() {
-			$scope.syllabusLoaded = false;
-
-			AlertService.showAlert('noSyllabus');
+			if (e && e.lock) {
+				AlertService.showAlert('syllabusLocked', [e.lock.createdByName]);
+			} else if (e && e.locked) {
+				AlertService.showAlert('noSyllabusLock');
+			} else {
+				AlertService.showAlert('cannotSaveSyllabus');
+			}
 
 			ret.reject();
+		}).finally(function() {
+			TenjinService.viewState.loadSyllabus({
+				syllabusId: syllabusId
+			}).then(function() {
+				$scope.syllabusLoaded = true;
+
+				TreeService.selectElement(TreeService.findElementByPosition([0]));
+
+				ret.resolve();
+			}).catch(function() {
+				$scope.syllabusLoaded = false;
+
+				AlertService.showAlert('noSyllabus');
+
+				ret.reject();
+			});
 		});
 
 		return ret.promise;

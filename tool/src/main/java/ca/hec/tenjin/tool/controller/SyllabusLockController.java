@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusLockService;
+import ca.hec.tenjin.api.exception.NoSyllabusLockException;
 import ca.hec.tenjin.api.exception.SyllabusLockedException;
 import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
 import lombok.Setter;
@@ -71,8 +72,6 @@ public class SyllabusLockController {
 					// Delete old lock
 					syllabusLockService.unlockSyllabus(syllabusId);
 				} else {
-					log.info("Cannot lock syllabus (already locked)");
-
 					throw new SyllabusLockedException(lock);
 				}
 			}
@@ -82,26 +81,31 @@ public class SyllabusLockController {
 	}
 
 	@RequestMapping(value = "/syllabus/{syllabusId}/lock/renew", method = RequestMethod.POST)
-	public @ResponseBody SyllabusLock renewSyllabusLock(@PathVariable Long syllabusId) throws SyllabusLockedException {
+	public @ResponseBody SyllabusLock renewSyllabusLock(@PathVariable Long syllabusId) throws SyllabusLockedException, NoSyllabusLockException {
 		SyllabusLock lock = syllabusLockService.getSyllabusLock(syllabusId);
 
-		// If the lock does not exist, we create it
+		// No lock
 		if (lock == null) {
-			return syllabusLockService.lockSyllabus(syllabusId, sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName());
+			throw new NoSyllabusLockException();
 		}
 
-		// If the lock does not belong to the user, we throw
+		// The lock was not created by the user
 		if (!lock.getCreatedBy().equals(sakaiProxy.getCurrentUserId())) {
-			log.info("Cannot renew syllabus lock (already locked by someone else)");
+			// The lock has expired, delete it
+			if (syllabusLockService.isLockExpired(lock)) {
+				syllabusLockService.unlockSyllabus(syllabusId);
 
-			throw new SyllabusLockedException(lock);
+				throw new NoSyllabusLockException();
+			} else {
+				throw new SyllabusLockedException(lock);
+			}
 		}
 
 		syllabusLockService.renewSyllabusLock(lock);
 
 		return lock;
 	}
-	
+
 	@ExceptionHandler(SyllabusLockedException.class)
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 	public @ResponseBody SyllabusLockedException handleSyllabusLockedException(SyllabusLockedException ex) {
