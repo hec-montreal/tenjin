@@ -70,7 +70,12 @@ public class ImportController {
 	public @ResponseBody ResponseEntity<Syllabus> importSyllabus(@PathVariable("siteId") String siteId) {
 		
 		if (importService != null) {
-			return new ResponseEntity<Syllabus>(importService.importSyllabusFromSite(siteId), HttpStatus.OK);
+			Syllabus syllabus = importService.importSyllabusFromSite(siteId);
+			if (syllabus != null) { 
+				return new ResponseEntity<Syllabus>(syllabus, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Syllabus>(HttpStatus.NOT_FOUND);
+			}
 		} else {
 			return new ResponseEntity<Syllabus>(HttpStatus.NOT_IMPLEMENTED);
 		}
