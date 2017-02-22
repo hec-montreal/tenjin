@@ -40,7 +40,18 @@
 		'importServiceUndefined': {
 			type: 'danger',
 			message: $translate.instant('ALERT_IMPORT_SERVICE_UNDEFINED')
-		}	
+		},
+
+		'importSyllabusPermissionError': {
+			type: 'danger',
+			message: $translate.instant('ALERT_IMPORT_SYLLABUS_PERMISSION_ERROR')
+		},
+
+		'importSyllabusNotFound': {
+			type: 'danger',
+			message: $translate.instant('ALERT_IMPORT_SYLLABUS_NOT_FOUND')
+		},
+
 	}
 
 	this.currentAlert = null;

@@ -1,5 +1,7 @@
 package ca.hec.tenjin.api;
 
+import org.sakaiproject.exception.PermissionException;
+
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 
 /**
@@ -11,6 +13,6 @@ import ca.hec.tenjin.api.model.syllabus.Syllabus;
  */
 public interface ImportService {
 	
-	public Syllabus importSyllabusFromSite(String siteId);
+	public Syllabus importSyllabusFromSite(String siteId) throws PermissionException;
 
 }

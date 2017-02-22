@@ -61,11 +61,11 @@
 
 		$http.post(url, siteId).success(function(data) {
 			ret.resolve(data);
-		}).error(function(data) {
-			ret.reject(data);
+		}).error(function(data, status) {
+			ret.reject(status);
 		}).finally(function() {
 			tthis.working = false;
-		})
+		});
 		return ret.promise;
 	}
 
