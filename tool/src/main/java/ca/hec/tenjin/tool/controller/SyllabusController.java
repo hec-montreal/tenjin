@@ -107,7 +107,7 @@ public class SyllabusController {
 		try {
 			// We get the syllabus list for the current site with the sections
 			// associated to the user
-			syllabusList = syllabusService.getSyllabusList(siteId, currentUserId);
+			syllabusList = syllabusService.getSyllabusListForUser(siteId, currentUserId);
 
 
 		} catch (Exception e) {
@@ -119,6 +119,7 @@ public class SyllabusController {
 	}
 
 	/**
+	 * TODO remove this? Not used I think
 	 * Returns the published syllabus for a user
 	 * 
 	 * @param siteId

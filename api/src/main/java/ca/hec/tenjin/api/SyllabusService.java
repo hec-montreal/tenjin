@@ -52,7 +52,7 @@ public interface SyllabusService {
 	 * @throws DeniedAccessException 
 	 * @throws StructureSyllabusException 
 	 */
-	public List<Syllabus> getSyllabusList(String siteId,  String currentUserId)  throws NoSiteException, DeniedAccessException;
+	public List<Syllabus> getSyllabusListForUser(String siteId,  String currentUserId)  throws NoSiteException, DeniedAccessException;
 	
 	/**
 	 * Create a new syllabus or update the existing syllabus based on id
