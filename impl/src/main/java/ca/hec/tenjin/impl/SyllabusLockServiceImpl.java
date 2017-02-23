@@ -4,14 +4,24 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusLockService;
+import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusLockDao;
+import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
 import lombok.Setter;
 
 public class SyllabusLockServiceImpl implements SyllabusLockService {
 
-	private static final int LOCK_DELAY_MINUTES = 2;
+	private static final int DEFAULT_SYLLABUS_LOCK_DELAY_SECONDS = 120;
+
+	@Setter
+	private SakaiProxy sakaiProxy;
+
+	@Setter
+	private SyllabusDao syllabusDao;
 
 	@Setter
 	private SyllabusLockDao syllabusLockDao;
@@ -62,15 +72,28 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 	public boolean isLockExpired(SyllabusLock lock) {
 		Calendar cal = Calendar.getInstance();
 
+		String delayProp = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_LOCK_DELAY_SECONDS);
+		int delay;
+
+		if (delayProp == null || delayProp.length() == 0) {
+			delay = DEFAULT_SYLLABUS_LOCK_DELAY_SECONDS;
+		}
+
+		try {
+			delay = Integer.parseInt(delayProp);
+		} catch (NumberFormatException e) {
+			delay = DEFAULT_SYLLABUS_LOCK_DELAY_SECONDS;
+		}
+
 		cal.setTime(lock.getLastRenewalDate());
-		cal.add(Calendar.MINUTE, LOCK_DELAY_MINUTES);
+		cal.add(Calendar.SECOND, delay);
 
 		return cal.getTime().before(new Date());
 	}
 
 	@Override
-	public boolean checkIfUserHasLock(Long syllabusId, String currentUserId) {
-		SyllabusLock lock = getSyllabusLock(syllabusId);
+	public boolean checkIfUserHasLock(Syllabus syllabus, String currentUserId) {
+		SyllabusLock lock = getSyllabusLock(syllabus.getId());
 
 		if (lock == null) {
 			return false;
@@ -78,13 +101,33 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 
 		// If the lock has expired, delete it and return false
 		if (isLockExpired(lock)) {
-			unlockSyllabus(syllabusId);
+			unlockSyllabus(syllabus.getId());
 
 			return false;
 		}
 
 		// At this point the lock exists and has not expired, so check if it
 		// belongs to user
-		return lock.getCreatedBy().equals(currentUserId);
+		boolean hasLock = lock.getCreatedBy().equals(currentUserId);
+		String checkCommonLockProp = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_LOCK_CHECK_COMMON_LOCK);
+
+		if (hasLock && !syllabus.getCommon() && (checkCommonLockProp != null && checkCommonLockProp.toLowerCase().equals("true"))) {
+			try {
+				Syllabus common = syllabusDao.getCommonSyllabus(syllabus.getSiteId());
+				SyllabusLock commonLock = getSyllabusLock(common.getId());
+
+				if (isLockExpired(commonLock) || commonLock.getCreatedBy().equals(currentUserId)) {
+					unlockSyllabus(common.getId());
+
+					return true;
+				} else {
+					return false;
+				}
+			} catch (NoSyllabusException e) {
+				return hasLock;
+			}
+		}
+
+		return hasLock;
 	}
 }

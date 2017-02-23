@@ -4,7 +4,12 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.authz.api.*;
+import org.sakaiproject.authz.api.AuthzGroup;
+import org.sakaiproject.authz.api.AuthzGroupService;
+import org.sakaiproject.authz.api.FunctionManager;
+import org.sakaiproject.authz.api.GroupNotDefinedException;
+import org.sakaiproject.authz.api.SecurityService;
+import org.sakaiproject.component.api.ServerConfigurationService;
 import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.event.api.EventTrackingService;
@@ -38,6 +43,7 @@ public class SakaiProxyImpl implements SakaiProxy {
 	private FunctionManager functionManager;
 	private UserDirectoryService userDirectoryService;
 	private ContentHostingService contentHostingService;
+	private ServerConfigurationService serverConfigurationService;
 
 	public void init() {
 
@@ -182,5 +188,10 @@ public class SakaiProxyImpl implements SakaiProxy {
 		//authzgroupservice.getGroup needs a regerence not an id
 		authzGroup = siteService.findGroup(groupId);
 		return (Group) authzGroup;
+	}
+
+	@Override
+	public String getSakaiProperty(String name) {
+		return serverConfigurationService.getString(name);
 	}
 }

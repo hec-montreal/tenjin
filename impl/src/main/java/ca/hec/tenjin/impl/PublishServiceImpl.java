@@ -129,7 +129,7 @@ public class PublishServiceImpl implements PublishService {
 		Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
 
 		// Check the lock
-		if (!syllabusLockService.checkIfUserHasLock(syllabusId, sakaiProxy.getCurrentUserId())) {
+		if (!syllabusLockService.checkIfUserHasLock(syllabus, sakaiProxy.getCurrentUserId())) {
 			throw new SyllabusLockedException(syllabusLockService.getSyllabusLock(syllabusId));
 		}
 

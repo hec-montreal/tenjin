@@ -133,7 +133,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		// Check lock
 		if (syllabus.getId() != null) {
-			if (!syllabusLockService.checkIfUserHasLock(syllabus.getId(), sakaiProxy.getCurrentUserId())) {
+			if (!syllabusLockService.checkIfUserHasLock(syllabus, sakaiProxy.getCurrentUserId())) {
 				throw new SyllabusLockedException(syllabusLockService.getSyllabusLock(syllabus.getId()));
 			}
 		}
@@ -309,7 +309,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 			throw new NoSyllabusException(syllabusId);
 		}
 
-		if (!syllabusLockService.checkIfUserHasLock(syllabusId, sakaiProxy.getCurrentSiteId())) {
+		if (!syllabusLockService.checkIfUserHasLock(syllabus, sakaiProxy.getCurrentSiteId())) {
 			throw new SyllabusLockedException(syllabusLockService.getSyllabusLock(syllabusId));
 		}
 

@@ -30,7 +30,7 @@ tenjinApp.service('SyllabusLockService', ['$q', '$http', 'AlertService', functio
 
 				if (e.lock) {
 					AlertService.showAlert('syllabusLocked', [e.lock.createdByName]);
-				} else if (data.locked) {
+				} else if (e.locked) {
 					AlertService.showAlert('noSyllabusLock');
 				} else {
 					AlertService.showAlert('cannotSaveSyllabus');

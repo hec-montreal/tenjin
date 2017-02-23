@@ -2,6 +2,7 @@ package ca.hec.tenjin.api;
 
 import java.util.List;
 
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
 
 /**
@@ -60,8 +61,8 @@ public interface SyllabusLockService {
 	/**
 	 * Check if a user has a lock on a syllabus
 	 * 
-	 * @param syllabusId
+	 * @param syllabus
 	 * @param currentUserId
 	 */
-	public boolean checkIfUserHasLock(Long syllabusId, String currentUserId);
+	public boolean checkIfUserHasLock(Syllabus syllabus, String currentUserId);
 }
