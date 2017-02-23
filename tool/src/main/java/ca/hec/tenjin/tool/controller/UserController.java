@@ -184,7 +184,7 @@ public class UserController {
 		profile.put("sectionPublish", sectionPublish);
 
 		//Permissions to the syllabi
-		List<Syllabus> syllabusList = syllabusService.getSyllabusList(siteId, currentUserId);
+		List<Syllabus> syllabusList = syllabusService.getSyllabusListForUser(siteId, currentUserId);
 		if (syllabusList != null) {
 			for (Syllabus syllabus : syllabusList) {
 				//The user has permissions in the site

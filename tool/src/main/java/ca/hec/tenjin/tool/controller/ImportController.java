@@ -22,16 +22,11 @@
 package ca.hec.tenjin.tool.controller;
 
 import ca.hec.tenjin.api.ImportService;
-import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusService;
-import ca.hec.tenjin.api.TenjinFunctions;
 
-import java.util.*;
-
-import ca.hec.tenjin.api.exception.DeniedAccessException;
-import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import org.sakaiproject.site.api.Group;
+
+import org.sakaiproject.exception.PermissionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +34,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import lombok.Setter;
@@ -67,13 +64,23 @@ public class ImportController {
 	private TenjinSecurityService securityService = null; 
 
 	@RequestMapping(value = "/import/{siteId}", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<Syllabus> importSyllabus(@PathVariable("siteId") String siteId) {
+	public @ResponseBody ResponseEntity<Syllabus> importSyllabus(@PathVariable("siteId") String siteId) throws PermissionException {
 		
 		if (importService != null) {
-			return new ResponseEntity<Syllabus>(importService.importSyllabusFromSite(siteId), HttpStatus.OK);
+			Syllabus syllabus = importService.importSyllabusFromSite(siteId);
+			if (syllabus != null) { 
+				return new ResponseEntity<Syllabus>(syllabus, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Syllabus>(HttpStatus.NOT_FOUND);
+			}
 		} else {
 			return new ResponseEntity<Syllabus>(HttpStatus.NOT_IMPLEMENTED);
 		}
-			
+	}
+
+	@ExceptionHandler(PermissionException.class)
+	@ResponseStatus(value = HttpStatus.FORBIDDEN)
+	public @ResponseBody Object handlePermissionException(PermissionException ex) {
+		return "Missing permission";
 	}
 }

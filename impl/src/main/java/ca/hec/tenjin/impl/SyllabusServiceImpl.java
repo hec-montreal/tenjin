@@ -71,7 +71,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	@Override
-	public List<Syllabus> getSyllabusList(String siteId, String currentUserId) throws NoSiteException, DeniedAccessException {
+	public List<Syllabus> getSyllabusListForUser(String siteId, String currentUserId) throws NoSiteException, DeniedAccessException {
 		List<Syllabus> syllabusList = null;
 		List<Syllabus> finalSyllabusList = new ArrayList<Syllabus>();
 		syllabusList = syllabusDao.getSyllabusList(siteId);

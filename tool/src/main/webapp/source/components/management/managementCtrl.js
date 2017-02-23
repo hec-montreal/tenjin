@@ -63,9 +63,14 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'Syl
 		ModalService.externalSyllabusImport().result.then(function(data) {
 			SyllabusService.importSyllabusFromSite(data.siteId).then(function() {
 				refresh();
-			}).catch(function() {
-				// TODO : Check if it is error 501, otherwise different message
-				AlertService.showAlert('importServiceUndefined');
+			}).catch(function(status) {
+				if (status === 404) {
+					AlertService.showAlert('importSyllabusNotFound');
+				} else if (status === 403) {
+					AlertService.showAlert('importSyllabusPermissionError');
+				} else {
+					AlertService.showAlert('importServiceUndefined');
+				}
 			});
 		});
 	};
