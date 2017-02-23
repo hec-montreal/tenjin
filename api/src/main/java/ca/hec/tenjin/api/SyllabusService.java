@@ -74,7 +74,7 @@ public interface SyllabusService {
 	 * @throws DeniedAccessException 
 	 * @throws SyllabusLockedException 
 	 */
-	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, SyllabusLockedException;
+	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException;
 
 	/**
 	 * Retrieve the SyllabusElementMappings for a syllabus 

@@ -302,16 +302,14 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	@Override
-	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, SyllabusLockedException {
+	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException {
 		Syllabus syllabus = syllabusDao.getSyllabus(syllabusId);
 
 		if (syllabus == null) {
 			throw new NoSyllabusException(syllabusId);
 		}
 
-		if (!syllabusLockService.checkIfUserHasLock(syllabus, sakaiProxy.getCurrentSiteId())) {
-			throw new SyllabusLockedException(syllabusLockService.getSyllabusLock(syllabusId));
-		}
+		syllabusLockService.unlockSyllabus(syllabusId);
 
 		if (syllabus.getCommon()) {
 			throw new DeniedAccessException();

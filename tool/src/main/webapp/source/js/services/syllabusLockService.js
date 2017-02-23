@@ -1,4 +1,4 @@
-tenjinApp.service('SyllabusLockService', ['$q', '$http', 'AlertService', function($q, $http, AlertService) {
+tenjinApp.service('SyllabusLockService', ['$q', '$http', 'AlertService', 'UserService', function($q, $http, AlertService, UserService) {
 	'use strict';
 
 	var renewLoopHandle = null;
@@ -22,6 +22,10 @@ tenjinApp.service('SyllabusLockService', ['$q', '$http', 'AlertService', functio
 			this.stopRenewLoop();
 		}
 
+		var delay = parseInt(UserService.getProfile().lockRenewDelaySeconds, 10) * 1000;
+
+		console.log("Starting lock renew loop with delay = " + delay);
+
 		this.renewLoopHandle = setInterval(function() {
 			tthis.renewSyllabusLock(syllabusId).then(function() {
 				console.log("Lock renewed");
@@ -36,10 +40,12 @@ tenjinApp.service('SyllabusLockService', ['$q', '$http', 'AlertService', functio
 					AlertService.showAlert('cannotSaveSyllabus');
 				}
 			});
-		}, 10000);
+		}, delay);
 	};
 
 	this.stopRenewLoop = function() {
+		console.log("Stoping lock renew loop");
+
 		clearInterval(this.renewLoopHandle);
 
 		this.renewLoopHandle = null;

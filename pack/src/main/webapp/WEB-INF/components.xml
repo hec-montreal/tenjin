@@ -35,6 +35,7 @@
 				<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
 				<property name="syllabusLockDao" ref="ca.hec.tenjin.api.dao.SyllabusLockDao" />
 				<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+				<property name="securityService" ref="ca.hec.tenjin.api.TenjinSecurityService" />
 			</bean>
 		</property>
 		

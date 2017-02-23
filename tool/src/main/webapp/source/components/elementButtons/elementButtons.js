@@ -27,8 +27,8 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'Alert
 
 					SyllabusService.deleteElementFromSyllabus(data, parent, $element);
 
-					SyllabusService.save(data).catch(function(error) {
-						AlertService.showAlert('cannotSaveSyllabus');
+					SyllabusService.save(data).catch(function(e) {
+						AlertService.showSyllabusSaveAlert(e);
 					});
 				});
 			};
@@ -43,14 +43,8 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'Alert
 
 					SyllabusService.addElementToSyllabus(data, elementData.parent, elementData.element);
 
-					SyllabusService.save(data).catch(function(data) {
-						if (data.lock) {
-							AlertService.showAlert('syllabusLocked', [data.lock.createdByName]);
-						} else if (data.locked) {
-							AlertService.showAlert('noSyllabusLock');
-						} else {
-							AlertService.showAlert('cannotSaveSyllabus');
-						}
+					SyllabusService.save(data).catch(function(e) {
+						AlertService.showSyllabusSaveAlert(e);
 					});
 				});
 			}

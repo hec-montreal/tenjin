@@ -16,8 +16,8 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'Syl
 			SyllabusService.syllabusList.push(data);
 
 			syllabusAdded = data;
-		}).catch(function(data) {
-			AlertService.showAlert('cannotSaveSyllabus');
+		}).catch(function(e) {
+			AlertService.showSyllabusSaveAlert(e);
 		});
 	};
 
@@ -37,8 +37,8 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'Syl
 
 			SyllabusService.create(UserService.getProfile().siteId, data.name, sections).then(function() {
 				refresh();
-			}).catch(function() {
-				AlertService.showAlert('cannotSaveSyllabus');
+			}).catch(function(e) {
+				AlertService.showSyllabusSaveAlert(e);
 			});
 		});
 	};
@@ -112,12 +112,18 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'Syl
 
 		var ret = $q.defer();
 
-		SyllabusService.save(syllabus).then(function() {
-			ret.resolve();
+		SyllabusLockService.lockSyllabus(syllabus.id).then(function() {
+			SyllabusService.save(syllabus).then(function() {
+				ret.resolve();
 
-			refresh();
-		}).catch(function() {
-			AlertService.showAlert('cannotSaveSyllabus');
+				refresh();
+			}).catch(function(e) {
+				AlertService.showSyllabusSaveAlert(e);
+
+				ret.reject();
+			});
+		}).catch(function(e) {
+			AlertService.showSyllabusSaveAlert(e);
 
 			ret.reject();
 		});
@@ -157,12 +163,18 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'Syl
 
 			var ret = $q.defer();
 
-			SyllabusService.save(lastModifiedSyllabus).then(function() {
-				ret.resolve();
+			SyllabusLockService.lockSyllabus(lastModifiedSyllabus.id).then(function() {
+				SyllabusService.save(lastModifiedSyllabus).then(function() {
+					ret.resolve();
 
-				refresh();
-			}).catch(function() {
-				AlertService.showAlert('cannotSaveSyllabus');
+					refresh();
+				}).catch(function(e) {
+					AlertService.showSyllabusSaveAlert(e);
+
+					ret.reject();
+				});
+			}).catch(function(e) {
+				AlertService.showSyllabusSaveAlert(e);
 
 				ret.reject();
 			});

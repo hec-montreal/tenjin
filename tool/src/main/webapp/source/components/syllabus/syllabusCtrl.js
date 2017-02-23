@@ -14,36 +14,20 @@
 
 		AlertService.reset();
 
-		SyllabusLockService.lockSyllabus(syllabusId).then(function() {
-			SyllabusLockService.startRenewLoop(syllabusId);
-		}).catch(function(e) {
-			e = e.data;
+		TenjinService.viewState.loadSyllabus({
+			syllabusId: syllabusId
+		}).then(function() {
+			$scope.syllabusLoaded = true;
 
-			if (e && e.lock) {
-				AlertService.showAlert('syllabusLocked', [e.lock.createdByName]);
-			} else if (e && e.locked) {
-				AlertService.showAlert('noSyllabusLock');
-			} else {
-				AlertService.showAlert('cannotSaveSyllabus');
-			}
+			TreeService.selectElement(TreeService.findElementByPosition([0]));
+
+			ret.resolve();
+		}).catch(function() {
+			$scope.syllabusLoaded = false;
+
+			AlertService.showAlert('noSyllabus');
 
 			ret.reject();
-		}).finally(function() {
-			TenjinService.viewState.loadSyllabus({
-				syllabusId: syllabusId
-			}).then(function() {
-				$scope.syllabusLoaded = true;
-
-				TreeService.selectElement(TreeService.findElementByPosition([0]));
-
-				ret.resolve();
-			}).catch(function() {
-				$scope.syllabusLoaded = false;
-
-				AlertService.showAlert('noSyllabus');
-
-				ret.reject();
-			});
 		});
 
 		return ret.promise;
@@ -62,8 +46,8 @@
 	};
 
 	$scope.save = function() {
-		SyllabusService.saveCurrent().catch(function() {
-			AlertService.showAlert('cannotSaveSyllabus');
+		SyllabusService.saveCurrent().catch(function(e) {
+			AlertService.showSyllabusSaveAlert(e);
 		});
 	};
 

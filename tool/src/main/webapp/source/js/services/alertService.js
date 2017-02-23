@@ -92,6 +92,21 @@
 		}
 	};
 
+	/**
+	 * Util method to display the correct error on syllabus save
+	 */
+	this.showSyllabusSaveAlert = function(error) {
+		var data = error.data ? error.data : error;
+
+		if (data.lock) {
+			this.showAlert('syllabusLocked', [data.lock.createdByName]);
+		} else if (data.locked) {
+			this.showAlert('noSyllabusLock');
+		} else {
+			this.showAlert('cannotSaveSyllabus');
+		}
+	};
+
 	this.reset = function() {
 		this.currentAlert = null;
 	};

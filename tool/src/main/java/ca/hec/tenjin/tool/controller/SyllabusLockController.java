@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusLockService;
+import ca.hec.tenjin.api.exception.DeniedAccessException;
+import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.NoSyllabusLockException;
 import ca.hec.tenjin.api.exception.SyllabusLockedException;
 import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
@@ -39,9 +41,11 @@ public class SyllabusLockController {
 	 * 
 	 * @param syllabusId
 	 * @return
+	 * @throws DeniedAccessException
+	 * @throws NoSyllabusException
 	 */
 	@RequestMapping(value = "/syllabus/{syllabusId}/lock", method = RequestMethod.GET)
-	public @ResponseBody SyllabusLock getSyllabusLock(@PathVariable Long syllabusId) {
+	public @ResponseBody SyllabusLock getSyllabusLock(@PathVariable Long syllabusId) throws DeniedAccessException {
 		SyllabusLock ret = syllabusLockService.getSyllabusLock(syllabusId);
 
 		if (ret == null) {
@@ -59,7 +63,7 @@ public class SyllabusLockController {
 	}
 
 	@RequestMapping(value = "/syllabus/{syllabusId}/lock", method = RequestMethod.POST)
-	public @ResponseBody SyllabusLock lockSyllabus(@PathVariable Long syllabusId) throws SyllabusLockedException {
+	public @ResponseBody SyllabusLock lockSyllabus(@PathVariable Long syllabusId) throws SyllabusLockedException, DeniedAccessException {
 		SyllabusLock lock = syllabusLockService.getSyllabusLock(syllabusId);
 
 		// Verify the current lock
@@ -81,7 +85,7 @@ public class SyllabusLockController {
 	}
 
 	@RequestMapping(value = "/syllabus/{syllabusId}/lock/renew", method = RequestMethod.POST)
-	public @ResponseBody SyllabusLock renewSyllabusLock(@PathVariable Long syllabusId) throws SyllabusLockedException, NoSyllabusLockException {
+	public @ResponseBody SyllabusLock renewSyllabusLock(@PathVariable Long syllabusId) throws SyllabusLockedException, NoSyllabusLockException, DeniedAccessException {
 		SyllabusLock lock = syllabusLockService.getSyllabusLock(syllabusId);
 
 		// No lock

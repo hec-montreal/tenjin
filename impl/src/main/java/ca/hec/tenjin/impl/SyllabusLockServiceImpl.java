@@ -6,8 +6,10 @@ import java.util.List;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusLockService;
+import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusLockDao;
+import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
@@ -26,18 +28,49 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 	@Setter
 	private SyllabusLockDao syllabusLockDao;
 
+	@Setter
+	private TenjinSecurityServiceImpl securityService;
+
 	@Override
-	public SyllabusLock getSyllabusLock(Long syllabusId) {
+	public SyllabusLock getSyllabusLock(Long syllabusId) throws DeniedAccessException {
+		Syllabus syllabus;
+
+		try {
+			syllabus = syllabusDao.getSyllabus(syllabusId);
+		} catch (NoSyllabusException e) {
+			return null;
+		}
+
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+			throw new DeniedAccessException();
+		}
+
 		return syllabusLockDao.getSyllabusLockForSyllabus(syllabusId);
 	}
 
 	@Override
-	public List<SyllabusLock> getSyllabusLocksForUser(Long userId) {
+	public List<SyllabusLock> getSyllabusLocksForUser(Long userId) throws DeniedAccessException {
+		if (!sakaiProxy.getCurrentUserId().equals(userId)) {
+			throw new DeniedAccessException();
+		}
+
 		return syllabusLockDao.getSyllabusLocksForUser(userId);
 	}
 
 	@Override
-	public SyllabusLock lockSyllabus(Long syllabusId, String userId, String username) {
+	public SyllabusLock lockSyllabus(Long syllabusId, String userId, String username) throws DeniedAccessException {
+		Syllabus syllabus;
+
+		try {
+			syllabus = syllabusDao.getSyllabus(syllabusId);
+		} catch (NoSyllabusException e) {
+			return null;
+		}
+
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+			throw new DeniedAccessException();
+		}
+
 		SyllabusLock lock = new SyllabusLock();
 
 		lock.setSyllabusId(syllabusId);
@@ -51,7 +84,19 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 	}
 
 	@Override
-	public void unlockSyllabus(Long syllabusId) {
+	public void unlockSyllabus(Long syllabusId) throws DeniedAccessException {
+		Syllabus syllabus;
+
+		try {
+			syllabus = syllabusDao.getSyllabus(syllabusId);
+		} catch (NoSyllabusException e) {
+			return;
+		}
+
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+			throw new DeniedAccessException();
+		}
+
 		SyllabusLock lock = syllabusLockDao.getSyllabusLockForSyllabus(syllabusId);
 
 		if (lock == null) {
@@ -62,7 +107,11 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 	}
 
 	@Override
-	public void renewSyllabusLock(SyllabusLock lock) {
+	public void renewSyllabusLock(SyllabusLock lock) throws DeniedAccessException {
+		if (!sakaiProxy.getCurrentUserId().equals(lock.getCreatedBy())) {
+			throw new DeniedAccessException();
+		}
+
 		lock.setLastRenewalDate(new Date());
 
 		syllabusLockDao.save(lock);
@@ -70,6 +119,10 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 
 	@Override
 	public boolean isLockExpired(SyllabusLock lock) {
+		if (lock == null) {
+			return true;
+		}
+		
 		Calendar cal = Calendar.getInstance();
 
 		String delayProp = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_LOCK_DELAY_SECONDS);
@@ -92,7 +145,7 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 	}
 
 	@Override
-	public boolean checkIfUserHasLock(Syllabus syllabus, String currentUserId) {
+	public boolean checkIfUserHasLock(Syllabus syllabus, String currentUserId) throws DeniedAccessException {
 		SyllabusLock lock = getSyllabusLock(syllabus.getId());
 
 		if (lock == null) {

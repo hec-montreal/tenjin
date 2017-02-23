@@ -40,8 +40,8 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 					var result = $scope.syllabusService.addRubricToSyllabus(data, $scope.element, element);
 
 					if (result > 0) {
-						SyllabusService.save(data).catch(function(error) {
-							AlertService.showAlert('cannotSaveSyllabus');
+						SyllabusService.save(data).catch(function(e) {
+							AlertService.showSyllabusSaveAlert(e);
 						});
 					}
 				} else {
@@ -56,8 +56,8 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 
 						SyllabusService.addElementToSyllabus(data, modalData.parent, modalData.element);
 
-						SyllabusService.save(data).catch(function() {
-							AlertService.showAlert('cannotSaveSyllabus');
+						SyllabusService.save(data).catch(function(e) {
+							AlertService.showSyllabusSaveAlert(e);
 						});
 					});
 				}
