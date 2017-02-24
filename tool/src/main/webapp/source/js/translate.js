@@ -378,7 +378,7 @@
 		EXAM_WEIGHT: 'Pondération',
 		EXAM_LOCATION: 'Lieu: ',
 		EXAM_INCLASS: 'En classe ',
-		EXAM_ATHOME: 'A la maison',
+		EXAM_ATHOME: 'À la maison',
 		EXAM_TERMS: 'Modalité: ',
 		EXAM_ORAL: 'Oral',
 		EXAM_WRITTEN: 'Écrit',
