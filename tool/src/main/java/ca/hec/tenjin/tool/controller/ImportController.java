@@ -22,6 +22,7 @@
 package ca.hec.tenjin.tool.controller;
 
 import ca.hec.tenjin.api.ImportService;
+import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusService;
 
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
@@ -40,10 +41,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ca.hec.tenjin.api.TenjinSecurityService;
+import ca.hec.tenjin.api.dao.SyllabusDao;
+import ca.hec.tenjin.api.exception.DeniedAccessException;
+import ca.hec.tenjin.api.exception.NoSiteException;
+import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.StructureSyllabusException;
 
 @Controller
 @RequestMapping(value ="v1")
@@ -61,21 +70,43 @@ public class ImportController {
 
 	@Setter
 	@Autowired
-	private TenjinSecurityService securityService = null; 
+	private SyllabusDao syllabusDao; 
+
+	@Setter
+	@Autowired
+	private SakaiProxy sakaiProxy = null; 
 
 	@RequestMapping(value = "/import/{siteId}", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<Syllabus> importSyllabus(@PathVariable("siteId") String siteId) throws PermissionException {
+	public @ResponseBody ResponseEntity<Syllabus> importSyllabus(@PathVariable("siteId") String siteId) 
+			throws PermissionException, NoSiteException, DeniedAccessException, NoSyllabusException, StructureSyllabusException {
 		
-		if (importService != null) {
-			Syllabus syllabus = importService.importSyllabusFromSite(siteId);
-			if (syllabus != null) { 
-				return new ResponseEntity<Syllabus>(syllabus, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<Syllabus>(HttpStatus.NOT_FOUND);
-			}
-		} else {
+		if (importService == null) {
 			return new ResponseEntity<Syllabus>(HttpStatus.NOT_IMPLEMENTED);
 		}
+		
+		String currentSiteId = sakaiProxy.getCurrentSiteId();
+		
+		// Delete existing Syllabuses
+//		List<Syllabus> deleteSyllabusList = syllabusService.getSyllabusList(currentSiteId);
+//		for (Syllabus s : deleteSyllabusList) {
+//			// TODO does this need to go in a service?  Change the import service to a provider?
+//			syllabusDao.softDeleteSyllabus(s);
+//		}
+
+		Syllabus syllabus = importService.importSyllabusFromSite(siteId);
+		Set<String> sections = sakaiProxy.getGroupsForSite(currentSiteId);
+		
+		syllabus.setSiteId(currentSiteId);
+		syllabus.setCourseTitle(currentSiteId);
+		syllabus.setSections(sections);
+		
+//		syllabusService.createOrUpdateSyllabus(syllabus);
+		
+		if (syllabus != null) {
+			return new ResponseEntity<Syllabus>(syllabus, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Syllabus>(HttpStatus.NOT_FOUND);
+		}		
 	}
 
 	@ExceptionHandler(PermissionException.class)

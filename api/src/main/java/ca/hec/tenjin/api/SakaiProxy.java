@@ -1,5 +1,7 @@
 package ca.hec.tenjin.api;
 
+import java.util.Set;
+
 import org.sakaiproject.authz.api.GroupNotDefinedException;
 import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.exception.IdUnusedException;
@@ -60,4 +62,6 @@ public interface SakaiProxy {
 	public Group getGroup(String groupId) throws GroupNotDefinedException;
 	
 	public String getSakaiProperty(String name);
+	
+	public Set<String> getGroupsForSite(String siteId);
 }
