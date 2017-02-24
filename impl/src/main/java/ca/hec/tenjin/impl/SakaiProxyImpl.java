@@ -1,6 +1,10 @@
 package ca.hec.tenjin.impl;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -193,5 +197,20 @@ public class SakaiProxyImpl implements SakaiProxy {
 	@Override
 	public String getSakaiProperty(String name) {
 		return serverConfigurationService.getString(name);
+	}
+
+	@Override
+	public Set<String> getGroupsForSite(String siteId) {
+		Set<String> groups = new HashSet<String>();
+		
+		Site site = getSite(siteId);
+		Collection<Group> siteGroups = site.getGroups();
+		for (Group group: siteGroups) {
+			if (group.getProviderGroupId() != null) {
+				groups.add(group.getId());
+			}
+		}
+
+		return groups;
 	}
 }

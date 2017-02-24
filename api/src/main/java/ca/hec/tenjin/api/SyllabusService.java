@@ -48,11 +48,17 @@ public interface SyllabusService {
 	 * @param siteId The site ID
 	 * @param currentUserId Current user id
 	 * @throws NoSiteException
-	 * @throws NoSyllabusException
 	 * @throws DeniedAccessException 
-	 * @throws StructureSyllabusException 
 	 */
 	public List<Syllabus> getSyllabusListForUser(String siteId,  String currentUserId)  throws NoSiteException, DeniedAccessException;
+	
+	/**
+	 * Retrieve all syllabuses for the given site
+	 *
+	 * @return the syllabus list for the user
+	 * @throws NoSiteException
+	 */
+	public List<Syllabus> getSyllabusList(String siteId)  throws NoSiteException, DeniedAccessException;
 	
 	/**
 	 * Create a new syllabus or update the existing syllabus based on id
