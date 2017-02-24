@@ -1,9 +1,13 @@
 <div class="element video">
 	<div class="video">
-		<div class="row embed">
+		<div class="row embed" data-ng-if="element.attributes.videoUrl">
 			<iframe height="220" src="{{videoUrl}}" frameborder="0" allowfullscreen ng-if="isIframe" class="col-sm-3 col-xs-12"></iframe>
 			<span ng-bind-html="videoUrl" ng-if="!isIframe"></span>
 			<span ng-bind-html="element.description" class="col-sm-9 col-xs-12 comment syllabus-text"></span>
+		</div>
+
+		<div class="row embed" data-ng-if="embedCode" ng-bind-html="embedCode" data-nodrag>
+
 		</div>
 	</div>
 </div>

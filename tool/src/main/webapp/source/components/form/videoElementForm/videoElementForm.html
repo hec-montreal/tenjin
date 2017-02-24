@@ -1,19 +1,29 @@
 ﻿<div class="element-form"> 
-	<!-- URL or Embed -->
+	<!-- URL -->
 	<div class="row field">
 		<div class="col-md-2">
-			<label for="videoUrl" class="label-text-url">{{ 'FORM_URL_EMBED' | translate }} <span class="mandatory"></label>
+			<label for="videoUrl" class="label-text-url">{{ 'FORM_URL_EMBED' | translate }}</label>
 		</div>
 
 		<div class="col-md-10">
-			<input id="videoUrl" type="text" name="url" data-ng-model="element.attributes.videoUrl" class="input-text-title" required/>
+			<input id="videoUrl" type="text" name="url" data-ng-model="element.attributes.videoUrl" class="input-text-title"/>
+		</div>
+	</div>
+
+	<div class="row field">
+		<div class="col-md-2">
+			<label for="embedCode">{{ 'FORM_EMBED' | translate }}</label>
+		</div>
+
+		<div class="col-md-10">
+			<textarea id="embedCode" data-ng-model="element.attributes.embedCode"></textarea>
 		</div>
 	</div>
 
 	<!-- Description -->
 	<div class="field">
 		<div class="label-text-description">{{ 'FORM_DESCRIPTION' | translate }}</div>
-		<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description" required></textarea> 
+		<textarea id="mytextarea" cols="30" rows="10" ckeditor="editorOptions" data-ng-model="element.description"></textarea> 
 	</div>
 
 	<element-common-attributes data-element="element" data-noimportant="true"></element-common-attributes>

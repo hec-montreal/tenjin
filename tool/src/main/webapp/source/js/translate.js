@@ -35,6 +35,7 @@
 		FORM_DATE_DISPLAY_END: 'Ending date',
 		FORM_URL: 'URL',
 		FORM_URL_EMBED: 'URL',
+		FORM_EMBED: 'Embed code',
 		CONTACTINFO_FIRSTNAME: 'Firstname',
 		CONTACTINFO_LASTNAME: 'Lastname',
 		CONTACTINFO_TITLE: 'Title',
@@ -250,7 +251,7 @@
 		PUBLISHED_SYLLABUS: 'Published',
 		DRAFTED_SYLLABUS: 'Not published',
 		NOTATTRIBUTED_SYLLABUS: 'Not attributed',
-        PUBLISH_CHECK_COMMON:'The common course outline must be published first before you can publish this course outline.',
+		PUBLISH_CHECK_COMMON: 'The common course outline must be published first before you can publish this course outline.',
 		PUBLISH_TITLE_LABEL: 'Publish the course outline',
 		PUBLISH_LAST_PUBLISH_LABEL: 'Last publication of the course outline:',
 		PUBLISH_MODIFIED_SECTIONS_LABEL: 'Voulez-vous publier les modifications pour le plan de cours associé au(x) section(s)',
@@ -543,7 +544,7 @@
 		PUBLISH_MODIFIED_PAGES_LABEL: 'Liste des pages modifiées:',
 		PUBLISH_CANCEL_BUTTON_LABEL: 'Annuler',
 		NOTATTRIBUTED_SYLLABUS: 'Non attribué',
-        PUBLISH_CHECK_COMMON:'Le plan de cours commun doit être publié avant de publier ce plan de cours.',
+		PUBLISH_CHECK_COMMON: 'Le plan de cours commun doit être publié avant de publier ce plan de cours.',
 		PUBLISH_STATE_TITLE: 'Confirmation',
 		PUBLISH_SUCCESS: 'La publication du plan de cours a réussi',
 		PUBLISH_FAILURE: 'La publication du plan de cours a échoué',
@@ -575,7 +576,8 @@
 		ELEMENT_HIDDEN_BETWEEN: 'Caché avant le %1 et après le %2',
 		FROM_COMMON: 'Provenant du commun',
 		DATE_TIME_FORMAT: 'yyyy-MM-dd HH:mm',
-		HIDDEN_BY_RESOURCE_FLAG: 'Caché par les propriétés de la ressource'
+		HIDDEN_BY_RESOURCE_FLAG: 'Caché par les propriétés de la ressource',
+		FORM_EMBED: 'Code d\'imbrication:'
 	});
 
 	$translateProvider.preferredLanguage('fr');
