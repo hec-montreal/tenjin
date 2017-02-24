@@ -141,7 +141,7 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/{ids}/delete", method = RequestMethod.GET)
-	public void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException {
+	public @ResponseBody void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException {
 		for (Long id : syllabusId) {
 			syllabusService.deleteSyllabus(id);
 		}
