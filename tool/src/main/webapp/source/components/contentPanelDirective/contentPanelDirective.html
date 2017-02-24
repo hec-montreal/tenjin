@@ -8,7 +8,7 @@
 		</div>
 
 		<!-- Not published notice -->
-		<div data-ng-if="!element.equalsPublished && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice not-published">
+		<div data-ng-if="!element.equalsPublished && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice not-published">
 			<h3><span class="glyphicon glyphicon-flag"></span> {{ 'NOT_PUBLISHED' | translate }}</h3>
 		</div>
 
@@ -18,7 +18,7 @@
 		</div>
 
 		<!-- Hidden by date notice -->
-		<div data-ng-if="isElementHiddenByDate(element) && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice hidden-by-date">
+		<div data-ng-if="isElementHiddenByDate(element) && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice hidden-by-date">
 			<h3><span class="glyphicon glyphicon-flag"></span> {{ getElementHiddenByDateMessage(element) }}</h3>
 		</div>
 
