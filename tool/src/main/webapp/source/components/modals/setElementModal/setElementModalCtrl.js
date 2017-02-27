@@ -32,6 +32,10 @@
 	}
 
 	$scope.ok = function() {
+		if ($scope.element.preSave) {
+			$scope.element.preSave.call($scope.element);
+		}
+
 		var errors = $scope.validateElement();
 
 		if (errors.length <= 0) {
@@ -50,7 +54,7 @@
 		var ret = [];
 
 		// If the validation function exists
-		if (!!validationFn) {
+		if (validationFn) {
 			ret = validationFn.call($scope.element);
 		}
 

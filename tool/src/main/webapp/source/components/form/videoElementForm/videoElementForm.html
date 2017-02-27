@@ -1,8 +1,21 @@
 ﻿<div class="element-form"> 
-	<!-- URL -->
 	<div class="row field">
 		<div class="col-md-2">
-			<label for="videoUrl" class="label-text-url">{{ 'FORM_URL_EMBED' | translate }}</label>
+			<label for="inputMode">{{ 'SOURCE' | translate }}</label>
+		</div>
+
+		<div class="col-md-10">
+			<select id="inputMode" data-ng-model="inputMode">
+				<option value="url">{{ 'SOURCE_URL' | translate }}</option>
+				<option value="embed">{{ 'SOURCE_EMBED' | translate }}</option>
+			</select>
+		</div>
+	</div>
+
+	<!-- URL -->
+	<div class="row field" data-ng-if="inputMode === 'url'">
+		<div class="col-md-2">
+			<label for="videoUrl">{{ 'FORM_URL_EMBED' | translate }}</label>
 		</div>
 
 		<div class="col-md-10">
@@ -10,7 +23,7 @@
 		</div>
 	</div>
 
-	<div class="row field">
+	<div class="row field" data-ng-if="inputMode === 'embed'">
 		<div class="col-md-2">
 			<label for="embedCode">{{ 'FORM_EMBED' | translate }}</label>
 		</div>

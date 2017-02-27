@@ -57,8 +57,6 @@ tenjinApp.directive('videoElement', ['$sce', function($sce) {
 				$scope.videoUrl = videoEmbedUrl;
 			} else if ($scope.element.attributes.embedCode) {
 				$scope.embedCode = $sce.trustAsHtml($scope.element.attributes.embedCode);
-
-				console.log("Embed code: " + $scope.embedCode);
 			}
 		}
 	};

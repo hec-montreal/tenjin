@@ -18,6 +18,22 @@
 				removePlugins: 'elementspath,resize'
 			};
 
+			if ($scope.element.attributes.embedCode && $scope.element.attributes.embedCode.length > 0) {
+				$scope.inputMode = 'embed';
+			} else {
+				$scope.inputMode = 'url';
+			}
+
+			$scope.element.preSave = function() {
+				if ($scope.inputMode === 'url') {
+					delete this.attributes.embedCode;
+				}
+
+				if ($scope.inputMode === 'embed') {
+					delete this.attributes.videoUrl;
+				}
+			};
+
 			$scope.element.validate = function() {
 				var ret = [];
 
@@ -26,6 +42,17 @@
 						field: "videoUrl",
 						message: "ERROR_MISSING_VIDEO_URL"
 					});
+				}
+
+				if (this.attributes.videoUrl) {
+					var url = this.attributes.videoUrl;
+
+					if (url.indexOf('youtube') < 0 && url.indexOf('vimeo') < 0 && url.indexOf('dailymotion') < 0) {
+						ret.push({
+							field: "videoUrl",
+							message: "ERROR_INVALID_VIDEO_URL"
+						});
+					}
 				}
 
 				return ret;

@@ -23,8 +23,6 @@
 			$scope.element.validate = function() {
 				var ret = [];
 
-				console.log($scope.element.$selectedResource)
-
 				if (!$scope.element.attributes.imageId) {
 					ret.push({
 						field: "image",

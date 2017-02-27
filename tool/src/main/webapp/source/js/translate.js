@@ -112,6 +112,7 @@
 		ERROR_MISSING_CONTACTINFO_FIRSTNAME: 'Please enter a first name',
 		ERROR_MISSING_CONTACTINFO_LASTNAME: 'Please enter a last name',
 		ERROR_MISSING_VIDEO_URL: 'Please enter a video URL',
+		ERROR_INVALID_VIDEO_URL: 'Please enter a valid video URL',
 		ERROR_CONTENT_MANDATORY: 'The content field is mandatory',
 		ERROR_START_DATE_GREATER: 'The end date must be later than the start date',
 		ERROR_URL_MANDATORY: 'The url field is mandatory',
@@ -288,7 +289,10 @@
 		ELEMENT_HIDDEN_BETWEEN: 'Element hidden before %1 and after %2',
 		FROM_COMMON: 'From common',
 		DATE_TIME_FORMAT: 'yyyy-MM-dd HH:mm',
-		HIDDEN_BY_RESOURCE_FLAG: 'Hidden by resource'
+		HIDDEN_BY_RESOURCE_FLAG: 'Hidden by resource',
+		SOURCE: 'Source',
+		SOURCE_URL: 'URL (Youtube, Vimeo, Dailymotion)',
+		SOURCE_EMBED: 'Embed',
 	}).translations('fr', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -321,6 +325,7 @@
 		ERROR_MISSING_CONTACTINFO_FIRSTNAME: 'Le prénom est obligatoire',
 		ERROR_MISSING_CONTACTINFO_LASTNAME: 'Le nom est obligatoire',
 		ERROR_MISSING_VIDEO_URL: 'L\'url du vidéo est obligatoire',
+		ERROR_INVALID_VIDEO_URL: 'L\'url du vidéo est invalide',
 		FORM_TITLE: 'Libellé',
 		FORM_DESCRIPTION: 'Description / Commentaire',
 		FORM_IMPORTANT: 'Important',
@@ -577,7 +582,10 @@
 		FROM_COMMON: 'Provenant du commun',
 		DATE_TIME_FORMAT: 'yyyy-MM-dd HH:mm',
 		HIDDEN_BY_RESOURCE_FLAG: 'Caché par les propriétés de la ressource',
-		FORM_EMBED: 'Code d\'imbrication:'
+		FORM_EMBED: 'Code d\'imbrication:',
+		SOURCE: 'Source',
+		SOURCE_URL: 'URL (Youtube, Vimeo, Dailymotion)',
+		SOURCE_EMBED: 'Imbrication (Méliès)'
 	});
 
 	$translateProvider.preferredLanguage('fr');
