@@ -84,6 +84,14 @@
 					.replace('%1', dates.start.format(fmt))
 					.replace('%2', dates.end.format(fmt));
 			};
+
+			$scope.isElementVisibleToStudent = function(element) {
+				if (!$scope.isElementHiddenByResourceFlag(element)) {
+					return true;
+				}
+
+				return UserService.isAllowed('syllabusWrite', SyllabusService.syllabus);
+			};
 		}
 	};
 }]);

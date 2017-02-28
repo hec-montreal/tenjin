@@ -107,6 +107,18 @@
 		}
 	};
 
+	this.showSyllabusLoadAlert = function(error) {
+		var data = error.data ? error.data : error;
+
+		if (data.lock) {
+			this.showAlert('syllabusLocked', [data.lock.createdByName]);
+		} else if (data.locked) {
+			this.showAlert('noSyllabusLock');
+		} else {
+			this.showAlert('noSyllabus');
+		}
+	};
+
 	this.reset = function() {
 		this.currentAlert = null;
 	};

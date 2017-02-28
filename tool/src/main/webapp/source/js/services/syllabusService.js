@@ -635,12 +635,14 @@
 		if (elementResourceIdName) {
 			var res = ResourcesService.getResource(element.attributes[elementResourceIdName]);
 
-			if (res.release) {
-				start = moment(res.release.time);
-			}
+			if (res) {
+				if (res.release) {
+					start = moment(res.release.time);
+				}
 
-			if (res.retract) {
-				end = moment(res.retract.time);
+				if (res.retract) {
+					end = moment(res.retract.time);
+				}
 			}
 		}
 		// Use the element date fields
@@ -670,6 +672,6 @@
 
 		var res = ResourcesService.getResource(element.attributes[elementResourceIdName]);
 
-		return res && res.hidden;
+		return res ? res.hidden : true;
 	};
 }]);

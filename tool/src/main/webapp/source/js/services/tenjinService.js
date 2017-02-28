@@ -69,7 +69,9 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 				SyllabusLockService.stopRenewLoop();
 
 				if (UserService.getProfile().syllabusWrite.indexOf(parseInt(ctx.syllabusId)) > -1) {
-					SyllabusLockService.lockSyllabus(ctx.syllabusId).then(function() {
+					SyllabusLockService.lockSyllabus(ctx.syllabusId).catch(function(e) {
+						AlertService.showSyllabusLoadAlert(e);
+					}).finally(function() {
 						SyllabusService.loadSyllabus(ctx.syllabusId).then(function() {
 							SyllabusLockService.startRenewLoop(ctx.syllabusId);
 
@@ -77,10 +79,6 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 						}).catch(function(e) {
 							ret.reject(e);
 						});
-					}).catch(function(e) {
-						AlertService.showSyllabusSaveAlert(e);
-
-						ret.reject(e);
 					});
 				} else {
 					SyllabusService.loadPublishedSyllabus(ctx.syllabusId).then(function() {

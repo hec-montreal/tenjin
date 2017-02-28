@@ -22,10 +22,10 @@
 			TreeService.selectElement(TreeService.findElementByPosition([0]));
 
 			ret.resolve();
-		}).catch(function() {
+		}).catch(function(e) {
 			$scope.syllabusLoaded = false;
 
-			AlertService.showAlert('noSyllabus');
+			AlertService.showSyllabusLoadAlert(e);
 
 			ret.reject();
 		});

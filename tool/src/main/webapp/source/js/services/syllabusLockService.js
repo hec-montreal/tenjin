@@ -30,15 +30,7 @@ tenjinApp.service('SyllabusLockService', ['$q', '$http', 'AlertService', 'UserSe
 			tthis.renewSyllabusLock(syllabusId).then(function() {
 				console.log("Lock renewed");
 			}).catch(function(e) {
-				e = e.data;
-
-				if (e.lock) {
-					AlertService.showAlert('syllabusLocked', [e.lock.createdByName]);
-				} else if (e.locked) {
-					AlertService.showAlert('noSyllabusLock');
-				} else {
-					AlertService.showAlert('cannotSaveSyllabus');
-				}
+				AlertService.showSyllabusSaveAlert(e);
 			});
 		}, delay);
 	};
