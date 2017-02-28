@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusLockService;
+import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.NoSyllabusLockException;
+import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.exception.SyllabusLockedException;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
 import lombok.Setter;
 
@@ -28,6 +31,10 @@ public class SyllabusLockController {
 	@Setter
 	@Autowired
 	private SyllabusLockService syllabusLockService;
+	
+	@Setter
+	@Autowired
+	private SyllabusService syllabusService;
 
 	@Setter
 	@Autowired
@@ -63,24 +70,26 @@ public class SyllabusLockController {
 	}
 
 	@RequestMapping(value = "/syllabus/{syllabusId}/lock", method = RequestMethod.POST)
-	public @ResponseBody SyllabusLock lockSyllabus(@PathVariable Long syllabusId) throws SyllabusLockedException, DeniedAccessException {
+	public @ResponseBody SyllabusLock lockSyllabus(@PathVariable Long syllabusId) throws SyllabusLockedException, DeniedAccessException, NoSyllabusException, StructureSyllabusException {
 		SyllabusLock lock = syllabusLockService.getSyllabusLock(syllabusId);
 
-		// Verify the current lock
+		// Verify the lock for the syllabus
 		if (lock != null) {
-			if (syllabusLockService.isLockExpired(lock)) {
-				syllabusLockService.unlockSyllabus(syllabusId);
-			} else {
-				// Check if the lock belongs to the current user
-				if (lock.getCreatedBy().equals(sakaiProxy.getCurrentUserId())) {
-					// Delete old lock
-					syllabusLockService.unlockSyllabus(syllabusId);
-				} else {
-					throw new SyllabusLockedException(lock);
-				}
+			validateLock(lock, sakaiProxy.getCurrentUserId());
+		}
+		
+		String checkCommonLockProp = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_LOCK_CHECK_COMMON_LOCK);
+
+		if(checkCommonLockProp != null && checkCommonLockProp.toLowerCase().equals("true")) {
+			Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
+			Syllabus common = syllabusService.getCommonSyllabus(syllabus.getSiteId());
+			SyllabusLock commonLock = syllabusLockService.getSyllabusLock(common.getId());
+			
+			if(commonLock != null) {
+				validateLock(commonLock, sakaiProxy.getCurrentUserId());
 			}
 		}
-
+				
 		return syllabusLockService.lockSyllabus(syllabusId, sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName());
 	}
 
@@ -114,5 +123,19 @@ public class SyllabusLockController {
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 	public @ResponseBody SyllabusLockedException handleSyllabusLockedException(SyllabusLockedException ex) {
 		return ex;
+	}
+	
+	private void validateLock(SyllabusLock lock, String currentUserId) throws DeniedAccessException, SyllabusLockedException {
+		if (syllabusLockService.isLockExpired(lock)) {
+			syllabusLockService.unlockSyllabus(lock.getSyllabusId());
+		} else {
+			// Check if the lock belongs to the current user
+			if (lock.getCreatedBy().equals(sakaiProxy.getCurrentUserId())) {
+				// Delete old lock
+				syllabusLockService.unlockSyllabus(lock.getSyllabusId());
+			} else {
+				throw new SyllabusLockedException(lock);
+			}
+		}
 	}
 }

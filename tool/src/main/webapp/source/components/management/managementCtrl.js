@@ -23,6 +23,8 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'Syl
 
 	SyllabusLockService.stopRenewLoop();
 
+	AlertService.reset();
+
 	$scope.refresh = refresh;
 
 	$scope.addSyllabus = function() {
