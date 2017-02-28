@@ -426,7 +426,7 @@
 		ALERT_IMPORT_SERVICE_UNDEFINED: 'Aucun service d\'import n\'as été défini',
 		ALERT_NO_LOCK: 'Vous ne pouvez modifier ce syllabus',
 		ALERT_LOCKED_BY: 'Le syllabus est présentement en édition par %1',
-		ALERT_IMPORT_SYLLABUS_PERMISSION_ERROR: 'Vous n\'avez pas la permission de copier le plan de cours spécifié',
+		ALERT_IMPORT_SYLLABUS_PERMISSION_ERROR: 'Vous n\'avez pas la permission d\'importer le plan de cours spécifié',
 		ALERT_IMPORT_SYLLABUS_NOT_FOUND: 'Le plan de cours spécifié n\'existe pas',
 		ALERT_IMPORT_SYLLABUS_ERROR: 'Une erreur s\'est produite lors de l\'import du plan de cours',
 		CALENDAR_TODAY: 'Aujourd\'hui',
