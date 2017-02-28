@@ -68,8 +68,10 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'Syl
 					AlertService.showAlert('importSyllabusNotFound');
 				} else if (status === 403) {
 					AlertService.showAlert('importSyllabusPermissionError');
-				} else {
+				} else if (status === 503) {
 					AlertService.showAlert('importServiceUndefined');
+				} else {
+					AlertService.showAlert('importSyllabusError');
 				}
 			});
 		});

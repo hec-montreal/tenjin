@@ -95,14 +95,14 @@ public class ImportController {
 
 		Syllabus syllabus = importService.importSyllabusFromSite(siteId);
 		Set<String> sections = sakaiProxy.getGroupsForSite(currentSiteId);
-		
-		syllabus.setSiteId(currentSiteId);
-		syllabus.setCourseTitle(currentSiteId);
-		syllabus.setSections(sections);
-		
+				
 //		syllabusService.createOrUpdateSyllabus(syllabus);
 		
 		if (syllabus != null) {
+			syllabus.setSiteId(currentSiteId);
+			syllabus.setCourseTitle(currentSiteId);
+			syllabus.setSections(sections);
+
 			return new ResponseEntity<Syllabus>(syllabus, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Syllabus>(HttpStatus.NOT_FOUND);

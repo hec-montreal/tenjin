@@ -60,7 +60,13 @@
 		'importSyllabusNotFound': {
 			type: 'danger',
 			message: $translate.instant('ALERT_IMPORT_SYLLABUS_NOT_FOUND')
+		},
+
+		'importSyllabusError': {
+			type: 'danger',
+			message: $translate.instant('ALERT_IMPORT_SYLLABUS_ERROR')
 		}
+
 	};
 
 	this.currentAlert = null;
