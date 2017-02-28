@@ -159,28 +159,6 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 			return false;
 		}
 
-		// At this point the lock exists and has not expired, so check if it
-		// belongs to user
-		boolean hasLock = lock.getCreatedBy().equals(currentUserId);
-		String checkCommonLockProp = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_LOCK_CHECK_COMMON_LOCK);
-
-		if (hasLock && !syllabus.getCommon() && (checkCommonLockProp != null && checkCommonLockProp.toLowerCase().equals("true"))) {
-			try {
-				Syllabus common = syllabusDao.getCommonSyllabus(syllabus.getSiteId());
-				SyllabusLock commonLock = getSyllabusLock(common.getId());
-
-				if (isLockExpired(commonLock) || commonLock.getCreatedBy().equals(currentUserId)) {
-					unlockSyllabus(common.getId());
-
-					return true;
-				} else {
-					return false;
-				}
-			} catch (NoSyllabusException e) {
-				return hasLock;
-			}
-		}
-
-		return hasLock;
+		return lock.getCreatedBy().equals(currentUserId);
 	}
 }
