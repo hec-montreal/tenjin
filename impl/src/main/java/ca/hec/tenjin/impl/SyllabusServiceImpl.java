@@ -47,7 +47,7 @@ import lombok.Setter;
  *
  */
 @Setter
-@Component
+//@Component
 public class SyllabusServiceImpl implements SyllabusService {
 
 	private static final Logger log = Logger.getLogger(SyllabusServiceImpl.class);
@@ -57,7 +57,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 	private TemplateService templateService;
 	private TenjinSecurityService securityService;
 	private SyllabusLockService syllabusLockService;
-	@Autowired
+
+	@Autowired(required=false)
 	private ImportService importService;
 	
 	@Override
