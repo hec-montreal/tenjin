@@ -60,9 +60,17 @@ public class TemplateServiceImpl implements TemplateService {
 				}
 				
 				if (element != null) {
+					String title = "";
 					element.setDisplayOrder(i);
-					if (templateStructure.getProvider() == null)
-					    element.setTitle(templateStructure.getTemplateElement().getLabels().get(locale));
+					if (templateStructure.getProvider() == null) {
+						if (templateStructure.getTemplateElement().getLabels().containsKey(locale)) {
+							title = templateStructure.getTemplateElement().getLabels().get(locale);
+						} else {
+							// TODO: get default somewhere else?
+							title = templateStructure.getTemplateElement().getLabels().get("fr_CA");
+						}
+					}
+					element.setTitle(title);
 					element.setTemplateStructureId(templateStructure.getId());
 					long idElement = level*1000 - i;
 					element.setId(idElement);
@@ -145,12 +153,17 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Override
 	public HashMap<String, HashMap<String, Object>> getTemplateRules(Long templateId) throws IdUnusedException {
+		return getTemplateRules(templateId, "fr_CA");
+	}
+	
+	@Override
+	public HashMap<String, HashMap<String, Object>> getTemplateRules(Long templateId, String language) throws IdUnusedException {
 		HashMap<String, HashMap<String, Object>> results = new HashMap<String, HashMap<String, Object>>();
 		
 		Template t = templateDao.getTemplate(templateId);
 
 		for (TemplateStructure elem : t.getElements()) {
-			getRules(elem, results);
+			getRules(elem, results, language);
 		}
 
 		return results;
@@ -160,7 +173,8 @@ public class TemplateServiceImpl implements TemplateService {
 	 * il faudra au moins mettre les valeurs en cache?
 	 * ZCII-2008
 	 */
-	private void getRules(TemplateStructure structure, HashMap<String, HashMap<String, Object>> map) {
+	@SuppressWarnings("unchecked")
+	private void getRules(TemplateStructure structure, HashMap<String, HashMap<String, Object>> map, String language) {
 
 	    	//TODO: ?? remove provided elements from the menu
 		if (structure!= null) {
@@ -186,7 +200,14 @@ public class TemplateServiceImpl implements TemplateService {
 				Map<String, Object> templateElementMap = new HashMap<String, Object>();
 				templateElementMap.put("id", structure.getId());
 				templateElementMap.put("type", structure.getTemplateElement().getType().getTitle());
-				templateElementMap.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
+				
+				if (structure.getTemplateElement().getLabels().containsKey(language)) {
+					templateElementMap.put("label", structure.getTemplateElement().getLabels().get(language));
+				} else {
+					// TODO: get default somewhere else?
+					templateElementMap.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
+				}
+				
 				templateElementMap.put("provided", structure.getProvider() == null ? false:true);
 
 				// add child template element to the list of the parent element
@@ -195,7 +216,7 @@ public class TemplateServiceImpl implements TemplateService {
 		}
 
 		for (TemplateStructure elem : structure.getElements()) {
-			getRules(elem, map);
+			getRules(elem, map, language);
 		}
 
 		return;

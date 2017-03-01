@@ -32,7 +32,7 @@ public interface TemplateService {
 	public Template getTemplate(Long templateId) throws IdUnusedException;
 
 	/**
-	 * Retrieves the template rules
+	 * Retrieves the template rules in french
 	 * 	that is, a mapping of TemplateStructure id's with the TemplateElements that can be added to it.
 	 *
 	 * @param templateId
@@ -41,10 +41,20 @@ public interface TemplateService {
 	public HashMap<String, HashMap<String, Object>> getTemplateRules(Long templateId) throws IdUnusedException;
 
 	/**
+	 * Retrieves the template rules in the given language
+	 * 	that is, a mapping of TemplateStructure id's with the TemplateElements that can be added to it.
+	 *
+	 * @param templateId
+	 * @return
+	 */
+	public HashMap<String, HashMap<String, Object>> getTemplateRules(Long templateId, String language) throws IdUnusedException;
+
+	/**
 	 * Retrieves a TemplateStructure by id
 	 *
 	 * @param templateStructureId
 	 * @return
 	 */
 	public TemplateStructure getTemplateStructure(Long templateStructureId) throws IdUnusedException;
+
 }
