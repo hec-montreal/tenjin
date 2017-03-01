@@ -89,4 +89,11 @@ public interface SyllabusService {
 	 * @param hidden - should hidden mappings be included
 	 */
 	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden);
+
+	/**
+	 * Import a syllabus from the given siteId using an autowired TenjinImportProvider if one exists
+	 * 
+	 * @param siteId
+	 */
+	public Syllabus importSyllabusFromSite(String siteId) throws DeniedAccessException, SyllabusLockedException;
 }

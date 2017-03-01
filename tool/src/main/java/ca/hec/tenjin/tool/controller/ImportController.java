@@ -41,18 +41,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import lombok.Setter;
 
-import java.util.List;
-import java.util.Set;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import ca.hec.tenjin.api.TenjinSecurityService;
-import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
+import ca.hec.tenjin.api.exception.SyllabusLockedException;
 
 @Controller
 @RequestMapping(value ="v1")
@@ -68,50 +64,32 @@ public class ImportController {
 	@Autowired(required=false)
 	private ImportService importService;
 
-	@Setter
-	@Autowired
-	private SyllabusDao syllabusDao; 
-
-	@Setter
-	@Autowired
-	private SakaiProxy sakaiProxy = null; 
-
 	@RequestMapping(value = "/import/{siteId}", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Syllabus> importSyllabus(@PathVariable("siteId") String siteId) 
-			throws PermissionException, NoSiteException, DeniedAccessException, NoSyllabusException, StructureSyllabusException {
+			throws DeniedAccessException, SyllabusLockedException {
 		
 		if (importService == null) {
 			return new ResponseEntity<Syllabus>(HttpStatus.NOT_IMPLEMENTED);
 		}
 		
-		String currentSiteId = sakaiProxy.getCurrentSiteId();
-		
-		// Delete existing Syllabuses
-//		List<Syllabus> deleteSyllabusList = syllabusService.getSyllabusList(currentSiteId);
-//		for (Syllabus s : deleteSyllabusList) {
-//			// TODO does this need to go in a service?  Change the import service to a provider?
-//			syllabusDao.softDeleteSyllabus(s);
-//		}
-
-		Syllabus syllabus = importService.importSyllabusFromSite(siteId);
-		Set<String> sections = sakaiProxy.getGroupsForSite(currentSiteId);
-				
-//		syllabusService.createOrUpdateSyllabus(syllabus);
-		
+		Syllabus syllabus = syllabusService.importSyllabusFromSite(siteId);
 		if (syllabus != null) {
-			syllabus.setSiteId(currentSiteId);
-			syllabus.setCourseTitle(currentSiteId);
-			syllabus.setSections(sections);
-
 			return new ResponseEntity<Syllabus>(syllabus, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Syllabus>(HttpStatus.NOT_FOUND);
-		}		
+		}
+
 	}
 
-	@ExceptionHandler(PermissionException.class)
+	@ExceptionHandler(DeniedAccessException.class)
 	@ResponseStatus(value = HttpStatus.FORBIDDEN)
-	public @ResponseBody Object handlePermissionException(PermissionException ex) {
-		return "Missing permission";
+	public @ResponseBody Object handlePermissionException(DeniedAccessException ex) {
+		return null;
+	}
+
+	@ExceptionHandler(SyllabusLockedException.class)
+	@ResponseStatus(value = HttpStatus.LOCKED)
+	public @ResponseBody Object handleSyllabusLockedException(DeniedAccessException ex) {
+		return null;
 	}
 }

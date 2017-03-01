@@ -1,8 +1,7 @@
 package ca.hec.tenjin.api;
 
-import org.sakaiproject.exception.PermissionException;
-
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.exception.DeniedAccessException;
 
 /**
  * An interface to abstract all methods relating to importing existing syllabuses 
@@ -13,6 +12,6 @@ import ca.hec.tenjin.api.model.syllabus.Syllabus;
  */
 public interface ImportService {
 	
-	public Syllabus importSyllabusFromSite(String siteId) throws PermissionException;
+	public Syllabus importSyllabusFromSite(String siteId) throws DeniedAccessException;
 
 }
