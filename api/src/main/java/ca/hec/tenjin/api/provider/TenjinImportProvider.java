@@ -1,4 +1,4 @@
-package ca.hec.tenjin.api;
+package ca.hec.tenjin.api.provider;
 
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
@@ -10,7 +10,7 @@ import ca.hec.tenjin.api.exception.DeniedAccessException;
  * @author Curtis van Osch (curtis.van-osch@hec.ca)
  *
  */
-public interface ImportService {
+public interface TenjinImportProvider {
 	
 	public Syllabus importSyllabusFromSite(String siteId) throws DeniedAccessException;
 

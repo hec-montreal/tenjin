@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ca.hec.tenjin.api.ImportService;
+import ca.hec.tenjin.api.provider.TenjinImportProvider;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TenjinFunctions;
@@ -68,7 +68,7 @@ public class UserController {
 
 	@Setter
 	@Autowired(required = false)
-	private ImportService importService;
+	private TenjinImportProvider importProvider;
 
 	@Setter
 	@Autowired
@@ -110,7 +110,7 @@ public class UserController {
 			}
 
 			// Whether to allow import
-			profile.put("activateImportButton", importService != null);
+			profile.put("activateImportButton", importProvider != null);
 
 			// The user has permissions in the sections
 			usersGroup = site.getGroups();

@@ -17,11 +17,8 @@ import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 
-import ca.hec.tenjin.api.ImportService;
+import ca.hec.tenjin.api.provider.TenjinImportProvider;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusLockService;
 import ca.hec.tenjin.api.SyllabusService;
@@ -59,7 +56,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	private SyllabusLockService syllabusLockService;
 
 	@Autowired(required=false)
-	private ImportService importService;
+	private TenjinImportProvider importProvider;
 	
 	@Override
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, StructureSyllabusException {
@@ -348,7 +345,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	public Syllabus importSyllabusFromSite(String siteId) 
 			throws DeniedAccessException, SyllabusLockedException {
 		
-		if (importService == null)
+		if (importProvider == null)
 			return null;
 					
 		String currentSiteId = sakaiProxy.getCurrentSiteId();
@@ -360,7 +357,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 				syllabusDao.softDeleteSyllabus(s);
 			}
 
-			Syllabus syllabus = importService.importSyllabusFromSite(siteId);
+			Syllabus syllabus = importProvider.importSyllabusFromSite(siteId);
 			Set<String> sections = sakaiProxy.getGroupsForSite(currentSiteId);
 				
 			if (syllabus != null) {

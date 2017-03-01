@@ -21,7 +21,7 @@
 
 package ca.hec.tenjin.tool.controller;
 
-import ca.hec.tenjin.api.ImportService;
+import ca.hec.tenjin.api.provider.TenjinImportProvider;
 import ca.hec.tenjin.api.SyllabusService;
 
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
@@ -57,13 +57,13 @@ public class ImportController {
 
 	@Setter
 	@Autowired(required=false)
-	private ImportService importService;
+	private TenjinImportProvider importProvider;
 
 	@RequestMapping(value = "/import/{siteId}", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Syllabus> importSyllabus(@PathVariable("siteId") String siteId) 
 			throws DeniedAccessException, SyllabusLockedException {
 		
-		if (importService == null) {
+		if (importProvider == null) {
 			return new ResponseEntity<Syllabus>(HttpStatus.NOT_IMPLEMENTED);
 		}
 		
