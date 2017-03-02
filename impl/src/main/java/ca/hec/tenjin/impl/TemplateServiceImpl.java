@@ -90,6 +90,7 @@ public class TemplateServiceImpl implements TemplateService {
 		}
 
 		syllabus.setElements(elements);
+		syllabus.setLocale(locale);
 
 		return syllabus;
 	}
