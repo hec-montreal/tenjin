@@ -118,12 +118,4 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 	this.getResource = function(resourceId) {
 		return getResource(this.resources, resourceId);
 	};
-
-	this.findParent = function(resource, root) {
-		if (!root) {
-			root = this.resources;
-		}
-
-		return null;
-	}
 }]);

@@ -14,7 +14,7 @@
 	</div>
 
 	<div data-ng-if="item.type === type" data-ng-click="setSelectedResource(item)" class="select-resource" data-ng-class="{'item-selected': (element.$selectedResource.resourceId === item.resourceId) }">
-		{{::item.name}}
+		{{::item.name}} {{ itemInfo(item) }}
 	</div>
 
 	<ol ui-tree-nodes="" data-ng-model="item.resourceChildren" data-ng-class="{hidden: collapsed}">

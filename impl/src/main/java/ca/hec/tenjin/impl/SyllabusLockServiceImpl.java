@@ -33,18 +33,6 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 
 	@Override
 	public SyllabusLock getSyllabusLock(Long syllabusId) throws DeniedAccessException {
-		Syllabus syllabus;
-
-		try {
-			syllabus = syllabusDao.getSyllabus(syllabusId);
-		} catch (NoSyllabusException e) {
-			return null;
-		}
-
-		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
-			throw new DeniedAccessException();
-		}
-
 		return syllabusLockDao.getSyllabusLockForSyllabus(syllabusId);
 	}
 

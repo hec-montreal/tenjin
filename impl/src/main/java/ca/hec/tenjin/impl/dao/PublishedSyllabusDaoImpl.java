@@ -169,8 +169,8 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			attributes = element.getAttributes();
 
 			ContentResource resource = sakaiProxy.getResource(attributes.get("documentId"));
-			if (resource != null && resource.isAvailable()) {
-				return true;
+			if (resource == null || !resource.isAvailable()) {
+				return false;
 			}
 		} else if (element instanceof PublishedCitationElement) {
 			attributes = element.getAttributes();
@@ -178,25 +178,26 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			String citationListId = citationId.substring(0, citationId.lastIndexOf('/'));
 
 			ContentResource citationList = sakaiProxy.getResource(citationListId);
-			if (citationList != null && citationList.isAvailable()) {
-				return true;
-			}
-		} else {
-			Date now = new Date();
-			Date startDate = null;
-			Date endDate = null;
-
-			startDate = element.getAvailabilityStartDate();
-			endDate = element.getAvailabilityEndDate();
-
-			if ((startDate == null || now.after(startDate)) && (endDate == null || now.before(endDate))) {
-
-				return true;
+			
+			if (citationList == null || !citationList.isAvailable()) {
+				return false;
 			}
 		}
-		return false;
+		
+		return isElementVisibleByDates(element);
 	}
 
+	private boolean isElementVisibleByDates(AbstractPublishedSyllabusElement element) {
+		Date now = new Date();
+		Date startDate = null;
+		Date endDate = null;
+
+		startDate = element.getAvailabilityStartDate();
+		endDate = element.getAvailabilityEndDate();
+
+		return ((startDate == null || now.after(startDate)) && (endDate == null || now.before(endDate)));
+	}
+	
 	@SuppressWarnings("unchecked")
 	private List<PublishedSyllabusElementMapping> getPublishedSyllabusElementMappings(Long syllabusId) {
 		String query = "from PublishedSyllabusElementMapping mapping where syllabusId = ?";
