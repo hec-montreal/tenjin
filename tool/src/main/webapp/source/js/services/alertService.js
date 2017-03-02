@@ -114,7 +114,7 @@
 	};
 
 	this.showSyllabusLoadAlert = function(error) {
-		var data = error.data ? error.data : error;
+		var data = error ? error.data ? error.data : error : '';
 
 		if (data.lock) {
 			this.showAlert('syllabusLocked', [data.lock.createdByName]);
