@@ -84,13 +84,13 @@ public class TemplateServiceImpl implements TemplateService {
 					
 					elements.add(element);
 				}
-				// add other types
 			}
 
 		}
 
 		syllabus.setElements(elements);
 		syllabus.setLocale(locale);
+		syllabus.setTemplateId(templateId);
 
 		return syllabus;
 	}
