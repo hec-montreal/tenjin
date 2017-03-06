@@ -1,15 +1,15 @@
-﻿tenjinApp.directive('contentPanelDirective', ['SyllabusService', 'SyllabusLockService', 'UserService', 'config', '$translate', function(SyllabusService, SyllabusLockService, UserService, config, $translate) {
+﻿tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 'UserService', 'config', '$translate', function(SyllabusService, SyllabusLockService, UserService, config, $translate) {
 	'use strict';
 
 	return {
 		scope: {
-			element: '=contentPanelDirective',
+			element: '=',
 			index: '='
 		},
 
-		restrict: 'A',
+		restrict: 'E',
 
-		templateUrl: 'contentPanelDirective/contentPanelDirective.html',
+		templateUrl: 'elementRender/elementRender.html',
 
 		controller: function($scope) {
 			$scope.syllabusService = SyllabusService;

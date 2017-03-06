@@ -6,6 +6,10 @@
 				<span data-ng-if="treeService.selectedElement.type == 'evaluation'"> ({{treeService.selectedElement.attributes.evaluationWeight}}%)</span>
 				<span data-ng-if="treeService.selectedElement.type == 'exam'"> ({{treeService.selectedElement.attributes.examWeight}}%)</span>
 			</h2>
+
+			<div data-ng-if="treeService.selectedElement.description && treeService.selectedElement.description.length > 0" class="description">
+				<div data-ng-bind-html="treeService.selectedElement.description"></div>
+			</div>
 		</div>
 
 		<div class="right">
@@ -26,11 +30,11 @@
 	<div ui-tree="treeOptions" data-drag-enabled="true" data-ng-model="treeService.selectedElement">
 		<ol ui-tree-nodes="" ng-model="treeService.selectedElement.elements" class="list-element">
 			<li ng-repeat="item in treeService.selectedElement.elements"  ui-tree-node>
-				<div data-content-panel-directive="item" index="$index"></div>
-				
+				<element-render data-element="item" data-index="$index"></element-render>
+
 				<ol class="listing" ui-tree-nodes="" data-ng-model="item.elements" class="list-element list-element-leaf" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite' || item.type === 'rubric'" >
 					<li data-ng-repeat="item in item.elements" data-nodrag="{{!userService.canEditElement(item, syllabusService.syllabus)}}" ui-tree-node ui-tree-handle>
-						<div data-content-panel-directive="item" index="$index"></div>
+						<element-render data-element="item" data-index="$index"></element-render>
 					</li>
 				</ol>
 			</li>
