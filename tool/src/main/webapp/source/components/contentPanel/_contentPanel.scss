@@ -93,4 +93,8 @@
 		padding-right: 15px;
 		font-size: 1.2em;
 	}
+
+	[data-nodrag='true'] {
+		cursor: default!important;
+	}
 }
