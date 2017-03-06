@@ -18,6 +18,7 @@ import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusEleme
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedDocumentElement;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedImageElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabusElementMapping;
 import lombok.Setter;
@@ -169,6 +170,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			attributes = element.getAttributes();
 
 			ContentResource resource = sakaiProxy.getResource(attributes.get("documentId"));
+			
 			if (resource == null || !resource.isAvailable()) {
 				return false;
 			}
@@ -178,12 +180,20 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			String citationListId = citationId.substring(0, citationId.lastIndexOf('/'));
 
 			ContentResource citationList = sakaiProxy.getResource(citationListId);
-			
+
 			if (citationList == null || !citationList.isAvailable()) {
 				return false;
 			}
+		} else if (element instanceof PublishedImageElement) {
+			attributes = element.getAttributes();
+
+			ContentResource image = sakaiProxy.getResource(attributes.get("imageId"));
+
+			if (image == null || !image.isAvailable()) {
+				return false;
+			}
 		}
-		
+
 		return isElementVisibleByDates(element);
 	}
 
@@ -197,7 +207,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 
 		return ((startDate == null || now.after(startDate)) && (endDate == null || now.before(endDate)));
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private List<PublishedSyllabusElementMapping> getPublishedSyllabusElementMappings(Long syllabusId) {
 		String query = "from PublishedSyllabusElementMapping mapping where syllabusId = ?";

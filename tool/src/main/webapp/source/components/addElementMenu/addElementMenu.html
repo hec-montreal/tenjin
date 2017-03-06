@@ -1,4 +1,4 @@
-<div data-ng-show = "userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="btn-group {{showAddMenu ? 'open' : ''}}" uib-dropdown keyboard-nav>
+<div data-ng-show = "userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError" class="btn-group {{showAddMenu ? 'open' : ''}}" uib-dropdown keyboard-nav>
 	<button type="button" class="btn action-list" uib-dropdown-toggle ng-click="checkRubricsAlreadyPresent()">
 		<span class="glyphicon glyphicon-plus-sign"></span>
 		<span class="add-label">{{ 'ADD' | translate }}</span>

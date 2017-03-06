@@ -618,6 +618,8 @@
 			return 'imageId';
 		} else if (element.type === 'document') {
 			return 'documentId';
+		} else if (element.type === 'citation') {
+			return 'citationId';
 		}
 
 		return null;
@@ -636,6 +638,10 @@
 			var res = ResourcesService.getResource(element.attributes[elementResourceIdName]);
 
 			if (res) {
+				if (elementResourceIdName === 'citationId') {
+					res = ResourcesService.getResource(res.parentId);
+				}
+
 				if (res.release) {
 					start = moment(res.release.time);
 				}
@@ -671,6 +677,10 @@
 		}
 
 		var res = ResourcesService.getResource(element.attributes[elementResourceIdName]);
+
+		if (elementResourceIdName === 'citationId') {
+			res = ResourcesService.getResource(res.parentId);
+		}
 
 		return res ? res.hidden : true;
 	};

@@ -73,9 +73,7 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 					}
 				}
 
-				if(ret.length > 0) {
-					return "(" + ret + ")";
-				}
+				return ret.length > 0 ? "(" + ret + ")" : "";
 			}
 		},
 

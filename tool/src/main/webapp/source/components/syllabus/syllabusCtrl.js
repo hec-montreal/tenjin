@@ -2,6 +2,7 @@
 	'use strict';
 
 	$scope.syllabusService = SyllabusService;
+	$scope.syllabusLockService = SyllabusLockService;
 	$scope.resourcesService = ResourcesService;
 	$scope.userService = UserService;
 	$scope.config = config;

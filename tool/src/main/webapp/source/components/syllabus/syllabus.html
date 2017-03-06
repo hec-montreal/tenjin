@@ -30,11 +30,11 @@
 					</div>
 
 					<div class="toolbar-right">
-						<button data-ng-show = "userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="action"  ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
+						<button data-ng-show = "userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError" class="action"  ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
 							<span class="glyphicon glyphicon-floppy-disk"></span> {{ 'BUTTON_SAVE' | translate }}
 						</button>
 
-						<button data-ng-show = "userService.isAllowed('syllabusPublish', syllabusService.syllabus)" class="action" ng-click="startPublish()">
+						<button data-ng-show = "userService.isAllowed('syllabusPublish', syllabusService.syllabus) && !syllabusLockService.lockError" class="action" ng-click="startPublish()">
 							<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
 						</button>
 					</div>

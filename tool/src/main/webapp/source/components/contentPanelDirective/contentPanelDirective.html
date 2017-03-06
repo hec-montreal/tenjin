@@ -1,6 +1,6 @@
 <div ui-tree-handle class="tree-node tree-node-content">
 	<div data-ng-switch="element.type" data-ng-class="['element-host', {'important': element.important, 'no-buttons': !userService.canEditElement(element,syllabusService.syllabus)}]">
-		<element-buttons data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" data-element-buttons="element" data-noedit="!userService.canEditElement(element,syllabusService.syllabus)" data-nodelete="!userService.canEditElement(element,syllabusService.syllabus)" data-nodrag="!userService.canEditElement(element,syllabusService.syllabus)" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite}]"></element-buttons>
+		<element-buttons data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError" data-element-buttons="element" data-noedit="!userService.canEditElement(element,syllabusService.syllabus)" data-nodelete="!userService.canEditElement(element,syllabusService.syllabus)" data-nodrag="!userService.canEditElement(element,syllabusService.syllabus)" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite}]"></element-buttons>
 
 		<!-- From common notice -->
 		<div data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !userService.canEditElement(element,syllabusService.syllabus) && !element.composite" class="from-common">

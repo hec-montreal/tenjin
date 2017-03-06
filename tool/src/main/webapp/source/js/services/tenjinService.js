@@ -69,11 +69,17 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 				SyllabusLockService.stopRenewLoop();
 
 				if (UserService.getProfile().syllabusWrite.indexOf(parseInt(ctx.syllabusId)) > -1) {
+					SyllabusLockService.lockError = false;
+
 					SyllabusLockService.lockSyllabus(ctx.syllabusId).catch(function(e) {
 						AlertService.showSyllabusLoadAlert(e);
+
+						SyllabusLockService.lockError = true;
 					}).finally(function() {
 						SyllabusService.loadSyllabus(ctx.syllabusId).then(function() {
-							SyllabusLockService.startRenewLoop(ctx.syllabusId);
+							if (!SyllabusLockService.lockError) {
+								SyllabusLockService.startRenewLoop(ctx.syllabusId);
+							}
 
 							ret.resolve();
 						}).catch(function(e) {
