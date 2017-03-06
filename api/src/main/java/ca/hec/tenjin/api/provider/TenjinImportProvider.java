@@ -12,6 +12,6 @@ import ca.hec.tenjin.api.exception.DeniedAccessException;
  */
 public interface TenjinImportProvider {
 	
-	public Syllabus importSyllabusFromSite(String siteId) throws DeniedAccessException;
+	public Syllabus importSyllabusFromSite(String siteId, String destinationSiteId) throws DeniedAccessException;
 
 }
