@@ -357,7 +357,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 				syllabusDao.softDeleteSyllabus(s);
 			}
 
-			Syllabus syllabus = importProvider.importSyllabusFromSite(siteId);
+			Syllabus syllabus = importProvider.importSyllabusFromSite(siteId, currentSiteId);
 			Set<String> sections = sakaiProxy.getGroupsForSite(currentSiteId);
 				
 			if (syllabus != null) {
