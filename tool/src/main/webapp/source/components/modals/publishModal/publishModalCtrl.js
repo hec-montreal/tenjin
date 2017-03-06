@@ -9,7 +9,7 @@ tenjinApp.controller('PublishModalCtrl', ['$scope', '$rootScope', '$uibModalInst
 
 	$scope.syllabus = SyllabusService.getSyllabus();
 	$scope.publishing = false;
-	$scope.sections = PublishService.getSections();
+	$scope.sections = PublishService.getTargetedSections();
 	$scope.modifiedPages = PublishService.getModifiedPages();
 
 	$scope.doAnnounce = false;

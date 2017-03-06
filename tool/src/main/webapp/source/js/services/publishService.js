@@ -46,14 +46,18 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 		return ret.promise;
 	};
 
-	this.getSections = function() {
-		var sections = [];
+	this.getTargetedSections = function() {
+		var ret = [];
 
-			for (var i = 0; i < SyllabusService.syllabus.sections.length; i++) {
-				sections[i] = UserService.getSectionTitle(SyllabusService.syllabus.sections[i]);
-			}
+		if (SyllabusService.getSyllabus().common) {
+			return UserService.getProfile().sections.map(function(s) {
+				return s.name;
+			});
+		}
 
-		return sections;
+		return SyllabusService.getSyllabus().sections.map(function(s) {
+			return UserService.getSectionTitle(s);
+		});
 	};
 
 

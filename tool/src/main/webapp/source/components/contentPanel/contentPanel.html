@@ -7,13 +7,13 @@
 				<span data-ng-if="treeService.selectedElement.type == 'exam'"> ({{treeService.selectedElement.attributes.examWeight}}%)</span>
 			</h2>
 
-			<div data-ng-if="treeService.selectedElement.description && treeService.selectedElement.description.length > 0" class="description">
+			<div data-ng-if="treeService.selectedElement.description && treeService.selectedElement.description.length > 0" class="description syllabus-text">
 				<div data-ng-bind-html="treeService.selectedElement.description"></div>
 			</div>
 		</div>
 
 		<div class="right">
-			<add-element-menu id="menu-add" data-add-element-menu="treeService.selectedElement"  class="container-menu-add"></add-element-menu>
+			<add-element-menu id="menu-add" data-add-element-menu="treeService.selectedElement" class="container-menu-add"></add-element-menu>
 		</div>
 
 		<div style="clear: both;"></div>
