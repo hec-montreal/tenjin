@@ -1,26 +1,23 @@
 
 package ca.hec.tenjin.impl;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
-import ca.hec.tenjin.api.dao.SyllabusDao;
-import ca.hec.tenjin.api.exception.NoSiteException;
-import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.authz.api.GroupNotDefinedException;
-import org.sakaiproject.authz.api.Member;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
-import org.sakaiproject.user.api.User;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.TenjinSecurityService;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.dao.SyllabusDao;
+import ca.hec.tenjin.api.exception.NoSiteException;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import lombok.Setter;
 
 @Setter
@@ -62,13 +59,24 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 
 			//if he has the permission on the sections associated to the syllabus, he has it on the syllabus
 			Set<String> sectionIds = syllabus.getSections();
-			if (sectionIds != null) {
+			
+			if (sectionIds != null && !sectionIds.isEmpty()) {
 				for (String sectionId : sectionIds) {
 					Group group = null;
 					group = site.getGroup(sectionId);
 					if (check(userId, permission, group))
 						return true;
 				}
+			} else {
+				// Check permission on any section
+				for(Group group : site.getGroups()) {
+					if(check(userId, permission, group)) {
+						return true;
+					}
+				}
+				
+				// Check permission on site
+				return checkOnSiteGroup(userId, permission, site);
 			}
 
 		} catch (IdUnusedException e) {
