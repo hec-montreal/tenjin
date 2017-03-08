@@ -39,6 +39,8 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 
 	this.ViewStates = {
 		edition: {
+			stateName: 'syllabus-edit',
+
 			loadViewData: function(siteId) {
 				var ret = $q.defer();
 				var dataToLoad = [];
@@ -103,6 +105,8 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 		},
 
 		published: {
+			stateName: 'syllabus-published',
+
 			loadViewData: function(siteId) {
 				var ret = $q.defer();
 				var dataToLoad = [];

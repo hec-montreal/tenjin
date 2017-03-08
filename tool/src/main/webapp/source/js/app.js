@@ -63,11 +63,11 @@ tenjinApp.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: 'management/management.html'
 		})
 		.state('syllabus-edit', {
-			url: '/syllabus/:id',
+			url: '/syllabus/:id/:elementId',
 			templateUrl: 'syllabus/syllabus.html'
 		})
 		.state('syllabus-published', {
-			url: '/syllabus',
+			url: '/syllabus/:elementId',
 			templateUrl: 'syllabus/syllabus.html'
 		});
 });

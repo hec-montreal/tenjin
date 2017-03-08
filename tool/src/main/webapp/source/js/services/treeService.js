@@ -1,4 +1,4 @@
-﻿tenjinApp.service('TreeService', ['SyllabusService', '$timeout', function(SyllabusService, $timeout) {
+﻿tenjinApp.service('TreeService', ['SyllabusService', 'TenjinService', '$timeout', '$state', function(SyllabusService, TenjinService, $timeout, $state) {
 	'use strict';
 
 	// Keep track of the selected element
@@ -48,6 +48,16 @@
 
 		this.selectedElement = element;
 		this.lastSelectedPosition = this.findSelectedElementPosition();
+
+		$state.transitionTo(TenjinService.viewState.stateName, {
+			id: SyllabusService.getSyllabus().id,
+			elementId: this.selectedElement.id
+		}, {
+			location: true,
+			inherit: true,
+			relative: $state.$current,
+			notify: false
+		});
 	};
 
 	this.selectElementById = function(id) {

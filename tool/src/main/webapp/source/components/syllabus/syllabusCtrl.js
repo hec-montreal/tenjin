@@ -20,8 +20,6 @@
 		}).then(function() {
 			$scope.syllabusLoaded = true;
 
-			TreeService.selectElement(TreeService.findElementByPosition([0]));
-
 			ret.resolve();
 		}).catch(function(e) {
 			$scope.syllabusLoaded = false;
@@ -101,5 +99,11 @@
 
 	loadSyllabus($state.params.id || -1).finally(function() {
 		$scope.hideGlobalLoading();
+
+		if ($state.params.elementId && $state.params.elementId.length > 0) {
+			TreeService.selectElementById(parseInt($state.params.elementId, 10));
+		} else {
+			TreeService.selectElement(TreeService.findElementByPosition([0]));
+		}
 	});
 }]);
