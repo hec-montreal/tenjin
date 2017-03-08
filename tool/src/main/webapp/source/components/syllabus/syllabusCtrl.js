@@ -35,6 +35,16 @@
 	$scope.selectSyllabus = function(syllabus) {
 		$scope.showGlobalLoading();
 
+		$state.transitionTo(TenjinService.viewState.stateName, {
+			id: syllabus.id,
+			elementId: undefined
+		}, {
+			location: true,
+			inherit: true,
+			relative: $state.$current,
+			notify: false
+		});
+
 		loadSyllabus(syllabus.id).finally(function() {
 			$scope.hideGlobalLoading();
 		});
