@@ -142,7 +142,7 @@
         <dependency>
         	<groupId>org.sakaiproject.announcement</groupId>
         	<artifactId>sakai-announcement-api</artifactId>
-        	<version>11.2</version>
+        	<version>11.3</version>
         </dependency>
         <dependency>
         	<groupId>org.sakaiproject.message</groupId>
