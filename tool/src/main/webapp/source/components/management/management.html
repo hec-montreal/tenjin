@@ -16,6 +16,7 @@
 					<th>{{ 'TABLE_SECTIONS' | translate }}</th>
 					<th>{{ 'TABLE_LAST_PUBLISHED_DATE' | translate }}</th>
 					<th>{{ 'TABLE_LAST_MODIFICATION_DATE' | translate }}</th>
+					<th><!--Copy --></th>
 					<th class="th-select"> </th>
 				</tr>
 
@@ -46,6 +47,10 @@
 
 					<td>
 						<span data-ng-if="syllabus.lastModifiedDate">{{syllabus.lastModifiedDate | date: 'medium'}}</span>
+					</td>
+
+					<td>
+						<a data-ng-if="!syllabus.common" href="#" data-ng-click="copySyllabus(syllabus.id)">{{ 'COPY' | translate }}</a>
 					</td>
 
 					<td class="th-select">

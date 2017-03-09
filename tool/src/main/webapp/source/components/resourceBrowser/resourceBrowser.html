@@ -1,4 +1,5 @@
 <script type="text/ng-template" id="browser_renderer.html">
+
 	<div data-ng-if="item.type === 'folder'" class="folder">
 		<a class="btn btn-success btn-xs" data-ng-if="item.resourceChildren && item.resourceChildren.length > 0" data-ng-click="toggleTree(this)">
 			<span class="glyphicon" data-ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>

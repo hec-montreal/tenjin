@@ -1,4 +1,4 @@
-﻿tenjinApp.service('SyllabusService', ['AlertService', 'ResourcesService', '$translate', '$q', '$http', '$rootScope', function(AlertService, ResourcesService, $translate, $q, $http, $rootScope) {
+﻿tenjinApp.service('SyllabusService', ['AlertService', 'ResourcesService', 'SyllabusLockService', '$translate', '$q', '$http', '$rootScope', function(AlertService, ResourcesService, SyllabusLockService, $translate, $q, $http, $rootScope) {
 	'use strict';
 
 	this.syllabus = null;
@@ -12,6 +12,28 @@
 	// variable used to look through the syllabus tree
 	this.navigation = {
 		'level': 1
+	};
+
+	this.forEachElement = function(syllabus, fn, position) {
+		if (!syllabus || !syllabus.elements) {
+			return;
+		}
+
+		if (!position) {
+			position = [];
+		}
+
+		for (var i = 0; i < syllabus.elements.length; i++) {
+			var element = syllabus.elements[i];
+			var currentPosition = position.concat([i]);
+
+			// If fn returns true, we break (gives a way for fn to break the loop)
+			if (fn(element, currentPosition) === true) {
+				break;
+			}
+
+			this.forEachElement(element, fn, currentPosition);
+		}
 	};
 
 	// Save a syllabus
@@ -54,6 +76,50 @@
 		return this.save(newSyllabus);
 	};
 
+	this.copy = function(id, newTitle) {
+		var tthis = this;
+		var ret = $q.defer();
+
+		this.loadSyllabus(id).then(function(syllabusToCopy) {
+			var syllabusToCreate = {
+				'id': null,
+				'siteId': syllabusToCopy.siteId,
+				'sections': [],
+				'title': newTitle,
+				'common': false,
+				'templateId': syllabusToCopy.templateId,
+				'elements': null,
+				'locale': 'fr_CA'
+			};
+
+			// Create the syllabus
+			tthis.save(syllabusToCreate).then(function(newSyllabus) {
+				tthis.forEachElement(syllabusToCopy, function(el) {
+					if (!el.common) {
+						delete el.id;
+						delete el.parentId;
+					}
+				});
+
+				newSyllabus.elements = syllabusToCopy.elements;
+
+				SyllabusLockService.lockSyllabus(newSyllabus.id).then(function() {
+					tthis.save(newSyllabus).then(function(finishedSyllabus) {
+						ret.resolve();
+					}).catch(function(e) {
+						ret.reject(e);
+					});
+				});
+			}).catch(function(e) {
+				ret.reject(e);
+			});
+		}).catch(function(e) {
+			ret.reject(e);
+		});
+
+		return ret.promise;
+	};
+
 	this.importSyllabusFromSite = function(siteId) {
 		var tthis = this;
 		var ret = $q.defer();
@@ -66,6 +132,7 @@
 		}).finally(function() {
 			tthis.working = false;
 		});
+
 		return ret.promise;
 	}
 

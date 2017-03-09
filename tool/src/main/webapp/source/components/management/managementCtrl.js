@@ -1,14 +1,24 @@
-tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'SyllabusService', 'SyllabusLockService', 'AlertService', 'ModalService', 'UserService', 'config', '$q', function($scope, $timeout, $translate, SyllabusService, SyllabusLockService, AlertService, ModalService, UserService, config, $q) {
+tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$translate', 'SyllabusService', 'SyllabusLockService', 'AlertService', 'ModalService', 'UserService', 'config', '$q', function($scope, $rootScope, $timeout, $translate, SyllabusService, SyllabusLockService, AlertService, ModalService, UserService, config, $q) {
 	'use strict';
 
 	var refresh = function() {
+		var ret = $q.defer();
+
 		UserService.loadProfile().then(function() {
-			SyllabusService.loadSyllabusList().catch(function() {
+			SyllabusService.loadSyllabusList().then(function() {
+				ret.resolve();
+			}).catch(function() {
 				AlertService.showAlert("cannotLoadBaseData");
+
+				ret.reject();
 			});
 		}).catch(function() {
 			AlertService.showAlert("cannotLoadBaseData");
+
+			ret.reject();
 		});
+
+		return ret.promise;
 	};
 
 	var createSyllabus = function(chosenSections) {
@@ -59,6 +69,10 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'Syl
 				AlertService.showAlert('cannotDeleteSyllabusList');
 			});
 		});
+	};
+
+	$scope.copySyllabus = function(syllabusId) {
+		ModalService.copySyllabus(syllabusId);
 	};
 
 	$scope.externalSyllabusImport = function() {
@@ -212,6 +226,14 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$timeout', '$translate', 'Syl
 	$scope.showStatus = function($statusId) {
 		return $translate.instant(config.statusLabel[$statusId]);
 	};
+
+	$scope.$on('copy', function(e, data) {
+		SyllabusService.copy(data.data.syllabusId, data.data.name).then(function() {
+			refresh().then(function() {
+				$rootScope.$broadcast('copied');
+			})
+		});
+	});
 
 	$scope.syllabusService = SyllabusService;
 	$scope.alertService = AlertService;

@@ -5,33 +5,11 @@
 	this.selectedElement = null;
 	this.lastSelectedPosition = null;
 
-	this.forEachElement = function(syllabus, fn, position) {
-		if (!syllabus || !syllabus.elements) {
-			return;
-		}
-
-		if (!position) {
-			position = [];
-		}
-
-		for (var i = 0; i < syllabus.elements.length; i++) {
-			var element = syllabus.elements[i];
-			var currentPosition = position.concat([i]);
-
-			// If fn returns true, we break (gives a way for fn to break the loop)
-			if (fn(element, currentPosition) === true) {
-				break;
-			}
-
-			this.forEachElement(element, fn, currentPosition);
-		}
-	};
-
 	/**
 	 * Unselect all Tree elements
 	 */
 	this.unselectAllElements = function() {
-		this.forEachElement(SyllabusService.getSyllabus(), function(element) {
+		SyllabusService.forEachElement(SyllabusService.getSyllabus(), function(element) {
 			element.$selected = false;
 		});
 
@@ -63,7 +41,7 @@
 	this.selectElementById = function(id) {
 		var tthis = this;
 
-		this.forEachElement(SyllabusService.getSyllabus(), function(element) {
+		SyllabusService.forEachElement(SyllabusService.getSyllabus(), function(element) {
 			if (element.id === id) {
 				tthis.selectElement(element);
 
@@ -89,7 +67,7 @@
 	this.findSelectedElement = function() {
 		var ret = null;
 
-		this.forEachElement(SyllabusService.getSyllabus(), function(element) {
+		SyllabusService.forEachElement(SyllabusService.getSyllabus(), function(element) {
 			if (element.$selected) {
 				ret = element;
 
@@ -104,7 +82,7 @@
 	this.findSelectedElementPosition = function() {
 		var ret = null;
 
-		this.forEachElement(SyllabusService.getSyllabus(), function(element, position) {
+		SyllabusService.forEachElement(SyllabusService.getSyllabus(), function(element, position) {
 			if (element.$selected) {
 				ret = position;
 

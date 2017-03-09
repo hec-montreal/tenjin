@@ -1,0 +1,25 @@
+<form class="tenjin-modal copy-syllabus" data-ng-submit="ok()" > 
+	<div class="modal-header">
+		<h2 class="modal-title">{{ 'COPY' | translate}}</h2> 
+	</div>
+
+	<div class="modal-body" data-ng-if="!loading">
+		<div>
+			<div>
+				<label for="label">{{ 'FORM_TITLE' | translate}} : </label> <span class="mandatory"></span>
+				<input type="text" id="label" class="label-syllabus" name="label" data-ng-model="data.name" required/>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-body" data-ng-if="loading">
+		<div class="loader">
+			<img src="/tenjin-tool/img/desktop/loader.gif">
+		</div>
+	</div>
+
+	<div class="modal-footer" data-ng-if="!loading">
+		<button type="submit">{{'BUTTON_OK' | translate}}</button> 
+		<button type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
+	</div> 
+</form>

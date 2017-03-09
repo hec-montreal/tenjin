@@ -152,4 +152,19 @@
 			backdrop: 'static'
 		});
 	};
+
+	this.copySyllabus = function(syllabusId) {
+		return $uibModal.open({
+			animation: true,
+			templateUrl: 'modals/copySyllabusModal/copySyllabusModal.html',
+			controller: 'CopySyllabusModal',
+			size: '',
+			backdrop: 'static',
+			resolve: {
+				syllabusId: {
+					'syllabusId': syllabusId
+				}
+			}
+		});
+	};
 }]);

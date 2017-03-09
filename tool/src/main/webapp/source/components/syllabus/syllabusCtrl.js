@@ -33,20 +33,9 @@
 	};
 
 	$scope.selectSyllabus = function(syllabus) {
-		$scope.showGlobalLoading();
-
-		$state.transitionTo(TenjinService.viewState.stateName, {
+		$state.go(TenjinService.viewState.stateName, {
 			id: syllabus.id,
 			elementId: undefined
-		}, {
-			location: true,
-			inherit: true,
-			relative: $state.$current,
-			notify: false
-		});
-
-		loadSyllabus(syllabus.id).finally(function() {
-			$scope.hideGlobalLoading();
 		});
 	};
 
@@ -83,7 +72,7 @@
 	$scope.$on('publish', function() {
 		PublishService.publish().then(function(data) {
 			SyllabusService.reloadSyllabus().then(function() {
-				TreeService.selectElement(SyllabusService.syllabus.elements[0]);
+				TreeService.selectElement(TreeService.findElementByPosition(TreeService.lastSelectedPosition));
 
 				// Refresh management ui
 				UserService.loadProfile().then(function() {

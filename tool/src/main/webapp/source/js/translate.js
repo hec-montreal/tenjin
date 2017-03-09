@@ -295,6 +295,8 @@
 		SOURCE: 'Source',
 		SOURCE_URL: 'URL (Youtube, Vimeo, Dailymotion)',
 		SOURCE_EMBED: 'Embed',
+		COPY: 'Copy',
+		SYLLABUS_TITLE: 'Titre du syllabus'
 	}).translations('fr', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -589,7 +591,9 @@
 		FORM_EMBED: 'Code d\'imbrication:',
 		SOURCE: 'Source',
 		SOURCE_URL: 'URL (Youtube, Vimeo, Dailymotion)',
-		SOURCE_EMBED: 'Imbrication (Méliès)'
+		SOURCE_EMBED: 'Imbrication (Méliès)',
+		COPY: 'Copier',
+		SYLLABUS_TITLE: 'Titre du syllabus'
 	});
 
 	$translateProvider.preferredLanguage('fr');
