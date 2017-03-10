@@ -3,6 +3,7 @@
 		<div class="buttons-list col-xs-12">
 			<button data-ng-show="userService.isAllowedView('sectionAssign')" type="button" data-ng-click="addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
 			<button data-ng-show="userService.isAllowedView('sectionAssign')" type="button" data-ng-disabled="disableDelete" data-ng-click="deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
+			<button data-ng-show="userService.isAllowedView('sectionAssign')" type="button" data-ng-disabled="disableCopy" data-ng-click="copySyllabus()">{{ 'COPY' | translate }}</button>
 			<button data-ng-show="userService.isAllowedView('import') && userService.isAllowedView('sectionAssign')" type="button" data-ng-click="externalSyllabusImport()">{{ 'BUTTON_IMPORT_SYLLABUS' | translate }}</button>
 		</div>
 	</div>
@@ -16,7 +17,6 @@
 					<th>{{ 'TABLE_SECTIONS' | translate }}</th>
 					<th>{{ 'TABLE_LAST_PUBLISHED_DATE' | translate }}</th>
 					<th>{{ 'TABLE_LAST_MODIFICATION_DATE' | translate }}</th>
-					<th><!--Copy --></th>
 					<th class="th-select"> </th>
 				</tr>
 
@@ -49,12 +49,8 @@
 						<span data-ng-if="syllabus.lastModifiedDate">{{syllabus.lastModifiedDate | date: 'medium'}}</span>
 					</td>
 
-					<td>
-						<a data-ng-if="!syllabus.common" href="#" data-ng-click="copySyllabus(syllabus.id)">{{ 'COPY' | translate }}</a>
-					</td>
-
 					<td class="th-select">
-						<input data-ng-if="!syllabus.common" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="enableDelete()" />
+						<input data-ng-if="!syllabus.common" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="checkStatus()" />
 					</td>
 				</tr>
 			</table>

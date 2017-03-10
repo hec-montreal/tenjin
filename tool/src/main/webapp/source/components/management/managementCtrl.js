@@ -6,6 +6,8 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 
 		UserService.loadProfile().then(function() {
 			SyllabusService.loadSyllabusList().then(function() {
+				$scope.checkStatus();
+
 				ret.resolve();
 			}).catch(function() {
 				AlertService.showAlert("cannotLoadBaseData");
@@ -59,7 +61,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 		var syllabusList = [];
 
 		for (var i = 0; i < $scope.syllabusService.syllabusList.length; i++) {
-			if ($scope.syllabusService.syllabusList[i].checked === true) {
+			if ($scope.syllabusService.syllabusList[i].checked) {
 				syllabusList.push($scope.syllabusService.syllabusList[i]);
 			}
 		}
@@ -67,11 +69,27 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 		ModalService.deleteSyllabus(syllabusList).result.then(function(syllabusToDelete) {
 			SyllabusService.deleteSyllabusList(syllabusToDelete).catch(function(data) {
 				AlertService.showAlert('cannotDeleteSyllabusList');
+			}).finally(function() {
+				$scope.refresh();
 			});
 		});
 	};
 
-	$scope.copySyllabus = function(syllabusId) {
+	$scope.copySyllabus = function() {
+		var syllabusId = null;
+
+		for (var i = 0; i < $scope.syllabusService.syllabusList.length; i++) {
+			if ($scope.syllabusService.syllabusList[i].checked) {
+				syllabusId = $scope.syllabusService.syllabusList[i].id;
+
+				break;
+			}
+		}
+
+		if (syllabusId === null) {
+			return;
+		}
+
 		ModalService.copySyllabus(syllabusId);
 	};
 
@@ -93,14 +111,28 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 		});
 	};
 
-	$scope.enableDelete = function() {
+	$scope.checkStatus = function() {
 		$scope.disableDelete = true;
+		$scope.disableCopy = true;
+
+		var checkCount = 0;
+		var isCommonChecked = false;
 
 		// if a syllabus is checked then the delete button should be enabled
 		for (var i = 0; i < $scope.syllabusService.syllabusList.length; i++) {
-			if ($scope.syllabusService.syllabusList[i].checked === true) {
+			if ($scope.syllabusService.syllabusList[i].checked) {
+				checkCount++;
+
+				if ($scope.syllabusService.syllabusList[i].common) {
+					isCommonChecked = true;
+				}
+
 				$scope.disableDelete = false;
 			}
+		}
+
+		if (checkCount === 1 && !isCommonChecked) {
+			$scope.disableCopy = false;
 		}
 	};
 
@@ -241,6 +273,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 	$scope.config = config;
 
 	$scope.disableDelete = true;
+	$scope.disableCopy = true;
 
 	var lastModifiedSyllabus;
 	var lastModifiedSyllabusBeforeUpdate;
