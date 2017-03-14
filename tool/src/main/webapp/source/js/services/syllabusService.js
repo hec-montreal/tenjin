@@ -745,7 +745,7 @@
 
 		var res = ResourcesService.getResource(element.attributes[elementResourceIdName]);
 
-		if (elementResourceIdName === 'citationId') {
+		if (res && elementResourceIdName === 'citationId') {
 			res = ResourcesService.getResource(res.parentId);
 		}
 
