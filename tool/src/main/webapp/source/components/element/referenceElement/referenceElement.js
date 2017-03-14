@@ -13,19 +13,19 @@ tenjinApp.directive('referenceElement', ['config',  '$translate','ResourcesServi
 		link: function($scope, $element) {
 			$scope.citation = ResourcesService.getResource($scope.element.attributes.citationId);
 
-			var referenceTypeId = $scope.element.attributes.referenceType;
+			var citationTypeId = $scope.element.attributes.citationType;
 
-            if (referenceTypeId) {
-                $scope.referenceTypeId = parseInt(referenceTypeId, 10);
+            if (citationTypeId) {
+                $scope.citationTypeId = parseInt(citationTypeId, 10);
             } else {
-                $scope.referenceTypeId = -1;
+                $scope.citationTypeId = -1;
             }
 
-            // Retrieve the label for the reference type id
-            if ($scope.element.attributes.referenceType) {
-                for (var i = 0; i < config.referenceTypes.length; i++) {
-                    if (parseInt($scope.element.attributes.referenceType, 10) === config.referenceTypes[i].id) {
-                        $scope.referenceType = $translate.instant(config.referenceTypes[i].name);
+            // Retrieve the label for the citation type id
+            if ($scope.element.attributes.citationType) {
+                for (var i = 0; i < config.citationTypes.length; i++) {
+                    if (parseInt($scope.element.attributes.citationType, 10) === config.citationTypes[i].id) {
+                        $scope.citationType = $translate.instant(config.citationTypes[i].name);
                         break;
                     }
                 }

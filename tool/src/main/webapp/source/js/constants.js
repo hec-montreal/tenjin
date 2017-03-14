@@ -149,7 +149,7 @@
 		'name': 'HYPERLINK_TYPE_SOFTWARE'
 	}],
 
-	referenceTypes: [{
+	citationTypes: [{
 		'id': -1,
 		'name': 'REFERENCE_TYPE_DEFAULT'
 	}, {

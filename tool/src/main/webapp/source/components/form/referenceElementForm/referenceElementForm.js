@@ -25,7 +25,7 @@ tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$tra
 
 			$scope.selectType = function($type) {
 				$scope.currentType = $type;
-				$scope.element.attributes.referenceType = $scope.currentType.id;
+				$scope.element.attributes.citationType = $scope.currentType.id;
 			};
 
 			// Validation
@@ -48,16 +48,16 @@ tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$tra
 				$scope.element.attributes.activateLibraryLink = 'true';
 			}
 
-			// Retrieve the reference type for the given reference type id
-			if ($scope.element.attributes.referenceType) {
-				for (var i = 0; i < config.referenceTypes.length; i++) {
-					if (parseInt($scope.element.attributes.referenceType, 10) === config.referenceTypes[i].id) {
-						$scope.currentType = config.referenceTypes[i];
+			// Retrieve the citation type for the given citation type id
+			if ($scope.element.attributes.citationType) {
+				for (var i = 0; i < config.citationTypes.length; i++) {
+					if (parseInt($scope.element.attributes.citationType, 10) === config.citationTypes[i].id) {
+						$scope.currentType = config.citationTypes[i];
 						break;
 					}
 				}
 			} else {
-				$scope.currentType = $scope.config.referenceTypes[0];
+				$scope.currentType = $scope.config.citationTypes[0];
 			}
 		}
 	};
