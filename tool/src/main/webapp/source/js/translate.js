@@ -134,7 +134,7 @@
 		ALERT_CANNOT_PUBLISH_SYLLABUS: 'Cannot publish course outline',
 		ALERT_NO_SYLLABUS: 'No course outline',
 		ALERT_IMPORT_SERVICE_UNDEFINED: 'No import service is defined',
-		ALERT_NO_LOCK: 'You d\'ont have the lock on this course outline',
+		ALERT_NO_LOCK: 'You don\'t have the lock on this course outline',
 		ALERT_LOCKED_BY: 'The current course outline is locked by %1',
 		ALERT_IMPORT_SYLLABUS_PERMISSION_ERROR: 'You are not authorized to copy the specified course outline',
 		ALERT_IMPORT_SYLLABUS_NOT_FOUND: 'The specified course outline does not exist',
