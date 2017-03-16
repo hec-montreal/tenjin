@@ -1,44 +1,46 @@
-﻿tenjinApp.directive('toolElementForm', ['config', '$translate', function(config, $translate) {
-    'use strict';
+﻿tenjinApp.directive('toolElementForm', ['config', '$translate', 'SyllabusService', function(config, $translate, SyllabusService) {
+	'use strict';
 
-    return {
-        scope: {
-            element: '=toolElementForm'
-        },
+	return {
+		scope: {
+			element: '=toolElementForm'
+		},
 
-        restrict: 'A',
+		restrict: 'A',
 
-        templateUrl: 'form/toolElementForm/toolElementForm.html',
+		templateUrl: 'form/toolElementForm/toolElementForm.html',
 
-        controller: function($scope) {
-            // setup editor options
-            $scope.editorOptions = {
-                language: 'fr',
-                height: '200',
-                toolbar: config.ckeditorToolbarTenjin,
-                removePlugins: 'elementspath,resize'
-            };
+		controller: function($scope) {
+			// setup editor options
+			$scope.editorOptions = {
+				language: 'fr',
+				height: '200',
+				toolbar: config.ckeditorToolbarTenjin,
+				removePlugins: 'elementspath,resize'
+			};
 
-            $scope.selectType = function($type) {
-                $scope.currentType = $type;
-                if ($scope.currentType.id !== -1) {
-                    $scope.element.attributes.docType = $scope.currentType.id;
-                }
-            };
+			$scope.filterSections = SyllabusService.getSyllabus().sections;
 
-            // Validation
-            $scope.element.validate = function() {
-                var ret = [];
+			$scope.selectType = function($type) {
+				$scope.currentType = $type;
+				if ($scope.currentType.id !== -1) {
+					$scope.element.attributes.docType = $scope.currentType.id;
+				}
+			};
 
-                if (!$scope.element.attributes.sakaiToolId) {
-                    ret.push({
-                        field: "sakai_tool",
-                        message: "ERROR_SAKAI_TOOL"
-                    });
-                }
+			// Validation
+			$scope.element.validate = function() {
+				var ret = [];
 
-                return ret;
-            }
-        }
-    };
+				if (!$scope.element.attributes.sakaiToolId) {
+					ret.push({
+						field: "sakai_tool",
+						message: "ERROR_SAKAI_TOOL"
+					});
+				}
+
+				return ret;
+			}
+		}
+	};
 }]);

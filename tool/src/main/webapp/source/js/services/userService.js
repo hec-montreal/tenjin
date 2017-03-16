@@ -87,9 +87,13 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 
 
 	this.getSection = function (sectionId){
-		this.profile.sectionAssign.filter(function($section){
-			return $section.id === sectionId;
-		});
+		for(var i = 0; i < this.profile.sectionAssign.length; i++) {
+			if(this.profile.sectionAssign[i].id === sectionId) {
+				return this.profile.sectionAssign[i];
+			}
+		}
+
+		return null;
 	};
 
 	//If it is in the table will always return 1

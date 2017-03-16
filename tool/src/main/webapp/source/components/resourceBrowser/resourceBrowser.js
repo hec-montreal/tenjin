@@ -1,4 +1,4 @@
-tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService', '$timeout', '$translate', function(SakaiToolsService, ResourcesService, $timeout, $translate) {
+tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService', 'UserService', '$timeout', '$translate', function(SakaiToolsService, ResourcesService, UserService, $timeout, $translate) {
 	'use strict';
 
 	return {
@@ -6,7 +6,8 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 			element: '=',
 			type: '@',
 			collapseAll: '=',
-			title: '='
+			title: '=',
+			filterSections: '='
 		},
 
 		restrict: 'E',
@@ -14,8 +15,6 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 		templateUrl: 'resourceBrowser/resourceBrowser.html',
 
 		controller: function($scope) {
-			console.log(SakaiToolsService.getToolEntities());
-			
 			if ($scope.type === 'sakai_entity') {
 				$scope.resources = SakaiToolsService.getToolEntities();
 			} else {
@@ -45,6 +44,27 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 					$scope.element.attributes.citationId = item.resourceId;
 				} else if ($scope.type === 'document') {
 					$scope.element.attributes.documentId = item.resourceId;
+				}
+			};
+
+			$scope.isResourceVisible = function(res) {
+				if ($scope.filterSections && $scope.filterSections.length > 0 && res.sections && res.sections.length > 0) {
+					for (var a = 0; a < $scope.filterSections.length; a++) {
+						for (var b = 0; b < res.sections.length; b++) {
+							var section = UserService.getSection($scope.filterSections[a]);
+
+							if (section.name === res.sections[b]) {
+								return true;
+							}
+						}
+					}
+
+					console.log("Rejecting");
+					console.log(res);
+
+					return false;
+				} else {
+					return true;
 				}
 			};
 
