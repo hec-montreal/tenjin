@@ -41,6 +41,29 @@
 			<groupId>org.sakaiproject.kernel</groupId>
 			<artifactId>sakai-kernel-util</artifactId>
 		</dependency>
+		
+		<dependency>
+            <groupId>org.sakaiproject.entitybroker</groupId>
+            <artifactId>entitybroker-api</artifactId>
+        </dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject.samigo</groupId>
+			<artifactId>samigo-api</artifactId>
+			<version>11.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.sakaiproject.samigo</groupId>
+			<artifactId>samigo-impl</artifactId>
+			<version>11.3</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject.samigo</groupId>
+			<artifactId>samigo-services</artifactId>
+			<version>11.3</version>
+		</dependency>
 
 		<!-- spring and hibernate -->
       <dependency>

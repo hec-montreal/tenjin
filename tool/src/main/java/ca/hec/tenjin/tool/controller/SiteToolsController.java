@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,12 +32,9 @@ import org.sakaiproject.announcement.api.AnnouncementMessageEdit;
 import org.sakaiproject.announcement.api.AnnouncementMessageHeaderEdit;
 import org.sakaiproject.announcement.api.AnnouncementService;
 import org.sakaiproject.component.cover.ServerConfigurationService;
-import org.sakaiproject.entitybroker.EntityBroker;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.site.api.SiteService;
-import org.sakaiproject.tool.api.SessionManager;
-import org.sakaiproject.tool.api.ToolManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +43,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.provider.tool.SamigoToolEntityProvider;
 import lombok.Setter;
 
 /**
@@ -55,7 +53,7 @@ import lombok.Setter;
  * @version $Id: $
  */
 @Controller
-@RequestMapping(value = "tools")
+@RequestMapping(value = "v1")
 public class SiteToolsController {
 
 	private static Log log = LogFactory.getLog(SiteToolsController.class);
@@ -66,84 +64,33 @@ public class SiteToolsController {
 
 	@Setter
 	@Autowired
-	private SessionManager sessionManager;
-
+	private SakaiProxy sakaiProxy;
+	
 	@Setter
 	@Autowired
 	private AnnouncementService announcementService;
 
 	@Setter
 	@Autowired
-	private ToolManager toolManager;
+	private SamigoToolEntityProvider samigoToolEntityProvider;
+	
+	@RequestMapping(value = "/{siteId}/tool-entities", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> getSiteToolEntities(@PathVariable String siteId) {
+		Map<String, Object> ret = new HashMap<>();
+		
+		ret.put("user", sakaiProxy.getCurrentUserId());
+		
+		List<Map<String, Object>> tools = new ArrayList<>();;
+		
+		Map<String, Object> samigo = new HashMap<>();
+		samigo.put("name", samigoToolEntityProvider.getToolName());
+		samigo.put("type", "folder");
 
-	@Setter
-	@Autowired
-	private SiteService siteService;
-
-	@Setter
-	@Autowired
-	private EntityBroker entityBroker;
-
-	@RequestMapping(value = "/{siteId}", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getSiteToolsElements(@PathVariable String siteId) {
-		String currentUserId = sessionManager.getCurrentSessionUserId();
-		List<String> entities;
-		String name;
-		Map<String, Object> entityMap = new HashMap<String, Object>();
-		List<Object> entityList = new ArrayList<Object>();
-
-		List<Object> resourceChildren = new ArrayList<Object>();
-		Map<String, Object> resourceFolder = new HashMap<String, Object>();
-
-		Map<String, Object> allTools = new HashMap<String, Object>();
-		log.info(currentUserId);
-
-		Set<String> providers = entityBroker.getRegisteredPrefixes();
-
-		try {
-			siteService.getSite(siteId);
-			allTools.put("user", currentUserId);
-
-			for (String provider : providers) {
-				entities = entityBroker.findEntityRefs(new String[] { provider }, new String[] { "context", "userId" }, new String[] { siteId, currentUserId }, true);
-				entityList = new ArrayList<Object>();
-
-				if (!provider.equalsIgnoreCase(BLOCKED_TOPIC) && !provider.equalsIgnoreCase(BLOCKED_FORUM_TOPIC)) {
-					if (entities != null && !entities.isEmpty()) {
-						for (String ent : entities) {
-							entityMap = new HashMap<String, Object>();
-							entityMap.put("resourceId", ent);
-							name = entityBroker.getPropertyValue(ent, "title");
-							entityMap.put("name", name);
-							// Have to pass through direct to get to the entity
-							entityMap.put("url", ServerConfigurationService.getServerUrl() + "/direct" + ent);
-							entityMap.put("type", "sakai_entity");
-							entityMap.put("tool", provider.toUpperCase());
-							entityList.add(entityMap);
-						}
-					}
-
-					if (entityList.size() > 0) {
-						resourceFolder = new HashMap<String, Object>();
-
-						if (allTools.containsKey("resourceChildren")) {
-							resourceChildren = (List<Object>) allTools.get("resourceChildren");
-						}
-
-						resourceFolder.put("name", provider.toUpperCase());
-						resourceFolder.put("type", "folder");
-						resourceFolder.put("resourceChildren", entityList);
-						resourceChildren.add(resourceFolder);
-
-						allTools.put("resourceChildren", resourceChildren);
-					}
-				}
-			}
-		} catch (IdUnusedException e) {
-			e.printStackTrace();
-		}
-
-		return allTools;
+		samigo.put("resourceChildren", samigoToolEntityProvider.getEntities(siteId, sakaiProxy.getCurrentSiteId()));
+		tools.add(samigo);
+		ret.put("resourceChildren", tools);
+		
+		return ret;
 	}
 
 	@RequestMapping(value = "/announcement/{siteId}", method = RequestMethod.POST)

@@ -15,7 +15,7 @@ tenjinApp.service('CitationsService', ['$q', '$http', '$translate', function($q,
 		}
 
 		var b64Path = Base64.encode(citationListId);
-
+		
 		$http.get('/direct/citation/list-b64/' + b64Path + '.json').success(function(data) {
 			_processCitations(citationList, data.citations);
 

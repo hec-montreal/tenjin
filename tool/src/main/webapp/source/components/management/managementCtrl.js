@@ -60,9 +60,9 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 	$scope.deleteSyllabus = function() {
 		var syllabusList = [];
 
-		for (var i = 0; i < $scope.syllabusService.syllabusList.length; i++) {
-			if ($scope.syllabusService.syllabusList[i].checked) {
-				syllabusList.push($scope.syllabusService.syllabusList[i]);
+		for (var i = 0; i < SyllabusService.syllabusList.length; i++) {
+			if (SyllabusService.syllabusList[i].checked) {
+				syllabusList.push(SyllabusService.syllabusList[i]);
 			}
 		}
 
@@ -76,21 +76,21 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 	};
 
 	$scope.copySyllabus = function() {
-		var syllabusId = null;
+		var syllabus = null;
 
-		for (var i = 0; i < $scope.syllabusService.syllabusList.length; i++) {
-			if ($scope.syllabusService.syllabusList[i].checked) {
-				syllabusId = $scope.syllabusService.syllabusList[i].id;
+		for (var i = 0; i < SyllabusService.syllabusList.length; i++) {
+			if (SyllabusService.syllabusList[i].checked) {
+				syllabus = SyllabusService.syllabusList[i];
 
 				break;
 			}
 		}
 
-		if (syllabusId === null) {
+		if (syllabus === null) {
 			return;
 		}
 
-		ModalService.copySyllabus(syllabusId);
+		ModalService.copySyllabus(syllabus);
 	};
 
 	$scope.externalSyllabusImport = function() {

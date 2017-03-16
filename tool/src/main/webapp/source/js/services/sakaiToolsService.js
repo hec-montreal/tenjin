@@ -12,7 +12,7 @@ tenjinApp.service('SakaiToolsService', ['$rootScope', '$q', '$http', function ( 
 		var tthis = this;
 		var ret = $q.defer();
 
-		$http.get('tools/' + siteId + '.json').success(function (data) {
+		$http.get('v1/' + siteId + '/tool-entities.json').success(function (data) {
 			tthis.setToolsEntities(data);
 
 			ret.resolve(tthis.getToolEntities());

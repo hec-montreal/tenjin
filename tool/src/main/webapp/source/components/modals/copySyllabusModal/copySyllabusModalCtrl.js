@@ -1,9 +1,9 @@
-tenjinApp.controller('CopySyllabusModal', ['$scope', '$rootScope', '$uibModalInstance', '$translate', 'syllabusId', function($scope, $rootScope, $uibModalInstance, $translate, syllabusId) {
+tenjinApp.controller('CopySyllabusModal', ['$scope', '$rootScope', '$uibModalInstance', '$translate', 'syllabusToCopy', function($scope, $rootScope, $uibModalInstance, $translate, syllabusToCopy) {
 	'use strict';
 
 	// Init syllabus data : name of syllabus + sections
 	$scope.data = {
-		name: $translate.instant('CREATE_SYLLABUS_DEFAULT_NAME')
+		name: $translate.instant('COPY_DEFAULT_NAME_PREFIX') + ' ' + syllabusToCopy.title
 	};
 
 	$scope.loading = false;
@@ -15,7 +15,7 @@ tenjinApp.controller('CopySyllabusModal', ['$scope', '$rootScope', '$uibModalIns
 		$scope.loading = true;
 
 		var data = {
-			syllabusId: syllabusId.syllabusId,
+			syllabusId: syllabusToCopy.id,
 			name: $scope.data.name
 		};
 

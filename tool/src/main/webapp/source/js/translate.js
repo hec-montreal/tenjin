@@ -299,7 +299,9 @@
 		SOURCE_URL: 'URL (Youtube, Vimeo, Dailymotion)',
 		SOURCE_EMBED: 'Embed',
 		COPY: 'Duplicate',
-		SYLLABUS_TITLE: 'Course outline title'
+		COPY_SYLLABUS: 'Copy course outline',
+		TITLE: 'Title',
+		COPY_DEFAULT_NAME_PREFIX: 'Copy of'
 	}).translations('fr', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -595,8 +597,10 @@
 		SOURCE: 'Source',
 		SOURCE_URL: 'URL (Youtube, Vimeo, Dailymotion)',
 		SOURCE_EMBED: 'Imbrication (Méliès)',
-		COPY: 'Copier',
-		SYLLABUS_TITLE: 'Titre du syllabus'
+		COPY: 'Dupliquer',
+		COPY_SYLLABUS: 'Dupliquer un plan de cours',
+		TITLE: 'Titre',
+		COPY_DEFAULT_NAME_PREFIX: 'Copie de'
 	});
 
 	$translateProvider.preferredLanguage('fr');

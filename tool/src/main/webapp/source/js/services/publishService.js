@@ -37,7 +37,7 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 			'message': message
 		};
 
-		$http.post('tools/announcement/' + SyllabusService.syllabus.siteId + '.json', announcement).success(function(data) {
+		$http.post('v1/announcement/' + SyllabusService.syllabus.siteId + '.json', announcement).success(function(data) {
 			ret.resolve(data);
 		}).error(function(data) {
 			ret.reject(data);

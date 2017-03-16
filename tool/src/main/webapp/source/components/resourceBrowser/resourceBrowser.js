@@ -14,6 +14,8 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 		templateUrl: 'resourceBrowser/resourceBrowser.html',
 
 		controller: function($scope) {
+			console.log(SakaiToolsService.getToolEntities());
+			
 			if ($scope.type === 'sakai_entity') {
 				$scope.resources = SakaiToolsService.getToolEntities();
 			} else {
