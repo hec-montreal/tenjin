@@ -14,22 +14,7 @@ tenjinApp.directive('referenceElement', ['config',  '$translate','ResourcesServi
 			$scope.citation = ResourcesService.getResource($scope.element.attributes.citationId);
 
 			var citationTypeId = $scope.element.attributes.citationType;
-
-            if (citationTypeId) {
-                $scope.citationTypeId = parseInt(citationTypeId, 10);
-            } else {
-                $scope.citationTypeId = -1;
-            }
-
-            // Retrieve the label for the citation type id
-            if ($scope.element.attributes.citationType) {
-                for (var i = 0; i < config.citationTypes.length; i++) {
-                    if (parseInt($scope.element.attributes.citationType, 10) === config.citationTypes[i].id) {
-                        $scope.citationType = $translate.instant(config.citationTypes[i].name);
-                        break;
-                    }
-                }
-            }
+			$scope.citationType = $translate.instant(citationTypeId);
 
 			$scope.element.title = "Citation";
 

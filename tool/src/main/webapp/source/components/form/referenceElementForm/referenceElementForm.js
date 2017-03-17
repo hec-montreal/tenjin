@@ -25,7 +25,7 @@ tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$tra
 
 			$scope.selectType = function($type) {
 				$scope.currentType = $type;
-				$scope.element.attributes.citationType = $scope.currentType.id;
+				$scope.element.attributes.citationType = $scope.currentType.name;
 			};
 
 			// Validation
@@ -51,7 +51,7 @@ tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$tra
 			// Retrieve the citation type for the given citation type id
 			if ($scope.element.attributes.citationType) {
 				for (var i = 0; i < config.citationTypes.length; i++) {
-					if (parseInt($scope.element.attributes.citationType, 10) === config.citationTypes[i].id) {
+					if ($scope.element.attributes.citationType === config.citationTypes[i].name) {
 						$scope.currentType = config.citationTypes[i];
 						break;
 					}
