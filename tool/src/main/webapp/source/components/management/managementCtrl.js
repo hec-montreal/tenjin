@@ -267,6 +267,15 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 		});
 	});
 
+	// Should maybe move these calls to the modals?
+	$scope.$on('import', function(e, data) {
+		SyllabusService.importSyllabusFromSite(data.data.siteId).then(function() {
+			refresh().then(function() {
+				$rootScope.$broadcast('imported');
+			})
+		});
+	});
+
 	$scope.syllabusService = SyllabusService;
 	$scope.alertService = AlertService;
 	$scope.userService = UserService;

@@ -149,8 +149,6 @@
 			ret.resolve(tthis.getSyllabus());
 		}).error(function(data) {
 			ret.reject(data);
-		}).finally(function() {
-			tthis.working = false;
 		});
 
 		return ret.promise;

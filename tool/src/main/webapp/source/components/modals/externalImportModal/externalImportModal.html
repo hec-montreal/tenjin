@@ -3,7 +3,7 @@
 		<h2>{{ 'MODAL_DESCRIPTION_IMPORT_SYLLABUS' | translate}}</h2> 
 	</div>
 
-	<div class="modal-body">
+	<div class="modal-body"  data-ng-if="!loading">
 		<div class="import-instructions">
 			{{ 'FORM_IMPORT_INSTRUCTIONS' | translate }}
 		</div>
@@ -14,7 +14,13 @@
 		<input type="text" name="siteId" id="siteId" placeholder="{{ 'FORM_IMPORT_SITEID_PLACEHOLDER' | translate }}" data-ng-model="data.siteId" required />
 	</div>
 
-	<div class="modal-footer">
+	<div class="modal-body" data-ng-if="loading">
+		<div class="loader">
+			<img src="/tenjin-tool/img/desktop/loader.gif">
+		</div>
+	</div>
+
+	<div class="modal-footer" ng-if="!loading">
 		<button type="submit">OK</button> 
 		<button type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
 	</div> 

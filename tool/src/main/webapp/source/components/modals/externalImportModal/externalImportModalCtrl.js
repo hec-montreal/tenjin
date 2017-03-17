@@ -1,4 +1,4 @@
-tenjinApp.controller('ExternalImportModalCtrl', ['$scope', '$uibModalInstance', 'SyllabusService', 'AlertService', function($scope, $uibModalInstance, SyllabusService, AlertService) {
+tenjinApp.controller('ExternalImportModalCtrl', ['$scope', '$rootScope', '$uibModalInstance', 'SyllabusService', 'AlertService', function($scope, $rootScope, $uibModalInstance, SyllabusService, AlertService) {
 	'use strict';
 
 	$scope.data = { 
@@ -6,8 +6,20 @@ tenjinApp.controller('ExternalImportModalCtrl', ['$scope', '$uibModalInstance', 
 	};
 
 	$scope.ok = function() {
-		$uibModalInstance.close($scope.data);
+		$scope.loading = true;
+
+		// see managementCtrl
+		$rootScope.$broadcast('import', {
+			data: $scope.data
+		});
 	};
+
+	/**
+	 * When import is complete
+	 */
+	$rootScope.$on('imported', function() {
+		$uibModalInstance.dismiss('cancel');
+	});
 
 	/**
 	 * Callback cancel button
