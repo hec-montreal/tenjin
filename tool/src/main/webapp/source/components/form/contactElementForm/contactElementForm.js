@@ -26,8 +26,8 @@
             };
 
             $scope.selectTitle = function($title) {
-                $scope.currentTitle = $title;
-                $scope.element.attributes.contactInfoTitle = $scope.currentTitle.id;
+                $scope.currentTitle = $title.name;
+                $scope.element.attributes.contactInfoTitle = $scope.currentTitle.name;
             };
 
             $scope.element.validate = function() {
@@ -53,15 +53,9 @@
         link: function($scope, $element) {
             // Retrieve the title for the given title id
             if ($scope.element.attributes.contactInfoTitle) {
-                for (var i = 0; i < config.contactInfoTitles.length; i++) {
-                    if (parseInt($scope.element.attributes.contactInfoTitle, 10) === config.contactInfoTitles[i].id) {
-                        $scope.currentTitle = config.contactInfoTitles[i];
-                        break;
-                    }
-                }
-
+				$scope.currentTitle = $scope.element.attributes.contactInfoTitle;
             } else {
-                $scope.currentTitle = $scope.config.contactInfoTitles[0];
+                $scope.currentTitle = $scope.config.contactInfoTitles[0].name;
             }
         }
     };
