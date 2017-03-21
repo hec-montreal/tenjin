@@ -21,8 +21,8 @@
             };
 
             $scope.selectType = function($type) {
-                $scope.currentType = $type;
-                $scope.element.attributes.hyperlinkType = $scope.currentType.id;
+                $scope.currentType = $type.name;
+                $scope.element.attributes.hyperlinkType = $scope.currentType;
             };
 
             // Validation
@@ -50,15 +50,9 @@
         link: function($scope, $element) {
             // Récupération du type de document
             if ($scope.element.attributes.hyperlinkType) {
-                for (var i = 0; i < config.hyperlinkTypes.length; i++) {
-                    if (parseInt($scope.element.attributes.hyperlinkType, 10) === config.hyperlinkTypes[i].id) {
-                        $scope.currentType = config.hyperlinkTypes[i];
-
-                        break;
-                    }
-                }
+                $scope.currentType = $scope.element.attributes.hyperlinkType;
             } else {
-                $scope.currentType = $scope.config.hyperlinkTypes[0];
+                $scope.currentType = $scope.config.hyperlinkTypes[0].name;
             }
         }
     };

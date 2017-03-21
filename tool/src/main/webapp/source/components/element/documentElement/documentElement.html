@@ -1,7 +1,7 @@
 <div class="element document">
    <div class="element-title syllabus-text">
 		<a data-nodrag href="{{resource.url}}" target="_blank">{{ element.title || resource.name }}</a>
-		<span ng-if="documentTypeId !== -1" class="resource-type">[{{ documentType }} - {{ documentTypeId }}]</span> 
+		<span ng-if="documentType" class="resource-type">[{{ documentType }}]</span> 
 	</div>
 
 	<div class="file-title syllabus-text">

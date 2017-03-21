@@ -15,21 +15,8 @@ tenjinApp.directive('documentElement', ['config', '$translate', 'ResourcesServic
             var documentTypeId = $scope.element.attributes.documentType;
 
             if (documentTypeId) {
-                $scope.documentTypeId = parseInt(documentTypeId, 10);
-            } else {
-                $scope.documentTypeId = -1;
+				$scope.documentType = $translate.instant(documentTypeId);
             }
-
-            // Retrieve the label for the document type id
-            if ($scope.element.attributes.documentType) {
-                for (var i = 0; i < config.documentTypes.length; i++) {
-                    if (parseInt($scope.element.attributes.documentType, 10) === config.documentTypes[i].id) {
-                        $scope.documentType = $translate.instant(config.documentTypes[i].name);
-                        break;
-                    }
-                }
-            }
-
         }
     };
 }]);

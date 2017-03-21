@@ -21,8 +21,8 @@
 			};
 
 			$scope.selectType = function($type) {
-				$scope.currentType = $type;
-				$scope.element.attributes.documentType = $scope.currentType.id;
+				$scope.currentType = $type.name;
+				$scope.element.attributes.documentType = $scope.currentType.name;
 			};
 
 			// Validation
@@ -43,15 +43,9 @@
 		link: function($scope, $element) {
 			// Retrieve the document type for the given document type id
 			if ($scope.element.attributes.documentType) {
-				for (var i = 0; i < config.documentTypes.length; i++) {
-					if (parseInt($scope.element.attributes.documentType, 10) === config.documentTypes[i].id) {
-						$scope.currentType = config.documentTypes[i];
-						break;
-					}
-				}
-
+				$scope.currentType = $scope.element.attributes.documentType
 			} else {
-				$scope.currentType = $scope.config.documentTypes[0];
+				$scope.currentType = $scope.config.documentTypes[0].name;
 			}
 		}
 	};

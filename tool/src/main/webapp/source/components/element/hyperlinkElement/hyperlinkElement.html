@@ -2,7 +2,7 @@
 	<div class="element-title syllabus-text">
 		<a data-nodrag href="{{element.attributes.hyperlinkUrl}}" target="_blank">{{(element.title ? element.title : element.attributes.hyperlinkUrl)}}</a>
 
-		<span ng-if="hyperlinkTypeId !== -1" class="link-type">
+		<span ng-if="hyperlinkType" class="link-type">
 			&nbsp;[{{ hyperlinkType }}] 
 		</span>
 	</div>
