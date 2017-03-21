@@ -2,6 +2,8 @@ package ca.hec.tenjin.api;
 
 import java.util.List;
 
+import org.sakaiproject.exception.IdUnusedException;
+
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
@@ -82,6 +84,14 @@ public interface SyllabusService {
 	 */
 	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException;
 
+	/**
+	 * Copy a syllabus
+	 * @throws IdUnusedException 
+	 * @throws NoSyllabusException 
+	 * @throws StructureSyllabusException 
+	 */
+	void copySyllabus(Long syllabusId, String title) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException;
+	
 	/**
 	 * Retrieve the SyllabusElementMappings for a syllabus 
 	 * 

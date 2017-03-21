@@ -100,6 +100,8 @@ public interface SyllabusDao {
 	 * @return The saved object
 	 */
 	public Object save(Object o);
+	
+	public void detach(Object o);
 
 	/**
 	 * Delete a hibernate object to the database (merge them if it's already in the session).

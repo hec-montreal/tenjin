@@ -1,15 +1,15 @@
 tenjinApp.directive('rubricElement', function() {
-    'use strict';
+	'use strict';
 
-    return {
-        scope: true,
+	return {
+		scope: true,
 
-        restrict: 'A',
+		restrict: 'A',
 
-        templateUrl: 'element/rubricElement/rubricElement.html',
+		templateUrl: 'element/rubricElement/rubricElement.html',
 
-        controller: function($scope) {
+		controller: function($scope) {
 
-        }
-    };
+		}
+	};
 });

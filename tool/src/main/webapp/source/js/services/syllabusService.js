@@ -80,41 +80,13 @@
 		var tthis = this;
 		var ret = $q.defer();
 
-		this.loadSyllabus(id).then(function(syllabusToCopy) {
-			var syllabusToCreate = {
-				'id': null,
-				'siteId': syllabusToCopy.siteId,
-				'sections': [],
-				'title': newTitle,
-				'common': false,
-				'templateId': syllabusToCopy.templateId,
-				'elements': null,
-				'locale': 'fr_CA'
-			};
+		$http.post('v1/syllabus/copy/' + id + '.json', {
+			'title': newTitle
+		}).then(function(data) {
+			console.log("After copy");
+			console.log(data);
 
-			// Create the syllabus
-			tthis.save(syllabusToCreate).then(function(newSyllabus) {
-				tthis.forEachElement(syllabusToCopy, function(el) {
-					if (!el.common) {
-						delete el.id;
-						delete el.parentId;
-					}
-				});
-
-				newSyllabus.elements = syllabusToCopy.elements;
-
-				SyllabusLockService.lockSyllabus(newSyllabus.id).then(function() {
-					tthis.save(newSyllabus).then(function(finishedSyllabus) {
-						ret.resolve();
-					}).catch(function(e) {
-						ret.reject(e);
-					});
-				});
-			}).catch(function(e) {
-				ret.reject(e);
-			});
-		}).catch(function(e) {
-			ret.reject(e);
+			ret.resolve(data);
 		});
 
 		return ret.promise;
@@ -147,7 +119,7 @@
 			ret.resolve(tthis.getSyllabus());
 		}).error(function(data) {
 			ret.reject(data);
-		}).finally(function () {
+		}).finally(function() {
 			tthis.working = false;
 		});
 

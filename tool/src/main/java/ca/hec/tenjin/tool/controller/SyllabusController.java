@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.util.ResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ import ca.hec.tenjin.api.exception.UnknownElementTypeException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
+import ca.hec.tenjin.tool.controller.util.CopySyllabusObject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -126,12 +128,6 @@ public class SyllabusController {
 	 */
 	@RequestMapping(value = "/syllabus/published", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<PublishedSyllabus> getUserPublishedSyllabus() throws NoSyllabusException, DeniedAccessException {
-		String sectionId = null;
-/*
-		if (sections.size() > 0) {
-			sectionId = (String) sections.get(0).get("id");
-		}*/
-
 		return new ResponseEntity<PublishedSyllabus>(publishService.getPublishedSyllabus(sakaiProxy.getCurrentSiteId(), null), HttpStatus.OK);
 	}
 	
@@ -170,6 +166,11 @@ public class SyllabusController {
 		return syllabusService.createOrUpdateSyllabus(syllabus);
 	}
 
+	@RequestMapping(value = "/syllabus/copy/{syllabusId}", method = RequestMethod.POST)
+	public @ResponseBody void copySyllabus(@PathVariable("syllabusId") Long syllabusId, @RequestBody CopySyllabusObject copyObject) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException {
+		syllabusService.copySyllabus(syllabusId, copyObject.getTitle());
+	}
+	
 	@ExceptionHandler(NoSiteException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public @ResponseBody Object handleNoSiteException(NoSiteException ex) {

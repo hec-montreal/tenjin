@@ -24,7 +24,6 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
-import ca.hec.tenjin.api.model.template.TemplateElement;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
 import lombok.Setter;
 
@@ -368,5 +367,9 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		
 		return mappings;
 	}
-	
+
+	@Override
+	public void detach(Object o) {
+		getHibernateTemplate().getSessionFactory().getCurrentSession().evict(o);
+	}
 }

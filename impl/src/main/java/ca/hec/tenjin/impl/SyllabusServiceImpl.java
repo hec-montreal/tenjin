@@ -18,7 +18,6 @@ import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ca.hec.tenjin.api.provider.TenjinImportProvider;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusLockService;
 import ca.hec.tenjin.api.SyllabusService;
@@ -36,6 +35,7 @@ import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.tenjin.api.provider.TenjinImportProvider;
 import lombok.Setter;
 
 /**
@@ -44,7 +44,7 @@ import lombok.Setter;
  *
  */
 @Setter
-//@Component
+// @Component
 public class SyllabusServiceImpl implements SyllabusService {
 
 	private static final Logger log = Logger.getLogger(SyllabusServiceImpl.class);
@@ -55,9 +55,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 	private TenjinSecurityService securityService;
 	private SyllabusLockService syllabusLockService;
 
-	@Autowired(required=false)
+	@Autowired(required = false)
 	private TenjinImportProvider importProvider;
-	
+
 	@Override
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, StructureSyllabusException {
 		Syllabus syllabus = null;
@@ -83,7 +83,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		return syllabusList;
 	}
-	
+
 	@Override
 	public List<Syllabus> getSyllabusListForUser(String siteId, String currentUserId) throws NoSiteException, DeniedAccessException {
 		List<Syllabus> syllabusList = null;
@@ -316,6 +316,41 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	@Override
+	public void copySyllabus(Long syllabusId, String title) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException {
+		Syllabus syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
+
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_READ, syllabus)) {
+			throw new DeniedAccessException();
+		}
+
+		Date now = new Date();
+		Syllabus copy = new Syllabus();
+
+		copy.setSiteId(syllabus.getSiteId());
+		copy.setTitle(title);
+		copy.setCommon(false);
+		copy.setTemplateId(syllabus.getTemplateId());
+		copy.setLocale(syllabus.getLocale());
+		copy.setCreatedDate(now);
+		copy.setCourseTitle(sakaiProxy.getSite(copy.getSiteId()).getTitle());
+		copy.setCreatedBy(sakaiProxy.getCurrentUserId());
+		copy.setCreatedByName(sakaiProxy.getCurrentUserName());
+		copy.setLastModifiedDate(now);
+		copy.setLastModifiedBy(sakaiProxy.getCurrentUserId());
+		copy.setDeleted(false);
+		copy.setPublishedDate(null);
+		copy.setPublishedBy(null);
+
+		// Create
+		syllabusDao.save(copy);
+
+		// Copy elements
+		for (int i = 0; i < syllabus.getElements().size(); i++) {
+			createElementCopy(syllabus.getElements().get(i), null, i, copy);
+		}
+	}
+
+	@Override
 	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException {
 		Syllabus syllabus = syllabusDao.getSyllabus(syllabusId);
 
@@ -340,16 +375,15 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		syllabusDao.softDeleteSyllabus(syllabus);
 	}
-	
+
 	@Override
-	public Syllabus importSyllabusFromSite(String siteId) 
-			throws DeniedAccessException, SyllabusLockedException {
-		
+	public Syllabus importSyllabusFromSite(String siteId) throws DeniedAccessException, SyllabusLockedException {
+
 		if (importProvider == null)
 			return null;
-					
+
 		String currentSiteId = sakaiProxy.getCurrentSiteId();
-		
+
 		try {
 			// Delete existing Syllabuses
 			List<Syllabus> deleteSyllabusList = getSyllabusList(currentSiteId);
@@ -359,27 +393,27 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 			Syllabus syllabus = importProvider.importSyllabusFromSite(siteId, currentSiteId);
 			Set<String> sections = sakaiProxy.getGroupsForSite(currentSiteId);
-				
+
 			if (syllabus != null) {
 				syllabus.setId(null);
 				syllabus.setSiteId(currentSiteId);
 				syllabus.setCourseTitle(currentSiteId);
 				syllabus.setSections(sections);
 
-				createOrUpdateSyllabus(syllabus);			
-			}		
+				createOrUpdateSyllabus(syllabus);
+			}
 			return syllabus;
 		} catch (NoSiteException nse) {
 			// current site id does not exist
 			nse.printStackTrace();
 		} catch (NoSyllabusException nse) {
 			// only occurs when updating a syllabus
-			nse.printStackTrace();			
+			nse.printStackTrace();
 		} catch (StructureSyllabusException sse) {
 			// structuring syllabus elements in createOrUpdateSyllabus failed
-			sse.printStackTrace();			
+			sse.printStackTrace();
 		}
-		
+
 		return null;
 	}
 
@@ -590,6 +624,32 @@ public class SyllabusServiceImpl implements SyllabusService {
 		for (Syllabus syllabus : syllabuses) {
 			for (String sectionId : sectionsToUnassign) {
 				syllabus.getSections().remove(sectionId);
+			}
+		}
+	}
+
+	private void createElementCopy(AbstractSyllabusElement element, AbstractSyllabusElement parent, int displayOrder, Syllabus forSyllabus) {
+		if (!element.getCommon()) {
+			// Act as a new element
+			syllabusDao.detach(element);
+			
+			element.setId(null);
+			element.setParentId(parent == null ? null : parent.getId());
+			element.setEqualsPublished(false);
+
+			syllabusDao.save(element);
+		}
+		
+		// Create element mapping
+		createSyllabusElementMapping(forSyllabus.getId(), element, displayOrder, false);
+
+		if (element.isComposite()) {
+			SyllabusCompositeElement comp = (SyllabusCompositeElement) element;
+
+			for (int i = 0; i < comp.getElements().size(); i++) {
+				AbstractSyllabusElement child = comp.getElements().get(i);
+
+				createElementCopy(child, comp, i, forSyllabus);
 			}
 		}
 	}
