@@ -27,7 +27,7 @@
 
             $scope.selectTitle = function($title) {
                 $scope.currentTitle = $title.name;
-                $scope.element.attributes.contactInfoTitle = $scope.currentTitle.name;
+                $scope.element.attributes.contactInfoTitle = $scope.currentTitle;
             };
 
             $scope.element.validate = function() {
