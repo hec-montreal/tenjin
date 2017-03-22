@@ -94,21 +94,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 	};
 
 	$scope.externalSyllabusImport = function() {
-		ModalService.externalSyllabusImport().result.then(function(data) {
-			SyllabusService.importSyllabusFromSite(data.siteId).then(function() {
-				refresh();
-			}).catch(function(status) {
-				if (status === 404) {
-					AlertService.showAlert('importSyllabusNotFound');
-				} else if (status === 403) {
-					AlertService.showAlert('importSyllabusPermissionError');
-				} else if (status === 503) {
-					AlertService.showAlert('importServiceUndefined');
-				} else {
-					AlertService.showAlert('importSyllabusError');
-				}
-			});
-		});
+		ModalService.externalSyllabusImport();
 	};
 
 	$scope.checkStatus = function() {
@@ -270,9 +256,19 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 	// Should maybe move these calls to the modals?
 	$scope.$on('import', function(e, data) {
 		SyllabusService.importSyllabusFromSite(data.data.siteId).then(function() {
-			refresh().then(function() {
-				$rootScope.$broadcast('imported');
-			})
+			refresh();
+		}).catch(function(status) {
+			if (status === 404) {
+				AlertService.showAlert('importSyllabusNotFound');
+			} else if (status === 403) {
+				AlertService.showAlert('importSyllabusPermissionError');
+			} else if (status === 503) {
+				AlertService.showAlert('importServiceUndefined');
+			} else {
+				AlertService.showAlert('importSyllabusError');
+			}
+		}).finally(function() {
+			$rootScope.$broadcast('imported');
 		});
 	});
 
