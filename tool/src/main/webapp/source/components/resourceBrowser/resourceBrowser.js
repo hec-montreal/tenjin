@@ -53,14 +53,11 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 						for (var b = 0; b < res.sections.length; b++) {
 							var section = UserService.getSection($scope.filterSections[a]);
 
-							if (section.name === res.sections[b]) {
+							if (section.id === res.sections[b]) {
 								return true;
 							}
 						}
 					}
-
-					console.log("Rejecting");
-					console.log(res);
 
 					return false;
 				} else {

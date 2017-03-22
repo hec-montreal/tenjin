@@ -65,6 +65,12 @@
 			<version>11.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.sakaiproject.samigo</groupId>
+			<artifactId>samigo-hibernate</artifactId>
+			<version>11.3</version>
+		</dependency>
+
 		<!-- spring and hibernate -->
       <dependency>
         <groupId>org.springframework</groupId>
