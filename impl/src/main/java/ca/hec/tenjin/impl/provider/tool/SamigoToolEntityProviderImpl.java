@@ -20,37 +20,36 @@ public class SamigoToolEntityProviderImpl implements SamigoToolEntityProvider {
 
 	@Setter
 	private PublishedAssessmentEntityProvider publishedAssessmentEntityProvider;
-	
+
 	@Override
 	public List<ToolEntity> getEntities(String siteId, String currentUserId) {
-		PublishedAssessmentEntityProviderImpl providerImpl = (PublishedAssessmentEntityProviderImpl) publishedAssessmentEntityProvider; 
+		PublishedAssessmentEntityProviderImpl providerImpl = (PublishedAssessmentEntityProviderImpl) publishedAssessmentEntityProvider;
 		PublishedAssessmentService service = new PublishedAssessmentService();
 		AuthzQueriesFacadeAPI authz = PersistenceService.getInstance().getAuthzQueriesFacade();
-		
-		List<String> entities = providerImpl.findEntityRefs(new String[]{PublishedAssessmentEntityProvider.ENTITY_PREFIX}, 
-															new String[]{"site", "user"}, 
-															new String[]{siteId, currentUserId},
-															false);
 
 		List<ToolEntity> ret = new ArrayList<>();
-				
-		for(String key : entities) {
-			PublishedAssessmentFacade a = service.getPublishedAssessment(key.substring(PublishedAssessmentEntityProvider.ENTITY_PREFIX.length() + 2));
-			ToolEntity entity = new SamigoToolEntity();
-			
-			entity.setResourceId(key);
-			entity.setName(a.getTitle());
-			entity.setUrl(key);
-		
-			List<AuthorizationData> authorizations = authz.getAuthorizationByFunctionAndQualifier("TAKE_ASSESSMENT", a.getAssessmentId().toString());
-			
-			for(AuthorizationData data : authorizations) {
-				entity.getSections().add(data.getAgentIdString());
+
+		List<String> entities = providerImpl.findEntityRefs(new String[] { PublishedAssessmentEntityProvider.ENTITY_PREFIX }, new String[] { "site", "user" }, new String[] { siteId, currentUserId }, false);
+
+		if (entities != null) {
+			for (String key : entities) {
+				PublishedAssessmentFacade a = service.getPublishedAssessment(key.substring(PublishedAssessmentEntityProvider.ENTITY_PREFIX.length() + 2));
+				ToolEntity entity = new SamigoToolEntity();
+
+				entity.setResourceId(key);
+				entity.setName(a.getTitle());
+				entity.setUrl(key);
+
+				List<AuthorizationData> authorizations = authz.getAuthorizationByFunctionAndQualifier("TAKE_ASSESSMENT", a.getAssessmentId().toString());
+
+				for (AuthorizationData data : authorizations) {
+					entity.getSections().add(data.getAgentIdString());
+				}
+
+				ret.add(entity);
 			}
-			
-			ret.add(entity);
 		}
-		
+
 		return ret;
 	}
 
