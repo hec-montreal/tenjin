@@ -198,7 +198,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 					AbstractSyllabusElement tempElem;
 
 					tempElem = currElement.getClass().newInstance();
-					tempElem.copy(currElement);
+					tempElem.copyFrom(currElement);
 					AbstractPublishedSyllabusElement publishedElem = publishedSyllabusDao.getPublishedElement(currElement.getPublishedId());
 
 					// overwrite these values with published data

@@ -55,6 +55,6 @@ public class SamigoToolEntityProviderImpl implements SamigoToolEntityProvider {
 
 	@Override
 	public String getToolName() {
-		return PublishedAssessmentEntityProvider.ENTITY_PREFIX.toUpperCase();
+		return "SAM_PUB";
 	}
 }

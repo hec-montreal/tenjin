@@ -100,6 +100,10 @@
 	<bean id="ca.hec.tenjin.api.SamigoToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.SamigoToolEntityProviderImpl">
 		<property name="publishedAssessmentEntityProvider" ref="org.sakaiproject.tool.assessment.entity.api.PublishedEntityProvider" />
 	</bean>
+	
+	<bean id="ca.hec.tenjin.api.AssignmentToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.AssignmentToolEntityProviderImpl">
+		<property name="assignmentService" ref="org.sakaiproject.assignment.api.AssignmentService" />
+	</bean>
 
 	<bean name="ca.hec.tenjin.api.SakaiProxy" class="ca.hec.tenjin.impl.SakaiProxyImpl" init-method="init">
 		<!-- <property name="courseManagementService"><ref bean="org.sakaiproject.coursemanagement.api.CourseManagementService"/></property> -->

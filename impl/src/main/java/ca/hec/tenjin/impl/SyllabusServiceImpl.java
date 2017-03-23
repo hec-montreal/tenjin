@@ -236,7 +236,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 							existingRubric.setCommon(true);
 							existingRubric.setDisplayOrder(element.getDisplayOrder());
 							existingRubric.setElements(((SyllabusRubricElement) element).getElements());
-							element.copy(existingRubric);
+							element.copyFrom(existingRubric);
 						}
 					}
 
@@ -346,7 +346,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		// Copy elements
 		for (int i = 0; i < syllabus.getElements().size(); i++) {
-			createElementCopy(syllabus.getElements().get(i), null, i, copy);
+			createElementCopy(syllabus.getElements().get(i), null, i, copy, sakaiProxy.getCurrentUserId());
 		}
 	}
 
@@ -534,7 +534,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 			// update persistent object, save handled by hibernate at end of
 			// transaction
-			existingElement.copy(newElement);
+			existingElement.copyFrom(newElement);
 			existingElement.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 			existingElement.setLastModifiedDate(new Date());
 			existingElement.setEqualsPublished(false);
@@ -628,20 +628,40 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 	}
 
-	private void createElementCopy(AbstractSyllabusElement element, AbstractSyllabusElement parent, int displayOrder, Syllabus forSyllabus) {
+	private void createElementCopy(AbstractSyllabusElement element, AbstractSyllabusElement parent, int displayOrder, Syllabus forSyllabus, String userId) {
 		if (!element.getCommon()) {
-			// Act as a new element
-			syllabusDao.detach(element);
-			
-			element.setId(null);
-			element.setParentId(parent == null ? null : parent.getId());
-			element.setEqualsPublished(false);
+			// Create new element
+			AbstractSyllabusElement newElement = null;
 
-			syllabusDao.save(element);
+			try {
+				newElement = (AbstractSyllabusElement) element.getClass().newInstance();
+			} catch (IllegalAccessException e) {
+				// Should never happen
+				e.printStackTrace();
+
+				return;
+			} catch (InstantiationException e) {
+				// Should never happen
+				e.printStackTrace();
+
+				return;
+			}
+
+			newElement.copyFrom(element);
+			newElement.setId(null);
+			newElement.setParentId(parent == null ? null : parent.getId());
+			newElement.setPublishedId(null);
+			newElement.setEqualsPublished(false);
+			newElement.setCreatedBy(userId);
+			newElement.setCreatedDate(new Date());
+			
+			syllabusDao.save(newElement);
+
+			createSyllabusElementMapping(forSyllabus.getId(), newElement, displayOrder, false);
+		} else {
+			// Create common element mapping
+			createSyllabusElementMapping(forSyllabus.getId(), element, displayOrder, false);
 		}
-		
-		// Create element mapping
-		createSyllabusElementMapping(forSyllabus.getId(), element, displayOrder, false);
 
 		if (element.isComposite()) {
 			SyllabusCompositeElement comp = (SyllabusCompositeElement) element;
@@ -649,7 +669,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 			for (int i = 0; i < comp.getElements().size(); i++) {
 				AbstractSyllabusElement child = comp.getElements().get(i);
 
-				createElementCopy(child, comp, i, forSyllabus);
+				createElementCopy(child, comp, i, forSyllabus, userId);
 			}
 		}
 	}

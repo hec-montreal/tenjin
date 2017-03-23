@@ -1,16 +1,15 @@
 package ca.hec.tenjin.api.model.syllabus;
 
-import lombok.Data;
-
-import java.util.*;
-
-import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
+import lombok.Data;
 
 /**
  *
@@ -20,16 +19,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
  */
 
 @Data
-@JsonSubTypes({
-	@Type(value = SyllabusCompositeElement.class, name = "composite"),
-	@Type(value = SyllabusCitationElement.class, name = "citation"),
-	@Type(value = SyllabusContactInfoElement.class, name = "contact_info"),
-	@Type(value = SyllabusDocumentElement.class, name = "document"),
-	@Type(value = SyllabusHyperlinkElement.class, name = "hyperlink"),
-	@Type(value = SyllabusImageElement.class, name = "image"),
-	@Type(value = SyllabusSakaiToolElement.class, name = "sakai_entity"),
-	@Type(value = SyllabusTextElement.class, name = "text"),
-	@Type(value = SyllabusVideoElement.class, name = "video") })
+@JsonSubTypes({ @Type(value = SyllabusCompositeElement.class, name = "composite"), @Type(value = SyllabusCitationElement.class, name = "citation"), @Type(value = SyllabusContactInfoElement.class, name = "contact_info"), @Type(value = SyllabusDocumentElement.class, name = "document"), @Type(value = SyllabusHyperlinkElement.class, name = "hyperlink"), @Type(value = SyllabusImageElement.class, name = "image"), @Type(value = SyllabusSakaiToolElement.class, name = "sakai_entity"), @Type(value = SyllabusTextElement.class, name = "text"), @Type(value = SyllabusVideoElement.class, name = "video") })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.EXISTING_PROPERTY, property = "type")
 public abstract class AbstractSyllabusElement {
 
@@ -43,60 +33,59 @@ public abstract class AbstractSyllabusElement {
 
 	private Boolean common;
 	private Boolean publicElement;
-    private Boolean important;
-    
-    private Long publishedId;
-    private Boolean equalsPublished;
-    
-    // not mapped by hibernate because it's actually from SyllabusElementMapping
-    private Boolean hidden;
-    private Integer displayOrder;
-    
-    private Boolean hasDatesInterval;
-    
-    private Date availabilityStartDate;
-    private Date availabilityEndDate;
+	private Boolean important;
 
-    private Date createdDate;
-    private String createdBy;
-    private Date lastModifiedDate;
-    private String lastModifiedBy;
-    
-    private Long providerId;
+	private Long publishedId;
+	private Boolean equalsPublished;
 
-    private Map<String, String> attributes;
+	// not mapped by hibernate because it's actually from SyllabusElementMapping
+	private Boolean hidden;
+	private Integer displayOrder;
 
-    // force each subclass to return a type
-    abstract public String getType();
-    
-    public boolean isComposite() {
-    	// false by default, override in SyllabusCompositeElement
-    	return false;
-    }
-    
-    public void copy(AbstractSyllabusElement e) {
-    	this.setId(e.getId());
-    	this.setParentId(e.getParentId());
-    	this.setTemplateStructureId(e.getTemplateStructureId());
-    	this.setSiteId(e.getSiteId());
-    	this.setTitle(e.getTitle());
-    	this.setDescription(e.getDescription());
-    	this.setCommon(e.getCommon());
-    	this.setPublicElement(e.getPublicElement());
-    	this.setImportant(e.getImportant());
-    	this.setPublishedId(e.getPublishedId());
-    	this.setEqualsPublished(e.getEqualsPublished());
-    	this.setDisplayOrder(e.getDisplayOrder());
-    	this.setHidden(e.getHidden());
-    	this.setAvailabilityStartDate(e.getAvailabilityStartDate());
-    	this.setAvailabilityEndDate(e.getAvailabilityEndDate());
-    	this.setCreatedDate(e.getCreatedDate());
-    	this.setCreatedBy(e.getCreatedBy());
-    	this.setLastModifiedDate(e.getLastModifiedDate());
-    	this.setLastModifiedBy(e.getLastModifiedBy());
-    	this.setAttributes(new HashMap<String, String>(e.getAttributes()));
-    	this.setHasDatesInterval(e.getHasDatesInterval());
-    	this.setProviderId(e.getProviderId());
-    }
+	private Boolean hasDatesInterval;
+
+	private Date availabilityStartDate;
+	private Date availabilityEndDate;
+
+	private Date createdDate;
+	private String createdBy;
+	private Date lastModifiedDate;
+	private String lastModifiedBy;
+
+	private Long providerId;
+
+	private Map<String, String> attributes;
+
+	// force each subclass to return a type
+	abstract public String getType();
+
+	public boolean isComposite() {
+		// false by default, override in SyllabusCompositeElement
+		return false;
+	}
+
+	public void copyFrom(AbstractSyllabusElement e) {
+		this.setId(e.getId());
+		this.setParentId(e.getParentId());
+		this.setTemplateStructureId(e.getTemplateStructureId());
+		this.setSiteId(e.getSiteId());
+		this.setTitle(e.getTitle());
+		this.setDescription(e.getDescription());
+		this.setCommon(e.getCommon());
+		this.setPublicElement(e.getPublicElement());
+		this.setImportant(e.getImportant());
+		this.setPublishedId(e.getPublishedId());
+		this.setEqualsPublished(e.getEqualsPublished());
+		this.setDisplayOrder(e.getDisplayOrder());
+		this.setHidden(e.getHidden());
+		this.setAvailabilityStartDate(e.getAvailabilityStartDate());
+		this.setAvailabilityEndDate(e.getAvailabilityEndDate());
+		this.setCreatedDate(e.getCreatedDate());
+		this.setCreatedBy(e.getCreatedBy());
+		this.setLastModifiedDate(e.getLastModifiedDate());
+		this.setLastModifiedBy(e.getLastModifiedBy());
+		this.setAttributes(new HashMap<String, String>(e.getAttributes()));
+		this.setHasDatesInterval(e.getHasDatesInterval());
+		this.setProviderId(e.getProviderId());
+	}
 }
-

@@ -44,6 +44,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.provider.tool.AssignmentToolEntityProvider;
 import ca.hec.tenjin.api.provider.tool.SamigoToolEntityProvider;
 import lombok.Setter;
 
@@ -74,6 +75,10 @@ public class SiteToolsController {
 	@Autowired
 	private SamigoToolEntityProvider samigoToolEntityProvider;
 	
+	@Setter
+	@Autowired
+	private AssignmentToolEntityProvider assignmentToolEntityProvider;
+	
 	@RequestMapping(value = "/{siteId}/tool-entities", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> getSiteToolEntities(@PathVariable String siteId) {
 		Map<String, Object> ret = new HashMap<>();
@@ -85,9 +90,15 @@ public class SiteToolsController {
 		Map<String, Object> samigo = new HashMap<>();
 		samigo.put("name", samigoToolEntityProvider.getToolName());
 		samigo.put("type", "folder");
-
 		samigo.put("resourceChildren", samigoToolEntityProvider.getEntities(siteId, sakaiProxy.getCurrentSiteId()));
 		tools.add(samigo);
+		
+		Map<String, Object> assignment = new HashMap<>();
+		assignment.put("name", assignmentToolEntityProvider.getToolName());
+		assignment.put("type", "folder");
+		assignment.put("resourceChildren", assignmentToolEntityProvider.getEntities(siteId, sakaiProxy.getCurrentSiteId()));
+		tools.add(assignment);
+		
 		ret.put("resourceChildren", tools);
 		
 		return ret;
