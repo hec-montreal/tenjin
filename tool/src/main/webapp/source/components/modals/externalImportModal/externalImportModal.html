@@ -4,14 +4,19 @@
 	</div>
 
 	<div class="modal-body"  data-ng-if="!loading">
-		<div class="import-instructions">
-			{{ 'FORM_IMPORT_INSTRUCTIONS' | translate }}
+		<div data-ng-if="!confirm">
+			<div class="import-instructions">
+				{{ 'FORM_IMPORT_INSTRUCTIONS' | translate }}
+			</div>
+			<br/>
+			<label for="siteId">
+				{{ 'FORM_IMPORT_SITEID' | translate }} <span class="mandatory"></span> 
+			</label>
+			<input type="text" name="siteId" id="siteId" placeholder="{{ 'FORM_IMPORT_SITEID_PLACEHOLDER' | translate }}" data-ng-model="data.siteId" required />
 		</div>
-		<br/>
-		<label for="siteId">
-			{{ 'FORM_IMPORT_SITEID' | translate }} <span class="mandatory"></span> 
-		</label>
-		<input type="text" name="siteId" id="siteId" placeholder="{{ 'FORM_IMPORT_SITEID_PLACEHOLDER' | translate }}" data-ng-model="data.siteId" required />
+		<div data-ng-if="confirm">
+			{{ 'FORM_IMPORT_CONFIRM' | translate }}
+		</div>
 	</div>
 
 	<div class="modal-body" data-ng-if="loading">
