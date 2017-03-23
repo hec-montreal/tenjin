@@ -1,7 +1,7 @@
-tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$translate', 'SyllabusService', 'SyllabusLockService', 'AlertService', 'ModalService', 'UserService', 'config', '$q', function($scope, $rootScope, $timeout, $translate, SyllabusService, SyllabusLockService, AlertService, ModalService, UserService, config, $q) {
+tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$translate', 'SyllabusService', 'SyllabusLockService', 'AlertService', 'ModalService', 'UserService', 'ResourcesService', 'CitationsService', 'config', '$q', function($scope, $rootScope, $timeout, $translate, SyllabusService, SyllabusLockService, AlertService, ModalService, UserService, ResourcesService, CitationsService, config, $q) {
 	'use strict';
 
-	var refresh = function() {
+	var refresh = function(refreshResources) {
 		var ret = $q.defer();
 
 		UserService.loadProfile().then(function() {
@@ -19,6 +19,18 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 
 			ret.reject();
 		});
+		
+		if (refreshResources === true) {
+			ResourcesService.loadResources(UserService.getProfile().siteId).then(function() {
+				CitationsService.loadCitations().then(function() {
+					ret.resolve();
+				}).catch(function() {
+					ret.reject();
+				});
+			}).catch(function(e) {
+				ret.reject(e);
+			});
+		}
 
 		return ret.promise;
 	};
@@ -256,7 +268,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 	// Should maybe move these calls to the modals?
 	$scope.$on('import', function(e, data) {
 		SyllabusService.importSyllabusFromSite(data.data.siteId).then(function() {
-			refresh();
+			refresh(true);
 		}).catch(function(status) {
 			if (status === 404) {
 				AlertService.showAlert('importSyllabusNotFound');

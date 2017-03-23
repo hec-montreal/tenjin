@@ -4,16 +4,22 @@ tenjinApp.controller('ExternalImportModalCtrl', ['$scope', '$rootScope', '$uibMo
 	$scope.data = { 
 		siteId : ""
 	};
+	
+	$scope.confirm = false;
 
 	$scope.ok = function() {
-		$scope.loading = true;
+		if (!$scope.confirm) {
+			$scope.confirm = true;
+		} else {
+			$scope.loading = true;
 
-		// see managementCtrl
-		$rootScope.$broadcast('import', {
-			data: $scope.data
-		});
+			// see managementCtrl
+			$rootScope.$broadcast('import', {
+				data: $scope.data
+			});
+		}
 	};
-
+	
 	/**
 	 * When import is complete
 	 */

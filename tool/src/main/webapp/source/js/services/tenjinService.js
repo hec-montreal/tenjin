@@ -1,30 +1,6 @@
 tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'SyllabusService', 'SyllabusLockService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'AlertService', function($q, config, $state, UserService, SyllabusService, SyllabusLockService, ResourcesService, SakaiToolsService, CitationsService, PublishService, AlertService) {
 	'use strict';
 
-	var loadCitations = function(data, citationsLists) {
-		var ret = $q.defer();
-		var citationsLists = CitationsService.loadCitationLists(ResourcesService.resources);
-
-		$q.all(citationsLists.promises).then(function(data) {
-			var updatedResource, updatedResourceId;
-
-			for (var i = 0; i < data.length; i++) {
-				if (data[i].citations) {
-					updatedResourceId = citationsLists.resourceIds[i];
-					updatedResource = ResourcesService.getResource(updatedResourceId);
-
-					updatedResource.resourceChildren = CitationsService.updateJsonProperties(updatedResourceId, data[i].citations);
-				}
-			}
-
-			ret.resolve();
-		}).catch(function() {
-			ret.reject();
-		});
-
-		return ret.promise;
-	};
-
 	var makeRoute = function(route, params) {
 		var ret = {
 			'route': route
@@ -53,7 +29,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 
 				$q.all(dataToLoad).then(function() {
 					// Finally load the citations
-					loadCitations().then(function() {
+					CitationsService.loadCitations().then(function() {
 						ret.resolve();
 					}).catch(function() {
 						ret.reject();
@@ -118,7 +94,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 
 				$q.allSettled(dataToLoad).then(function() {
 					// Finally load the citations
-					loadCitations().then(function() {
+					CitationsService.loadCitations().then(function() {
 						ret.resolve();
 					}).catch(function() {
 						ret.reject();

@@ -1,4 +1,4 @@
-tenjinApp.service('CitationsService', ['$q', '$http', '$translate', function($q, $http, $translate) {
+tenjinApp.service('CitationsService', ['$q', '$http', '$translate', 'ResourcesService', function($q, $http, $translate, ResourcesService) {
 	'use strict';
 
 	/**
@@ -79,4 +79,30 @@ tenjinApp.service('CitationsService', ['$q', '$http', '$translate', function($q,
 
 		return citations;
 	};
+	
+	this.loadCitations = function() {
+		var ret = $q.defer();
+		var citationsLists = this.loadCitationLists(ResourcesService.resources);
+		var tthis = this;
+
+		$q.all(citationsLists.promises).then(function(data) {
+			var updatedResource, updatedResourceId;
+
+			for (var i = 0; i < data.length; i++) {
+				if (data[i].citations) {
+					updatedResourceId = citationsLists.resourceIds[i];
+					updatedResource = ResourcesService.getResource(updatedResourceId);
+
+					updatedResource.resourceChildren = tthis.updateJsonProperties(updatedResourceId, data[i].citations);
+				}
+			}
+
+			ret.resolve();
+		}).catch(function() {
+			ret.reject();
+		});
+
+		return ret.promise;
+	};
+
 }]);
