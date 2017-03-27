@@ -34,7 +34,6 @@ import ca.hec.tenjin.api.exception.SyllabusLockedException;
 import ca.hec.tenjin.api.exception.UnknownElementTypeException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 import ca.hec.tenjin.tool.controller.util.CopySyllabusObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -109,7 +108,6 @@ public class SyllabusController {
 			// associated to the user
 			syllabusList = syllabusService.getSyllabusListForUser(siteId, currentUserId);
 
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<Syllabus>>(syllabusList, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -150,6 +148,11 @@ public class SyllabusController {
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {
+		// ZC-2834
+		if (syllabus.getId() != null && syllabus.getSections().size() == 0 && !syllabus.getCommon()) {
+			publishService.unpublishSyllabus(syllabus.getId());
+		}
+
 		return syllabusService.createOrUpdateSyllabus(syllabus);
 	}
 
@@ -157,7 +160,7 @@ public class SyllabusController {
 	public @ResponseBody void copySyllabus(@PathVariable("syllabusId") Long syllabusId, @RequestBody CopySyllabusObject copyObject) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException {
 		syllabusService.copySyllabus(syllabusId, copyObject.getTitle());
 	}
-	
+
 	@ExceptionHandler(NoSiteException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public @ResponseBody Object handleNoSiteException(NoSiteException ex) {
@@ -181,7 +184,7 @@ public class SyllabusController {
 	public @ResponseBody SyllabusLockedException handleSyllabusLockedException(SyllabusLockedException ex) {
 		return ex;
 	}
-	
+
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public @ResponseBody Object handleStructureSyllabusException(StructureSyllabusException ex) {

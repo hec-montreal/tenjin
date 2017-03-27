@@ -187,19 +187,17 @@ public class SyllabusServiceImpl implements SyllabusService {
 		} else {
 			existingSyllabus = syllabusDao.getSyllabus(syllabus.getId());
 
-			if (existingSyllabus != syllabus) {
-				if (!existingSyllabus.getSections().equals(syllabus.getSections())) {
-					if (!checkSectionAssignPermissions(existingSyllabus.getSiteId(), existingSyllabus.getSections(), syllabus.getSections())) {
-						throw new DeniedAccessException("User not allowed to assign the sections");
-					}
-
-					reassignSections(syllabi, existingSyllabus.getSections(), syllabus.getSections());
+			if (!existingSyllabus.getSections().equals(syllabus.getSections())) {
+				if (!checkSectionAssignPermissions(existingSyllabus.getSiteId(), existingSyllabus.getSections(), syllabus.getSections())) {
+					throw new DeniedAccessException("User not allowed to assign the sections");
 				}
 
-				// update persistent object, save handled by hibernate at end of
-				// transaction
-				updatePersistentSyllabusObject(existingSyllabus, syllabus);
+				reassignSections(syllabi, existingSyllabus.getSections(), syllabus.getSections());
 			}
+
+			// update persistent object, save handled by hibernate at end of
+			// transaction
+			updatePersistentSyllabusObject(existingSyllabus, syllabus);
 
 			existingSyllabusElementMappings = getExistingSyllabusElementMappings(syllabus.getId());
 		}
@@ -418,7 +416,6 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	private void updatePersistentSyllabusObject(Syllabus existingSyllabus, Syllabus syllabus) {
-
 		existingSyllabus.setSiteId(syllabus.getSiteId());
 		existingSyllabus.setCourseTitle(syllabus.getCourseTitle());
 		existingSyllabus.setTitle(syllabus.getTitle());

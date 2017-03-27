@@ -48,4 +48,5 @@ public interface PublishService {
 	 */
 	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, DeniedAccessException, StructureSyllabusException, SyllabusLockedException;
 
+	public void unpublishSyllabus(Long syllabusId) throws NoSyllabusException;
 }
