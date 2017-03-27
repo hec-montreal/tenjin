@@ -1,9 +1,6 @@
 
 package ca.hec.tenjin.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -15,15 +12,12 @@ import org.sakaiproject.site.api.Site;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.TenjinSecurityService;
-import ca.hec.tenjin.api.dao.SyllabusDao;
-import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import lombok.Setter;
 
 @Setter
 public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 	private SakaiProxy sakaiProxy;
-	private SyllabusDao syllabusDao;
 
 	private static Log log = LogFactory.getLog(TenjinSecurityServiceImpl.class);
 
@@ -46,38 +40,48 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 			Site site = sakaiProxy.getSite(syllabus.getSiteId());
 
 			//If syllabus is common check on site
-			if (syllabus.getCommon()) {
-				if ( checkOnSiteGroup(userId, permission, site))
-					return true;
-				if (permission != TenjinFunctions.TENJIN_FUNCTION_READ)
-					return false;
+			if (syllabus.getCommon() && 
+					permission == TenjinFunctions.TENJIN_FUNCTION_READ &&
+					checkOnSiteGroup(userId, TenjinFunctions.TENJIN_FUNCTION_VIEW_MANAGER, site)) {
+				
+				return true;
 			}
+
+			// if user has the appropriate permission on the site realm return true
+			if (checkOnSiteGroup(userId, permission, site))
+				return true;
 
 			//if he is owner he has all permissions on the syllabus
 			if (isOwner(userId, syllabus) && !syllabus.getCommon())
 				return true;
-
-			//if he has the permission on the sections associated to the syllabus, he has it on the syllabus
-			Set<String> sectionIds = syllabus.getSections();
 			
-			if (sectionIds != null && !sectionIds.isEmpty()) {
-				for (String sectionId : sectionIds) {
-					Group group = null;
-					group = site.getGroup(sectionId);
-					if (check(userId, permission, group))
-						return true;
-				}
-			} else {
-				// Check permission on any section
-				for(Group group : site.getGroups()) {
-					if(check(userId, permission, group)) {
-						return true;
-					}
-				}
+
+			if (!syllabus.getCommon() || permission == TenjinFunctions.TENJIN_FUNCTION_READ) {
 				
-				// Check permission on site
-				return checkOnSiteGroup(userId, permission, site);
-			}
+				// special case for creating a non-common syllabus
+				if (syllabus.getId() == null && permission == TenjinFunctions.TENJIN_FUNCTION_WRITE) {
+					// Check if user is allowed to create a syllabus (write on any section in the site)
+					for(Group group : site.getGroups()) {
+						if(check(userId, permission, group)) {
+							return true;
+						}
+					}
+
+					// Check permission on site
+					return checkOnSiteGroup(userId, permission, site);
+				}
+
+				//if he has read or write the permission on the sections associated to a non-common syllabus
+				Set<String> sectionIds = syllabus.getSections();
+				if (sectionIds != null && !sectionIds.isEmpty()) {
+					for (String sectionId : sectionIds) {
+						Group group = null;
+						group = site.getGroup(sectionId);
+						if (check(userId, permission, group))
+							return true;
+					}
+				} 
+			}			
 
 		} catch (IdUnusedException e) {
 			log.warn("The site " + syllabus.getSiteId() + " does not exist");
@@ -92,29 +96,6 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 			return true;
 
 		return sakaiProxy.isAllowed(userId, permission, site.getReference());
-	}
-
-	@Override
-	public List<String> getSections(String userId,String siteId) throws NoSiteException{
-		Site site;
-		List<String> sections = new ArrayList<String>();
-
-
-		try {
-			site = sakaiProxy.getSite(siteId);
-			Collection<Group> groups = site.getGroups();
-			for (Group group: groups){
-				if (check(userId, TenjinFunctions.TENJIN_FUNCTION_READ, group) ||
-						check(userId, TenjinFunctions.TENJIN_FUNCTION_WRITE, group) ||
-						check(userId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH,group)){
-					sections.add(group.getProviderGroupId());
-				}
-			}
-
-		} catch (IdUnusedException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	private boolean isOwner(String userId, AbstractSyllabus syllabus){

@@ -93,8 +93,6 @@
 
 	<bean id="ca.hec.tenjin.api.TenjinSecurityService" class="ca.hec.tenjin.impl.TenjinSecurityServiceImpl">
 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
-
-		<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
 	</bean>
 	
 	<bean id="ca.hec.tenjin.api.SamigoToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.SamigoToolEntityProviderImpl">

@@ -118,19 +118,6 @@ public class SyllabusController {
 		return new ResponseEntity<List<Syllabus>>(syllabusList, HttpStatus.OK);
 	}
 
-	/**
-	 * TODO remove this? Not used I think
-	 * Returns the published syllabus for a user
-	 * 
-	 * @param siteId
-	 * @return
-	 * @throws NoSyllabusException
-	 */
-	@RequestMapping(value = "/syllabus/published", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<PublishedSyllabus> getUserPublishedSyllabus() throws NoSyllabusException, DeniedAccessException {
-		return new ResponseEntity<PublishedSyllabus>(publishService.getPublishedSyllabus(sakaiProxy.getCurrentSiteId(), null), HttpStatus.OK);
-	}
-	
 	@RequestMapping(value = "/syllabus", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {
 		return syllabusService.createOrUpdateSyllabus(syllabus);

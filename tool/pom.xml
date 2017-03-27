@@ -232,7 +232,7 @@
 			        <goal>gulp</goal>
 			    </goals>
 			    <configuration>
-			        <arguments>deploy</arguments>
+			        <arguments>build</arguments>
 			    </configuration>
 			</execution>
 
