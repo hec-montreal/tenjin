@@ -150,16 +150,9 @@
 	this.loadPublishedSyllabus = function(id) {
 		var tthis = this;
 		var ret = $q.defer();
-		var getUrl = '';
+		var getUrl = 'v1/syllabus/' + id + '.json?published=true';
 
 		this.working = true;
-
-		// if no id is specified, we can try and get the single published syllabus available to this user
-		if (typeof(id) === 'undefined') {
-			getUrl = 'v1/syllabus/published.json';
-		} else {
-			getUrl = 'v1/syllabus/' + id + '.json?published=true';
-		}
 
 		$http.get(getUrl).success(function(data) {
 			tthis.setSyllabus(data);
