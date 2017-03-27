@@ -3,6 +3,7 @@ package ca.hec.tenjin.tool.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.sakaiproject.time.api.Time;
@@ -38,8 +39,13 @@ public class EntityContent {
 		@JsonProperty private Collection<EntityContent> resourceChildren = new ArrayList<EntityContent>();
 			
 		@JsonProperty private Map<String, Object> properties = new HashMap<String, Object>();
-			
+		
+		@JsonProperty private List<String> sections;
 
+		public EntityContent () {
+			this.sections = new ArrayList<>();
+		}
+		
 		public void addResourceChild(EntityContent child) {
 			this.resourceChildren.add(child);
 		}

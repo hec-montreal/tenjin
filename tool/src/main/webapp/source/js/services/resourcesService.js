@@ -65,13 +65,13 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 		var tthis = this;
 		var ret = $q.defer();
 
-		$http.get('resources/' + siteId + '.json?depth=all').success(function (data) {
+		$http.get('resources/' + siteId + '.json?depth=all').success(function(data) {
 			var res = data ? data[0] : [];
 
 			tthis.setResources(res);
 
 			ret.resolve(tthis);
-		}).error(function (data) {
+		}).error(function(data) {
 			ret.reject(data);
 		})
 

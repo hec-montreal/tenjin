@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('documentElementForm', ['config', '$translate', function(config, $translate) {
+﻿tenjinApp.directive('documentElementForm', ['config', '$translate', 'SyllabusService', function(config, $translate, SyllabusService) {
 	'use strict';
 
 	return {
@@ -19,6 +19,8 @@
 				toolbar: config.ckeditorToolbarTenjin,
 				removePlugins: 'elementspath,resize'
 			};
+
+			$scope.filterSections = SyllabusService.getSyllabus().sections;
 
 			$scope.selectType = function($type) {
 				$scope.currentType = $type.name;

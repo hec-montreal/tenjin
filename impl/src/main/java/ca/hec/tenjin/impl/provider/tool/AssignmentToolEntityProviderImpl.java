@@ -6,13 +6,13 @@ import java.util.List;
 import org.sakaiproject.assignment.api.Assignment;
 import org.sakaiproject.assignment.api.AssignmentService;
 
+import ca.hec.tenjin.api.ToolUtil;
 import ca.hec.tenjin.api.provider.tool.AssignmentToolEntity;
 import ca.hec.tenjin.api.provider.tool.AssignmentToolEntityProvider;
 import ca.hec.tenjin.api.provider.tool.ToolEntity;
 import lombok.Setter;
 
 public class AssignmentToolEntityProviderImpl implements AssignmentToolEntityProvider {
-
 	@Setter
 	private AssignmentService assignmentService;
 
@@ -31,7 +31,7 @@ public class AssignmentToolEntityProviderImpl implements AssignmentToolEntityPro
 
 			if (assignment.getGroups() != null) {
 				for(Object strObj : assignment.getGroups()) {
-					String groupId = extractGroupId((String) strObj);
+					String groupId = ToolUtil.extractGroupId((String) strObj);
 					
 					if(groupId != null) {
 						entity.getSections().add(groupId);
@@ -48,20 +48,5 @@ public class AssignmentToolEntityProviderImpl implements AssignmentToolEntityPro
 	@Override
 	public String getToolName() {
 		return "ASSIGNMENT";
-	}
-
-	private String extractGroupId(String str) {
-		if(str == null) {
-			return null;
-		}
-		
-		final String MARKER = "/group/";
-		int indexOfMarker = str.indexOf(MARKER);
-		
-		if(indexOfMarker < 0) {
-			return null;
-		}
-		
-		return str.substring(indexOfMarker + MARKER.length());
 	}
 }

@@ -55,6 +55,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.ToolUtil;
 import lombok.Setter;
 
 /**
@@ -135,7 +136,13 @@ public class SiteResourcesController {
 		
 		// Set the resource public access flag
 		tempRd.setPublicAccess(contentHostingService.isRoleView(entity.getId(), AuthzGroupService.ANON_ROLE));
-
+		
+		if(entity.getGroups() != null) {
+			for(Object groupObj : entity.getGroups()) {
+				tempRd.getSections().add(ToolUtil.extractGroupId((String) groupObj));
+			}
+		}
+		
 		// Set the copyright flag		
 		String copyright = (String) tempRd.getProperties().get(ResourceProperties.PROP_COPYRIGHT_CHOICE);
 		
@@ -253,6 +260,7 @@ public class SiteResourcesController {
 		List<EntityContent> resourceDetails = new ArrayList<EntityContent>();
 		if (collection!=null) {
 			EntityContent resourceDetail = getResourceDetails(collection, currentDepth, requestedDepth, timeStamp);
+			
 			if (resourceDetail != null) {
 				resourceDetails.add(resourceDetail);
 			} else {

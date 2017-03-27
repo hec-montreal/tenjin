@@ -9,3 +9,4 @@ tool/src/main/webapp/build
 tool/src/main/webapp/node
 tool/src/main/webapp/node_modules
 *.bak
+mysite.txt

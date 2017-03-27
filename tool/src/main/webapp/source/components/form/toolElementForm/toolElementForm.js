@@ -19,8 +19,6 @@
 				removePlugins: 'elementspath,resize'
 			};
 
-			$scope.filterSections = SyllabusService.getSyllabus().sections;
-
 			$scope.selectType = function($type) {
 				$scope.currentType = $type;
 				if ($scope.currentType.id !== -1) {

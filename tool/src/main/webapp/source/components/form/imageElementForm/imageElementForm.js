@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('imageElementForm', ['config', function(config) {
+﻿tenjinApp.directive('imageElementForm', ['config', 'SyllabusService', function(config, SyllabusService) {
 	'use strict';
 
 	return {
@@ -19,6 +19,8 @@
 				removePlugins: 'elementspath,resize'
 			};
 
+			$scope.filterSections = SyllabusService.getSyllabus().sections;
+			
 			// Validation
 			$scope.element.validate = function() {
 				var ret = [];
