@@ -24,20 +24,14 @@ tenjinApp.service('SyllabusLockService', ['$q', '$http', 'AlertService', 'UserSe
 
 		var delay = parseInt(UserService.getProfile().lockRenewDelaySeconds, 10) * 1000;
 
-		console.log("Starting lock renew loop with delay = " + delay);
-
 		this.renewLoopHandle = setInterval(function() {
-			tthis.renewSyllabusLock(syllabusId).then(function() {
-				console.log("Lock renewed");
-			}).catch(function(e) {
+			tthis.renewSyllabusLock(syllabusId).catch(function(e) {
 				AlertService.showSyllabusSaveAlert(e);
 			});
 		}, delay);
 	};
 
 	this.stopRenewLoop = function() {
-		console.log("Stoping lock renew loop");
-
 		clearInterval(this.renewLoopHandle);
 
 		this.renewLoopHandle = null;

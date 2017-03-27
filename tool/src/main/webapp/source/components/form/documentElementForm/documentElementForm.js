@@ -24,7 +24,7 @@
 
 			$scope.selectType = function($type) {
 				$scope.currentType = $type.name;
-				$scope.element.attributes.documentType = $scope.currentType.name;
+				$scope.element.attributes.documentType = $scope.currentType;
 			};
 
 			// Validation

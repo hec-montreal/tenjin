@@ -83,9 +83,6 @@
 		$http.post('v1/syllabus/copy/' + id + '.json', {
 			'title': newTitle
 		}).then(function(data) {
-			console.log("After copy");
-			console.log(data);
-
 			ret.resolve(data);
 		});
 
@@ -720,13 +717,10 @@
 
 		for (var i = 0; i < this.syllabusList.length; i++) {
 			if (this.syllabusList[i].id === syllabus.id) {
-				console.log("Found in list, update");
 				this.syllabusList[i] = syllabus;
 
 				break;
 			}
 		}
-
-		console.log(this.syllabusList);
 	};
 }]);
