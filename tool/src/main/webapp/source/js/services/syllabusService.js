@@ -45,7 +45,7 @@
 		this.working = true;
 
 		$http.post(url, syllabus).success(function(data) {
-			tthis.setSyllabus(data);
+			tthis.updateCurrentSyllabus(data);
 
 			$rootScope.$broadcast('syllabusService:save');
 
@@ -713,5 +713,20 @@
 		}
 
 		return res ? res.hidden : true;
+	};
+
+	this.updateCurrentSyllabus = function(syllabus) {
+		this.setSyllabus(syllabus);
+
+		for (var i = 0; i < this.syllabusList.length; i++) {
+			if (this.syllabusList[i].id === syllabus.id) {
+				console.log("Found in list, update");
+				this.syllabusList[i] = syllabus;
+
+				break;
+			}
+		}
+
+		console.log(this.syllabusList);
 	};
 }]);
