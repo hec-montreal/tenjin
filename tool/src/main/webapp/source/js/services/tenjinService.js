@@ -118,10 +118,10 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 					ret.reject(e);
 				};
 
-				if (profile.syllabusRead.length > 0) {
-					SyllabusService.loadPublishedSyllabus(profile.syllabusRead[0]).then(success).catch(fail);
-				} else if (profile.syllabusWrite.length > 0) {
+				if (profile.syllabusWrite.length > 0) {
 					SyllabusService.loadSyllabus(profile.syllabusWrite[0]).then(success).catch(fail);
+				} else if (profile.syllabusRead.length > 0) {
+					SyllabusService.loadPublishedSyllabus(profile.syllabusRead[0]).then(success).catch(fail);
 				} else {
 					return $q.reject();
 				}
