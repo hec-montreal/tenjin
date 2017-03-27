@@ -1,5 +1,6 @@
 package ca.hec.tenjin.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -149,7 +150,7 @@ public class PublishServiceImpl implements PublishService {
 		// if the syllabus has been published before, delete the published
 		// version
 		if (syllabus.getPublishedDate() != null) {
-			publishedSyllabusDao.deletePublishedSyllabus(syllabusId);
+		publishedSyllabusDao.deletePublishedSyllabus(syllabusId);
 		}
 
 		// add top-level elements to the search queue (breadth-first traversal)
@@ -160,6 +161,9 @@ public class PublishServiceImpl implements PublishService {
 
 		// a map to look up the new published id based on the unpublished id
 		HashMap<Long, Long> publishedIdMap = new HashMap<Long, Long>();
+		
+		// get the ids of the published syllabuses for this site so we know which need mappings to the common elements
+		List<Long> publishedSyllabusIdsForSite = getPublishedSyllabusIdsForSite(syllabus.getSiteId());
 
 		while (!searchQueue.isEmpty()) {
 			AbstractSyllabusElement element = searchQueue.remove();
@@ -214,7 +218,11 @@ public class PublishServiceImpl implements PublishService {
 			List<SyllabusElementMapping> existingMappings = syllabusDao.getMappingsForElement(element);
 
 			for (SyllabusElementMapping mapping : existingMappings) {
-				publishMapping(mapping, elementToPublish);
+				if (mapping.getSyllabusId().equals(syllabus.getId()) || 
+						publishedSyllabusIdsForSite.contains(mapping.getSyllabusId())) {
+
+					publishMapping(mapping, elementToPublish);
+				}
 			}
 
 			if (syllabus.getCommon() && oldPublishedId != null) {
@@ -232,6 +240,17 @@ public class PublishServiceImpl implements PublishService {
 		syllabusDao.update(syllabus);
 
 		return syllabus;
+	}
+
+	private List<Long> getPublishedSyllabusIdsForSite(String siteId) {
+		List<Long> ids = new ArrayList<Long>();
+		
+		List<PublishedSyllabus> syllabi = publishedSyllabusDao.getPublishedSyllabusList(siteId);
+		for (PublishedSyllabus s : syllabi) {
+			ids.add(s.getId());
+		}
+		
+		return ids;
 	}
 
 	private void publishMapping(SyllabusElementMapping mapping, AbstractPublishedSyllabusElement publishedElement) {
