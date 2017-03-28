@@ -14,6 +14,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement;
@@ -259,5 +260,10 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		List<AbstractPublishedSyllabusElement> elements = (List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("from AbstractPublishedSyllabusElement where parent_id = ?", elementId);
 
 		return elements;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId) {
+		return (List<PublishedSyllabus>) getHibernateTemplate().find("from PublishedSyllabus where site_id = ? and publishedDate is not null", siteId);
 	}
 }
