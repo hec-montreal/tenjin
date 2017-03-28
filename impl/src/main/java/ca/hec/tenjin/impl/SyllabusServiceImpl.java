@@ -57,7 +57,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 	@Autowired(required = false)
 	private TenjinImportProvider importProvider;
-
+	
 	@Override
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, StructureSyllabusException {
 		Syllabus syllabus = null;

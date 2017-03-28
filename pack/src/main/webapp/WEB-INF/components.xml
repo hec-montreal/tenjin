@@ -60,7 +60,7 @@
 				<!-- API injection -->
 				<property name="publishedSyllabusDao" ref="ca.hec.tenjin.api.dao.PublishedSyllabusDao" />
 				<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
-				<property name="SyllabusService" ref="ca.hec.tenjin.api.SyllabusService" />
+				<property name="syllabusService" ref="ca.hec.tenjin.api.SyllabusService" />
 				<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 				<property name="securityService" ref="ca.hec.tenjin.api.TenjinSecurityService" />
 				<property name="syllabusLockService" ref="ca.hec.tenjin.api.SyllabusLockService" />

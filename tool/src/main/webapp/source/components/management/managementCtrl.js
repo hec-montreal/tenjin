@@ -212,7 +212,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 			var ret = $q.defer();
 
 			SyllabusLockService.lockSyllabus(lastModifiedSyllabus.id).then(function() {
-				SyllabusService.save(lastModifiedSyllabus).then(function() {
+				SyllabusService.updateSections(lastModifiedSyllabus).then(function() {
 					ret.resolve();
 
 					refresh();

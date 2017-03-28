@@ -222,8 +222,16 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 
 	@SuppressWarnings({ "unchecked" })
 	public void deletePublishedSyllabus(Long syllabusId) throws NoSyllabusException {
-		PublishedSyllabus syllabus = getPublishedSyllabus(syllabusId, false);
-
+		PublishedSyllabus syllabus = null;
+		
+		try
+		{
+			syllabus = getPublishedSyllabus(syllabusId, false);
+		}
+		catch(NoSyllabusException e) {
+			return;
+		}
+		
 		if (syllabus.getCommon()) {
 			List<AbstractPublishedSyllabusElement> elements = (List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("from AbstractPublishedSyllabusElement where site_id = ? and common = ?", syllabus.getSiteId(), true);
 
@@ -238,7 +246,10 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 
 			// delete all mappings for this syllabus and it's published elements
 			getHibernateTemplate().bulkUpdate("delete from PublishedSyllabusElementMapping where syllabus_id = ?", syllabus.getId());
-
+			
+			// Update all the non-published elements
+			getHibernateTemplate().bulkUpdate("update AbstractSyllabusElement set equalsPublished = false, publishedId = null where common = false and id in (select syllabusElement.id from SyllabusElementMapping where syllabusId = ?)", syllabus.getId());
+			
 			getHibernateTemplate().deleteAll(elements);
 		}
 	}

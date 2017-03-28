@@ -59,6 +59,25 @@
 		return ret.promise;
 	};
 
+	this.updateSections = function(syllabus) {
+		var tthis = this;
+		var ret = $q.defer();
+
+		this.working = true;
+
+		$http.post('v1/syllabus/sections.json', syllabus).success(function (data) {
+			$rootScope.$broadcast('syllabusService:save');
+
+			ret.resolve(data);
+		}).error(function(data) {
+			ret.reject(data);
+		}).finally(function() {
+			tthis.working = false;
+		});
+
+		return ret.promise;
+	};
+
 	this.create = function(siteId, name, sections) {
 		var common = this.getCommonSyllabus();
 
