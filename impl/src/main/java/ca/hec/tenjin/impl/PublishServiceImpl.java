@@ -150,7 +150,7 @@ public class PublishServiceImpl implements PublishService {
 		// if the syllabus has been published before, delete the published
 		// version
 		if (syllabus.getPublishedDate() != null) {
-		publishedSyllabusDao.deletePublishedSyllabus(syllabusId);
+			publishedSyllabusDao.deletePublishedSyllabus(syllabusId);
 		}
 
 		// add top-level elements to the search queue (breadth-first traversal)

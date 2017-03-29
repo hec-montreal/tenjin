@@ -20,8 +20,6 @@
 				removePlugins: 'elementspath,resize'
 			};
 
-			$scope.filterSections = SyllabusService.getSyllabus().sections;
-
 			$scope.selectType = function($type) {
 				$scope.currentType = $type.name;
 				$scope.element.attributes.documentType = $scope.currentType;

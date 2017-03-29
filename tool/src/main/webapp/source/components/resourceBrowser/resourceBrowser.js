@@ -1,4 +1,4 @@
-tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService', 'UserService', '$timeout', '$translate', function(SakaiToolsService, ResourcesService, UserService, $timeout, $translate) {
+tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService', 'UserService', 'SyllabusService', '$timeout', '$translate', function(SakaiToolsService, ResourcesService, UserService, SyllabusService, $timeout, $translate) {
 	'use strict';
 
 	return {
@@ -6,8 +6,7 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 			element: '=',
 			type: '@',
 			collapseAll: '=',
-			title: '=',
-			filterSections: '='
+			title: '='
 		},
 
 		restrict: 'E',
@@ -48,20 +47,33 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 			};
 
 			$scope.isResourceVisible = function(res) {
-				if ($scope.filterSections && $scope.filterSections.length > 0 && res.sections && res.sections.length > 0) {
-					for (var a = 0; a < $scope.filterSections.length; a++) {
-						for (var b = 0; b < res.sections.length; b++) {
-							var section = UserService.getSection($scope.filterSections[a]);
+				var syllabusSections = SyllabusService.getSyllabus().sections;
+				var allSections = UserService.getProfile().sections;
 
-							if (section.id === res.sections[b]) {
+				// No section assigned to syllabus
+				// Res must be assigned to no sections or all sections
+				if (syllabusSections.length === 0) {
+					if (!res.sections) {
+						return true;
+					}
+
+					return res.sections.length === 0 || res.sections.length === syllabusSections.length;
+				} else {
+					// Sections are assigned to syllabus
+					// Res must have syllabus section or no sections
+					if (!res.sections || res.sections.length) {
+						return true;
+					}
+
+					for (var i = 0; i < res.sections.length; i++) {
+						for (var j = 0; j < syllabusSections.length; j++) {
+							if (res.sections[i] === syllabusSections[j]) {
 								return true;
 							}
 						}
 					}
 
 					return false;
-				} else {
-					return true;
 				}
 			};
 

@@ -19,8 +19,6 @@
 				removePlugins: 'elementspath,resize'
 			};
 
-			$scope.filterSections = SyllabusService.getSyllabus().sections;
-			
 			// Validation
 			$scope.element.validate = function() {
 				var ret = [];
