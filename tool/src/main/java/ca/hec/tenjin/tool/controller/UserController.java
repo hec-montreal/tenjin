@@ -80,11 +80,9 @@ public class UserController {
 		String currentUserId = sakaiProxy.getCurrentUserId();
 		String siteId = sakaiProxy.getCurrentSiteId();
 		Site site = null;
-		Syllabus commonSyllabus;
 		Collection<Group> usersGroup;
 
 		// Section permissions
-		List<Object> sectionRead = new ArrayList<Object>();
 		List<Object> sectionWrite = new ArrayList<Object>();
 		List<Object> sectionPublish = new ArrayList<Object>();
 		Map<String, String> section;
@@ -113,16 +111,18 @@ public class UserController {
 			profile.put("activateImportButton", importProvider != null);
 
 			// The user has permissions in the sections
+			boolean writeOnSite = securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site);
+			boolean publishOnSite = securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH, site);
 			usersGroup = site.getGroups();
 			for (Group group : usersGroup) {
 				if (group.getProviderGroupId() != null) {
-					if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, group)) {
+					if (writeOnSite || securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, group)) {
 						section = new HashMap<String, String>();
 						section.put("id", group.getId());
 						section.put("name", group.getTitle());
 						sectionWrite.add(section);
 					}
-					if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH, group)) {
+					if (publishOnSite || securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH, group)) {
 						section = new HashMap<String, String>();
 						section.put("id", group.getId());
 						section.put("name", group.getTitle());

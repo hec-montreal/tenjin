@@ -113,8 +113,12 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		// remove syllabi the user does not have access to
 		for (Syllabus syllabus : syllabusList) {
-			if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, syllabus))
+			// if user has read or write it should be in the list
+			if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, syllabus) ||
+					securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+
 				finalSyllabusList.add(syllabus);
+			}
 		}
 
 		return finalSyllabusList;

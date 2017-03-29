@@ -1,9 +1,9 @@
 <div class="management" data-ng-controller="ManagementCtrl">
 	<div class="row">
 		<div class="buttons-list col-xs-12">
-			<button data-ng-show="userService.isAllowedView('sectionAssign')" type="button" data-ng-click="addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
-			<button data-ng-show="userService.isAllowedView('sectionAssign')" type="button" data-ng-disabled="disableCopy" data-ng-click="copySyllabus()">{{ 'COPY' | translate }}</button>
-			<button data-ng-show="userService.isAllowedView('sectionAssign')" type="button" data-ng-disabled="disableDelete" data-ng-click="deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
+			<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.getCommonSyllabus()) || userService.isAllowedView('sectionAssign')" type="button" data-ng-click="addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
+			<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.getCommonSyllabus()) || userService.isAllowedView('sectionAssign')" type="button" data-ng-disabled="disableCopy" data-ng-click="copySyllabus()">{{ 'COPY' | translate }}</button>
+			<button data-ng-show="userService.isAllowedView('syllabusWrite')" type="button" data-ng-disabled="disableDelete" data-ng-click="deleteSyllabus()">{{ 'BUTTON_DELETE_SYLLABUS' | translate }}</button>
 			<button data-ng-show="userService.isAllowedView('import') && userService.isAllowed('syllabusWrite', syllabusService.getCommonSyllabus())" type="button" data-ng-click="externalSyllabusImport()">{{ 'BUTTON_IMPORT_SYLLABUS' | translate }}</button>
 		</div>
 	</div>
@@ -24,7 +24,8 @@
 					<td>
 						<a class="action" data-ng-if="userService.canEditElement(syllabus, syllabus) && !syllabus.common" editable-text="syllabus.title" onbeforesave="updateTitle($data, syllabus)"><span class="glyphicon glyphicon-pencil"></span></a>
 						
-						<a ui-sref="syllabus-edit({ id: syllabus.id })">{{syllabus.title}}</a>
+						<a data-ng-if="userService.isAllowed('syllabusWrite', syllabus) || syllabus.publishedDate != null" ui-sref="syllabus-edit({ id: syllabus.id })">{{syllabus.title}}</a>
+						<span data-ng-if="!userService.isAllowed('syllabusWrite', syllabus) && syllabus.publishedDate == null">{{syllabus.title}}</span>
 					</td>
 
 					<td>{{syllabus.createdByName}}</td>
@@ -50,7 +51,7 @@
 					</td>
 
 					<td class="th-select">
-						<input data-ng-if="!syllabus.common" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="checkStatus()" />
+						<input data-ng-if="!syllabus.common && userService.isAllowed('syllabusWrite', syllabus)" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="checkStatus()" />
 					</td>
 				</tr>
 			</table>
