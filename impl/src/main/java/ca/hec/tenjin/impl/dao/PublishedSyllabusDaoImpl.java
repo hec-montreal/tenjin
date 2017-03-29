@@ -14,7 +14,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement;
@@ -248,13 +247,15 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			// delete all mappings for this syllabus and it's published elements
 			getHibernateTemplate().bulkUpdate("delete from PublishedSyllabusElementMapping where syllabus_id = ?", syllabus.getId());
 			
-			// Update all the non-published elements
-			getHibernateTemplate().bulkUpdate("update AbstractSyllabusElement set equalsPublished = false, publishedId = null where common = false and id in (select syllabusElement.id from SyllabusElementMapping where syllabusId = ?)", syllabus.getId());
-			
 			getHibernateTemplate().deleteAll(elements);
 		}
 	}
 
+	public void unpublishSyllabusElements(Long syllabusId) {
+		// Update all the non-published elements
+		getHibernateTemplate().bulkUpdate("update AbstractSyllabusElement set equalsPublished = false, publishedId = null where common = false and id in (select syllabusElement.id from SyllabusElementMapping where syllabusId = ?)", syllabusId);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<AbstractPublishedSyllabusElement> getChildPublishedElements(Long elementId) {
 		List<AbstractPublishedSyllabusElement> elements = (List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("from AbstractPublishedSyllabusElement where parent_id = ?", elementId);

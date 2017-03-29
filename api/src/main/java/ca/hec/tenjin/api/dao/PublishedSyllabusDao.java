@@ -23,7 +23,6 @@ package ca.hec.tenjin.api.dao;
 import java.util.List;
 
 import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 
@@ -93,4 +92,6 @@ public interface PublishedSyllabusDao {
 	 * @return The list of published syllabus objects for the site
 	 */
 	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId);
+
+	public void unpublishSyllabusElements(Long syllabusId);
 }

@@ -152,13 +152,19 @@ public class SyllabusController {
 	}
 	
 	@RequestMapping(value = "/syllabus/sections", method = RequestMethod.POST)
-	public @ResponseBody Syllabus updateSyllabusSections(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {
-		// ZC-2834
-		if (syllabus.getSections().size() == 0 && !syllabus.getCommon()) {
-			publishService.unpublishSyllabus(syllabus.getId());
+	public @ResponseBody Syllabus updateSyllabusSections(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {				
+		Syllabus ret = syllabusService.createOrUpdateSyllabus(syllabus);
+		
+		// 'Unpublish' other syllabuses with no sections
+		List<Syllabus> list = syllabusService.getSyllabusList(syllabus.getSiteId());
+		
+		for(Syllabus syl : list) {
+			if (syl.getSections().size() == 0 && !syl.getCommon()) {
+				publishService.unpublishSyllabus(syl.getId());
+			}
 		}
 		
-		return syllabusService.createOrUpdateSyllabus(syllabus);
+		return ret;
 	}
 
 	@RequestMapping(value = "/syllabus/copy/{syllabusId}", method = RequestMethod.POST)

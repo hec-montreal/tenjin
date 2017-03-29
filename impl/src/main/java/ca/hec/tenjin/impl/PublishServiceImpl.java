@@ -292,7 +292,7 @@ public class PublishServiceImpl implements PublishService {
 	public void unpublishSyllabus(Long syllabusId) throws NoSyllabusException {
 		Syllabus syllabus = syllabusDao.getSyllabus(syllabusId);
 		
-		publishedSyllabusDao.deletePublishedSyllabus(syllabusId);
+		publishedSyllabusDao.unpublishSyllabusElements(syllabusId);
 		
 		syllabus.setPublishedBy(null);
 		syllabus.setPublishedDate(null);
