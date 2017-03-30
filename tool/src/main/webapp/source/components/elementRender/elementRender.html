@@ -23,7 +23,7 @@
 		</div>
 
 		<!-- Error to indicate missing Sakai entity -->
-		<div data-ng-if="element.type === 'sakai_entity' && isSakaiEntityMissing(element)" class="notice error hidden-by-null">
+		<div data-ng-if="element.type === 'sakai_entity' && isSakaiEntityMissing(element) && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice error">
 			<h3><span class="glyphicon glyphicon-flag"></span> {{ 'MISSING_SAKAI_ENTITY_FLAG' | translate }} </h3>
 		</div>
 
