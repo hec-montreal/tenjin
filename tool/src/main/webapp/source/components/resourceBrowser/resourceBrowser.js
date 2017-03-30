@@ -57,11 +57,11 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 						return true;
 					}
 
-					return res.sections.length === 0 || res.sections.length === syllabusSections.length;
+					return res.sections.length === 0;
 				} else {
 					// Sections are assigned to syllabus
 					// Res must have syllabus section or no sections
-					if (!res.sections || res.sections.length) {
+					if (!res.sections || res.sections.length === 0) {
 						return true;
 					}
 

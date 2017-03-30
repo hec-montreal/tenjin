@@ -1,29 +1,12 @@
 .mobile-navigation {
-	ul {
-		list-style: none;
+	width: 100%;
+	height: 50px;
+	background-color: $color-mobile-navigation;
+	color: $font-color-mobile-navigation;
 
-		li {
-			padding: 0;
-		}
+	position:fixed;
+	left:0px;
+	bottom:0px;
 
-		padding: 0;
-	}
-
-	.menu-items {
-		font-size: 1.3em;
-	}
-
-	.menu-item {
-		padding: 5px 0 3px 5px;
-	}
-
-	.menu-item.item-selected {
-		background-color: $color-mobile-navigation-active;
-	}
-
-	.title {
-		background-color: $color-mobile-navigation;
-		color: $font-color-mobile-navigation;
-		padding: 5px 0 3px 10px;
-	}
+	z-index: 9999;
 }
