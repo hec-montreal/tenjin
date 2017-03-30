@@ -65,6 +65,7 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 						return true;
 					}
 
+					// Check for intersection between res sections and syllabus sections
 					for (var i = 0; i < res.sections.length; i++) {
 						for (var j = 0; j < syllabusSections.length; j++) {
 							if (res.sections[i] === syllabusSections[j]) {

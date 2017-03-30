@@ -25,5 +25,16 @@
 </section> -->
 
 <div class="mobile-navigation">
+	<div data-ng-class="['menu-button', {'active': mobileMenuVisible}]">
+		<span data-ng-click="toggleMobileMenu()" class="glyphicon glyphicon-th-list"></span>
+	</div>
 
+	<div class="arrows">
+		<span class="arrow glyphicon glyphicon-chevron-left"></span>
+		<span class="arrow glyphicon glyphicon-chevron-right"></span>
+	</div>
+</div>
+
+<div class="mobile-menu" data-ng-if="mobileMenuVisible">
+	<p>Mobile menu</p>
 </div>
