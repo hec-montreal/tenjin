@@ -293,6 +293,7 @@ public class PublishServiceImpl implements PublishService {
 		Syllabus syllabus = syllabusDao.getSyllabus(syllabusId);
 		
 		publishedSyllabusDao.unpublishSyllabusElements(syllabusId);
+		publishedSyllabusDao.deletePublishedSyllabus(syllabusId);
 		
 		syllabus.setPublishedBy(null);
 		syllabus.setPublishedDate(null);
