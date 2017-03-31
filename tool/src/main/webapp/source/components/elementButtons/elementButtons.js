@@ -22,14 +22,8 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'Alert
 				var parent = SyllabusService.getParent($element);
 
 				ModalService.confirmDeleteElement(parent, $element).result.then(function() {
-					// We copy the current syllabus
-					var data = angular.copy(SyllabusService.syllabus);
-
-					SyllabusService.deleteElementFromSyllabus(data, parent, $element);
-
-					SyllabusService.save(data).catch(function(e) {
-						AlertService.showSyllabusSaveAlert(e);
-					});
+					SyllabusService.deleteElementFromSyllabus(SyllabusService.syllabus, parent, $element);
+					SyllabusService.setDirty(true);
 				});
 			};
 
@@ -37,15 +31,9 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'Alert
 				var parent = SyllabusService.getParent($element);
 
 				ModalService.editElement(parent, $element).result.then(function(elementData) {
-					var data = angular.copy(SyllabusService.syllabus);
-
 					elementData.element.equalsPublished = false;
-
-					SyllabusService.addElementToSyllabus(data, elementData.parent, elementData.element);
-
-					SyllabusService.save(data).catch(function(e) {
-						AlertService.showSyllabusSaveAlert(e);
-					});
+					SyllabusService.addElementToSyllabus(SyllabusService.syllabus, elementData.parent, elementData.element);
+					SyllabusService.setDirty(true);
 				});
 			}
 		}
