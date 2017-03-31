@@ -76,11 +76,11 @@
 	<div ng-if="citationTypeId !== -1" class="citation-type">[{{ citationType }}]</div> 
 	
 	<div ng-if="element.attributes.activateLibraryLink" class="library-link"> 
-		<a target="_blank" data-nodrag href={{citation.values.primaryUrl}}>{{'REFERENCE_LIBRARY_LINK' | translate}}</a>
+		<a target="_blank" data-nodrag href={{citation.values.url}}>{{'REFERENCE_LIBRARY_LINK' | translate}}</a>
 	</div> 
 
-	<div ng-if="element.attributes.activateOtherLink" class="other-link"> 
-		<a target="_blank" data-nodrag href="element.attributes.otherLinkurl">{{'REFERENCE_OTHER_LINK' | translate}}</a>
+	<div ng-if="element.attributes.activateOtherLink" class="other-link">
+		<a target="_blank" data-nodrag href={{element.attributes.otherLinkurl}}>{{'REFERENCE_OTHER_LINK' | translate}}</a>
 	</div> 
 
 	<div ng-if="element.description" ng-bind-html="element.description" class="description"></div>
