@@ -35,9 +35,29 @@
 .mobile-menu {
 	width: 100%;
 	background-color: $color-mobile-navigation;
+	color: $font-color-mobile-navigation-active;
 
 	position: fixed;
 	left: 0px;
 	bottom: $mobile-navigation-height;
+	max-height: 500px;
 	z-index: 999;
+	overflow-y: scroll;
+
+	.menu-items {
+		font-size: 2em;
+
+		ul {
+			list-style: none;
+			padding: 0;
+		}
+
+		.item-selected {
+			background-color: $color-button-hover;
+		}
+
+		.menu-item {
+			padding-left: 15px;
+		}
+	}
 }

@@ -1,4 +1,4 @@
-tenjinApp.directive("mobileNavigation", ['SyllabusService', 'TreeService', function (SyllabusService, TreeService) {
+tenjinApp.directive("mobileNavigation", ['SyllabusService', 'TreeService', function(SyllabusService, TreeService) {
 	'use strict';
 
 	return {
@@ -8,14 +8,26 @@ tenjinApp.directive("mobileNavigation", ['SyllabusService', 'TreeService', funct
 
 		templateUrl: 'mobileNavigation/mobileNavigation.html',
 
-		controller: function ($scope) {
+		controller: function($scope) {
 			$scope.syllabusService = SyllabusService;
 			$scope.treeService = TreeService;
 
 			$scope.mobileMenuVisible = false;
 
-			$scope.toggleMobileMenu = function () {
+			$scope.toggleMobileMenu = function() {
 				$scope.mobileMenuVisible = !$scope.mobileMenuVisible;
+			};
+
+			$scope.selectElement = function(element) {
+				TreeService.selectElement(element);
+
+				$scope.mobileMenuVisible = false;
+			};
+
+			$scope.goLeft = function() {
+				var pos = TreeService.findSelectedElementPosition();
+				
+				console.log(pos);
 			};
 		}
 	};
