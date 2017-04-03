@@ -8,6 +8,7 @@
 	$scope.config = config;
 	$scope.showNavigation = true;
 	$scope.alertService = AlertService;
+	$scope.saving = false;
 
 	// Load syllabus
 	var loadSyllabus = function(syllabusId) {
@@ -44,8 +45,11 @@
 	};
 
 	$scope.save = function() {
+		$scope.saving = true;
 		SyllabusService.saveCurrent().catch(function(e) {
 			AlertService.showSyllabusSaveAlert(e);
+		}).finally(function() {
+			$scope.saving = false;
 		});
 	};
 
