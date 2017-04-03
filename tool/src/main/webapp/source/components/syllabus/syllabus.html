@@ -31,7 +31,7 @@
 
 					<div class="toolbar-right">
 						<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError" class="action" ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
-							<span class="glyphicon glyphicon-floppy-disk"></span> {{ 'BUTTON_SAVE' | translate }}
+							<span class="glyphicon" ng-class="{'glyphicon-floppy-disk': !saving, 'glyphicon-refresh glyphicon-refresh-animate': saving}"></span> {{ 'BUTTON_SAVE' | translate }}
 						</button>
 
 						<button data-ng-show="userService.isAllowed('syllabusPublish', syllabusService.syllabus) && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError" ng-disabled="syllabusService.working || (!syllabusService.syllabus.common && (!syllabusService.syllabus.sections || syllabusService.syllabus.sections.length === 0))" class="action" ng-click="startPublish()">

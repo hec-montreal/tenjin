@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 'UserService', 'config', '$translate', function(SyllabusService, SyllabusLockService, UserService, config, $translate) {
+﻿tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 'UserService', 'SakaiToolsService', 'config', '$translate', function(SyllabusService, SyllabusLockService, UserService, SakaiToolsService, config, $translate) {
 	'use strict';
 
 	return {
@@ -47,6 +47,10 @@
 
 			$scope.isElementHiddenByResourceFlag = function(element) {
 				return SyllabusService.isElementHiddenByResourceFlag(element);
+			};
+			
+			$scope.isSakaiEntityMissing = function(element) {
+				return SakaiToolsService.getEntity(element.attributes.sakaiToolId) == null;
 			};
 
 			$scope.isElementHiddenByDate = function(element) {

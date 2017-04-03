@@ -17,6 +17,7 @@ import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusLockService;
@@ -379,6 +380,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	@Override
+	@Transactional
 	public Syllabus importSyllabusFromSite(String siteId) throws DeniedAccessException, SyllabusLockedException {
 
 		if (importProvider == null)
@@ -387,12 +389,6 @@ public class SyllabusServiceImpl implements SyllabusService {
 		String currentSiteId = sakaiProxy.getCurrentSiteId();
 
 		try {
-			// Delete existing Syllabuses
-			List<Syllabus> deleteSyllabusList = getSyllabusList(currentSiteId);
-			for (Syllabus s : deleteSyllabusList) {
-				syllabusDao.softDeleteSyllabus(s);
-			}
-
 			Syllabus syllabus = importProvider.importSyllabusFromSite(siteId, currentSiteId);
 			Set<String> sections = sakaiProxy.getGroupsForSite(currentSiteId);
 
@@ -400,7 +396,14 @@ public class SyllabusServiceImpl implements SyllabusService {
 				syllabus.setId(null);
 				syllabus.setSiteId(currentSiteId);
 				syllabus.setCourseTitle(currentSiteId);
+				syllabus.setCommon(true);
 				syllabus.setSections(sections);
+
+				// Delete existing Syllabuses
+				List<Syllabus> deleteSyllabusList = getSyllabusList(currentSiteId);
+				for (Syllabus s : deleteSyllabusList) {
+					syllabusDao.softDeleteSyllabus(s);
+				}
 
 				createOrUpdateSyllabus(syllabus);
 			}

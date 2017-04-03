@@ -8,7 +8,7 @@
 		</div>
 
 		<!-- Not published notice -->
-		<div data-ng-if="element.type !== 'rubric' && !element.equalsPublished && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice not-published">
+		<div data-ng-if="element.type !== 'rubric' && !element.equalsPublished && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice warning not-published">
 			<h3><span class="glyphicon glyphicon-flag"></span> {{ 'NOT_PUBLISHED' | translate }}</h3>
 		</div>
 
@@ -18,8 +18,13 @@
 		</div>
 
 		<!-- Hidden by date notice -->
-		<div data-ng-if="isElementHiddenByDate(element) && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice hidden-by-date">
+		<div data-ng-if="isElementHiddenByDate(element) && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice warning hidden-by-date">
 			<h3><span class="glyphicon glyphicon-flag"></span> {{ getElementHiddenByDateMessage(element) }}</h3>
+		</div>
+
+		<!-- Error to indicate missing Sakai entity -->
+		<div data-ng-if="element.type === 'sakai_entity' && isSakaiEntityMissing(element) && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice error">
+			<h3><span class="glyphicon glyphicon-flag"></span> {{ 'MISSING_SAKAI_ENTITY_FLAG' | translate }} </h3>
 		</div>
 
 		<div data-ng-class="['element-wrapper', {'important': element.important, 'hidden-by-date': isElementHiddenByDate(element) && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus), 'not-published': !element.equalsPublished && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus)}]">

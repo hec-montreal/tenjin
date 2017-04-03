@@ -37,29 +37,17 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 
 					$scope.mode = 'creation';
 
-					var data = angular.copy($scope.syllabusService.syllabus);
-					var result = $scope.syllabusService.addRubricToSyllabus(data, $scope.element, element);
+					var result = SyllabusService.addRubricToSyllabus(SyllabusService.syllabus, $scope.element, element);
+					SyllabusService.setDirty(true);
 
-					if (result > 0) {
-						SyllabusService.save(data).catch(function(e) {
-							AlertService.showSyllabusSaveAlert(e);
-						});
-					}
 				} else {
 					// hide menu
 					$scope.showAddMenu = false;
 
 					ModalService.createElement($type, $scope.element).result.then(function(modalData) {
-						// We create a copy of the current syllabus and we add it the element to be added
-						var data = angular.copy(SyllabusService.syllabus);
-
 						modalData.element.equalsPublished = false;
-
-						SyllabusService.addElementToSyllabus(data, modalData.parent, modalData.element);
-
-						SyllabusService.save(data).catch(function(e) {
-							AlertService.showSyllabusSaveAlert(e);
-						});
+						SyllabusService.addElementToSyllabus(SyllabusService.syllabus, modalData.parent, modalData.element);
+						SyllabusService.setDirty(true);
 					});
 				}
 			};
