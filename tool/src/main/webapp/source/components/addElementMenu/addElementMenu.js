@@ -26,6 +26,7 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 					var element = {
 						'attributes': {},
 						'type': $type.type,
+						'composite': true,
 						'parentId': $scope.element.id,
 						'templateStructureId': $type.id,
 						'availabilityStartDate': Date.now(),
@@ -46,7 +47,11 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 
 					ModalService.createElement($type, $scope.element).result.then(function(modalData) {
 						modalData.element.equalsPublished = false;
-						SyllabusService.addElementToSyllabus(SyllabusService.syllabus, modalData.parent, modalData.element);
+						// define childrens list if it is not
+						if (!modalData.parent.elements) {
+							modalData.parent.elements = [];
+						}
+						modalData.parent.elements.push(modalData.element);
 						SyllabusService.setDirty(true);
 					});
 				}
