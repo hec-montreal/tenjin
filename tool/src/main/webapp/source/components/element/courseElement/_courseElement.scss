@@ -1,6 +1,8 @@
 #tenjin {
 	.element.course {
-		min-height: 50px;
-		font-weight: bold;
+		a {
+			color: $font-color-navigation;
+			cursor: pointer;
+		}
 	}
 }

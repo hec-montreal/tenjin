@@ -1,6 +1,6 @@
 .content-panel {
 	.title {
-		padding: 20px 0 0 0;
+		padding: 20px 0 0 4px;
 
 		.left {
 			float: left;
@@ -47,6 +47,10 @@
 
 	.syllabus-text {
 		font-size: 1.2em;
+
+		li {
+			margin: 10px 0 10px 0;
+		}
 	}
 
 	.element-host {
@@ -108,5 +112,13 @@
 
 	[data-nodrag='true'] {
 		cursor: default!important;
+	}
+
+	.no-drag {
+		cursor: initial!important;
+	}
+
+	.no-drag .angular-ui-tree-handle {
+		cursor: initial!important;
 	}
 }

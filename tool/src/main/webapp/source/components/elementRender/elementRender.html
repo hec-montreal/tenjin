@@ -1,4 +1,4 @@
-<div ui-tree-handle class="tree-node tree-node-content">
+<div ui-tree-handle data-ng-class="['tree-node', 'tree-node-content', {'no-drag': !userService.isAllowed('syllabusWrite', syllabusService.syllabus) || syllabusLockService.lockError}]">
 	<div data-ng-switch="element.type" data-nodrag="{{syllabusLockService.lockError}}" data-ng-class="['element-host', {'important': element.important, 'no-buttons': !userService.canEditElement(element,syllabusService.syllabus)}]">
 		<element-buttons data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError" data-element-buttons="element" data-noedit="!userService.canEditElement(element,syllabusService.syllabus) || element.type === 'rubric'" data-nodelete="!userService.canEditElement(element,syllabusService.syllabus)" data-nodrag="!userService.canEditElement(element,syllabusService.syllabus)" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite, 'has-notice': element.type !== 'rubric' && !element.equalsPublished}]"></element-buttons>
 

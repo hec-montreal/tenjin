@@ -1,20 +1,9 @@
-.element-exam,
-.element-examattr {
-    .location-title,
-    .location,
-    .terms-title,
-    .terms,
-    .submission-title,
-    .submission,
-    .assessmenttype-title,
-    .assessmenttype {
-        font-weight: bold;
-    }
+.element-exam {
+	.row {
+		padding-bottom: 10px;
+	}
 
-    .exam-type {
-        color: #999;
-        font-weight: normal;
-        margin-top: 10px;
-
-    }
+	.element-examattr {
+		padding-top: 10px;
+	}
 }

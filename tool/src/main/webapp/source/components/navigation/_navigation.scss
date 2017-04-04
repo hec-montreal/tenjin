@@ -17,7 +17,7 @@
 	}
 
 	.title {
-		padding-left: 22px;
+		padding-left: 20px;
 		cursor: default;
 
 		.title-text {
@@ -42,34 +42,63 @@
 
 	.menu-item {
 		cursor: pointer;
-		padding: 6px 10px 3px 40px;
+		padding: 10px 10px 5px 20px;
+
+		a {
+			color: $font-color-navigation !important;
+			font-family: $font-family-regular;
+			font-weight: normal;
+			font-size: 1.3em;
+			display: block;
+			width: 100%;
+		}
+
+		.number {
+			float: left;
+			width: 36px;
+			text-align: right;
+		}
+
+		.item-title {
+			float: left;
+			max-width: 270px;
+		}
 	}
 
-	.menu-item a {
-		color: $font-color-navigation !important;
-		font-family: $font-family-regular;
-		font-weight: normal;
-		font-size: 1.2em;
+	.menu-item::after {
+		content: '';
 		display: block;
-		width: 100%;
+		clear: both;
 	}
 
 	.menu-item-selected {
 		background-color: $color-navigation-active !important;
+
+		a {
+			color: $font-color-navigation-active !important;
+		}
 	}
 
-	.menu-item-selected a {
-		color: $font-color-navigation-active !important;
+	.menu-item-parent {
+		a {
+			color: $font-color-navigation-composite !important;
+			font-weight: bold;
+		}
 	}
 
-	.menu-item-parent a {
-		color: $font-color-navigation-composite !important;
+	.menu-item-parent.menu-item-selected {
+		a {
+			color: $font-color-navigation-active !important;
+			font-weight: bold;
+		}
 	}
 
-	.menu-item-toplevel a {
-		text-transform: uppercase;
-		font-family: $font-family-title;
-		font-weight: normal;
-		font-size: 1.5em;
+	.menu-item-toplevel {
+		a {
+			text-transform: uppercase;
+			font-family: $font-family-title;
+			font-weight: normal;
+			font-size: 1.5em;
+		}
 	}
 }
