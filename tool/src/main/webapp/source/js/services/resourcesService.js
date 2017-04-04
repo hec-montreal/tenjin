@@ -40,7 +40,7 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 			}
 		}
 
-		return undefined;
+		return null;
 	};
 
 	/**
@@ -108,7 +108,7 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 			}
 		}
 
-		return undefined;
+		return null;
 	};
 
 	/**

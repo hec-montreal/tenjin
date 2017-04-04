@@ -90,13 +90,13 @@ public class SiteToolsController {
 		Map<String, Object> samigo = new HashMap<>();
 		samigo.put("name", samigoToolEntityProvider.getToolName());
 		samigo.put("type", "folder");
-		samigo.put("resourceChildren", samigoToolEntityProvider.getEntities(siteId, sakaiProxy.getCurrentSiteId()));
+		samigo.put("resourceChildren", samigoToolEntityProvider.getEntities(siteId, sakaiProxy.getCurrentUserId()));
 		tools.add(samigo);
 		
 		Map<String, Object> assignment = new HashMap<>();
 		assignment.put("name", assignmentToolEntityProvider.getToolName());
 		assignment.put("type", "folder");
-		assignment.put("resourceChildren", assignmentToolEntityProvider.getEntities(siteId, sakaiProxy.getCurrentSiteId()));
+		assignment.put("resourceChildren", assignmentToolEntityProvider.getEntities(siteId, sakaiProxy.getCurrentUserId()));
 		tools.add(assignment);
 		
 		ret.put("resourceChildren", tools);

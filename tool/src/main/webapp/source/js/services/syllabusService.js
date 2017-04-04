@@ -65,7 +65,7 @@
 
 		this.working = true;
 
-		$http.post('v1/syllabus/sections.json', syllabus).success(function (data) {
+		$http.post('v1/syllabus/sections.json', syllabus).success(function(data) {
 			$rootScope.$broadcast('syllabusService:save');
 
 			ret.resolve(data);
@@ -301,7 +301,7 @@
 				}
 			}
 		}
-		return undefined;
+		return null;
 	};
 
 	// TODO : to delete 
@@ -577,20 +577,19 @@
 	 * @return {Object} The parent element or undefined
 	 */
 	var getParent = function($rootTree, $element) {
-
 		if ($rootTree.id === $element.parentId) {
 			return $rootTree;
 		} else {
 			if ($rootTree.elements) {
 				for (var i = 0; i < $rootTree.elements.length; i++) {
-					var resultat = getParent($rootTree.elements[i], $element);
-					if (resultat) {
-						return resultat;
+					var result = getParent($rootTree.elements[i], $element);
+					if (result) {
+						return result;
 					}
 				}
 			}
 		}
-		return undefined;
+		return null;
 	};
 
 	/**

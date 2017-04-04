@@ -79,6 +79,21 @@
 		return ret;
 	};
 
+	this.findElementPosition = function(el) {
+		var ret = null;
+
+		SyllabusService.forEachElement(SyllabusService.getSyllabus(), function(element, position) {
+			if (el.id === element.id) {
+				ret = position;
+
+				// Break
+				return true;
+			}
+		});
+
+		return ret;
+	};
+
 	this.findSelectedElementPosition = function() {
 		var ret = null;
 
@@ -92,5 +107,46 @@
 		});
 
 		return ret;
+	};
+
+	this.isElementSelectable = function(el) {
+		return SyllabusService.template[el.templateStructureId].displayInMenu;
+	};
+
+	this.findElementParent = function(el) {
+		var ret = SyllabusService.getParent(el);
+
+		if (!ret) {
+			return SyllabusService.getSyllabus();
+		}
+
+		return ret;
+	};
+
+	this.findPeviousSibling = function(el) {
+		var pos = this.findElementPosition(el);
+		var tail = pos[pos.length - 1];
+
+		if (tail === 0) {
+			return null;
+		}
+
+		pos[pos.length - 1] = tail - 1;
+
+		return this.findElementByPosition(pos);
+	};
+
+	this.findNextSibling = function(el) {
+		var pos = this.findElementPosition(el);
+		var tail = pos[pos.length - 1];
+		var parent = this.findElementParent(el);
+
+		if (tail >= parent.elements.length) {
+			return null;
+		}
+
+		pos[pos.length - 1] = tail + 1;
+
+		return this.findElementByPosition(pos);
 	};
 }]);

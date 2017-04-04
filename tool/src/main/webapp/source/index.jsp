@@ -5,6 +5,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
 
 		<title>Tenjin</title>
 
@@ -22,6 +24,15 @@
 		<script src="/tenjin-tool/lib/tenjinlib.js"></script> 
 
 		<script src="/tenjin-tool/js/tenjin.js"></script>
+
+		<!-- Hide url bar on mobile -->
+		<script>
+			window.addEventListener("load",function() {
+				setTimeout(function(){
+					window.scrollTo(0, 1);
+				}, 0);
+			});
+		</script>
 	</head>
 
 	<body id="body" class="portletBody">
