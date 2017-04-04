@@ -22,7 +22,12 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'Alert
 				var parent = SyllabusService.getParent($element);
 
 				ModalService.confirmDeleteElement(parent, $element).result.then(function() {
-					SyllabusService.deleteElementFromSyllabus(SyllabusService.syllabus, parent, $element);
+					// identify and remove element from it's parent
+					for (var i = 0; i < parent.elements.length; i++) {
+						if (parent.elements[i].id === $element.id) {
+							parent.elements.splice(i, 1);
+						}
+					}
 					SyllabusService.setDirty(true);
 				});
 			};
@@ -32,7 +37,15 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'Alert
 
 				ModalService.editElement(parent, $element).result.then(function(elementData) {
 					elementData.element.equalsPublished = false;
-					SyllabusService.addElementToSyllabus(SyllabusService.syllabus, elementData.parent, elementData.element);
+
+					// identify and replace this element in the parent
+					var parentsChildren = elementData.parent.elements;
+					for (var i = 0; i < parentsChildren.length; i++) {
+						if (parentsChildren[i].id === elementData.element.id) {
+							parentsChildren[i] = elementData.element;
+							break;
+						}
+					}
 					SyllabusService.setDirty(true);
 				});
 			}

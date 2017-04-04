@@ -390,56 +390,6 @@
 	};
 
 	/**
-	 * Add a new element to the syllabus
-	 * @param {Object} $rootTree Root tree
-	 * @param {Object} $parent Parent of the element
-	 * @param {Object} $element Element to be inserted
-	 * @param {Object} $position Position of the element in the list
-	 */
-	var addElementToSyllabus = function($rootTree, $parent, $element, $position) {
-
-		if ($rootTree.elements) {
-
-			if ($rootTree.id === $parent.id && isSyllabusElement($rootTree)) {
-				// If the element already exists, replace it (update)
-				var modification = false;
-				for (var i = 0; i < $rootTree.elements.length; i++) {
-					if ($rootTree.elements[i].id === $element.id) {
-						// modification
-						$rootTree.elements[i] = $element;
-						modification = true;
-						break;
-					}
-				}
-				// add element
-				if (!modification) {
-					$rootTree.elements.push($element);
-				}
-
-			} else {
-
-				for (var i = 0; i < $rootTree.elements.length; i++) {
-					addElementToSyllabus($rootTree.elements[i], $parent, $element, $position);
-				}
-
-			}
-
-		}
-
-	};
-
-	/**
-	 * Add a new element to the syllabus
-	 * @param {Object} $data Syllabus root tree
-	 * @param {Object} $parent Parent of the element
-	 * @param {Object} $element Element to be inserted
-	 * @param {Object} $position Position of the element in the list
-	 */
-	this.addElementToSyllabus = function($data, $parent, $element, $position) {
-		addElementToSyllabus($data, $parent, $element, $position);
-	};
-
-	/**
 	 * Add a new rubric to the syllabus
 	 * @param {Object} $rootTree Syllabus root tree
 	 * @param {Object} $parent Parent of the element
@@ -525,49 +475,7 @@
 		// We get the template rules of the parent element 
 		// to add the rubric to the right place
 		var rules = this.template[$parent.templateStructureId];
-
-
 		return addRubricToSyllabus($data, $parent, $element, rules);
-	};
-
-	/**
-	 * Delete an element from the syllabus
-	 * @param {Object} $data Syllabus root tree
-	 * @param {Object} $parent Parent of the element
-	 * @param {Object} $element Element to be deleted
-	 */
-	var deleteElementFromSyllabus = function($rootTree, $parent, $element) {
-
-		if ($rootTree.elements) {
-
-			if ($rootTree.id === $parent.id && isSyllabusElement($rootTree)) {
-				// si l'élément existe déjà on le supprime et on le remplace
-				for (var i = 0; i < $rootTree.elements.length; i++) {
-					if ($rootTree.elements[i].id === $element.id) {
-						$rootTree.elements.splice(i, 1);
-					}
-				}
-
-			} else {
-
-				for (var i = 0; i < $rootTree.elements.length; i++) {
-					deleteElementFromSyllabus($rootTree.elements[i], $parent, $element);
-				}
-
-			}
-
-		}
-
-	};
-
-	/**
-	 * Delete an element from the syllabus
-	 * @param {Object} $data Syllabus root tree
-	 * @param {Object} $parent Parent of the element
-	 * @param {Object} $element Element to be deleted
-	 */
-	this.deleteElementFromSyllabus = function($data, $parent, $element) {
-		deleteElementFromSyllabus($data, $parent, $element);
 	};
 
 	/**

@@ -47,7 +47,11 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 
 					ModalService.createElement($type, $scope.element).result.then(function(modalData) {
 						modalData.element.equalsPublished = false;
-						SyllabusService.addElementToSyllabus(SyllabusService.syllabus, modalData.parent, modalData.element);
+						// define childrens list if it is not
+						if (!modalData.parent.elements) {
+							modalData.parent.elements = [];
+						}
+						modalData.parent.elements.push(modalData.element);
 						SyllabusService.setDirty(true);
 					});
 				}
