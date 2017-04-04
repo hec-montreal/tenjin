@@ -26,6 +26,7 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 					var element = {
 						'attributes': {},
 						'type': $type.type,
+						'composite': true,
 						'parentId': $scope.element.id,
 						'templateStructureId': $type.id,
 						'availabilityStartDate': Date.now(),
