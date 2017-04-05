@@ -38,7 +38,7 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 
 					$scope.mode = 'creation';
 
-					var result = SyllabusService.addRubricToSyllabus(SyllabusService.syllabus, $scope.element, element);
+					var result = SyllabusService.addRubricToSyllabusElement($scope.element, element);
 					SyllabusService.setDirty(true);
 
 				} else {
