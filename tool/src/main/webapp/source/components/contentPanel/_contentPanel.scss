@@ -121,4 +121,10 @@
 	.no-drag .angular-ui-tree-handle {
 		cursor: initial!important;
 	}
+
+	.panel-element::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
 }
