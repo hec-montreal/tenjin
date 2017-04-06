@@ -256,6 +256,9 @@
 	}, {
 		'id': 14,
 		'name': 'CONTACT_TITLE_TRAINEE'
+	}, {
+		'id': 15,
+		'name': 'CONTACT_TITLE_SEMINARY'
 	}],
 
 	extensionsImage: ['jpg', 'jpeg', 'bmp', 'gif', 'png'],
