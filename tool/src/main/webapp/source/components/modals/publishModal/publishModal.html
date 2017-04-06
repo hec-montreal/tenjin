@@ -75,8 +75,8 @@
 	</div>
 
 	<div class="modal-footer" data-ng-if="status === 'beforePublish'">
-		<button data-ng-click="close()">{{ 'PUBLISH_CANCEL_BUTTON_LABEL' | translate }}</button>
 		<button data-ng-if="isCommonSyllabusPublished()" data-ng-click="publish()">{{ 'BUTTON_PUBLISH' | translate }}</button>
+		<button data-ng-click="close()">{{ 'PUBLISH_CANCEL_BUTTON_LABEL' | translate }}</button>
 	</div>
 
 	<div class="modal-footer" data-ng-if="status === 'afterPublish'">
