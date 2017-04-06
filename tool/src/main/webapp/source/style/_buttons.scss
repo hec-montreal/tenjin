@@ -111,4 +111,20 @@
 		border-color: transparent !important;
 		color: $color-button-active !important;
 	}
+
+	/* Button for mobile navigation */
+	button.mobile {
+		background-color: transparent !important;
+		border-color: transparent !important;
+		color: $font-color-button-mobile-navigation !important;
+		font-size: 1em;
+		padding: 0;
+		margin: 0;
+	}
+
+	button.mobile:active {
+		background-color: transparent !important;
+		border-color: transparent !important;
+		color: $font-color-mobile-navigation-active !important;
+	}
 }
