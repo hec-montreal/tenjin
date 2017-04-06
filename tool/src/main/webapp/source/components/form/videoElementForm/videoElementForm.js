@@ -24,6 +24,10 @@
 				$scope.inputMode = 'url';
 			}
 
+			if (!$scope.element.id) {
+				$scope.element.visibility = true;
+			}
+
 			$scope.element.preSave = function() {
 				if ($scope.inputMode === 'url') {
 					delete this.attributes.embedCode;
