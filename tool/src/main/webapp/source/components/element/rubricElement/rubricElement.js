@@ -1,4 +1,4 @@
-tenjinApp.directive('rubricElement', function() {
+tenjinApp.directive('rubricElement',['SyllabusService', function(SyllabusService) {
 	'use strict';
 
 	return {
@@ -12,4 +12,4 @@ tenjinApp.directive('rubricElement', function() {
 
 		}
 	};
-});
+}]);

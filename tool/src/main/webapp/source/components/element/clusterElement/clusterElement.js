@@ -1,15 +1,15 @@
-tenjinApp.directive('clusterElement', ['TreeService', function(TreeService) {
-    'use strict';
+tenjinApp.directive('clusterElement', ['TreeService', 'SyllabusService', function(TreeService, SyllabusService) {
+	'use strict';
 
-    return {
-        scope: true,
+	return {
+		scope: true,
 
-        restrict: 'A',
+		restrict: 'A',
 
-        templateUrl: 'element/clusterElement/clusterElement.html',
+		templateUrl: 'element/clusterElement/clusterElement.html',
 
-        controller: function($scope) {
-            $scope.treeService = TreeService;
-        }
-    };
+		controller: function($scope) {
+			$scope.treeService = TreeService;
+		}
+	};
 }]);
