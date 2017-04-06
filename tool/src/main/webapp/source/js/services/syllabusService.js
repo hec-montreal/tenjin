@@ -391,91 +391,62 @@
 
 	/**
 	 * Add a new rubric to the syllabus
-	 * @param {Object} $rootTree Syllabus root tree
 	 * @param {Object} $parent Parent of the element
 	 * @param {Object} $element Element to be inserted
-	 * @param {Object} $rules Template rules
 	 * @return {Number} If the rubric already exists then return -1, else return 1
 	 */
-	var addRubricToSyllabus = function($rootTree, $parent, $element, $rules) {
+	this.addRubricToSyllabusElement = function($parent, $element) {
 
-		if ($rootTree.elements) {
+		var rules = this.template[$parent.templateStructureId];
 
-			if ($rootTree.id === $parent.id && isSyllabusElement($rootTree)) {
-				if ($rootTree.elements.length > 0) {
+		if (!$parent.elements) 
+			$parent.elements = [];
 
-					// Check if the rubric already exists
-					for (var i = 0; i < $rootTree.elements.length; i++) {
-						if ($rootTree.elements[i].templateStructureId === $element.templateStructureId) {
-							// Rubric already present
-							return -1;
-						}
-					}
+		if ($parent.elements.length > 0) {
 
-					// Check where the rubric must be inserted
-					var listTemp = [];
-					var index = -1;
-					for (var i = 0; i < $rules.elements.length; i++) {
-						for (var j = 0; j < $rootTree.elements.length; j++) {
-							if ($rules.elements[i].id === $rootTree.elements[j].templateStructureId) {
-								listTemp.push($rootTree.elements[j]);
-								break;
-							}
-						}
-
-						if ($rules.elements[i].id === $element.templateStructureId) {
-							listTemp.push($element);
-						}
-					}
-
-					for (var i = 0; i < listTemp.length; i++) {
-						if (listTemp[i].templateStructureId === $element.templateStructureId) {
-							index = i;
-							break;
-						}
-					}
-
-					// Add the rubric to the syllabus
-					if (index !== -1) {
-						$rootTree.elements.splice(index, 0, $element);
-						return 1;
-					}
-
-
-				} else {
-					$rootTree.elements.push($element);
-					return 1;
+			// Check if the rubric already exists
+			for (var i = 0; i < $parent.elements.length; i++) {
+				if ($parent.elements[i].templateStructureId === $element.templateStructureId) {
+					// Rubric already present
+					return -1;
 				}
-
-			} else {
-
-				for (var i = 0; i < $rootTree.elements.length; i++) {
-					var results = addRubricToSyllabus($rootTree.elements[i], $parent, $element, $rules);
-					if (results === -1) {
-						return results;
-					}
-				}
-
 			}
 
+			// Check where the rubric must be inserted
+			var listTemp = [];
+			var index = -1;
+			for (var i = 0; i < rules.elements.length; i++) {
+				for (var j = 0; j < $parent.elements.length; j++) {
+					if (rules.elements[i].id === $parent.elements[j].templateStructureId) {
+						listTemp.push($parent.elements[j]);
+						break;
+					}
+				}
+
+				if (rules.elements[i].id === $element.templateStructureId) {
+					listTemp.push($element);
+				}
+			}
+
+			for (var i = 0; i < listTemp.length; i++) {
+				if (listTemp[i].templateStructureId === $element.templateStructureId) {
+					index = i;
+					break;
+				}
+			}
+
+			// Add the rubric to the syllabus
+			if (index !== -1) {
+				$parent.elements.splice(index, 0, $element);
+				return 1;
+			}
+		} else {
+			$parent.elements.push($element);
+			return 1;
 		}
 
 		return 1;
 
-	};
-
-	/**
-	 * Add a new rubric to the syllabus
-	 * @param {Object} $data Syllabus root tree
-	 * @param {Object} $parent Parent of the element
-	 * @param {Object} $element Element to be inserted
-	 * @return {Number} If the rubric already exists then return -1, else return 1
-	 */
-	this.addRubricToSyllabus = function($data, $parent, $element) {
-		// We get the template rules of the parent element 
-		// to add the rubric to the right place
-		var rules = this.template[$parent.templateStructureId];
-		return addRubricToSyllabus($data, $parent, $element, rules);
 	};
 
 	/**
