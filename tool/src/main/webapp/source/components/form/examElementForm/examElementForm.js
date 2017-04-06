@@ -1,25 +1,29 @@
-tenjinApp.directive('examElementForm', function() {
-    'use strict';
+tenjinApp.directive('examElementForm', ['SyllabusService', function(SyllabusService) {
+	'use strict';
 
-    return {
-        scope: {
-            element: '=examElementForm',
-            typelabel: '=' //Might need to link to rules for I18N purposes
-        },
+	return {
+		scope: {
+			element: '=examElementForm',
+			typelabel: '=' //Might need to link to rules for I18N purposes
+		},
 
-        restrict: 'A',
+		restrict: 'A',
 
-        templateUrl: 'form/examElementForm/examElementForm.html',
-        
-        controller: function($scope) {
+		templateUrl: 'form/examElementForm/examElementForm.html',
 
-        },
+		controller: function($scope) {
+			var templateType = SyllabusService.template[$scope.element.templateStructureId];
 
-        link: function($scope, $element) {
+			if (!$scope.element.title || $scope.element.title.length === 0) {
+				$scope.element.title = templateType.label
+			}
+		},
 
-            if (!$scope.element.attributes.examType) {
-                $scope.element.attributes.examType = $scope.typelabel;
-            }
-        }
-    };
-});
+		link: function($scope, $element) {
+
+			if (!$scope.element.attributes.examType) {
+				$scope.element.attributes.examType = $scope.typelabel;
+			}
+		}
+	};
+}]);

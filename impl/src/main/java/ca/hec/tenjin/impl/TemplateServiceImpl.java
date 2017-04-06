@@ -14,7 +14,6 @@ import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusTextElement;
 import ca.hec.tenjin.api.model.template.Template;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
 import lombok.Setter;
@@ -183,6 +182,16 @@ public class TemplateServiceImpl implements TemplateService {
 			elementObject = new HashMap<String, Object>();
 			elementObject.put("displayInMenu", structure.getDisplayInMenu());
 			elementObject.put("mandatory", structure.getMandatory());
+
+			if (structure.getTemplateElement() != null) {
+				if (structure.getTemplateElement().getLabels().containsKey(language)) {
+					elementObject.put("label", structure.getTemplateElement().getLabels().get(language));
+				} else {
+					// TODO: get default somewhere else?
+					elementObject.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
+				}
+			}
+			
 			// add template structure to the main map
 			map.put(structure.getId().toString(), elementObject);
 			
@@ -201,7 +210,9 @@ public class TemplateServiceImpl implements TemplateService {
 				Map<String, Object> templateElementMap = new HashMap<String, Object>();
 				templateElementMap.put("id", structure.getId());
 				templateElementMap.put("type", structure.getTemplateElement().getType().getTitle());
-				
+
+				templateElementMap.put("provided", structure.getProvider() == null ? false:true);
+
 				if (structure.getTemplateElement().getLabels().containsKey(language)) {
 					templateElementMap.put("label", structure.getTemplateElement().getLabels().get(language));
 				} else {
@@ -209,8 +220,6 @@ public class TemplateServiceImpl implements TemplateService {
 					templateElementMap.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
 				}
 				
-				templateElementMap.put("provided", structure.getProvider() == null ? false:true);
-
 				// add child template element to the list of the parent element
 				elementParentList.add(templateElementMap);
 			}	

@@ -1,44 +1,50 @@
-tenjinApp.directive('evaluationElementForm', function() {
-    'use strict';
+tenjinApp.directive('evaluationElementForm',['SyllabusService', function(SyllabusService) {
+	'use strict';
 
-    return {
-        scope: {
-            element: '=evaluationElementForm',
-            typelabel: '=' //Might need to link to rules for I18N purposes
-        },
+	return {
+		scope: {
+			element: '=evaluationElementForm',
+			typelabel: '=' //Might need to link to rules for I18N purposes
+		},
 
-        restrict: 'A',
+		restrict: 'A',
 
-        templateUrl: 'form/evaluationElementForm/evaluationElementForm.html',
+		templateUrl: 'form/evaluationElementForm/evaluationElementForm.html',
 
-        controller: function($scope) {
-            $scope.formats = ['dd-MM-yyyy'];
-            $scope.format = $scope.formats[0];
+		controller: function($scope) {
+			$scope.formats = ['dd-MM-yyyy'];
+			$scope.format = $scope.formats[0];
 
-            $scope.statusDateEval = {
-                opened: false
-            };
+			var templateType = SyllabusService.template[$scope.element.templateStructureId];
 
-            $scope.dateOptions = {
-                formatYear: 'yy',
-                startingDay: 1
-            };
+			if (!$scope.element.title || $scope.element.title.length === 0) {
+				$scope.element.title = templateType.label
+			}
 
-            $scope.openDateEval = function($event) {
-                $scope.statusDateEval.opened = true;
-            };
+			$scope.statusDateEval = {
+				opened: false
+			};
 
-            // Disable weekend selection
-            $scope.disabled = function(date, mode) {
-                return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-            };
+			$scope.dateOptions = {
+				formatYear: 'yy',
+				startingDay: 1
+			};
 
-        },
+			$scope.openDateEval = function($event) {
+				$scope.statusDateEval.opened = true;
+			};
 
-        link: function($scope, $element) {
-            if (!$scope.element.attributes.evaluationType) {
-                $scope.element.attributes.evaluationType = $scope.typelabel;
-            }
-        }
-    };
-});
+			// Disable weekend selection
+			$scope.disabled = function(date, mode) {
+				return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+			};
+
+		},
+
+		link: function($scope, $element) {
+			if (!$scope.element.attributes.evaluationType) {
+				$scope.element.attributes.evaluationType = $scope.typelabel;
+			}
+		}
+	};
+}]);
