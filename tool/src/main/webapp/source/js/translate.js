@@ -305,7 +305,8 @@
 		COPY: 'Duplicate',
 		COPY_SYLLABUS: 'Copy course outline',
 		TITLE: 'Title',
-		COPY_DEFAULT_NAME_PREFIX: 'Copy of'
+		COPY_DEFAULT_NAME_PREFIX: 'Copy of',
+		WARNING_UNSAVED: 'You have unsaved changes that will be lost if you leave this page, would you like to continue?'
 	}).translations('fr', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -608,7 +609,8 @@
 		COPY: 'Dupliquer',
 		COPY_SYLLABUS: 'Dupliquer un plan de cours',
 		TITLE: 'Titre',
-		COPY_DEFAULT_NAME_PREFIX: 'Copie de'
+		COPY_DEFAULT_NAME_PREFIX: 'Copie de',
+		WARNING_UNSAVED: 'Vos modifications n\'ont pas été enregistré, voulez-vous quitter et perdre ces changements?'
 	});
 
 	$translateProvider.preferredLanguage('fr');

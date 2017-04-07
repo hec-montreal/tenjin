@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('SyllabusCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', 'SyllabusService', 'SyllabusLockService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'PublishService', 'TenjinService', 'config', 'AlertService', 'ModalService', function($rootScope, $scope, $timeout, $q, $state, SyllabusService, SyllabusLockService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, PublishService, TenjinService, config, AlertService, ModalService) {
+﻿tenjinApp.controller('SyllabusCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', '$translate', 'SyllabusService', 'SyllabusLockService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'PublishService', 'TenjinService', 'config', 'AlertService', 'ModalService', function($rootScope, $scope, $timeout, $q, $state, $translate, SyllabusService, SyllabusLockService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, PublishService, TenjinService, config, AlertService, ModalService) {
 	'use strict';
 
 	$scope.syllabusService = SyllabusService;
@@ -33,11 +33,27 @@
 		return ret.promise;
 	};
 
+
+	var confirmLeave = function() {
+		if (SyllabusService.isDirty()) {
+			return confirm($translate.instant('WARNING_UNSAVED'));
+		} 
+		return true;
+	}
+
+	$scope.goToManagement = function() {
+		if (confirmLeave()) {
+			$state.go('management');
+		}
+	}
+
 	$scope.selectSyllabus = function(syllabus) {
-		$state.go(TenjinService.viewState.stateName, {
-			id: syllabus.id,
-			elementId: undefined
-		});
+		if (confirmLeave()) {
+			$state.go(TenjinService.viewState.stateName, {
+				id: syllabus.id,
+				elementId: undefined
+			});
+		}
 	};
 
 	$scope.toggleNavigation = function() {
@@ -97,7 +113,18 @@
 			$rootScope.$broadcast('cannotPublishSyllabus');
 		});
 	});
+	
+	window.onbeforeunload = function() {
+		if (SyllabusService.isDirty()) {
+			return $translate.instant('WARNING_UNSAVED');
+		}
+	}
 
+	// remove unsaved warning when leaving tenjin
+	$scope.$on('$destroy', function() {
+		delete window.onbeforeunload;
+	});
+	
 	$scope.showGlobalLoading();
 
 	loadSyllabus($state.params.id || -1).finally(function() {

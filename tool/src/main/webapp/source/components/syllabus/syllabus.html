@@ -1,4 +1,4 @@
-<div ng-controller="SyllabusCtrl">	
+<div ng-controller="SyllabusCtrl">
 	<div id="syllabus">
 		<div class="row">
 			<h1 class="course-title col-xs-12">
@@ -11,7 +11,7 @@
 				<div class="toolbar-wrapper">
 					<div class="toolbar-left">
 						<!-- Management button -->
-						<button  data-ng-show = "userService.isAllowedView('management')" ui-sref="management">
+						<button  data-ng-show = "userService.isAllowedView('management')" ng-click="goToManagement()">
 							{{ 'BUTTON_MANAGEMENT' | translate }}
 						</button>
 
