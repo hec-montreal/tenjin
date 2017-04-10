@@ -1,25 +1,14 @@
-.element-evaluation,
-.element-evaluationattr {
-    .location-title,
-    .location,
-    .terms-title,
-    .terms,
-    .submission-title,
-    .submission,
-    .assessmenttype-title,
-    .assessmenttype {
-        font-weight: bold;
-    }
+.element-evaluation {
+	.row {
+		padding-bottom: 10px;
+	}
 
-    .eval-date {
-        padding-right: 15em;
-        float: right;
-    }
+	.eval-date {
+		padding-right: 15em;
+		float: right;
+	}
 
-    .eval-type {
-        color: #999;
-        font-weight: normal;
-        margin-top: 10px;
-
-    }
+	.element-evaluationattr {
+		padding-top: 10px;
+	}
 }
