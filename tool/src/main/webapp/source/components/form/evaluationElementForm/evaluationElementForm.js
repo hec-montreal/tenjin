@@ -30,6 +30,9 @@ tenjinApp.directive('evaluationElementForm',['SyllabusService', function(Syllabu
 				startingDay: 1
 			};
 
+			if ($scope.element.attributes.evaluationDate)
+				$scope.evaluationDateObject = new Date($scope.element.attributes.evaluationDate);
+
 			$scope.openDateEval = function($event) {
 				$scope.statusDateEval.opened = true;
 			};
@@ -39,6 +42,11 @@ tenjinApp.directive('evaluationElementForm',['SyllabusService', function(Syllabu
 				return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
 			};
 
+			$scope.element.preSave = function() {
+				if ($scope.evaluationDateObject) {
+					this.attributes.evaluationDate = $scope.evaluationDateObject;
+				}
+			};
 		},
 
 		link: function($scope, $element) {
