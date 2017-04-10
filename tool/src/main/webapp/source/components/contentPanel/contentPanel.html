@@ -18,11 +18,11 @@
 	</div>
 
 	<div data-ng-if="treeService.selectedElement.type == 'evaluation'">
-		<div data-evaluationattr-element="treeService.selectedElement"></div>
+		<evaluationattr-element data-evaluationattr-element="treeService.selectedElement"></evaluationattr-element>
 	</div>
 
 	<div data-ng-if="treeService.selectedElement.type == 'exam'">
-		<div data-examattr-element="treeService.selectedElement"></div>
+		<examattr-element data-examattr-element="treeService.selectedElement"></examattr-element>
 	</div>
 
 	<div ui-tree="treeOptions" data-drag-enabled="true" data-ng-model="treeService.selectedElement">
