@@ -356,12 +356,10 @@ public class SyllabusServiceImpl implements SyllabusService {
 	@Override
 	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException {
 		Syllabus syllabus = syllabusDao.getSyllabus(syllabusId);
-
+		
 		if (syllabus == null) {
 			throw new NoSyllabusException(syllabusId);
 		}
-
-		syllabusLockService.unlockSyllabus(syllabusId);
 
 		if (syllabus.getCommon()) {
 			throw new DeniedAccessException();
@@ -370,12 +368,17 @@ public class SyllabusServiceImpl implements SyllabusService {
 		if (syllabus.getSections() != null && syllabus.getSections().size() > 0) {
 			throw new DeniedAccessException();
 		}
-
-		// check permissions: is allowed to modify syllabus
-		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+		
+		boolean canDelete = sakaiProxy.getCurrentUserId().equals(syllabus.getCreatedBy()) ||
+							securityService.checkOnSiteGroup(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, sakaiProxy.getCurrentSite()) || 
+							securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus);
+		
+		if(!canDelete) {
 			throw new DeniedAccessException();
 		}
-
+		
+		syllabusLockService.unlockSyllabus(syllabusId);
+		
 		syllabusDao.softDeleteSyllabus(syllabus);
 	}
 

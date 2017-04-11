@@ -1,7 +1,6 @@
 package ca.hec.tenjin.impl;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -212,5 +211,10 @@ public class SakaiProxyImpl implements SakaiProxy {
 		}
 
 		return groups;
+	}
+
+	@Override
+	public Site getCurrentSite() {
+		return getSite(getCurrentSiteId());
 	}
 }

@@ -45,6 +45,8 @@ public interface SakaiProxy {
 
 	public String getCurrentSiteId();
 
+	public Site getCurrentSite();
+	
 	public String getCurrentUserId();
 
 	public String getCurrentUserName();
