@@ -16,8 +16,6 @@ tenjinApp.directive('referenceElement', ['config',  '$translate','ResourcesServi
 			var citationTypeId = $scope.element.attributes.citationType;
 			$scope.citationType = $translate.instant(citationTypeId);
 
-			$scope.element.title = "Citation";
-
 			$scope.dot = ".";
 			$scope.comma = ',';
 			$scope.openParenthesis = '(';
