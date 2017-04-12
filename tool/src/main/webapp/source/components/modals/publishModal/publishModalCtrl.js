@@ -9,7 +9,12 @@ tenjinApp.controller('PublishModalCtrl', ['$scope', '$rootScope', '$uibModalInst
 
 	$scope.syllabus = SyllabusService.getSyllabus();
 	$scope.publishing = false;
-	$scope.sections = PublishService.getTargetedSections();
+
+	$scope.sections = PublishService.getTargetedSections().sort(function(a, b) {
+		console.log(a + " cmp " + b);
+		return a.localeCompare(b);
+	});
+
 	$scope.modifiedPages = PublishService.getModifiedPages();
 
 	$scope.doAnnounce = false;

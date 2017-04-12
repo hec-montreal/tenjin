@@ -40,7 +40,13 @@ tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$tra
 				}
 
 				return ret;
-			}
+			};
+
+			$scope.getCitationTypes = function () {
+				return config.citationTypes.sort(function(a, b) {
+					return $translate.instant(a.name).localeCompare($translate.instant(b.name));
+				});
+			};
 		},
 
 		link: function($scope) {

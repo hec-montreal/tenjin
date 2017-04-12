@@ -24,7 +24,7 @@
 			</button>
 
 			<ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-				<li role="menuitem" data-ng-repeat="type in config.documentTypes">
+				<li role="menuitem" data-ng-repeat="type in getDocumentTypes()">
 					<a href="" data-ng-click="selectType(type)">{{::type.name | translate }}</a> 
 				</li>
 			</ul>

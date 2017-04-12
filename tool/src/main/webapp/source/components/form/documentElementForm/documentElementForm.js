@@ -12,7 +12,7 @@
 
 		controller: function($scope) {
 			$scope.config = config;
-			
+
 			$scope.editorOptions = {
 				language: 'fr',
 				height: '200',
@@ -37,7 +37,13 @@
 				}
 
 				return ret;
-			}
+			};
+
+			$scope.getDocumentTypes = function() {
+				return config.documentTypes.sort(function(a, b) {
+					return $translate.instant(a.name).localeCompare($translate.instant(b.name));
+				});
+			};
 		},
 
 		link: function($scope, $element) {
