@@ -21,6 +21,9 @@ public class SamigoToolEntityProviderImpl implements SamigoToolEntityProvider {
 	@Setter
 	private PublishedAssessmentEntityProvider publishedAssessmentEntityProvider;
 
+	@Setter
+	private PersistenceService persistenceService;
+
 	@Override
 	public List<ToolEntity> getEntities(String siteId, String currentUserId) {
 		PublishedAssessmentEntityProviderImpl providerImpl = (PublishedAssessmentEntityProviderImpl) publishedAssessmentEntityProvider;
@@ -50,6 +53,7 @@ public class SamigoToolEntityProviderImpl implements SamigoToolEntityProvider {
 			}
 		}
 
+		//persistenceService.getPublishedAssessmentFacadeQueries().getBasicInfoOfAllPublishedAssessments("title", true, siteId);
 		return ret;
 	}
 

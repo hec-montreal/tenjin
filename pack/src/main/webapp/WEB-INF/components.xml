@@ -97,6 +97,7 @@
 	
 	<bean id="ca.hec.tenjin.api.SamigoToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.SamigoToolEntityProviderImpl">
 		<property name="publishedAssessmentEntityProvider" ref="org.sakaiproject.tool.assessment.entity.api.PublishedEntityProvider" />
+		<property name="persistenceService" ref="PersistenceService" />
 	</bean>
 	
 	<bean id="ca.hec.tenjin.api.AssignmentToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.AssignmentToolEntityProviderImpl">
