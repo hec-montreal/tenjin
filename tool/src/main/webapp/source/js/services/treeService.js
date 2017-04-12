@@ -138,6 +138,9 @@
 
 	this.findNextSibling = function(el) {
 		var pos = this.findElementPosition(el);
+
+		console.log(pos);
+
 		var tail = pos[pos.length - 1];
 		var parent = this.findElementParent(el);
 
@@ -146,6 +149,8 @@
 		}
 
 		pos[pos.length - 1] = tail + 1;
+
+		console.log(pos);
 
 		return this.findElementByPosition(pos);
 	};

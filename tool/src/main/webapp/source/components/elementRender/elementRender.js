@@ -48,7 +48,7 @@
 			$scope.isElementHiddenByResourceFlag = function(element) {
 				return SyllabusService.isElementHiddenByResourceFlag(element);
 			};
-			
+
 			$scope.isSakaiEntityMissing = function(element) {
 				return SakaiToolsService.getEntity(element.attributes.sakaiToolId) == null;
 			};
@@ -88,6 +88,14 @@
 				return $translate.instant('ELEMENT_HIDDEN_BETWEEN')
 					.replace('%1', dates.start.format(fmt))
 					.replace('%2', dates.end.format(fmt));
+			};
+
+			$scope.isElementFadedOut = function(element) {
+				if (element.composite && (element.type !== 'exam' && element.type !== 'evaluation')) {
+					return false;
+				}
+
+				return !element.equalsPublished;
 			};
 		}
 	};

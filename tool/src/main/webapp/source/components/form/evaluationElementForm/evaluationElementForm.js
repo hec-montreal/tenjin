@@ -46,6 +46,8 @@ tenjinApp.directive('evaluationElementForm',['SyllabusService', function(Syllabu
 				if ($scope.evaluationDateObject) {
 					this.attributes.evaluationDate = $scope.evaluationDateObject;
 				}
+
+				this.composite = true;
 			};
 		},
 

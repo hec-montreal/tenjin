@@ -1,18 +1,12 @@
 <div class="element-examattr">
 	<div data-ng-if="element.attributes.examType" class="row">
-		<div class="col-md-1">
-		</div>
 		<div class="col-md-5">
 			<span> {{'EXAM_TYPE' | translate}}</span>
 			<span>{{element.attributes.examType}}</span>
 		</div>
-		<div class="col-md-6">
-		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-md-1">
-		</div>
 		<div class="col-md-5">
 			<span data-ng-if="element.attributes.examInClass === 'true' || element.attributes.examAtHome === 'true'" >{{'EXAM_LOCATION' | translate}} </span>
 			<span data-ng-if="element.attributes.examInClass === 'true' " >{{'EXAM_INCLASS' | translate}} </span>
@@ -29,8 +23,6 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-1">
-		</div>
 		<div class="col-md-5">
 			<span data-ng-if="element.attributes.examOral === 'true' || element.attributes.examWritten === 'true'" >{{'EXAM_TERMS' | translate}} </span>
 			<span data-ng-if="element.attributes.examOral === 'true' " >{{'EXAM_ORAL' | translate}} </span>

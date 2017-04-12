@@ -6,11 +6,13 @@
 	.eval-date {
 		padding-right: 15em;
 		float: right;
-		font-size: 0.9em;
 	}
 
 	.element-evaluationattr {
 		padding-top: 10px;
-		font-size: 0.9em;
+
+		.row {
+			padding-left: 25px;
+		}
 	}
 }

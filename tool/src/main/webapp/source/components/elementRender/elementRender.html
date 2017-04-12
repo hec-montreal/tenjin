@@ -27,7 +27,7 @@
 			<h3><span class="glyphicon glyphicon-flag"></span> {{ 'MISSING_SAKAI_ENTITY_FLAG' | translate }} </h3>
 		</div>
 
-		<div data-ng-class="['element-wrapper', {'important': element.important, 'hidden-by-date': isElementHiddenByDate(element) && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus), 'not-published': !element.equalsPublished && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus)}]">
+		<div data-ng-class="['element-wrapper', {'important': element.important, 'hidden-by-date': isElementHiddenByDate(element) && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus), 'not-published': isElementFadedOut(element) && userService.isAllowed('syllabusWrite', syllabusService.syllabus)}]">
 			<div data-ng-if="element.important" class="important-notice">
 				<h3>{{ 'FORM_IMPORTANT' | translate }}</h3>
 			</div>
