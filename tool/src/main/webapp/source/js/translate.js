@@ -595,7 +595,7 @@
 		FORM_IMPORT_WARNING: 'Attention :  l\'opération d\'import remplacera tous les plans de cours du site.',
 		FORM_IMPORT_SITEID: 'Identifiant du site d\'origine',
 		FORM_IMPORT_SITEID_PLACEHOLDER: '9-999-99.A2017(.A01)',
-		FORM_IMPORT_CONFIRM: 'Êtes-vous certain de vouloir effectuer cet import? Les plans de cours exisants du site actuel seront supprimé et le plan de cours commun sera remplacé par le plan de cours importé.',
+		FORM_IMPORT_CONFIRM: 'Êtes-vous certain de vouloir effectuer cet import? Les plans de cours exisants du site actuel seront supprimés et le plan de cours commun sera remplacé par le plan de cours importé.',
 		ELEMENT_HIDDEN_BEFORE: 'Caché avant le ',
 		ELEMENT_HIDDEN_BETWEEN: 'Caché avant le %1 et après le %2',
 		FROM_COMMON: 'Provenant du commun',
