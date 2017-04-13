@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('courseElementForm', function() {
+﻿tenjinApp.directive('courseElementForm',['SyllabusService', function(SyllabusService) {
 	'use strict';
 
 	return {
@@ -11,6 +11,12 @@
 		templateUrl: 'form/courseElementForm/courseElementForm.html',
 
 		controller: function($scope) {
+			var templateType = SyllabusService.template[$scope.element.templateStructureId];
+
+			if (!$scope.element.title || $scope.element.title.length === 0) {
+				$scope.element.title = templateType.label
+			}
+
 			// Validation
 			$scope.element.validate = function() {
 				var ret = [];
@@ -33,4 +39,4 @@
 			};
 		}
 	};
-});
+}]);

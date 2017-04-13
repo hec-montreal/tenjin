@@ -1,12 +1,5 @@
 <div class="element-evaluationattr">
-	<div class="row" data-ng-if="element.attributes.evaluationType">
-		 <div class="col-md-5">
-			<span> {{'EVALUATION_TYPE' | translate}}</span>
-			<span>{{element.attributes.evaluationType}}</span>
-		</div>
-	</div> 
-
-	<div class="row">
+	<div class="sub">
 		<div class="col-md-5">
 			<span data-ng-if="element.attributes.evaluationInClass === 'true' || element.attributes.evaluationAtHome === 'true'">{{'EVALUATION_LOCATION' | translate}} </span>
 			<span data-ng-if="element.attributes.evaluationInClass === 'true' ">{{'EVALUATION_INCLASS' | translate}} </span>
@@ -22,7 +15,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="sub">
 		<div class="col-md-5">
 			<span data-ng-if="element.attributes.evaluationOral === 'true' || element.attributes.evaluationWritten === 'true'">{{'EVALUATION_TERMS' | translate}} </span>
 			<span data-ng-if="element.attributes.evaluationOral === 'true' ">{{'EVALUATION_ORAL' | translate}} </span>

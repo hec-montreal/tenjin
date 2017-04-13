@@ -1,18 +1,27 @@
 .element-evaluation {
-	.row {
-		padding-bottom: 10px;
-	}
-
 	.eval-date {
 		padding-right: 15em;
-		float: right;
 	}
 
 	.element-evaluationattr {
 		padding-top: 10px;
 
-		.row {
-			padding-left: 25px;
+		.sub .col-md-5 {
+			padding-left: 40px;
 		}
+
+		.sub {
+			padding-bottom: 10px;
+		}
+	}
+
+	.sub::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+
+	.element-page > .sub {
+		margin-bottom: -15px;
 	}
 }

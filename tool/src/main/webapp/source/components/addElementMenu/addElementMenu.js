@@ -52,6 +52,9 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 							modalData.parent.elements = [];
 						}
 						modalData.parent.elements.push(modalData.element);
+
+						SyllabusService.numberSyllabus(SyllabusService.syllabus);
+
 						SyllabusService.setDirty(true);
 					});
 				}

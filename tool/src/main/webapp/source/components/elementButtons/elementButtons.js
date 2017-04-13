@@ -46,6 +46,9 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'Alert
 							break;
 						}
 					}
+
+					SyllabusService.numberSyllabus(SyllabusService.syllabus);
+
 					SyllabusService.setDirty(true);
 				});
 			}
