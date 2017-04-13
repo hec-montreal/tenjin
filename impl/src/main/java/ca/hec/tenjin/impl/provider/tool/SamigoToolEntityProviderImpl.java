@@ -3,13 +3,10 @@ package ca.hec.tenjin.impl.provider.tool;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sakaiproject.tool.assessment.data.dao.authz.AuthorizationData;
 import org.sakaiproject.tool.assessment.entity.api.PublishedAssessmentEntityProvider;
-import org.sakaiproject.tool.assessment.entity.impl.PublishedAssessmentEntityProviderImpl;
-import org.sakaiproject.tool.assessment.facade.AuthzQueriesFacadeAPI;
 import org.sakaiproject.tool.assessment.facade.PublishedAssessmentFacade;
+import org.sakaiproject.tool.assessment.facade.PublishedAssessmentFacadeQueries;
 import org.sakaiproject.tool.assessment.services.PersistenceService;
-import org.sakaiproject.tool.assessment.services.assessment.PublishedAssessmentService;
 
 import ca.hec.tenjin.api.provider.tool.SamigoToolEntity;
 import ca.hec.tenjin.api.provider.tool.SamigoToolEntityProvider;
@@ -26,34 +23,24 @@ public class SamigoToolEntityProviderImpl implements SamigoToolEntityProvider {
 
 	@Override
 	public List<ToolEntity> getEntities(String siteId, String currentUserId) {
-		PublishedAssessmentEntityProviderImpl providerImpl = (PublishedAssessmentEntityProviderImpl) publishedAssessmentEntityProvider;
-		PublishedAssessmentService service = new PublishedAssessmentService();
-		AuthzQueriesFacadeAPI authz = PersistenceService.getInstance().getAuthzQueriesFacade();
+		//use method #2 that doesn't require current user to be in the group
+		List<PublishedAssessmentFacade> assessments = 
+				persistenceService.getPublishedAssessmentFacadeQueries().getBasicInfoOfAllPublishedAssessments2(
+						PublishedAssessmentFacadeQueries.TITLE, true, siteId);
 
 		List<ToolEntity> ret = new ArrayList<>();
 
-		List<String> entities = providerImpl.findEntityRefs(new String[] { PublishedAssessmentEntityProvider.ENTITY_PREFIX }, new String[] { "site", "user" }, new String[] { siteId, currentUserId }, false);
+		for (PublishedAssessmentFacade assessmentObj : assessments) {
+			ToolEntity entity = new SamigoToolEntity();
 
-		if (entities != null) {
-			for (String key : entities) {
-				PublishedAssessmentFacade a = service.getPublishedAssessment(key.substring(PublishedAssessmentEntityProvider.ENTITY_PREFIX.length() + 2));
-				ToolEntity entity = new SamigoToolEntity();
+			entity.setName(assessmentObj.getTitle());
+			entity.setResourceId(assessmentObj.getPublishedAssessmentId().toString());
+			entity.setUrl("/direct/sam_pub/" + assessmentObj.getPublishedAssessmentId().toString());
+			entity.setSections(persistenceService.getPublishedAssessmentFacadeQueries().getReleaseToGroupIdsForPublishedAssessment(assessmentObj.getPublishedAssessmentId().toString()));
 
-				entity.setResourceId(key);
-				entity.setName(a.getTitle());
-				entity.setUrl(key);
-
-				List<AuthorizationData> authorizations = authz.getAuthorizationByFunctionAndQualifier("TAKE_ASSESSMENT", a.getAssessmentId().toString());
-
-				for (AuthorizationData data : authorizations) {
-					entity.getSections().add(data.getAgentIdString());
-				}
-
-				ret.add(entity);
-			}
+			ret.add(entity);
 		}
 
-		//persistenceService.getPublishedAssessmentFacadeQueries().getBasicInfoOfAllPublishedAssessments("title", true, siteId);
 		return ret;
 	}
 
