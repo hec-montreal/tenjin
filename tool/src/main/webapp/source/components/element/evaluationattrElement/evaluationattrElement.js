@@ -1,24 +1,24 @@
 tenjinApp.directive('evaluationattrElement', function() {
-    'use strict';
+	'use strict';
 
-    return {
-        scope: {
-            element: '=evaluationattrElement'
-        },
+	return {
+		scope: {
+			element: '=evaluationattrElement'
+		},
 
-        restrict: 'A',
+		restrict: 'A',
 
-        templateUrl: 'element/evaluationattrElement/evaluationattrElement.html',
+		templateUrl: 'element/evaluationattrElement/evaluationattrElement.html',
 
-        controller: function($scope) {
-             console.log($scope.element.attributes);
-        },
+		controller: function($scope) {
 
-        link: function($scope, $element) {
-            $scope.slash = '/';
-            $scope.team = 'team';
-            $scope.individual = 'individual';
-           
-        }
-    };
+		},
+
+		link: function($scope, $element) {
+			$scope.slash = '/';
+			$scope.team = 'team';
+			$scope.individual = 'individual';
+		   
+		}
+	};
 });

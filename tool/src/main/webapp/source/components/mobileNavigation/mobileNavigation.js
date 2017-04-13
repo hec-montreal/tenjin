@@ -24,6 +24,10 @@ tenjinApp.directive("mobileNavigation", ['SyllabusService', 'TreeService', funct
 				$scope.mobileMenuVisible = false;
 			};
 
+			$scope.isEnumeration = function(element) {
+				return element.type === 'evaluation' || element.type === 'exam' || element.type === 'lecture' || element.type === 'tutorial';
+			};
+
 			$scope.goLeft = function() {
 				var selectedElement = TreeService.findSelectedElement();
 				var previousSibling = TreeService.findPeviousSibling(selectedElement);
@@ -63,6 +67,15 @@ tenjinApp.directive("mobileNavigation", ['SyllabusService', 'TreeService', funct
 
 				if (nextSibling) {
 					TreeService.selectElement(nextSibling);
+				} else {
+					// Go to parent next sibling
+					var parent = TreeService.findElementParent(selectedElement);
+
+					nextSibling = TreeService.findNextSibling(parent);
+
+					if (nextSibling) {
+						TreeService.selectElement(nextSibling);
+					}
 				}
 			};
 		}

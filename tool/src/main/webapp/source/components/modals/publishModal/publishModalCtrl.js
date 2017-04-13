@@ -11,7 +11,6 @@ tenjinApp.controller('PublishModalCtrl', ['$scope', '$rootScope', '$uibModalInst
 	$scope.publishing = false;
 
 	$scope.sections = PublishService.getTargetedSections().sort(function(a, b) {
-		console.log(a + " cmp " + b);
 		return a.localeCompare(b);
 	});
 

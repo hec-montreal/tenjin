@@ -1,23 +1,23 @@
 tenjinApp.directive('examattrElement', function() {
-    'use strict';
+	'use strict';
 
-    return {
-        scope: {
-            element: '=examattrElement'
-        },
+	return {
+		scope: {
+			element: '=examattrElement'
+		},
 
-        restrict: 'A',
+		restrict: 'A',
 
-        templateUrl: 'element/examattrElement/examattrElement.html',
+		templateUrl: 'element/examattrElement/examattrElement.html',
 
-        controller: function($scope) {
-            console.log($scope.element.attributes);
-        },
+		controller: function($scope) {
 
-        link: function($scope, $element) {
-            $scope.slash = '/';
-            $scope.team = 'team';
-            $scope.individual = 'individual';
-        }
-    };
+		},
+
+		link: function($scope, $element) {
+			$scope.slash = '/';
+			$scope.team = 'team';
+			$scope.individual = 'individual';
+		}
+	};
 });
