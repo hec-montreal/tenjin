@@ -36,7 +36,14 @@ public class SamigoToolEntityProviderImpl implements SamigoToolEntityProvider {
 			entity.setName(assessmentObj.getTitle());
 			entity.setResourceId(assessmentObj.getPublishedAssessmentId().toString());
 			entity.setUrl("/direct/sam_pub/" + assessmentObj.getPublishedAssessmentId().toString());
-			entity.setSections(persistenceService.getPublishedAssessmentFacadeQueries().getReleaseToGroupIdsForPublishedAssessment(assessmentObj.getPublishedAssessmentId().toString()));
+
+			List<String> sections = new ArrayList<>();
+			for (String section: persistenceService.getPublishedAssessmentFacadeQueries().getReleaseToGroupIdsForPublishedAssessment(assessmentObj.getPublishedAssessmentId().toString())) {
+				if (!section.equals(siteId)) {
+					sections.add(section);
+				}
+			}
+			entity.setSections(sections);
 
 			ret.add(entity);
 		}
