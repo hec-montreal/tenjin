@@ -42,7 +42,7 @@ public class SamigoToolEntityProviderImpl implements SamigoToolEntityProvider {
 				String section = (String)sectionObj;
 				// if the quiz is public or assigned to the site, sections can stay empty
 				// it will be available to all course outlines
-				if (!section.equals(siteId) && !section.equals("public")) {
+				if (!section.equals(siteId) && !section.equals("ANONYMOUS_USERS")) {
 					sections.add(section);
 				}
 			}
