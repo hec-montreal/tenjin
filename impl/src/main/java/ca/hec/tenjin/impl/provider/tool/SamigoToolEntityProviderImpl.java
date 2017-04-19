@@ -38,8 +38,11 @@ public class SamigoToolEntityProviderImpl implements SamigoToolEntityProvider {
 			entity.setUrl("/direct/sam_pub/" + assessmentObj.getPublishedAssessmentId().toString());
 
 			List<String> sections = new ArrayList<>();
-			for (String section: persistenceService.getPublishedAssessmentFacadeQueries().getReleaseToGroupIdsForPublishedAssessment(assessmentObj.getPublishedAssessmentId().toString())) {
-				if (!section.equals(siteId)) {
+			for (Object sectionObj: persistenceService.getPublishedAssessmentFacadeQueries().getReleaseToGroupIdsForPublishedAssessment(assessmentObj.getPublishedAssessmentId().toString())) {
+				String section = (String)sectionObj;
+				// if the quiz is public or assigned to the site, sections can stay empty
+				// it will be available to all course outlines
+				if (!section.equals(siteId) && !section.equals("public")) {
 					sections.add(section);
 				}
 			}
