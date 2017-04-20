@@ -19,6 +19,7 @@
 		$scope.type = type;
 
 		$scope.element = {
+			'id': SyllabusService.getTemporaryId(),
 			'attributes': {},
 			'type': $scope.type.type,
 			'parentId': $scope.parent.id,

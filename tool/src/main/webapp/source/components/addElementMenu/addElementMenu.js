@@ -24,6 +24,7 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 				// If the type is rubric, add now
 				if ($type.type === 'rubric') {
 					var element = {
+						'id': SyllabusService.getTemporaryId(),
 						'attributes': {},
 						'type': $type.type,
 						'composite': true,

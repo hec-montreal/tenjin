@@ -9,6 +9,9 @@
 	this.dirty = false;
 	this.working = false;
 
+	// temporary id to use for new elements, decremented after every use
+	var tempId = -1;
+
 	// variable used to look through the syllabus tree
 	this.navigation = {
 		'level': 1
@@ -340,6 +343,14 @@
 	 */
 	this.setTemplate = function($template) {
 		this.template = $template;
+	};
+
+	/**
+	 * Get a temporary id for a new element
+	 * otherwise adding and modifying sub-elements (prior to a save) is problematic
+	 */
+	this.getTemporaryId = function() {
+		return tempId--;
 	};
 
 	/**
