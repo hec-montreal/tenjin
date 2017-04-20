@@ -11,13 +11,13 @@
 				<div class="toolbar-wrapper">
 					<div class="toolbar-left">
 						<!-- Management button -->
-						<button  data-ng-show = "userService.isAllowedView('management')" ng-click="goToManagement()">
+						<button  data-ng-show = "userService.isAllowedView('management')" ng-click="goToManagement()" ng-disabled="syllabusService.isWorking()">
 							{{ 'BUTTON_MANAGEMENT' | translate }}
 						</button>
 
 						<!-- Groups list-->
 						<div  data-ng-show = "userService.isAllowedView('syllabusWrite')" class="btn-group button-list" uib-dropdown keyboard-nav>
-							<button id="btn-group-list" class="list" ng-disabled="syllabusService.working" uib-dropdown-toggle>
+							<button id="btn-group-list" class="list" ng-disabled="syllabusService.isWorking()" uib-dropdown-toggle>
 								<span class="add-label">{{syllabusService.syllabus.title}}</span> <span class="caret"></span> 
 							</button>
 
