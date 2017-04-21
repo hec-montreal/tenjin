@@ -3,7 +3,7 @@
 	<!-- Display items composite, evaluation, exam, lecture and tutorial -->
 	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" data-ng-class="['menu-item', {'item-selected': item.$selected, 'menu-item-selected': item.$selected, 'menu-item-parent': syllabusService.itemHasChildInMenu(item), 'menu-item-toplevel': !syllabusService.itemHasParentInMenu(item) }]">
 		<a data-nodrag data-ng-click="treeService.selectElement(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }">
-			<div>
+			<div ng-class="{'numbered-title': isTitleNumbered(item.type)}">
 				<div data-ng-if="item.type === 'evaluation' || item.type ==='exam'" class="number">
 					{{ $index + 1 }}&nbsp;-&nbsp;
 				</div>

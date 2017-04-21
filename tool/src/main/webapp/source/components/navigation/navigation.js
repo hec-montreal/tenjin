@@ -14,6 +14,14 @@
 			$scope.closed = false;
 			$scope.userService = UserService;
 
+			$scope.isTitleNumbered = function($type) {
+				if ($type === 'exam' || $type === 'evaluation' ||
+					$type === 'lecture' || $type === 'tutorial') {
+						return true;
+				}
+				return false;
+			}
+
 			$scope.toggleDrawer = function() {
 				$scope.$emit('navigationToggled');
 			};

@@ -53,14 +53,15 @@
 			width: 100%;
 		}
 
+		.numbered-title {
+			padding-left: 10px;
+		}
+
 		.number {
 			float: left;
-			width: 36px;
-			text-align: right;
 		}
 
 		.item-title {
-			float: left;
 			max-width: 270px;
 		}
 	}
