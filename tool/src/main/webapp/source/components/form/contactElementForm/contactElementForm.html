@@ -36,7 +36,7 @@
 					</button>
 
 					<ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-						<li role="menuitem" data-ng-repeat="title in config.contactInfoTitles">
+						<li role="menuitem" data-ng-repeat="title in getContactInfoTitles()">
 						<a href="" data-ng-click="selectTitle(title)">{{::title.name | translate }}</a> 
 						</li>
 					</ul>
