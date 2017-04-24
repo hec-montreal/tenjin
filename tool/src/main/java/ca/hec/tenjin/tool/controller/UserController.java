@@ -21,12 +21,15 @@
 
 package ca.hec.tenjin.tool.controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.SyllabusService;
+import ca.hec.tenjin.api.TenjinFunctions;
+import ca.hec.tenjin.api.TenjinSecurityService;
+import ca.hec.tenjin.api.exception.DeniedAccessException;
+import ca.hec.tenjin.api.exception.NoSiteException;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.provider.TenjinImportProvider;
+import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.site.api.Group;
@@ -38,15 +41,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ca.hec.tenjin.api.provider.TenjinImportProvider;
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.SyllabusService;
-import ca.hec.tenjin.api.TenjinFunctions;
-import ca.hec.tenjin.api.TenjinSecurityService;
-import ca.hec.tenjin.api.exception.DeniedAccessException;
-import ca.hec.tenjin.api.exception.NoSiteException;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import lombok.Setter;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "v1")
@@ -98,6 +93,10 @@ public class UserController {
 
 			profile.put("siteId", siteId);
 			profile.put("courseTitle", site.getTitle());
+
+			profile.put("locale", sakaiProxy.getCurrentUserLocale());
+
+			profile.put("defaultLocale", sakaiProxy.getDefaultLocale());
 
 			profile.put("sections", getSiteSections(site));
 

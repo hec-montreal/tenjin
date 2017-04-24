@@ -138,6 +138,10 @@
 			<ref bean="org.sakaiproject.user.api.UserDirectoryService" />
 		</property>
 
+		<property name="preferencesService">
+			<ref bean="org.sakaiproject.user.api.PreferencesService"/>
+		</property>
+
 		<property name="contentHostingService">
 			<ref bean="org.sakaiproject.content.api.ContentHostingService" />
 		</property>

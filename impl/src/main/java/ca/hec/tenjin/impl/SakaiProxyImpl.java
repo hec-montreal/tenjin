@@ -1,17 +1,11 @@
 package ca.hec.tenjin.impl;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.TenjinFunctions;
+import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.authz.api.AuthzGroup;
-import org.sakaiproject.authz.api.AuthzGroupService;
-import org.sakaiproject.authz.api.FunctionManager;
-import org.sakaiproject.authz.api.GroupNotDefinedException;
-import org.sakaiproject.authz.api.SecurityService;
+import org.sakaiproject.authz.api.*;
 import org.sakaiproject.component.api.ServerConfigurationService;
 import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.content.api.ContentResource;
@@ -24,13 +18,15 @@ import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.ToolManager;
+import org.sakaiproject.user.api.PreferencesService;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.TenjinFunctions;
-import lombok.Setter;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Setter
 public class SakaiProxyImpl implements SakaiProxy {
@@ -47,6 +43,7 @@ public class SakaiProxyImpl implements SakaiProxy {
 	private UserDirectoryService userDirectoryService;
 	private ContentHostingService contentHostingService;
 	private ServerConfigurationService serverConfigurationService;
+	private PreferencesService preferencesService;
 
 	public void init() {
 
@@ -216,5 +213,15 @@ public class SakaiProxyImpl implements SakaiProxy {
 	@Override
 	public Site getCurrentSite() {
 		return getSite(getCurrentSiteId());
+	}
+
+	@Override
+	public String getCurrentUserLocale ()  {
+
+		return (preferencesService.getLocale(getCurrentUserId()).toString());
+	}
+
+	public String getDefaultLocale (){
+		return serverConfigurationService.getString("tenjin.default.locale","en_US");
 	}
 }

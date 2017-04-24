@@ -66,4 +66,8 @@ public interface SakaiProxy {
 	public String getSakaiProperty(String name);
 	
 	public Set<String> getGroupsForSite(String siteId);
+
+	public String getCurrentUserLocale ();
+
+    public String getDefaultLocale ();
 }

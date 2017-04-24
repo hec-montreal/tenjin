@@ -3,7 +3,7 @@
 
 	$translateProvider.useSanitizeValueStrategy('escape');
 
-	$translateProvider.translations('en', {
+	$translateProvider.translations('en_US', {
 		MENU_LABEL: 'Course menu',
 		MODAL_DELETE_CONFIRM_TITLE: 'Delete element',
 		MODAL_DELETE_CONFIRM_MESSAGE: 'Are you sure you want to delete this element',
@@ -307,7 +307,7 @@
 		TITLE: 'Title',
 		COPY_DEFAULT_NAME_PREFIX: 'Copy of',
 		WARNING_UNSAVED: 'You have unsaved changes that will be lost if you leave this page, would you like to continue?'
-	}).translations('fr', {
+	}).translations('fr_CA', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
 		MODAL_DELETE_CONFIRM_MESSAGE: 'Êtes-vous sûr de vouloir supprimer l\'élément',
@@ -613,5 +613,6 @@
 		WARNING_UNSAVED: 'Vos modifications n\'ont pas été enregistré, voulez-vous quitter et perdre ces changements?'
 	});
 
-	$translateProvider.preferredLanguage('fr');
+	$translateProvider.preferredLanguage('fr_CA');
+	$translateProvider.registerAvailableLanguageKeys(['en_US', 'fr_CA']);
 }]);
