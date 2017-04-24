@@ -129,7 +129,7 @@
 		});
 
 		return modalInstance;
-	}
+	};
 
 	this.unassignSections = function(sections) {
 		var modalInstance = $uibModal.open({

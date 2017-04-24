@@ -104,13 +104,20 @@ body {
 		height: 34px;
 	}
 
-	.uib-daypicker tbody button {
-		background-color: #fff!important;
-		border: 0;
-	}
+	.uib-daypicker {
+		tbody button {
+			background-color: #fff!important;
+			color: #000!important;
+			border: 0;
+		}
 
-	.uib-daypicker thead button {
-		color: #fff!important;
+		tbody button:hover {
+			color: #000!important;
+		}
+
+		thead button {
+			color: #fff!important;
+		}
 	}
 
 	/* No other way to target this button? */

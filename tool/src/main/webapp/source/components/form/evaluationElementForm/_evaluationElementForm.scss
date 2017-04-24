@@ -1,16 +1,11 @@
-.container-eval-form{
+.element-form.evaluation {
+	.input-group {
+		input {
+			height: 34px;
+		}
+	}
 
-	
+	.group-dates {
+		margin-left: 20px;
+	}
 }
-
-.eval-form-control {
-    height: 28px;
-}
-
-.eval-form-date-group{
-	display:inline-block;
-	border-collapse:separate; 
-
-}
-
-
