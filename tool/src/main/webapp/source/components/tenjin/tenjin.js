@@ -1,4 +1,4 @@
-tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', 'SyllabusLockService', '$translate','tmhDynamicLocale', function(TenjinService, AlertService, SyllabusLockService, $translate, tmhDynamicLocale) {
+tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', 'SyllabusLockService', 'UserService', '$translate','tmhDynamicLocale', function(TenjinService, AlertService, SyllabusLockService, UserService, $translate, tmhDynamicLocale) {
 	return {
 		restrict: 'E',
 
@@ -9,8 +9,6 @@ tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', 'SyllabusLockSer
 		controller: function($scope) {
 			window.SyllabusLockService = SyllabusLockService;
 
-			$translate.use('fr');
-			tmhDynamicLocale.set('fr');
 
 			$scope.showGlobalLoading = function() {
 				$scope.globalLoading = true;
@@ -26,6 +24,16 @@ tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', 'SyllabusLockSer
 
 			TenjinService.loadData().then(function() {
 				$scope.baseDataLoaded = true;
+				// Set locale
+				var availableLang = $translate.getAvailableLanguageKeys();
+				if (availableLang.indexOf(UserService.getProfile().locale) > -1){
+					$translate.use(UserService.getProfile().locale);
+					tmhDynamicLocale.set(UserService.getProfile().locale);
+				}else{  
+					$translate.use(UserService.getProfile().defaultLocale);
+					tmhDynamicLocale.set(UserService.getProfile().defaultLocale);
+				}
+			
 			}).catch(function() {
 				AlertService.showAlert('cannotLoadBaseData');
 			}).finally(function() {
