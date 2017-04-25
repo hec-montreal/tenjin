@@ -10,6 +10,7 @@
 
 		controller: function($scope) {
 			$scope.config = config;
+			
 			// setup editor options
 			$scope.editorOptionsDisponibilite = {
 				language: 'fr',

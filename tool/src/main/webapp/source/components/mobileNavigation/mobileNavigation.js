@@ -14,12 +14,18 @@ tenjinApp.directive("mobileNavigation", ['SyllabusService', 'TreeService', funct
 
 			$scope.mobileMenuVisible = false;
 
+			var scrollTop = function() {
+				window.scroll(0, 0);
+			};
+
 			$scope.toggleMobileMenu = function() {
 				$scope.mobileMenuVisible = !$scope.mobileMenuVisible;
 			};
 
 			$scope.selectElement = function(element) {
 				TreeService.selectElement(element);
+
+				scrollTop();
 
 				$scope.mobileMenuVisible = false;
 			};
@@ -46,6 +52,8 @@ tenjinApp.directive("mobileNavigation", ['SyllabusService', 'TreeService', funct
 						TreeService.selectElement(parent.elements[0]);
 					}
 				}
+
+				scrollTop();
 			};
 
 			$scope.goRight = function() {
@@ -77,6 +85,8 @@ tenjinApp.directive("mobileNavigation", ['SyllabusService', 'TreeService', funct
 						TreeService.selectElement(nextSibling);
 					}
 				}
+
+				scrollTop();
 			};
 		}
 	};
