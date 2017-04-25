@@ -6,10 +6,18 @@
 	.navigation-drawer {
 		display: none;
 	}
+
+	.management .default {
+		display: none;
+	}
 }
 
 @media (min-width: $mobile-breakpoint + 1) {
 	.mobile-navigation-host {
+		display: none;
+	}
+
+	.management .mobile {
 		display: none;
 	}
 }
