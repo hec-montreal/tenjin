@@ -38,7 +38,7 @@
 		ERROR_INVALID_VIDEO_URL: 'Please enter a valid video URL',
 		FORM_TITLE: 'Title',
 		FORM_DESCRIPTION: 'Description',
-		FORM_IMPORTANT: 'Important (add a header)',
+		FORM_IMPORTANT: 'Important',
 		FORM_VISIBILITY: 'Visibility limited to students of this course',
 		FORM_DATE_DISPLAY_START: 'Diffusion Date',
 		FORM_DATE_DISPLAY_END: 'Ending Date',
