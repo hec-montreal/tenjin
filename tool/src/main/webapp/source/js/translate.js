@@ -610,7 +610,7 @@
 		COPY_SYLLABUS: 'Dupliquer un plan de cours',
 		TITLE: 'Titre',
 		COPY_DEFAULT_NAME_PREFIX: 'Copie de',
-		WARNING_UNSAVED: 'Vos modifications n\'ont pas été enregistré, voulez-vous quitter et perdre ces changements?'
+		WARNING_UNSAVED: 'Vos modifications n\'ont pas été enregistrées, voulez-vous quitter et perdre ces changements?'
 	});
 
 	$translateProvider.preferredLanguage('fr_CA');
