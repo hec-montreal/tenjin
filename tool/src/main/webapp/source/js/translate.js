@@ -4,7 +4,7 @@
 	$translateProvider.useSanitizeValueStrategy('escape');
 
 	$translateProvider.translations('en_US', {
-		MENU_LABEL: 'Course menu',
+		MENU_LABEL: 'Course Menu',
 		MODAL_DELETE_CONFIRM_TITLE: 'Delete Element',
 		MODAL_DELETE_CONFIRM_MESSAGE: 'Are you sure you want to delete this element',
 		MODAL_CREATE_ELEMENT_TITLE: 'Add Element',
@@ -215,7 +215,7 @@
 		REFERENCE_LIBRARY_LINK: 'Available at the library',
 		REFERENCE_OTHER_LINK: 'Other link',
 		MOBILE_MENU_BACK: 'Back',
-		BUTTON_MANAGEMENT: 'Course outline list',
+		BUTTON_MANAGEMENT: 'Course Outline List',
 		STATUS_INITIAL: 'Initial',
 		STATUS_DRAFT: 'Draft',
 		STATUS_PUBLISHED: 'Published',
@@ -242,7 +242,7 @@
 		MANAGEMENT_ERREUR_NAME: 'No section',
 		FORUM: 'Forum',
 		ASSIGNMENT: 'Assignments',
-		SAM_PUB: 'Tests et Quizzes',
+		SAM_PUB: 'Tests and Quizzes',
 		HOME_ERROR_LOADING: 'Error during loading.',
 		CREATE_SYLLABUS_DEFAULT_NAME: 'personalized course outline',
 		DATA_MODIFIABLE_IN_RESOURCES: 'The following data are editable with the Resources tool',
