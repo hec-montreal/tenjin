@@ -301,7 +301,7 @@
 		MISSING_SAKAI_ENTITY_FLAG: 'This link is pointing to an assignment or a quiz that does not exist',
 		SOURCE: 'Source',
 		SOURCE_URL: 'URL (Youtube, Vimeo, Dailymotion)',
-		SOURCE_EMBED: 'Embed',
+		SOURCE_EMBED: 'Embed Code',
 		COPY: 'Duplicate',
 		COPY_SYLLABUS: 'Duplicate Course Outline',
 		TITLE: 'Title',
