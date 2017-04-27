@@ -22,6 +22,7 @@ import org.sakaiproject.user.api.PreferencesService;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
+import org.sakaiproject.util.ResourceLoader;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -217,8 +218,14 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 	@Override
 	public String getCurrentUserLocale ()  {
+		String locale ;
+		try{
 
-		return (preferencesService.getLocale(getCurrentUserId()).toString());
+			locale = preferencesService.getLocale(getCurrentUserId()).toString();
+		} catch (Exception e){
+			locale = new ResourceLoader().getLocale().toString();;
+		}
+		return (locale);
 	}
 
 	public String getDefaultLocale (){
