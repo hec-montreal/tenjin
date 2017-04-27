@@ -7,7 +7,6 @@
 				<span data-ng-if="treeService.selectedElement.type == 'exam'"> ({{treeService.selectedElement.attributes.examWeight}}%)</span>
 			</h2>
 
-			<span  data-ng-if="treeService.selectedElement.attributes.evaluationDate" class="eval-date">{{'EVALUATION_DATE' | translate}} {{treeService.selectedElement.attributes.evaluationDate | date:'dd/MM/yyyy'}}</span>
 			<div data-ng-if="treeService.selectedElement.description && treeService.selectedElement.description.length > 0" class="description syllabus-text">
 				<div data-ng-bind-html="treeService.selectedElement.description"></div>
 			</div>
@@ -19,10 +18,18 @@
 	</div>
 
 	<div data-ng-if="treeService.selectedElement.type == 'evaluation'">
+		<div class="item-panel-composite details">
+			{{ 'DETAILS' | translate }}
+		</div>
+
 		<evaluationattr-element data-evaluationattr-element="treeService.selectedElement"></evaluationattr-element>
 	</div>
 
 	<div data-ng-if="treeService.selectedElement.type == 'exam'">
+		<div class="item-panel-composite details">
+			{{ 'DETAILS' | translate }}
+		</div>
+
 		<examattr-element data-examattr-element="treeService.selectedElement"></examattr-element>
 	</div>
 

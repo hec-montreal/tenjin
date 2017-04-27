@@ -1,5 +1,5 @@
 <div class="management" data-ng-controller="ManagementCtrl">
-	<div class="row">
+	<div class="row default">
 		<div class="buttons-list col-xs-12">
 			<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.getCommonSyllabus()) || userService.isAllowedView('sectionAssign')" type="button" data-ng-click="addSyllabus()">{{ 'BUTTON_CREATE_SYLLABUS' | translate }}</button>
 			<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.getCommonSyllabus()) || userService.isAllowedView('sectionAssign')" type="button" data-ng-disabled="disableCopy" data-ng-click="copySyllabus()">{{ 'COPY' | translate }}</button>
@@ -62,15 +62,10 @@
 		<div class="col-xs-12">
 			<table>
 				<tr>
-					<th class="th-select"> </th>
 					<th>{{ 'TABLE_NAME' | translate }}</th>
 				</tr>
 
 				<tr data-ng-repeat="syllabus in syllabusService.syllabusList track by syllabus.id">
-					<td class="th-select">
-						<input data-ng-if="!syllabus.common && userService.isAllowed('syllabusWrite', syllabus)" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="checkStatus()" />
-					</td>
-
 					<td>
 						<div>
 							<a data-ng-if="userService.isAllowed('syllabusWrite', syllabus) || syllabus.publishedDate != null" ui-sref="syllabus-edit({ id: syllabus.id })">{{syllabus.title}}</a>
@@ -83,6 +78,14 @@
 
 						<div>
 							{{ showSections(syllabus) }}
+						</div>
+
+						<div>
+							<span class="bold">{{ 'TABLE_LAST_PUBLISHED_DATE' | translate }}:</span> {{syllabus.publishedDate | date: 'medium'}}
+						</div>
+
+						<div>
+							<span class="bold">{{ 'TABLE_LAST_MODIFICATION_DATE' | translate }}:</span> {{syllabus.lastModifiedDate | date: 'medium'}}
 						</div>
 					</td>
 				</tr>

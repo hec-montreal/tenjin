@@ -18,7 +18,6 @@ tenjinApp.directive('evaluationattrElement', function() {
 			$scope.slash = '/';
 			$scope.team = 'team';
 			$scope.individual = 'individual';
-		   
 		}
 	};
 });

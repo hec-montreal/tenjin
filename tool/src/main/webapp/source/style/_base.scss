@@ -104,13 +104,18 @@ body {
 		height: 34px;
 	}
 
-	.uib-daypicker {
+	.uib-daypicker, .uib-monthpicker, .uib-yearpicker {
 		tbody button {
 			background-color: #fff!important;
 			color: #000!important;
 			border: 0;
 		}
 
+		thead button {
+			margin: 0;
+			width: 100%;
+		}
+		
 		tbody button:hover {
 			color: #000!important;
 		}

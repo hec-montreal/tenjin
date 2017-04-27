@@ -1,13 +1,9 @@
 <div class="element-evaluation">
 	<div class="element-title element-page syllabus-text">
 		<div class="sub">
-			<div class="col-md-5">
+			<div>
 				{{element.$numero}} - <a href="" data-ng-click="treeService.selectElement(element);">{{element.title}}</a>
 				<span data-ng-if="element.attributes.evaluationWeight"> ({{element.attributes.evaluationWeight}}%)</span>
-			</div>
-
-			<div class="col-md-6">
-				<span  data-ng-if="element.attributes.evaluationDate" class="eval-date">{{'EVALUATION_DATE' | translate}} {{element.attributes.evaluationDate | date:'dd/MM/yyyy'}}</span>
 			</div>
 		</div>
 

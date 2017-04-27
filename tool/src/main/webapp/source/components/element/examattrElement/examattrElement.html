@@ -1,32 +1,30 @@
 <div class="element-examattr">
-	<div class="sub">
-		<div class="col-md-5">
-			<span data-ng-if="element.attributes.examInClass === 'true' || element.attributes.examAtHome === 'true'" >{{'EXAM_LOCATION' | translate}} </span>
+	<ul>
+		<li data-ng-if="element.attributes.examInClass === 'true' || element.attributes.examAtHome === 'true'">
+			{{'EXAM_LOCATION' | translate}}:
 			<span data-ng-if="element.attributes.examInClass === 'true' " >{{'EXAM_INCLASS' | translate}} </span>
 			<span data-ng-if="element.attributes.examInClass === 'true' && element.attributes.examAtHome === 'true'" >{{slash}}</span>
 			<span data-ng-if="element.attributes.examAtHome === 'true'" >{{'EXAM_ATHOME' | translate}} </span>
-		</div>
+		</li>
 
-		<div class="col-md-6">
-			<span data-ng-if="element.attributes.examPaper === 'true' || element.attributes.examElectronic === 'true'" >{{'EXAM_SUBMISSION_TYPE' | translate}} </span>
+		<li data-ng-if="element.attributes.examPaper === 'true' || element.attributes.examElectronic === 'true'">
+			{{'EXAM_SUBMISSION_TYPE' | translate}}:
 			<span data-ng-if="element.attributes.examPaper === 'true' " >{{'EXAM_PAPER' | translate}} </span>
 			<span data-ng-if="element.attributes.examPaper === 'true' && element.attributes.examElectronic === 'true'" >{{slash}}</span>
 			<span data-ng-if="element.attributes.examElectronic === 'true'" >{{'EXAM_ELECTRONIC' | translate}} </span>
-		</div>
-	</div>
+		</li>
 
-	<div class="sub">
-		<div class="col-md-5">
-			<span data-ng-if="element.attributes.examOral === 'true' || element.attributes.examWritten === 'true'" >{{'EXAM_TERMS' | translate}} </span>
+		<li data-ng-if="element.attributes.examOral === 'true' || element.attributes.examWritten === 'true'">
+			{{'EXAM_TERMS' | translate}}:
 			<span data-ng-if="element.attributes.examOral === 'true' " >{{'EXAM_ORAL' | translate}} </span>
 			<span data-ng-if="element.attributes.examOral === 'true' && element.attributes.examWritten === 'true'" >{{slash}}</span>
 			<span data-ng-if="element.attributes.examWritten === 'true'" >{{'EXAM_WRITTEN' | translate}} </span>
-		</div>
+		</li>
 
-		<div class="col-md-6">
-			<span data-ng-if="element.attributes.examMode" >{{'EXAM_ASSESSMENT_TYPE' | translate}} </span>
+		<li data-ng-if="element.attributes.examMode">
+			{{'EXAM_ASSESSMENT_TYPE' | translate}}
 			<span data-ng-if="element.attributes.examMode === 'team' " >{{'EXAM_TEAM' | translate}} </span>
 			<span data-ng-if="element.attributes.examMode === 'individual'" >{{'EXAM_INDIVIDUAL' | translate}} </span>
-		</div>
-	</div>
+		</li>
+	</ul>
 </div>
