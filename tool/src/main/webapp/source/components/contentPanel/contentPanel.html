@@ -22,7 +22,9 @@
 			{{ 'DETAILS' | translate }}
 		</div>
 
-		<evaluationattr-element data-evaluationattr-element="treeService.selectedElement"></evaluationattr-element>
+		<div class="syllabus-text">
+			<evaluationattr-element data-evaluationattr-element="treeService.selectedElement"></evaluationattr-element>
+		</div>
 	</div>
 
 	<div data-ng-if="treeService.selectedElement.type == 'exam'">
@@ -30,7 +32,9 @@
 			{{ 'DETAILS' | translate }}
 		</div>
 
-		<examattr-element data-examattr-element="treeService.selectedElement"></examattr-element>
+		<div class="syllabus-text">
+			<examattr-element data-examattr-element="treeService.selectedElement"></examattr-element>
+		</div>
 	</div>
 
 	<div ui-tree="treeOptions" data-drag-enabled="true" data-ng-model="treeService.selectedElement">
