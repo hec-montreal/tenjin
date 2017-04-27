@@ -603,7 +603,7 @@
 		DATE_TIME_FORMAT: 'yyyy-MM-dd HH:mm',
 		HIDDEN_BY_RESOURCE_FLAG: 'Caché par les propriétés de la ressource',
 		MISSING_SAKAI_ENTITY_FLAG: 'Ce lien pointe vers un travail/quiz qui n\'existe pas',
-		FORM_EMBED: 'Code d\'imbrication:',
+		FORM_EMBED: 'Code d\'imbrication',
 		SOURCE: 'Source',
 		SOURCE_URL: 'URL (Youtube, Vimeo, Dailymotion)',
 		SOURCE_EMBED: 'Imbrication (Méliès)',
