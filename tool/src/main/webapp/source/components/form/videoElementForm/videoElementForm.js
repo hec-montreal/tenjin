@@ -25,7 +25,7 @@
 			}
 
 			if (!$scope.element.id) {
-				$scope.element.visibility = true;
+				$scope.element.hidden = true;
 			}
 
 			$scope.element.preSave = function() {
