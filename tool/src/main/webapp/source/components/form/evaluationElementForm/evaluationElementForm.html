@@ -27,7 +27,7 @@
 
 			<div class="col-md-8" >
 				<p class="input-group">
-					<input type="text" id="evaluationDate" class="form-control" datetime-picker="{{ 'DATE_TIME_FORMAT' | translate }}" data-ng-model="evaluationDateObject" is-open="statusDateEval.opened" today-text="{{ 'CALENDAR_TODAY' | translate }}" now-text="{{ 'CALENDAR_NOW' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" time-text="{{ 'CALENDAR_TIME' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" />
+					<input type="text" id="evaluationDate" class="form-control" datetime-picker="{{ 'DATE_TIME_FORMAT' | translate }}" data-ng-model="evaluationDateObject" is-open="statusDateEval.opened" today-text="{{ 'CALENDAR_TODAY' | translate }}" now-text="{{ 'CALENDAR_NOW' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" time-text="{{ 'CALENDAR_TIME' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" show-weeks="false" />
 					
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-default btn-date" data-ng-click="openDateEval($event)">

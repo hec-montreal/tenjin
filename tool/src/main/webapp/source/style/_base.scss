@@ -123,6 +123,11 @@ body {
 		thead button {
 			color: #fff!important;
 		}
+
+		// Plugin has a bug
+		td[ng-if='showWeeks'],th[ng-if='showWeeks'] {
+			display: none;
+		}
 	}
 
 	/* No other way to target this button? */

@@ -1,6 +1,10 @@
 ﻿tenjinApp.constant('config', {
 	defaultHyperlinkProtocol: "http",
 
+	datepickerOptions: {
+		showWeeks: false
+	},
+
 	ckeditorToolbarTenjin: [{
 			name: 'basicstyles',
 			items: ['Bold', 'Italic', 'Strike', 'Underline']

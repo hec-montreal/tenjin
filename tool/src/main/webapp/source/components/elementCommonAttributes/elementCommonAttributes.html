@@ -24,7 +24,7 @@
 			
 			<span class="container-date-start">
 				<p class="input-group">
-					<input type="text" class="form-control" datetime-picker="{{ 'DATE_TIME_FORMAT' | translate }}" data-ng-model="element.availabilityStartDate " is-open="status.opened" today-text="{{ 'CALENDAR_TODAY' | translate }}" now-text="{{ 'CALENDAR_NOW' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" time-text="{{ 'CALENDAR_TIME' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" />
+					<input type="text" class="form-control" datetime-picker="{{ 'DATE_TIME_FORMAT' | translate }}" data-ng-model="element.availabilityStartDate " is-open="status.opened" today-text="{{ 'CALENDAR_TODAY' | translate }}" now-text="{{ 'CALENDAR_NOW' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" time-text="{{ 'CALENDAR_TIME' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" options="constants.datepickerOptions" />
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-default btn-date" data-ng-click="open($event)">
 							<i class="glyphicon glyphicon-calendar" ></i>
@@ -40,7 +40,7 @@
 			
 			<span class="container-date-end">
 				<p class="input-group">
-					<input id="input-date-end" type="text" class="form-control" datetime-picker="{{ 'DATE_TIME_FORMAT' | translate }}" data-ng-model="element.availabilityEndDate" is-open="statusEnd.opened" data-ng-disabled="!element.hasEndDate" today-text="{{ 'CALENDAR_TODAY' | translate }}" now-text="{{ 'CALENDAR_NOW' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" time-text="{{ 'CALENDAR_TIME' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}"/>
+					<input id="input-date-end" type="text" class="form-control" datetime-picker="{{ 'DATE_TIME_FORMAT' | translate }}" data-ng-model="element.availabilityEndDate" is-open="statusEnd.opened" data-ng-disabled="!element.hasEndDate" today-text="{{ 'CALENDAR_TODAY' | translate }}" now-text="{{ 'CALENDAR_NOW' | translate }}" date-text="{{ 'CALENDAR_DATE' | translate }}" time-text="{{ 'CALENDAR_TIME' | translate }}" clear-text="{{ 'CALENDAR_CLEAR' | translate }}" close-text="{{ 'CALENDAR_CLOSE' | translate }}" show-weeks="false" />
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-default btn-date" data-ng-click="openEnd($event)" data-ng-disabled="!element.hasEndDate">
 							<i class="glyphicon glyphicon-calendar" ></i>
