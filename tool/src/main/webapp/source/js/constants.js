@@ -20,6 +20,9 @@
 		}, {
 			name: 'forms',
 			items: ['Outdent', 'Indent']
+		}, {
+			name: 'insert',
+			items: ['Table']
 		}
 	],
 
@@ -259,6 +262,9 @@
 	}, {
 		'id': 15,
 		'name': 'CONTACT_TITLE_SEMINARY'
+	}, {
+		'id': 16,
+		'name': 'CONTACT_VISITOR_PROFESSOR'
 	}],
 
 	extensionsImage: ['jpg', 'jpeg', 'bmp', 'gif', 'png'],

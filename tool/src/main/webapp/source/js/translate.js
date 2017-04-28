@@ -307,7 +307,8 @@
 		TITLE: 'Title',
 		COPY_DEFAULT_NAME_PREFIX: 'Copy of',
 		WARNING_UNSAVED: 'You have unsaved changes that will be lost if you leave this page, would you like to continue?',
-		DETAILS: 'Details'
+		DETAILS: 'Details',
+		CONTACT_VISITOR_PROFESSOR: 'Visiting Professor'
 	}).translations('fr_CA', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -527,10 +528,10 @@
 		BUTTON_CREATE_SYLLABUS: 'Créer un plan de cours personnalisé',
 		LINK_SYLLABUS: 'Accéder',
 		BUTTON_DELETE_SYLLABUS: 'Supprimer',
-		MODAL_TITLE_NEW_SYLLABUS: 'Ajout plan de cours',
+		MODAL_TITLE_NEW_SYLLABUS: 'Créer un plan de cours personnalisé',
 		MODAL_DESCRIPTION_NEW_SYLLABUS: 'Ajouter un nouveau plan de cours personnalisé ?',
 		MODAL_SECTIONS_NEW_SYLLABUS: 'Sélectionner les sections pour ce plan de cours',
-		MODAL_NEW_SYLLABUS: 'Libellé',
+		MODAL_NEW_SYLLABUS: 'Titre',
 		MODAL_TITLE_DELETE_SYLLABUS: 'Alerte',
 		MODAL_DESCRIPTION_DELETE_SYLLABUS: 'Supprimer le plan de cours ',
 		MODAL_SECTIONS_DELETE_SYLLABUS: 'Les sections suivantes sont assignées à ce plan de cours. Vous devez d\'abord les retirer du plan de cours.',
@@ -612,7 +613,8 @@
 		TITLE: 'Titre',
 		COPY_DEFAULT_NAME_PREFIX: 'Copie de',
 		WARNING_UNSAVED: 'Vos modifications n\'ont pas été enregistrées, voulez-vous quitter et perdre ces changements?',
-		DETAILS: 'Détails'
+		DETAILS: 'Détails',
+		CONTACT_VISITOR_PROFESSOR: 'Professeur(e) visiteur(se)'
 	});
 
 	$translateProvider.preferredLanguage('fr_CA');
