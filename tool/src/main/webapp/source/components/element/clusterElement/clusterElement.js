@@ -10,6 +10,8 @@ tenjinApp.directive('clusterElement', ['TreeService', 'SyllabusService', functio
 
 		controller: function($scope) {
 			$scope.treeService = TreeService;
+
+			$scope.element.composite = true;
 		}
 	};
 }]);
