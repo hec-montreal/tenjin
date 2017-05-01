@@ -6,7 +6,7 @@
 	<div class="modal-body" data-ng-if="status === 'beforePublish'">
 		<div data-ng-if="isCommonSyllabusPublished()">
 			<div  class="last-publish-date" data-ng-if="syllabus.publishedDate">
-				{{ 'PUBLISH_LAST_PUBLISH_LABEL' | translate }} <span class="date">{{syllabus.publishedDate | date:'d MMMM y h:mm:ss a'}}</span>
+				{{ 'PUBLISH_LAST_PUBLISH_LABEL' | translate }} <span class="date">{{syllabus.publishedDate | date:'medium'}}</span>
 			</div>
 
 			<div class="published-sections">
