@@ -4,7 +4,8 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	templateCache = require('gulp-angular-templatecache'),
 	sass = require('gulp-sass'),
-	gutil = require('gulp-util');
+	gutil = require('gulp-util'),
+	rename = require('gulp-rename');
 
 // Images
 gulp.task('images', function() {
@@ -58,7 +59,6 @@ gulp.task('js:lib', function() {
 			'./node_modules/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js',
 			'./node_modules/angular-ui-router/release/angular-ui-router.min.js',
 			'./node_modules/es6-shim/es6-shim.js',
-			'./node_modules/angular-i18n/angular-locale_fr-ca.js',
 			'./node_modules/ng-dialog/js/ngDialog.min.js',
 			'./node_modules/js-base64/base64.js',
 			'./node_modules/moment/min/moment.min.js',
@@ -75,8 +75,10 @@ gulp.task('js:lib', function() {
 gulp.task('js:locale', function() {
 	return gulp.src([
 			'./node_modules/angular-i18n/angular-locale_fr-ca.js',
-			'./node_modules/angular-i18n/angular-locale_en-ca.js'
-		])
+			'./node_modules/angular-i18n/angular-locale_en-us.js'
+		]).pipe(rename(function(path) {
+			path.basename = path.basename.replace('locale_fr-ca', 'locale_fr_CA-ca').replace('locale_en-us', 'locale_en_US-ca');
+		}))
 		.pipe(gulp.dest('./dest/lib/locale'));
 });
 
@@ -120,9 +122,9 @@ gulp.task('build', ['images', 'style', 'js', 'web']);
 // Deploy
 gulp.task('deploy', ['build', 'deploy:tomcat']);
 
-gulp.task('deploy:tomcat', function () {
+gulp.task('deploy:tomcat', function() {
 	return gulp.src(['./dest/**/*'])
-			.pipe(gulp.dest(process.env.CATALINA_HOME+'/webapps/tenjin-tool'));
+		.pipe(gulp.dest(process.env.CATALINA_HOME + '/webapps/tenjin-tool'));
 });
 
 // Watch
