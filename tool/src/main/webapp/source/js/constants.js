@@ -5,31 +5,6 @@
 		showWeeks: false
 	},
 
-	ckeditorToolbarTenjin: [{
-			name: 'basicstyles',
-			items: ['Bold', 'Italic', 'Strike', 'Underline']
-		}, {
-			name: 'paragraph',
-			items: ['BulletedList', 'NumberedList', 'Blockquote']
-		}, {
-			name: 'editing',
-			items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
-		}, {
-			name: 'links',
-			items: ['Link', 'Unlink', 'Anchor']
-		},
-		'/', {
-			name: 'styles',
-			items: ['PasteText', 'PasteFromWord', 'RemoveFormat']
-		}, {
-			name: 'forms',
-			items: ['Outdent', 'Indent']
-		}, {
-			name: 'insert',
-			items: ['Table']
-		}
-	],
-
 	types: {
 		'text': {
 			'type': 'text',

@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('textElementForm', ['config', function(config) {
+﻿tenjinApp.directive('textElementForm', ['EditorService', function(EditorService) {
 	'use strict';
 
 	return {
@@ -11,12 +11,7 @@
 		templateUrl: 'form/textElementForm/textElementForm.html',
 
 		controller: function($scope) {
-			$scope.editorOptions = {
-				language: 'fr',
-				height: '200',
-				toolbar: config.ckeditorToolbarTenjin,
-				removePlugins: 'elementspath,resize'
-			};
+			$scope.editorOptions = EditorService.createEditorOptions();
 
 			// Validation
 			$scope.element.validate = function() {

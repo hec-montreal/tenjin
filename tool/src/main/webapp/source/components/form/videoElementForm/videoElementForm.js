@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('videoElementForm', ['$sce', 'config', function($sce, config) {
+﻿tenjinApp.directive('videoElementForm', ['$sce', 'EditorService', function($sce, EditorService) {
 	'use strict';
 
 	return {
@@ -11,12 +11,7 @@
 		templateUrl: 'form/videoElementForm/videoElementForm.html',
 
 		controller: function($scope) {
-			$scope.editorOptions = {
-				language: 'fr',
-				height: '120',
-				toolbar: config.ckeditorToolbarTenjin,
-				removePlugins: 'elementspath,resize'
-			};
+			$scope.editorOptions = EditorService.createEditorOptions();
 
 			if ($scope.element.attributes.embedCode && $scope.element.attributes.embedCode.length > 0) {
 				$scope.inputMode = 'embed';

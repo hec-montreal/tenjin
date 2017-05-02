@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('clusterElementForm', ['config', 'SyllabusService', function(config, SyllabusService) {
+﻿tenjinApp.directive('clusterElementForm', ['SyllabusService', 'EditorService', function(SyllabusService, EditorService) {
 	'use strict';
 
 	return {
@@ -12,12 +12,7 @@
 
 		controller: function($scope) {
 			// setup editor options
-			$scope.editorOptions = {
-				language: 'fr',
-				height: '120',
-				toolbar: config.ckeditorToolbarTenjin,
-				removePlugins: 'elementspath,resize'
-			};
+			$scope.editorOptions = EditorService.createEditorOptions();
 
 			var templateType = SyllabusService.template[$scope.element.templateStructureId];
 

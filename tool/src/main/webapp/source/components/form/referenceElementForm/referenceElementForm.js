@@ -1,4 +1,4 @@
-tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$translate', function(config, ResourcesService, $translate) {
+tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$translate', 'EditorService', function(config, ResourcesService, $translate, EditorService) {
 	'use strict';
 
 	return {
@@ -14,12 +14,7 @@ tenjinApp.directive('referenceElementForm', ['config', 'ResourcesService', '$tra
 		controller: function($scope) {
 			$scope.config = config;
 			// setup editor options
-			$scope.editorOptions = {
-				language: 'fr',
-				height: '200',
-				toolbar: config.ckeditorToolbarTenjin,
-				removePlugins: 'elementspath,resize'
-			};
+			$scope.editorOptions = EditorService.createEditorOptions();
 
 			$scope.ResourcesService = ResourcesService;
 

@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('toolElementForm', ['config', '$translate', 'SyllabusService', function(config, $translate, SyllabusService) {
+﻿tenjinApp.directive('toolElementForm', ['$translate', 'SyllabusService', 'EditorService', function($translate, SyllabusService, EditorService) {
 	'use strict';
 
 	return {
@@ -12,12 +12,7 @@
 
 		controller: function($scope) {
 			// setup editor options
-			$scope.editorOptions = {
-				language: 'fr',
-				height: '200',
-				toolbar: config.ckeditorToolbarTenjin,
-				removePlugins: 'elementspath,resize'
-			};
+			$scope.editorOptions = EditorService.createEditorOptions();
 
 			$scope.selectType = function($type) {
 				$scope.currentType = $type;
