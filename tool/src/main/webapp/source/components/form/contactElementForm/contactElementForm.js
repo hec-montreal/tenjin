@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('contactElementForm', ['config', '$translate', function(config, $translate) {
+﻿tenjinApp.directive('contactElementForm', ['config', '$translate', 'EditorService', function(config, $translate, EditorService) {
 	'use strict';
 
 	return {
@@ -12,19 +12,9 @@
 			$scope.config = config;
 			
 			// setup editor options
-			$scope.editorOptionsDisponibilite = {
-				language: 'fr',
-				height: '120',
-				toolbar: config.ckeditorToolbarTenjin,
-				removePlugins: 'elementspath,resize'
-			};
+			$scope.editorOptionsDisponibilite = EditorService.createEditorOptions();
 
-			$scope.editorOptionsCommentaire = {
-				language: 'fr',
-				height: '120',
-				toolbar: config.ckeditorToolbarTenjin,
-				removePlugins: 'elementspath,resize'
-			};
+			$scope.editorOptionsCommentaire = EditorService.createEditorOptions();
 
 			$scope.getContactInfoTitles = function () {
 				return config.contactInfoTitles.sort(function(a, b) {
