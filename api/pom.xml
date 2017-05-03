@@ -84,6 +84,12 @@
 					<include>**/*.hbm.xml</include>
 				</includes>
 			</resource>
+			<resource>
+				<directory>${basedir}/src/main/bundle</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
 			<!--
 			<resource>
 				<directory>${basedir}/src/main/bundle</directory>

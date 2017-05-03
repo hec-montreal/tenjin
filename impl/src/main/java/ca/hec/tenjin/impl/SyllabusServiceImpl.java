@@ -1,17 +1,9 @@
 package ca.hec.tenjin.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.LocaleUtils;
 import org.apache.log4j.Logger;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
@@ -472,7 +464,6 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	private Syllabus createCommonSyllabus(String siteId) throws NoSiteException, DeniedAccessException {
-		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, "fr_CA");
 		Site site = null;
 
 		try {
@@ -481,6 +472,14 @@ public class SyllabusServiceImpl implements SyllabusService {
 			log.error("Site " + siteId + " could not be retrieved.");
 			return null;
 		}
+
+		String locale = site.getProperties().getProperty("locale_string");
+		if (locale.isEmpty()) {
+			String localePropName = sakaiProxy.getSakaiProperty("tenjin.localeSitePropertyName");
+			locale = site.getProperties().getProperty(localePropName);
+		}
+
+		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, (!locale.isEmpty()) ? locale : "en_US");
 
 		if (newCommonSyllabus != null) {
 			newCommonSyllabus.setTemplateId(1L);
@@ -492,14 +491,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 			newCommonSyllabus.setLastModifiedDate(new Date());
 			newCommonSyllabus.setCourseTitle(site.getTitle());
 
-			String locale = site.getProperties().getProperty("locale_string");
-			if (locale != null) {
-				newCommonSyllabus.setLocale(locale);
-			} else {
-				// TODO use a different default?
-				newCommonSyllabus.setLocale("fr_CA");
-			}
-			newCommonSyllabus.setTitle("Commun"); // i18n
+			ResourceBundle rb = ResourceBundle.getBundle("tenjin", LocaleUtils.toLocale(locale));
+			newCommonSyllabus.setTitle(rb.getString("tenjin.common.title"));
 
 			newCommonSyllabus.setSections(new HashSet<String>());
 			for (Group g : site.getGroups()) {
