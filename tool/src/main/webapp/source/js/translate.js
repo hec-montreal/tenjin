@@ -226,7 +226,7 @@
 		MODAL_TITLE_NEW_SYLLABUS: 'Create Personalized Course Outline',
 		MODAL_DESCRIPTION_NEW_SYLLABUS: 'Add a new personalized course outline ?',
 		MODAL_SECTIONS_NEW_SYLLABUS: 'Select the sections for this course outline',
-		MODAL_NEW_SYLLABUS: 'Label',
+		MODAL_NEW_SYLLABUS: 'Title',
 		MODAL_TITLE_DELETE_SYLLABUS: 'Alert',
 		MODAL_DESCRIPTION_DELETE_SYLLABUS: 'Delete the course outline ',
 		MODAL_SECTIONS_DELETE_SYLLABUS: 'The following sections have been assigned to this course outline. You have to unassign those sections before deleting the course outline.',
