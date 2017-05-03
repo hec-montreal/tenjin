@@ -10,7 +10,9 @@ tenjinApp.service('EditorService', ['UserService', function(UserService) {
 
 		return {
 			language: lang,
+
 			height: '120',
+
 			toolbar: [{
 					name: 'basicstyles',
 					items: ['Bold', 'Italic', 'Strike', 'Underline']
@@ -35,6 +37,7 @@ tenjinApp.service('EditorService', ['UserService', function(UserService) {
 					items: ['Table']
 				}
 			],
+
 			removePlugins: 'elementspath,resize'
 		};
 	};
