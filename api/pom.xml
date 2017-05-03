@@ -84,14 +84,12 @@
 					<include>**/*.hbm.xml</include>
 				</includes>
 			</resource>
-			<!--
 			<resource>
 				<directory>${basedir}/src/main/bundle</directory>
 				<includes>
-					<include>**/*.properties</include>
+					<include>**/*</include>
 				</includes>
 			</resource>
-		-->
 		</resources>
 	</build>
 </project>
