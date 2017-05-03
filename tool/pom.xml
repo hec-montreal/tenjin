@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<parent>
 		<artifactId>tenjin</artifactId>
 		<groupId>ca.hec</groupId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
+	
 	<groupId>ca.hec</groupId>
 	<artifactId>tenjin-tool</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-
 	<dependencies>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-core</artifactId>
-        <version>${kernel.spring.version}</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-web</artifactId>
-        <version>${kernel.spring.version}</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-webmvc</artifactId>
-        <version>${kernel.spring.version}</version>
-      </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${kernel.spring.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${kernel.spring.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${kernel.spring.version}</version>
+		</dependency>
+     
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
@@ -37,6 +41,7 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+	
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -45,18 +50,17 @@
 			<scope>compile</scope>
 		</dependency>
 
-
 		<!-- project dependencies -->
 		<dependency>
 			<groupId>ca.hec</groupId>
 			<artifactId>tenjin-api</artifactId>
 		</dependency>
 
-        <!-- we are running a webapp in a servlet container so we need the servlet API -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-        </dependency>
+		<!-- we are running a webapp in a servlet container so we need the servlet API -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
 
 		<!-- We need this special package to run the jsps in Sakai -->
 		<dependency>
@@ -73,81 +77,92 @@
 		</dependency>
 
 		<!-- third party dependencies -->
-
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+		
 		<!-- Sakai dependencies -->
 		<dependency>
 			<groupId>org.sakaiproject.kernel</groupId>
 			<artifactId>sakai-kernel-api</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.sakaiproject.kernel</groupId>
 			<artifactId>sakai-component-manager</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.sakaiproject.kernel</groupId>
 			<artifactId>sakai-kernel-util</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.sakaiproject.entitybroker</groupId>
 			<artifactId>entitybroker-api</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.sakaiproject.entitybroker</groupId>
 			<artifactId>entitybroker-utils</artifactId>
 			<version>1.4.3</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>net.sf.spring-json</groupId>
 			<artifactId>spring-json</artifactId>
 			<version>1.3.1</version>
 			<exclusions>
-        		<exclusion>  <!-- declare the exclusion here -->
-          			<groupId>org.springframework</groupId>
-          			<artifactId>spring</artifactId>
-        		</exclusion>
-      		</exclusions>
+		    	<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+	      		</exclusion>
+    		</exclusions>
 		</dependency>
+		
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib-ext-spring</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-		<!-- Jackson JSON Mapper -->
+
 		<dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-		  <artifactId>jackson-core</artifactId>
-          <version>${sakai.jackson.version}</version>
-	      <scope>provided</scope>
+        	<groupId>com.fasterxml.jackson.core</groupId>
+	  		<artifactId>jackson-core</artifactId>
+         	<version>${sakai.jackson.version}</version>
+      		<scope>provided</scope>
 		</dependency>
-        <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-annotations</artifactId>
-          <version>${sakai.jackson.version}</version>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-databind</artifactId>
-          <version>${sakai.jackson.version}</version>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-        	<groupId>org.sakaiproject.announcement</groupId>
-        	<artifactId>sakai-announcement-api</artifactId>
-        	<version>11.3</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.sakaiproject.message</groupId>
-        	<artifactId>sakai-message-api</artifactId>
-        </dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${sakai.jackson.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${sakai.jackson.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject.announcement</groupId>
+			<artifactId>sakai-announcement-api</artifactId>
+			<version>11.3</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject.message</groupId>
+			<artifactId>sakai-message-api</artifactId>
+		</dependency>
 	</dependencies>
 
 	<repositories>
@@ -155,6 +170,7 @@
 			<id>spring-json</id>
 			<url>http://spring-json.sourceforge.net/repository</url>
 		</repository>
+		
 		<repository>
 			<id>codehaus</id>
 			<url>http://repository.codehaus.org/org/codehaus</url>
@@ -162,7 +178,6 @@
 	</repositories>
 
 	<build>
-      		<!-- configure the build to use the standard maven structure -->
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>
@@ -171,12 +186,14 @@
 					<include>**/*.xml</include>
 				</includes>
 			</resource>
+			
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
 				<includes>
 					<include>**/*</include>
 				</includes>
 			</resource>
+			
 			<resource>
 				<directory>${basedir}/src/main/bundle</directory>
 				<includes>
@@ -184,62 +201,57 @@
 				</includes>
 			</resource>
 		</resources>
+		
 		<plugins>
-
-		<plugin>
-	        <groupId>nl.geodienstencentrum.maven</groupId>
-	        <artifactId>sass-maven-plugin</artifactId>
-	        <version>2.5</version>
-	    </plugin>
-
-
-		<!-- frontend maven plugin -->
-
-	 <plugin>
-       <groupId>com.github.eirslett</groupId>
-       <artifactId>frontend-maven-plugin</artifactId>
-       <version>0.0.27</version>
-       <configuration>
-       		<workingDirectory>src/main/webapp</workingDirectory>
-       </configuration>
-
-	    <executions>
-		   <execution>
-			    <id>install node and npm</id>
-			    <goals>
-			        <goal>install-node-and-npm</goal>
-			    </goals>
-			    <configuration>
-			        <nodeVersion>v4.0.0</nodeVersion>
-			        <npmVersion>2.14.2</npmVersion>
-			    </configuration>
-			</execution>
-
-			<execution>
-			    <id>npm install</id>
-			    <goals>
-			        <goal>npm</goal>
-			    </goals>
-
-			    <configuration>
-			        <arguments>install</arguments>
-			    </configuration>
-			</execution>
-
-		     <execution>
-			    <id>gulp build</id>
-			    <goals>
-			        <goal>gulp</goal>
-			    </goals>
-			    <configuration>
-			        <arguments>build</arguments>
-			    </configuration>
-			</execution>
-
-		   </executions>
-	     </plugin>
-
-			<!-- configure the war plugin to correctly use the standard maven structure -->
+			<plugin>
+		       <groupId>nl.geodienstencentrum.maven</groupId>
+		       <artifactId>sass-maven-plugin</artifactId>
+		       <version>2.5</version>
+		   </plugin>
+		
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>0.0.27</version>
+				<configuration>
+					<workingDirectory>src/main/webapp</workingDirectory>
+				</configuration>
+		
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+							<goals>
+								<goal>install-node-and-npm</goal>
+							</goals>
+							<configuration>
+								<nodeVersion>v4.0.0</nodeVersion>
+								<npmVersion>2.14.2</npmVersion>
+							</configuration>
+					</execution>
+		
+					<execution>
+					    <id>npm install</id>
+					    <goals>
+					        <goal>npm</goal>
+					    </goals>
+				
+					    <configuration>
+					        <arguments>install</arguments>
+					    </configuration>
+					</execution>
+		
+				    <execution>
+					    <id>gulp build</id>
+					    <goals>
+					        <goal>gulp</goal>
+					    </goals>
+					    <configuration>
+					        <arguments>build</arguments>
+					    </configuration>
+					</execution>
+		   		</executions>
+		    </plugin>
+		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -247,9 +259,6 @@
 					<warSourceDirectory>${basedir}/src/main/webapp/dest</warSourceDirectory>
 				</configuration>
 			</plugin>
-
-
 		</plugins>
 	</build>
-
 </project>
