@@ -95,6 +95,10 @@
 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 	</bean>
 	
+	<bean id="ca.hec.tenjin.api.PdfExportService" class="ca.hec.tenjin.impl.export.pdf.PdfExportServiceImpl">
+		
+	</bean>
+	
 	<bean id="ca.hec.tenjin.api.SamigoToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.SamigoToolEntityProviderImpl">
 		<property name="publishedAssessmentEntityProvider" ref="org.sakaiproject.tool.assessment.entity.api.PublishedEntityProvider" />
 		<property name="persistenceService" ref="PersistenceService" />
