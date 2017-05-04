@@ -8,9 +8,12 @@ public class PdfSyllabusTemplateImpl implements PdfSyllabusTemplate {
 
 	private PdfSyllabusTemplateContext context;
 	private String template;
+	private String css;
 
-	public PdfSyllabusTemplateImpl(String raw) {
+	public PdfSyllabusTemplateImpl(String raw, String css) {
 		this.template = raw;
+		
+		this.css = css;
 
 		this.context = new PdfSyllabusTemplateContextImpl();
 	}
@@ -57,7 +60,7 @@ public class PdfSyllabusTemplateImpl implements PdfSyllabusTemplate {
 			}
 		}
 
-		return buff.toString();
+		return buff.toString().replace("@css", css);
 	}
 
 	@Override

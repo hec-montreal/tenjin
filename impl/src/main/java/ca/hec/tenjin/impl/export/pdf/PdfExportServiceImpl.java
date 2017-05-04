@@ -19,22 +19,20 @@ import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 
 public class PdfExportServiceImpl implements PdfExportService {
 
-	private static final String BASE_TEMPLATE_DIR = "/ca/hec/tenjin/templates/pdf";
-
 	@Override
 	public byte[] makePdf(PublishedSyllabus syllabus, OutputStream outputStream) throws PdfExportException {
 		ITextRenderer renderer = new ITextRenderer();
 
 		PdfSyllabusTemplate template;
-		
+
 		try {
-			template = new PdfSyllabusTemplateImpl(loadTemplateStream("/syllabus.html"));
+			template = new PdfSyllabusTemplateImpl(loadTemplateStream("/syllabus.html"), loadTemplateStream("/css/style.css"));
 		} catch (IOException e) {
 			throw new PdfExportException(e);
 		}
 
 		template.getContext().setValue("syllabus", syllabus);
-		
+
 		Document doc = XMLResource.load(new ByteArrayInputStream(template.renderTemplate().getBytes(Charset.forName("UTF-8")))).getDocument();
 
 		renderer.setDocument(doc, "www.hec.ca");
@@ -50,6 +48,6 @@ public class PdfExportServiceImpl implements PdfExportService {
 	}
 
 	private String loadTemplateStream(String templateName) throws IOException {
-		return IOUtils.toString(getClass().getResourceAsStream(BASE_TEMPLATE_DIR + templateName), "UTF-8");
+		return IOUtils.toString(getClass().getResourceAsStream(PdfExportService.BASE_TEMPLATE_DIR + templateName), "UTF-8");
 	}
 }
