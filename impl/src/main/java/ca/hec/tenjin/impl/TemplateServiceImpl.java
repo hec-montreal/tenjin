@@ -65,8 +65,7 @@ public class TemplateServiceImpl implements TemplateService {
 						if (templateStructure.getTemplateElement().getLabels().containsKey(locale)) {
 							title = templateStructure.getTemplateElement().getLabels().get(locale);
 						} else {
-							// TODO: get default somewhere else?
-							title = templateStructure.getTemplateElement().getLabels().get("fr_CA");
+							title = templateStructure.getTemplateElement().getLabels().get("en_US");
 						}
 					}
 					element.setTitle(title);
