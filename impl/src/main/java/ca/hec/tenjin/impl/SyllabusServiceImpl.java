@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
+import org.sakaiproject.util.ResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -474,12 +475,16 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 
 		String locale = site.getProperties().getProperty("locale_string");
-		if (locale.isEmpty()) {
-			String localePropName = sakaiProxy.getSakaiProperty("tenjin.localeSitePropertyName");
+		if (locale == null || locale.isEmpty()) {
+			String localePropName = sakaiProxy.getSakaiProperty("tenjin.syllabusLocale.sitePropertyName");
 			locale = site.getProperties().getProperty(localePropName);
 		}
+		if (locale == null || locale.isEmpty()) {
+			// use default server locale
+			locale = new ResourceLoader().getLocale().toString();
+		}
 
-		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, (!locale.isEmpty()) ? locale : "en_US");
+		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, locale);
 
 		if (newCommonSyllabus != null) {
 			newCommonSyllabus.setTemplateId(1L);
