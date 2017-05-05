@@ -36,6 +36,8 @@ import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.site.api.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -105,7 +107,7 @@ public class SiteToolsController {
 	}
 
 	@RequestMapping(value = "/announcement/{siteId}", method = RequestMethod.POST)
-	public void createAnnouncement(@RequestBody Map<String, String> announcement, @PathVariable String siteId) {
+	public @ResponseBody ResponseEntity createAnnouncement(@RequestBody Map<String, String> announcement, @PathVariable String siteId) {
 		String title = announcement.get("title");
 		String message = announcement.get("message");
 
@@ -125,16 +127,17 @@ public class SiteToolsController {
 					header.clearGroupAccess();
 
 					channel.commitMessage(messageEdit);
-
 				}
 			} else {
 				throw new Exception("No annoucement channel available");
-
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	private AnnouncementChannel getAnnouncementChannel(String siteId) {

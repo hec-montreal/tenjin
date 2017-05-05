@@ -53,22 +53,22 @@
 		</div>
 
 		<div>
-			<input id="doAnnounce" type="checkbox" data-ng-model="$parent.doAnnounce" />
+			<input id="doAnnounce" type="checkbox" data-ng-model="announcementData.doAnnounce" />
 			<label for="doAnnounce">{{ 'PUBLISH_ANNOUNCEMENT' | translate }}</label>
 		</div>
 
-		<div class="announce" data-ng-if="$parent.doAnnounce">
+		<div class="announce" data-ng-if="announcementData.doAnnounce">
 			<div class="row field">
 				<div class="col-xs-12">
 					<label for="announceTitle">{{ 'PUBLISH_ANNOUNCEMENT_TITLE' | translate }}</label>
-					<input type="text" id="announceTitle" data-ng-model="$parent.announceTitle" />
+					<input type="text" id="announceTitle" data-ng-model="announcementData.announceTitle" />
 				</div>
 			</div>
 
 			<div class="row field">
 				<div class="col-xs-12">
 					<label for="announceMessage">{{ 'PUBLISH_ANNOUNCEMENT_MESSAGE' | translate }}</label>
-					<textarea id="announceMessage" data-ng-model="$parent.announceMessage"></textarea>
+					<textarea id="announceMessage" data-ng-model="announcementData.announceMessage"></textarea>
 				</div>
 			</div>
 		</div>

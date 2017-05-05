@@ -37,6 +37,12 @@
 			message: $translate.instant('ALERT_CANNOT_CREATE_ANNOUNCEMENT')
 		},
 
+		'createAnnouncementSuccess': {
+			type: 'success',
+			message: $translate.instant('ALERT_CREATE_ANNOUNCEMENT_SUCCESS'),
+			closeable: true
+		},
+
 		'importServiceUndefined': {
 			type: 'danger',
 			message: $translate.instant('ALERT_IMPORT_SERVICE_UNDEFINED')
@@ -77,7 +83,11 @@
 	};
 
 	this.isCurrentAlertCloseable = function() {
-		return this.currentAlertCloseable;
+		if (this.currentAlert.closeable) {
+		    return this.currentAlert.closeable;
+		} else {
+		    return false;
+		}
 	}
 
 	this.showAlert = function(name, messageVariables) {
