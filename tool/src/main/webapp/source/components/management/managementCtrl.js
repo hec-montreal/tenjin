@@ -153,7 +153,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 
 	$scope.updateTitle = function(data, syllabus) {
 		if (data.length === 0) {
-			return $translate.instant("MANAGEMENT_ERREUR_NAME");
+			return $translate.instant("MANAGEMENT_ERROR_NAME");
 		}
 
 		syllabus.title = data;
