@@ -6,7 +6,7 @@
 	$translateProvider.translations('en_US', {
 		MENU_LABEL: 'Course Menu',
 		MODAL_DELETE_CONFIRM_TITLE: 'Delete Element',
-		MODAL_DELETE_CONFIRM_MESSAGE: 'Are you sure you want to delete this element',
+		MODAL_DELETE_CONFIRM_MESSAGE: 'Are you sure you want to delete the element',
 		MODAL_CREATE_ELEMENT_TITLE: 'Add Element',
 		MODAL_EDIT_ELEMENT_TITLE: 'Edit Element',
 		TYPE_ELEMENT_TEXT: 'Text',
