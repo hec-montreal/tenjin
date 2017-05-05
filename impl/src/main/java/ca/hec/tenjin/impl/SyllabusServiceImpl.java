@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
-import org.sakaiproject.util.ResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -481,7 +480,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 		if (locale == null || locale.isEmpty()) {
 			// use default server locale
-			locale = new ResourceLoader().getLocale().toString();
+			locale = Locale.getDefault().toString();
 		}
 
 		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, locale);
