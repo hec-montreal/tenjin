@@ -2,23 +2,40 @@ package ca.hec.tenjin.impl.dao;
 
 import java.util.List;
 
+import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.memory.api.Cache;
+import org.sakaiproject.memory.api.MemoryService;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ca.hec.tenjin.api.dao.*;
 import ca.hec.tenjin.api.model.template.Template;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
-import ca.hec.tenjin.api.model.syllabus.provider.*;
 
 public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao {
 
 	private Log log = LogFactory.getLog(TemplateDaoImpl.class);
+	private static String CACHE_NAME = "ca.hec.tenjin.impl.dao.TemplateDao";
+	private Cache<Long, Template> templateCache;
+	private Cache<Long, TemplateStructure> templateStructureCache;
+
+	@Setter
+	private MemoryService memoryService;
+
+	public void init() {
+		templateCache = memoryService.newCache(CACHE_NAME+".Template");
+		templateStructureCache = memoryService.newCache(CACHE_NAME+".TemplateStructure");
+	}
 
 	@Override
 	public Template getTemplate(Long templateId) throws IdUnusedException {
+		if (templateCache != null && templateCache.containsKey(templateId)) {
+			return templateCache.get(templateId);
+		}
+
 		Template t = getHibernateTemplate().get(Template.class, templateId);
 		
 		// HibernateUtil.currentSession().get(OfficialProvider.class,1)
@@ -27,11 +44,11 @@ public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao 
 		}
 		
 		initProviders(t.getElements());
+
+		templateCache.put(templateId, t);
 		return t;
 	}
-	
-		
-	
+
 	private void initProviders (List<TemplateStructure> templateStructures){
 		
 		for(TemplateStructure ts: templateStructures) {
@@ -48,12 +65,18 @@ public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao 
 
 	@Override
 	public TemplateStructure getTemplateStructure(Long templateStructureId) throws IdUnusedException {
+
+		if (templateStructureCache != null && templateStructureCache.containsKey(templateStructureId)) {
+			return templateStructureCache.get(templateStructureId);
+		}
+
 		TemplateStructure ts = getHibernateTemplate().get(TemplateStructure.class, templateStructureId);
 		
 		if (ts == null) {
 			throw new IdUnusedException(templateStructureId.toString());
 		}
-		
+
+		templateStructureCache.put(templateStructureId, ts);
 		return ts;
 	}
 }
