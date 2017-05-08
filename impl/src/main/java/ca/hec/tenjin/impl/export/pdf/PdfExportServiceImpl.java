@@ -5,37 +5,42 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xhtmlrenderer.resource.XMLResource;
 
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
+import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
+import com.github.jknack.handlebars.io.TemplateLoader;
 import com.lowagie.text.DocumentException;
 
 import ca.hec.tenjin.api.exception.PdfExportException;
 import ca.hec.tenjin.api.export.pdf.PdfExportService;
-import ca.hec.tenjin.api.export.pdf.PdfSyllabusTemplate;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 
 public class PdfExportServiceImpl implements PdfExportService {
 
-	@Override
-	public byte[] makePdf(PublishedSyllabus syllabus, OutputStream outputStream) throws PdfExportException {
-		ITextRenderer renderer = new ITextRenderer();
-
-		PdfSyllabusTemplate template;
-
-		try {
-			template = new PdfSyllabusTemplateImpl(loadTemplateStream("/syllabus.html"), loadTemplateStream("/css/style.css"));
-		} catch (IOException e) {
-			throw new PdfExportException(e);
+	public class TemplateContext
+	{
+		private PublishedSyllabus syllabus;
+		
+		public TemplateContext(PublishedSyllabus syllabus) {
+			this.syllabus = syllabus;
 		}
+		
+		public PublishedSyllabus getSyllabus() {
+			return this.syllabus;
+		}
+	}
+	
+	@Override
+	public byte[] makePdf(PublishedSyllabus syllabus, OutputStream outputStream) throws PdfExportException {		
+		// Pdf
+		ITextRenderer renderer = new ITextRenderer();
+		Document doc = XMLResource.load(new ByteArrayInputStream(makeTemplate(new TemplateContext(syllabus)).getBytes(Charset.forName("utf-8")))).getDocument();
 
-		template.getContext().setValue("syllabus", syllabus);
-
-		Document doc = XMLResource.load(new ByteArrayInputStream(template.renderTemplate().getBytes(Charset.forName("UTF-8")))).getDocument();
-
-		renderer.setDocument(doc, "www.hec.ca");
+		renderer.setDocument(doc, "https://www.hec.ca");
 		renderer.layout();
 
 		try {
@@ -46,8 +51,21 @@ public class PdfExportServiceImpl implements PdfExportService {
 
 		return null;
 	}
+	
+	private String makeTemplate(TemplateContext context) throws PdfExportException {
+		String ret;
+		
+		TemplateLoader loader = new ClassPathTemplateLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR, "");
+		Handlebars handlebars = new Handlebars(loader);
 
-	private String loadTemplateStream(String templateName) throws IOException {
-		return IOUtils.toString(getClass().getResourceAsStream(PdfExportService.BASE_TEMPLATE_DIR + templateName), "UTF-8");
+		try {
+			Template template = handlebars.compile("syllabus.html");
+			
+			ret = template.apply(context);
+			
+			return ret;
+		} catch (IOException e) {
+			throw new PdfExportException(e);
+		}	
 	}
 }

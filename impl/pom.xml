@@ -13,7 +13,7 @@
 	<groupId>ca.hec</groupId>
 	<artifactId>tenjin-impl</artifactId>
 	<packaging>jar</packaging>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>ca.hec</groupId>
@@ -49,6 +49,13 @@
 		    <groupId>org.xhtmlrenderer</groupId>
 		    <artifactId>flying-saucer-pdf</artifactId>
 		    <version>9.1.5</version>
+		</dependency>
+
+		<!-- Template engine for pdf html files -->
+		<dependency>
+		    <groupId>com.github.jknack</groupId>
+		    <artifactId>handlebars</artifactId>
+		    <version>4.0.6</version>
 		</dependency>
 
 		<!-- IO Utils -->
