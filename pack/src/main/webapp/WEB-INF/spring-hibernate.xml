@@ -105,10 +105,11 @@
 		<property name="transactionManager"
 			ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
 		<property name="target">
-			<bean class="ca.hec.tenjin.impl.dao.TemplateDaoImpl">
+			<bean class="ca.hec.tenjin.impl.dao.TemplateDaoImpl" init-method="init">
 				<property name="sessionFactory">
 					<ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
 				</property>
+				<property name="memoryService" ref="org.sakaiproject.memory.api.MemoryService"/>
 			</bean>
 		</property>
 		<property name="transactionAttributes">
