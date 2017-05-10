@@ -22,7 +22,6 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 				var dataToLoad = [];
 
 				// First batch of data to load
-				dataToLoad.push(SyllabusService.loadTemplate());
 				dataToLoad.push(ResourcesService.loadResources(siteId));
 				dataToLoad.push(SakaiToolsService.loadToolEntities(siteId));
 				dataToLoad.push(SyllabusService.loadSyllabusList());
@@ -30,6 +29,12 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 				$q.all(dataToLoad).then(function() {
 					// Finally load the citations
 					CitationsService.loadCitations().then(function() {
+						ret.resolve();
+					}).catch(function() {
+						ret.reject();
+					});
+
+					SyllabusService.loadTemplate().then(function() {
 						ret.resolve();
 					}).catch(function() {
 						ret.reject();
@@ -88,13 +93,18 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 				var dataToLoad = [];
 
 				// First batch of data to load
-				dataToLoad.push(SyllabusService.loadTemplate());
 				dataToLoad.push(ResourcesService.loadResources(siteId));
 				dataToLoad.push(SakaiToolsService.loadToolEntities(siteId));
 
 				$q.allSettled(dataToLoad).then(function() {
 					// Finally load the citations
 					CitationsService.loadCitations().then(function() {
+						ret.resolve();
+					}).catch(function() {
+						ret.reject();
+					});
+
+					SyllabusService.loadTemplate().then(function() {
 						ret.resolve();
 					}).catch(function() {
 						ret.reject();
