@@ -1,3 +1,15 @@
-<div>
-	<h2>{=element.id}</h2>
-</div>
+<li>
+	{{! element.type}}
+
+	{{#type-is this 'composite'}}
+		{{> elements/composite.html}}
+	{{/type-is}}
+
+	{{#type-is this 'rubric'}}
+		{{> elements/rubric.html}}
+	{{/type-is}}
+
+	{{#type-is this 'text'}}
+		{{> elements/text.html}}
+	{{/type-is}}
+</li>

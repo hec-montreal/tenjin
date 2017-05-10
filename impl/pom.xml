@@ -50,7 +50,13 @@
 		    <artifactId>flying-saucer-pdf</artifactId>
 		    <version>9.1.5</version>
 		</dependency>
-
+		
+		<dependency>
+		    <groupId>org.jsoup</groupId>
+		    <artifactId>jsoup</artifactId>
+		    <version>1.8.3</version>
+		</dependency>
+		
 		<!-- Template engine for pdf html files -->
 		<dependency>
 		    <groupId>com.github.jknack</groupId>
@@ -141,6 +147,7 @@
 				<includes>
 					<include>**/*.html</include>
 					<include>**/*.css</include>
+					<include>**/*.png</include>
 				</includes>
 			</resource>
 		</resources>

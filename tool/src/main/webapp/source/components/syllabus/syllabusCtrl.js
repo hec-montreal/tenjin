@@ -69,6 +69,10 @@
 		});
 	};
 
+	$scope.pdf = function () {
+		window.location = 'v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.json';
+	};
+
 	$scope.startPublish = function() {
 		ModalService.prePublishSyllabus();
 	};

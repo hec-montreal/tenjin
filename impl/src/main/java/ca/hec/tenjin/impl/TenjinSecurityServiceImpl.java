@@ -17,6 +17,7 @@ import lombok.Setter;
 
 @Setter
 public class TenjinSecurityServiceImpl implements TenjinSecurityService {
+	
 	private SakaiProxy sakaiProxy;
 
 	private static Log log = LogFactory.getLog(TenjinSecurityServiceImpl.class);

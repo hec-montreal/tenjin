@@ -1,0 +1,13 @@
+<div class="composite">
+	<div class="title">
+		{{element.title}}
+	</div>
+
+	<ul>
+		{{#each children}}
+			<li class="element">
+				{{> elements/element.html}}
+			</li>
+		{{/each}}
+	</ul>
+</div>

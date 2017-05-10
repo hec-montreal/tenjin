@@ -1,6 +1,7 @@
 package ca.hec.tenjin.tool.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,28 +10,46 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ca.hec.tenjin.api.PublishService;
-import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.exception.PdfExportException;
 import ca.hec.tenjin.api.export.pdf.PdfExportService;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 
 @Controller
 @RequestMapping(value = "v1")
 public class ExportController {
 
 	@Autowired
-	PdfExportService pdfExportService;
+	private PdfExportService pdfExportService;
+
+	@Autowired
+	private PublishService publishService;
 	
 	@Autowired
-	PublishService publishService;
-	
+	private SyllabusService syllabusService;
+
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/syllabus/{id}/pdf", method = RequestMethod.GET)
-	public @ResponseBody byte[] exportPdf(@PathVariable("id") Long id, HttpServletResponse response) throws PdfExportException, IOException {
+	public void exportPdf(@PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "false") boolean published, HttpServletResponse response) throws PdfExportException, IOException {
 		try {
-			return pdfExportService.makePdf(publishService.getPublishedSyllabus(id), response.getOutputStream());
-		} catch (NoSyllabusException e) {
+			AbstractSyllabus syllabus;
+			List<Object> elements;
+
+			if (published) {
+				syllabus = publishService.getPublishedSyllabus(id);
+				elements = (List<Object>)(List<?>)((PublishedSyllabus)syllabus).getElements();
+			} else {
+				syllabus = syllabusService.getSyllabus(id);
+				elements = (List<Object>)(List<?>)((Syllabus)syllabus).getElements();
+			}
+
+			pdfExportService.makePdf(syllabus, elements, published, response.getOutputStream());
+		} catch (Exception e) {
 			throw new PdfExportException(e);
 		}
 	}

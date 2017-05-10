@@ -37,6 +37,10 @@
 						<button data-ng-show="userService.isAllowed('syllabusPublish', syllabusService.syllabus) && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError" ng-disabled="syllabusService.isDirty() || syllabusService.working || (!syllabusService.syllabus.common && (!syllabusService.syllabus.sections || syllabusService.syllabus.sections.length === 0))" class="action" ng-click="startPublish()">
 							<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
 						</button>
+
+						<button class="action" ng-click="pdf()">
+							PDF
+						</button>
 					</div>
 				</div>
 			</div>
