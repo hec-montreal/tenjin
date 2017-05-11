@@ -128,7 +128,7 @@
 		ALERT_RUBRIC_EXISTS: 'The rubric already exists',
 		ALERT_SUCCESS_ADD_SYLLABUS: 'The personalized course outline has been added.',
 		ALERT_SUCCESS_DELETE_SYLLABUS: 'The course outline has been deleted',
-		ALERT_CANNOT_CREATE_ANNOUNCEMENT: 'Cannot create announcement',
+		ALERT_CANNOT_CREATE_ANNOUNCEMENT: 'Error creating announcement',
 		ALERT_CREATE_ANNOUNCEMENT_SUCCESS: 'Announcement created successfully',
 		ALERT_CANNOT_LOAD_BASE_DATA: 'Cannot load base data',
 		ALERT_CANNOT_SAVE_SYLLABUS: 'Cannot save course outline',

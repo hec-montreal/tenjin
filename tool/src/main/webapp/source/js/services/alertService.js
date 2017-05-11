@@ -1,78 +1,81 @@
 ﻿tenjinApp.service('AlertService', ['$translate', function($translate) {
 	'use strict';
 
-	var alerts = {
-		'default': {
-			type: 'danger',
-			message: $translate.instant('ALERT_ERROR')
-		},
+	var alerts;
 
-		'cannotLoadBaseData': {
-			type: 'danger',
-			message: $translate.instant('ALERT_CANNOT_LOAD_BASE_DATA')
-		},
+	this.init = function() {
+        alerts = {
+    		'default': {
+	    		type: 'danger',
+		    	message: $translate.instant('ALERT_ERROR')
+    		},
 
-		'noSyllabus': {
-			type: 'danger',
-			message: $translate.instant("ALERT_NO_SYLLABUS")
-		},
+	    	'cannotLoadBaseData': {
+		    	type: 'danger',
+			    message: $translate.instant('ALERT_CANNOT_LOAD_BASE_DATA')
+    		},
 
-		'cannotSaveSyllabus': {
-			type: 'danger',
-			message: $translate.instant('ALERT_CANNOT_SAVE_SYLLABUS')
-		},
+	    	'noSyllabus': {
+		    	type: 'danger',
+			    message: $translate.instant("ALERT_NO_SYLLABUS")
+    		},
 
-		'cannotPublishSyllabus': {
-			type: 'danger',
-			message: $translate.instant('ALERT_CANNOT_PUBLISH_SYLLABUS')
-		},
+	    	'cannotSaveSyllabus': {
+		    	type: 'danger',
+			    message: $translate.instant('ALERT_CANNOT_SAVE_SYLLABUS')
+    		},
 
-		'cannotDeleteSyllabusList': {
-			type: 'danger',
-			message: $translate.instant('ALERT_CANNOT_DELETE_SYLLABUS_LIST')
-		},
+	    	'cannotPublishSyllabus': {
+			    type: 'danger',
+		    	message: $translate.instant('ALERT_CANNOT_PUBLISH_SYLLABUS')
+    		},
 
-		'cannotCreateAnnouncement': {
-			type: 'danger',
-			message: $translate.instant('ALERT_CANNOT_CREATE_ANNOUNCEMENT')
-		},
+	    	'cannotDeleteSyllabusList': {
+    			type: 'danger',
+    			message: $translate.instant('ALERT_CANNOT_DELETE_SYLLABUS_LIST')
+    		},
 
-		'createAnnouncementSuccess': {
-			type: 'success',
-			message: $translate.instant('ALERT_CREATE_ANNOUNCEMENT_SUCCESS'),
-			closeable: true
-		},
+    		'cannotCreateAnnouncement': {
+    			type: 'danger',
+    			message: $translate.instant('ALERT_CANNOT_CREATE_ANNOUNCEMENT')
+    		},
 
-		'importServiceUndefined': {
-			type: 'danger',
-			message: $translate.instant('ALERT_IMPORT_SERVICE_UNDEFINED')
-		},
+    		'createAnnouncementSuccess': {
+    			type: 'success',
+    			message: $translate.instant('ALERT_CREATE_ANNOUNCEMENT_SUCCESS'),
+    			closeable: true
+    		},
 
-		'noSyllabusLock': {
-			type: 'danger',
-			message: $translate.instant('ALERT_NO_LOCK'),
-		},
+    		'importServiceUndefined': {
+	    		type: 'danger',
+    			message: $translate.instant('ALERT_IMPORT_SERVICE_UNDEFINED')
+    		},
 
-		'syllabusLocked': {
-			type: 'danger',
-			message: $translate.instant('ALERT_LOCKED_BY')
-		},
+    		'noSyllabusLock': {
+    			type: 'danger',
+    			message: $translate.instant('ALERT_NO_LOCK'),
+    		},
 
-		'importSyllabusPermissionError': {
-			type: 'danger',
-			message: $translate.instant('ALERT_IMPORT_SYLLABUS_PERMISSION_ERROR')
-		},
+    		'syllabusLocked': {
+    			type: 'danger',
+    			message: $translate.instant('ALERT_LOCKED_BY')
+    		},
 
-		'importSyllabusNotFound': {
-			type: 'danger',
-			message: $translate.instant('ALERT_IMPORT_SYLLABUS_NOT_FOUND')
-		},
+	    	'importSyllabusPermissionError': {
+    			type: 'danger',
+	    		message: $translate.instant('ALERT_IMPORT_SYLLABUS_PERMISSION_ERROR')
+    		},
 
-		'importSyllabusError': {
-			type: 'danger',
-			message: $translate.instant('ALERT_IMPORT_SYLLABUS_ERROR')
-		}
+    		'importSyllabusNotFound': {
+	    		type: 'danger',
+    			message: $translate.instant('ALERT_IMPORT_SYLLABUS_NOT_FOUND')
+	    	},
 
+    		'importSyllabusError': {
+	    		type: 'danger',
+    			message: $translate.instant('ALERT_IMPORT_SYLLABUS_ERROR')
+	    	}
+    	}
 	};
 
 	this.currentAlert = null;
@@ -142,4 +145,6 @@
 	this.getCurrentAlertMessage = function() {
 		return this.currentAlert.renderedMessage;
 	};
+
+	this.init();
 }]);
