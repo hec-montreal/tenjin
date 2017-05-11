@@ -32,20 +32,26 @@ public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao 
 
 	@Override
 	public Template getTemplate(Long templateId) throws IdUnusedException {
+		Template t = null;
+
 		if (templateCache != null && templateCache.containsKey(templateId)) {
-			return templateCache.get(templateId);
+			t = templateCache.get(templateId);
 		}
 
-		Template t = getHibernateTemplate().get(Template.class, templateId);
-		
-		// HibernateUtil.currentSession().get(OfficialProvider.class,1)
+		// Sakai Cache returns null if element does not exist/is expired
 		if (t == null) {
-			throw new IdUnusedException(templateId.toString());
-		}
-		
-		initProviders(t.getElements());
+			t = getHibernateTemplate().get(Template.class, templateId);
 
-		templateCache.put(templateId, t);
+			// HibernateUtil.currentSession().get(OfficialProvider.class,1)
+			if (t == null) {
+				throw new IdUnusedException(templateId.toString());
+			}
+
+			initProviders(t.getElements());
+
+			templateCache.put(templateId, t);
+		}
+
 		return t;
 	}
 
@@ -65,18 +71,21 @@ public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao 
 
 	@Override
 	public TemplateStructure getTemplateStructure(Long templateStructureId) throws IdUnusedException {
+		TemplateStructure ts = null;
 
 		if (templateStructureCache != null && templateStructureCache.containsKey(templateStructureId)) {
-			return templateStructureCache.get(templateStructureId);
+			ts = templateStructureCache.get(templateStructureId);
 		}
 
-		TemplateStructure ts = getHibernateTemplate().get(TemplateStructure.class, templateStructureId);
-		
 		if (ts == null) {
-			throw new IdUnusedException(templateStructureId.toString());
-		}
+			ts = getHibernateTemplate().get(TemplateStructure.class, templateStructureId);
 
-		templateStructureCache.put(templateStructureId, ts);
+			if (ts == null) {
+				throw new IdUnusedException(templateStructureId.toString());
+			}
+
+			templateStructureCache.put(templateStructureId, ts);
+		}
 		return ts;
 	}
 }
