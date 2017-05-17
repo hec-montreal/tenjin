@@ -48,7 +48,7 @@ public class ExportController {
 				elements = (List<Object>)(List<?>)((Syllabus)syllabus).getElements();
 			}
 
-			pdfExportService.makePdf(syllabus, elements, published, response.getOutputStream());
+			pdfExportService.makePdf(syllabus, elements, response.getOutputStream());
 		} catch (Exception e) {
 			throw new PdfExportException(e);
 		}

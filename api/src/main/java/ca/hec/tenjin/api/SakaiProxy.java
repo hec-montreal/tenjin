@@ -3,6 +3,7 @@ package ca.hec.tenjin.api;
 import java.util.Set;
 
 import org.sakaiproject.authz.api.GroupNotDefinedException;
+import org.sakaiproject.citation.api.Citation;
 import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
@@ -59,6 +60,8 @@ public interface SakaiProxy {
 
 	public ContentResource getResource(String string);
 
+	public Citation getCitation(String id);
+	
 	public User getUser(String id) throws UserNotDefinedException;
 
 	public Group getGroup(String groupId) throws GroupNotDefinedException;

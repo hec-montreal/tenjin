@@ -71,6 +71,19 @@
 		    <version>2.5</version>
 		</dependency>
 
+		<!-- Json -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.8.8</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.8.8.1</version>
+		</dependency>
+
 		<!-- Sakai dependencies -->
 		<dependency>
 			<groupId>org.sakaiproject.kernel</groupId>
@@ -122,6 +135,12 @@
 			<version>11.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-citations-api</artifactId>
+			<version>11.3</version>
+		</dependency>
+
 		<!-- spring and hibernate -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -148,6 +167,7 @@
 					<include>**/*.html</include>
 					<include>**/*.css</include>
 					<include>**/*.png</include>
+					<include>**/*.json</include>
 				</includes>
 			</resource>
 		</resources>

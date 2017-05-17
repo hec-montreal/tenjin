@@ -1,11 +1,19 @@
 package ca.hec.tenjin.impl;
 
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.TenjinFunctions;
-import lombok.Setter;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.authz.api.*;
+import org.sakaiproject.authz.api.AuthzGroup;
+import org.sakaiproject.authz.api.AuthzGroupService;
+import org.sakaiproject.authz.api.FunctionManager;
+import org.sakaiproject.authz.api.GroupNotDefinedException;
+import org.sakaiproject.authz.api.SecurityService;
+import org.sakaiproject.citation.api.Citation;
+import org.sakaiproject.citation.api.CitationService;
 import org.sakaiproject.component.api.ServerConfigurationService;
 import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.content.api.ContentResource;
@@ -24,10 +32,9 @@ import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 import org.sakaiproject.util.ResourceLoader;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.TenjinFunctions;
+import lombok.Setter;
 
 @Setter
 public class SakaiProxyImpl implements SakaiProxy {
@@ -44,6 +51,7 @@ public class SakaiProxyImpl implements SakaiProxy {
 	private UserDirectoryService userDirectoryService;
 	private ContentHostingService contentHostingService;
 	private ServerConfigurationService serverConfigurationService;
+	private CitationService citationService;
 	private PreferencesService preferencesService;
 
 	public void init() {
@@ -230,5 +238,10 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 	public String getDefaultLocale (){
 		return serverConfigurationService.getString("tenjin.default.locale","en_US");
+	}
+
+	@Override
+	public Citation getCitation(String id) {
+		return null;
 	}
 }

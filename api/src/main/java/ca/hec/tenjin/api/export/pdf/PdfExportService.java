@@ -21,5 +21,5 @@ public interface PdfExportService {
 	 * @param outputStream The pdf will be outputed to this stream
 	 * @throws PdfExportException
 	 */
-	void makePdf(AbstractSyllabus syllabus, List<Object> elements, boolean published, OutputStream outputStream) throws PdfExportException;
+	void makePdf(AbstractSyllabus syllabus, List<Object> elements, OutputStream outputStream) throws PdfExportException;
 }

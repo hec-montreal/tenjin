@@ -1,5 +1,5 @@
 <li>
-	{{! element.type}}
+	<div class="type">{{element.type}}</div>
 
 	{{#type-is this 'composite'}}
 		{{> elements/composite.html}}
@@ -11,5 +11,17 @@
 
 	{{#type-is this 'text'}}
 		{{> elements/text.html}}
+	{{/type-is}}
+
+	{{#type-is this 'citation'}}
+		{{> elements/citation.html}}
+	{{/type-is}}
+
+	{{#type-is this 'contact_info'}}
+		{{> elements/contact-info.html}}
+	{{/type-is}}
+
+	{{#type-is this 'exam'}}
+		{{> elements/exam.html}}
 	{{/type-is}}
 </li>

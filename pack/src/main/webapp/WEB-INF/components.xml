@@ -107,6 +107,10 @@
 	<bean id="ca.hec.tenjin.api.AssignmentToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.AssignmentToolEntityProviderImpl">
 		<property name="assignmentService" ref="org.sakaiproject.assignment.api.AssignmentService" />
 	</bean>
+	
+	<bean id="ca.hec.tenjin.api.provider.TenjinDataProvider" class="ca.hec.tenjin.impl.provider.TenjinDataProviderImpl">
+
+	</bean>
 
 	<bean name="ca.hec.tenjin.api.SakaiProxy" class="ca.hec.tenjin.impl.SakaiProxyImpl" init-method="init">
 		<!-- <property name="courseManagementService"><ref bean="org.sakaiproject.coursemanagement.api.CourseManagementService"/></property> -->
@@ -152,6 +156,10 @@
 
 		<property name="groupService">
 			<ref bean="org.sakaiproject.authz.api.AuthzGroupService" />
+		</property>
+		
+		<property name="citationService">
+			<ref bean="org.sakaiproject.citation.api.CitationService" />
 		</property>
 		
 		<property name="serverConfigurationService">

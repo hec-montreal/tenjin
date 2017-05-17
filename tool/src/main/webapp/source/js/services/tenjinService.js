@@ -1,4 +1,4 @@
-tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'SyllabusService', 'SyllabusLockService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'AlertService', function($q, config, $state, UserService, SyllabusService, SyllabusLockService, ResourcesService, SakaiToolsService, CitationsService, PublishService, AlertService) {
+tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'DataService', 'SyllabusService', 'SyllabusLockService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'AlertService', function($q, config, $state, UserService, DataService, SyllabusService, SyllabusLockService, ResourcesService, SakaiToolsService, CitationsService, PublishService, AlertService) {
 	'use strict';
 
 	var makeRoute = function(route, params) {
@@ -141,20 +141,25 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Sy
 		var tthis = this;
 		var ret = $q.defer();
 
-		// We must load the profile before loading anything else
-		UserService.loadProfile().then(function() {
-			var siteId = UserService.getProfile().siteId;
+		// Load enumerations and strings
+		DataService.load().then(function() {
+			// We must load the profile before loading anything else
+			UserService.loadProfile().then(function() {
+				var siteId = UserService.getProfile().siteId;
 
-			tthis.viewState = tthis.findViewStateFromProfile();
+				tthis.viewState = tthis.findViewStateFromProfile();
 
-			tthis.viewState.loadViewData(siteId).then(function() {
-				ret.resolve();
+				tthis.viewState.loadViewData(siteId).then(function() {
+					ret.resolve();
+				}).catch(function(e) {
+					ret.reject(e);
+				});
 			}).catch(function(e) {
 				ret.reject(e);
 			});
 		}).catch(function(e) {
 			ret.reject(e);
-		});
+		})
 
 		return ret.promise;
 	};

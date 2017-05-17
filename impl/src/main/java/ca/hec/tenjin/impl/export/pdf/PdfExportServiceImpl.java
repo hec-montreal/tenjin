@@ -26,15 +26,10 @@ import ca.hec.tenjin.api.exception.PdfExportException;
 import ca.hec.tenjin.api.export.pdf.PdfExportService;
 import ca.hec.tenjin.api.export.pdf.PdfResourceLoader;
 import ca.hec.tenjin.api.export.pdf.model.CourseInfo;
-import ca.hec.tenjin.api.export.pdf.model.Image;
-import ca.hec.tenjin.api.export.pdf.model.ImageSyllabusElement;
 import ca.hec.tenjin.api.export.pdf.model.SyllabusElement;
 import ca.hec.tenjin.api.export.pdf.model.TemplateContext;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
-import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement;
+import ca.hec.tenjin.impl.export.pdf.template.AttributeTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.TypeIsTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.UnescapeHtmlTemplateHelper;
 import lombok.Setter;
@@ -51,7 +46,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 	private PdfResourceLoader resourceLoader;
 
 	@Override
-	public void makePdf(AbstractSyllabus syllabus, List<Object> elements, boolean published, OutputStream outputStream) throws PdfExportException {
+	public void makePdf(AbstractSyllabus syllabus, List<Object> elements, OutputStream outputStream) throws PdfExportException {
 		// Loaders
 		if (_TO_REMOVE________DEBUG_MODE) {
 			templateLoader = new FileTemplateLoader("C:/Dev/Projects/workspace/zc2/sakai_tenjin/sakai/tenjin/impl/src/main/resources/ca/hec/tenjin/templates/pdf", "");
@@ -62,7 +57,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 		}
 
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, published), published);
+			String template = makeTemplate(makeTemplateContext(syllabus, elements));
 			ITextRenderer renderer = new ITextRenderer();
 			Document doc = XMLResource.load(new ByteArrayInputStream(template.getBytes(Charset.forName("utf-8")))).getDocument();
 
@@ -75,7 +70,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 		}
 	}
 
-	private String makeTemplate(TemplateContext context, final boolean published) throws PdfExportException {
+	private String makeTemplate(TemplateContext context) throws PdfExportException {
 		String ret;
 		Handlebars handlebars = new Handlebars(templateLoader);
 
@@ -83,25 +78,26 @@ public class PdfExportServiceImpl implements PdfExportService {
 		handlebars.infiniteLoops(true);
 
 		// Template helpers
-		handlebars.registerHelper("type-is", new TypeIsTemplateHelper(published));
+		handlebars.registerHelper("type-is", new TypeIsTemplateHelper());
 		handlebars.registerHelper("html", new UnescapeHtmlTemplateHelper());
+		handlebars.registerHelper("attribute", new AttributeTemplateHelper());
 
 		try {
 			Template template = handlebars.compile("syllabus.html");
 
 			ret = template.apply(context);
-			
-			if(_TO_REMOVE________DEBUG_MODE) {
+
+			if (_TO_REMOVE________DEBUG_MODE) {
 				FileUtils.write(new File("c:/out.html"), ret);
 			}
-			
+
 			return ret;
 		} catch (IOException e) {
 			throw new PdfExportException(e);
 		}
 	}
 
-	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, boolean published) throws IOException, PdfExportException {
+	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements) throws IOException, PdfExportException {
 		TemplateContext ret = new TemplateContext();
 
 		ret.setSyllabus(syllabus);
@@ -121,53 +117,33 @@ public class PdfExportServiceImpl implements PdfExportService {
 			throw new PdfExportException(e);
 		}
 
-		Image defaultImage = resourceLoader.loadImage("images/unknown.png");
-
 		for (Object element : elements) {
-			if (isElementImage(element, published)) {
-				ret.getElements().add(new ImageSyllabusElement(element, defaultImage));
-			} else {
-				ret.getElements().add(buildElement(element, published));
-			}
+			ret.getElements().add(buildElement(element));
 		}
 
 		return ret;
 	}
 
-	private SyllabusElement buildElement(Object element, boolean published) {
+	private SyllabusElement buildElement(Object element) {
 		SyllabusElement ret = new SyllabusElement(element);
 
-		if (published) {
-			AbstractPublishedSyllabusElement cast = (AbstractPublishedSyllabusElement) element;
+		// If the element is composite, add children
+		if (ret.<Boolean>call("isComposite")) {
+			List<Object> children = ret.<List<Object>>call("getElements");
 
-			if (cast.isComposite()) {
-				PublishedCompositeElement cast2 = (PublishedCompositeElement) cast;
-
-				for (AbstractPublishedSyllabusElement child : cast2.getElements()) {
-					ret.getChildren().add(buildElement(child, published));
-				}
+			for (Object child : children) {
+				ret.getChildren().add(buildElement(child));
 			}
-		} else {
-			AbstractSyllabusElement cast = (AbstractSyllabusElement) element;
+		}
 
-			if (cast.isComposite()) {
-				SyllabusCompositeElement cast2 = (SyllabusCompositeElement) cast;
+		String type = ret.call("getType");
 
-				for (AbstractSyllabusElement child : cast2.getElements()) {
-					ret.getChildren().add(buildElement(child, published));
-				}
-			}
+		// If the element is a citation, we must fetch it
+		if (type.equals("citation")) {
+			String citationId = ret.getAttribute("citationId");
 		}
 
 		return ret;
-	}
-
-	private boolean isElementImage(Object element, boolean published) {
-		if (published) {
-			return ((AbstractPublishedSyllabusElement) element).getType().equals("image");
-		} else {
-			return ((AbstractSyllabusElement) element).getType().equals("image");
-		}
 	}
 
 	private String safeCourseProp(Site course, String name, String def) {

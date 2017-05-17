@@ -13,6 +13,10 @@ public class UnescapeHtmlTemplateHelper implements Helper<String> {
 
 	@Override
 	public Object apply(String str, Options options) throws IOException {
+		if(str == null) {
+			return "";
+		}
+		
 		String html = StringEscapeUtils.unescapeHtml(str);
 		Document document = Jsoup.parseBodyFragment(html);
 		
