@@ -309,7 +309,9 @@
 		COPY_DEFAULT_NAME_PREFIX: 'Copy of',
 		WARNING_UNSAVED: 'You have unsaved changes that will be lost if you leave this page, would you like to continue?',
 		DETAILS: 'Details',
-		CONTACT_VISITOR_PROFESSOR: 'Visiting Professor'
+		CONTACT_VISITOR_PROFESSOR: 'Visiting Professor',
+		MANAGEMENT_EXPLANATION_1: 'Personalised course outlines are linked to the common course outile. It is not possible to detach them.',
+		MANAGEMENT_EXPLANATION_2: 'The "section" column indicates that students in those sections will see the content from the common course outline as well as that of the personalised course outline.'
 	}).translations('fr_CA', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -616,7 +618,9 @@
 		COPY_DEFAULT_NAME_PREFIX: 'Copie de',
 		WARNING_UNSAVED: 'Vos modifications n\'ont pas été enregistrées, voulez-vous quitter et perdre ces changements?',
 		DETAILS: 'Détails',
-		CONTACT_VISITOR_PROFESSOR: 'Professeur(e) visiteur(se)'
+		CONTACT_VISITOR_PROFESSOR: 'Professeur(e) visiteur(se)',
+		MANAGEMENT_EXPLANATION_1: 'Les plans de cours personnalisés sont tous attachés au plan de cours commun. Il n\'est pas possible de les détacher.',
+		MANAGEMENT_EXPLANATION_2: 'La colonne « sections » indique que les étudiants de la section voient le contenu du plan de cours commun ainsi que les ajouts faits au personnalisé.'
 	});
 
 	$translateProvider.preferredLanguage('fr_CA');
