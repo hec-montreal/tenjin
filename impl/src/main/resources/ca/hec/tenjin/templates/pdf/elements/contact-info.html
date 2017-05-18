@@ -1,25 +1,25 @@
 <div class="contact-info">
 	<div class="name">
-		{{#attribute this 'contactInfoFirstName'}}{{/attribute}}&nbsp;{{#attribute this 'contactInfoLastName'}}{{/attribute}}
+		{{attr this 'contactInfoFirstName'}}&nbsp;{{attr this 'contactInfoLastName'}}
 	</div>
 
 	<div class="title">
-		{{#attribute this 'contactInfoTitle'}}{{/attribute}}
+		{{attr this 'contactInfoTitle'}}
 	</div>
 
 	<div class="email">
-		{{#attribute this 'contactInfoEmail'}}{{/attribute}}
+		{{attr this 'contactInfoEmail'}}
 	</div>
 
 	<div class="phone">
-		{{#attribute this 'contactInfoPhone'}}{{/attribute}}
+		{{attr this 'contactInfoPhone'}}
 	</div>
 
 	<div class="phone">
-		{{#attribute this 'contactInfoOfficeRoom'}}{{/attribute}}
+		{{attr this 'contactInfoOfficeRoom'}}
 	</div>
 
 	<div class="description syllabus-text">
-		{{#html element.description}}{{/html}}
+		{{{html element.description}}}
 	</div>
 </div>

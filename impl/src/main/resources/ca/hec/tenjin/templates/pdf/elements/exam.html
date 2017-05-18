@@ -1,5 +1,83 @@
 <div class="exam">
 	<div class="title">
-		{{element.title}} <span class="weight">({{#attribute this 'examWeight'}}{{/attribute}}%)</span>
+		{{element.title}} <span class="weight">({{attr this 'examWeight'}}%)</span>
 	</div>
+
+	<div class="details">
+		<ul>
+			{{#attr-cond this 'or' 'examInClass' 'examAtHome'}}
+				<li>
+					<span class="label">{{str 'EXAM_LOCATION'}}:</span>
+
+					{{#attr-true this 'examInClass'}}
+						{{str 'EXAM_INCLASS'}}
+					{{/attr-true}}
+
+					{{#attr-cond this 'and' 'examInClass' 'examAtHome'}}
+						/
+					{{/attr-cond}}
+
+					{{#attr-true this 'examAtHome'}}
+						{{str 'EXAM_ATHOME'}}
+					{{/attr-true}}
+				</li>
+			{{/attr-cond}}
+
+			{{#attr-cond this 'or' 'examPaper' 'examElectronic'}}
+				<li>
+					<span class="label">{{str 'EXAM_SUBMISSION_TYPE'}}:</span>
+
+					{{#attr-true this 'examPaper'}}
+						{{str 'EXAM_PAPER'}}
+					{{/attr-true}}
+
+					{{#attr-cond this 'and' 'examPaper' 'examElectronic'}}
+						/
+					{{/attr-cond}}
+
+					{{#attr-true this 'examElectronic'}}
+						{{str 'EXAM_ELECTRONIC'}}
+					{{/attr-true}}
+				</li>
+			{{/attr-cond}}
+
+			{{#attr-cond this 'or' 'examOral' 'examWritten'}}
+				<li>
+					<span class="label">{{str 'EXAM_TERMS'}}:</span>
+
+					{{#attr-true this 'examOral'}}
+						{{str 'EXAM_ORAL'}}
+					{{/attr-true}}
+
+					{{#attr-cond this 'and' 'examOral' 'examWritten'}}
+						/
+					{{/attr-cond}}
+
+					{{#attr-true this 'examWritten'}}
+						{{str 'EXAM_WRITTEN'}}
+					{{/attr-true}}
+				</li>
+			{{/attr-cond}}
+
+			{{#attr-true this 'examMode'}}
+				<span class="label">{{str 'EXAM_ASSESSMENT_TYPE'}}:</span>
+
+				{{#attr-is this 'examMode' 'team'}}
+					{{str 'EXAM_TEAM'}}
+				{{/attr-is}}
+
+				{{#attr-is this 'examMode' 'individual'}}
+					{{str 'EXAM_INDIVIDUAL'}}
+				{{/attr-is}}
+			{{/attr-true}}
+		</ul>
+	</div>
+
+	<ul>
+		{{#each children}}
+			<li class="element">
+				{{> elements/element.html}}
+			</li>
+		{{/each}}
+	</ul>
 </div>

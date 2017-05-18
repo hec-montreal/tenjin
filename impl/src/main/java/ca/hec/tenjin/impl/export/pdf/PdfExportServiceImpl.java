@@ -29,7 +29,12 @@ import ca.hec.tenjin.api.export.pdf.model.CourseInfo;
 import ca.hec.tenjin.api.export.pdf.model.SyllabusElement;
 import ca.hec.tenjin.api.export.pdf.model.TemplateContext;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
+import ca.hec.tenjin.api.provider.TenjinDataProvider;
+import ca.hec.tenjin.impl.export.pdf.template.AttributeConditionTemplateHelper;
+import ca.hec.tenjin.impl.export.pdf.template.AttributeIfTemplateHelper;
+import ca.hec.tenjin.impl.export.pdf.template.AttributeIsTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.AttributeTemplateHelper;
+import ca.hec.tenjin.impl.export.pdf.template.StringTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.TypeIsTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.UnescapeHtmlTemplateHelper;
 import lombok.Setter;
@@ -41,6 +46,9 @@ public class PdfExportServiceImpl implements PdfExportService {
 
 	@Setter
 	private SakaiProxy sakaiProxy;
+
+	@Setter
+	private TenjinDataProvider tenjinDataProvider;
 
 	private TemplateLoader templateLoader;
 	private PdfResourceLoader resourceLoader;
@@ -80,7 +88,11 @@ public class PdfExportServiceImpl implements PdfExportService {
 		// Template helpers
 		handlebars.registerHelper("type-is", new TypeIsTemplateHelper());
 		handlebars.registerHelper("html", new UnescapeHtmlTemplateHelper());
-		handlebars.registerHelper("attribute", new AttributeTemplateHelper());
+		handlebars.registerHelper("attr", new AttributeTemplateHelper());
+		handlebars.registerHelper("str", new StringTemplateHelper(tenjinDataProvider, "fr_CA"));
+		handlebars.registerHelper("attr-true", new AttributeIfTemplateHelper());
+		handlebars.registerHelper("attr-is", new AttributeIsTemplateHelper());
+		handlebars.registerHelper("attr-cond", new AttributeConditionTemplateHelper());
 
 		try {
 			Template template = handlebars.compile("syllabus.html");
@@ -88,7 +100,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 			ret = template.apply(context);
 
 			if (_TO_REMOVE________DEBUG_MODE) {
-				FileUtils.write(new File("c:/out.html"), ret);
+				FileUtils.write(new File("c:/out.html"), ret, Charset.forName("utf-8"));
 			}
 
 			return ret;

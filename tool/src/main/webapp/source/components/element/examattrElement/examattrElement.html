@@ -1,7 +1,7 @@
 <div class="element-examattr">
 	<ul>
 		<li data-ng-if="element.attributes.examInClass === 'true' || element.attributes.examAtHome === 'true'">
-			{{'EXAM_LOCATION' | translate}}:
+			<span class='label'>{{'EXAM_LOCATION' | translate}}:</span>
 			<span data-ng-if="element.attributes.examInClass === 'true' " >{{'EXAM_INCLASS' | translate}} </span>
 			<span data-ng-if="element.attributes.examInClass === 'true' && element.attributes.examAtHome === 'true'" >{{slash}}</span>
 			<span data-ng-if="element.attributes.examAtHome === 'true'" >{{'EXAM_ATHOME' | translate}} </span>
