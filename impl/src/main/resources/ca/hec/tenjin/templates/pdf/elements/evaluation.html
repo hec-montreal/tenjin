@@ -2,4 +2,88 @@
 	<div class="title">
 		{{element.title}}
 	</div>
+
+	<div class="details">
+		<ul>
+			{{#attr-exists this 'evaluationDate'}}
+				<li>
+					<span class="label">{{str 'EVALUATION_DATE'}}:</span> {{attr-date this 'evaluationDate'}}
+				</li>
+			{{/attr-exists}}
+
+			{{#attr-cond this 'or' 'evaluationInClass' 'evaluationAtHome'}}
+				<li>
+					<span class="label">{{str 'EVALUATION_LOCATION'}}:</span>
+
+					{{#attr-exists this 'evaluationInClass'}}
+						{{str 'EVALUATION_INCLASS'}}
+					{{/attr-exists}}
+
+					{{#attr-cond this 'and' 'evaluationInClass' 'evaluationAtHome'}}
+						/
+					{{/attr-cond}}
+
+					{{#attr-exists this 'evaluationAtHome'}}
+						{{str 'EVALUATION_ATHOME'}}
+					{{/attr-exists}}
+				</li>
+			{{/attr-cond}}
+
+			{{#attr-cond this 'or' 'evaluationPaper' 'evaluationElectronic'}}
+				<li>
+					<span class="label">{{str 'EVALUATION_SUBMISSION_TYPE'}}:</span>
+
+					{{#attr-exists this 'evaluationPaper'}}
+						{{str 'EVALUATION_PAPER'}}
+					{{/attr-exists}}
+
+					{{#attr-cond this 'and' 'evaluationPaper' 'evaluationElectronic'}}
+						/
+					{{/attr-cond}}
+
+					{{#attr-exists this 'evaluationElectronic'}}
+						{{str 'EVALUATION_ELECTRONIC'}}
+					{{/attr-exists}}
+				</li>
+			{{/attr-cond}}
+
+			{{#attr-cond this 'or' 'evaluationOral' 'evaluationWritten'}}
+				<li>
+					<span class="label">{{str 'EVALUATION_TERMS'}}:</span>
+
+					{{#attr-exists this 'evaluationOral'}}
+						{{str 'EVALUATION_ORAL'}}
+					{{/attr-exists}}
+
+					{{#attr-cond this 'and' 'evaluationOral' 'evaluationWritten'}}
+						/
+					{{/attr-cond}}
+
+					{{#attr-exists this 'evaluationWritten'}}
+						{{str 'EVALUATION_WRITTEN'}}
+					{{/attr-exists}}
+				</li>
+			{{/attr-cond}}
+
+			{{#attr-exists this 'evaluationMode'}}
+				<span class="label">{{str 'EVALUATION_ASSESSMENT_TYPE'}}:</span>
+
+				{{#attr-is this 'evaluationMode' 'team'}}
+					{{str 'EVALUATION_TEAM'}}
+				{{/attr-is}}
+
+				{{#attr-is this 'evaluationMode' 'individual'}}
+					{{str 'EVALUATION_INDIVIDUAL'}}
+				{{/attr-is}}
+			{{/attr-exists}}
+		</ul>
+	</div>
+
+	<ul>
+		{{#each children}}
+			<li class="element">
+				{{> elements/element.html}}
+			</li>
+		{{/each}}
+	</ul>
 </div>

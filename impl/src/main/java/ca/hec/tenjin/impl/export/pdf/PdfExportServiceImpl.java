@@ -34,6 +34,7 @@ import ca.hec.tenjin.impl.export.pdf.template.AttributeConditionTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.AttributeIfTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.AttributeIsTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.AttributeTemplateHelper;
+import ca.hec.tenjin.impl.export.pdf.template.DateAttributeTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.StringTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.TypeIsTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.UnescapeHtmlTemplateHelper;
@@ -90,9 +91,10 @@ public class PdfExportServiceImpl implements PdfExportService {
 		handlebars.registerHelper("html", new UnescapeHtmlTemplateHelper());
 		handlebars.registerHelper("attr", new AttributeTemplateHelper());
 		handlebars.registerHelper("str", new StringTemplateHelper(tenjinDataProvider, "fr_CA"));
-		handlebars.registerHelper("attr-true", new AttributeIfTemplateHelper());
+		handlebars.registerHelper("attr-exists", new AttributeIfTemplateHelper());
 		handlebars.registerHelper("attr-is", new AttributeIsTemplateHelper());
 		handlebars.registerHelper("attr-cond", new AttributeConditionTemplateHelper());
+		handlebars.registerHelper("attr-date", new DateAttributeTemplateHelper());
 
 		try {
 			Template template = handlebars.compile("syllabus.html");

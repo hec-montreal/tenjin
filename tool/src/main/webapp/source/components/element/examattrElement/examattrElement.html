@@ -1,7 +1,7 @@
 <div class="element-examattr">
 	<ul>
 		<li data-ng-if="element.attributes.examInClass === 'true' || element.attributes.examAtHome === 'true'">
-			<span class='label'>{{'EXAM_LOCATION' | translate}}:</span>
+			{{'EXAM_LOCATION' | translate}}:
 			<span data-ng-if="element.attributes.examInClass === 'true' " >{{'EXAM_INCLASS' | translate}} </span>
 			<span data-ng-if="element.attributes.examInClass === 'true' && element.attributes.examAtHome === 'true'" >{{slash}}</span>
 			<span data-ng-if="element.attributes.examAtHome === 'true'" >{{'EXAM_ATHOME' | translate}} </span>
@@ -17,7 +17,7 @@
 		<li data-ng-if="element.attributes.examOral === 'true' || element.attributes.examWritten === 'true'">
 			{{'EXAM_TERMS' | translate}}:
 			<span data-ng-if="element.attributes.examOral === 'true' " >{{'EXAM_ORAL' | translate}} </span>
-			<span data-ng-if="element.attributes.examOral === 'true' && element.attributes.examWritten === 'true'" >{{slash}}</span>
+			<span daat-ng-if="element.attributes.examOral === 'true' && element.attributes.examWritten === 'true'" >{{slash}}</span>
 			<span data-ng-if="element.attributes.examWritten === 'true'" >{{'EXAM_WRITTEN' | translate}} </span>
 		</li>
 

@@ -9,17 +9,17 @@
 				<li>
 					<span class="label">{{str 'EXAM_LOCATION'}}:</span>
 
-					{{#attr-true this 'examInClass'}}
+					{{#attr-exists this 'examInClass'}}
 						{{str 'EXAM_INCLASS'}}
-					{{/attr-true}}
+					{{/attr-exists}}
 
 					{{#attr-cond this 'and' 'examInClass' 'examAtHome'}}
 						/
 					{{/attr-cond}}
 
-					{{#attr-true this 'examAtHome'}}
+					{{#attr-exists this 'examAtHome'}}
 						{{str 'EXAM_ATHOME'}}
-					{{/attr-true}}
+					{{/attr-exists}}
 				</li>
 			{{/attr-cond}}
 
@@ -27,17 +27,17 @@
 				<li>
 					<span class="label">{{str 'EXAM_SUBMISSION_TYPE'}}:</span>
 
-					{{#attr-true this 'examPaper'}}
+					{{#attr-exists this 'examPaper'}}
 						{{str 'EXAM_PAPER'}}
-					{{/attr-true}}
+					{{/attr-exists}}
 
 					{{#attr-cond this 'and' 'examPaper' 'examElectronic'}}
 						/
 					{{/attr-cond}}
 
-					{{#attr-true this 'examElectronic'}}
+					{{#attr-exists this 'examElectronic'}}
 						{{str 'EXAM_ELECTRONIC'}}
-					{{/attr-true}}
+					{{/attr-exists}}
 				</li>
 			{{/attr-cond}}
 
@@ -45,21 +45,21 @@
 				<li>
 					<span class="label">{{str 'EXAM_TERMS'}}:</span>
 
-					{{#attr-true this 'examOral'}}
+					{{#attr-exists this 'examOral'}}
 						{{str 'EXAM_ORAL'}}
-					{{/attr-true}}
+					{{/attr-exists}}
 
 					{{#attr-cond this 'and' 'examOral' 'examWritten'}}
 						/
 					{{/attr-cond}}
 
-					{{#attr-true this 'examWritten'}}
+					{{#attr-exists this 'examWritten'}}
 						{{str 'EXAM_WRITTEN'}}
-					{{/attr-true}}
+					{{/attr-exists}}
 				</li>
 			{{/attr-cond}}
 
-			{{#attr-true this 'examMode'}}
+			{{#attr-exists this 'examMode'}}
 				<span class="label">{{str 'EXAM_ASSESSMENT_TYPE'}}:</span>
 
 				{{#attr-is this 'examMode' 'team'}}
@@ -69,7 +69,7 @@
 				{{#attr-is this 'examMode' 'individual'}}
 					{{str 'EXAM_INDIVIDUAL'}}
 				{{/attr-is}}
-			{{/attr-true}}
+			{{/attr-exists}}
 		</ul>
 	</div>
 

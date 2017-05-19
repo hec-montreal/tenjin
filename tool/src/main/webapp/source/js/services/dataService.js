@@ -8,6 +8,7 @@ tenjinApp.service('DataService', ['$q', '$http', 'config', function($q, $http, c
 			config.types = data.types;
 			config.documentTypes = data.documentTypes;
 			config.citationTypes = data.citationTypes;
+			config.hyperlinkTypes = data.hyperlinkTypes;
 			config.contactInfoTitles = data.contactInfoTitles;
 
 			/*for(var key in data.strings) {
