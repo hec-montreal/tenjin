@@ -310,7 +310,7 @@
 		WARNING_UNSAVED: 'You have unsaved changes that will be lost if you leave this page, would you like to continue?',
 		DETAILS: 'Details',
 		CONTACT_VISITOR_PROFESSOR: 'Visiting Professor',
-		MANAGEMENT_EXPLANATION_1: 'Personalised course outlines are linked to the common course outile. It is not possible to detach them.',
+		MANAGEMENT_EXPLANATION_1: 'Personalised course outlines are linked to the common course outline. It is not possible to detach them.',
 		MANAGEMENT_EXPLANATION_2: 'The "section" column indicates that students in those sections will see the content from the common course outline as well as that of the personalised course outline.'
 	}).translations('fr_CA', {
 		MENU_LABEL: 'Menu du cours',
