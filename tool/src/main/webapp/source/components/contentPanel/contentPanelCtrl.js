@@ -41,12 +41,6 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 						return true;
 					}
 				} else {
-					// root level
-					// Prevent dragging lectures outside a composite
-					if (sourceNodeScope.item.type === "lecture") {
-						return false;
-					}
-
 					return true;
 				}
 			}
