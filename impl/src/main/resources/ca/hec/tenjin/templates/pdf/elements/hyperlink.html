@@ -1,3 +1,17 @@
 <div class="hyperlink">
-	<h1>HYPERLINK</h1>
+	<div class="link">
+		<a href="{{attr this 'hyperlinkUrl'}}" target="_blank">
+			{{#title-exists this}}
+				{{element.title}}
+			{{else}}
+				{{attr this 'hyperlinkUrl'}}
+			{{/title-exists}}
+		</a>
+
+		<span class="type">[{{attr-enum this 'hyperlinkType' 'hyperlinkTypes'}}]</span>
+
+		<div class="description syllabus-text">
+			{{{html element.description}}}
+		</div>
+	</div>
 </div>

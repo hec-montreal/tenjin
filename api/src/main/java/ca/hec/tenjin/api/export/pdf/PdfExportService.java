@@ -16,10 +16,8 @@ public interface PdfExportService {
 
 	/**
 	 * Construct a pdf with the specified syllabus
-	 * 
-	 * @param syllabus The syllabus
-	 * @param outputStream The pdf will be outputed to this stream
+	 *
 	 * @throws PdfExportException
 	 */
-	void makePdf(AbstractSyllabus syllabus, List<Object> elements, OutputStream outputStream) throws PdfExportException;
+	void makePdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws PdfExportException;
 }

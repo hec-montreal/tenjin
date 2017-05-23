@@ -21,6 +21,8 @@ public interface TenjinDataProvider {
 
 	List<ContactInfoTitle> getContactInfoTitles();
 
+	String getEnumValue(String enumType, String key, String locale);
+	
 	Map<String, Map<String, String>> getInterfaceStrings();
 	
 	Map<String, String> getInterfaceStrings(String locale);

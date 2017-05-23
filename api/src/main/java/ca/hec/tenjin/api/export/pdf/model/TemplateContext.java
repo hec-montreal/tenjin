@@ -16,6 +16,7 @@ public class TemplateContext {
 	private List<SyllabusElement> elements;
 	private CourseInfo courseInfo;
 	private Image logo;
+	private String locale;
 
 	public TemplateContext() {
 		this.elements = new ArrayList<>();

@@ -12,11 +12,21 @@ ul {
 	list-style: none;
 }
 
-.type {
-	color: #f00;
+/* Debug */
+.debug .element {
+	border: 1px solid #f00;
+}
+
+.element-type {
 	display: none;
 }
 
+.debug .element .element-type {
+	color: #f00;
+	display: block;
+}
+
+/* Layout */
 #header #logo {
 	border-bottom: 4px solid #003366;
 }
@@ -49,27 +59,11 @@ ul {
 	padding-bottom: 10px;
 }
 
-.element .composite > .title {
-	font-size: 22px;
-	padding: 10px 0 10px 0;
+.box-title {
+	font-size: 18px;
+	padding: 5px;
 	page-break-inside: avoid;
-}
-
-.element .rubric > .title, .element .exam > .title, .element .evaluation > .title {
-	font-size: 20px;
 	background-color: #ddd;
-	padding: 5px 0 5px 5px;
-	page-break-inside: avoid;
-}
-
-.exam > .title, .evaluation > .title {
-	margin-bottom: 10px;
-}
-
-.exam .element .title, .evaluation .element .title {
-	background-color: #fff;
-	padding-bottom: 0;
-	padding-left: 0;
 }
 
 .syllabus-text {
@@ -81,10 +75,35 @@ ul {
 	list-style-position: inside;
 }
 
-.syllabus-text p {
+.label {
+	font-weight: bold;
+}
+
+/* Specific elements */
+.text p {
 	padding-bottom: 10px;
 }
 
-.label {
-	font-weight: bold;
+.composite > .title {
+	font-size: 22px;
+	page-break-inside: avoid;
+}
+
+.contact-info .description .syllabus-text {
+	font-style: italic;
+}
+
+.exam > .elements .rubric > .title {
+	background-color: #fff;
+	padding: 0px;
+}
+
+.evaluation > .elements .rubric > .title {
+	background-color: #fff;
+	padding: 0px;
+}
+
+.lecture > .elements .rubric > .title {
+	background-color: #fff;
+	padding: 0px;
 }

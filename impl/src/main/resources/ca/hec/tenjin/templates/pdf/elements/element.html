@@ -1,35 +1,43 @@
-<li>
-	<div class="type">{{element.type}}</div>
+<div class="element-type">
+	{{element.type}}
+</div>
 
-	{{#type-is this 'composite'}}
-		{{> elements/composite.html}}
-	{{/type-is}}
+{{#type-is this 'composite'}}
+	{{> elements/composite.html}}
+{{/type-is}}
 
-	{{#type-is this 'rubric'}}
-		{{> elements/rubric.html}}
-	{{/type-is}}
+{{#type-is this 'rubric'}}
+	{{> elements/rubric.html}}
+{{/type-is}}
 
-	{{#type-is this 'text'}}
-		{{> elements/text.html}}
-	{{/type-is}}
+{{#type-is this 'text'}}
+	{{> elements/text.html}}
+{{/type-is}}
 
-	{{#type-is this 'citation'}}
-		{{> elements/citation.html}}
-	{{/type-is}}
+{{#type-is this 'citation'}}
+	{{> elements/citation.html}}
+{{/type-is}}
 
-	{{#type-is this 'contact_info'}}
-		{{> elements/contact-info.html}}
-	{{/type-is}}
+{{#type-is this 'contact_info'}}
+	{{> elements/contact-info.html}}
+{{/type-is}}
 
-	{{#type-is this 'exam'}}
-		{{> elements/exam.html}}
-	{{/type-is}}
+{{#type-is this 'exam'}}
+	{{> elements/exam.html}}
+{{/type-is}}
 
-	{{#type-is this 'evaluation'}}
-		{{> elements/evaluation.html}}
-	{{/type-is}}
+{{#type-is this 'evaluation'}}
+	{{> elements/evaluation.html}}
+{{/type-is}}
 
-	{{#type-is this 'hyperlink'}}
-		{{> elements/hyperlink.html}}
-	{{/type-is}}
-</li>
+{{#type-is this 'hyperlink'}}
+	{{> elements/hyperlink.html}}
+{{/type-is}}
+
+{{#type-is this 'lecture'}}
+	{{> elements/lecture.html}}
+{{/type-is}}
+
+{{#type-is this 'image'}}
+	{{> elements/image.html}}
+{{/type-is}}

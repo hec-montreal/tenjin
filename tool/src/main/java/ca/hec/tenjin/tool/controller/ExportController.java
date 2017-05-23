@@ -35,7 +35,7 @@ public class ExportController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/syllabus/{id}/pdf", method = RequestMethod.GET)
-	public void exportPdf(@PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "false") boolean published, HttpServletResponse response) throws PdfExportException, IOException {
+	public void exportPdf(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, @RequestParam(required = false, name="published", defaultValue = "false") boolean published, HttpServletResponse response) throws PdfExportException, IOException {
 		try {
 			AbstractSyllabus syllabus;
 			List<Object> elements;
@@ -48,7 +48,7 @@ public class ExportController {
 				elements = (List<Object>)(List<?>)((Syllabus)syllabus).getElements();
 			}
 
-			pdfExportService.makePdf(syllabus, elements, response.getOutputStream());
+			pdfExportService.makePdf(syllabus, elements, locale, response.getOutputStream());
 		} catch (Exception e) {
 			throw new PdfExportException(e);
 		}

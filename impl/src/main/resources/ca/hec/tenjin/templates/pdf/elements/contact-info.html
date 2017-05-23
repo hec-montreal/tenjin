@@ -4,22 +4,30 @@
 	</div>
 
 	<div class="title">
-		{{attr this 'contactInfoTitle'}}
+		{{attr-enum this 'contactInfoTitle' 'contactInfoTitles'}}
 	</div>
 
-	<div class="email">
-		{{attr this 'contactInfoEmail'}}
-	</div>
+	{{#attr-exists this 'contactInfoEmail'}}
+		<div class="email">
+			<span class="label">{{str 'CONTACTINFO_EMAIL'}}</span>: {{attr this 'contactInfoEmail'}}
+		</div>
+	{{/attr-exists}}
 
-	<div class="phone">
-		{{attr this 'contactInfoPhone'}}
-	</div>
+	{{#attr-exists this 'contactInfoTelephone'}}
+		<div class="phone">
+			<span class="label">{{str 'CONTACTINFO_TELEPHONE'}}</span>: {{attr this 'contactInfoTelephone'}}
+		</div>
+	{{/attr-exists}}
 
-	<div class="phone">
-		{{attr this 'contactInfoOfficeRoom'}}
-	</div>
+	{{#attr-exists this 'contactInfoOfficeRoom'}}
+		<div class="office">
+			<span class="label">{{str 'CONTACTINFO_OFFICEROOM'}}</span>: {{attr this 'contactInfoOfficeRoom'}}
+		</div>
+	{{/attr-exists}}
 
-	<div class="description syllabus-text">
-		{{{html element.description}}}
+	<div class="description">
+		<div class="syllabus-text">
+			{{{html element.description}}}
+		</div>
 	</div>
 </div>

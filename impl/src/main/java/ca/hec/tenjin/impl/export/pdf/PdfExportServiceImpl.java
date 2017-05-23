@@ -31,11 +31,13 @@ import ca.hec.tenjin.api.export.pdf.model.TemplateContext;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.provider.TenjinDataProvider;
 import ca.hec.tenjin.impl.export.pdf.template.AttributeConditionTemplateHelper;
+import ca.hec.tenjin.impl.export.pdf.template.AttributeEnumTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.AttributeIfTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.AttributeIsTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.AttributeTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.DateAttributeTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.StringTemplateHelper;
+import ca.hec.tenjin.impl.export.pdf.template.TitleExistsTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.TypeIsTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.UnescapeHtmlTemplateHelper;
 import lombok.Setter;
@@ -55,7 +57,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 	private PdfResourceLoader resourceLoader;
 
 	@Override
-	public void makePdf(AbstractSyllabus syllabus, List<Object> elements, OutputStream outputStream) throws PdfExportException {
+	public void makePdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws PdfExportException {
 		// Loaders
 		if (_TO_REMOVE________DEBUG_MODE) {
 			templateLoader = new FileTemplateLoader("C:/Dev/Projects/workspace/zc2/sakai_tenjin/sakai/tenjin/impl/src/main/resources/ca/hec/tenjin/templates/pdf", "");
@@ -66,7 +68,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 		}
 
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements));
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale));
 			ITextRenderer renderer = new ITextRenderer();
 			Document doc = XMLResource.load(new ByteArrayInputStream(template.getBytes(Charset.forName("utf-8")))).getDocument();
 
@@ -88,13 +90,15 @@ public class PdfExportServiceImpl implements PdfExportService {
 
 		// Template helpers
 		handlebars.registerHelper("type-is", new TypeIsTemplateHelper());
+		handlebars.registerHelper("title-exists", new TitleExistsTemplateHelper());
 		handlebars.registerHelper("html", new UnescapeHtmlTemplateHelper());
 		handlebars.registerHelper("attr", new AttributeTemplateHelper());
-		handlebars.registerHelper("str", new StringTemplateHelper(tenjinDataProvider, "fr_CA"));
+		handlebars.registerHelper("str", new StringTemplateHelper(tenjinDataProvider, context.getLocale()));
 		handlebars.registerHelper("attr-exists", new AttributeIfTemplateHelper());
 		handlebars.registerHelper("attr-is", new AttributeIsTemplateHelper());
 		handlebars.registerHelper("attr-cond", new AttributeConditionTemplateHelper());
 		handlebars.registerHelper("attr-date", new DateAttributeTemplateHelper());
+		handlebars.registerHelper("attr-enum", new AttributeEnumTemplateHelper(tenjinDataProvider, context.getLocale()));
 
 		try {
 			Template template = handlebars.compile("syllabus.html");
@@ -111,10 +115,11 @@ public class PdfExportServiceImpl implements PdfExportService {
 		}
 	}
 
-	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements) throws IOException, PdfExportException {
+	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String locale) throws IOException, PdfExportException {
 		TemplateContext ret = new TemplateContext();
 
 		ret.setSyllabus(syllabus);
+		ret.setLocale(locale);
 		ret.setLogo(resourceLoader.loadImage("images/logo.png"));
 
 		try {
