@@ -54,6 +54,14 @@
 						<input data-ng-if="!syllabus.common && userService.isAllowed('syllabusWrite', syllabus)" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="checkStatus()" />
 					</td>
 				</tr>
+				<tr>
+					<td colspan="6" class="explanation">
+						<div>
+							{{ 'MANAGEMENT_EXPLANATION_1' | translate }}</br>
+							{{ 'MANAGEMENT_EXPLANATION_2' | translate }}
+						</div>
+					</td>
+				</tr>
 			</table>
 		</div>
 	</div>
@@ -90,12 +98,6 @@
 					</td>
 				</tr>
 			</table>
-		</div>
-	</div>
-	<div class="row default">
-		 <div class="col-xs-12 jumbotron">
-			<p>{{ 'MANAGEMENT_EXPLANATION_1' | translate }}</p>
-			<p>{{ 'MANAGEMENT_EXPLANATION_2' | translate }}</p>
 		</div>
 	</div>
 </div>
