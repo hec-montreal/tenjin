@@ -311,7 +311,7 @@
 		DETAILS: 'Details',
 		CONTACT_VISITOR_PROFESSOR: 'Visiting Professor',
 		MANAGEMENT_EXPLANATION_1: 'Personalised course outlines are linked to the common course outline. It is not possible to detach them.',
-		MANAGEMENT_EXPLANATION_2: 'The "section" column indicates that students in those sections will see the content from the common course outline as well as that of the personalised course outline.'
+		MANAGEMENT_EXPLANATION_2: 'The "sections" column indicates that students in those sections will see the published version of that course outline.'
 	}).translations('fr_CA', {
 		MENU_LABEL: 'Menu du cours',
 		MODAL_DELETE_CONFIRM_TITLE: 'Suppression de l\'élément',
@@ -620,7 +620,7 @@
 		DETAILS: 'Détails',
 		CONTACT_VISITOR_PROFESSOR: 'Professeur(e) visiteur(se)',
 		MANAGEMENT_EXPLANATION_1: 'Les plans de cours personnalisés sont tous attachés au plan de cours commun. Il n\'est pas possible de les détacher.',
-		MANAGEMENT_EXPLANATION_2: 'La colonne « sections » indique que les étudiants de la section voient le contenu du plan de cours commun ainsi que les ajouts faits au personnalisé.'
+		MANAGEMENT_EXPLANATION_2: 'La colonne « sections » indique que les étudiants de ces sections voient la version publiée de ce plan de cours.'
 	});
 
 	$translateProvider.preferredLanguage('fr_CA');
