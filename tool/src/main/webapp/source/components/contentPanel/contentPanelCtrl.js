@@ -25,11 +25,12 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		name: "contentPanelTree",
 		item: TreeService.selectedElement,
 
+/*
 		accept: function(sourceNodeScope, destNodesScope, destIndex) {
 			// test if nodes come from the same tree
 			if (sourceNodeScope.treeOptions.name === destNodesScope.treeOptions.name) {
 				if (destNodesScope.item) {
-					if (destNodesScope.item.type === 'composite' || destNodesScope.item.type === 'lecture' || destNodesScope.item.type === 'tutorial' || destNodesScope.item.type === 'evaluation' || destNodesScope.item.type === 'exam') {
+					if (destNodesScope.item.type === 'composite' || destNodesScope.item.type === 'lecture' || destNodesScope.item.type === 'tutorial' || destNodesScope.item.type === 'evaluation' || destNodesScope.item.type === 'exam' || destNodesScope.item.type === 'cluster') {
 						// a composite element can't be moved inside another composite element
 						if (sourceNodeScope.item.type === 'composite' && destNodesScope.item.type === 'composite') {
 							return false;
@@ -46,7 +47,8 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 			}
 
 			return false;
-		},
+		},*/
+
 
 		dropped: function(event) {
 			var srcItem = event.source.nodesScope.item;
