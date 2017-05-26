@@ -1,15 +1,22 @@
 package ca.hec.tenjin.api;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import org.sakaiproject.authz.api.GroupNotDefinedException;
-import org.sakaiproject.citation.api.Citation;
 import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.exception.PermissionException;
+import org.sakaiproject.exception.ServerOverloadException;
+import org.sakaiproject.exception.TypeException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserNotDefinedException;
+
+import ca.hec.tenjin.api.export.pdf.model.SakaiCitation;
+import ca.hec.tenjin.api.model.data.EntityContent;
 
 /**
  * An interface to abstract all Sakai related API calls in a central method that
@@ -23,8 +30,7 @@ public interface SakaiProxy {
 	public final static String PROPERTY_SYLLABUS_LOCK_DELAY_SECONDS = "tenjin.syllabusLockDelaySeconds";
 	public final static String PROPERTY_SYLLABUS_LOCK_RENEW_DELAY_SECONDS = "tenjin.syllabusLockRenewDelaySeconds";
 	public final static String PROPERTY_SYLLABUS_LOCK_CHECK_COMMON_LOCK = "tenjin.syllabusLockCheckCommonLock";
-	
-	
+
 	/**
 	 * Is the current user a superUser? (anyone in admin realm)
 	 * 
@@ -47,7 +53,7 @@ public interface SakaiProxy {
 	public String getCurrentSiteId();
 
 	public Site getCurrentSite();
-	
+
 	public String getCurrentUserId();
 
 	public String getCurrentUserName();
@@ -59,18 +65,20 @@ public interface SakaiProxy {
 	public boolean siteExists(String siteId);
 
 	public ContentResource getResource(String string);
-
-	public Citation getCitation(String id);
 	
+	public List<EntityContent> getSiteResources(String siteId, String timestamp, String depth, String resourceId);
+
 	public User getUser(String id) throws UserNotDefinedException;
 
 	public Group getGroup(String groupId) throws GroupNotDefinedException;
-	
+
 	public String getSakaiProperty(String name);
-	
+
 	public Set<String> getGroupsForSite(String siteId);
 
-	public String getCurrentUserLocale ();
+	public String getCurrentUserLocale();
 
-    public String getDefaultLocale ();
+	public String getDefaultLocale();
+
+	List<SakaiCitation> getSiteCitations(String siteId, Collection<EntityContent> siteResources) throws PermissionException, IdUnusedException, TypeException, ServerOverloadException;
 }

@@ -5,10 +5,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.util.Base64;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.exception.PermissionException;
+import org.sakaiproject.exception.ServerOverloadException;
+import org.sakaiproject.exception.TypeException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.w3c.dom.Document;
@@ -26,8 +32,11 @@ import ca.hec.tenjin.api.exception.PdfExportException;
 import ca.hec.tenjin.api.export.pdf.PdfExportService;
 import ca.hec.tenjin.api.export.pdf.PdfResourceLoader;
 import ca.hec.tenjin.api.export.pdf.model.CourseInfo;
+import ca.hec.tenjin.api.export.pdf.model.SakaiCitation;
+import ca.hec.tenjin.api.export.pdf.model.SakaiResource;
 import ca.hec.tenjin.api.export.pdf.model.SyllabusElement;
 import ca.hec.tenjin.api.export.pdf.model.TemplateContext;
+import ca.hec.tenjin.api.model.data.EntityContent;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.provider.TenjinDataProvider;
 import ca.hec.tenjin.impl.export.pdf.template.AttributeConditionTemplateHelper;
@@ -115,7 +124,10 @@ public class PdfExportServiceImpl implements PdfExportService {
 		}
 	}
 
-	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String locale) throws IOException, PdfExportException {
+	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String locale) throws IOException, PdfExportException, IdUnusedException, TypeException, PermissionException, ServerOverloadException {
+		List<EntityContent> resources = sakaiProxy.getSiteResources(sakaiProxy.getCurrentSiteId(), null, null, null);
+		List<SakaiCitation> citations = sakaiProxy.getSiteCitations(sakaiProxy.getCurrentSiteId(), resources);
+
 		TemplateContext ret = new TemplateContext();
 
 		ret.setSyllabus(syllabus);
@@ -137,13 +149,13 @@ public class PdfExportServiceImpl implements PdfExportService {
 		}
 
 		for (Object element : elements) {
-			ret.getElements().add(buildElement(element));
+			ret.getElements().add(buildElement(element, resources, citations));
 		}
 
 		return ret;
 	}
 
-	private SyllabusElement buildElement(Object element) {
+	private SyllabusElement buildElement(Object element, List<EntityContent> resources, List<SakaiCitation> citations) throws IdUnusedException, TypeException, PermissionException, ServerOverloadException {
 		SyllabusElement ret = new SyllabusElement(element);
 
 		// If the element is composite, add children
@@ -151,15 +163,28 @@ public class PdfExportServiceImpl implements PdfExportService {
 			List<Object> children = ret.<List<Object>>call("getElements");
 
 			for (Object child : children) {
-				ret.getChildren().add(buildElement(child));
+				ret.getChildren().add(buildElement(child, resources, citations));
 			}
 		}
 
 		String type = ret.call("getType");
 
-		// If the element is a citation, we must fetch it
-		if (type.equals("citation")) {
+		if (type.equals("image")) {
+			String resourceId = ret.getAttribute("imageId");
+			EntityContent res = findResource(resources, resourceId);
+
+			ret.setResource(new SakaiResource(res));
+
+			byte[] data = ((ContentResource) res.getOriginalEntity()).getContent();
+
+			ret.getResource().setBytesB64(Base64.getEncoder().encodeToString(data));
+			ret.getResource().setContentType(res.getMimeType());
+		} else if (type.equals("citation")) {
 			String citationId = ret.getAttribute("citationId");
+			
+			citationId = citationId.substring(citationId.lastIndexOf("/") + 1);
+		
+			ret.setCitation(findCitation(citations, citationId));
 		}
 
 		return ret;
@@ -197,5 +222,32 @@ public class PdfExportServiceImpl implements PdfExportService {
 		}
 
 		return ret.substring(0, ret.length() - 2);
+	}
+
+	private EntityContent findResource(Collection<EntityContent> resources, String id) {
+		for (EntityContent content : resources) {
+
+			if (content.getResourceId().startsWith(id)) {
+				return content;
+			}
+
+			EntityContent child = findResource(content.getResourceChildren(), id);
+
+			if (child != null) {
+				return child;
+			}
+		}
+
+		return null;
+	}
+
+	private SakaiCitation findCitation(Collection<SakaiCitation> citations, String id) {
+		for(SakaiCitation citation : citations) {
+			if(citation.getCitation().getId().equals(id)) {
+				return citation;
+			}
+		}
+		
+		return null;
 	}
 }

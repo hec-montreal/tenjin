@@ -3,7 +3,7 @@ package ca.hec.tenjin.api.export.pdf;
 import java.io.IOException;
 import java.util.Base64;
 
-import ca.hec.tenjin.api.export.pdf.model.Image;
+import ca.hec.tenjin.api.export.pdf.model.SakaiResource;
 
 public abstract class PdfResourceLoader {
 
@@ -15,11 +15,11 @@ public abstract class PdfResourceLoader {
 
 	public abstract byte[] loadResource(String path) throws IOException;
 
-	public Image loadImage(String path) throws IOException {
-		Image ret = new Image();
+	public SakaiResource loadImage(String path) throws IOException {
+		SakaiResource ret = new SakaiResource();
 
-		ret.setMimeType(PdfResourceLoader.findMimeType(path));
-		ret.setBase64(Base64.getEncoder().encodeToString(loadResource(path)));
+		ret.setContentType(PdfResourceLoader.findMimeType(path));
+		ret.setBytesB64(Base64.getEncoder().encodeToString(loadResource(path)));
 
 		return ret;
 	}

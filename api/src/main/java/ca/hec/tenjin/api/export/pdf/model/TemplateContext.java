@@ -15,7 +15,7 @@ public class TemplateContext {
 	private AbstractSyllabus syllabus;
 	private List<SyllabusElement> elements;
 	private CourseInfo courseInfo;
-	private Image logo;
+	private SakaiResource logo;
 	private String locale;
 
 	public TemplateContext() {

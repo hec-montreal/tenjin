@@ -50,6 +50,8 @@ public class ExportController {
 
 			pdfExportService.makePdf(syllabus, elements, locale, response.getOutputStream());
 		} catch (Exception e) {
+			e.printStackTrace();
+			
 			throw new PdfExportException(e);
 		}
 	}

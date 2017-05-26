@@ -2,7 +2,6 @@ package ca.hec.tenjin.api.export.pdf.model;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,14 +12,13 @@ public class SyllabusElement {
 
 	private Object element;
 	private List<SyllabusElement> children;
-	private String escapedDescription;
-	private Map<String, Object> resources;
+	private SakaiResource resource;
+	private SakaiCitation citation;
 
 	public SyllabusElement(Object element) {
 		this.element = element;
 
 		this.children = new ArrayList<>();
-		this.resources = new HashMap<>();
 	}
 
 	@SuppressWarnings("unchecked")

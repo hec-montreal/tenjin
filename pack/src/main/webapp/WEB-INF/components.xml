@@ -166,5 +166,13 @@
 		<property name="serverConfigurationService">
 			<ref bean="org.sakaiproject.component.api.ServerConfigurationService" />
 		</property>
+		
+		<property name="timeService">
+			<ref bean="org.sakaiproject.time.api.TimeService" />
+		</property>
+		
+		<property name="entityManager">
+			<ref bean="org.sakaiproject.entity.api.EntityManager" />
+		</property>
 	</bean>
 </beans>
