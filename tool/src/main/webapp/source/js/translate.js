@@ -297,7 +297,7 @@
 		ELEMENT_HIDDEN_BEFORE: 'Element hidden before ',
 		ELEMENT_HIDDEN_BETWEEN: 'Element hidden before %1 and after %2',
 		FROM_COMMON: 'From common',
-		DATE_TIME_FORMAT: 'yyyy-MM-dd HH:mm',
+		DATE_TIME_FORMAT: 'MM/dd/yyyy HH:mm',
 		HIDDEN_BY_RESOURCE_FLAG: 'Hidden by resource',
 		MISSING_SAKAI_ENTITY_FLAG: 'This link is pointing to an assignment or a quiz that does not exist',
 		SOURCE: 'Source',
