@@ -120,3 +120,11 @@ ul {
 	-fs-fit-images-to-width: 100%;
 	page-break-inside: avoid;
 }
+
+.citation .article .sourceTitle {
+	font-style: italic;
+}
+
+.citation .book .title {
+	font-weight: bold;
+}

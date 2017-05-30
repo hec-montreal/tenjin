@@ -41,13 +41,9 @@ import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.provider.TenjinDataProvider;
 import ca.hec.tenjin.impl.export.pdf.template.AttributeConditionTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.AttributeEnumTemplateHelper;
-import ca.hec.tenjin.impl.export.pdf.template.AttributeIfTemplateHelper;
-import ca.hec.tenjin.impl.export.pdf.template.AttributeIsTemplateHelper;
-import ca.hec.tenjin.impl.export.pdf.template.AttributeTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.DateAttributeTemplateHelper;
+import ca.hec.tenjin.impl.export.pdf.template.IfEqTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.StringTemplateHelper;
-import ca.hec.tenjin.impl.export.pdf.template.TitleExistsTemplateHelper;
-import ca.hec.tenjin.impl.export.pdf.template.TypeIsTemplateHelper;
 import ca.hec.tenjin.impl.export.pdf.template.UnescapeHtmlTemplateHelper;
 import lombok.Setter;
 
@@ -98,17 +94,13 @@ public class PdfExportServiceImpl implements PdfExportService {
 		handlebars.infiniteLoops(true);
 
 		// Template helpers
-		handlebars.registerHelper("type-is", new TypeIsTemplateHelper());
-		handlebars.registerHelper("title-exists", new TitleExistsTemplateHelper());
+		handlebars.registerHelper("if-eq", new IfEqTemplateHelper());
 		handlebars.registerHelper("html", new UnescapeHtmlTemplateHelper());
-		handlebars.registerHelper("attr", new AttributeTemplateHelper());
 		handlebars.registerHelper("str", new StringTemplateHelper(tenjinDataProvider, context.getLocale()));
-		handlebars.registerHelper("attr-exists", new AttributeIfTemplateHelper());
-		handlebars.registerHelper("attr-is", new AttributeIsTemplateHelper());
 		handlebars.registerHelper("attr-cond", new AttributeConditionTemplateHelper());
 		handlebars.registerHelper("attr-date", new DateAttributeTemplateHelper());
 		handlebars.registerHelper("attr-enum", new AttributeEnumTemplateHelper(tenjinDataProvider, context.getLocale()));
-
+		
 		try {
 			Template template = handlebars.compile("syllabus.html");
 
@@ -170,21 +162,11 @@ public class PdfExportServiceImpl implements PdfExportService {
 		String type = ret.call("getType");
 
 		if (type.equals("image")) {
-			String resourceId = ret.getAttribute("imageId");
-			EntityContent res = findResource(resources, resourceId);
-
-			ret.setResource(new SakaiResource(res));
-
-			byte[] data = ((ContentResource) res.getOriginalEntity()).getContent();
-
-			ret.getResource().setBytesB64(Base64.getEncoder().encodeToString(data));
-			ret.getResource().setContentType(res.getMimeType());
+			prepareImageElement(ret, resources);
+		} else if(type.equals("document")) {
+			prepareDocumentElement(ret, resources);
 		} else if (type.equals("citation")) {
-			String citationId = ret.getAttribute("citationId");
-			
-			citationId = citationId.substring(citationId.lastIndexOf("/") + 1);
-		
-			ret.setCitation(findCitation(citations, citationId));
+			prepareCitationElement(ret, citations);
 		}
 
 		return ret;
@@ -249,5 +231,32 @@ public class PdfExportServiceImpl implements PdfExportService {
 		}
 		
 		return null;
+	}
+	
+	private void prepareImageElement(SyllabusElement e, List<EntityContent> resources) throws ServerOverloadException {
+		String resourceId = e.getAttribute("imageId");
+		EntityContent res = findResource(resources, resourceId);
+
+		e.setResource(new SakaiResource(res));
+
+		byte[] data = ((ContentResource) res.getOriginalEntity()).getContent();
+
+		e.getResource().setBytesB64(Base64.getEncoder().encodeToString(data));
+		e.getResource().setContentType(res.getMimeType());
+	}
+	
+	private void prepareDocumentElement(SyllabusElement e, List<EntityContent> resources) {
+		String resourceId = e.getAttribute("documentId");
+		EntityContent res = findResource(resources, resourceId);
+		
+		e.setResource(new SakaiResource(res));
+	}
+	
+	private void prepareCitationElement(SyllabusElement e, List<SakaiCitation> citations) {
+		String citationId = e.getAttribute("citationId");
+		
+		citationId = citationId.substring(citationId.lastIndexOf("/") + 1);
+	
+		e.setCitation(findCitation(citations, citationId));
 	}
 }

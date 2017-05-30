@@ -1,29 +1,29 @@
 <div class="contact-info">
 	<div class="name">
-		{{attr this 'contactInfoFirstName'}}&nbsp;{{attr this 'contactInfoLastName'}}
+		{{element.attributes.contactInfoFirstName}}&nbsp;{{element.attributes.contactInfoLastName}}
 	</div>
 
 	<div class="title">
 		{{attr-enum this 'contactInfoTitle' 'contactInfoTitles'}}
 	</div>
 
-	{{#attr-exists this 'contactInfoEmail'}}
+	{{#if element.attributes.contactInfoEmail}}
 		<div class="email">
-			<span class="label">{{str 'CONTACTINFO_EMAIL'}}</span>: {{attr this 'contactInfoEmail'}}
+			<span class="label">{{str 'CONTACTINFO_EMAIL'}}</span>: {{element.attributes.contactInfoEmail}}
 		</div>
-	{{/attr-exists}}
+	{{/if}}
 
-	{{#attr-exists this 'contactInfoTelephone'}}
+	{{#if element.attributes.contactInfoTelephone}}
 		<div class="phone">
-			<span class="label">{{str 'CONTACTINFO_TELEPHONE'}}</span>: {{attr this 'contactInfoTelephone'}}
+			<span class="label">{{str 'CONTACTINFO_TELEPHONE'}}</span>: {{element.attributes.contactInfoTelephone}}
 		</div>
-	{{/attr-exists}}
+	{{/if}}
 
-	{{#attr-exists this 'contactInfoOfficeRoom'}}
+	{{#if element.attributes.contactInfoOfficeRoom}}
 		<div class="office">
-			<span class="label">{{str 'CONTACTINFO_OFFICEROOM'}}</span>: {{attr this 'contactInfoOfficeRoom'}}
+			<span class="label">{{str 'CONTACTINFO_OFFICEROOM'}}</span>: {{element.attributes.contactInfoOfficeRoom}}
 		</div>
-	{{/attr-exists}}
+	{{/if}}
 
 	<div class="description">
 		<div class="syllabus-text">

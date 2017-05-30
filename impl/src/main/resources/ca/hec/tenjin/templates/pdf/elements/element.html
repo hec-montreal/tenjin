@@ -2,42 +2,50 @@
 	{{element.type}}
 </div>
 
-{{#type-is this 'composite'}}
+{{#if-eq element.type 'composite'}}
 	{{> elements/composite.html}}
-{{/type-is}}
+{{/if-eq}}
 
-{{#type-is this 'rubric'}}
+{{#if-eq element.type 'rubric'}}
 	{{> elements/rubric.html}}
-{{/type-is}}
+{{/if-eq}}
 
-{{#type-is this 'text'}}
+{{#if-eq element.type 'text'}}
 	{{> elements/text.html}}
-{{/type-is}}
+{{/if-eq}}
 
-{{#type-is this 'citation'}}
+{{#if-eq element.type 'citation'}}
 	{{> elements/citation.html}}
-{{/type-is}}
+{{/if-eq}}
 
-{{#type-is this 'contact_info'}}
+{{#if-eq element.type 'contact_info'}}
 	{{> elements/contact-info.html}}
-{{/type-is}}
+{{/if-eq}}
 
-{{#type-is this 'exam'}}
+{{#if-eq element.type 'exam'}}
 	{{> elements/exam.html}}
-{{/type-is}}
+{{/if-eq}}
 
-{{#type-is this 'evaluation'}}
+{{#if-eq element.type 'evaluation'}}
 	{{> elements/evaluation.html}}
-{{/type-is}}
+{{/if-eq}}
 
-{{#type-is this 'hyperlink'}}
+{{#if-eq element.type 'hyperlink'}}
 	{{> elements/hyperlink.html}}
-{{/type-is}}
+{{/if-eq}}
 
-{{#type-is this 'lecture'}}
+{{#if-eq element.type 'lecture'}}
 	{{> elements/lecture.html}}
-{{/type-is}}
+{{/if-eq}}
 
-{{#type-is this 'image'}}
+{{#if-eq element.type 'image'}}
 	{{> elements/image.html}}
-{{/type-is}}
+{{/if-eq}}
+
+{{#if-eq element.type 'document'}}
+	{{> elements/document.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'video'}}
+	{{> elements/video.html}}
+{{/if-eq}}

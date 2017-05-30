@@ -5,27 +5,27 @@
 
 	<div class="details">
 		<ul>
-			{{#attr-exists this 'evaluationDate'}}
+			{{#if element.attributes.evaluationDate}}
 				<li>
 					<span class="label">{{str 'EVALUATION_DATE'}}:</span> {{attr-date this 'evaluationDate'}}
 				</li>
-			{{/attr-exists}}
+			{{/if}}
 
 			{{#attr-cond this 'or' 'evaluationInClass' 'evaluationAtHome'}}
 				<li>
 					<span class="label">{{str 'EVALUATION_LOCATION'}}:</span>
 
-					{{#attr-exists this 'evaluationInClass'}}
+					{{#if element.attributes.evaluationInClass}}
 						{{str 'EVALUATION_INCLASS'}}
-					{{/attr-exists}}
+					{{/if}}
 
 					{{#attr-cond this 'and' 'evaluationInClass' 'evaluationAtHome'}}
 						/
 					{{/attr-cond}}
 
-					{{#attr-exists this 'evaluationAtHome'}}
+					{{#if element.attributes.evaluationAtHome}}
 						{{str 'EVALUATION_ATHOME'}}
-					{{/attr-exists}}
+					{{/if}}
 				</li>
 			{{/attr-cond}}
 
@@ -33,17 +33,17 @@
 				<li>
 					<span class="label">{{str 'EVALUATION_SUBMISSION_TYPE'}}:</span>
 
-					{{#attr-exists this 'evaluationPaper'}}
+					{{#if element.attributes.evaluationPaper}}
 						{{str 'EVALUATION_PAPER'}}
-					{{/attr-exists}}
+					{{/if}}
 
 					{{#attr-cond this 'and' 'evaluationPaper' 'evaluationElectronic'}}
 						/
 					{{/attr-cond}}
 
-					{{#attr-exists this 'evaluationElectronic'}}
+					{{#if element.attributes.evaluationElectronic}}
 						{{str 'EVALUATION_ELECTRONIC'}}
-					{{/attr-exists}}
+					{{/if}}
 				</li>
 			{{/attr-cond}}
 
@@ -51,31 +51,31 @@
 				<li>
 					<span class="label">{{str 'EVALUATION_TERMS'}}:</span>
 
-					{{#attr-exists this 'evaluationOral'}}
+					{{#if element.attributes.evaluationOral}}
 						{{str 'EVALUATION_ORAL'}}
-					{{/attr-exists}}
+					{{/if}}
 
 					{{#attr-cond this 'and' 'evaluationOral' 'evaluationWritten'}}
 						/
 					{{/attr-cond}}
 
-					{{#attr-exists this 'evaluationWritten'}}
+					{{#if element.attributes.evaluationWritten}}
 						{{str 'EVALUATION_WRITTEN'}}
-					{{/attr-exists}}
+					{{/if}}
 				</li>
 			{{/attr-cond}}
 
-			{{#attr-exists this 'evaluationMode'}}
+			{{#if element.attributes.evaluationMode}}
 				<span class="label">{{str 'EVALUATION_ASSESSMENT_TYPE'}}:</span>
 
-				{{#attr-is this 'evaluationMode' 'team'}}
+				{{#if-eq element.attributes.evaluationMode 'team'}}
 					{{str 'EVALUATION_TEAM'}}
-				{{/attr-is}}
+				{{/if-eq}}
 
-				{{#attr-is this 'evaluationMode' 'individual'}}
+				{{#if-eq element.attributes.evaluationMode 'individual'}}
 					{{str 'EVALUATION_INDIVIDUAL'}}
-				{{/attr-is}}
-			{{/attr-exists}}
+				{{/if-eq}}
+			{{/if}}
 		</ul>
 	</div>
 

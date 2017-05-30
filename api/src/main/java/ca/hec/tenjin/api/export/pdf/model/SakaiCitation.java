@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class SakaiCitation {
 	private Citation citation;
+	private String type;
 	
 	@SuppressWarnings("rawtypes")
 	private Map props;
@@ -16,10 +17,8 @@ public class SakaiCitation {
 	public SakaiCitation(Citation citation) {
 		this.citation = citation;
 		
-		props = citation.getCitationProperties();
-	}
-	
-	public String getCreator() {
-		return (String) props.get("creator");
+		this.type = citation.getSchema().getIdentifier();
+		
+		this.props = citation.getCitationProperties();
 	}
 }

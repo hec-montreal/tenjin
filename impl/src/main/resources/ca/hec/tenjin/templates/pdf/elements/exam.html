@@ -1,6 +1,6 @@
 <div class="exam">
 	<div class="title box-title">
-		{{element.title}} <span class="weight">({{attr this 'examWeight'}}%)</span>
+		{{element.title}} <span class="weight">({{element.attributes.examWeight}}%)</span>
 	</div>
 
 	<div class="details">
@@ -9,17 +9,17 @@
 				<li>
 					<span class="label">{{str 'EXAM_LOCATION'}}:</span>
 
-					{{#attr-exists this 'examInClass'}}
+					{{#if element.attributes.examInClass}}
 						{{str 'EXAM_INCLASS'}}
-					{{/attr-exists}}
+					{{/if}}
 
 					{{#attr-cond this 'and' 'examInClass' 'examAtHome'}}
 						/
 					{{/attr-cond}}
 
-					{{#attr-exists this 'examAtHome'}}
+					{{#if element.attributes.examAtHome}}
 						{{str 'EXAM_ATHOME'}}
-					{{/attr-exists}}
+					{{/if}}
 				</li>
 			{{/attr-cond}}
 
@@ -27,17 +27,17 @@
 				<li>
 					<span class="label">{{str 'EXAM_SUBMISSION_TYPE'}}:</span>
 
-					{{#attr-exists this 'examPaper'}}
+					{{#if element.attributes.examPaper}}
 						{{str 'EXAM_PAPER'}}
-					{{/attr-exists}}
+					{{/if}}
 
 					{{#attr-cond this 'and' 'examPaper' 'examElectronic'}}
 						/
 					{{/attr-cond}}
 
-					{{#attr-exists this 'examElectronic'}}
+					{{#if element.attributes.examElectronic}}
 						{{str 'EXAM_ELECTRONIC'}}
-					{{/attr-exists}}
+					{{/if}}
 				</li>
 			{{/attr-cond}}
 
@@ -45,31 +45,31 @@
 				<li>
 					<span class="label">{{str 'EXAM_TERMS'}}:</span>
 
-					{{#attr-exists this 'examOral'}}
+					{{#if element.attributes.examOral}}
 						{{str 'EXAM_ORAL'}}
-					{{/attr-exists}}
+					{{/if}}
 
 					{{#attr-cond this 'and' 'examOral' 'examWritten'}}
 						/
 					{{/attr-cond}}
 
-					{{#attr-exists this 'examWritten'}}
+					{{#if element.attributes.examWritten}}
 						{{str 'EXAM_WRITTEN'}}
-					{{/attr-exists}}
+					{{/if}}
 				</li>
 			{{/attr-cond}}
 
-			{{#attr-exists this 'examMode'}}
+			{{#if element.attributes.examMode}}
 				<span class="label">{{str 'EXAM_ASSESSMENT_TYPE'}}:</span>
 
-				{{#attr-is this 'examMode' 'team'}}
+				{{#if-eq element.attributes.examMode 'team'}}
 					{{str 'EXAM_TEAM'}}
-				{{/attr-is}}
+				{{/if-eq}}
 
-				{{#attr-is this 'examMode' 'individual'}}
+				{{#if-eq element.attributes.examMode 'individual'}}
 					{{str 'EXAM_INDIVIDUAL'}}
-				{{/attr-is}}
-			{{/attr-exists}}
+				{{/if-eq}}
+			{{/if}}
 		</ul>
 	</div>
 
