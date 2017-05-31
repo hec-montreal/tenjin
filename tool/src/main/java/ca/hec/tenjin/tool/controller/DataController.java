@@ -24,7 +24,6 @@ public class DataController {
 	public @ResponseBody Map<String, Object> getData() throws IdUnusedException {
 		Map<String, Object> ret = new HashMap<>();
 		
-		ret.put("types", dataProvider.getElementTypes());
 		ret.put("documentTypes", dataProvider.getDocumentTypes());
 		ret.put("hyperlinkTypes", dataProvider.getHyperlinkTypes());
 		ret.put("citationTypes", dataProvider.getCitationTypes());

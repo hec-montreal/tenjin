@@ -5,7 +5,6 @@ tenjinApp.service('DataService', ['$q', '$http', 'config', function($q, $http, c
 		var ret = $q.defer();
 
 		$http.get('v1/data.json').success(function(data) {
-			config.types = data.types;
 			config.documentTypes = data.documentTypes;
 			config.citationTypes = data.citationTypes;
 			config.hyperlinkTypes = data.hyperlinkTypes;

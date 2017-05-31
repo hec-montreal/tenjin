@@ -70,6 +70,7 @@ ul {
 .box-title {
 	font-size: 18px;
 	padding: 5px;
+	margin-bottom: 3px;
 	page-break-inside: avoid;
 	background-color: #ddd;
 }

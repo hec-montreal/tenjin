@@ -14,12 +14,10 @@ import ca.hec.tenjin.api.model.data.CitationType;
 import ca.hec.tenjin.api.model.data.ContactInfoTitle;
 import ca.hec.tenjin.api.model.data.DataEnum;
 import ca.hec.tenjin.api.model.data.DocumentType;
-import ca.hec.tenjin.api.model.data.ElementType;
 import ca.hec.tenjin.api.model.data.HyperlinkType;
 import ca.hec.tenjin.api.provider.TenjinDataProvider;
 
 public class TenjinDataProviderImpl implements TenjinDataProvider {
-	private Map<String, ElementType> elementTypes;
 	private Map<String, List<DataEnum>> enums;
 	private Map<String, Map<String, String>> strings;
 
@@ -30,21 +28,6 @@ public class TenjinDataProviderImpl implements TenjinDataProvider {
 	private void loadRootNodes() throws IOException, InstantiationException, IllegalAccessException {
 		JsonNode enumerationsRoot = new ObjectMapper().readTree(getClass().getResourceAsStream("/ca/hec/tenjin/data/enumerations.json"));
 		JsonNode stringsRoot = new ObjectMapper().readTree(getClass().getResourceAsStream("/ca/hec/tenjin/data/strings.json"));
-
-		// Element types
-		elementTypes = new HashMap<>();
-
-		Iterator<Map.Entry<String, JsonNode>> jsonElementTypes = enumerationsRoot.get("types").fields();
-
-		while (jsonElementTypes.hasNext()) {
-			Map.Entry<String, JsonNode> entry = jsonElementTypes.next();
-			ElementType type = new ElementType();
-
-			type.setType(entry.getValue().get("type").textValue());
-			type.setLabel(entry.getValue().get("label").textValue());
-
-			elementTypes.put(entry.getKey(), type);
-		}
 
 		// Other enums
 		enums = new HashMap<>();
@@ -84,11 +67,6 @@ public class TenjinDataProviderImpl implements TenjinDataProvider {
 		}
 		
 		return null;
-	}
-
-	@Override
-	public Map<String, ElementType> getElementTypes() {
-		return elementTypes;
 	}
 
 	@Override

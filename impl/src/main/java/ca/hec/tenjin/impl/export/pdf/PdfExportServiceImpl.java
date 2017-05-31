@@ -1,7 +1,6 @@
 package ca.hec.tenjin.impl.export.pdf;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
@@ -9,7 +8,6 @@ import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.PermissionException;
@@ -24,7 +22,6 @@ import org.xhtmlrenderer.resource.XMLResource;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
-import com.github.jknack.handlebars.io.FileTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
 
 import ca.hec.tenjin.api.SakaiProxy;
@@ -49,9 +46,6 @@ import lombok.Setter;
 
 public class PdfExportServiceImpl implements PdfExportService {
 
-	// Speed up testing (no need to redeploy to test html files)
-	final boolean _TO_REMOVE________DEBUG_MODE = true;
-
 	@Setter
 	private SakaiProxy sakaiProxy;
 
@@ -64,13 +58,8 @@ public class PdfExportServiceImpl implements PdfExportService {
 	@Override
 	public void makePdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws PdfExportException {
 		// Loaders
-		if (_TO_REMOVE________DEBUG_MODE) {
-			templateLoader = new FileTemplateLoader("C:/Dev/Projects/workspace/zc2/sakai_tenjin/sakai/tenjin/impl/src/main/resources/ca/hec/tenjin/templates/pdf", "");
-			resourceLoader = new FilePdfResourceLoader("C:/Dev/Projects/workspace/zc2/sakai_tenjin/sakai/tenjin/impl/src/main/resources/ca/hec/tenjin/templates/pdf");
-		} else {
-			templateLoader = new ClassPathTemplateLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR, "");
-			resourceLoader = new ClasspathPdfResourceLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR);
-		}
+		templateLoader = new ClassPathTemplateLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR, "");
+		resourceLoader = new ClasspathPdfResourceLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR);
 
 		try {
 			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale));
@@ -105,10 +94,6 @@ public class PdfExportServiceImpl implements PdfExportService {
 			Template template = handlebars.compile("syllabus.html");
 
 			ret = template.apply(context);
-
-			if (_TO_REMOVE________DEBUG_MODE) {
-				FileUtils.write(new File("c:/out.html"), ret, Charset.forName("utf-8"));
-			}
 
 			return ret;
 		} catch (IOException e) {
@@ -151,6 +136,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 		SyllabusElement ret = new SyllabusElement(element);
 
 		// If the element is composite, add children
+		
 		if (ret.<Boolean>call("isComposite")) {
 			List<Object> children = ret.<List<Object>>call("getElements");
 

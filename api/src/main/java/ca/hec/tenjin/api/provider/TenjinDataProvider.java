@@ -6,12 +6,9 @@ import java.util.Map;
 import ca.hec.tenjin.api.model.data.CitationType;
 import ca.hec.tenjin.api.model.data.ContactInfoTitle;
 import ca.hec.tenjin.api.model.data.DocumentType;
-import ca.hec.tenjin.api.model.data.ElementType;
 import ca.hec.tenjin.api.model.data.HyperlinkType;
 
 public interface TenjinDataProvider {
-
-	Map<String, ElementType> getElementTypes();
 
 	List<DocumentType> getDocumentTypes();
 

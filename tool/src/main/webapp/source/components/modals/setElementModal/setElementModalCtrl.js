@@ -7,7 +7,7 @@
 	if (element) {
 		// Edit mode
 		$scope.type = {
-			'label': $translate.instant(config.types[element.type].label),
+			'label':'',
 			'type': element.type
 		};
 
