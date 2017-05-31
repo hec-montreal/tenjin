@@ -1,0 +1,83 @@
+<div class="exam">
+	<div class="title box-title">
+		{{element.title}} <span class="weight">({{element.attributes.examWeight}}%)</span>
+	</div>
+
+	<div class="details">
+		<ul>
+			{{#attr-cond this 'or' 'examInClass' 'examAtHome'}}
+				<li>
+					<span class="label">{{str 'EXAM_LOCATION'}}:</span>
+
+					{{#if element.attributes.examInClass}}
+						{{str 'EXAM_INCLASS'}}
+					{{/if}}
+
+					{{#attr-cond this 'and' 'examInClass' 'examAtHome'}}
+						/
+					{{/attr-cond}}
+
+					{{#if element.attributes.examAtHome}}
+						{{str 'EXAM_ATHOME'}}
+					{{/if}}
+				</li>
+			{{/attr-cond}}
+
+			{{#attr-cond this 'or' 'examPaper' 'examElectronic'}}
+				<li>
+					<span class="label">{{str 'EXAM_SUBMISSION_TYPE'}}:</span>
+
+					{{#if element.attributes.examPaper}}
+						{{str 'EXAM_PAPER'}}
+					{{/if}}
+
+					{{#attr-cond this 'and' 'examPaper' 'examElectronic'}}
+						/
+					{{/attr-cond}}
+
+					{{#if element.attributes.examElectronic}}
+						{{str 'EXAM_ELECTRONIC'}}
+					{{/if}}
+				</li>
+			{{/attr-cond}}
+
+			{{#attr-cond this 'or' 'examOral' 'examWritten'}}
+				<li>
+					<span class="label">{{str 'EXAM_TERMS'}}:</span>
+
+					{{#if element.attributes.examOral}}
+						{{str 'EXAM_ORAL'}}
+					{{/if}}
+
+					{{#attr-cond this 'and' 'examOral' 'examWritten'}}
+						/
+					{{/attr-cond}}
+
+					{{#if element.attributes.examWritten}}
+						{{str 'EXAM_WRITTEN'}}
+					{{/if}}
+				</li>
+			{{/attr-cond}}
+
+			{{#if element.attributes.examMode}}
+				<span class="label">{{str 'EXAM_ASSESSMENT_TYPE'}}:</span>
+
+				{{#if-eq element.attributes.examMode 'team'}}
+					{{str 'EXAM_TEAM'}}
+				{{/if-eq}}
+
+				{{#if-eq element.attributes.examMode 'individual'}}
+					{{str 'EXAM_INDIVIDUAL'}}
+				{{/if-eq}}
+			{{/if}}
+		</ul>
+	</div>
+
+	<ul class="elements">
+		{{#each children}}
+			<li class="element">
+				{{> elements/element.html}}
+			</li>
+		{{/each}}
+	</ul>
+</div>

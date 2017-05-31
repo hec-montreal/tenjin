@@ -1,0 +1,19 @@
+<div class="document">
+	<a target="_blank" href="{{resource.entityContent.url}}">
+		{{#if element.title}}
+			{{element.title}}
+		{{else}}
+			{{resource.entityContent.name}}
+		{{/if}}
+	</a>
+
+	<div class="title">
+		({{resource.entityContent.name}})
+	</div>
+
+	{{#if element.description}}
+		<div class="description syllabus-text">
+			{{{html element.description}}}
+		</div>
+	{{/if}}
+</div>

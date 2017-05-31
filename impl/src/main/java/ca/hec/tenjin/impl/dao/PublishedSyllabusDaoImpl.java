@@ -180,7 +180,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			String citationListId = citationId.substring(0, citationId.lastIndexOf('/'));
 
 			ContentResource citationList = sakaiProxy.getResource(citationListId);
-
+			
 			if (citationList == null || !citationList.isAvailable()) {
 				return false;
 			}

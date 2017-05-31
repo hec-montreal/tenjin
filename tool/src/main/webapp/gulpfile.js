@@ -56,6 +56,7 @@ gulp.task('js:lib', function() {
 			'./node_modules/angular-ui-tree/dist/angular-ui-tree.js',
 			'./node_modules/checklist-model/checklist-model.js',
 			'./node_modules/angular-translate/dist/angular-translate.min.js',
+			'./node_modules/angular-translate-loader-url/angular-translate-loader-url.min.js',
 			'./node_modules/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js',
 			'./node_modules/angular-ui-router/release/angular-ui-router.min.js',
 			'./node_modules/es6-shim/es6-shim.js',

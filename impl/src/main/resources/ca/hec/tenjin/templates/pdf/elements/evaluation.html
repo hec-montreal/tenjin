@@ -1,0 +1,89 @@
+<div class="evaluation">
+	<div class="title box-title">
+		{{element.title}}
+	</div>
+
+	<div class="details">
+		<ul>
+			{{#if element.attributes.evaluationDate}}
+				<li>
+					<span class="label">{{str 'EVALUATION_DATE'}}:</span> {{attr-date this 'evaluationDate'}}
+				</li>
+			{{/if}}
+
+			{{#attr-cond this 'or' 'evaluationInClass' 'evaluationAtHome'}}
+				<li>
+					<span class="label">{{str 'EVALUATION_LOCATION'}}:</span>
+
+					{{#if element.attributes.evaluationInClass}}
+						{{str 'EVALUATION_INCLASS'}}
+					{{/if}}
+
+					{{#attr-cond this 'and' 'evaluationInClass' 'evaluationAtHome'}}
+						/
+					{{/attr-cond}}
+
+					{{#if element.attributes.evaluationAtHome}}
+						{{str 'EVALUATION_ATHOME'}}
+					{{/if}}
+				</li>
+			{{/attr-cond}}
+
+			{{#attr-cond this 'or' 'evaluationPaper' 'evaluationElectronic'}}
+				<li>
+					<span class="label">{{str 'EVALUATION_SUBMISSION_TYPE'}}:</span>
+
+					{{#if element.attributes.evaluationPaper}}
+						{{str 'EVALUATION_PAPER'}}
+					{{/if}}
+
+					{{#attr-cond this 'and' 'evaluationPaper' 'evaluationElectronic'}}
+						/
+					{{/attr-cond}}
+
+					{{#if element.attributes.evaluationElectronic}}
+						{{str 'EVALUATION_ELECTRONIC'}}
+					{{/if}}
+				</li>
+			{{/attr-cond}}
+
+			{{#attr-cond this 'or' 'evaluationOral' 'evaluationWritten'}}
+				<li>
+					<span class="label">{{str 'EVALUATION_TERMS'}}:</span>
+
+					{{#if element.attributes.evaluationOral}}
+						{{str 'EVALUATION_ORAL'}}
+					{{/if}}
+
+					{{#attr-cond this 'and' 'evaluationOral' 'evaluationWritten'}}
+						/
+					{{/attr-cond}}
+
+					{{#if element.attributes.evaluationWritten}}
+						{{str 'EVALUATION_WRITTEN'}}
+					{{/if}}
+				</li>
+			{{/attr-cond}}
+
+			{{#if element.attributes.evaluationMode}}
+				<span class="label">{{str 'EVALUATION_ASSESSMENT_TYPE'}}:</span>
+
+				{{#if-eq element.attributes.evaluationMode 'team'}}
+					{{str 'EVALUATION_TEAM'}}
+				{{/if-eq}}
+
+				{{#if-eq element.attributes.evaluationMode 'individual'}}
+					{{str 'EVALUATION_INDIVIDUAL'}}
+				{{/if-eq}}
+			{{/if}}
+		</ul>
+	</div>
+
+	<ul class="elements">
+		{{#each children}}
+			<li class="element">
+				{{> elements/element.html}}
+			</li>
+		{{/each}}
+	</ul>
+</div>

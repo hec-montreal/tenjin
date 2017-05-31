@@ -1,4 +1,4 @@
-package ca.hec.tenjin.tool.controller;
+package ca.hec.tenjin.api.model.data;
 
 import java.util.Collections;
 import java.util.HashSet;

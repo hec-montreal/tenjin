@@ -94,9 +94,14 @@
 	<bean id="ca.hec.tenjin.api.TenjinSecurityService" class="ca.hec.tenjin.impl.TenjinSecurityServiceImpl">
 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 	</bean>
+
+	<bean id="ca.hec.tenjin.api.provider.TenjinDataProvider" class="ca.hec.tenjin.impl.provider.TenjinDataProviderImpl">
+
+	</bean>
 	
 	<bean id="ca.hec.tenjin.api.PdfExportService" class="ca.hec.tenjin.impl.export.pdf.PdfExportServiceImpl">
-		
+		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+		<property name="tenjinDataProvider" ref="ca.hec.tenjin.api.provider.TenjinDataProvider" />
 	</bean>
 	
 	<bean id="ca.hec.tenjin.api.SamigoToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.SamigoToolEntityProviderImpl">
@@ -107,7 +112,7 @@
 	<bean id="ca.hec.tenjin.api.AssignmentToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.AssignmentToolEntityProviderImpl">
 		<property name="assignmentService" ref="org.sakaiproject.assignment.api.AssignmentService" />
 	</bean>
-
+	
 	<bean name="ca.hec.tenjin.api.SakaiProxy" class="ca.hec.tenjin.impl.SakaiProxyImpl" init-method="init">
 		<!-- <property name="courseManagementService"><ref bean="org.sakaiproject.coursemanagement.api.CourseManagementService"/></property> -->
 		<!-- <property name="groupProvider"><ref bean="org.sakaiproject.authz.api.GroupProvider"/></property> -->
@@ -154,8 +159,20 @@
 			<ref bean="org.sakaiproject.authz.api.AuthzGroupService" />
 		</property>
 		
+		<property name="citationService">
+			<ref bean="org.sakaiproject.citation.api.CitationService" />
+		</property>
+		
 		<property name="serverConfigurationService">
 			<ref bean="org.sakaiproject.component.api.ServerConfigurationService" />
+		</property>
+		
+		<property name="timeService">
+			<ref bean="org.sakaiproject.time.api.TimeService" />
+		</property>
+		
+		<property name="entityManager">
+			<ref bean="org.sakaiproject.entity.api.EntityManager" />
 		</property>
 	</bean>
 </beans>

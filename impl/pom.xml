@@ -13,7 +13,7 @@
 	<groupId>ca.hec</groupId>
 	<artifactId>tenjin-impl</artifactId>
 	<packaging>jar</packaging>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>ca.hec</groupId>
@@ -50,12 +50,38 @@
 		    <artifactId>flying-saucer-pdf</artifactId>
 		    <version>9.1.5</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.jsoup</groupId>
+		    <artifactId>jsoup</artifactId>
+		    <version>1.8.3</version>
+		</dependency>
+		
+		<!-- Template engine for pdf html files -->
+		<dependency>
+		    <groupId>com.github.jknack</groupId>
+		    <artifactId>handlebars</artifactId>
+		    <version>4.0.6</version>
+		</dependency>
 
 		<!-- IO Utils -->
 		<dependency>
 		    <groupId>commons-io</groupId>
 		    <artifactId>commons-io</artifactId>
 		    <version>2.5</version>
+		</dependency>
+
+		<!-- Json -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.8.8</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.8.8.1</version>
 		</dependency>
 
 		<!-- Sakai dependencies -->
@@ -109,6 +135,12 @@
 			<version>11.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-citations-api</artifactId>
+			<version>11.3</version>
+		</dependency>
+
 		<!-- spring and hibernate -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -134,6 +166,8 @@
 				<includes>
 					<include>**/*.html</include>
 					<include>**/*.css</include>
+					<include>**/*.png</include>
+					<include>**/*.json</include>
 				</includes>
 			</resource>
 		</resources>

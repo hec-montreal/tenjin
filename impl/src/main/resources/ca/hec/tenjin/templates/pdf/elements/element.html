@@ -1,0 +1,51 @@
+<div class="element-type">
+	{{element.type}}
+</div>
+
+{{#if-eq element.type 'composite'}}
+	{{> elements/composite.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'rubric'}}
+	{{> elements/rubric.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'text'}}
+	{{> elements/text.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'citation'}}
+	{{> elements/citation.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'contact_info'}}
+	{{> elements/contact-info.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'exam'}}
+	{{> elements/exam.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'evaluation'}}
+	{{> elements/evaluation.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'hyperlink'}}
+	{{> elements/hyperlink.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'lecture'}}
+	{{> elements/lecture.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'image'}}
+	{{> elements/image.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'document'}}
+	{{> elements/document.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'video'}}
+	{{> elements/video.html}}
+{{/if-eq}}
