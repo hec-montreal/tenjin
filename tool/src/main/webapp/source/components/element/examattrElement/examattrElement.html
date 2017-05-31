@@ -1,4 +1,4 @@
-<div class="element-examattr">
+<div class="element-examattr" ui-tree-handle>
 	<ul>
 		<li data-ng-if="element.attributes.examInClass === 'true' || element.attributes.examAtHome === 'true'">
 			{{'EXAM_LOCATION' | translate}}:
@@ -22,7 +22,7 @@
 		</li>
 
 		<li data-ng-if="element.attributes.examMode">
-			{{'EXAM_ASSESSMENT_TYPE' | translate}}
+			{{'EXAM_ASSESSMENT_TYPE' | translate}}:
 			<span data-ng-if="element.attributes.examMode === 'team' " >{{'EXAM_TEAM' | translate}} </span>
 			<span data-ng-if="element.attributes.examMode === 'individual'" >{{'EXAM_INDIVIDUAL' | translate}} </span>
 		</li>

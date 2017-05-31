@@ -1,4 +1,4 @@
-tenjinApp.directive('evaluationattrElement', function() {
+tenjinApp.directive('evaluationattrElement', ['$translate', function($translate) {
 	'use strict';
 
 	return {
@@ -11,7 +11,7 @@ tenjinApp.directive('evaluationattrElement', function() {
 		templateUrl: 'element/evaluationattrElement/evaluationattrElement.html',
 
 		controller: function($scope) {
-
+			$scope.dateFormat = $translate.instant('DATE_TIME_FORMAT');
 		},
 
 		link: function($scope, $element) {
@@ -20,4 +20,4 @@ tenjinApp.directive('evaluationattrElement', function() {
 			$scope.individual = 'individual';
 		}
 	};
-});
+}]);

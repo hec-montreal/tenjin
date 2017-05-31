@@ -1,9 +1,6 @@
 package ca.hec.tenjin.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.log4j.Logger;
 import org.sakaiproject.exception.IdUnusedException;
@@ -152,7 +149,8 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Override
 	public HashMap<String, HashMap<String, Object>> getTemplateRules(Long templateId) throws IdUnusedException {
-		return getTemplateRules(templateId, "fr_CA");
+		String locale = Locale.getDefault().toString();
+		return getTemplateRules(templateId, locale);
 	}
 	
 	@Override
@@ -168,10 +166,6 @@ public class TemplateServiceImpl implements TemplateService {
 		return results;
 	}
 
-	/*
-	 * il faudra au moins mettre les valeurs en cache?
-	 * ZCII-2008
-	 */
 	@SuppressWarnings("unchecked")
 	private void getRules(TemplateStructure structure, HashMap<String, HashMap<String, Object>> map, String language) {
 
@@ -183,12 +177,10 @@ public class TemplateServiceImpl implements TemplateService {
 			elementObject.put("mandatory", structure.getMandatory());
 
 			if (structure.getTemplateElement() != null) {
-				if (structure.getTemplateElement().getLabels().containsKey(language)) {
-					elementObject.put("label", structure.getTemplateElement().getLabels().get(language));
-				} else {
-					// TODO: get default somewhere else?
-					elementObject.put("label", structure.getTemplateElement().getLabels().get("fr_CA"));
+				if (!structure.getTemplateElement().getLabels().containsKey(language)) {
+					language = Locale.getDefault().toString();
 				}
+				elementObject.put("label", structure.getTemplateElement().getLabels().get(language));
 			}
 			
 			// add template structure to the main map

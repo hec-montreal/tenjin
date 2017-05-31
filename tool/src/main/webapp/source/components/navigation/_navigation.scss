@@ -4,10 +4,6 @@
 
 	background-color: $color-navigation !important;
 
-	.angular-ui-tree-nodes .angular-ui-tree-nodes {
-		padding: 0!important;
-	}
-
 	.inner {
 		min-height: 1000px;
 	}
@@ -51,10 +47,6 @@
 			font-size: 1.3em;
 			display: block;
 			width: 100%;
-		}
-
-		.numbered-title {
-			padding-left: 10px;
 		}
 
 		.number {
