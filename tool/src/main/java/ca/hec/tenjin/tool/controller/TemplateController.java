@@ -10,12 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.util.ResourceLoader;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -48,8 +43,8 @@ public class TemplateController {
 	}
 
 	@RequestMapping(value = "/{templateId}/rules", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, HashMap<String, Object>> getTemplateRules(@PathVariable Long templateId) throws IdUnusedException {
-		return templateService.getTemplateRules(templateId);
+	public @ResponseBody HashMap<String, HashMap<String, Object>> getTemplateRules(@PathVariable Long templateId, @RequestParam(required = false) String locale) throws IdUnusedException {
+		return templateService.getTemplateRules(templateId, locale);
 	}
 
 	@ExceptionHandler(IdUnusedException.class)

@@ -102,6 +102,10 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 				for (var i = 0; i < rootTree.resourceChildren.length; i++) {
 					var results = getResource(rootTree.resourceChildren[i], resourceId);
 					if (results) {
+					    // if parent folder is hidden, so is resource
+					    if (rootTree.hidden) {
+					        results.hidden = true;
+					    }
 						return results;
 					}
 				}

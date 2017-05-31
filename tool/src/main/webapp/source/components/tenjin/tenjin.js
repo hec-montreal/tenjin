@@ -29,9 +29,11 @@ tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', 'SyllabusLockSer
 				if (availableLang.indexOf(UserService.getProfile().locale) > -1){
 					$translate.use(UserService.getProfile().locale);
 					tmhDynamicLocale.set(UserService.getProfile().locale);
+					AlertService.init();
 				}else{  
 					$translate.use(UserService.getProfile().defaultLocale);
 					tmhDynamicLocale.set(UserService.getProfile().defaultLocale);
+					AlertService.init();
 				}
 			
 			}).catch(function() {

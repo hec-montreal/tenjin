@@ -16,9 +16,12 @@ tenjinApp.controller('PublishModalCtrl', ['$scope', '$rootScope', '$uibModalInst
 
 	$scope.modifiedPages = PublishService.getModifiedPages();
 
-	$scope.doAnnounce = false;
-	$scope.announceTitle = $translate.instant('ANNOUNCEMENT_TITLE');
-	$scope.announceMessage = $translate.instant('ANNOUNCEMENT_MESSAGE') + ' ' + $filter('date')(Date.now(), 'd MMMM y h:mm:ss a');
+	$scope.announcementData = {
+        	doAnnounce : false,
+	        announceTitle : $translate.instant('ANNOUNCEMENT_TITLE'),
+        	announceMessage : $translate.instant('ANNOUNCEMENT_MESSAGE') + ' ' + $filter('date')(Date.now(), 'd MMMM y h:mm:ss a')
+	};
+
 
 	$scope.publish = function() {
 		$scope.status = 'duringPublish'
@@ -31,8 +34,10 @@ tenjinApp.controller('PublishModalCtrl', ['$scope', '$rootScope', '$uibModalInst
 	};
 
 	$scope.checkAnnouncementAndClose = function() {
-		if ($scope.doAnnounce) {
-			PublishService.createAnnouncement($scope.announceTitle, $scope.announceMessage).catch(function(reason) {
+		if ($scope.announcementData.doAnnounce) {
+			PublishService.createAnnouncement($scope.announcementData.announceTitle, $scope.announcementData.announceMessage).then(function() {
+			       AlertService.showAlert('createAnnouncementSuccess');
+			}).catch(function(reason) {
 				AlertService.showAlert('cannotCreateAnnouncement');
 			});
 		}

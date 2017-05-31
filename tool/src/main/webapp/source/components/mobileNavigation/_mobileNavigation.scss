@@ -52,16 +52,16 @@
 			padding: 0;
 		}
 
+		ul .ng-not-empty {
+			padding-left: 30px;
+		}
+
 		.item-selected {
 			background-color: $color-button-hover;
 		}
 
 		.menu-item {
 			padding-left: 15px;
-		}
-
-		.menu-item.enum {
-			padding-left: 30px;
 		}
 	}
 }
