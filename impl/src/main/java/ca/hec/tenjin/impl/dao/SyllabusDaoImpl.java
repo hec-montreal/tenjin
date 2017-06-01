@@ -118,7 +118,9 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 				element.setDescription(providedElement.getDescription());
 				element.setPublicElement(providedElement.getPublicElement());
 				element.setImportant(providedElement.getImportant());
-				element.setAttributes(new HashMap<String, String>(providedElement.getAttributes()));
+				if (providedElement.getAttributes() != null) {
+					element.setAttributes(new HashMap<String, String>(providedElement.getAttributes()));
+				}
 			}
 		}
 
