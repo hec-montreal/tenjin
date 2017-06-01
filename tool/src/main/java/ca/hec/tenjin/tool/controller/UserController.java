@@ -28,7 +28,7 @@ import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.provider.TenjinImportProvider;
+import ca.hec.tenjin.api.provider.CourseOutlineProvider;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -63,7 +63,7 @@ public class UserController {
 
 	@Setter
 	@Autowired(required = false)
-	private TenjinImportProvider importProvider;
+	private CourseOutlineProvider importProvider;
 
 	@Setter
 	@Autowired

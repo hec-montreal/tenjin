@@ -10,7 +10,7 @@ import ca.hec.tenjin.api.exception.DeniedAccessException;
  * @author Curtis van Osch (curtis.van-osch@hec.ca)
  *
  */
-public interface TenjinImportProvider {
+public interface CourseOutlineProvider {
 	
 	public Syllabus importSyllabusFromSite(String siteId, String destinationSiteId) throws DeniedAccessException;
 

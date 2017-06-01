@@ -18,7 +18,7 @@
  * limitations under the License.
  *
  ******************************************************************************/
-package ca.hec.tenjin.api.model.syllabus.provider;
+package ca.hec.tenjin.api.provider;
 
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 
@@ -27,7 +27,7 @@ import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
  */
-public class CalculatorPolicyProvider extends OfficialProvider{
+public class CatalogDescriptionProvider extends ExternalDataProvider {
 
     @Override
     public AbstractSyllabusElement getAbstractSyllabusElement() {

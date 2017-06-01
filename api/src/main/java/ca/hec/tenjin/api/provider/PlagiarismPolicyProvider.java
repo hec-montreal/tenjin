@@ -18,15 +18,12 @@
  * limitations under the License.
  *
  ******************************************************************************/
-package ca.hec.tenjin.api.model.syllabus.provider;
+package ca.hec.tenjin.api.provider;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-import org.sakaiproject.authz.cover.SecurityService;
 import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.content.cover.ContentHostingService;
 import org.sakaiproject.exception.IdUnusedException;
@@ -42,7 +39,7 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusTextElement;
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
  */
-public class PlagiarismPolicyProvider extends OfficialProvider{
+public class PlagiarismPolicyProvider extends ExternalDataProvider {
 
     //TODO: break variables to refer to folder and file if possible I18N
     //TODO: make sure it does not have problems with access permissions
