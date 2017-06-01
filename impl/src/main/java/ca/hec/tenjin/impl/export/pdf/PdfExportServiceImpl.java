@@ -102,7 +102,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 	}
 
 	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String locale) throws IOException, PdfExportException, IdUnusedException, TypeException, PermissionException, ServerOverloadException {
-		List<EntityContent> resources = sakaiProxy.getSiteResources(sakaiProxy.getCurrentSiteId(), null, null, null);
+		List<EntityContent> resources = sakaiProxy.getSiteResources(sakaiProxy.getCurrentSiteId(), null, "all", null);
 		List<SakaiCitation> citations = sakaiProxy.getSiteCitations(sakaiProxy.getCurrentSiteId(), resources);
 
 		TemplateContext ret = new TemplateContext();
@@ -198,7 +198,9 @@ public class PdfExportServiceImpl implements PdfExportService {
 			if (content.getResourceId().startsWith(id)) {
 				return content;
 			}
-
+			
+			System.out.println("Trying children of " + content.getResourceId() + " (" + content.getResourceChildren().size() + ")");
+			
 			EntityContent child = findResource(content.getResourceChildren(), id);
 
 			if (child != null) {
