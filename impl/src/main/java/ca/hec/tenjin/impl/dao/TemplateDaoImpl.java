@@ -42,7 +42,7 @@ public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao 
 		if (t == null) {
 			t = getHibernateTemplate().get(Template.class, templateId);
 
-			// HibernateUtil.currentSession().get(OfficialProvider.class,1)
+			// HibernateUtil.currentSession().get(ExternalDataProvider.class,1)
 			if (t == null) {
 				throw new IdUnusedException(templateId.toString());
 			}

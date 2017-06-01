@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.hec.tenjin.api.provider.ExternalDataProvider;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -22,7 +23,6 @@ import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
-import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
 import lombok.Setter;
@@ -109,7 +109,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
 		//TODO: mirror provided element to syllabus element
 		if (providerId != null) {
-			OfficialProvider provider =  getHibernateTemplate().get(OfficialProvider.class, providerId);
+			ExternalDataProvider provider =  getHibernateTemplate().get(ExternalDataProvider.class, providerId);
 
 			if (provider != null) {
 				AbstractSyllabusElement providedElement = provider.getAbstractSyllabusElement();

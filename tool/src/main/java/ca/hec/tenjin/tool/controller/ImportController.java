@@ -21,7 +21,7 @@
 
 package ca.hec.tenjin.tool.controller;
 
-import ca.hec.tenjin.api.provider.TenjinImportProvider;
+import ca.hec.tenjin.api.provider.CourseOutlineProvider;
 import ca.hec.tenjin.api.SyllabusService;
 
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
@@ -57,7 +57,7 @@ public class ImportController {
 
 	@Setter
 	@Autowired(required=false)
-	private TenjinImportProvider importProvider;
+	private CourseOutlineProvider importProvider;
 
 	@RequestMapping(value = "/import/{siteId}", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Syllabus> importSyllabus(@PathVariable("siteId") String siteId) 

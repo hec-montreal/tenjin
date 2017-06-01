@@ -2,6 +2,7 @@ package ca.hec.tenjin.impl;
 
 import java.util.*;
 
+import ca.hec.tenjin.api.provider.CourseOutlineProvider;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.log4j.Logger;
@@ -28,7 +29,6 @@ import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
-import ca.hec.tenjin.api.provider.TenjinImportProvider;
 import lombok.Setter;
 
 /**
@@ -49,7 +49,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	private SyllabusLockService syllabusLockService;
 
 	@Autowired(required = false)
-	private TenjinImportProvider importProvider;
+	private CourseOutlineProvider importProvider;
 	
 	@Override
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, StructureSyllabusException {

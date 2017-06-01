@@ -1,9 +1,8 @@
 package ca.hec.tenjin.api.model.template;
 
 import java.util.List;
-import java.util.Set;
 
-import ca.hec.tenjin.api.model.syllabus.provider.OfficialProvider;
+import ca.hec.tenjin.api.provider.ExternalDataProvider;
 import lombok.*;
 
 /**
@@ -20,7 +19,7 @@ public class TemplateStructure {
     private Boolean mandatory;
     private Boolean displayInMenu;
     private TemplateElement templateElement;
-    private OfficialProvider provider;
+    private ExternalDataProvider provider;
     private List<TemplateStructure> elements;
     private Long parentId;
 

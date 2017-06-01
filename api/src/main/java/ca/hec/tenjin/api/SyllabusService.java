@@ -101,7 +101,7 @@ public interface SyllabusService {
 	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden);
 
 	/**
-	 * Import a syllabus from the given siteId using an autowired TenjinImportProvider if one exists
+	 * Import a syllabus from the given siteId using an autowired CourseOutlineProvider if one exists
 	 * 
 	 * @param siteId
 	 */
