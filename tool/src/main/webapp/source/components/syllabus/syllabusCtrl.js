@@ -72,7 +72,7 @@
 	$scope.pdf = function (published) {
 		var pub = published ? '?published=true' : '';
 
-		window.location = 'v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.json' + pub;
+		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.json' + pub, '_blank');
 	};
 
 	$scope.startPublish = function() {
