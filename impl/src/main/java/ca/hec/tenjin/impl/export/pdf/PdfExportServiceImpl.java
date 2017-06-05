@@ -224,7 +224,11 @@ public class PdfExportServiceImpl implements PdfExportService {
 	private void prepareImageElement(SyllabusElement e, List<EntityContent> resources) throws ServerOverloadException {
 		String resourceId = e.getAttribute("imageId");
 		EntityContent res = findResource(resources, resourceId);
-
+		
+		if(res == null) {
+			return;
+		}
+		
 		e.setResource(new SakaiResource(res));
 
 		byte[] data = ((ContentResource) res.getOriginalEntity()).getContent();

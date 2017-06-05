@@ -69,8 +69,10 @@
 		});
 	};
 
-	$scope.pdf = function () {
-		window.location = 'v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.json';
+	$scope.pdf = function (published) {
+		var pub = published ? '?published=true' : '';
+
+		window.location = 'v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.json' + pub;
 	};
 
 	$scope.startPublish = function() {
