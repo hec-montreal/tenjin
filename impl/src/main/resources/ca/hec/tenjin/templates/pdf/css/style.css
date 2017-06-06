@@ -20,6 +20,11 @@ ul {
 	list-style: none;
 }
 
+/* Element error */
+.element-error {
+	color: #f00;
+}
+
 /* Debug */
 .debug .element {
 	border: 1px solid #f00;

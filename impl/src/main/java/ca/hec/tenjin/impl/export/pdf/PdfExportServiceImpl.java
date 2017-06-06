@@ -199,8 +199,6 @@ public class PdfExportServiceImpl implements PdfExportService {
 				return content;
 			}
 			
-			System.out.println("Trying children of " + content.getResourceId() + " (" + content.getResourceChildren().size() + ")");
-			
 			EntityContent child = findResource(content.getResourceChildren(), id);
 
 			if (child != null) {
