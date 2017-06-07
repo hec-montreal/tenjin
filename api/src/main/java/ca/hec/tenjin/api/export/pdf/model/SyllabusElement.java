@@ -14,7 +14,7 @@ public class SyllabusElement {
 	private List<SyllabusElement> children;
 	private SakaiResource resource;
 	private SakaiCitation citation;
-
+	
 	public SyllabusElement(Object element) {
 		this.element = element;
 
@@ -41,5 +41,9 @@ public class SyllabusElement {
 		}
 
 		return attributes.get(name);
+	}
+	
+	public int getChildrenCount() {
+		return children.size();
 	}
 }

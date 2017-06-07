@@ -27,14 +27,14 @@ ul {
 
 /* Debug */
 .debug .element {
-	border: 1px solid #f00;
+	border: 1px dashed #f00;
 }
 
-.element-type {
+.element-debug-info {
 	display: none;
 }
 
-.debug .element .element-type {
+.debug .element .element-debug-info {
 	color: #f00;
 	display: block;
 }

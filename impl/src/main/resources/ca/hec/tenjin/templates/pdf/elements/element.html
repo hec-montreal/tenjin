@@ -1,5 +1,5 @@
-<div class="element-type">
-	{{element.type}}
+<div class="element-debug-info">
+	{{element.type}} ({{childrenCount}})
 </div>
 
 {{#if-eq element.type 'composite'}}
@@ -48,4 +48,8 @@
 
 {{#if-eq element.type 'video'}}
 	{{> elements/video.html}}
+{{/if-eq}}
+
+{{#if-eq element.type 'tutorial'}}
+	{{> elements/tutorial.html}}
 {{/if-eq}}
