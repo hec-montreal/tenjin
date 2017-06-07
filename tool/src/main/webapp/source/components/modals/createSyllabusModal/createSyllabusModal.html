@@ -3,6 +3,10 @@
 		<h2 class="modal-title">{{ 'MODAL_TITLE_NEW_SYLLABUS' | translate}}</h2> 
 	</div>
 
+	<div class="modal-body errors" ng-if="error">
+		{{error}}
+	</div>
+
 	<div class="modal-body">
 		<div>
 			<div data-ng-if="(data.sections.length > 0)">{{ 'MODAL_SECTIONS_NEW_SYLLABUS' | translate}}</div>

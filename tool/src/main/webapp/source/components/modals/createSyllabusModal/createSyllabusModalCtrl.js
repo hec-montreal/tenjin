@@ -7,6 +7,8 @@ tenjinApp.controller('CreateSyllabusModalCtrl', ['$scope', '$uibModalInstance', 
 		sections: []
 	};
 
+	$scope.error = null;
+
 	// Get user sections with write permissions
 	for (var i = 0; i < UserService.getProfile().sectionAssign.length; i++) {
 		var sectionUser = UserService.getProfile().sectionAssign[i];
@@ -27,7 +29,13 @@ tenjinApp.controller('CreateSyllabusModalCtrl', ['$scope', '$uibModalInstance', 
 	 * Callback ok button
 	 */
 	$scope.ok = function() {
-		$uibModalInstance.close($scope.data);
+		if(!$scope.data.name || $scope.data.name.length === 0) {
+			$scope.error = $translate.instant('ERROR_TITLE_MANDATORY');
+		} else{
+			$scope.error = null;
+
+			$uibModalInstance.close($scope.data);
+		}
 	};
 
 	/**

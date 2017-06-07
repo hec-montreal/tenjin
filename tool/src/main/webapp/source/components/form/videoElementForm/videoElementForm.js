@@ -36,11 +36,20 @@
 			$scope.element.validate = function() {
 				var ret = [];
 
-				if ((!this.attributes.videoUrl || this.attributes.videoUrl.length === 0) && (!this.attributes.embedCode || this.attributes.embedCode.length === 0)) {
-					ret.push({
-						field: "videoUrl",
-						message: "ERROR_MISSING_VIDEO_URL"
-					});
+				if($scope.inputMode === 'url') {
+					if (!this.attributes.videoUrl || this.attributes.videoUrl.length === 0) {
+						ret.push({
+							field: "videoUrl",
+							message: "ERROR_MISSING_VIDEO_URL"
+						});
+					}
+				} else {
+					if (!this.attributes.embedCode || this.attributes.embedCode.length === 0) {
+						ret.push({
+							field: "embedCode",
+							message: "ERROR_MISSING_VIDEO_EMBED_CODE"
+						});
+					}
 				}
 
 				if (this.attributes.videoUrl) {
