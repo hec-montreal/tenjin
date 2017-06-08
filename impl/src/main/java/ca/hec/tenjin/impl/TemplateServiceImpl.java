@@ -51,8 +51,13 @@ public class TemplateServiceImpl implements TemplateService {
 				}
 
 				if (templateStructure.getProvider() != null){
-				    element = templateStructure.getProvider().getAbstractSyllabusElement();
-				    element.setProviderId(templateStructure.getProvider().getProvider_id());
+					try {
+						element = templateStructure.getProvider().getAbstractSyllabusElement();
+						element.setProviderId(templateStructure.getProvider().getProvider_id());
+					} catch (Exception e) {
+						log.error("Exception getting provided syllabus element from provider " +
+							templateStructure.getProvider().getClass().getName());
+					}
 				}
 				
 				if (element != null) {
@@ -109,8 +114,13 @@ public class TemplateServiceImpl implements TemplateService {
 	
 				//For the provided contents
 				if (templateStructure.getProvider() != null){
-				   el = templateStructure.getProvider().getAbstractSyllabusElement();
-				   el.setProviderId(templateStructure.getProvider().getProvider_id());
+					try {
+						el = templateStructure.getProvider().getAbstractSyllabusElement();
+						el.setProviderId(templateStructure.getProvider().getProvider_id());
+					} catch (Exception e) {
+						log.error("Exception getting provided syllabus element from provider " +
+								templateStructure.getProvider().getClass().getName());
+					}
 				}
 
 				    

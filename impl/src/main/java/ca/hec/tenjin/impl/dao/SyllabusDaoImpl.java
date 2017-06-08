@@ -112,14 +112,19 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 			ExternalDataProvider provider =  getHibernateTemplate().get(ExternalDataProvider.class, providerId);
 
 			if (provider != null) {
-				AbstractSyllabusElement providedElement = provider.getAbstractSyllabusElement();
-				// Override title, description, public, important and attributes with the provided values.
-				element.setTitle(providedElement.getTitle());
-				element.setDescription(providedElement.getDescription());
-				element.setPublicElement(providedElement.getPublicElement());
-				element.setImportant(providedElement.getImportant());
-				if (providedElement.getAttributes() != null) {
-					element.setAttributes(new HashMap<String, String>(providedElement.getAttributes()));
+				try {
+					AbstractSyllabusElement providedElement = provider.getAbstractSyllabusElement();
+					// Override title, description, public, important and attributes with the provided values.
+					element.setTitle(providedElement.getTitle());
+					element.setDescription(providedElement.getDescription());
+					element.setPublicElement(providedElement.getPublicElement());
+					element.setImportant(providedElement.getImportant());
+					if (providedElement.getAttributes() != null) {
+						element.setAttributes(new HashMap<String, String>(providedElement.getAttributes()));
+					}
+				} catch (Exception e) {
+					log.error("Exception getting provided syllabus element from provider " +
+							provider.getClass().getName());
 				}
 			}
 		}
