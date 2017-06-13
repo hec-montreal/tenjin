@@ -20,6 +20,7 @@ import ca.hec.tenjin.api.export.pdf.PdfExportService;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
+import ca.hec.tenjin.api.provider.TenjinDataProvider;
 
 @Controller
 @RequestMapping(value = "v1")
@@ -34,6 +35,9 @@ public class ExportController {
 	@Autowired
 	private SyllabusService syllabusService;
 
+	@Autowired
+	private TenjinDataProvider tenjinDataProvider;
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/syllabus/{id}/pdf", method = RequestMethod.GET)
 	public void exportPdf(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, @RequestParam(required = false, name = "published", defaultValue = "false") boolean published, HttpServletResponse response) throws PdfExportException, IOException {
@@ -45,7 +49,8 @@ public class ExportController {
 				try {
 					syllabus = publishService.getPublishedSyllabus(id);
 				} catch (NoSyllabusException e) {
-					response.getWriter().append("No syllabus");
+					response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+					response.getWriter().append(tenjinDataProvider.getInterfaceString("ERROR_NO_PUBLISHED_SYLLABUS", locale));
 					
 					return;
 				}

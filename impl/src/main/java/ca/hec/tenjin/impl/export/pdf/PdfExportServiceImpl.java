@@ -1,7 +1,6 @@
 package ca.hec.tenjin.impl.export.pdf;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
@@ -9,7 +8,6 @@ import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.PermissionException;
@@ -96,8 +94,6 @@ public class PdfExportServiceImpl implements PdfExportService {
 			Template template = handlebars.compile("syllabus.html");
 
 			ret = template.apply(context);
-			
-			FileUtils.write(new File("c:/out.html"), ret);
 			
 			return ret;
 		} catch (IOException e) {
