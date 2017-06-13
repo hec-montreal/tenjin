@@ -37,7 +37,7 @@
 	var confirmLeave = function() {
 		if (SyllabusService.isDirty()) {
 			return confirm($translate.instant('WARNING_UNSAVED'));
-		} 
+		}
 		return true;
 	}
 
@@ -69,10 +69,18 @@
 		});
 	};
 
-	$scope.pdf = function (published) {
-		var pub = published ? '?published=true' : '';
+	$scope.pdf = function(published) {
+		var post = '';
 
-		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.json' + pub, '_blank');
+		if (published) {
+			post += '?published=true&locale=';
+		} else{
+			post += '?locale=';
+		}
+
+		post += UserService.getProfile().locale;
+
+		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.json' + post, '_blank');
 	};
 
 	$scope.startPublish = function() {
@@ -119,7 +127,7 @@
 			$rootScope.$broadcast('cannotPublishSyllabus');
 		});
 	});
-	
+
 	window.onbeforeunload = function() {
 		if (SyllabusService.isDirty()) {
 			return $translate.instant('WARNING_UNSAVED');
@@ -130,7 +138,7 @@
 	$scope.$on('$destroy', function() {
 		delete window.onbeforeunload;
 	});
-	
+
 	$scope.showGlobalLoading();
 
 	loadSyllabus($state.params.id || -1).finally(function() {

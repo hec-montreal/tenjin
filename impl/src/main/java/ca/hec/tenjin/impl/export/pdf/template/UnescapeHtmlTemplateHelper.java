@@ -51,7 +51,9 @@ public class UnescapeHtmlTemplateHelper implements Helper<String> {
 	
 	private String sanitize(String xml) {
 		//Remove MS crap (<o:p>wefwef</o:p>)
-		xml = xml.replaceAll("<[^:]:[^>]>.*<\\/[^:]:[^:]>", "");
+		
+		xml = xml.replaceAll("<[^:]:[^>]>", "");
+		xml = xml.replaceAll("<\\/[^:]:[^:]>", "");
 		
 		return xml;
 	}

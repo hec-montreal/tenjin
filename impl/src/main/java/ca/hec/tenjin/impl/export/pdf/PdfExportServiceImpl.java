@@ -94,7 +94,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 			Template template = handlebars.compile("syllabus.html");
 
 			ret = template.apply(context);
-
+			
 			return ret;
 		} catch (IOException e) {
 			throw new PdfExportException(e);
