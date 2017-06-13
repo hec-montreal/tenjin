@@ -323,6 +323,7 @@
 	this.setSyllabus = function(syllabus) {
 		this.syllabus = syllabus;
 
+
 		// numbering
 		this.numberSyllabus(this.syllabus);
 		// save a copy

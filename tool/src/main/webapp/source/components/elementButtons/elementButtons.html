@@ -1,4 +1,4 @@
-<div class="buttons">
+<div class="buttons" data-ng-if="tenjinService.viewState.stateName === 'syllabus-edit'">
 	<!-- Add -->
 	<add-element-menu ng-if="element.type === 'rubric' || element.type === 'composite'" data-add-element-menu="element" data-ng-class="['element-add-element-menu', 'no-bg', {'alone': nodelete}]"></add-element-menu>
 

@@ -2,7 +2,7 @@
 	<div id="syllabus">
 		<div class="row">
 			<h1 class="course-title col-xs-12">
-				{{::syllabusService.syllabus.courseTitle}}
+				{{::syllabusService.syllabus.courseTitle}} <span class="student-view-title" data-ng-if="tenjinService.viewState.stateName === 'edition-student-view'">({{'VERSION_STUDENTS' | translate}})</span>
 			</h1>
 		</div>
 
@@ -30,12 +30,20 @@
 					</div>
 
 					<div class="toolbar-right">
-						<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError" class="action" ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
+						<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError && tenjinService.viewState.stateName === 'syllabus-edit'" class="action" ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
 							<span class="glyphicon" ng-class="{'glyphicon-floppy-disk': !saving, 'glyphicon-refresh glyphicon-refresh-animate': saving}"></span> {{ 'BUTTON_SAVE' | translate }}
 						</button>
 
-						<button data-ng-show="userService.isAllowed('syllabusPublish', syllabusService.syllabus) && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError" ng-disabled="syllabusService.isDirty() || syllabusService.working || (!syllabusService.syllabus.common && (!syllabusService.syllabus.sections || syllabusService.syllabus.sections.length === 0))" class="action" ng-click="startPublish()">
+						<button data-ng-show="userService.isAllowed('syllabusPublish', syllabusService.syllabus) && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError  && tenjinService.viewState.stateName === 'syllabus-edit'" ng-disabled="syllabusService.isDirty() || syllabusService.working || (!syllabusService.syllabus.common && (!syllabusService.syllabus.sections || syllabusService.syllabus.sections.length === 0))" class="action" ng-click="startPublish()">
 							<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
+						</button>
+
+						<button data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit'" data-ng-click="showStudentView()" class="action">
+							<span class="glyphicon glyphicon-user"></span> {{'VERSION_STUDENTS' | translate}}
+						</button>
+
+						<button data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.stateName === 'edition-student-view'" data-ng-click="showEditionView()" class="action">
+							<span class="glyphicon glyphicon-wrench"></span> {{'VERSION_IN_EDITION' | translate}}
 						</button>
 
 						<button data-ng-show="!userService.isAllowed('syllabusWrite', syllabusService.syllabus)" data-ng-click="pdf(true)" class="action">

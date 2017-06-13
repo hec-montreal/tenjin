@@ -41,6 +41,8 @@
 		return true;
 	}
 
+	$scope.tenjinService = TenjinService;
+
 	$scope.goToManagement = function() {
 		if (confirmLeave()) {
 			$state.go('management');
@@ -81,6 +83,34 @@
 		post += UserService.getProfile().locale;
 
 		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.json' + post, '_blank');
+	};
+
+	$scope.showStudentView = function () {
+		var tthis = this;
+
+		$scope.showGlobalLoading();
+
+		TenjinService.loadDataForViewState(TenjinService.ViewStates.editionStudentView).then(function () {
+			loadSyllabus(SyllabusService.getSyllabus().id).then(function () {
+				$scope.hideGlobalLoading();
+
+				TreeService.selectElement(TreeService.findElementByPosition([0]));
+			});
+		});
+	};
+
+	$scope.showEditionView = function () {
+		var tthis = this;
+
+		$scope.showGlobalLoading();
+
+		TenjinService.loadDataForViewState(TenjinService.ViewStates.edition).then(function () {
+			loadSyllabus(SyllabusService.getSyllabus().id).then(function () {
+				$scope.hideGlobalLoading();
+
+				TreeService.selectElement(TreeService.findElementByPosition([0]));
+			});
+		});
 	};
 
 	$scope.startPublish = function() {
