@@ -153,12 +153,14 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
     		AbstractSyllabusElement currElement = currElementMapping.getSyllabusElement();
     		
     		// for non-common syllabuses, skip common element if it is not published (and is not from the template or a rubric)
-			TemplateStructure templateStructure = templateService.getTemplateStructure(currElement.getTemplateStructureId());
+			TemplateStructure templateStructure = null;
+			if (currElement.getTemplateStructureId() != null && currElement.getTemplateStructureId() > 0)
+				templateStructure = templateService.getTemplateStructure(currElement.getTemplateStructureId());
 
     		if (!syllabus.getCommon() && currElement.getCommon() && 
     				currElement.getPublishedId() == null &&
     				!(currElement instanceof SyllabusRubricElement) && 
-    				!templateStructure.getMandatory()) {
+					(templateStructure != null && !templateStructure.getMandatory())) {
     			continue;
     		}
 	    		
