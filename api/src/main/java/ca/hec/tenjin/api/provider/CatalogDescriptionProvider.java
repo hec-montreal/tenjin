@@ -21,6 +21,10 @@
 package ca.hec.tenjin.api.provider;
 
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusTextElement;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -31,8 +35,23 @@ public class CatalogDescriptionProvider extends ExternalDataProvider {
 
     @Override
     public AbstractSyllabusElement getAbstractSyllabusElement() {
-	return null;
-    }
 
+        SyllabusRubricElement descriptionRubric = new SyllabusRubricElement();
+        descriptionRubric.setTitle("Description"); //TODO i18n
+
+        SyllabusTextElement descriptionText = new SyllabusTextElement();
+        descriptionText.setDescription("this is a text"); // TODO get the text from the db
+        descriptionText.setTemplateStructureId(-1L);
+        descriptionText.setCommon(true);
+        descriptionText.setPublicElement(true);
+        descriptionText.setHidden(false);
+        descriptionText.setImportant(false);
+
+        ArrayList elements = new ArrayList<AbstractSyllabusElement>();
+        elements.add(descriptionText);
+
+        descriptionRubric.setElements(elements);
+	    return descriptionRubric;
+    }
 }
 
