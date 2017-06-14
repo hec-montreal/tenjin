@@ -49,7 +49,6 @@ public class ExportController {
 				try {
 					syllabus = publishService.getPublishedSyllabus(id);
 				} catch (NoSyllabusException e) {
-					response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 					response.getWriter().append(tenjinDataProvider.getInterfaceString("ERROR_NO_PUBLISHED_SYLLABUS", locale));
 					
 					return;
