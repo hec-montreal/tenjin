@@ -67,4 +67,32 @@ public class ExportController {
 			throw new PdfExportException(e);
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/syllabus/{id}/pdf-html", method = RequestMethod.GET)
+	public void exportPdfHtml(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, @RequestParam(required = false, name = "published", defaultValue = "false") boolean published, HttpServletResponse response) throws PdfExportException, IOException {
+		try {
+			AbstractSyllabus syllabus = null;
+			List<Object> elements;
+
+			if (published) {
+				try {
+					syllabus = publishService.getPublishedSyllabus(id);
+				} catch (NoSyllabusException e) {
+					return;
+				}
+
+				elements = (List<Object>) (List<?>) ((PublishedSyllabus) syllabus).getElements();
+			} else {
+				syllabus = syllabusService.getSyllabus(id);
+				elements = (List<Object>) (List<?>) ((Syllabus) syllabus).getElements();
+			}
+			
+			response.getWriter().append(pdfExportService.makePdfHtml(syllabus, elements, locale, null));
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			throw new PdfExportException(e);
+		}
+	}
 }

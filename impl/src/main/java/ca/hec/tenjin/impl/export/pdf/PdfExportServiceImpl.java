@@ -75,6 +75,21 @@ public class PdfExportServiceImpl implements PdfExportService {
 		}
 	}
 
+	@Override
+	public String makePdfHtml(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws PdfExportException {
+		// Loaders
+		templateLoader = new ClassPathTemplateLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR, "");
+		resourceLoader = new ClasspathPdfResourceLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR);
+
+		try {
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale));
+			
+			return template;
+		} catch (Exception e) {
+			throw new PdfExportException(e);
+		}
+	}
+
 	private String makeTemplate(TemplateContext context) throws PdfExportException {
 		String ret;
 		Handlebars handlebars = new Handlebars(templateLoader);
@@ -89,12 +104,12 @@ public class PdfExportServiceImpl implements PdfExportService {
 		handlebars.registerHelper("attr-cond", new AttributeConditionTemplateHelper());
 		handlebars.registerHelper("attr-date", new DateAttributeTemplateHelper());
 		handlebars.registerHelper("attr-enum", new AttributeEnumTemplateHelper(tenjinDataProvider, context.getLocale()));
-		
+
 		try {
 			Template template = handlebars.compile("syllabus.html");
 
 			ret = template.apply(context);
-			
+
 			return ret;
 		} catch (IOException e) {
 			throw new PdfExportException(e);
@@ -136,7 +151,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 		SyllabusElement ret = new SyllabusElement(element);
 
 		// If the element is composite, add children
-		
+
 		if (ret.<Boolean>call("isComposite")) {
 			List<Object> children = ret.<List<Object>>call("getElements");
 
@@ -149,7 +164,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 
 		if (type.equals("image")) {
 			prepareImageElement(ret, resources);
-		} else if(type.equals("document")) {
+		} else if (type.equals("document")) {
 			prepareDocumentElement(ret, resources);
 		} else if (type.equals("citation")) {
 			prepareCitationElement(ret, citations);
@@ -193,12 +208,16 @@ public class PdfExportServiceImpl implements PdfExportService {
 	}
 
 	private EntityContent findResource(Collection<EntityContent> resources, String id) {
+		if (id == null) {
+			return null;
+		}
+
 		for (EntityContent content : resources) {
 
 			if (content.getResourceId().startsWith(id)) {
 				return content;
 			}
-			
+
 			EntityContent child = findResource(content.getResourceChildren(), id);
 
 			if (child != null) {
@@ -210,23 +229,23 @@ public class PdfExportServiceImpl implements PdfExportService {
 	}
 
 	private SakaiCitation findCitation(Collection<SakaiCitation> citations, String id) {
-		for(SakaiCitation citation : citations) {
-			if(citation.getCitation().getId().equals(id)) {
+		for (SakaiCitation citation : citations) {
+			if (citation.getCitation().getId().equals(id)) {
 				return citation;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	private void prepareImageElement(SyllabusElement e, List<EntityContent> resources) throws ServerOverloadException {
 		String resourceId = e.getAttribute("imageId");
 		EntityContent res = findResource(resources, resourceId);
-		
-		if(res == null) {
+
+		if (res == null) {
 			return;
 		}
-		
+
 		e.setResource(new SakaiResource(res));
 
 		byte[] data = ((ContentResource) res.getOriginalEntity()).getContent();
@@ -234,19 +253,19 @@ public class PdfExportServiceImpl implements PdfExportService {
 		e.getResource().setBytesB64(Base64.getEncoder().encodeToString(data));
 		e.getResource().setContentType(res.getMimeType());
 	}
-	
+
 	private void prepareDocumentElement(SyllabusElement e, List<EntityContent> resources) {
 		String resourceId = e.getAttribute("documentId");
 		EntityContent res = findResource(resources, resourceId);
-		
+
 		e.setResource(new SakaiResource(res));
 	}
-	
+
 	private void prepareCitationElement(SyllabusElement e, List<SakaiCitation> citations) {
 		String citationId = e.getAttribute("citationId");
-		
+
 		citationId = citationId.substring(citationId.lastIndexOf("/") + 1);
-	
+
 		e.setCitation(findCitation(citations, citationId));
 	}
 }
