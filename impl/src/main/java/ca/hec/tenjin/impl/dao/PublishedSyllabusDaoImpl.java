@@ -267,4 +267,10 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId) {
 		return (List<PublishedSyllabus>) getHibernateTemplate().find("from PublishedSyllabus where site_id = ? and publishedDate is not null", siteId);
 	}
+
+	@Override
+	public PublishedSyllabus getPublishedPublicSyllabus(Long id, boolean includeElements) throws NoSyllabusException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

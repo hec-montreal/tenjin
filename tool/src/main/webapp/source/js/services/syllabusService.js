@@ -634,4 +634,6 @@
 			}
 		}
 	};
+
+	window.sss = this;
 }]);

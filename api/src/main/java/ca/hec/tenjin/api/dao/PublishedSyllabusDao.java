@@ -43,6 +43,8 @@ public interface PublishedSyllabusDao {
 	 */
 	public PublishedSyllabus getPublishedSyllabus(Long id, boolean includeElements) throws NoSyllabusException;
 
+	public PublishedSyllabus getPublishedPublicSyllabus(Long id, boolean includeElements) throws NoSyllabusException;
+	
 	/**
 	 * Retreive a published syllabus for a site & section
 	 * 
