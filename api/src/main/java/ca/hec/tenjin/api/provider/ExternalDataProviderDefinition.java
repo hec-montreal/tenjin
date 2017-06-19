@@ -21,18 +21,19 @@
 package ca.hec.tenjin.api.provider;
 
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import lombok.Data;
 
 /**
  *
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
  */
-public class CalculatorPolicyProvider extends ExternalDataProvider {
-
-    @Override
-    public AbstractSyllabusElement getAbstractSyllabusElement() {
-	return null;
-    }
-
+@Data
+public class ExternalDataProviderDefinition {
+    
+    private long provider_id;
+    private String classType;
+    private String title;
+    private String description;
 }
 

@@ -20,9 +20,11 @@
  ******************************************************************************/
 package ca.hec.tenjin.api.provider;
 
+//import ca.hec.cdm.jobs.model.CourseOffering;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusTextElement;
+//import ca.hec.cdm.jobs.CatalogDescriptionJobDao;
 
 import java.util.ArrayList;
 
@@ -31,7 +33,9 @@ import java.util.ArrayList;
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
  */
-public class CatalogDescriptionProvider extends ExternalDataProvider {
+public class CatalogDescriptionProvider implements ExternalDataProvider {
+
+//    CatalogDescriptionJobDao cdmDao;
 
     @Override
     public AbstractSyllabusElement getAbstractSyllabusElement() {
@@ -40,7 +44,7 @@ public class CatalogDescriptionProvider extends ExternalDataProvider {
         descriptionRubric.setTitle("Description"); //TODO i18n
 
         SyllabusTextElement descriptionText = new SyllabusTextElement();
-        descriptionText.setDescription("this is a text"); // TODO get the text from the db
+        descriptionText.setDescription(getOfficialDescriptionString("1-620-15")); // TODO get the text from the db
         descriptionText.setTemplateStructureId(-1L);
         descriptionText.setCommon(true);
         descriptionText.setPublicElement(true);
@@ -52,6 +56,13 @@ public class CatalogDescriptionProvider extends ExternalDataProvider {
 
         descriptionRubric.setElements(elements);
 	    return descriptionRubric;
+    }
+
+    private String getOfficialDescriptionString(String catalogNbr) {
+        //CourseOffering co = cdmDao.getCourseOffering(catalogNbr);
+
+        //return co.getShortDescription();
+        return "Official description";
     }
 }
 

@@ -3,26 +3,15 @@
       "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
           "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="ca.hec.tenjin.api.provider" 	default-lazy="false" >
-	<class name="ExternalDataProvider" table="TENJIN_PROVIDER">
+<hibernate-mapping default-lazy="false" >
+	<class name="ca.hec.tenjin.api.provider.ExternalDataProviderDefinition" table="TENJIN_PROVIDER">
 		<id name="provider_id" type="long" column="PROVIDER_ID">
 	    	<generator class="native">
                  <param name="sequence">PROVIDER_ID_SEQ</param>
         	</generator>
 		</id>
-		<discriminator column="CLASS_TYPE" type="string"/>
+		<property name="classType" column="CLASS_TYPE" type="string"/>
 		<property name="title" type="string" column="TITLE" length="255"/>
 		<property name="description" type="materialized_clob" column="DESCRIPTION"/>
-		
-		
-		<subclass name= "PlagiarismPolicyProvider" 
-			discriminator-value= "PlagiarismPolicyProvider"/>
-		
-		<subclass name= "CalculatorPolicyProvider" 
-			discriminator-value= "CalculatorPolicyProvider"/>
-		
-		<subclass name= "CatalogDescriptionProvider"
-			discriminator-value= "CatalogDescriptionProvider"/>
-		
      </class>
 </hibernate-mapping>

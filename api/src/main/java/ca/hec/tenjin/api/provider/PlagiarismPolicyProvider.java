@@ -39,7 +39,7 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusTextElement;
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
  */
-public class PlagiarismPolicyProvider extends ExternalDataProvider {
+public class PlagiarismPolicyProvider implements ExternalDataProvider {
 
     //TODO: break variables to refer to folder and file if possible I18N
     //TODO: make sure it does not have problems with access permissions
