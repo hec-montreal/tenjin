@@ -18,7 +18,7 @@
  * limitations under the License.
  *
  ******************************************************************************/
-package ca.hec.tenjin.api.provider;
+package ca.hec.tenjin.api.model.template;
 
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import lombok.Data;

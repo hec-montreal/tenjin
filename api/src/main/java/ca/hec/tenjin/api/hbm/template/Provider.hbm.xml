@@ -4,7 +4,7 @@
           "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" >
-	<class name="ca.hec.tenjin.api.provider.ExternalDataProviderDefinition" table="TENJIN_PROVIDER">
+	<class name="ca.hec.tenjin.api.model.template.ExternalDataProviderDefinition" table="TENJIN_PROVIDER">
 		<id name="providerId" type="long" column="PROVIDER_ID">
 	    	<generator class="native">
                  <param name="sequence">PROVIDER_ID_SEQ</param>

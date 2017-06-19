@@ -25,7 +25,7 @@
             class="ca.hec.tenjin.api.model.template.TemplateElement"/>
             
         <many-to-one name="provider" column="PROVIDER_ID" fetch="select"
-        	class="ca.hec.tenjin.api.provider.ExternalDataProviderDefinition"/>
+        	class="ca.hec.tenjin.api.model.template.ExternalDataProviderDefinition"/>
 
         <list name="elements">
             <key column="PARENT_ID"/>

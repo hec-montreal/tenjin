@@ -2,7 +2,6 @@ package ca.hec.tenjin.api.model.template;
 
 import java.util.List;
 
-import ca.hec.tenjin.api.provider.ExternalDataProviderDefinition;
 import lombok.*;
 
 /**
