@@ -104,41 +104,12 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return syllabi;
 	}
 
-	private AbstractSyllabusElement getProvidedContent (AbstractSyllabusElement element){
-		Long providerId = element.getProviderId(); 
-
-		//TODO: mirror provided element to syllabus element
-		if (providerId != null) {
-			ExternalDataProvider provider =  getHibernateTemplate().get(ExternalDataProvider.class, providerId);
-
-			if (provider != null) {
-				try {
-					AbstractSyllabusElement providedElement = provider.getAbstractSyllabusElement();
-					// Override title, description, public, important and attributes with the provided values.
-					element.setTitle(providedElement.getTitle());
-					element.setDescription(providedElement.getDescription());
-					element.setPublicElement(providedElement.getPublicElement());
-					element.setImportant(providedElement.getImportant());
-					if (providedElement.getAttributes() != null) {
-						element.setAttributes(new HashMap<String, String>(providedElement.getAttributes()));
-					}
-				} catch (Exception e) {
-					log.error("Exception getting provided syllabus element from provider " +
-							provider.getClass().getName());
-				}
-			}
-		}
-
-		return element;
-	}
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	public AbstractSyllabusElement getSyllabusElement(Long elementId) {
 		List<AbstractSyllabusElement> elements;
 		elements = (List<AbstractSyllabusElement>) getHibernateTemplate().find("from AbstractSyllabusElement where id = ?", elementId);
 		AbstractSyllabusElement element = elements.get(0);
-		element = getProvidedContent(element);
 		return element;
 	}
 
@@ -164,9 +135,6 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
     			continue;
     		}
 	    		
-    		//TODO: check if we need to move this code to the pojo to make it systematic. Fill provided content if needed
-    		currElement = getProvidedContent(currElement);
-    		
     		// set the hidden property for the element (from the mapping) so it can be used in UI
     		currElement.setHidden(currElementMapping.getHidden());
     		currElement.setDisplayOrder(currElementMapping.getDisplayOrder());
