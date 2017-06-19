@@ -2,6 +2,7 @@ package ca.hec.tenjin.impl;
 
 import java.util.*;
 
+import ca.hec.tenjin.api.provider.ExternalDataProvider;
 import org.apache.log4j.Logger;
 import org.sakaiproject.exception.IdUnusedException;
 
@@ -52,12 +53,14 @@ public class TemplateServiceImpl implements TemplateService {
 
 				if (templateStructure.getProvider() != null){
 					try {
-						// TODO have to instantiate the provider (based on getClassType) to get the syllabuselement
-//						element = templateStructure.getProvider().getAbstractSyllabusElement();
+						Class clazz = Class.forName(templateStructure.getProvider().getClassType());
+						ExternalDataProvider provider = (ExternalDataProvider)clazz.newInstance();
+
+						element = provider.getAbstractSyllabusElement();
 						element.setProviderId(templateStructure.getProvider().getProviderId());
 					} catch (Exception e) {
 						log.error("Exception getting provided syllabus element from provider " +
-							templateStructure.getProvider().getClass().getName());
+							templateStructure.getProvider().getClassType());
 					}
 				}
 				
@@ -116,12 +119,14 @@ public class TemplateServiceImpl implements TemplateService {
 				//For the provided contents
 				if (templateStructure.getProvider() != null){
 					try {
-						// TODO have to instantiate the provider (based on getClassType) to get the syllabuselement
-						//el = templateStructure.getProvider().getAbstractSyllabusElement();
+						Class clazz = Class.forName(templateStructure.getProvider().getClassType());
+						ExternalDataProvider provider = (ExternalDataProvider)clazz.newInstance();
+
+						el = provider.getAbstractSyllabusElement();
 						el.setProviderId(templateStructure.getProvider().getProviderId());
 					} catch (Exception e) {
 						log.error("Exception getting provided syllabus element from provider " +
-								templateStructure.getProvider().getClass().getName());
+								templateStructure.getProvider().getClassType());
 					}
 				}
 
