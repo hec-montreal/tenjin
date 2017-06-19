@@ -31,7 +31,7 @@ import lombok.Data;
 @Data
 public class ExternalDataProviderDefinition {
     
-    private long provider_id;
+    private long providerId;
     private String classType;
     private String title;
     private String description;

@@ -54,7 +54,7 @@ public class TemplateServiceImpl implements TemplateService {
 					try {
 						// TODO have to instantiate the provider (based on getClassType) to get the syllabuselement
 //						element = templateStructure.getProvider().getAbstractSyllabusElement();
-						element.setProviderId(templateStructure.getProvider().getProvider_id());
+						element.setProviderId(templateStructure.getProvider().getProviderId());
 					} catch (Exception e) {
 						log.error("Exception getting provided syllabus element from provider " +
 							templateStructure.getProvider().getClass().getName());
@@ -118,7 +118,7 @@ public class TemplateServiceImpl implements TemplateService {
 					try {
 						// TODO have to instantiate the provider (based on getClassType) to get the syllabuselement
 						//el = templateStructure.getProvider().getAbstractSyllabusElement();
-						el.setProviderId(templateStructure.getProvider().getProvider_id());
+						el.setProviderId(templateStructure.getProvider().getProviderId());
 					} catch (Exception e) {
 						log.error("Exception getting provided syllabus element from provider " +
 								templateStructure.getProvider().getClass().getName());
