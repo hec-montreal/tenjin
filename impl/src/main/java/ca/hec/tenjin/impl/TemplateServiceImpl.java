@@ -5,6 +5,7 @@ import java.util.*;
 import ca.hec.tenjin.api.provider.ExternalDataProvider;
 import org.apache.log4j.Logger;
 import org.sakaiproject.exception.IdUnusedException;
+import org.springframework.context.ApplicationContext;
 
 import ca.hec.tenjin.api.TemplateService;
 import ca.hec.tenjin.api.dao.TemplateDao;
@@ -15,13 +16,17 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import ca.hec.tenjin.api.model.template.Template;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
 import lombok.Setter;
+import org.springframework.context.ApplicationContextAware;
 
-public class TemplateServiceImpl implements TemplateService {
+public class TemplateServiceImpl implements TemplateService, ApplicationContextAware {
 
 	private static final Logger log = Logger.getLogger(TemplateServiceImpl.class);
 
     @Setter
 	private TemplateDao templateDao;
+
+    @Setter
+	private ApplicationContext applicationContext;
 
 	@Override
 	public Syllabus getEmptySyllabusFromTemplate(Long templateId, String locale) {
@@ -53,14 +58,13 @@ public class TemplateServiceImpl implements TemplateService {
 
 				if (templateStructure.getProvider() != null){
 					try {
-						Class clazz = Class.forName(templateStructure.getProvider().getClassType());
-						ExternalDataProvider provider = (ExternalDataProvider)clazz.newInstance();
+						ExternalDataProvider provider = (ExternalDataProvider)applicationContext.getBean(templateStructure.getProvider().getBeanName());
 
 						element = provider.getAbstractSyllabusElement();
 						element.setProviderId(templateStructure.getProvider().getProviderId());
 					} catch (Exception e) {
 						log.error("Exception getting provided syllabus element from provider " +
-							templateStructure.getProvider().getClassType());
+							templateStructure.getProvider().getBeanName());
 					}
 				}
 				
@@ -119,14 +123,13 @@ public class TemplateServiceImpl implements TemplateService {
 				//For the provided contents
 				if (templateStructure.getProvider() != null){
 					try {
-						Class clazz = Class.forName(templateStructure.getProvider().getClassType());
-						ExternalDataProvider provider = (ExternalDataProvider)clazz.newInstance();
+						ExternalDataProvider provider = (ExternalDataProvider)applicationContext.getBean(templateStructure.getProvider().getBeanName());
 
 						el = provider.getAbstractSyllabusElement();
 						el.setProviderId(templateStructure.getProvider().getProviderId());
 					} catch (Exception e) {
 						log.error("Exception getting provided syllabus element from provider " +
-								templateStructure.getProvider().getClassType());
+								templateStructure.getProvider().getBeanName());
 					}
 				}
 

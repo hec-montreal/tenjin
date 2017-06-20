@@ -32,7 +32,7 @@ import lombok.Data;
 public class ExternalDataProviderDefinition {
     
     private long providerId;
-    private String classType;
+    private String beanName;
     private String title;
     private String description;
 }
