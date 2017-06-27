@@ -2,8 +2,10 @@ package ca.hec.tenjin.impl;
 
 import java.util.*;
 
+import ca.hec.tenjin.api.provider.ExternalDataProvider;
 import org.apache.log4j.Logger;
 import org.sakaiproject.exception.IdUnusedException;
+import org.springframework.context.ApplicationContext;
 
 import ca.hec.tenjin.api.TemplateService;
 import ca.hec.tenjin.api.dao.TemplateDao;
@@ -14,16 +16,20 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import ca.hec.tenjin.api.model.template.Template;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
 import lombok.Setter;
+import org.springframework.context.ApplicationContextAware;
 
-public class TemplateServiceImpl implements TemplateService {
+public class TemplateServiceImpl implements TemplateService, ApplicationContextAware {
 
 	private static final Logger log = Logger.getLogger(TemplateServiceImpl.class);
 
     @Setter
 	private TemplateDao templateDao;
 
+    @Setter
+	private ApplicationContext applicationContext;
+
 	@Override
-	public Syllabus getEmptySyllabusFromTemplate(Long templateId, String locale) {
+	public Syllabus getEmptySyllabusFromTemplate(Long templateId, String siteId, String locale) {
 		Template template = null; 
 		Syllabus syllabus = new Syllabus();
 		long level = -1;
@@ -43,20 +49,21 @@ public class TemplateServiceImpl implements TemplateService {
 			if (templateStructure.getMandatory() != null && templateStructure.getMandatory() == true) {
 				AbstractSyllabusElement element = null;
 
-				String type = templateStructure.getTemplateElement().getType().getTitle();
-				if ( type.equalsIgnoreCase("composite") ) {
-					element = new SyllabusCompositeElement();
-				} else if ( type.equalsIgnoreCase("rubric") ) {
-					element = new SyllabusRubricElement();
-				}
-
 				if (templateStructure.getProvider() != null){
 					try {
-						element = templateStructure.getProvider().getAbstractSyllabusElement();
-						element.setProviderId(templateStructure.getProvider().getProvider_id());
+						ExternalDataProvider provider = (ExternalDataProvider)applicationContext.getBean(templateStructure.getProvider().getBeanName());
+						element = provider.getAbstractSyllabusElement(siteId);
 					} catch (Exception e) {
+						e.printStackTrace();
 						log.error("Exception getting provided syllabus element from provider " +
-							templateStructure.getProvider().getClass().getName());
+							templateStructure.getProvider().getBeanName());
+					}
+				} else {
+					String type = templateStructure.getTemplateElement().getType().getTitle();
+					if ( type.equalsIgnoreCase("composite") ) {
+						element = new SyllabusCompositeElement();
+					} else if ( type.equalsIgnoreCase("rubric") ) {
+						element = new SyllabusRubricElement();
 					}
 				}
 				
@@ -69,6 +76,8 @@ public class TemplateServiceImpl implements TemplateService {
 						} else {
 							title = templateStructure.getTemplateElement().getLabels().get("en_US");
 						}
+					} else {
+						element.setProviderId(templateStructure.getProvider().getProviderId());
 					}
 					element.setTitle(title);
 					element.setTemplateStructureId(templateStructure.getId());
@@ -80,12 +89,11 @@ public class TemplateServiceImpl implements TemplateService {
 					element.setCommon(true);
 
 					// recursion on the children
-					recursiveAddElements(templateStructure, element, locale, idElement);
+					recursiveAddElements(templateStructure, element, locale, idElement, siteId);
 					
 					elements.add(element);
 				}
 			}
-
 		}
 
 		syllabus.setElements(elements);
@@ -95,7 +103,7 @@ public class TemplateServiceImpl implements TemplateService {
 		return syllabus;
 	}
 
-	private void recursiveAddElements(TemplateStructure root, AbstractSyllabusElement element, String locale, long idElement) {
+	private void recursiveAddElements(TemplateStructure root, AbstractSyllabusElement element, String locale, long idElement, String siteId) {
 		
 		List<AbstractSyllabusElement> elements = new ArrayList<AbstractSyllabusElement>();
 		for (int i = 0; i < root.getElements().size(); i++) {
@@ -103,31 +111,32 @@ public class TemplateServiceImpl implements TemplateService {
 			TemplateStructure templateStructure = root.getElements().get(i);
 			if (templateStructure.getMandatory() != null && templateStructure.getMandatory() == true) {
 				AbstractSyllabusElement el = null;
-				
-				
-				String type = templateStructure.getTemplateElement().getType().getTitle();
-				if ( type.equalsIgnoreCase("composite") ) {
-					el = new SyllabusCompositeElement();
-				} else if ( type.equalsIgnoreCase("rubric") ) {
-					el = new SyllabusRubricElement();
-				}
-	
+
 				//For the provided contents
-				if (templateStructure.getProvider() != null){
+				if (templateStructure.getProvider() != null) {
 					try {
-						el = templateStructure.getProvider().getAbstractSyllabusElement();
-						el.setProviderId(templateStructure.getProvider().getProvider_id());
+						ExternalDataProvider provider = (ExternalDataProvider) applicationContext.getBean(templateStructure.getProvider().getBeanName());
+						el = provider.getAbstractSyllabusElement(siteId);
 					} catch (Exception e) {
+						e.printStackTrace();
 						log.error("Exception getting provided syllabus element from provider " +
-								templateStructure.getProvider().getClass().getName());
+								templateStructure.getProvider().getBeanName());
+					}
+				} else {
+					String type = templateStructure.getTemplateElement().getType().getTitle();
+					if ( type.equalsIgnoreCase("composite") ) {
+						el = new SyllabusCompositeElement();
+					} else if ( type.equalsIgnoreCase("rubric") ) {
+						el = new SyllabusRubricElement();
 					}
 				}
 
-				    
 				if (el != null) {
 					el.setDisplayOrder(i);
 					if (templateStructure.getProvider() == null)
 					    el.setTitle(templateStructure.getTemplateElement().getLabels().get(locale));
+					else
+						el.setProviderId(templateStructure.getProvider().getProviderId());
 					el.setTemplateStructureId(templateStructure.getId());
 					long idEl = idElement*1000 - i;
 					el.setId(idEl);
@@ -137,7 +146,7 @@ public class TemplateServiceImpl implements TemplateService {
 					el.setCommon(true);
 					
 					// recursion on the children
-					recursiveAddElements(templateStructure, el, locale, idEl);
+					recursiveAddElements(templateStructure, el, locale, idEl, siteId);
 					
 					elements.add(el);
 				}

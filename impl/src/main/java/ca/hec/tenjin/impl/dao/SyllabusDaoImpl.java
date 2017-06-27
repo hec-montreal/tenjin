@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.hec.tenjin.api.provider.ExternalDataProvider;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -104,41 +103,12 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return syllabi;
 	}
 
-	private AbstractSyllabusElement getProvidedContent (AbstractSyllabusElement element){
-		Long providerId = element.getProviderId(); 
-
-		//TODO: mirror provided element to syllabus element
-		if (providerId != null) {
-			ExternalDataProvider provider =  getHibernateTemplate().get(ExternalDataProvider.class, providerId);
-
-			if (provider != null) {
-				try {
-					AbstractSyllabusElement providedElement = provider.getAbstractSyllabusElement();
-					// Override title, description, public, important and attributes with the provided values.
-					element.setTitle(providedElement.getTitle());
-					element.setDescription(providedElement.getDescription());
-					element.setPublicElement(providedElement.getPublicElement());
-					element.setImportant(providedElement.getImportant());
-					if (providedElement.getAttributes() != null) {
-						element.setAttributes(new HashMap<String, String>(providedElement.getAttributes()));
-					}
-				} catch (Exception e) {
-					log.error("Exception getting provided syllabus element from provider " +
-							provider.getClass().getName());
-				}
-			}
-		}
-
-		return element;
-	}
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	public AbstractSyllabusElement getSyllabusElement(Long elementId) {
 		List<AbstractSyllabusElement> elements;
 		elements = (List<AbstractSyllabusElement>) getHibernateTemplate().find("from AbstractSyllabusElement where id = ?", elementId);
 		AbstractSyllabusElement element = elements.get(0);
-		element = getProvidedContent(element);
 		return element;
 	}
 
@@ -153,18 +123,17 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
     		AbstractSyllabusElement currElement = currElementMapping.getSyllabusElement();
     		
     		// for non-common syllabuses, skip common element if it is not published (and is not from the template or a rubric)
-			TemplateStructure templateStructure = templateService.getTemplateStructure(currElement.getTemplateStructureId());
+			TemplateStructure templateStructure = null;
+			if (currElement.getTemplateStructureId() != null && currElement.getTemplateStructureId() > 0)
+				templateStructure = templateService.getTemplateStructure(currElement.getTemplateStructureId());
 
     		if (!syllabus.getCommon() && currElement.getCommon() && 
     				currElement.getPublishedId() == null &&
     				!(currElement instanceof SyllabusRubricElement) && 
-    				!templateStructure.getMandatory()) {
+					(templateStructure != null && !templateStructure.getMandatory())) {
     			continue;
     		}
 	    		
-    		//TODO: check if we need to move this code to the pojo to make it systematic. Fill provided content if needed
-    		currElement = getProvidedContent(currElement);
-    		
     		// set the hidden property for the element (from the mapping) so it can be used in UI
     		currElement.setHidden(currElementMapping.getHidden());
     		currElement.setDisplayOrder(currElementMapping.getDisplayOrder());

@@ -20,4 +20,6 @@ public interface PdfExportService {
 	 * @throws PdfExportException
 	 */
 	void makePdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws PdfExportException;
+
+	String makePdfHtml(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws PdfExportException;
 }

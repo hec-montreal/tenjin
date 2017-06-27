@@ -483,7 +483,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 			locale = Locale.getDefault().toString();
 		}
 
-		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, locale);
+		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, siteId, locale);
 
 		if (newCommonSyllabus != null) {
 			newCommonSyllabus.setTemplateId(1L);

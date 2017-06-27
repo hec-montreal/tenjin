@@ -5,7 +5,6 @@ import java.util.List;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.memory.api.Cache;
 import org.sakaiproject.memory.api.MemoryService;
@@ -42,31 +41,14 @@ public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao 
 		if (t == null) {
 			t = getHibernateTemplate().get(Template.class, templateId);
 
-			// HibernateUtil.currentSession().get(ExternalDataProvider.class,1)
 			if (t == null) {
 				throw new IdUnusedException(templateId.toString());
 			}
-
-			initProviders(t.getElements());
 
 			templateCache.put(templateId, t);
 		}
 
 		return t;
-	}
-
-	private void initProviders (List<TemplateStructure> templateStructures){
-		
-		for(TemplateStructure ts: templateStructures) {
-//			System.out.println ("no init "+ ts.getProvider());
-			if (ts.getProvider() != null){
-//				System.out.print("init");
-				Hibernate.initialize(ts.getProvider());
-
-			}
-			if (ts.getElements() != null)
-				initProviders(ts.getElements());
-		}		
 	}
 
 	@Override

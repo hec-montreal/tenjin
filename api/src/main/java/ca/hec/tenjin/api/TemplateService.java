@@ -22,7 +22,7 @@ public interface TemplateService {
 	 * @param locale
 	 * @return Syllabus
 	 */
-	public Syllabus getEmptySyllabusFromTemplate(Long templateId, String locale);
+	public Syllabus getEmptySyllabusFromTemplate(Long templateId, String siteId, String locale);
 
 	/**
 	 * Retrieves the template

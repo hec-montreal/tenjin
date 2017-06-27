@@ -3,7 +3,6 @@ package ca.hec.tenjin.api.model.syllabus;
 import java.util.Date;
 import java.util.Set;
 
-import ca.hec.tenjin.api.provider.ExternalDataProvider;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -33,5 +32,4 @@ public class AbstractSyllabus {
     private Date publishedDate;
     private Boolean deleted;
     private Set<String> sections;
-    private ExternalDataProvider provider;
 }
