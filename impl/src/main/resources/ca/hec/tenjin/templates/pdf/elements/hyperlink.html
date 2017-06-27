@@ -8,7 +8,9 @@
 			{{/if}}
 		</a>
 
-		<span class="type">[{{attr-enum this 'hyperlinkType' 'hyperlinkTypes'}}]</span>
+		{{#if element.attributes.hyperlinkType}}
+			<span class="type">[{{attr-enum this 'hyperlinkType' 'hyperlinkTypes'}}]</span>
+		{{/if}}
 
 		<div class="description syllabus-text">
 			{{{html element.description}}}
