@@ -270,6 +270,13 @@
 		return ret.promise;
 	};
 
+	/*
+	 * Get the list of elements that can be added to a composite element (according to the template rules)
+	 */
+	this.getAddableElementsFromTemplateRules = function(element) {
+		return this.template[element.templateStructureId].elements;
+	};
+
 	/**
 	 * Get the syllabus list
 	 * @return {Array} Syllabus list
