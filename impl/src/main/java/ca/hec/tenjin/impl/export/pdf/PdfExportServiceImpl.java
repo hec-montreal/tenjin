@@ -55,12 +55,13 @@ public class PdfExportServiceImpl implements PdfExportService {
 	private TemplateLoader templateLoader;
 	private PdfResourceLoader resourceLoader;
 
-	@Override
-	public void makePdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws PdfExportException {
-		// Loaders
+	public PdfExportServiceImpl() {
 		templateLoader = new ClassPathTemplateLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR, "");
 		resourceLoader = new ClasspathPdfResourceLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR);
-
+	}
+	
+	@Override
+	public void makePdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws PdfExportException {
 		try {
 			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale));
 			ITextRenderer renderer = new ITextRenderer();
@@ -77,10 +78,6 @@ public class PdfExportServiceImpl implements PdfExportService {
 
 	@Override
 	public String makePdfHtml(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws PdfExportException {
-		// Loaders
-		templateLoader = new ClassPathTemplateLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR, "");
-		resourceLoader = new ClasspathPdfResourceLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR);
-
 		try {
 			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale));
 			
