@@ -33,4 +33,12 @@ public class SyllabusCompositeElement extends AbstractSyllabusElement {
 	public boolean isComposite() {
 		return true;
 	}
+
+	public void setProviderId(Long providerId) {
+		super.setProviderId(providerId);
+		// set provider id in children
+		for (AbstractSyllabusElement e: elements) {
+			e.setProviderId(providerId);
+		}
+	}
 }

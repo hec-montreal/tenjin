@@ -283,8 +283,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 			if (existingSyllabusElementMappings != null && !existingSyllabusElementMappings.isEmpty()) {
 				for (SyllabusElementMapping mapping : existingSyllabusElementMappings.values()) {
 					// cannot delete common element from another syllabus
-					if (!syllabus.getCommon() && mapping.getSyllabusElement().getCommon()) {
-						// Cannot delete common element from a regular syllabus
+					if ((!syllabus.getCommon() && mapping.getSyllabusElement().getCommon()) || mapping.getSyllabusElement().getProviderId() != null) {
+						// Cannot delete common element from a regular syllabus, or provided elements
 						continue;
 					}
 
@@ -534,7 +534,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 		// user may not update the publishedId
 		newElement.setPublishedId(existingElement.getPublishedId());
 
-		if (!newElement.equals(existingElement)) {
+		// don't modify provided elements
+		if (existingElement.getProviderId() == null && !newElement.equals(existingElement)) {
 
 			// update persistent object, save handled by hibernate at end of
 			// transaction

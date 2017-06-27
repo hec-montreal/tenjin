@@ -53,6 +53,7 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 					try {
 						ExternalDataProvider provider = (ExternalDataProvider)applicationContext.getBean(templateStructure.getProvider().getBeanName());
 						element = provider.getAbstractSyllabusElement(siteId);
+						element.setProviderId(templateStructure.getProvider().getProviderId());
 					} catch (Exception e) {
 						e.printStackTrace();
 						log.error("Exception getting provided syllabus element from provider " +
@@ -76,8 +77,6 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 						} else {
 							title = templateStructure.getTemplateElement().getLabels().get("en_US");
 						}
-					} else {
-						element.setProviderId(templateStructure.getProvider().getProviderId());
 					}
 					element.setTitle(title);
 					element.setTemplateStructureId(templateStructure.getId());
@@ -117,6 +116,7 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 					try {
 						ExternalDataProvider provider = (ExternalDataProvider) applicationContext.getBean(templateStructure.getProvider().getBeanName());
 						el = provider.getAbstractSyllabusElement(siteId);
+						el.setProviderId(templateStructure.getProvider().getProviderId());
 					} catch (Exception e) {
 						e.printStackTrace();
 						log.error("Exception getting provided syllabus element from provider " +
@@ -135,8 +135,6 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 					el.setDisplayOrder(i);
 					if (templateStructure.getProvider() == null)
 					    el.setTitle(templateStructure.getTemplateElement().getLabels().get(locale));
-					else
-						el.setProviderId(templateStructure.getProvider().getProviderId());
 					el.setTemplateStructureId(templateStructure.getId());
 					long idEl = idElement*1000 - i;
 					el.setId(idEl);
