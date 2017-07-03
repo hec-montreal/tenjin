@@ -1,7 +1,7 @@
 <div ng-controller="SyllabusCtrl">
 	<div id="syllabus">
 		<div class="row">
-			<h1 class="course-title col-xs-12">
+			<h1 class="course-title col-xs-12 mobile-toggle">
 				{{::syllabusService.syllabus.courseTitle}} <span class="student-view-title" data-ng-if="tenjinService.viewState.stateName === 'edition-student-view'">({{'VERSION_STUDENTS' | translate}})</span>
 			</h1>
 		</div>
@@ -38,14 +38,6 @@
 							<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
 						</button>
 
-						<button data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit'" data-ng-click="showStudentView()" class="action">
-							<span class="glyphicon glyphicon-user"></span> {{'VERSION_STUDENTS' | translate}}
-						</button>
-
-						<button data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.stateName === 'edition-student-view'" data-ng-click="showEditionView()" class="action">
-							<span class="glyphicon glyphicon-wrench"></span> {{'VERSION_IN_EDITION' | translate}}
-						</button>
-
 						<div uib-dropdown class="pdf-dropdown">
 							<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" type="button" class="btn action-list" uib-dropdown-toggle ng-click="popPdf()" ng-disabled="syllabusService.isWorking()">
 								<img src="img/icon-pdf.png"></img>
@@ -61,12 +53,16 @@
 								<li role="menuitem">
 									<a href="javascript:void(0);" ng-click="pdf(true)">{{ 'VERSION_STUDENTS' | translate }}</a>
 								</li>
+
+								<li role="menuitem">
+									<a href="javascript:void(0);" ng-click="pdfPublic()">{{ 'VERSION_PUBLIC' | translate }}</a>
+								</li>
 							</ul>
 						</div>
 
 						<div uib-dropdown class="view-dropdown">
 							<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" type="button" class="btn action-list" uib-dropdown-toggle ng-click="popPdf()" ng-disabled="syllabusService.isWorking()">
-								<span class="glyphicon glyphicon-eye-open"></span> View
+								<span class="glyphicon glyphicon-eye-open"></span> {{ 'VIEW' | translate }}
 								<span class="caret"></span>
 							</button>
 
@@ -77,6 +73,10 @@
 
 								<li role="menuitem" data-ng-class="{'selected': tenjinService.viewState.stateName === 'edition-student-view'}">
 									<a href="javascript:void(0);" ng-click="showStudentView()"><span class="glyphicon glyphicon-ok"></span> {{ 'VERSION_STUDENTS' | translate }}</a>
+								</li>
+
+								<li role="menuitem" data-ng-class="{'selected': tenjinService.viewState.stateName === 'edition-public-view'}">
+									<a href="javascript:void(0);" ng-click="showPublicView()"><span class="glyphicon glyphicon-ok"></span> {{ 'VERSION_PUBLIC' | translate }}</a>
 								</li>
 							</ul>
 						</div>

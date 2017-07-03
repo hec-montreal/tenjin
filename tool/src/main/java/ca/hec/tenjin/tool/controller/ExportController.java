@@ -37,7 +37,7 @@ public class ExportController {
 
 	@Autowired
 	private TenjinDataProvider tenjinDataProvider;
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/syllabus/{id}/pdf", method = RequestMethod.GET)
 	public void exportPdf(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, @RequestParam(required = false, name = "published", defaultValue = "false") boolean published, HttpServletResponse response) throws PdfExportException, IOException {
@@ -50,7 +50,7 @@ public class ExportController {
 					syllabus = publishService.getPublishedSyllabus(id);
 				} catch (NoSyllabusException e) {
 					response.getWriter().append(tenjinDataProvider.getInterfaceString("ERROR_NO_PUBLISHED_SYLLABUS", locale));
-					
+
 					return;
 				}
 
@@ -67,7 +67,32 @@ public class ExportController {
 			throw new PdfExportException(e);
 		}
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/syllabus/{id}/pdf-public", method = RequestMethod.GET)
+	public void exportPublicPdf(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, HttpServletResponse response) throws PdfExportException, IOException {
+		try {
+			AbstractSyllabus syllabus = null;
+			List<Object> elements;
+
+			try {
+				syllabus = publishService.getPublicSyllabus(id);
+			} catch (NoSyllabusException e) {
+				response.getWriter().append(tenjinDataProvider.getInterfaceString("ERROR_NO_PUBLISHED_SYLLABUS", locale));
+
+				return;
+			}
+
+			elements = (List<Object>) (List<?>) ((PublishedSyllabus) syllabus).getElements();
+
+			pdfExportService.makePdf(syllabus, elements, locale, response.getOutputStream());
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			throw new PdfExportException(e);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/syllabus/{id}/pdf-html", method = RequestMethod.GET)
 	public void exportPdfHtml(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, @RequestParam(required = false, name = "published", defaultValue = "false") boolean published, HttpServletResponse response) throws PdfExportException, IOException {
@@ -87,7 +112,7 @@ public class ExportController {
 				syllabus = syllabusService.getSyllabus(id);
 				elements = (List<Object>) (List<?>) ((Syllabus) syllabus).getElements();
 			}
-			
+
 			response.getWriter().append(pdfExportService.makePdfHtml(syllabus, elements, locale, null));
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -37,6 +37,8 @@ public interface PublishService {
 	 */
 	public PublishedSyllabus getPublishedSyllabus(String siteId, String sectionId) throws NoSyllabusException, DeniedAccessException;
 
+	public PublishedSyllabus getPublicSyllabus(Long syllabusId) throws NoSyllabusException;	
+	
 	/**
 	 * Publish the syllabus with the given id
 	 * 

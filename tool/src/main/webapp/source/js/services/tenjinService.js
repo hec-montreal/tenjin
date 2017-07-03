@@ -138,6 +138,59 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 			}
 		},
 
+		editionPublicView: {
+			stateName: 'edition-public-view',
+
+			loadViewData: function (siteId) {
+				var ret = $q.defer();
+				var dataToLoad = [];
+
+				// First batch of data to load
+				dataToLoad.push(ResourcesService.loadResources(siteId));
+				dataToLoad.push(SakaiToolsService.loadToolEntities(siteId));
+
+				$q.allSettled(dataToLoad).then(function() {
+					// Finally load the citations
+					CitationsService.loadCitations().then(function() {
+						ret.resolve();
+					}).catch(function() {
+						ret.reject();
+					});
+
+					SyllabusService.loadTemplate().then(function() {
+						ret.resolve();
+					}).catch(function() {
+						ret.reject();
+					});
+				}).catch(function(e) {
+					ret.reject(e);
+				});
+
+				return ret.promise;
+			},
+
+			loadSyllabus: function(ctx) {
+				var ret = $q.defer();
+				var profile = UserService.getProfile();
+
+				var success = function() {
+					ret.resolve();
+				};
+
+				var fail = function(e) {
+					ret.reject(e);
+				};
+
+				SyllabusService.loadPublicSyllabus(ctx.syllabusId).then(success).catch(fail);
+
+				return ret.promise;
+			},
+
+			getHomeRoute: function() {
+				return makeRoute('');
+			}
+		},
+
 		published: {
 			stateName: 'syllabus-published',
 

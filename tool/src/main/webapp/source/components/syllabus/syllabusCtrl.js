@@ -85,6 +85,26 @@
 		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.json' + post, '_blank');
 	};
 
+	$scope.pdfPublic = function() {
+		var post = '?locale=' + UserService.getProfile().locale;
+
+		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf-public.json' + post, '_blank');
+	};
+
+	$scope.showEditionView = function () {
+		var tthis = this;
+
+		$scope.showGlobalLoading();
+
+		TenjinService.loadDataForViewState(TenjinService.ViewStates.edition).then(function () {
+			loadSyllabus(SyllabusService.getSyllabus().id).then(function () {
+				$scope.hideGlobalLoading();
+
+				TreeService.selectElement(TreeService.findElementByPosition([0]));
+			});
+		});
+	};
+
 	$scope.showStudentView = function () {
 		var tthis = this;
 
@@ -99,12 +119,12 @@
 		});
 	};
 
-	$scope.showEditionView = function () {
+	$scope.showPublicView = function () {
 		var tthis = this;
 
 		$scope.showGlobalLoading();
 
-		TenjinService.loadDataForViewState(TenjinService.ViewStates.edition).then(function () {
+		TenjinService.loadDataForViewState(TenjinService.ViewStates.editionPublicView).then(function () {
 			loadSyllabus(SyllabusService.getSyllabus().id).then(function () {
 				$scope.hideGlobalLoading();
 

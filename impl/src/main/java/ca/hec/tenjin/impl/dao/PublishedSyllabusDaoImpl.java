@@ -38,7 +38,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		}
 
 		if (includeElements) {
-			syllabus.setElements(getStructuredPublishedSyllabusElements(id));
+			syllabus.setElements(getStructuredPublishedSyllabusElements(id, false));
 		}
 
 		return syllabus;
@@ -87,7 +87,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		}
 
 		if (ret != null) {
-			ret.setElements(getStructuredPublishedSyllabusElements(ret.getId()));
+			ret.setElements(getStructuredPublishedSyllabusElements(ret.getId(), false));
 		}
 
 		// If ret is still null here, no valid published syllabus was found
@@ -96,11 +96,24 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 	}
 
 	@Override
+	public PublishedSyllabus getPublicSyllabus(Long id) throws NoSyllabusException {
+		PublishedSyllabus ret = getPublishedSyllabus(id, false);
+		
+		if (ret == null || ret.getDeleted() || ret.getPublishedDate() == null) {
+			throw new NoSyllabusException(id);
+		}
+		
+		ret.setElements(getStructuredPublishedSyllabusElements(id, true));
+		
+		return ret;
+	}
+	
+	@Override
 	public AbstractPublishedSyllabusElement getPublishedElement(Long id) {
 		return getHibernateTemplate().get(AbstractPublishedSyllabusElement.class, id);
 	}
 
-	private List<AbstractPublishedSyllabusElement> getStructuredPublishedSyllabusElements(Long id) {
+	private List<AbstractPublishedSyllabusElement> getStructuredPublishedSyllabusElements(Long id, boolean onlyPublicElements) {
 		List<PublishedSyllabusElementMapping> elementMappings = this.getPublishedSyllabusElementMappings(id);
 
 		List<AbstractPublishedSyllabusElement> structuredElements = new ArrayList<AbstractPublishedSyllabusElement>();
@@ -113,12 +126,19 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			if (!isElementAvailable(currElement)) {
 				continue;
 			}
-
+			
+			// Skip private only elements
+			if(onlyPublicElements) {
+				if(currElement.getPublicElement() != null && currElement.getPublicElement() == true) {
+					continue;
+				}
+			}
+			
 			// TODO?: correct the displayOrder in case there are
 			// hidden/unavailable elements (otherwise some numbers are skipped
 			// in the order)
 			currElement.setDisplayOrder(currElementMapping.getDisplayOrder());
-
+			
 			// Add current element to the lookup map (only needed if it's
 			// composite), or replace the dummy one that was inserted previously
 			if (currElement.isComposite()) {
@@ -266,11 +286,5 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 	@SuppressWarnings("unchecked")
 	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId) {
 		return (List<PublishedSyllabus>) getHibernateTemplate().find("from PublishedSyllabus where site_id = ? and publishedDate is not null", siteId);
-	}
-
-	@Override
-	public PublishedSyllabus getPublishedPublicSyllabus(Long id, boolean includeElements) throws NoSyllabusException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

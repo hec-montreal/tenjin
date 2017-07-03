@@ -10,6 +10,10 @@
 	.management .default {
 		display: none;
 	}
+
+	.mobile-toggle {
+		display: none;
+	}
 }
 
 @media (min-width: $mobile-breakpoint + 1) {

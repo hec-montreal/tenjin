@@ -145,6 +145,11 @@ public class SyllabusController {
 			return syllabusService.getSyllabus(syllabusId);
 		}
 	}
+	
+	@RequestMapping(value = "/syllabus/{syllabusId}/public", method = RequestMethod.GET)
+	public @ResponseBody AbstractSyllabus getPublicSyllabus(@PathVariable Long syllabusId) throws NoSyllabusException {
+		return publishService.getPublicSyllabus(syllabusId);
+	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
 	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {

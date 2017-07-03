@@ -122,7 +122,11 @@ public class PublishServiceImpl implements PublishService {
 
 		return ret;
 	}
-
+	
+	public PublishedSyllabus getPublicSyllabus(Long syllabusId) throws NoSyllabusException {
+		return publishedSyllabusDao.getPublicSyllabus(syllabusId);
+	}
+	
 	@Override
 	@Transactional
 	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, DeniedAccessException, StructureSyllabusException, SyllabusLockedException {
