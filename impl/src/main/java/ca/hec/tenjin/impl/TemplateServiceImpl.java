@@ -53,7 +53,9 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 					try {
 						ExternalDataProvider provider = (ExternalDataProvider)applicationContext.getBean(templateStructure.getProvider().getBeanName());
 						element = provider.getAbstractSyllabusElement(siteId);
-						element.setProviderId(templateStructure.getProvider().getProviderId());
+						if (element != null) {
+							element.setProviderId(templateStructure.getProvider().getProviderId());
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 						log.error("Exception getting provided syllabus element from provider " +
@@ -116,7 +118,9 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 					try {
 						ExternalDataProvider provider = (ExternalDataProvider) applicationContext.getBean(templateStructure.getProvider().getBeanName());
 						el = provider.getAbstractSyllabusElement(siteId);
-						el.setProviderId(templateStructure.getProvider().getProviderId());
+						if (el != null) {
+							el.setProviderId(templateStructure.getProvider().getProviderId());
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 						log.error("Exception getting provided syllabus element from provider " +
