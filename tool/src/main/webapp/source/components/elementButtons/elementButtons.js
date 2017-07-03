@@ -1,4 +1,4 @@
-tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'AlertService', function(ModalService, SyllabusService, AlertService) {
+tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'AlertService', 'TenjinService', function(ModalService, SyllabusService, AlertService, TenjinService) {
 	'use strict';
 
 	return {
@@ -17,6 +17,7 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'Alert
 		controller: function($scope) {
 			$scope.modalService = ModalService;
 			$scope.syllabusService = SyllabusService;
+			$scope.tenjinService = TenjinService;
 
 			$scope.confirmDelete = function($element) {
 				var parent = SyllabusService.getParent($element);

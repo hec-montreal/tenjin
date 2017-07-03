@@ -1,8 +1,8 @@
 <div ng-controller="SyllabusCtrl">
 	<div id="syllabus">
 		<div class="row">
-			<h1 class="course-title col-xs-12">
-				{{::syllabusService.syllabus.courseTitle}}
+			<h1 class="course-title col-xs-12 mobile-toggle">
+				{{::syllabusService.syllabus.courseTitle}} <span class="student-view-title" data-ng-if="tenjinService.viewState.stateName === 'edition-student-view'">({{'VERSION_STUDENTS' | translate}})</span>
 			</h1>
 		</div>
 
@@ -30,16 +30,12 @@
 					</div>
 
 					<div class="toolbar-right">
-						<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError" class="action" ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
+						<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError && tenjinService.viewState.stateName === 'syllabus-edit'" class="action" ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
 							<span class="glyphicon" ng-class="{'glyphicon-floppy-disk': !saving, 'glyphicon-refresh glyphicon-refresh-animate': saving}"></span> {{ 'BUTTON_SAVE' | translate }}
 						</button>
 
-						<button data-ng-show="userService.isAllowed('syllabusPublish', syllabusService.syllabus) && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError" ng-disabled="syllabusService.isDirty() || syllabusService.working || (!syllabusService.syllabus.common && (!syllabusService.syllabus.sections || syllabusService.syllabus.sections.length === 0))" class="action" ng-click="startPublish()">
+						<button data-ng-show="userService.isAllowed('syllabusPublish', syllabusService.syllabus) && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError  && tenjinService.viewState.stateName === 'syllabus-edit'" ng-disabled="syllabusService.isDirty() || syllabusService.working || (!syllabusService.syllabus.common && (!syllabusService.syllabus.sections || syllabusService.syllabus.sections.length === 0))" class="action" ng-click="startPublish()">
 							<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
-						</button>
-
-						<button data-ng-show="!userService.isAllowed('syllabusWrite', syllabusService.syllabus)" data-ng-click="pdf(true)" class="action">
-							<img src="img/icon-pdf.png"></img> PDF
 						</button>
 
 						<div uib-dropdown class="pdf-dropdown">
@@ -56,6 +52,31 @@
 
 								<li role="menuitem">
 									<a href="javascript:void(0);" ng-click="pdf(true)">{{ 'VERSION_STUDENTS' | translate }}</a>
+								</li>
+
+								<li role="menuitem">
+									<a href="javascript:void(0);" ng-click="pdfPublic()">{{ 'VERSION_PUBLIC' | translate }}</a>
+								</li>
+							</ul>
+						</div>
+
+						<div uib-dropdown class="view-dropdown">
+							<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" type="button" class="btn action-list" uib-dropdown-toggle ng-click="popPdf()" ng-disabled="syllabusService.isWorking()">
+								<span class="glyphicon glyphicon-eye-open"></span> {{ 'VIEW' | translate }}
+								<span class="caret"></span>
+							</button>
+
+							<ul data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" uib-dropdown-menu class="list-menu-pdf" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+								<li role="menuitem" data-ng-class="{'selected': tenjinService.viewState.stateName === 'syllabus-edit'}">
+									<a href="javascript:void(0);" ng-click="showEditionView()"><span class="glyphicon glyphicon-ok"></span>{{ 'VERSION_IN_EDITION' | translate }}</a>
+								</li>
+
+								<li role="menuitem" data-ng-class="{'selected': tenjinService.viewState.stateName === 'edition-student-view'}">
+									<a href="javascript:void(0);" ng-click="showStudentView()"><span class="glyphicon glyphicon-ok"></span> {{ 'VERSION_STUDENTS' | translate }}</a>
+								</li>
+
+								<li role="menuitem" data-ng-class="{'selected': tenjinService.viewState.stateName === 'edition-public-view'}">
+									<a href="javascript:void(0);" ng-click="showPublicView()"><span class="glyphicon glyphicon-ok"></span> {{ 'VERSION_PUBLIC' | translate }}</a>
 								</li>
 							</ul>
 						</div>

@@ -185,6 +185,26 @@
 		return ret.promise;
 	};
 
+	// Web service to load a public syllabus
+	this.loadPublicSyllabus = function(id) {
+		var tthis = this;
+		var ret = $q.defer();
+		var getUrl = 'v1/syllabus/' + id + '/public.json';
+
+		this.working = true;
+
+		$http.get(getUrl).success(function(data) {
+			tthis.setSyllabus(data);
+			ret.resolve(tthis.getSyllabus());
+		}).error(function(data) {
+			ret.reject(data);
+		}).finally(function() {
+			tthis.working = false;
+		});
+
+		return ret.promise;
+	};
+
 	/**
 	 * Delete a list of syllabus
 	 * @param {Array} $syllabusList Syllabus list to delete
@@ -329,6 +349,7 @@
 	 */
 	this.setSyllabus = function(syllabus) {
 		this.syllabus = syllabus;
+
 
 		// numbering
 		this.numberSyllabus(this.syllabus);
@@ -640,4 +661,6 @@
 			}
 		}
 	};
+
+	window.sss = this;
 }]);
