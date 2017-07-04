@@ -7,7 +7,7 @@
 	if (element) {
 		// Edit mode
 		$scope.type = {
-			'label':'',
+			'label': '',
 			'type': element.type
 		};
 
@@ -35,6 +35,11 @@
 	$scope.ok = function() {
 		if ($scope.element.preSave) {
 			$scope.element.preSave.call($scope.element);
+		}
+
+		// Ensure the public field has a value
+		if ($scope.element.publicElement === null || $scope.element.publicElement === undefined) {
+			$scope.element.publicElement = true;
 		}
 
 		var errors = $scope.validateElement();

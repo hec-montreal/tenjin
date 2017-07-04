@@ -6,7 +6,7 @@
 	</div>
 
 	<div ng-show="!novisible">
-		<input type="checkbox" name="visibility" id="visibilityCheckbox" data-ng-model="element.publicElement"/>
+		<input type="checkbox" name="visibility" id="visibilityCheckbox" data-ng-model="element.publicElement" ng-true-value="false" ng-false-value="true"/>
 		<label for="visibilityCheckbox">{{ 'FORM_VISIBILITY' | translate }}</label> 
 	</div>
 
