@@ -129,7 +129,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			
 			// Skip private only elements
 			if(onlyPublicElements) {
-				if(currElement.getPublicElement() != null && currElement.getPublicElement() == true) {
+				if(currElement.getPublicElement() != null && currElement.getPublicElement() != true) {
 					continue;
 				}
 			}
