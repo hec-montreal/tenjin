@@ -386,5 +386,13 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		getHibernateTemplate().getSessionFactory().getCurrentSession().evict(o);
 	}
 
+	@Override
+	public List<AbstractSyllabusElement> getSyllabusElementsForProviderAndSite(Long providerId, String siteId) {
+		String query = "from AbstractSyllabusElement elem where siteId = ? and providerId = ?";
 
+		List<AbstractSyllabusElement> elements =
+				(List<AbstractSyllabusElement>) getHibernateTemplate().find(query, siteId, providerId);
+
+		return elements;
+	}
 }

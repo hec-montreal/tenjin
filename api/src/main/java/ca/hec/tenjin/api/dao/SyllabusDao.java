@@ -176,5 +176,7 @@ public interface SyllabusDao {
 	public void deleteSection(String syllabusId, String sectionId);
 
 	public void addSection (String syllabusId, String sectionId);
+
+	public List<AbstractSyllabusElement> getSyllabusElementsForProviderAndSite(Long providerId, String siteId);
 }
 

@@ -175,4 +175,45 @@
 			<ref bean="org.sakaiproject.entity.api.EntityManager" />
 		</property>
 	</bean>
+
+	<bean id="tenjinRefreshJob"
+		  class="ca.hec.tenjin.impl.jobs.RefreshProvidedElementsJobImpl">
+		<property name="syllabusService" ref="ca.hec.tenjin.api.SyllabusService" />
+		<property name="templateService" ref="ca.hec.tenjin.api.TemplateService" />
+	</bean>
+
+	<bean id="org.sakaiproject.api.app.scheduler.JobBeanWrapper.tenjinRefreshJob"
+		  class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobBeanWrapper"
+		  init-method="init">
+
+		<property name="beanId">
+			<value>tenjinRefreshJob</value>
+		</property>
+
+		<property name="jobName">
+			<value>Tenjin Refresh Provided Elements</value>
+		</property>
+
+		<property name="schedulerManager">
+			<ref bean="org.sakaiproject.api.app.scheduler.SchedulerManager" />
+		</property>
+		<property name="resourceBundleBase" value="ca.hec.tenjin.api.jobs.JobMessages"/>
+		<property name="configurableJobProperties">
+			<set>
+				<bean class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobProperty">
+					<property name="required" value="true"/>
+					<property name="labelResourceKey" value="siteId"/>
+					<property name="descriptionResourceKey" value="siteId.description"/>
+					<property name="defaultValue" value=""/>
+				</bean>
+				<bean class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobProperty">
+					<property name="required" value="false"/>
+					<property name="labelResourceKey" value="providerId"/>
+					<property name="descriptionResourceKey" value="providerId.description"/>
+					<property name="defaultValue" value=""/>
+				</bean>
+			</set>
+		</property>
+	</bean>
+
 </beans>
