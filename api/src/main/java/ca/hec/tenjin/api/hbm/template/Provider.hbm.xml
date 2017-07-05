@@ -10,7 +10,7 @@
                  <param name="sequence">PROVIDER_ID_SEQ</param>
         	</generator>
 		</id>
-		<property name="beanName" column="BEAN_NAME" type="string"/>
+		<property name="beanName" column="BEAN_NAME" type="string" not-null="true"/>
 		<property name="title" type="string" column="TITLE" length="255"/>
 		<property name="description" type="materialized_clob" column="DESCRIPTION"/>
      </class>
