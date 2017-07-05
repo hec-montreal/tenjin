@@ -60,6 +60,8 @@ public class ExportController {
 				elements = (List<Object>) (List<?>) ((Syllabus) syllabus).getElements();
 			}
 
+			response.setHeader("Content-Disposition", "inline; filename=\"syllabus.pdf\"");
+			
 			pdfExportService.makePdf(syllabus, elements, locale, response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
