@@ -256,7 +256,7 @@ public class PublishServiceImpl implements PublishService {
 		
 		return ids;
 	}
-
+ 
 	private void publishMapping(SyllabusElementMapping mapping, AbstractPublishedSyllabusElement publishedElement) {
 		if (!mapping.getHidden()) {
 			PublishedSyllabusElementMapping publishedMapping = new PublishedSyllabusElementMapping();

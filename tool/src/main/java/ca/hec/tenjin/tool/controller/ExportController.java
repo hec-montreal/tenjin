@@ -59,7 +59,7 @@ public class ExportController {
 				syllabus = syllabusService.getSyllabus(id);
 				elements = (List<Object>) (List<?>) ((Syllabus) syllabus).getElements();
 			}
-
+			
 			pdfExportService.makePdf(syllabus, elements, locale, response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,4 +120,5 @@ public class ExportController {
 			throw new PdfExportException(e);
 		}
 	}
+	
 }
