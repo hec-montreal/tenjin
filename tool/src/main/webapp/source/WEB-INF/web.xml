@@ -76,4 +76,9 @@
 		<url-pattern>*.json</url-pattern>
 	</servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>tenjinspringapp</servlet-name>
+		<url-pattern>*.pdf</url-pattern>
+	</servlet-mapping>
+
 </web-app>
