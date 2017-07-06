@@ -80,7 +80,7 @@
 
 		post += UserService.getProfile().locale;
 
-		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.json' + post, '_blank');
+		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.pdf' + post, '_blank');
 	};
 
 	$scope.startPublish = function() {
