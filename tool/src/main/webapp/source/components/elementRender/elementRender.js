@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 'UserService', 'SakaiToolsService', 'config', '$translate', function(SyllabusService, SyllabusLockService, UserService, SakaiToolsService, config, $translate) {
+﻿tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 'UserService', 'TenjinService', 'SakaiToolsService', 'config', '$translate', function(SyllabusService, SyllabusLockService, UserService, TenjinService, SakaiToolsService, config, $translate) {
 	'use strict';
 
 	return {
@@ -15,6 +15,7 @@
 			$scope.syllabusService = SyllabusService;
 			$scope.userService = UserService;
 			$scope.syllabusLockService = SyllabusLockService;
+			$scope.tenjinService = TenjinService;
 			$scope.config = config;
 
 			var template = SyllabusService.template[$scope.element.templateStructureId];
