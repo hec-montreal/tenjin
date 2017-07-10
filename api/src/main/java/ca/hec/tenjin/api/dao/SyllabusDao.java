@@ -20,14 +20,15 @@
  ******************************************************************************/
 package ca.hec.tenjin.api.dao;
 
-import java.util.List;
-
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -169,5 +170,11 @@ public interface SyllabusDao {
 
 
 	public SyllabusElementMapping getMappingForSyllabusAndElement(Long syllabusId, Long elementId);
+
+	public Map<String, Object> getSectionsBySyllabus(String siteId);
+
+	public void deleteSection(String syllabusId, String sectionId);
+
+	public void addSection (String syllabusId, String sectionId);
 }
 

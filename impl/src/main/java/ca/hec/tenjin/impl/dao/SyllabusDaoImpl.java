@@ -1,30 +1,26 @@
 package ca.hec.tenjin.impl.dao;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
-import org.sakaiproject.exception.IdUnusedException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
 import ca.hec.tenjin.api.TemplateService;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.tenjin.api.model.syllabus.*;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
 import lombok.Setter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.sakaiproject.exception.IdUnusedException;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao {
 
@@ -309,6 +305,44 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return null;
 	}
 
+	@Override
+	public Map<String, Object> getSectionsBySyllabus(String siteId) {
+		Query query = getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(
+				"select TENJIN_SYLLABUSSECTION.SECTION, TENJIN_SYLLABUS.SYLLABUS_ID from TENJIN_SYLLABUSSECTION, TENJIN_SYLLABUS " +
+						"where TENJIN_SYLLABUS.SYLLABUS_ID = TENJIN_SYLLABUSSECTION.SYLLABUS_ID AND TENJIN_SYLLABUS.SITE_ID like ?");
+		List<Object[]> queryResult = query.setString(0, siteId).list();
+
+		Map<String, Object> sectionsAndSyllabi = new HashMap<>();
+
+		for (Object[] row: queryResult){
+			sectionsAndSyllabi.put((String)row[0], (Object)row[1]);
+		}
+
+		return sectionsAndSyllabi;
+	}
+
+	public void deleteSection(String syllabusId, String sectionId) {
+		Query query = getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(
+				"delete TENJIN_SYLLABUSSECTION where syllabus_id = :syllabusId and section= :sectionId");
+		query.setParameter("syllabusId", syllabusId);
+		query = query.setParameter("sectionId", sectionId);
+
+		query.executeUpdate();
+
+	}
+
+	@Override
+	public void addSection(String syllabusId, String sectionId) {
+
+		Query query = getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(
+				"insert into TENJIN_SYLLABUSSECTION (syllabus_id,section) values (?,?)");
+		query = query.setString(0, syllabusId);
+		query = query.setString(1, sectionId);
+
+		query.executeUpdate();
+
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public SyllabusElementMapping addMappingToEndOfList(Long syllabusId, AbstractSyllabusElement element) {
@@ -351,4 +385,6 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	public void detach(Object o) {
 		getHibernateTemplate().getSessionFactory().getCurrentSession().evict(o);
 	}
+
+
 }
