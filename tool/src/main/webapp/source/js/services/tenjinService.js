@@ -128,7 +128,60 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 					ret.reject(e);
 				};
 
-				SyllabusService.loadPublishedSyllabus(profile.syllabusRead[0]).then(success).catch(fail);
+				SyllabusService.loadPublishedSyllabus(ctx.syllabusId).then(success).catch(fail);
+
+				return ret.promise;
+			},
+
+			getHomeRoute: function() {
+				return makeRoute('');
+			}
+		},
+
+		editionPublicView: {
+			stateName: 'edition-public-view',
+
+			loadViewData: function (siteId) {
+				var ret = $q.defer();
+				var dataToLoad = [];
+
+				// First batch of data to load
+				dataToLoad.push(ResourcesService.loadResources(siteId));
+				dataToLoad.push(SakaiToolsService.loadToolEntities(siteId));
+
+				$q.allSettled(dataToLoad).then(function() {
+					// Finally load the citations
+					CitationsService.loadCitations().then(function() {
+						ret.resolve();
+					}).catch(function() {
+						ret.reject();
+					});
+
+					SyllabusService.loadTemplate().then(function() {
+						ret.resolve();
+					}).catch(function() {
+						ret.reject();
+					});
+				}).catch(function(e) {
+					ret.reject(e);
+				});
+
+				return ret.promise;
+			},
+
+			loadSyllabus: function(ctx) {
+				var ret = $q.defer();
+				var profile = UserService.getProfile();
+
+				var success = function() {
+					ret.resolve();
+				};
+
+				var fail = function(e) {
+					ret.reject(e);
+				};
+
+				SyllabusService.loadPublicSyllabus(ctx.syllabusId).then(success).catch(fail);
 
 				return ret.promise;
 			},
@@ -201,6 +254,10 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 	this.viewState = null;
 
 	this.loadData = function() {
+		return this.loadDataForViewState(null);
+	};
+
+	this.loadDataForViewState = function (viewState) {
 		var tthis = this;
 		var ret = $q.defer();
 
@@ -210,7 +267,11 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 			UserService.loadProfile().then(function() {
 				var siteId = UserService.getProfile().siteId;
 
-				tthis.viewState = tthis.findViewStateFromProfile();
+				if(viewState) {
+					tthis.viewState = viewState;
+				} else{
+					tthis.viewState = tthis.findViewStateFromProfile()
+				}
 
 				tthis.viewState.loadViewData(siteId).then(function() {
 					ret.resolve();

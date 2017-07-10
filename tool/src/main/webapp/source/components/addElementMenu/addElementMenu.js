@@ -1,4 +1,4 @@
-tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusService', 'SyllabusLockService', 'AlertService', 'config', function(ModalService, UserService, SyllabusService, SyllabusLockService, AlertService, config) {
+tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusService', 'SyllabusLockService', 'AlertService', 'TenjinService', 'config', function(ModalService, UserService, SyllabusService, SyllabusLockService, AlertService, TenjinService, config) {
 	'use strict';
 
 	return {
@@ -17,6 +17,7 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 			$scope.alertService = AlertService;
 			$scope.config = config;
 			$scope.syllabusLockService = SyllabusLockService;
+			$scope.tenjinService = TenjinService;
 
 			$scope.addElement = function($type) {
 				$scope.isOpen = false;

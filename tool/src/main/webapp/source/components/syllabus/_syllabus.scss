@@ -45,6 +45,32 @@
 	}
 }
 
+.view-dropdown {
+	float: right;
+
+	button {
+
+	}
+}
+
+.list-menu-pdf {
+	li.selected {
+		.glyphicon {
+			visibility: visible;
+		}
+	}
+
+	.glyphicon {
+		visibility: hidden;
+		margin-right: 8px;
+		color: #bbb;
+	}
+
+	.list-menu-view {
+		margin-left: -70px;
+	}
+}
+
 @keyframes spin {
 	from { transform: scale(1) rotate(0deg);}
 	to { transform: scale(1) rotate(360deg);}

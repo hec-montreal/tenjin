@@ -297,7 +297,9 @@
 		"MANAGEMENT_EXPLANATION_1": "Personalised course outlines are linked to the common course outline. It is not possible to detach them.",
 		"MANAGEMENT_EXPLANATION_2": "The \"sections\" column indicates that students in those sections will see the published version of that course outline.",
 		"VERSION_IN_EDITION": "Version in edition",
-		"VERSION_STUDENTS": "Version for students"
+		"VERSION_STUDENTS": "Version for students",
+		"VERSION_PUBLIC": "Version for public",
+		"VIEW": "View"
 	},
 
 	"fr_CA": {
@@ -598,6 +600,8 @@
 		"MANAGEMENT_EXPLANATION_1": "Les plans de cours personnalisés sont tous attachés au plan de cours commun. Il n'est pas possible de les détacher.",
 		"MANAGEMENT_EXPLANATION_2": "La colonne « sections » indique que les étudiants de ces sections voient la version publiée de ce plan de cours.",
 		"VERSION_IN_EDITION": "Version en édition",
-		"VERSION_STUDENTS": "Version pour étudiants"
+		"VERSION_STUDENTS": "Version pour étudiants",
+		"VERSION_PUBLIC": "Version publique",
+		"VIEW": "Vue"
 	}
 }
