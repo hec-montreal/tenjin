@@ -3,6 +3,7 @@ package ca.hec.tenjin.impl;
 import java.util.*;
 
 import ca.hec.tenjin.api.provider.CourseOutlineProvider;
+import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.log4j.Logger;
@@ -680,16 +681,17 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	@Override
-	public List<AbstractSyllabusElement> getSyllabusElementsForProviderAndSite(Long providerId, String siteId) {
-		return syllabusDao.getSyllabusElementsForProviderAndSite(providerId, siteId);
+	public List<AbstractSyllabusElement> getSyllabusElementsForTemplateStructureAndSite(Long templateStructureId, String siteId) {
+		return syllabusDao.getSyllabusElementsForTemplateStructureAndSite(templateStructureId, siteId);
 	}
 
 	@Override
-	public boolean saveElementAndChildren(AbstractSyllabusElement e) {
-		if (syllabusDao.save(e) != null) {
-			return true;
-		}
+	public boolean saveOrUpdateElement(AbstractSyllabusElement e) {
+		return syllabusDao.saveOrUpdate(e);
+	}
 
-		return false;
+	@Override
+	public List<AbstractSyllabusElement> getChildrenForSyllabusElement(SyllabusCompositeElement parent) {
+		return syllabusDao.getChildrenForSyllabusElement(parent);
 	}
 }

@@ -3,6 +3,7 @@ package ca.hec.tenjin.api;
 import java.util.List;
 
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import org.sakaiproject.exception.IdUnusedException;
 
 import ca.hec.tenjin.api.exception.DeniedAccessException;
@@ -114,7 +115,21 @@ public interface SyllabusService {
 	 * @param providerId
 	 * @param siteId
 	 */
-	public List<AbstractSyllabusElement> getSyllabusElementsForProviderAndSite(Long providerId, String siteId);
+	public List<AbstractSyllabusElement> getSyllabusElementsForTemplateStructureAndSite(Long templateStructureId, String siteId);
 
-	public boolean saveElementAndChildren(AbstractSyllabusElement e);
+	/**
+	 * Save or update a persistent object in the database
+	 *
+	 * @param Object o - The object to update
+	 * @return true for success, false for failure
+	 */
+	public boolean saveOrUpdateElement(AbstractSyllabusElement e);
+
+	/**
+	 * Retrieve the list of child elements for the given composite element
+	 *
+	 * @param SyllabusCompositeElement parent
+	 * @return List<AbstractSyllabusElement>
+	 */
+	public List<AbstractSyllabusElement> getChildrenForSyllabusElement(SyllabusCompositeElement parent);
 }

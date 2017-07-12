@@ -208,7 +208,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void update(Object o) {
 		try {
@@ -217,7 +217,18 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 			e.printStackTrace();
 		}
 	}
-	
+
+	@Override
+	public boolean saveOrUpdate(Object o) {
+		try {
+			getHibernateTemplate().saveOrUpdate(o);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 	@Override
 	public void deleteSyllabusObject(Object o) {		
 		try {
@@ -387,11 +398,21 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	}
 
 	@Override
-	public List<AbstractSyllabusElement> getSyllabusElementsForProviderAndSite(Long providerId, String siteId) {
-		String query = "from AbstractSyllabusElement elem where siteId = ? and providerId = ?";
+	public List<AbstractSyllabusElement> getChildrenForSyllabusElement(SyllabusCompositeElement parent) {
+		String query = "from AbstractSyllabusElement elem where parentId = ?";
 
 		List<AbstractSyllabusElement> elements =
-				(List<AbstractSyllabusElement>) getHibernateTemplate().find(query, siteId, providerId);
+				(List<AbstractSyllabusElement>) getHibernateTemplate().find(query, parent.getId());
+
+		return elements;
+	}
+
+	@Override
+	public List<AbstractSyllabusElement> getSyllabusElementsForTemplateStructureAndSite(Long templateStructureId, String siteId) {
+		String query = "from AbstractSyllabusElement elem where siteId = ? and templateStructureId = ?";
+
+		List<AbstractSyllabusElement> elements =
+				(List<AbstractSyllabusElement>) getHibernateTemplate().find(query, siteId, templateStructureId);
 
 		return elements;
 	}

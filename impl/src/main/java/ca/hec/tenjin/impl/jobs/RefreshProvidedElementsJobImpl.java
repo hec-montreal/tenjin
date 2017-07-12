@@ -2,6 +2,7 @@ package ca.hec.tenjin.impl.jobs;
 
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TemplateService;
+import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
@@ -37,49 +38,84 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
     @Setter
     TemplateService templateService;
 
+    /*
+     * Job to refresh a syllabus element's content from it's provider (site id and template structure id must
+     * be specified).
+     *
+     * This job updates the provided element's title, description, attributes and does the same for it's children.
+     * TODO: It will not add new children from the provider
+     *
+     * The course outline must still be re-published for the published version to be updated.
+     */
     @Override
     @Transactional
     public void execute(JobExecutionContext context) throws JobExecutionException {
+
         String siteId = context.getMergedJobDataMap().getString("siteId");
-        Long providerId = context.getMergedJobDataMap().getLongFromString("providerId");
-        log.info(siteId + " - " + providerId);
 
-/*
-        List<AbstractSyllabusElement> elementsToRefresh =
-                syllabusService.getSyllabusElementsForProviderAndSite(providerId, siteId);
-
+        Long templateStructureId = null;
         try {
+            templateStructureId = context.getMergedJobDataMap().getLongFromString("templateStructureId");
+        } catch (NumberFormatException e) {
+            log.error("NumberFormatException " + e.getMessage());
+            return;
+        }
+        log.info("Refresh provided elements for site : " + siteId + " and templateStructure " + templateStructureId);
+
+        List<AbstractSyllabusElement> elementsToRefresh =
+                syllabusService.getSyllabusElementsForTemplateStructureAndSite(templateStructureId, siteId);
+
+        TemplateStructure templateStructure = null;
+        try {
+            templateStructure =
+                    templateService.getTemplateStructure(templateStructureId);
+        } catch (IdUnusedException e) {
+            log.error("Template structure " + templateStructureId + " does not exist.");
+            return;
+        }
+
+        if (templateStructure.getProvider() == null) {
+            log.error("TemplateStructure has no official data provider");
+            return;
+        }
+
+        ExternalDataProvider provider =
+                (ExternalDataProvider) applicationContext.getBean(templateStructure.getProvider().getBeanName());
+
+        AbstractSyllabusElement refreshedElement = provider.getAbstractSyllabusElement(siteId);
+
             for (AbstractSyllabusElement e : elementsToRefresh) {
-                if (e.getTemplateStructureId() < 0)
-                    continue;
-
-                TemplateStructure templateStructure =
-                        templateService.getTemplateStructure(e.getTemplateStructureId());
-                ExternalDataProvider provider =
-                        (ExternalDataProvider) applicationContext.getBean(templateStructure.getProvider().getBeanName());
-
-                AbstractSyllabusElement refreshedElement = provider.getAbstractSyllabusElement(siteId);
 
                 // copy important data
-                e.setTitle(refreshedElement.getTitle());
-                e.setDescription(refreshedElement.getDescription());
-                e.setLastModifiedDate(new Date());
-                e.setLastModifiedBy("admin");
-                if (refreshedElement.getAttributes() != null) {
-                    e.setAttributes(new HashMap<String, String>(refreshedElement.getAttributes()));
-                }
+                copyData(e, refreshedElement);
 
-                // TODO: delete children
-                if (refreshedElement.isComposite() && e.isComposite()) {
-                    SyllabusCompositeElement comp = (SyllabusCompositeElement) refreshedElement;
-                    ((SyllabusCompositeElement) e).setElements(comp.getElements());
+                if (e.isComposite() && refreshedElement.isComposite()) {
+                    refreshChildren((SyllabusCompositeElement)e, (SyllabusCompositeElement)refreshedElement);
                 }
-
-//                syllabusService.saveElementAndChildren(e);
             }
-        } catch (IdUnusedException e) {
-            log.error("Template Structure does not exist");
+    }
+
+    private void refreshChildren(SyllabusCompositeElement original, SyllabusCompositeElement refreshed) {
+        List<AbstractSyllabusElement> originalChildren = syllabusService.getChildrenForSyllabusElement(original);
+        List<AbstractSyllabusElement> refreshedChildren = refreshed.getElements();
+
+        for (int i = 0; i < originalChildren.size(); i++) {
+            copyData(originalChildren.get(i), refreshedChildren.get(i));
+
+            if (originalChildren.get(i).isComposite() && refreshedChildren.get(i).isComposite()) {
+                refreshChildren((SyllabusCompositeElement)originalChildren.get(i), (SyllabusCompositeElement)refreshedChildren.get(i));
+            }
         }
-*/
+    }
+
+    private void copyData(AbstractSyllabusElement destination, AbstractSyllabusElement source) {
+        destination.setTitle(source.getTitle());
+        destination.setDescription(source.getDescription());
+        destination.setLastModifiedDate(new Date());
+        destination.setLastModifiedBy("admin");
+        if (source.getAttributes() != null) {
+            destination.setAttributes(new HashMap<String, String>(source.getAttributes()));
+        }
+        syllabusService.saveOrUpdateElement(destination);
     }
 }

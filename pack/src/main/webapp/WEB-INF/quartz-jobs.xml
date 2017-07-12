@@ -37,9 +37,9 @@
                     <property name="defaultValue" value=""/>
                 </bean>
                 <bean class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobProperty">
-                    <property name="required" value="false"/>
-                    <property name="labelResourceKey" value="providerId"/>
-                    <property name="descriptionResourceKey" value="providerId.description"/>
+                    <property name="required" value="true"/>
+                    <property name="labelResourceKey" value="templateStructureId"/>
+                    <property name="descriptionResourceKey" value="templateStructureId.description"/>
                     <property name="defaultValue" value=""/>
                 </bean>
             </set>
