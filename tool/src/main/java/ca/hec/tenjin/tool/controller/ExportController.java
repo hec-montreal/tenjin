@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ca.hec.tenjin.api.ExportService;
 import ca.hec.tenjin.api.PublishService;
 import ca.hec.tenjin.api.SyllabusService;
+import ca.hec.tenjin.api.exception.ExportException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.exception.PdfExportException;
-import ca.hec.tenjin.api.export.pdf.PdfExportService;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
@@ -27,7 +27,7 @@ import ca.hec.tenjin.api.provider.TenjinDataProvider;
 public class ExportController {
 
 	@Autowired
-	private PdfExportService pdfExportService;
+	private ExportService exportService;
 
 	@Autowired
 	private PublishService publishService;
@@ -40,7 +40,7 @@ public class ExportController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/syllabus/{id}/pdf", method = RequestMethod.GET)
-	public void exportPdf(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, @RequestParam(required = false, name = "published", defaultValue = "false") boolean published, HttpServletResponse response) throws PdfExportException, IOException {
+	public void exportPdf(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, @RequestParam(required = false, name = "published", defaultValue = "false") boolean published, HttpServletResponse response) throws ExportException, IOException {
 		try {
 			AbstractSyllabus syllabus = null;
 			List<Object> elements;
@@ -63,17 +63,17 @@ public class ExportController {
 			response.setHeader("Content-Disposition", "attachment; filename=\"syllabus.pdf\"");
 			response.setHeader("Content-type", "application/pdf");
 			
-			pdfExportService.makePdf(syllabus, elements, locale, response.getOutputStream());
+			exportService.exportPdf(syllabus, elements, locale, response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 
-			throw new PdfExportException(e);
+			throw new ExportException(e);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/syllabus/{id}/pdf-public", method = RequestMethod.GET)
-	public void exportPublicPdf(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, HttpServletResponse response) throws PdfExportException, IOException {
+	public void exportPublicPdf(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, HttpServletResponse response) throws ExportException, IOException {
 		try {
 			AbstractSyllabus syllabus = null;
 			List<Object> elements;
@@ -91,17 +91,17 @@ public class ExportController {
 			response.setHeader("Content-Disposition", "attachment; filename=\"syllabus.pdf\"");
 			response.setHeader("Content-type", "application/pdf");
 			
-			pdfExportService.makePdf(syllabus, elements, locale, response.getOutputStream());
+			exportService.exportPdf(syllabus, elements, locale, response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 
-			throw new PdfExportException(e);
+			throw new ExportException(e);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/syllabus/{id}/pdf-html", method = RequestMethod.GET)
-	public void exportPdfHtml(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, @RequestParam(required = false, name = "published", defaultValue = "false") boolean published, HttpServletResponse response) throws PdfExportException, IOException {
+	public void exportPdfHtml(@PathVariable("id") Long id, @RequestParam(required = false, name = "locale", defaultValue = "fr_CA") String locale, @RequestParam(required = false, name = "published", defaultValue = "false") boolean published, HttpServletResponse response) throws ExportException, IOException {
 		try {
 			AbstractSyllabus syllabus = null;
 			List<Object> elements;
@@ -119,11 +119,11 @@ public class ExportController {
 				elements = (List<Object>) (List<?>) ((Syllabus) syllabus).getElements();
 			}
 
-			response.getWriter().append(pdfExportService.makePdfHtml(syllabus, elements, locale, null));
+			response.getWriter().append(exportService.exportPdfHtml(syllabus, elements, locale));
 		} catch (Exception e) {
 			e.printStackTrace();
 
-			throw new PdfExportException(e);
+			throw new ExportException(e);
 		}
 	}
 	

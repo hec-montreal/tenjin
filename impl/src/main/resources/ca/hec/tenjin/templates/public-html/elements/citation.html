@@ -1,0 +1,435 @@
+<div class="citation">
+	{{#if-eq citation.type 'article'}}
+		<div class="article">
+			{{#if citation.props.creator}}
+				{{#each citation.props.creator}}
+					<span class="creator">{{this}}</span>
+				{{/each}}
+			{{/if}}
+
+			{{#if citation.props.year}}
+				<span class="year">({{citation.props.year}})</span>
+			{{/if}}
+
+			{{#if citation.props.title}}
+				<span class="title">. &laquo;{{citation.props.title}}&raquo;</span>
+			{{/if}}
+
+			{{#if citation.props.sourceTitle}}
+				<span class="sourceTitle">, {{citation.props.sourceTitle}}</span>
+			{{/if}}
+
+			{{#if citation.props.volume}}
+				<span class="volume">, vol. {{citation.props.volume}}</span>
+			{{/if}}
+
+			{{#if citation.props.issue}}
+				<span class="issue">, no. {{citation.props.issue}}</span>
+			{{/if}}
+
+			{{#if citation.props.section}}
+				<span class="section">, {{citation.props.section}}</span>
+			{{/if}}
+
+			{{#if citation.props.pages}}
+				<span class="pages">, {{citation.props.pages}}p.</span>
+			{{/if}}
+
+			{{#if citation.props.isnIdentifier}}
+				<div class="issn">{{str 'REF_BIBLIO_ISSN'}} {{citation.props.isnIdentifier}}</div>
+			{{/if}}
+
+			{{#if citation.props.library}}
+				{{#if element.attributes.activateLibraryLink}}
+					<div class="library">
+						<a target="_blank" href={{citation.props.library}}>{{str 'REF_BIBLIO_DISPONIBILITY'}}</a>
+					</div>
+				{{/if}}
+			{{/if}}
+		</div>
+	{{/if-eq}}
+
+	{{#if-eq citation.type 'unknown'}}
+		<div class="unknown">
+			{{#if citation.props.creator}}
+				{{#each citation.props.creator}}
+					<span class="creator">{{this}}</span>
+				{{/each}}
+			{{/if}}
+
+			{{#if citation.props.year}}
+				<span class="year">({{citation.props.year}})</span>
+			{{/if}}
+
+			{{#if citation.props.title}}
+				<span class="title">. &laquo;{{citation.props.title}}&raquo;</span>
+			{{/if}}
+
+			{{#if citation.props.sourceTitle}}
+				<span class="sourceTitle">, {{citation.props.sourceTitle}}</span>
+			{{/if}}
+
+			{{#if citation.props.volume}}
+				<span class="volume">, vol. {{citation.props.volume}}</span>
+			{{/if}}
+
+			{{#if citation.props.issue}}
+				<span class="issue">, no. {{citation.props.issue}}</span>
+			{{/if}}
+
+			{{#if citation.props.section}}
+				<span class="section">, {{citation.props.section}}</span>
+			{{/if}}
+
+			{{#if citation.props.pages}}
+				<span class="pages">, {{citation.props.pages}}p.</span>
+			{{/if}}
+
+			{{#if citation.props.isnIdentifier}}
+				<div class="issn">{{str 'REF_BIBLIO_ISSN'}} {{citation.props.isnIdentifier}}</div>
+			{{/if}}
+
+			{{#if citation.props.library}}
+				{{#if element.attributes.activateLibraryLink}}
+					<div class="library">
+						<a target="_blank" href={{citation.props.library}}>{{str 'REF_BIBLIO_DISPONIBILITY'}}</a>
+					</div>
+				{{/if}}
+			{{/if}}
+		</div>
+	{{/if-eq}}
+
+	{{#if-eq citation.type 'book'}}
+		<div class="book">
+			{{#if citation.props.creator}}
+				{{#each citation.props.creator}}
+					<span class="creator">{{this}}</span>
+				{{/each}}
+			{{/if}}
+
+			{{#if citation.props.year}}
+				<span class="year">({{citation.props.year}})</span>
+			{{/if}}
+
+			{{#if citation.props.title}}
+				<span class="title">. &laquo;{{citation.props.title}}&raquo;</span>
+			{{/if}}
+
+			{{#if citation.props.edition}}
+				<span class="edition">, {{citation.props.edition}} ed.</span>
+			{{/if}}
+
+			{{#if citation.props.publisher}}
+				<span class="publisher">, {{citation.props.publisher}}</span>
+			{{/if}}
+
+			{{#if citation.props.editor}}
+				<span class="editor">, {{citation.props.editor}}</span>
+			{{/if}}
+
+			{{#if citation.props.pages}}
+				<span class="pages">, {{citation.props.pages}}p.</span>
+			{{/if}}
+
+			{{#if citation.props.isnIdentifier}}
+				<div class="isn">{{str 'REF_BIBLIO_ISSN'}} {{citation.props.isnIdentifier}}</div>
+			{{/if}}
+
+			{{#if citation.props.library}}
+				{{#if element.attributes.activateLibraryLink}}
+					<div class="library">
+						<a target="_blank" href={{citation.props.library}}>{{str 'REF_BIBLIO_DISPONIBILITY'}}</a>
+					</div>
+				{{/if}}
+			{{/if}}
+		</div>
+	{{/if-eq}}
+
+	{{#if-eq citation.type 'bookSection'}}
+		<div class="book-section">
+			{{#if citation.props.creator}}
+				{{#each citation.props.creator}}
+					<span class="creator">{{this}}</span>
+				{{/each}}
+			{{/if}}
+
+			{{#if citation.props.year}}
+				<span class="year">({{citation.props.year}})</span>
+			{{/if}}
+
+			{{#if citation.props.sourceTitle}}
+				<span class="sourceTitle">, {{citation.props.sourceTitle}}</span>
+			{{/if}}
+
+			{{#if citation.props.title}}
+				<span class="title">. &laquo;{{citation.props.title}}&raquo;</span>
+			{{/if}}
+
+			{{#if citation.props.volume}}
+				<span class="volume">, vol. {{citation.props.volume}}</span>
+			{{/if}}
+
+			{{#if citation.props.publicationLocation}}
+				<span class="publicationLocation">, {{citation.props.publicationLocation}}</span>
+			{{/if}}
+
+			{{#if citation.props.publisher}}
+				<span class="publisher">, {{citation.props.publisher}}</span>
+			{{/if}}
+
+			{{#if citation.props.editor}}
+				<span class="editor">, {{citation.props.editor}}</span>
+			{{/if}}
+
+			{{#if citation.props.pages}}
+				<span class="pages">, {{citation.props.pages}}p.</span>
+			{{/if}}
+
+			{{#if citation.props.isnIdentifier}}
+				<div class="isn">{{str 'REF_BIBLIO_ISSN'}} {{citation.props.isnIdentifier}}</div>
+			{{/if}}
+
+			{{#if citation.props.url}}
+				<span class="url">, <a target="_blank" href="{{citation.props.url}}">{{citation.props.url}}</a></span>
+			{{/if}}
+		</div>
+	{{/if-eq}}
+
+	{{#if-eq citation.type 'chapter'}}
+		<div class="book-section">
+			{{#if citation.props.creator}}
+				{{#each citation.props.creator}}
+					<span class="creator">{{this}}</span>
+				{{/each}}
+			{{/if}}
+
+			{{#if citation.props.year}}
+				<span class="year">({{citation.props.year}})</span>
+			{{/if}}
+
+			{{#if citation.props.sourceTitle}}
+				<span class="sourceTitle">, {{citation.props.sourceTitle}}</span>
+			{{/if}}
+
+			{{#if citation.props.title}}
+				<span class="title">. &laquo;{{citation.props.title}}&raquo;</span>
+			{{/if}}
+
+			{{#if citation.props.volume}}
+				<span class="volume">, vol. {{citation.props.volume}}</span>
+			{{/if}}
+
+			{{#if citation.props.publicationLocation}}
+				<span class="publicationLocation">, {{citation.props.publicationLocation}}</span>
+			{{/if}}
+
+			{{#if citation.props.publisher}}
+				<span class="publisher">, {{citation.props.publisher}}</span>
+			{{/if}}
+
+			{{#if citation.props.editor}}
+				<span class="editor">, {{citation.props.editor}}</span>
+			{{/if}}
+
+			{{#if citation.props.pages}}
+				<span class="pages">, {{citation.props.pages}}p.</span>
+			{{/if}}
+
+			{{#if citation.props.isnIdentifier}}
+				<div class="isn">{{str 'REF_BIBLIO_ISSN'}} {{citation.props.isnIdentifier}}</div>
+			{{/if}}
+
+			{{#if citation.props.url}}
+				<span class="url">, <a target="_blank" href="{{citation.props.url}}">{{citation.props.url}}</a></span>
+			{{/if}}
+		</div>
+	{{/if-eq}}
+
+	{{#if-eq citation.type 'webpage'}}
+		<div class="webpage">
+			{{#if citation.props.creator}}
+				{{#each citation.props.creator}}
+					<span class="creator">{{this}}</span>
+				{{/each}}
+			{{/if}}
+
+			{{#if citation.props.year}}
+				<span class="year">({{citation.props.year}})</span>
+			{{/if}}
+
+			{{#if citation.props.title}}
+				<span class="title">. &laquo;{{citation.props.title}}&raquo;</span>
+			{{/if}}
+
+			{{#if citation.props.siteTitle}}
+				<span class="siteTitle">, {{citation.props.siteTitle}}</span>
+			{{/if}}
+
+			{{#if citation.props.date}}
+				<span class="date">.{{str 'REF_BIBLIO_FROM'}} {{citation.props.date}}</span>
+			{{/if}}
+
+			{{#if citation.props.url}}
+				<span class="url">, <a target="_blank" href="{{citation.props.url}}">{{citation.props.url}}</a></span>
+			{{/if}}
+		</div>
+	{{/if-eq}}
+
+	{{#if-eq citation.type 'electronic'}}
+		<div class="electronic">
+			{{#if citation.props.creator}}
+				{{#each citation.props.creator}}
+					<span class="creator">{{this}}</span>
+				{{/each}}
+			{{/if}}
+
+			{{#if citation.props.year}}
+				<span class="year">({{citation.props.year}})</span>
+			{{/if}}
+
+			{{#if citation.props.title}}
+				<span class="title">. &laquo;{{citation.props.title}}&raquo;</span>
+			{{/if}}
+
+			{{#if citation.props.siteTitle}}
+				<span class="siteTitle">, {{citation.props.siteTitle}}</span>
+			{{/if}}
+
+			{{#if citation.props.date}}
+				<span class="date">.{{str 'REF_BIBLIO_FROM'}} {{citation.props.date}}</span>
+			{{/if}}
+
+			{{#if citation.props.url}}
+				<span class="url">, <a target="_blank" href="{{citation.props.url}}">{{citation.props.url}}</a></span>
+			{{/if}}
+		</div>
+	{{/if-eq}}
+
+	{{#if-eq citation.type 'proceed'}}
+		<div class="proceed">
+			{{#if citation.props.creator}}
+				{{#each citation.props.creator}}
+					<span class="creator">{{this}}</span>
+				{{/each}}
+			{{/if}}
+
+			{{#if citation.props.year}}
+				<span class="year">({{citation.props.year}})</span>
+			{{/if}}
+
+			{{#if citation.props.title}}
+				<span class="title">. &laquo;{{citation.props.title}}&raquo;</span>
+			{{/if}}
+
+			{{#if citation.props.sourceTitle}}
+				<span class="sourceTitle">, {{citation.props.sourceTitle}}</span>
+			{{/if}}
+		</div>
+	{{/if-eq}}
+
+	{{#if-eq citation.type 'report'}}
+		<div class="report">
+			{{#if citation.props.creator}}
+				{{#each citation.props.creator}}
+					<span class="creator">{{this}}</span>
+				{{/each}}
+			{{/if}}
+
+			{{#if citation.props.year}}
+				<span class="year">({{citation.props.year}})</span>
+			{{/if}}
+
+			{{#if citation.props.title}}
+				<span class="title">. &laquo;{{citation.props.title}}&raquo;</span>
+			{{/if}}
+
+			{{#if citation.props.publicationLocation}}
+				<span class="publicationLocation">, {{citation.props.publicationLocation}}</span>
+			{{/if}}
+
+			{{#if citation.props.publisher}}
+				<span class="publisher">, {{citation.props.publisher}}</span>
+			{{/if}}
+
+			{{#if citation.props.pages}}
+				<span class="pages">{{citation.props.pages}} p.</span>
+			{{/if}}
+
+			{{#if citation.props.isnIdentifier}}
+				<div class="issn">{{str 'REF_BIBLIO_ISSN'}} {{citation.props.isnIdentifier}}</div>
+			{{/if}}
+
+			{{#if citation.props.url}}
+				<span class="url">, <a target="_blank" href="{{citation.props.url}}">{{citation.props.url}}</a></span>
+			{{/if}}
+		</div>
+	{{/if-eq}}
+
+	{{#if-eq citation.type 'thesis'}}
+		<div class="thesis">
+			{{#if citation.props.creator}}
+				{{#each citation.props.creator}}
+					<span class="creator">{{this}}</span>
+				{{/each}}
+			{{/if}}
+
+			{{#if citation.props.year}}
+				<span class="year">({{citation.props.year}})</span>
+			{{/if}}
+
+			{{#if citation.props.title}}
+				<span class="title">. &laquo;{{citation.props.title}}&raquo;</span>
+			{{/if}}
+
+			{{#if citation.props.publicationLocation}}
+				<span class="publicationLocation">, {{citation.props.publicationLocation}}</span>
+			{{/if}}
+
+			{{#if citation.props.publisher}}
+				<span class="publisher">, {{citation.props.publisher}}</span>
+			{{/if}}
+
+			{{#if citation.props.pages}}
+				<span class="pages">{{citation.props.pages}} p.</span>
+			{{/if}}
+
+			{{#if citation.props.isnIdentifier}}
+				<div class="issn">{{str 'REF_BIBLIO_ISSN'}} {{citation.props.isnIdentifier}}</div>
+			{{/if}}
+
+			{{#if citation.props.url}}
+				<span class="url">, <a target="_blank" href="{{citation.props.url}}">{{citation.props.url}}</a></span>
+			{{/if}}
+		</div>
+	{{/if-eq}}
+
+	{{#if-eq element.attributes.citationType '-1'}}
+		<div></div>
+	{{else}}
+		<div class="type">
+			[{{str element.attributes.citationType}}]
+		</div>
+	{{/if-eq}}
+
+	{{#if element.attributes.activateLibraryLink}}
+		{{#if citation.props.openUrl}}
+			<div class="link"> 
+				<a target="_blank" href="{{citation.props.openUrl}}">{{str 'REFERENCE_LIBRARY_LINK'}}</a>
+			</div>
+		{{/if}}
+	{{/if}}
+
+	{{#if element.attributes.activateOtherLink}}
+		{{#if element.attributes.otherLinkurl}}
+			<div class="link"> 
+				<a target="_blank" href="{{element.attributes.otherLinkurl}}">{{str 'REFERENCE_OTHER_LINK'}}</a>
+			</div>
+		{{/if}}
+	{{/if}}
+
+	{{#if element.description}}
+		<div class="syllabus-text">
+			{{{html element.description}}}
+		</div>
+	{{/if}}
+</div>

@@ -15,7 +15,7 @@ import org.sakaiproject.site.api.Site;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
-import ca.hec.tenjin.api.export.pdf.model.SakaiCitation;
+import ca.hec.tenjin.api.export.model.SakaiCitation;
 import ca.hec.tenjin.api.model.data.EntityContent;
 
 /**

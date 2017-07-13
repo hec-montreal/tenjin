@@ -1,0 +1,33 @@
+<div class="contact-info">
+	<div class="name">
+		{{element.attributes.contactInfoFirstName}}&nbsp;{{element.attributes.contactInfoLastName}}
+	</div>
+
+	<div class="title">
+		{{attr-enum this 'contactInfoTitle' 'contactInfoTitles'}}
+	</div>
+
+	{{#if element.attributes.contactInfoEmail}}
+		<div class="email">
+			<span class="label">{{str 'CONTACTINFO_EMAIL'}}</span>: {{element.attributes.contactInfoEmail}}
+		</div>
+	{{/if}}
+
+	{{#if element.attributes.contactInfoTelephone}}
+		<div class="phone">
+			<span class="label">{{str 'CONTACTINFO_TELEPHONE'}}</span>: {{element.attributes.contactInfoTelephone}}
+		</div>
+	{{/if}}
+
+	{{#if element.attributes.contactInfoOfficeRoom}}
+		<div class="office">
+			<span class="label">{{str 'CONTACTINFO_OFFICEROOM'}}</span>: {{element.attributes.contactInfoOfficeRoom}}
+		</div>
+	{{/if}}
+
+	<div class="description">
+		<div class="syllabus-text">
+			{{{html element.description}}}
+		</div>
+	</div>
+</div>

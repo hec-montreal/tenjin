@@ -1,9 +1,9 @@
-package ca.hec.tenjin.api.export.pdf;
+package ca.hec.tenjin.api.export;
 
 import java.io.IOException;
 import java.util.Base64;
 
-import ca.hec.tenjin.api.export.pdf.model.SakaiResource;
+import ca.hec.tenjin.api.export.model.SakaiResource;
 
 public abstract class PdfResourceLoader {
 

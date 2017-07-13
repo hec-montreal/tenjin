@@ -3,6 +3,7 @@
 
 <beans>
 	<bean parent="org.sakaiproject.entitybroker.entityprovider.AbstractEntityProvider" class="ca.hec.tenjin.tool.entity.provider.PublicSyllabusEntityProviderImpl">
-
+		<property name="publishService" ref="ca.hec.tenjin.api.PublishService" />
+		<property name="exportService" ref="ca.hec.tenjin.api.ExportService" />
 	</bean>
 </beans>

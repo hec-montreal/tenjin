@@ -1,4 +1,4 @@
-package ca.hec.tenjin.impl.export.pdf.template;
+package ca.hec.tenjin.impl.export.template;
 
 import java.io.IOException;
 

@@ -1,11 +1,11 @@
-package ca.hec.tenjin.impl.export.pdf.template;
+package ca.hec.tenjin.impl.export.template;
 
 import java.io.IOException;
 
 import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
 
-import ca.hec.tenjin.api.export.pdf.model.SyllabusElement;
+import ca.hec.tenjin.api.export.model.SyllabusElement;
 
 public class DateAttributeTemplateHelper implements Helper<SyllabusElement> {
 

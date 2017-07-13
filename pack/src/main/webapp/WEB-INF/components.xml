@@ -99,7 +99,7 @@
 
 	</bean>
 	
-	<bean id="ca.hec.tenjin.api.PdfExportService" class="ca.hec.tenjin.impl.export.pdf.PdfExportServiceImpl">
+	<bean id="ca.hec.tenjin.api.ExportService" class="ca.hec.tenjin.impl.ExportServiceImpl">
 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 		<property name="tenjinDataProvider" ref="ca.hec.tenjin.api.provider.TenjinDataProvider" />
 	</bean>

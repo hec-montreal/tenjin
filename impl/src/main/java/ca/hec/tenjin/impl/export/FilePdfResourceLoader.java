@@ -1,4 +1,4 @@
-package ca.hec.tenjin.impl.export.pdf;
+package ca.hec.tenjin.impl.export;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
 
-import ca.hec.tenjin.api.export.pdf.PdfResourceLoader;
+import ca.hec.tenjin.api.export.PdfResourceLoader;
 
 public class FilePdfResourceLoader extends PdfResourceLoader {
 	

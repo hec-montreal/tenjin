@@ -1,4 +1,4 @@
-package ca.hec.tenjin.impl.export.pdf;
+package ca.hec.tenjin.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -22,29 +22,31 @@ import org.xhtmlrenderer.resource.XMLResource;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
+import com.github.jknack.handlebars.io.FileTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
 
+import ca.hec.tenjin.api.ExportService;
 import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.exception.PdfExportException;
-import ca.hec.tenjin.api.export.pdf.PdfExportService;
-import ca.hec.tenjin.api.export.pdf.PdfResourceLoader;
-import ca.hec.tenjin.api.export.pdf.model.CourseInfo;
-import ca.hec.tenjin.api.export.pdf.model.SakaiCitation;
-import ca.hec.tenjin.api.export.pdf.model.SakaiResource;
-import ca.hec.tenjin.api.export.pdf.model.SyllabusElement;
-import ca.hec.tenjin.api.export.pdf.model.TemplateContext;
+import ca.hec.tenjin.api.exception.ExportException;
+import ca.hec.tenjin.api.export.PdfResourceLoader;
+import ca.hec.tenjin.api.export.model.CourseInfo;
+import ca.hec.tenjin.api.export.model.SakaiCitation;
+import ca.hec.tenjin.api.export.model.SakaiResource;
+import ca.hec.tenjin.api.export.model.SyllabusElement;
+import ca.hec.tenjin.api.export.model.TemplateContext;
 import ca.hec.tenjin.api.model.data.EntityContent;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.provider.TenjinDataProvider;
-import ca.hec.tenjin.impl.export.pdf.template.AttributeConditionTemplateHelper;
-import ca.hec.tenjin.impl.export.pdf.template.AttributeEnumTemplateHelper;
-import ca.hec.tenjin.impl.export.pdf.template.DateAttributeTemplateHelper;
-import ca.hec.tenjin.impl.export.pdf.template.IfEqTemplateHelper;
-import ca.hec.tenjin.impl.export.pdf.template.StringTemplateHelper;
-import ca.hec.tenjin.impl.export.pdf.template.UnescapeHtmlTemplateHelper;
+import ca.hec.tenjin.impl.export.ClasspathResourceLoader;
+import ca.hec.tenjin.impl.export.template.AttributeConditionTemplateHelper;
+import ca.hec.tenjin.impl.export.template.AttributeEnumTemplateHelper;
+import ca.hec.tenjin.impl.export.template.DateAttributeTemplateHelper;
+import ca.hec.tenjin.impl.export.template.IfEqTemplateHelper;
+import ca.hec.tenjin.impl.export.template.StringTemplateHelper;
+import ca.hec.tenjin.impl.export.template.UnescapeHtmlTemplateHelper;
 import lombok.Setter;
 
-public class PdfExportServiceImpl implements PdfExportService {
+public class ExportServiceImpl implements ExportService {
 
 	@Setter
 	private SakaiProxy sakaiProxy;
@@ -52,18 +54,23 @@ public class PdfExportServiceImpl implements PdfExportService {
 	@Setter
 	private TenjinDataProvider tenjinDataProvider;
 
-	private TemplateLoader templateLoader;
+	private TemplateLoader pdfTemplateLoader;
+	private TemplateLoader publicHtmlTemplateLoader;
 	private PdfResourceLoader resourceLoader;
 
-	public PdfExportServiceImpl() {
-		templateLoader = new ClassPathTemplateLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR, "");
-		resourceLoader = new ClasspathPdfResourceLoader(PdfExportServiceImpl.BASE_TEMPLATE_DIR);
+	public ExportServiceImpl() {
+		pdfTemplateLoader = new ClassPathTemplateLoader(ExportService.BASE_PDF_TEMPLATE_DIR, "");
+		
+		// publicHtmlTemplateLoader = new ClassPathTemplateLoader(ExportService.BASE_PUBLIC_HTML_TEMPLATE_DIR, "");
+		publicHtmlTemplateLoader = new FileTemplateLoader("C:/Dev/Projects/workspace/zc2/sakai_tenjin/sakai/tenjin/impl/src/main/resources/ca/hec/tenjin/templates/public-html", "");
+		
+		resourceLoader = new ClasspathResourceLoader(ExportService.BASE_PDF_TEMPLATE_DIR);
 	}
 	
 	@Override
-	public void makePdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws PdfExportException {
+	public void exportPdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws ExportException {
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale));
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale), pdfTemplateLoader);
 			ITextRenderer renderer = new ITextRenderer();
 			Document doc = XMLResource.load(new ByteArrayInputStream(template.getBytes(Charset.forName("utf-8")))).getDocument();
 
@@ -72,22 +79,33 @@ public class PdfExportServiceImpl implements PdfExportService {
 
 			renderer.createPDF(outputStream);
 		} catch (Exception e) {
-			throw new PdfExportException(e);
+			throw new ExportException(e);
 		}
 	}
 
 	@Override
-	public String makePdfHtml(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws PdfExportException {
+	public String exportPdfHtml(AbstractSyllabus syllabus, List<Object> elements, String locale) throws ExportException {
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale));
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale), pdfTemplateLoader);
 			
 			return template;
 		} catch (Exception e) {
-			throw new PdfExportException(e);
+			throw new ExportException(e);
 		}
 	}
 
-	private String makeTemplate(TemplateContext context) throws PdfExportException {
+	@Override
+	public String exportPublicHtml(AbstractSyllabus syllabus, List<Object> elements, String locale) throws ExportException {
+		try {
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale), publicHtmlTemplateLoader);
+			
+			return template;
+		} catch (Exception e) {
+			throw new ExportException(e);
+		}
+	}
+	
+	private String makeTemplate(TemplateContext context, TemplateLoader templateLoader) throws ExportException {
 		String ret;
 		Handlebars handlebars = new Handlebars(templateLoader);
 
@@ -109,14 +127,21 @@ public class PdfExportServiceImpl implements PdfExportService {
 
 			return ret;
 		} catch (IOException e) {
-			throw new PdfExportException(e);
+			throw new ExportException(e);
 		}
 	}
 
-	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String locale) throws IOException, PdfExportException, IdUnusedException, TypeException, PermissionException, ServerOverloadException {
-		List<EntityContent> resources = sakaiProxy.getSiteResources(sakaiProxy.getCurrentSiteId(), null, "all", null);
-		List<SakaiCitation> citations = sakaiProxy.getSiteCitations(sakaiProxy.getCurrentSiteId(), resources);
+	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String locale) throws IOException, ExportException, IdUnusedException, TypeException, PermissionException, ServerOverloadException {
+		List<EntityContent> resources = null;
+		List<SakaiCitation> citations = null;
 
+		try {
+			resources = sakaiProxy.getSiteResources(syllabus.getSiteId(), null, "all", null);
+			citations = sakaiProxy.getSiteCitations(syllabus.getSiteId(), resources);
+		} catch (Exception e) {
+
+		}
+		
 		TemplateContext ret = new TemplateContext();
 
 		ret.setSyllabus(syllabus);
@@ -134,7 +159,7 @@ public class PdfExportServiceImpl implements PdfExportService {
 
 			ret.setCourseInfo(courseInfo);
 		} catch (IdUnusedException e) {
-			throw new PdfExportException(e);
+			throw new ExportException(e);
 		}
 
 		for (Object element : elements) {
@@ -159,11 +184,11 @@ public class PdfExportServiceImpl implements PdfExportService {
 
 		String type = ret.call("getType");
 
-		if (type.equals("image")) {
+		if (type.equals("image") && resources != null) {
 			prepareImageElement(ret, resources);
-		} else if (type.equals("document")) {
+		} else if (type.equals("document") && resources != null) {
 			prepareDocumentElement(ret, resources);
-		} else if (type.equals("citation")) {
+		} else if (type.equals("citation") && resources != null) {
 			prepareCitationElement(ret, citations);
 		}
 

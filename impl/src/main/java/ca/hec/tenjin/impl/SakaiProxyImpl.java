@@ -53,7 +53,7 @@ import org.sakaiproject.util.ResourceLoader;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.ToolUtil;
-import ca.hec.tenjin.api.export.pdf.model.SakaiCitation;
+import ca.hec.tenjin.api.export.model.SakaiCitation;
 import ca.hec.tenjin.api.model.data.EntityContent;
 import ca.hec.tenjin.api.model.data.EntityDataUtils;
 import lombok.Setter;
@@ -283,12 +283,6 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 	@Override
 	public List<EntityContent> getSiteResources(String siteId, String timestamp, String depth, String resourceId) {
-		String userId = getCurrentUserId();
-
-		if (userId == null) {
-			throw new SecurityException("This action is not accessible to anon and there is no current user.");
-		}
-
 		@SuppressWarnings("deprecation")
 		Time timeStamp = makeTime(timestamp);
 

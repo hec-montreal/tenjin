@@ -1,4 +1,4 @@
-package ca.hec.tenjin.api.export.pdf.model;
+package ca.hec.tenjin.api.export.model;
 
 import lombok.Data;
 
