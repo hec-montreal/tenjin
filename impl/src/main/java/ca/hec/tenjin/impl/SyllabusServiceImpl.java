@@ -678,4 +678,18 @@ public class SyllabusServiceImpl implements SyllabusService {
 			}
 		}
 	}
+
+	@Override
+	public List<AbstractSyllabusElement> getSyllabusElementsForProviderAndSite(Long providerId, String siteId) {
+		return syllabusDao.getSyllabusElementsForProviderAndSite(providerId, siteId);
+	}
+
+	@Override
+	public boolean saveElementAndChildren(AbstractSyllabusElement e) {
+		if (syllabusDao.save(e) != null) {
+			return true;
+		}
+
+		return false;
+	}
 }

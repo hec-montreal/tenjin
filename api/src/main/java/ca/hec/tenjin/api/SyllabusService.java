@@ -2,6 +2,7 @@ package ca.hec.tenjin.api;
 
 import java.util.List;
 
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import org.sakaiproject.exception.IdUnusedException;
 
 import ca.hec.tenjin.api.exception.DeniedAccessException;
@@ -106,4 +107,14 @@ public interface SyllabusService {
 	 * @param siteId
 	 */
 	public Syllabus importSyllabusFromSite(String siteId) throws DeniedAccessException, SyllabusLockedException;
+
+	/**
+	 * retrieve the Syllabus Elements for a given provider and site id (mostly for refreshing)
+	 *
+	 * @param providerId
+	 * @param siteId
+	 */
+	public List<AbstractSyllabusElement> getSyllabusElementsForProviderAndSite(Long providerId, String siteId);
+
+	public boolean saveElementAndChildren(AbstractSyllabusElement e);
 }
