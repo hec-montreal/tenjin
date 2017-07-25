@@ -347,7 +347,44 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	@Override
-	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException {
+	public Syllabus transferCopySyllabus(String siteId, Long syllabusId, String title, boolean common, Long templateId, String locale, String courseTitle,
+									 String createdBy, String createdByName) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException{
+		Syllabus syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
+
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_READ, syllabus)) {
+			throw new DeniedAccessException();
+		}
+
+		Date now = new Date();
+		Syllabus copy = new Syllabus();
+
+		copy.setSiteId(siteId);
+		copy.setTitle(title);
+		copy.setCommon(common);
+		copy.setTemplateId(templateId);
+		copy.setLocale(locale);
+		copy.setCreatedDate(now);
+		copy.setCourseTitle(courseTitle);
+		copy.setCreatedBy(createdBy);
+		copy.setCreatedByName(createdByName);
+		copy.setLastModifiedDate(now);
+		copy.setLastModifiedBy(createdBy);
+		copy.setDeleted(false);
+		copy.setPublishedDate(null);
+		copy.setPublishedBy(null);
+
+		// Create
+		syllabusDao.save(copy);
+
+		// Copy elements
+		for (int i = 0; i < syllabus.getElements().size(); i++) {
+			transferCopyElement(syllabus.getElements().get(i), null, i, copy, createdBy);
+		}
+
+		return copy;
+	}
+
+	@Override	public void deleteSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException {
 		Syllabus syllabus = syllabusDao.getSyllabus(syllabusId);
 		
 		if (syllabus == null) {
@@ -693,5 +730,47 @@ public class SyllabusServiceImpl implements SyllabusService {
 	@Override
 	public List<AbstractSyllabusElement> getChildrenForSyllabusElement(SyllabusCompositeElement parent) {
 		return syllabusDao.getChildrenForSyllabusElement(parent);
+	}
+
+	private void transferCopyElement(AbstractSyllabusElement element, AbstractSyllabusElement parent, int displayOrder, Syllabus forSyllabus, String userId) {
+		// Create new element
+		AbstractSyllabusElement newElement = null;
+
+		try {
+			newElement = (AbstractSyllabusElement) element.getClass().newInstance();
+		} catch (IllegalAccessException e) {
+			// Should never happen
+			e.printStackTrace();
+
+			return;
+		} catch (InstantiationException e) {
+			// Should never happen
+			e.printStackTrace();
+
+			return;
+		}
+
+		newElement.copyFrom(element);
+		newElement.setId(null);
+		newElement.setSiteId(forSyllabus.getSiteId());
+		newElement.setParentId(parent == null ? null : parent.getId());
+		newElement.setPublishedId(null);
+		newElement.setEqualsPublished(false);
+		newElement.setCreatedBy(userId);
+		newElement.setCreatedDate(new Date());
+
+		syllabusDao.save(newElement);
+
+		createSyllabusElementMapping(forSyllabus.getId(), newElement, displayOrder, false);
+
+		if (element.isComposite()) {
+			SyllabusCompositeElement comp = (SyllabusCompositeElement) element;
+
+			for (int i = 0; i < comp.getElements().size(); i++) {
+				AbstractSyllabusElement child = comp.getElements().get(i);
+
+				transferCopyElement(child, newElement, i, forSyllabus, userId);
+			}
+		}
 	}
 }

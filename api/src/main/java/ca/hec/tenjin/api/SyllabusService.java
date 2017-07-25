@@ -125,6 +125,15 @@ public interface SyllabusService {
 	 */
 	public boolean saveOrUpdateElement(AbstractSyllabusElement e);
 
+		/**
+	 * Copy/Import a syllabus. Used to copy a syllabus from one site to another
+	 * @throws IdUnusedException
+	 * @throws NoSyllabusException
+	 * @throws StructureSyllabusException
+	 */
+	Syllabus transferCopySyllabus(String siteId, Long syllabusId, String title, boolean common, Long templateId, String locale, String courseTitle,
+							  String createdBy, String createdByName) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException;
+
 	/**
 	 * Retrieve the list of child elements for the given composite element
 	 *
