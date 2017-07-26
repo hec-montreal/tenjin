@@ -1,26 +1,15 @@
 package ca.hec.tenjin.impl;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.TenjinFunctions;
+import ca.hec.tenjin.api.ToolUtil;
+import ca.hec.tenjin.api.export.pdf.model.SakaiCitation;
+import ca.hec.tenjin.api.model.data.EntityContent;
+import ca.hec.tenjin.api.model.data.EntityDataUtils;
+import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.authz.api.AuthzGroup;
-import org.sakaiproject.authz.api.AuthzGroupService;
-import org.sakaiproject.authz.api.FunctionManager;
-import org.sakaiproject.authz.api.GroupNotDefinedException;
-import org.sakaiproject.authz.api.SecurityService;
+import org.sakaiproject.authz.api.*;
 import org.sakaiproject.citation.api.Citation;
 import org.sakaiproject.citation.api.CitationCollection;
 import org.sakaiproject.citation.api.CitationService;
@@ -50,13 +39,10 @@ import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 import org.sakaiproject.util.ResourceLoader;
 
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.TenjinFunctions;
-import ca.hec.tenjin.api.ToolUtil;
-import ca.hec.tenjin.api.export.pdf.model.SakaiCitation;
-import ca.hec.tenjin.api.model.data.EntityContent;
-import ca.hec.tenjin.api.model.data.EntityDataUtils;
-import lombok.Setter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Setter
 public class SakaiProxyImpl implements SakaiProxy {
@@ -368,9 +354,12 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 	@SuppressWarnings("unchecked")
 	private EntityContent getResourceDetails(ContentEntity entity, int currentDepth, int requestedDepth, Time timeStamp) {
-		boolean allowed = (entity.isCollection()) ? contentHostingService.allowGetCollection(entity.getId()) : contentHostingService.allowGetResource(entity.getId());
+		boolean allowed = (entity.isCollection()) ?
+				(contentHostingService.allowGetCollection(entity.getId()) ||
+						entity.getProperties().getProperty("SAKAI:hidden_accessible_content") != null)
+				: contentHostingService.allowGetResource(entity.getId());
 
-		if (!allowed) {
+		if (!allowed ) {
 			// If the user isn't allowed to see this we return null.
 			return null;
 		}
@@ -416,7 +405,6 @@ public class SakaiProxyImpl implements SakaiProxy {
 				}
 			}
 		}
-
 		return tempRd;
 	}
 
