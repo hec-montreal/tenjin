@@ -362,9 +362,12 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 	@SuppressWarnings("unchecked")
 	private EntityContent getResourceDetails(ContentEntity entity, int currentDepth, int requestedDepth, Time timeStamp) {
-		boolean allowed = (entity.isCollection()) ? contentHostingService.allowGetCollection(entity.getId()) : contentHostingService.allowGetResource(entity.getId());
+		boolean allowed = (entity.isCollection()) ?
+				(contentHostingService.allowGetCollection(entity.getId()) ||
+						entity.getProperties().getProperty("SAKAI:hidden_accessible_content") != null)
+				: contentHostingService.allowGetResource(entity.getId());
 
-		if (!allowed) {
+		if (!allowed ) {
 			// If the user isn't allowed to see this we return null.
 			return null;
 		}
@@ -410,7 +413,6 @@ public class SakaiProxyImpl implements SakaiProxy {
 				}
 			}
 		}
-
 		return tempRd;
 	}
 

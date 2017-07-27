@@ -5,22 +5,22 @@
 		<textarea>{{element}}</textarea>
 
 		<!-- From common notice -->
-		<div data-ng-if="!syllabusService.syllabus.common && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !userService.canEditElement(element,syllabusService.syllabus) && !element.composite && tenjinService.viewState.name === 'syllabus-edit'" class="from-common">
+		<div data-ng-if="!syllabusService.syllabus.common && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !userService.canEditElement(element,syllabusService.syllabus) && !element.composite && tenjinService.viewState.stateName === 'syllabus-edit'" class="from-common">
 			<span class="glyphicon glyphicon-eye-open" title="{{ 'FROM_COMMON' | translate }}"></span>
 		</div>
 
 		<!-- Not published notice -->
-		<div data-ng-if="element.type !== 'rubric' && !element.equalsPublished && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.name === 'syllabus-edit'" class="notice warning not-published">
+		<div data-ng-if="element.type !== 'rubric' && !element.equalsPublished && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice warning not-published">
 			<h3><span class="glyphicon glyphicon-flag"></span> {{ 'NOT_PUBLISHED' | translate }}</h3>
 		</div>
 
 		<!-- Hidden by resource flag -->
-		<div data-ng-if="isElementHiddenByResourceFlag(element) && tenjinService.viewState.name === 'syllabus-edit'" class="notice hidden-by-resource-flag">
+		<div data-ng-if="isElementHiddenByResourceFlag(element) && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice hidden-by-resource-flag">
 			<h3><span class="glyphicon glyphicon-flag"></span> {{ 'HIDDEN_BY_RESOURCE_FLAG' | translate }}</h3>
 		</div>
 
 		<!-- Hidden by date notice -->
-		<div data-ng-if="isElementHiddenByDate(element) && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.name === 'syllabus-edit'" class="notice warning hidden-by-date">
+		<div data-ng-if="isElementHiddenByDate(element) && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice warning hidden-by-date">
 			<h3><span class="glyphicon glyphicon-flag"></span> {{ getElementHiddenByDateMessage(element) }}</h3>
 		</div>
 

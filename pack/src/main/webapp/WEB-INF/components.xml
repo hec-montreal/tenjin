@@ -52,6 +52,14 @@
 			</props>
 		</property>
 	</bean>
+	<bean id="ca.hec.tenjin.api.SyllabusServiceEntityProvider" class="ca.hec.tenjin.impl.SyllabusServiceEntityProviderImpl"
+		  init-method="init">
+		<property name="entityManager" ref="org.sakaiproject.entity.api.EntityManager"/>
+		<property name="syllabusService" ref="ca.hec.tenjin.api.SyllabusService" />
+		<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
+		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+
+	</bean>
 
 	<bean id="ca.hec.tenjin.api.PublishService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager" ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />

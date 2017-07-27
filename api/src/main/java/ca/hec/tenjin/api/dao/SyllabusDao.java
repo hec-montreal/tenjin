@@ -22,15 +22,14 @@ package ca.hec.tenjin.api.dao;
 
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.tenjin.api.model.syllabus.*;
 
 import java.util.List;
 import java.util.Map;
 
 /**
+ *
+ * Data access object for dealing with Syllabus, SyllabusElement, and SyllabusElementMapping objects
  *
  * @author <a href="mailto:mame-awa.diop@hec.ca">Mame Awa Diop</a>
  * @version $Id: $
@@ -93,6 +92,14 @@ public interface SyllabusDao {
 	 * @return The syllabus element
 	 */
 	public AbstractSyllabusElement getSyllabusElement(Long elementId);
+
+	/**
+	 * Retrieves the list of children for a given composite element
+	 *
+	 * @param SyllabusCompositeElement parent
+	 * @return The syllabus elements that are children of parent
+	 */
+	public List<AbstractSyllabusElement> getChildrenForSyllabusElement(SyllabusCompositeElement parent);
 
 	/**
 	 * Save a hibernate object to the database (merge them if it's already in the session).
@@ -168,15 +175,54 @@ public interface SyllabusDao {
 	 */
 	public void update(Object o);
 
+	/**
+	 * Save or update a persistent object in the database
+	 *
+	 * @param Object o - The object to update
+	 * @return true for success, false for failure
+	 */
+	public boolean saveOrUpdate(Object o);
 
+	/**
+	 * Get the SyllabusElementMapping for a given syllabus and element
+	 *
+	 * @param Long syllabusId - The syllabus id
+	 * @param Long elementId - The element id
+	 * @return SyllabuselementMapping
+	 */
 	public SyllabusElementMapping getMappingForSyllabusAndElement(Long syllabusId, Long elementId);
 
+	/**
+	 * Retrieve the sections for each syllabus for a specified site
+	 *
+	 * @param String siteId
+	 * @return Map<String, Object> - a map of syllabus id -> section object
+	 */
 	public Map<String, Object> getSectionsBySyllabus(String siteId);
 
+	/**
+	 * Delete a section from the specified syllabus
+	 *
+	 * @param String syllabusId
+	 * @param String sectionId
+	 */
 	public void deleteSection(String syllabusId, String sectionId);
 
+	/**
+	 * Assign a section to the specified syllabus
+	 *
+	 * @param String syllabusId
+	 * @param String sectionId
+	 */
 	public void addSection (String syllabusId, String sectionId);
 
-	public List<AbstractSyllabusElement> getSyllabusElementsForProviderAndSite(Long providerId, String siteId);
+	/**
+	 * Get a list of SyllabusElements for a given template structure and site
+	 *
+	 * @param Long templateStructureId - The id of the template structure
+	 * @param String siteId - The site id
+	 * @return List<AbstractSyllabusElement>
+	 */
+	public List<AbstractSyllabusElement> getSyllabusElementsForTemplateStructureAndSite(Long templateStructureId, String siteId);
 }
 
