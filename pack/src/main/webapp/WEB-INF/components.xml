@@ -104,13 +104,13 @@
 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 	</bean>
 
-	<bean id="ca.hec.tenjin.api.provider.TenjinDataProvider" class="ca.hec.tenjin.impl.provider.TenjinDataProviderImpl">
+	<bean id="ca.hec.tenjin.api.dao.SyllabusConstantsDao" class="ca.hec.tenjin.impl.dao.SyllabusConstantsDaoImpl">
 
 	</bean>
 	
 	<bean id="ca.hec.tenjin.api.ExportService" class="ca.hec.tenjin.impl.ExportServiceImpl">
 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
-		<property name="tenjinDataProvider" ref="ca.hec.tenjin.api.provider.TenjinDataProvider" />
+		<property name="syllabusConstantsDao" ref="ca.hec.tenjin.api.dao.SyllabusConstantsDao" />
 	</bean>
 	
 	<bean id="ca.hec.tenjin.api.SamigoToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.SamigoToolEntityProviderImpl">

@@ -11,29 +11,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ca.hec.tenjin.api.provider.TenjinDataProvider;
+import ca.hec.tenjin.api.dao.SyllabusConstantsDao;
 
 @Controller
 @RequestMapping(value = "v1")
-public class DataController {
+public class SyllabusConstantsController {
 	
 	@Autowired
-	private TenjinDataProvider dataProvider;
+	private SyllabusConstantsDao syllabusConstantsDao;
 	
 	@RequestMapping(value = "/data", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> getData() throws IdUnusedException {
 		Map<String, Object> ret = new HashMap<>();
 		
-		ret.put("documentTypes", dataProvider.getDocumentTypes());
-		ret.put("hyperlinkTypes", dataProvider.getHyperlinkTypes());
-		ret.put("citationTypes", dataProvider.getCitationTypes());
-		ret.put("contactInfoTitles", dataProvider.getContactInfoTitles());
+		ret.put("documentTypes", syllabusConstantsDao.getDocumentTypes());
+		ret.put("hyperlinkTypes", syllabusConstantsDao.getHyperlinkTypes());
+		ret.put("citationTypes", syllabusConstantsDao.getCitationTypes());
+		ret.put("contactInfoTitles", syllabusConstantsDao.getContactInfoTitles());
 		
 		return ret;
 	}
 	
 	@RequestMapping(value = "/strings", method = RequestMethod.GET)
 	public @ResponseBody Map<String, String> getStringsForLocale(@RequestParam(name ="lang", required = true) String lang) {
-		return dataProvider.getInterfaceStrings(lang);
+		return syllabusConstantsDao.getInterfaceStrings(lang);
 	}
 }

@@ -1,4 +1,4 @@
-package ca.hec.tenjin.api.model.data;
+package ca.hec.tenjin.api.model.syllabusconstants;
 
 import lombok.Data;
 

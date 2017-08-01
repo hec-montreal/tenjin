@@ -1,14 +1,14 @@
-package ca.hec.tenjin.api.provider;
+package ca.hec.tenjin.api.dao;
 
 import java.util.List;
 import java.util.Map;
 
-import ca.hec.tenjin.api.model.data.CitationType;
-import ca.hec.tenjin.api.model.data.ContactInfoTitle;
-import ca.hec.tenjin.api.model.data.DocumentType;
-import ca.hec.tenjin.api.model.data.HyperlinkType;
+import ca.hec.tenjin.api.model.syllabusconstants.CitationType;
+import ca.hec.tenjin.api.model.syllabusconstants.ContactInfoTitle;
+import ca.hec.tenjin.api.model.syllabusconstants.DocumentType;
+import ca.hec.tenjin.api.model.syllabusconstants.HyperlinkType;
 
-public interface TenjinDataProvider {
+public interface SyllabusConstantsDao {
 
 	List<DocumentType> getDocumentTypes();
 

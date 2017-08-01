@@ -1,4 +1,4 @@
-package ca.hec.tenjin.api.model.data;
+package ca.hec.tenjin.api.model.syllabusconstants;
 
 import java.util.Collections;
 import java.util.HashSet;

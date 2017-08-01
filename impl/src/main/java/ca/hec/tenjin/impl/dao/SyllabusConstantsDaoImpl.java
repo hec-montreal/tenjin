@@ -1,4 +1,4 @@
-package ca.hec.tenjin.impl.provider;
+package ca.hec.tenjin.impl.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,18 +10,18 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ca.hec.tenjin.api.model.data.CitationType;
-import ca.hec.tenjin.api.model.data.ContactInfoTitle;
-import ca.hec.tenjin.api.model.data.DataEnum;
-import ca.hec.tenjin.api.model.data.DocumentType;
-import ca.hec.tenjin.api.model.data.HyperlinkType;
-import ca.hec.tenjin.api.provider.TenjinDataProvider;
+import ca.hec.tenjin.api.dao.SyllabusConstantsDao;
+import ca.hec.tenjin.api.model.syllabusconstants.CitationType;
+import ca.hec.tenjin.api.model.syllabusconstants.ContactInfoTitle;
+import ca.hec.tenjin.api.model.syllabusconstants.DataEnum;
+import ca.hec.tenjin.api.model.syllabusconstants.DocumentType;
+import ca.hec.tenjin.api.model.syllabusconstants.HyperlinkType;
 
-public class TenjinDataProviderImpl implements TenjinDataProvider {
+public class SyllabusConstantsDaoImpl implements SyllabusConstantsDao {
 	private Map<String, List<DataEnum>> enums;
 	private Map<String, Map<String, String>> strings;
 
-	public TenjinDataProviderImpl() throws IOException, InstantiationException, IllegalAccessException {
+	public SyllabusConstantsDaoImpl() throws IOException, InstantiationException, IllegalAccessException {
 		loadRootNodes();
 	}
 

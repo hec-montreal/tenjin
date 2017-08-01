@@ -11,12 +11,12 @@ import org.sakaiproject.entitybroker.util.AbstractEntityProvider;
 
 import ca.hec.tenjin.api.ExportService;
 import ca.hec.tenjin.api.PublishService;
+import ca.hec.tenjin.api.dao.SyllabusConstantsDao;
 import ca.hec.tenjin.api.entity.provider.PublicSyllabusEntityProvider;
 import ca.hec.tenjin.api.exception.ExportException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
-import ca.hec.tenjin.api.provider.TenjinDataProvider;
 import lombok.Setter;
 
 public class PublicSyllabusEntityProviderImpl extends AbstractEntityProvider implements PublicSyllabusEntityProvider, AutoRegisterEntityProvider, ActionsExecutable, Outputable {
@@ -27,7 +27,7 @@ public class PublicSyllabusEntityProviderImpl extends AbstractEntityProvider imp
 	private PublishService publishService;
 
 	@Setter
-	private TenjinDataProvider tenjinDataProvider;
+	private SyllabusConstantsDao syllabusConstantsDao;
 
 	@SuppressWarnings("unchecked")
 	@EntityCustomAction(action = "public-syllabus", viewKey = EntityView.VIEW_LIST)

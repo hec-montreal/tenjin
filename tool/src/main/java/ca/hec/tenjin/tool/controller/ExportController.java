@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ca.hec.tenjin.api.ExportService;
 import ca.hec.tenjin.api.PublishService;
 import ca.hec.tenjin.api.SyllabusService;
+import ca.hec.tenjin.api.dao.SyllabusConstantsDao;
 import ca.hec.tenjin.api.exception.ExportException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
-import ca.hec.tenjin.api.provider.TenjinDataProvider;
 
 @Controller
 @RequestMapping(value = "v1")
@@ -36,7 +36,7 @@ public class ExportController {
 	private SyllabusService syllabusService;
 
 	@Autowired
-	private TenjinDataProvider tenjinDataProvider;
+	private SyllabusConstantsDao syllabusConstantsDao;
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/syllabus/{id}/pdf", method = RequestMethod.GET)
@@ -49,7 +49,7 @@ public class ExportController {
 				try {
 					syllabus = publishService.getPublishedSyllabus(id);
 				} catch (NoSyllabusException e) {
-					response.getWriter().append(tenjinDataProvider.getInterfaceString("ERROR_NO_PUBLISHED_SYLLABUS", locale));
+					response.getWriter().append(syllabusConstantsDao.getInterfaceString("ERROR_NO_PUBLISHED_SYLLABUS", locale));
 
 					return;
 				}
@@ -81,7 +81,7 @@ public class ExportController {
 			try {
 				syllabus = publishService.getPublicSyllabus(id);
 			} catch (NoSyllabusException e) {
-				response.getWriter().append(tenjinDataProvider.getInterfaceString("ERROR_NO_PUBLISHED_SYLLABUS", locale));
+				response.getWriter().append(syllabusConstantsDao.getInterfaceString("ERROR_NO_PUBLISHED_SYLLABUS", locale));
 
 				return;
 			}

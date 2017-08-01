@@ -43,6 +43,17 @@ public class SyllabusElement {
 		return attributes.get(name);
 	}
 	
+	public String getAttributeListDebugInfo() {
+		StringBuilder ret = new StringBuilder();
+		Map<String, String> attributes = call("getAttributes");
+		
+		for(String key : attributes.keySet()) {
+			ret.append(key + ": " + attributes.get(key) + "\n");
+		}
+		
+		return ret.toString();
+	}
+	
 	public int getChildrenCount() {
 		return children.size();
 	}

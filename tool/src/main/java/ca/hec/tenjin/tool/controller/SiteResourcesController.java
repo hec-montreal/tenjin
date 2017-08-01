@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.model.data.EntityContent;
+import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
 import lombok.Setter;
 
 /**

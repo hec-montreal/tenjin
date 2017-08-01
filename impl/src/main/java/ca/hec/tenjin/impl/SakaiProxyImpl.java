@@ -54,8 +54,8 @@ import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.ToolUtil;
 import ca.hec.tenjin.api.export.model.SakaiCitation;
-import ca.hec.tenjin.api.model.data.EntityContent;
-import ca.hec.tenjin.api.model.data.EntityDataUtils;
+import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
+import ca.hec.tenjin.api.model.syllabusconstants.EntityDataUtils;
 import lombok.Setter;
 
 @Setter

@@ -5,16 +5,16 @@ import java.io.IOException;
 import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
 
+import ca.hec.tenjin.api.dao.SyllabusConstantsDao;
 import ca.hec.tenjin.api.export.model.SyllabusElement;
-import ca.hec.tenjin.api.provider.TenjinDataProvider;
 
 public class AttributeEnumTemplateHelper implements Helper<SyllabusElement> {
 
-	private TenjinDataProvider dataProvider;
+	private SyllabusConstantsDao syllabusConstantsDao;
 	private String locale;
 
-	public AttributeEnumTemplateHelper(TenjinDataProvider dataProvider, String locale) {
-		this.dataProvider = dataProvider;
+	public AttributeEnumTemplateHelper(SyllabusConstantsDao syllabusConstantsDao, String locale) {
+		this.syllabusConstantsDao = syllabusConstantsDao;
 		this.locale = locale;
 	}
 
@@ -26,7 +26,7 @@ public class AttributeEnumTemplateHelper implements Helper<SyllabusElement> {
 			return "";
 		}
 
-		String ret = dataProvider.getEnumValue(options.param(1), key, locale);
+		String ret = syllabusConstantsDao.getEnumValue(options.param(1), key, locale);
 
 		if (ret == null) {
 			return "";

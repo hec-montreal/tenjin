@@ -16,7 +16,7 @@ import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
 import ca.hec.tenjin.api.export.model.SakaiCitation;
-import ca.hec.tenjin.api.model.data.EntityContent;
+import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
 
 /**
  * An interface to abstract all Sakai related API calls in a central method that
