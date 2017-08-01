@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 'UserService', 'TenjinService', 'SakaiToolsService', 'config', '$translate', function(SyllabusService, SyllabusLockService, UserService, TenjinService, SakaiToolsService, config, $translate) {
+tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 'UserService', 'TenjinService', 'SakaiToolsService', 'config', '$translate', function(SyllabusService, SyllabusLockService, UserService, TenjinService, SakaiToolsService, config, $translate) {
 	'use strict';
 
 	return {
@@ -97,6 +97,30 @@
 				}
 
 				return !element.equalsPublished;
+			};
+
+			$scope.isElementHiddenByViewMode = function(element) {
+				if (SyllabusService.viewMode === 'edit') {
+					return false;
+				}
+
+				if (SyllabusService.viewMode === 'student') {
+					return $scope.isElementHiddenByDate(element) || $scope.isElementHiddenByResourceFlag(element);
+				}
+
+				if (SyllabusService.viewMode === 'public') {
+					if ($scope.isElementHiddenByDate(element) || $scope.isElementHiddenByResourceFlag(element)) {
+						return true;
+					}
+
+					if (element['publicElement'] === false) {
+						return true;
+					}
+
+					return false;
+				}
+
+				return false;
 			};
 		}
 	};

@@ -10,6 +10,8 @@
 	$scope.alertService = AlertService;
 	$scope.saving = false;
 
+	$scope.mode = 'edit';
+
 	// Load syllabus
 	var loadSyllabus = function(syllabusId) {
 		var ret = $q.defer();
@@ -92,45 +94,15 @@
 	};
 
 	$scope.showEditionView = function () {
-		var tthis = this;
-
-		$scope.showGlobalLoading();
-
-		TenjinService.loadDataForViewState(TenjinService.ViewStates.edition).then(function () {
-			loadSyllabus(SyllabusService.getSyllabus().id).then(function () {
-				$scope.hideGlobalLoading();
-
-				TreeService.selectElement(TreeService.findElementByPosition([0]));
-			});
-		});
+		SyllabusService.viewMode = "edit";
 	};
 
 	$scope.showStudentView = function () {
-		var tthis = this;
-
-		$scope.showGlobalLoading();
-
-		TenjinService.loadDataForViewState(TenjinService.ViewStates.editionStudentView).then(function () {
-			loadSyllabus(SyllabusService.getSyllabus().id).then(function () {
-				$scope.hideGlobalLoading();
-
-				TreeService.selectElement(TreeService.findElementByPosition([0]));
-			});
-		});
+		SyllabusService.viewMode = "student";
 	};
 
 	$scope.showPublicView = function () {
-		var tthis = this;
-
-		$scope.showGlobalLoading();
-
-		TenjinService.loadDataForViewState(TenjinService.ViewStates.editionPublicView).then(function () {
-			loadSyllabus(SyllabusService.getSyllabus().id).then(function () {
-				$scope.hideGlobalLoading();
-
-				TreeService.selectElement(TreeService.findElementByPosition([0]));
-			});
-		});
+		SyllabusService.viewMode = "public";
 	};
 
 	$scope.startPublish = function() {

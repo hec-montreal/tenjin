@@ -2,7 +2,10 @@
 	<div id="syllabus">
 		<div class="row">
 			<h1 class="course-title col-xs-12 mobile-toggle">
-				{{::syllabusService.syllabus.courseTitle}} <span class="student-view-title" data-ng-if="tenjinService.viewState.stateName === 'edition-student-view'">({{'VERSION_STUDENTS' | translate}})</span>
+				{{::syllabusService.syllabus.courseTitle}} 
+
+				<span class="student-view-title" data-ng-if="syllabusService.viewMode === 'student'">({{'VERSION_STUDENTS' | translate}})</span>
+				<span class="student-view-title" data-ng-if="syllabusService.viewMode === 'public'">({{'VERSION_PUBLIC' | translate}})</span>
 			</h1>
 		</div>
 
@@ -67,15 +70,15 @@
 							</button>
 
 							<ul data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" uib-dropdown-menu class="list-menu-pdf" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-								<li role="menuitem" data-ng-class="{'selected': tenjinService.viewState.stateName === 'syllabus-edit'}">
+								<li role="menuitem" data-ng-class="{'selected': syllabusService.viewMode === 'edit'}">
 									<a href="javascript:void(0);" ng-click="showEditionView()"><span class="glyphicon glyphicon-ok"></span>{{ 'VERSION_IN_EDITION' | translate }}</a>
 								</li>
 
-								<li role="menuitem" data-ng-class="{'selected': tenjinService.viewState.stateName === 'edition-student-view'}">
+								<li role="menuitem" data-ng-class="{'selected': syllabusService.viewMode === 'student'}">
 									<a href="javascript:void(0);" ng-click="showStudentView()"><span class="glyphicon glyphicon-ok"></span> {{ 'VERSION_STUDENTS' | translate }}</a>
 								</li>
 
-								<li role="menuitem" data-ng-class="{'selected': tenjinService.viewState.stateName === 'edition-public-view'}">
+								<li role="menuitem" data-ng-class="{'selected': syllabusService.viewMode === 'public'}">
 									<a href="javascript:void(0);" ng-click="showPublicView()"><span class="glyphicon glyphicon-ok"></span> {{ 'VERSION_PUBLIC' | translate }}</a>
 								</li>
 							</ul>
@@ -100,7 +103,7 @@
 				<button data-ng-click="toggleNavigation()"><span class="glyphicon glyphicon-chevron-right"></span></button>
 			</div>
 
-			<div ng-include="'contentPanel/contentPanel.html'" data-ng-class="['col-xs-12', 'pull-left', {'col-md-9': showNavigation, 'all-width': !showNavigation}]" id="contentPanel"></div>
+			<div ng-include="'contentPanel/contentPanel.html'" data-mode="mode" data-ng-class="['col-xs-12', 'pull-left', {'col-md-9': showNavigation, 'all-width': !showNavigation}]" id="contentPanel"></div>
 		</div>
 	</div>
 </div>

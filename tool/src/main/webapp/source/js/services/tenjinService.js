@@ -85,112 +85,6 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 			}
 		},
 
-		editionStudentView: {
-			stateName: 'edition-student-view',
-
-			loadViewData: function (siteId) {
-				var ret = $q.defer();
-				var dataToLoad = [];
-
-				// First batch of data to load
-				dataToLoad.push(ResourcesService.loadResources(siteId));
-				dataToLoad.push(SakaiToolsService.loadToolEntities(siteId));
-
-				$q.allSettled(dataToLoad).then(function() {
-					// Finally load the citations
-					CitationsService.loadCitations().then(function() {
-						ret.resolve();
-					}).catch(function() {
-						ret.reject();
-					});
-
-					SyllabusService.loadTemplate().then(function() {
-						ret.resolve();
-					}).catch(function() {
-						ret.reject();
-					});
-				}).catch(function(e) {
-					ret.reject(e);
-				});
-
-				return ret.promise;
-			},
-
-			loadSyllabus: function(ctx) {
-				var ret = $q.defer();
-				var profile = UserService.getProfile();
-
-				var success = function() {
-					ret.resolve();
-				};
-
-				var fail = function(e) {
-					ret.reject(e);
-				};
-
-				SyllabusService.loadPublishedSyllabus(ctx.syllabusId).then(success).catch(fail);
-
-				return ret.promise;
-			},
-
-			getHomeRoute: function() {
-				return makeRoute('');
-			}
-		},
-
-		editionPublicView: {
-			stateName: 'edition-public-view',
-
-			loadViewData: function (siteId) {
-				var ret = $q.defer();
-				var dataToLoad = [];
-
-				// First batch of data to load
-				dataToLoad.push(ResourcesService.loadResources(siteId));
-				dataToLoad.push(SakaiToolsService.loadToolEntities(siteId));
-
-				$q.allSettled(dataToLoad).then(function() {
-					// Finally load the citations
-					CitationsService.loadCitations().then(function() {
-						ret.resolve();
-					}).catch(function() {
-						ret.reject();
-					});
-
-					SyllabusService.loadTemplate().then(function() {
-						ret.resolve();
-					}).catch(function() {
-						ret.reject();
-					});
-				}).catch(function(e) {
-					ret.reject(e);
-				});
-
-				return ret.promise;
-			},
-
-			loadSyllabus: function(ctx) {
-				var ret = $q.defer();
-				var profile = UserService.getProfile();
-
-				var success = function() {
-					ret.resolve();
-				};
-
-				var fail = function(e) {
-					ret.reject(e);
-				};
-
-				SyllabusService.loadPublicSyllabus(ctx.syllabusId).then(success).catch(fail);
-
-				return ret.promise;
-			},
-
-			getHomeRoute: function() {
-				return makeRoute('');
-			}
-		},
-
 		published: {
 			stateName: 'syllabus-published',
 
@@ -257,7 +151,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 		return this.loadDataForViewState(null);
 	};
 
-	this.loadDataForViewState = function (viewState) {
+	this.loadDataForViewState = function(viewState) {
 		var tthis = this;
 		var ret = $q.defer();
 
@@ -267,9 +161,9 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 			UserService.loadProfile().then(function() {
 				var siteId = UserService.getProfile().siteId;
 
-				if(viewState) {
+				if (viewState) {
 					tthis.viewState = viewState;
-				} else{
+				} else {
 					tthis.viewState = tthis.findViewStateFromProfile()
 				}
 

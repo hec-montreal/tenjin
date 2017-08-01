@@ -9,6 +9,8 @@
 	this.dirty = false;
 	this.working = false;
 
+	this.viewMode = "edit";
+
 	// temporary id to use for new elements, decremented after every use
 	var tempId = -1;
 
