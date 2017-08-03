@@ -16,7 +16,7 @@
 			if (!$scope.element.title || $scope.element.title.length === 0) {
 				$scope.element.title = templateType.label
 			}
-
+			
 			// Validation
 			$scope.element.validate = function() {
 				var ret = [];
