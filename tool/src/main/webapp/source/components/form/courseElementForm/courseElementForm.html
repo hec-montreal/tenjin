@@ -1,11 +1,22 @@
 ﻿<div class="element-form">
-	<div class="row field">
+<div class="row field">
 		<div class="col-md-2">
-			<label class="label-text-title">{{ 'FORM_TITLE' | translate }} <span class="mandatory"></label>
+			<label class="label-text-title">{{ 'FORM_NUMBERING' | translate }} </label>
 		</div>
 
-		<div class="col-md-10">
-			<input type="text" name="title" data-ng-model="element.title" class="input-text-title" /> 
+		<div class="col-md-2">
+			<input type="text" name="numero" data-ng-model="element.attributes.numero" class="input-text-title" /> 
 		</div>
+		<div class="col-md-8"/>
 	</div>
 </div>
+<div class="row field">
+	<div class="col-md-2">
+		<label class="label-text-title">{{ 'FORM_TITLE' | translate }} <span class="mandatory"></label>
+	</div>
+
+	<div class="col-md-10">
+		<input type="text" name="title" data-ng-model="element.title" class="input-text-title" /> 
+	</div>
+</div>
+
