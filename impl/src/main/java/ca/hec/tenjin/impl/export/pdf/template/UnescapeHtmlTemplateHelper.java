@@ -32,7 +32,7 @@ public class UnescapeHtmlTemplateHelper implements Helper<String> {
 			
 			return sanitize(ret);
 		} catch (Exception e) {
-			return "<div class=\"element-error\">" + sanitize(document.body().text()) + "</div>";
+			return "<div class=\"element-error\">" + document.body().text().replaceAll("&", "&amp;") + "</div>";
 		}
 	}
 
@@ -54,9 +54,6 @@ public class UnescapeHtmlTemplateHelper implements Helper<String> {
 		//Remove MS crap (<o:p>wefwef</o:p>)
 		xml = xml.replaceAll("<[^:]:[^>]>", "");
 		xml = xml.replaceAll("<\\/[^:]:[^:]>", "");
-		
-		// Try to remove single &
-		xml = xml.replaceAll("& ", "&amp; ");
 		
 		return xml;
 	}
