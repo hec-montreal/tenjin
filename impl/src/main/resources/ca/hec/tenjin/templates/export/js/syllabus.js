@@ -6,16 +6,28 @@
 			selectElement(this);
 		});
 
-		$selectedElement = $($(".root > .element > .element-root:first-child")[0]);
+		$selectedElement = $($(".root > .element:first-child")[0]);
 
 		updateElements();
 	});
 
 	var updateElements = function () {
-		$(".element-root").hide();
+		// Hide all elements
+		$(".element").hide();
 
-		$selectedElement.find(".element-root").show();
+		var $parents = $selectedElement.parents(".element");
+
+		// Show all selected element parents
+		$parents.find("*").hide();
+		$parents.find(".element-host").show();
+		$parents.find(".element-listing").show();
+		$parents.show();
+
+		$selectedElement.find("*").show();
+		$selectedElement.find(".element-debug-info").hide();
 		$selectedElement.show();
+
+		console.log($selectedElement[0]);
 
 		$(".navigation-element").removeClass("selected");
 		$(".navigation-element[data-id='" + $selectedElement.attr("data-id") + "']").addClass("selected");
@@ -24,7 +36,7 @@
 	var selectElement = function (el) {
 		var $el = $(el).parents(".navigation-element");
 
-		$selectedElement = $(".element-root[data-id='" + $el.attr("data-id") + "']");
+		$selectedElement = $(".element[data-id='" + $el.attr("data-id") + "']");
 
 		updateElements();
 	};

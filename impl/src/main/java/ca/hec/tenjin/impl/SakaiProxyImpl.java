@@ -208,6 +208,10 @@ public class SakaiProxyImpl implements SakaiProxy {
 		return null;
 	}
 
+	public boolean isResourcePublic(ContentResource res) {
+		return contentHostingService.isRoleView(res.getId(), AuthzGroupService.ANON_ROLE);
+	}
+	
 	public User getUser(String id) throws UserNotDefinedException {
 		return userDirectoryService.getUser(id);
 	}
@@ -278,7 +282,24 @@ public class SakaiProxyImpl implements SakaiProxy {
 			}
 		}
 
-		return ret;
+		return ret; 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public SakaiCitation getCitation(String citationListId, String citationId) {
+		try {
+			CitationCollection collection = citationService.getCollection(citationListId);
+						
+			for(Citation citation : (List<Citation>) collection.getCitations()) {
+				if(citation.getId().equals(citationId)) {
+					return new SakaiCitation(citation);
+				}
+			}
+		} catch (IdUnusedException e) {
+			return null;
+		}
+		
+		return null;
 	}
 
 	@Override

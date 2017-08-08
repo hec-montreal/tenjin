@@ -1,4 +1,4 @@
-<div class="evaluation">
+<div class="evaluation element-host">
 	<div class="title box-title">
 		{{element.title}}
 	</div>
@@ -79,11 +79,9 @@
 		</ul>
 	</div>
 
-	<ul class="elements">
+	<ul class="element-listing">
 		{{#each children}}
-			<li class="element">
-				{{> elements/element.html}}
-			</li>
+			{{> elements/element.html}}
 		{{/each}}
 	</ul>
 </div>

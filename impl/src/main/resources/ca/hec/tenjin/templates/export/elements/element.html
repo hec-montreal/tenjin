@@ -1,4 +1,4 @@
-<div class="element-root" data-id="{{element.id}}">
+<li class="element" data-id="{{element.id}}">
 	<div class="element-debug-info">
 		{{element.type}} ({{childrenCount}})
 	</div>
@@ -58,4 +58,4 @@
 	{{#if-eq element.type 'sakai_entity'}}
 		{{> elements/tool.html}}
 	{{/if-eq}}
-</div>
+</li>

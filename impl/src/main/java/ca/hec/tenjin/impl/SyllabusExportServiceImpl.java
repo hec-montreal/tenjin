@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.Base64;
-import java.util.Collection;
 import java.util.List;
 
 import org.sakaiproject.content.api.ContentResource;
@@ -42,6 +41,7 @@ import ca.hec.tenjin.impl.export.ClasspathResourceLoader;
 import ca.hec.tenjin.impl.export.template.AttributeConditionTemplateHelper;
 import ca.hec.tenjin.impl.export.template.AttributeEnumTemplateHelper;
 import ca.hec.tenjin.impl.export.template.DateAttributeTemplateHelper;
+import ca.hec.tenjin.impl.export.template.ElementNavigationTitleHelper;
 import ca.hec.tenjin.impl.export.template.IfEqTemplateHelper;
 import ca.hec.tenjin.impl.export.template.StringTemplateHelper;
 import ca.hec.tenjin.impl.export.template.UnescapeHtmlTemplateHelper;
@@ -54,7 +54,7 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 
 	@Setter
 	private SyllabusConstantsDao syllabusConstantsDao;
-	
+
 	@Setter
 	private TemplateService templateService;
 
@@ -62,16 +62,17 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 	private PdfResourceLoader resourceLoader;
 
 	public SyllabusExportServiceImpl() {
-		// templateLoader = new ClassPathTemplateLoader(SyllabusExportService.BASE_TEMPLATE_DIR, "");
+		// templateLoader = new
+		// ClassPathTemplateLoader(SyllabusExportService.BASE_TEMPLATE_DIR, "");
 		templateLoader = new FileTemplateLoader("C:/Dev/Projects/workspace/zc2/sakai_tenjin/sakai/tenjin/impl/src/main/resources/ca/hec/tenjin/templates/export", "");
-		
+
 		resourceLoader = new ClasspathResourceLoader(SyllabusExportService.BASE_TEMPLATE_DIR);
 	}
-	
+
 	@Override
-	public void exportPdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws ExportException {
+	public void exportPdf(AbstractSyllabus syllabus, List<Object> elements, boolean publicOnly, String locale, OutputStream outputStream) throws ExportException {
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, "pdf", locale), templateLoader);
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, "pdf", publicOnly, locale), templateLoader);
 			ITextRenderer renderer = new ITextRenderer();
 			Document doc = XMLResource.load(new ByteArrayInputStream(template.getBytes(Charset.forName("utf-8")))).getDocument();
 
@@ -87,8 +88,8 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 	@Override
 	public String exportPdfHtml(AbstractSyllabus syllabus, List<Object> elements, String locale) throws ExportException {
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, "pdf", locale), templateLoader);
-			
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, "pdf", false, locale), templateLoader);
+
 			return template;
 		} catch (Exception e) {
 			throw new ExportException(e);
@@ -98,14 +99,14 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 	@Override
 	public String exportPublicHtml(AbstractSyllabus syllabus, List<Object> elements, String locale) throws ExportException {
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, "html", locale), templateLoader);
-			
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, "html", true, locale), templateLoader);
+
 			return template;
 		} catch (Exception e) {
 			throw new ExportException(e);
 		}
 	}
-	
+
 	private String makeTemplate(TemplateContext context, TemplateLoader templateLoader) throws ExportException {
 		String ret;
 		Handlebars handlebars = new Handlebars(templateLoader);
@@ -120,6 +121,7 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 		handlebars.registerHelper("attr-cond", new AttributeConditionTemplateHelper());
 		handlebars.registerHelper("attr-date", new DateAttributeTemplateHelper());
 		handlebars.registerHelper("attr-enum", new AttributeEnumTemplateHelper(syllabusConstantsDao, context.getLocale()));
+		handlebars.registerHelper("navigation-title", new ElementNavigationTitleHelper());
 
 		try {
 			Template template = handlebars.compile("syllabus.html");
@@ -132,9 +134,9 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 		}
 	}
 
-	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String mode, String locale) throws IOException, ExportException, IdUnusedException, TypeException, PermissionException, ServerOverloadException {
+	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String mode, boolean publicOnly, String locale) throws IOException, ExportException, IdUnusedException, TypeException, PermissionException, ServerOverloadException {
 		ca.hec.tenjin.api.model.template.Template syllabusTemplate = templateService.getTemplate(syllabus.getTemplateId());
-		
+
 		TemplateContext ret = new TemplateContext(mode);
 
 		ret.setSyllabus(syllabus);
@@ -156,34 +158,34 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 		}
 
 		for (Object element : elements) {
-			ret.getElements().add(buildElement(element, syllabusTemplate));
+			ret.getElements().add(buildElement(element, syllabusTemplate, publicOnly));
 		}
 
 		return ret;
 	}
 
-	private SyllabusElement buildElement(Object element, ca.hec.tenjin.api.model.template.Template syllabusTemplate) throws IdUnusedException, TypeException, PermissionException, ServerOverloadException {
+	private SyllabusElement buildElement(Object element, ca.hec.tenjin.api.model.template.Template syllabusTemplate, boolean publicOnly) throws IdUnusedException, TypeException, PermissionException, ServerOverloadException {
 		SyllabusElement ret = new SyllabusElement(element);
-		
+
 		// If the element is composite, add children
 		if (ret.<Boolean>call("isComposite")) {
 			List<Object> children = ret.<List<Object>>call("getElements");
 
 			for (Object child : children) {
-				ret.getChildren().add(buildElement(child, syllabusTemplate));
+				ret.getChildren().add(buildElement(child, syllabusTemplate, publicOnly));
 			}
 		}
 
 		TemplateStructure struct = syllabusTemplate.findElementById(ret.call("getTemplateStructureId"));
-		
+
 		ret.setDisplayInMenu(struct.getDisplayInMenu());
-		
+
 		String type = ret.call("getType");
 
 		if (type.equals("image")) {
-			prepareImageElement(ret);
+			prepareImageElement(ret, publicOnly);
 		} else if (type.equals("document")) {
-			prepareDocumentElement(ret);
+			prepareDocumentElement(ret, publicOnly);
 		} else if (type.equals("citation")) {
 			prepareCitationElement(ret);
 		}
@@ -225,24 +227,20 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 		return ret.substring(0, ret.length() - 2);
 	}
 
-	private SakaiCitation findCitation(Collection<SakaiCitation> citations, String id) {
-		for (SakaiCitation citation : citations) {
-			if (citation.getCitation().getId().equals(id)) {
-				return citation;
-			}
-		}
-
-		return null;
-	}
-
-	private void prepareImageElement(SyllabusElement e) throws ServerOverloadException {
+	private void prepareImageElement(SyllabusElement e, boolean publicOnly) throws ServerOverloadException {
 		String resourceId = e.getAttribute("imageId");
 		ContentResource res = sakaiProxy.getResource(resourceId);
-		
+
 		if (res == null) {
 			return;
 		}
 
+		if (publicOnly) {
+			if(!sakaiProxy.isResourcePublic(res)) {
+				return;
+			}
+		}
+		
 		e.setResource(new SakaiResource());
 
 		byte[] data = res.getContent();
@@ -251,14 +249,20 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 		e.getResource().setContentType(res.getProperties().getProperty(ResourceProperties.PROP_CONTENT_TYPE));
 	}
 
-	private void prepareDocumentElement(SyllabusElement e) {
+	private void prepareDocumentElement(SyllabusElement e, boolean publicOnly) {
 		String resourceId = e.getAttribute("documentId");
 		ContentResource res = sakaiProxy.getResource(resourceId);
 
-		if(res == null) {
+		if (res == null) {
 			return;
 		}
-		
+
+		if (publicOnly) {
+			if(!sakaiProxy.isResourcePublic(res)) {
+				return;
+			}
+		}
+
 		e.setResource(new SakaiResource());
 		e.getResource().setTitle(res.getProperties().getProperty(ResourceProperties.PROP_DISPLAY_NAME));
 		e.getResource().setUrl(res.getUrl());
@@ -266,14 +270,21 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 
 	private void prepareCitationElement(SyllabusElement e) {
 		String citationId = e.getAttribute("citationId");
-		ContentResource res = sakaiProxy.getResource(citationId);
+		String citationListId = findCitationListId(citationId);
+		SakaiCitation citation = sakaiProxy.getCitation(citationListId, citationId);
 
-		if(res == null) {
+		if (citation == null) {
 			return;
 		}
-		
-		/*citationId = citationId.substring(citationId.lastIndexOf("/") + 1);
 
-		e.setCitation(findCitation(citations, citationId));*/
+		/*
+		 * citationId = citationId.substring(citationId.lastIndexOf("/") + 1);
+		 * 
+		 * e.setCitation(findCitation(citations, citationId));
+		 */
+	}
+
+	private String findCitationListId(String citationId) {
+		return citationId.substring(0, citationId.lastIndexOf("/"));
 	}
 }

@@ -1,6 +1,6 @@
 {{#if displayInMenu}}
 	<li class="navigation-element" data-id="{{element.id}}">
-		<div class="click">{{element.title}}</div>
+		<div class="click">{{navigation-title this @index}}</div>
 
 		<ul class="sub">
 			{{#each children}}

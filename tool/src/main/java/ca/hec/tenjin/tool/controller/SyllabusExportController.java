@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ca.hec.tenjin.api.SyllabusExportService;
 import ca.hec.tenjin.api.PublishService;
+import ca.hec.tenjin.api.SyllabusExportService;
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.dao.SyllabusConstantsDao;
 import ca.hec.tenjin.api.exception.ExportException;
@@ -63,7 +63,7 @@ public class SyllabusExportController {
 			response.setHeader("Content-Disposition", "attachment; filename=\"syllabus.pdf\"");
 			response.setHeader("Content-type", "application/pdf");
 			
-			exportService.exportPdf(syllabus, elements, locale, response.getOutputStream());
+			exportService.exportPdf(syllabus, elements, false, locale, response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -91,7 +91,7 @@ public class SyllabusExportController {
 			response.setHeader("Content-Disposition", "attachment; filename=\"syllabus.pdf\"");
 			response.setHeader("Content-type", "application/pdf");
 			
-			exportService.exportPdf(syllabus, elements, locale, response.getOutputStream());
+			exportService.exportPdf(syllabus, elements, true, locale, response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 

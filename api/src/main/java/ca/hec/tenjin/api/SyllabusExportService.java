@@ -17,7 +17,7 @@ public interface SyllabusExportService {
 	/**
 	 * Construct a pdf with the specified syllabus
 	 */
-	void exportPdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws ExportException;
+	void exportPdf(AbstractSyllabus syllabus, List<Object> elements, boolean publicOnly, String locale, OutputStream outputStream) throws ExportException;
 
 	/**
 	 * Only produce the html markup for a pdf
