@@ -32,7 +32,7 @@ public class UnescapeHtmlTemplateHelper implements Helper<String> {
 			
 			return sanitize(ret);
 		} catch (Exception e) {
-			return "<div class=\"element-error\">" + document.body().text()+ "</div>";
+			return "<div class=\"element-error\">" + document.body().text().replaceAll("&", "&amp;") + "</div>";
 		}
 	}
 
@@ -40,6 +40,7 @@ public class UnescapeHtmlTemplateHelper implements Helper<String> {
 		try {
 			String temp = "<root>" + xml + "</root>";
 
+			// Ignore entities
 			temp = temp.replaceAll("&.*;", "__ENTITY__");
 
 			DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -51,7 +52,6 @@ public class UnescapeHtmlTemplateHelper implements Helper<String> {
 	
 	private String sanitize(String xml) {
 		//Remove MS crap (<o:p>wefwef</o:p>)
-		
 		xml = xml.replaceAll("<[^:]:[^>]>", "");
 		xml = xml.replaceAll("<\\/[^:]:[^:]>", "");
 		
