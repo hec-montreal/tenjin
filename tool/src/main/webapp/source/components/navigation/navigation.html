@@ -8,8 +8,8 @@
 					{{ $index + 1 }}&nbsp;-&nbsp;
 				</div>
 
-				<div data-ng-if="item.type === 'lecture' || item.type === 'tutorial'" class="number">
-					{{ item.$numero }}&nbsp;-&nbsp;
+				<div data-ng-if="(item.type === 'lecture' || item.type === 'tutorial') && item.attributes.numero" class="number">
+					{{ item.attributes.numero }}&nbsp;-&nbsp;
 				</div>
 
 				<div class="item-title">{{ item.title }}</div>
