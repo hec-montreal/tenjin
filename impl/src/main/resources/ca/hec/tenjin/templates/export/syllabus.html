@@ -2,13 +2,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>{{courseInfo.title}} - {{courseInfo.number}}</title>
-	
-		<style type="text/css">
-			{{> css/style.css}}
-		</style>
+		
+		{{#if-eq mode 'pdf'}}
+			<style type="text/css">
+				{{> css/pdf.css}}
+			</style>
+		{{/if-eq}}
+
+		{{#if-eq mode 'html'}}
+			<style type="text/css">
+				{{> css/html.css}}
+			</style>
+
+			<script id="jquery">
+				{{> js/lib/jquery-3.2.1.min.js}}
+			</script>
+
+			<script>
+				{{> js/syllabus.js}}
+			</script>
+		{{/if-eq}}
 	</head>
 	
-	<body class="">
+	<body class="mode-{{mode}}">
 		<div id="header">
 			<div id="logo">
 				<img src="data:{{logo.contentType}};base64,{{logo.bytesB64}}" alt=""></img>
@@ -31,8 +47,10 @@
 			</div>
 		</div>
 
-		<div id="host">
-			{{> menu.html}}
+		<div id="content">
+			{{#if-eq mode 'html'}}
+				{{> navigation.html}}
+			{{/if-eq}}
 
 			<div id="elements">
 				<ul class="root">

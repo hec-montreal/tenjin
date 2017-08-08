@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ca.hec.tenjin.api.ExportService;
+import ca.hec.tenjin.api.SyllabusExportService;
 import ca.hec.tenjin.api.PublishService;
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.dao.SyllabusConstantsDao;
@@ -24,10 +24,10 @@ import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
 
 @Controller
 @RequestMapping(value = "v1")
-public class ExportController {
+public class SyllabusExportController {
 
 	@Autowired
-	private ExportService exportService;
+	private SyllabusExportService exportService;
 
 	@Autowired
 	private PublishService publishService;

@@ -47,7 +47,23 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			};
 
 			$scope.isElementHiddenByResourceFlag = function(element) {
-				return SyllabusService.isElementHiddenByResourceFlag(element);
+				var res = SyllabusService.getElementResource(element);
+
+				if (res === null) {
+					return false;
+				}
+
+				return res.hidden;
+			};
+
+			$scope.isElementHiddenByResourcePublicFlag = function(element) {
+				var res = SyllabusService.getElementResource(element);
+
+				if (res === null) {
+					return false;
+				}
+
+				return !res.publicAccess;
 			};
 
 			$scope.isSakaiEntityMissing = function(element) {
@@ -109,13 +125,17 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				}
 
 				if (SyllabusService.viewMode === 'public') {
-					if ($scope.isElementHiddenByDate(element) || $scope.isElementHiddenByResourceFlag(element)) {
+					if ($scope.isElementHiddenByDate(element) ||
+						$scope.isElementHiddenByResourceFlag(element) ||
+						$scope.isElementHiddenByResourcePublicFlag(element)) {
 						return true;
 					}
 
 					if (element['publicElement'] === false) {
 						return true;
 					}
+
+
 
 					return false;
 				}

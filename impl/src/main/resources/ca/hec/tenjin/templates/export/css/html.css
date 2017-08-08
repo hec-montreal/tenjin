@@ -3,28 +3,13 @@
 	padding: 0;
 }
 
-html {
-	width: 100%;
-}
-
-body {
-	width: 100%;
-	margin: 10px;
-}
-
-@page {
-	margin: 60px 60px 60px 60px;
-	font-size: 18px;
-}
-
 ul {
 	list-style: none;
 }
 
-/* Element error */
-/*.element-error {
-	color: #f00;
-}*/
+body {
+	padding: 20px;
+}
 
 /* Debug */
 .debug .element {
@@ -41,16 +26,6 @@ ul {
 }
 
 /* Layout */
-#menu {
-	float: left;
-	width: 10%;
-}
-
-#elements {
-	float: right;
-	width: 90%;
-}
-
 #header #logo {
 	border-bottom: 4px solid #003366;
 }
@@ -78,7 +53,35 @@ ul {
 	width: 50%;
 }
 
-.element {
+#navigation {
+	float: left;
+	width: 300px;
+	padding-right: 10px;
+}
+
+#navigation .title {
+	padding-top: 10px;
+	font-size: 22px;
+}
+
+#navigation .sub {
+	padding-left: 20px;
+}
+
+.navigation-element.selected > .click {
+	background-color: #ddd;
+}
+
+.navigation-element .click {
+	padding: 5px;
+	cursor: pointer;
+}
+
+#elements {
+	overflow: hidden;
+}
+
+.element-root {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }

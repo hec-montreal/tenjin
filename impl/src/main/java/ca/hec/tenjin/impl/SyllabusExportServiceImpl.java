@@ -22,12 +22,12 @@ import org.xhtmlrenderer.resource.XMLResource;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
-import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
 
-import ca.hec.tenjin.api.ExportService;
 import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.SyllabusExportService;
+import ca.hec.tenjin.api.TemplateService;
 import ca.hec.tenjin.api.dao.SyllabusConstantsDao;
 import ca.hec.tenjin.api.exception.ExportException;
 import ca.hec.tenjin.api.export.PdfResourceLoader;
@@ -37,6 +37,7 @@ import ca.hec.tenjin.api.export.model.SakaiResource;
 import ca.hec.tenjin.api.export.model.SyllabusElement;
 import ca.hec.tenjin.api.export.model.TemplateContext;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
+import ca.hec.tenjin.api.model.template.TemplateStructure;
 import ca.hec.tenjin.impl.export.ClasspathResourceLoader;
 import ca.hec.tenjin.impl.export.template.AttributeConditionTemplateHelper;
 import ca.hec.tenjin.impl.export.template.AttributeEnumTemplateHelper;
@@ -46,31 +47,31 @@ import ca.hec.tenjin.impl.export.template.StringTemplateHelper;
 import ca.hec.tenjin.impl.export.template.UnescapeHtmlTemplateHelper;
 import lombok.Setter;
 
-public class ExportServiceImpl implements ExportService {
+public class SyllabusExportServiceImpl implements SyllabusExportService {
 
 	@Setter
 	private SakaiProxy sakaiProxy;
 
 	@Setter
 	private SyllabusConstantsDao syllabusConstantsDao;
+	
+	@Setter
+	private TemplateService templateService;
 
-	private TemplateLoader pdfTemplateLoader;
-	private TemplateLoader publicHtmlTemplateLoader;
+	private TemplateLoader templateLoader;
 	private PdfResourceLoader resourceLoader;
 
-	public ExportServiceImpl() {
-		pdfTemplateLoader = new ClassPathTemplateLoader(ExportService.BASE_PDF_TEMPLATE_DIR, "");
+	public SyllabusExportServiceImpl() {
+		// templateLoader = new ClassPathTemplateLoader(SyllabusExportService.BASE_TEMPLATE_DIR, "");
+		templateLoader = new FileTemplateLoader("C:/Dev/Projects/workspace/zc2/sakai_tenjin/sakai/tenjin/impl/src/main/resources/ca/hec/tenjin/templates/export", "");
 		
-		// publicHtmlTemplateLoader = new ClassPathTemplateLoader(ExportService.BASE_PUBLIC_HTML_TEMPLATE_DIR, "");
-		publicHtmlTemplateLoader = new FileTemplateLoader("C:/Dev/Projects/workspace/zc2/sakai_tenjin/sakai/tenjin/impl/src/main/resources/ca/hec/tenjin/templates/public-html", "");
-		
-		resourceLoader = new ClasspathResourceLoader(ExportService.BASE_PDF_TEMPLATE_DIR);
+		resourceLoader = new ClasspathResourceLoader(SyllabusExportService.BASE_TEMPLATE_DIR);
 	}
 	
 	@Override
 	public void exportPdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws ExportException {
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale), pdfTemplateLoader);
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, "pdf", locale), templateLoader);
 			ITextRenderer renderer = new ITextRenderer();
 			Document doc = XMLResource.load(new ByteArrayInputStream(template.getBytes(Charset.forName("utf-8")))).getDocument();
 
@@ -86,7 +87,7 @@ public class ExportServiceImpl implements ExportService {
 	@Override
 	public String exportPdfHtml(AbstractSyllabus syllabus, List<Object> elements, String locale) throws ExportException {
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale), pdfTemplateLoader);
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, "pdf", locale), templateLoader);
 			
 			return template;
 		} catch (Exception e) {
@@ -97,7 +98,7 @@ public class ExportServiceImpl implements ExportService {
 	@Override
 	public String exportPublicHtml(AbstractSyllabus syllabus, List<Object> elements, String locale) throws ExportException {
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale), publicHtmlTemplateLoader);
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, "html", locale), templateLoader);
 			
 			return template;
 		} catch (Exception e) {
@@ -131,8 +132,10 @@ public class ExportServiceImpl implements ExportService {
 		}
 	}
 
-	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String locale) throws IOException, ExportException, IdUnusedException, TypeException, PermissionException, ServerOverloadException {
-		TemplateContext ret = new TemplateContext();
+	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String mode, String locale) throws IOException, ExportException, IdUnusedException, TypeException, PermissionException, ServerOverloadException {
+		ca.hec.tenjin.api.model.template.Template syllabusTemplate = templateService.getTemplate(syllabus.getTemplateId());
+		
+		TemplateContext ret = new TemplateContext(mode);
 
 		ret.setSyllabus(syllabus);
 		ret.setLocale(locale);
@@ -153,13 +156,13 @@ public class ExportServiceImpl implements ExportService {
 		}
 
 		for (Object element : elements) {
-			ret.getElements().add(buildElement(element));
+			ret.getElements().add(buildElement(element, syllabusTemplate));
 		}
 
 		return ret;
 	}
 
-	private SyllabusElement buildElement(Object element) throws IdUnusedException, TypeException, PermissionException, ServerOverloadException {
+	private SyllabusElement buildElement(Object element, ca.hec.tenjin.api.model.template.Template syllabusTemplate) throws IdUnusedException, TypeException, PermissionException, ServerOverloadException {
 		SyllabusElement ret = new SyllabusElement(element);
 		
 		// If the element is composite, add children
@@ -167,10 +170,14 @@ public class ExportServiceImpl implements ExportService {
 			List<Object> children = ret.<List<Object>>call("getElements");
 
 			for (Object child : children) {
-				ret.getChildren().add(buildElement(child));
+				ret.getChildren().add(buildElement(child, syllabusTemplate));
 			}
 		}
 
+		TemplateStructure struct = syllabusTemplate.findElementById(ret.call("getTemplateStructureId"));
+		
+		ret.setDisplayInMenu(struct.getDisplayInMenu());
+		
 		String type = ret.call("getType");
 
 		if (type.equals("image")) {

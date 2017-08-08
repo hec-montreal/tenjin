@@ -17,8 +17,11 @@ public class TemplateContext {
 	private CourseInfo courseInfo;
 	private SakaiResource logo;
 	private String locale;
+	private String mode;
 
-	public TemplateContext() {
+	public TemplateContext(String mode) {
 		this.elements = new ArrayList<>();
+		
+		this.mode = mode;
 	}
 }
