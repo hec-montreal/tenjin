@@ -21,7 +21,7 @@ import org.xhtmlrenderer.resource.XMLResource;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
-import com.github.jknack.handlebars.io.FileTemplateLoader;
+import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
 
 import ca.hec.tenjin.api.SakaiProxy;
@@ -62,9 +62,7 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 	private PdfResourceLoader resourceLoader;
 
 	public SyllabusExportServiceImpl() {
-		// templateLoader = new
-		// ClassPathTemplateLoader(SyllabusExportService.BASE_TEMPLATE_DIR, "");
-		templateLoader = new FileTemplateLoader("C:/Dev/Projects/workspace/zc2/sakai_tenjin/sakai/tenjin/impl/src/main/resources/ca/hec/tenjin/templates/export", "");
+		templateLoader = new ClassPathTemplateLoader(SyllabusExportService.BASE_TEMPLATE_DIR, "");
 
 		resourceLoader = new ClasspathResourceLoader(SyllabusExportService.BASE_TEMPLATE_DIR);
 	}
@@ -178,7 +176,12 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 
 		TemplateStructure struct = syllabusTemplate.findElementById(ret.call("getTemplateStructureId"));
 
-		ret.setDisplayInMenu(struct.getDisplayInMenu());
+		// provided elements have no template structure
+		if (struct != null) {
+			ret.setDisplayInMenu(struct.getDisplayInMenu());
+		} else {
+			ret.setDisplayInMenu(false);
+		}
 
 		String type = ret.call("getType");
 
