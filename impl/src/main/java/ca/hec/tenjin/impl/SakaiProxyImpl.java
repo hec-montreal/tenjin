@@ -286,9 +286,11 @@ public class SakaiProxyImpl implements SakaiProxy {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public SakaiCitation getCitation(String citationListId, String citationId) {
+	public SakaiCitation getCitation(String citationListId, String citationId) throws ServerOverloadException {
 		try {
-			CitationCollection collection = citationService.getCollection(citationListId);
+			ContentResource res = getResource(citationListId);
+			String collectionId = new String(res.getContent());
+			CitationCollection collection = citationService.getCollection(collectionId);
 						
 			for(Citation citation : (List<Citation>) collection.getCitations()) {
 				if(citation.getId().equals(citationId)) {

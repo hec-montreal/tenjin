@@ -268,20 +268,19 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 		e.getResource().setUrl(res.getUrl());
 	}
 
-	private void prepareCitationElement(SyllabusElement e) {
+	private void prepareCitationElement(SyllabusElement e) throws ServerOverloadException {
 		String citationId = e.getAttribute("citationId");
 		String citationListId = findCitationListId(citationId);
+		
+		citationId = citationId.substring(citationId.lastIndexOf("/") + 1);
+
 		SakaiCitation citation = sakaiProxy.getCitation(citationListId, citationId);
 
 		if (citation == null) {
 			return;
 		}
 
-		/*
-		 * citationId = citationId.substring(citationId.lastIndexOf("/") + 1);
-		 * 
-		 * e.setCitation(findCitation(citations, citationId));
-		 */
+		e.setCitation(citation);
 	}
 
 	private String findCitationListId(String citationId) {
