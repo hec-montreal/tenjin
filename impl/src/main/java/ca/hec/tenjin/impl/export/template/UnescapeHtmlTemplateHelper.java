@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -32,7 +33,7 @@ public class UnescapeHtmlTemplateHelper implements Helper<String> {
 			
 			return sanitize(ret);
 		} catch (Exception e) {
-			return "<div class=\"element-error\">" + document.body().text().replaceAll("&", "&amp;") + "</div>";
+			return "<div class=\"element-error\">" + StringEscapeUtils.escapeHtml(document.body().text()) + "</div>";
 		}
 	}
 
