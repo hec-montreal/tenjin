@@ -43,7 +43,7 @@ tenjinApp.directive('evaluationElementForm',['SyllabusService', function(Syllabu
 			};
 
 			$scope.element.preSave = function() {
-				if ($scope.evaluationDateObject) {
+				if ($scope.evaluationDateObject !== undefined) {
 					this.attributes.evaluationDate = $scope.evaluationDateObject;
 				}
 
