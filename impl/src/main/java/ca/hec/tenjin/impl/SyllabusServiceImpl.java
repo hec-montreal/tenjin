@@ -47,7 +47,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
 
 		// throw denied access if no write permission on syllabus
-		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus))
+		if (!securityService.canWrite(sakaiProxy.getCurrentUserId(), syllabus))
 			throw new DeniedAccessException();
 
 		return syllabus;
@@ -78,7 +78,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 				site = sakaiProxy.getSite(siteId);
 
-				if (securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site)) {
+				if (securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON, site)) {
 					Syllabus common = createCommonSyllabus(siteId);
 					createOrUpdateSyllabus(common);
 					syllabusList.add(common);
@@ -96,8 +96,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 		// remove syllabi the user does not have access to
 		for (Syllabus syllabus : syllabusList) {
 			// if user has read or write it should be in the list
-			if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, syllabus) ||
-					securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+			if (securityService.canRead(currentUserId, syllabus) ||
+					securityService.canWrite(currentUserId, syllabus)) {
 
 				finalSyllabusList.add(syllabus);
 			}
@@ -127,7 +127,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 
 		// check permissions: is allowed to modify syllabus
-		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+		if (!securityService.canWrite(sakaiProxy.getCurrentUserId(), syllabus)) {
 			throw new DeniedAccessException();
 		}
 
@@ -300,7 +300,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	public void copySyllabus(Long syllabusId, String title) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException {
 		Syllabus syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
 
-		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_READ, syllabus)) {
+		if (!securityService.canRead(sakaiProxy.getCurrentUserId(), syllabus)) {
 			throw new DeniedAccessException();
 		}
 
@@ -337,7 +337,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 										 String createdByName, Map<Long, AbstractSyllabusElement> commonCopyMapping) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException{
 		Syllabus syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
 
-		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_READ, syllabus)) {
+		if (!securityService.canRead(sakaiProxy.getCurrentUserId(), syllabus)) {
 			throw new DeniedAccessException();
 		}
 
@@ -395,8 +395,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 		
 		boolean canDelete = sakaiProxy.getCurrentUserId().equals(syllabus.getCreatedBy()) ||
-							securityService.checkOnSiteGroup(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, sakaiProxy.getCurrentSite()) || 
-							securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus);
+							securityService.canWrite(sakaiProxy.getCurrentUserId(), syllabus);
 		
 		if(!canDelete) {
 			throw new DeniedAccessException();

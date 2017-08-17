@@ -110,18 +110,18 @@ public class UserController {
 			profile.put("activateImportButton", importProvider != null);
 
 			// The user has permissions in the sections
-			boolean writeOnSite = securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, site);
-			boolean publishOnSite = securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH, site);
+			boolean writeOnSite = securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS, site);
+			boolean publishOnSite = securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS, site);
 			usersGroup = site.getGroups();
 			for (Group group : usersGroup) {
 				if (group.getProviderGroupId() != null) {
-					if (writeOnSite || securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, group)) {
+					if (writeOnSite || securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS, group)) {
 						section = new HashMap<String, String>();
 						section.put("id", group.getId());
 						section.put("name", group.getTitle());
 						sectionWrite.add(section);
 					}
-					if (publishOnSite || securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH, group)) {
+					if (publishOnSite || securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS, group)) {
 						section = new HashMap<String, String>();
 						section.put("id", group.getId());
 						section.put("name", group.getTitle());
@@ -142,14 +142,15 @@ public class UserController {
 		List<Syllabus> syllabusList = syllabusService.getSyllabusListForUser(siteId, sakaiProxy.getCurrentUserId());
 		if (syllabusList != null) {
 			for (Syllabus syllabus : syllabusList) {
+
 				// The user has permissions in the site
-				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_READ, syllabus)) {
+				if (securityService.canRead(currentUserId, syllabus)) {
 					syllabusRead.add(syllabus.getId());
 				}
-				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
+				if (securityService.canWrite(currentUserId, syllabus)) {
 					syllabusWrite.add(syllabus.getId());
 				}
-				if (securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH, syllabus)) {
+				if (securityService.canPublish(currentUserId, syllabus)) {
 					syllabusPublish.add(syllabus.getId());
 				}
 			}
