@@ -82,15 +82,28 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 		List<String> registered = functionManager.getRegisteredFunctions();
 
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ, true);
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON, true);
 		}
 
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_WRITE)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_WRITE, true);
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ_PERS)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ_PERS, true);
 		}
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_PUBLISH)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_PUBLISH, true);
+
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON, true);
+		}
+
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS, true);
+		}
+
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_COMMON)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_COMMON, true);
+		}
+
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS, true);
 		}
 
 		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_VIEW_MANAGER)) {
