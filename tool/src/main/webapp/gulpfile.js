@@ -5,7 +5,8 @@ var gulp = require('gulp'),
 	templateCache = require('gulp-angular-templatecache'),
 	sass = require('gulp-sass'),
 	gutil = require('gulp-util'),
-	rename = require('gulp-rename');
+	rename = require('gulp-rename'),
+	md5 = require('gulp-md5-assets');
 
 // Images
 gulp.task('images', function() {
@@ -118,7 +119,12 @@ gulp.task('web:tools', function() {
 });
 
 // Build
-gulp.task('build', ['images', 'style', 'js', 'web']);
+gulp.task('build', ['images', 'style', 'js', 'web', 'md5']);
+
+gulp.task('md5', ['web', 'js', 'style'], function () {
+	return gulp.src(['./dest/js/tenjin.js', './dest/lib/tenjinlib.js', './dest/css/tenjin.css'])
+		.pipe(md5(10, './dest/index.jsp'));
+});
 
 // Deploy
 gulp.task('deploy', ['build', 'deploy:tomcat']);
