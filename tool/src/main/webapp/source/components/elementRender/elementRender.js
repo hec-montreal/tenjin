@@ -46,6 +46,31 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				}
 			};
 
+			$scope.isNotPublishedFlagVisible = function(element) {
+				// Is element = published
+				if (element.equalsPublished) {
+					return false;
+				}
+
+				// Only show flag in edit mode
+				if (!UserService.isAllowed('syllabusWrite', SyllabusService.syllabus) || TenjinService.viewState.stateName !== 'syllabus-edit') {
+					return false;
+				}
+
+				// Dont show flag on rubrics
+				if (element.type === 'rubric') {
+					return false;
+				}
+
+				// Dont show flag when view mode is student or public
+				if (SyllabusService.viewMode === 'student' || SyllabusService.viewMode === 'public') {
+					return false;
+				}
+
+				// Show flag
+				return true;
+			};
+
 			$scope.isElementHiddenByResourceFlag = function(element) {
 				var res = SyllabusService.getElementResource(element);
 
