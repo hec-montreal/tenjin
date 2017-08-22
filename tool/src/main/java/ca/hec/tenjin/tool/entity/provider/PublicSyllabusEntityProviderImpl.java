@@ -9,8 +9,8 @@ import org.sakaiproject.entitybroker.entityprovider.capabilities.AutoRegisterEnt
 import org.sakaiproject.entitybroker.entityprovider.capabilities.Outputable;
 import org.sakaiproject.entitybroker.util.AbstractEntityProvider;
 
-import ca.hec.tenjin.api.ExportService;
 import ca.hec.tenjin.api.PublishService;
+import ca.hec.tenjin.api.SyllabusExportService;
 import ca.hec.tenjin.api.dao.SyllabusConstantsDao;
 import ca.hec.tenjin.api.entity.provider.PublicSyllabusEntityProvider;
 import ca.hec.tenjin.api.exception.ExportException;
@@ -21,7 +21,7 @@ import lombok.Setter;
 
 public class PublicSyllabusEntityProviderImpl extends AbstractEntityProvider implements PublicSyllabusEntityProvider, AutoRegisterEntityProvider, ActionsExecutable, Outputable {
 	@Setter
-	private ExportService exportService;
+	private SyllabusExportService syllabusExportService;
 
 	@Setter
 	private PublishService publishService;
@@ -33,9 +33,14 @@ public class PublicSyllabusEntityProviderImpl extends AbstractEntityProvider imp
 	@EntityCustomAction(action = "public-syllabus", viewKey = EntityView.VIEW_LIST)
 	public String getPublicSyllabus(EntityView view) throws NumberFormatException, NoSyllabusException, ExportException {
 		String id = view.getPathSegment(2);
+		String locale = view.getPathSegment(3);
 		AbstractSyllabus syllabus = publishService.getPublicSyllabus(Long.parseLong(id));
 		
-		return exportService.exportPublicHtml(syllabus, (List<Object>) (List<?>) ((PublishedSyllabus) syllabus).getElements(), "fr");
+		if(locale == null) {
+			locale = "fr_CA";
+		}
+		
+		return syllabusExportService.exportPublicHtml(syllabus, (List<Object>) (List<?>) ((PublishedSyllabus) syllabus).getElements(), locale);
 	}
 
 	@Override
@@ -45,6 +50,6 @@ public class PublicSyllabusEntityProviderImpl extends AbstractEntityProvider imp
 
 	@Override
 	public String[] getHandledOutputFormats() {
-		return new String[] { JSON, HTML };
+		return new String[] { HTML };
 	}
 }

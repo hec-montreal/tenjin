@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -32,7 +33,7 @@ public class UnescapeHtmlTemplateHelper implements Helper<String> {
 			
 			return sanitize(ret);
 		} catch (Exception e) {
-			return "<div class=\"element-error\">" + document.body().text()+ "</div>";
+			return "<div class=\"element-error\">" + StringEscapeUtils.escapeHtml(document.body().text()) + "</div>";
 		}
 	}
 
@@ -40,6 +41,7 @@ public class UnescapeHtmlTemplateHelper implements Helper<String> {
 		try {
 			String temp = "<root>" + xml + "</root>";
 
+			// Ignore entities
 			temp = temp.replaceAll("&.*;", "__ENTITY__");
 
 			DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -51,7 +53,6 @@ public class UnescapeHtmlTemplateHelper implements Helper<String> {
 	
 	private String sanitize(String xml) {
 		//Remove MS crap (<o:p>wefwef</o:p>)
-		
 		xml = xml.replaceAll("<[^:]:[^>]>", "");
 		xml = xml.replaceAll("<\\/[^:]:[^:]>", "");
 		

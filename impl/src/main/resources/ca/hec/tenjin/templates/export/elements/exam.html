@@ -1,4 +1,4 @@
-<div class="exam">
+<div class="exam element-host">
 	<div class="title box-title">
 		{{element.title}} <span class="weight">({{element.attributes.examWeight}}%)</span>
 	</div>
@@ -73,11 +73,9 @@
 		</ul>
 	</div>
 
-	<ul class="elements">
+	<ul class="element-listing">
 		{{#each children}}
-			<li class="element">
-				{{> elements/element.html}}
-			</li>
+			{{> elements/element.html}}
 		{{/each}}
 	</ul>
 </div>

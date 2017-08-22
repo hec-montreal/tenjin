@@ -122,6 +122,12 @@ ul {
 	padding: 0px;
 }
 
+.lecture > .box-title,
+.tutorial > .box-title {
+    border-bottom: 2px solid black;
+    background: none;
+}
+
 .image img {
 	-fs-fit-images-to-width: 100%;
 	page-break-inside: avoid;

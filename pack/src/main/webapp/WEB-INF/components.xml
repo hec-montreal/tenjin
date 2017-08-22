@@ -108,9 +108,10 @@
 
 	</bean>
 	
-	<bean id="ca.hec.tenjin.api.ExportService" class="ca.hec.tenjin.impl.ExportServiceImpl">
+	<bean id="ca.hec.tenjin.api.SyllabusExportService" class="ca.hec.tenjin.impl.SyllabusExportServiceImpl">
 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 		<property name="syllabusConstantsDao" ref="ca.hec.tenjin.api.dao.SyllabusConstantsDao" />
+		<property name="templateService" ref="ca.hec.tenjin.api.TemplateService" />
 	</bean>
 	
 	<bean id="ca.hec.tenjin.api.SamigoToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.SamigoToolEntityProviderImpl">

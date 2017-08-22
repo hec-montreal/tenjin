@@ -1,0 +1,11 @@
+{{#if displayInMenu}}
+	<li class="navigation-element" data-id="{{element.id}}">
+		<div class="click">{{navigation-title this @index}}</div>
+
+		<ul class="sub">
+			{{#each children}}
+				{{> navigation-element.html}}
+			{{/each}}
+		</ul>
+	</li>
+{{/if}}

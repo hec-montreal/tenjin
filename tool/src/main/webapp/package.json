@@ -38,6 +38,10 @@
 		"moment-range": "3.0.1"
 	},
 
+	"devDependencies": {
+		"gulp-md5-assets": "^0.2.0"
+	},
+
 	"author": "HEC Montreal",
 
 	"license": "ISC",

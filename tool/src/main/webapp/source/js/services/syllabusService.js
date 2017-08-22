@@ -278,10 +278,10 @@
 		var tthis = this;
 		var ret = $q.defer();
 
-        // use the language of the common syllabus to get the locale of the rules
-        var common = this.getCommonSyllabus();
+		// use the language of the common syllabus to get the locale of the rules
+		var common = this.getCommonSyllabus();
 
-		$http.get('v1/template/1/rules.json'+ (common?'?locale='+common.locale:'')).success(function(data) {
+		$http.get('v1/template/1/rules.json' + (common ? '?locale=' + common.locale : '')).success(function(data) {
 			tthis.setTemplate(data);
 
 			ret.resolve(tthis.getTemplate());
@@ -442,7 +442,7 @@
 
 		var rules = this.template[$parent.templateStructureId];
 
-		if (!$parent.elements) 
+		if (!$parent.elements)
 			$parent.elements = [];
 
 		if ($parent.elements.length > 0) {
@@ -636,11 +636,11 @@
 		};
 	};
 
-	this.isElementHiddenByResourceFlag = function(element) {
+	this.getElementResource = function(element) {
 		var elementResourceIdName = this.findElementResourceIdName(element);
 
 		if (!elementResourceIdName) {
-			return false;
+			return null;
 		}
 
 		var res = ResourcesService.getResource(element.attributes[elementResourceIdName]);
@@ -649,7 +649,7 @@
 			res = ResourcesService.getResource(res.parentId);
 		}
 
-		return res ? res.hidden : true;
+		return res;
 	};
 
 	this.updateCurrentSyllabus = function(syllabus) {

@@ -82,15 +82,28 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 		List<String> registered = functionManager.getRegisteredFunctions();
 
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ, true);
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON, true);
 		}
 
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_WRITE)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_WRITE, true);
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ_PERS)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ_PERS, true);
 		}
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_PUBLISH)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_PUBLISH, true);
+
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON, true);
+		}
+
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS, true);
+		}
+
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_COMMON)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_COMMON, true);
+		}
+
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS, true);
 		}
 
 		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_VIEW_MANAGER)) {
@@ -208,6 +221,10 @@ public class SakaiProxyImpl implements SakaiProxy {
 		return null;
 	}
 
+	public boolean isResourcePublic(ContentResource res) {
+		return contentHostingService.isRoleView(res.getId(), AuthzGroupService.ANON_ROLE);
+	}
+	
 	public User getUser(String id) throws UserNotDefinedException {
 		return userDirectoryService.getUser(id);
 	}
@@ -278,7 +295,26 @@ public class SakaiProxyImpl implements SakaiProxy {
 			}
 		}
 
-		return ret;
+		return ret; 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public SakaiCitation getCitation(String citationListId, String citationId) throws ServerOverloadException {
+		try {
+			ContentResource res = getResource(citationListId);
+			String collectionId = new String(res.getContent());
+			CitationCollection collection = citationService.getCollection(collectionId);
+						
+			for(Citation citation : (List<Citation>) collection.getCitations()) {
+				if(citation.getId().equals(citationId)) {
+					return new SakaiCitation(citation);
+				}
+			}
+		} catch (IdUnusedException e) {
+			return null;
+		}
+		
+		return null;
 	}
 
 	@Override

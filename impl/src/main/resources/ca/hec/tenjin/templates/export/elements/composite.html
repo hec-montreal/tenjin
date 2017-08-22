@@ -1,0 +1,11 @@
+<div class="composite element-host">
+	<div class="title">
+		{{element.title}}
+	</div>
+
+	<ul class="element-listing">
+		{{#each children}}
+			{{> elements/element.html}}
+		{{/each}}
+	</ul>
+</div>

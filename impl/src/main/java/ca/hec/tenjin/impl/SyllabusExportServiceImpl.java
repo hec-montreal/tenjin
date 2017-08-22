@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.Base64;
-import java.util.Collection;
 import java.util.List;
 
 import org.sakaiproject.content.api.ContentResource;
@@ -23,11 +22,11 @@ import org.xhtmlrenderer.resource.XMLResource;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
-import com.github.jknack.handlebars.io.FileTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
 
-import ca.hec.tenjin.api.ExportService;
 import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.SyllabusExportService;
+import ca.hec.tenjin.api.TemplateService;
 import ca.hec.tenjin.api.dao.SyllabusConstantsDao;
 import ca.hec.tenjin.api.exception.ExportException;
 import ca.hec.tenjin.api.export.PdfResourceLoader;
@@ -37,16 +36,18 @@ import ca.hec.tenjin.api.export.model.SakaiResource;
 import ca.hec.tenjin.api.export.model.SyllabusElement;
 import ca.hec.tenjin.api.export.model.TemplateContext;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
+import ca.hec.tenjin.api.model.template.TemplateStructure;
 import ca.hec.tenjin.impl.export.ClasspathResourceLoader;
 import ca.hec.tenjin.impl.export.template.AttributeConditionTemplateHelper;
 import ca.hec.tenjin.impl.export.template.AttributeEnumTemplateHelper;
 import ca.hec.tenjin.impl.export.template.DateAttributeTemplateHelper;
+import ca.hec.tenjin.impl.export.template.ElementNavigationTitleHelper;
 import ca.hec.tenjin.impl.export.template.IfEqTemplateHelper;
 import ca.hec.tenjin.impl.export.template.StringTemplateHelper;
 import ca.hec.tenjin.impl.export.template.UnescapeHtmlTemplateHelper;
 import lombok.Setter;
 
-public class ExportServiceImpl implements ExportService {
+public class SyllabusExportServiceImpl implements SyllabusExportService {
 
 	@Setter
 	private SakaiProxy sakaiProxy;
@@ -54,23 +55,22 @@ public class ExportServiceImpl implements ExportService {
 	@Setter
 	private SyllabusConstantsDao syllabusConstantsDao;
 
-	private TemplateLoader pdfTemplateLoader;
-	private TemplateLoader publicHtmlTemplateLoader;
+	@Setter
+	private TemplateService templateService;
+
+	private TemplateLoader templateLoader;
 	private PdfResourceLoader resourceLoader;
 
-	public ExportServiceImpl() {
-		pdfTemplateLoader = new ClassPathTemplateLoader(ExportService.BASE_PDF_TEMPLATE_DIR, "");
-		
-		// publicHtmlTemplateLoader = new ClassPathTemplateLoader(ExportService.BASE_PUBLIC_HTML_TEMPLATE_DIR, "");
-		publicHtmlTemplateLoader = new FileTemplateLoader("C:/Dev/Projects/workspace/zc2/sakai_tenjin/sakai/tenjin/impl/src/main/resources/ca/hec/tenjin/templates/public-html", "");
-		
-		resourceLoader = new ClasspathResourceLoader(ExportService.BASE_PDF_TEMPLATE_DIR);
+	public SyllabusExportServiceImpl() {
+		templateLoader = new ClassPathTemplateLoader(SyllabusExportService.BASE_TEMPLATE_DIR, "");
+
+		resourceLoader = new ClasspathResourceLoader(SyllabusExportService.BASE_TEMPLATE_DIR);
 	}
-	
+
 	@Override
-	public void exportPdf(AbstractSyllabus syllabus, List<Object> elements, String locale, OutputStream outputStream) throws ExportException {
+	public void exportPdf(AbstractSyllabus syllabus, List<Object> elements, boolean publicOnly, String locale, OutputStream outputStream) throws ExportException {
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale), pdfTemplateLoader);
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, "pdf", publicOnly, locale), templateLoader);
 			ITextRenderer renderer = new ITextRenderer();
 			Document doc = XMLResource.load(new ByteArrayInputStream(template.getBytes(Charset.forName("utf-8")))).getDocument();
 
@@ -86,8 +86,8 @@ public class ExportServiceImpl implements ExportService {
 	@Override
 	public String exportPdfHtml(AbstractSyllabus syllabus, List<Object> elements, String locale) throws ExportException {
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale), pdfTemplateLoader);
-			
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, "pdf", false, locale), templateLoader);
+
 			return template;
 		} catch (Exception e) {
 			throw new ExportException(e);
@@ -97,14 +97,14 @@ public class ExportServiceImpl implements ExportService {
 	@Override
 	public String exportPublicHtml(AbstractSyllabus syllabus, List<Object> elements, String locale) throws ExportException {
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, locale), publicHtmlTemplateLoader);
-			
+			String template = makeTemplate(makeTemplateContext(syllabus, elements, "html", true, locale), templateLoader);
+
 			return template;
 		} catch (Exception e) {
 			throw new ExportException(e);
 		}
 	}
-	
+
 	private String makeTemplate(TemplateContext context, TemplateLoader templateLoader) throws ExportException {
 		String ret;
 		Handlebars handlebars = new Handlebars(templateLoader);
@@ -119,6 +119,7 @@ public class ExportServiceImpl implements ExportService {
 		handlebars.registerHelper("attr-cond", new AttributeConditionTemplateHelper());
 		handlebars.registerHelper("attr-date", new DateAttributeTemplateHelper());
 		handlebars.registerHelper("attr-enum", new AttributeEnumTemplateHelper(syllabusConstantsDao, context.getLocale()));
+		handlebars.registerHelper("navigation-title", new ElementNavigationTitleHelper());
 
 		try {
 			Template template = handlebars.compile("syllabus.html");
@@ -131,8 +132,10 @@ public class ExportServiceImpl implements ExportService {
 		}
 	}
 
-	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String locale) throws IOException, ExportException, IdUnusedException, TypeException, PermissionException, ServerOverloadException {
-		TemplateContext ret = new TemplateContext();
+	private TemplateContext makeTemplateContext(AbstractSyllabus syllabus, List<Object> elements, String mode, boolean publicOnly, String locale) throws IOException, ExportException, IdUnusedException, TypeException, PermissionException, ServerOverloadException {
+		ca.hec.tenjin.api.model.template.Template syllabusTemplate = templateService.getTemplate(syllabus.getTemplateId());
+
+		TemplateContext ret = new TemplateContext(mode);
 
 		ret.setSyllabus(syllabus);
 		ret.setLocale(locale);
@@ -153,30 +156,39 @@ public class ExportServiceImpl implements ExportService {
 		}
 
 		for (Object element : elements) {
-			ret.getElements().add(buildElement(element));
+			ret.getElements().add(buildElement(element, syllabusTemplate, publicOnly));
 		}
 
 		return ret;
 	}
 
-	private SyllabusElement buildElement(Object element) throws IdUnusedException, TypeException, PermissionException, ServerOverloadException {
+	private SyllabusElement buildElement(Object element, ca.hec.tenjin.api.model.template.Template syllabusTemplate, boolean publicOnly) throws IdUnusedException, TypeException, PermissionException, ServerOverloadException {
 		SyllabusElement ret = new SyllabusElement(element);
-		
+
 		// If the element is composite, add children
 		if (ret.<Boolean>call("isComposite")) {
 			List<Object> children = ret.<List<Object>>call("getElements");
 
 			for (Object child : children) {
-				ret.getChildren().add(buildElement(child));
+				ret.getChildren().add(buildElement(child, syllabusTemplate, publicOnly));
 			}
+		}
+
+		TemplateStructure struct = syllabusTemplate.findElementById(ret.call("getTemplateStructureId"));
+
+		// provided elements have no template structure
+		if (struct != null) {
+			ret.setDisplayInMenu(struct.getDisplayInMenu());
+		} else {
+			ret.setDisplayInMenu(false);
 		}
 
 		String type = ret.call("getType");
 
 		if (type.equals("image")) {
-			prepareImageElement(ret);
+			prepareImageElement(ret, publicOnly);
 		} else if (type.equals("document")) {
-			prepareDocumentElement(ret);
+			prepareDocumentElement(ret, publicOnly);
 		} else if (type.equals("citation")) {
 			prepareCitationElement(ret);
 		}
@@ -218,24 +230,20 @@ public class ExportServiceImpl implements ExportService {
 		return ret.substring(0, ret.length() - 2);
 	}
 
-	private SakaiCitation findCitation(Collection<SakaiCitation> citations, String id) {
-		for (SakaiCitation citation : citations) {
-			if (citation.getCitation().getId().equals(id)) {
-				return citation;
-			}
-		}
-
-		return null;
-	}
-
-	private void prepareImageElement(SyllabusElement e) throws ServerOverloadException {
+	private void prepareImageElement(SyllabusElement e, boolean publicOnly) throws ServerOverloadException {
 		String resourceId = e.getAttribute("imageId");
 		ContentResource res = sakaiProxy.getResource(resourceId);
-		
+
 		if (res == null) {
 			return;
 		}
 
+		if (publicOnly) {
+			if(!sakaiProxy.isResourcePublic(res)) {
+				return;
+			}
+		}
+		
 		e.setResource(new SakaiResource());
 
 		byte[] data = res.getContent();
@@ -244,29 +252,41 @@ public class ExportServiceImpl implements ExportService {
 		e.getResource().setContentType(res.getProperties().getProperty(ResourceProperties.PROP_CONTENT_TYPE));
 	}
 
-	private void prepareDocumentElement(SyllabusElement e) {
+	private void prepareDocumentElement(SyllabusElement e, boolean publicOnly) {
 		String resourceId = e.getAttribute("documentId");
 		ContentResource res = sakaiProxy.getResource(resourceId);
 
-		if(res == null) {
+		if (res == null) {
 			return;
 		}
-		
+
+		if (publicOnly) {
+			if(!sakaiProxy.isResourcePublic(res)) {
+				return;
+			}
+		}
+
 		e.setResource(new SakaiResource());
 		e.getResource().setTitle(res.getProperties().getProperty(ResourceProperties.PROP_DISPLAY_NAME));
 		e.getResource().setUrl(res.getUrl());
 	}
 
-	private void prepareCitationElement(SyllabusElement e) {
+	private void prepareCitationElement(SyllabusElement e) throws ServerOverloadException {
 		String citationId = e.getAttribute("citationId");
-		ContentResource res = sakaiProxy.getResource(citationId);
+		String citationListId = findCitationListId(citationId);
+		
+		citationId = citationId.substring(citationId.lastIndexOf("/") + 1);
 
-		if(res == null) {
+		SakaiCitation citation = sakaiProxy.getCitation(citationListId, citationId);
+
+		if (citation == null) {
 			return;
 		}
-		
-		/*citationId = citationId.substring(citationId.lastIndexOf("/") + 1);
 
-		e.setCitation(findCitation(citations, citationId));*/
+		e.setCitation(citation);
+	}
+
+	private String findCitationListId(String citationId) {
+		return citationId.substring(0, citationId.lastIndexOf("/"));
 	}
 }

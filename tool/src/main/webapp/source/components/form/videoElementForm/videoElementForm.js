@@ -30,6 +30,7 @@
 
 				if ($scope.inputMode === 'embed') {
 					delete this.attributes.videoUrl;
+					this.attributes.embedCode = this.attributes.embedCode.replace(/http\:/gi, "https:");
 				}
 			};
 

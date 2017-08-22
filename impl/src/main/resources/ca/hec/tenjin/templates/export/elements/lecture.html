@@ -1,0 +1,14 @@
+<div class="lecture element-host">
+	<div class="title box-title">
+		{{#if element.attributes.numero}}
+			{{element.attributes.numero}} -
+		{{/if}}
+		{{element.title}}
+	</div>
+
+	<ul class="element-listing">
+		{{#each children}}
+			{{> elements/element.html}}
+		{{/each}}
+	</ul>
+</div>

@@ -63,6 +63,11 @@
 							</ul>
 						</div>
 
+						<button data-ng-click="pdf(true)" data-ng-show="userService.isAllowed('syllabusRead', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-published'">
+							<img src="img/icon-pdf.png"></img>
+							<span class="">PDF</span>
+						</button>
+
 						<div uib-dropdown class="view-dropdown">
 							<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" type="button" class="btn action-list" uib-dropdown-toggle ng-click="popPdf()" ng-disabled="syllabusService.isWorking()">
 								<span class="glyphicon glyphicon-eye-open"></span> {{ 'VIEW' | translate }}

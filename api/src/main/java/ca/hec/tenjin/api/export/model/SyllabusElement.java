@@ -14,6 +14,7 @@ public class SyllabusElement {
 	private List<SyllabusElement> children;
 	private SakaiResource resource;
 	private SakaiCitation citation;
+	private boolean displayInMenu;
 	
 	public SyllabusElement(Object element) {
 		this.element = element;

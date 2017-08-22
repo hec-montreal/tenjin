@@ -114,7 +114,7 @@ public class PublishServiceImpl implements PublishService {
 	public PublishedSyllabus getPublishedSyllabus(String siteId, String sectionId) throws NoSyllabusException, DeniedAccessException {
 		PublishedSyllabus ret = publishedSyllabusDao.getPublishedSyllabusOrNull(siteId, sectionId);
 
-		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_READ, ret))
+		if (!securityService.canRead(sakaiProxy.getCurrentUserId(), ret))
 			throw new DeniedAccessException();
 		if (ret == null) {
 			throw new NoSyllabusException();
@@ -140,7 +140,7 @@ public class PublishServiceImpl implements PublishService {
 
 		// throw an exception if current user does not have publish permission
 		// on the syllabus
-		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_PUBLISH, syllabus))
+		if (!securityService.canPublish(sakaiProxy.getCurrentUserId(), syllabus))
 			throw new DeniedAccessException();
 
 		// throw an exception if the common syllabus is not published
@@ -193,6 +193,10 @@ public class PublishServiceImpl implements PublishService {
 				if (mapping != null && element.getPublishedId() != null) {
 					// we assume the common elements are already published
 					AbstractPublishedSyllabusElement publishedElement = publishedSyllabusDao.getPublishedElement(element.getPublishedId());
+
+					if (publishedElement != null && !publishedElement.getCommon()) {
+						publishedElement.setCommon(true);
+					}
 
 					publishMapping(mapping, publishedElement);
 				} else {

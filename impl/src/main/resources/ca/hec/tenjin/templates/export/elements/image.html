@@ -1,0 +1,9 @@
+<div class="image">
+	{{#if resource}}
+		<img src="data:{{resource.contentType}};base64,{{resource.bytesB64}}" alt=""></img>
+
+		<div class="description syllabus-text">
+			{{{html element.description}}}
+		</div>
+	{{/if}}
+</div>

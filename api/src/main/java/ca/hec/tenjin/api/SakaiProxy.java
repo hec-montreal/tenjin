@@ -66,6 +66,8 @@ public interface SakaiProxy {
 
 	public ContentResource getResource(String string);
 	
+	public boolean isResourcePublic(ContentResource res);
+	
 	public List<EntityContent> getSiteResources(String siteId, String timestamp, String depth, String resourceId);
 
 	public User getUser(String id) throws UserNotDefinedException;
@@ -80,5 +82,7 @@ public interface SakaiProxy {
 
 	public String getDefaultLocale();
 
+	SakaiCitation getCitation(String citationListId, String citationId) throws ServerOverloadException;
+	
 	List<SakaiCitation> getSiteCitations(String siteId, Collection<EntityContent> siteResources) throws PermissionException, IdUnusedException, TypeException, ServerOverloadException;
 }
