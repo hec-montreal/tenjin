@@ -28,13 +28,14 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 	};
 
 	// Web service to create a Sakai announcement
-	this.createAnnouncement = function(title, message) {
+	this.createAnnouncement = function(title, message, groups) {
 		var tthis = this;
 		var ret = $q.defer();
 
 		var announcement = {
 			'title': title,
-			'message': message
+			'message': message,
+			'groups': groups
 		};
 
 		$http.post('v1/announcement/' + SyllabusService.syllabus.siteId + '.json', announcement).success(function(data) {
