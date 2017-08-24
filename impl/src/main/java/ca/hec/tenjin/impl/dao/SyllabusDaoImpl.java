@@ -271,25 +271,6 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		List<Object> children = (List<Object>) getHibernateTemplate().findByCriteria(dc, 0, 1);
 		return children.size() > 0;
 	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public SyllabusRubricElement getRubric(Long parentId, Long templateStructureId) {
-		DetachedCriteria dc = DetachedCriteria.forClass(SyllabusRubricElement.class);
-		dc.add(Restrictions.eq("parentId", parentId));
-		dc.add(Restrictions.eq("templateStructureId", templateStructureId));
-		
-		List<SyllabusRubricElement> l = (List<SyllabusRubricElement>) getHibernateTemplate().findByCriteria(dc);
-		if (l.size() > 1) { 
-			// Error! TODO exception?
-			log.error("More than one rubric for the given parent id and template structure id! This is very bad");
-			return null;
-		} else if (l.size() == 1) {
-			return l.get(0);
-		} else {
-			return null;
-		}
-	}
 
 	@SuppressWarnings("unchecked")
 	@Override
