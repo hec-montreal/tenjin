@@ -138,8 +138,8 @@ public class UserController {
 		profile.put("sectionAssign", sectionWrite);
 		profile.put("sectionPublish", sectionPublish);
 
-		// Permissions to the syllabi
-		List<Syllabus> syllabusList = syllabusService.getSyllabusListForUser(siteId, currentUserId);
+		// check user permission on each syllabus
+		List<Syllabus> syllabusList = syllabusService.getSyllabusList(siteId);
 		if (syllabusList != null) {
 			for (Syllabus syllabus : syllabusList) {
 

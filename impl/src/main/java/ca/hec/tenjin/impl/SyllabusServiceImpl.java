@@ -222,7 +222,24 @@ public class SyllabusServiceImpl implements SyllabusService {
 				// element should be created
 				if (element.getId() == null || element.getId() < 0) {
 
-					createSyllabusElement(element);
+					if (element.getType().equals(SyllabusRubricElement.TYPE)) {
+						// A rubric should be the same element in all syllabuses
+						SyllabusRubricElement existingRubric = syllabusDao.getRubric(element.getParentId(), element.getTemplateStructureId());
+
+						syllabusesWithExistingRubricMapping = getSyllabusesWithElementMapping(existingRubric);
+
+						if (existingRubric != null) {
+							existingRubric.setCommon(true);
+							existingRubric.setDisplayOrder(element.getDisplayOrder());
+							existingRubric.setElements(((SyllabusRubricElement) element).getElements());
+							element.copyFrom(existingRubric);
+						}
+					}
+
+					if (element.getId() == null || element.getId() < 0) {
+						createSyllabusElement(element);
+					}
+
 					createSyllabusElementMapping(syllabus.getId(), element, element.getDisplayOrder(), false);
 
 					// add mappings to all syllabi if this is a common syllabus
@@ -234,6 +251,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 							}
 						}
 					}
+
 				} else if (existingSyllabusElementMappings != null && existingSyllabusElementMappings.containsKey(element.getId())) {
 
 					compareAndUpdateSyllabusElementMapping(existingSyllabusElementMappings.get(element.getId()), element);
