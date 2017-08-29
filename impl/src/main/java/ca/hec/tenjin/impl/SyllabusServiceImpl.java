@@ -222,24 +222,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 				// element should be created
 				if (element.getId() == null || element.getId() < 0) {
 
-					if (element.getType().equals(SyllabusRubricElement.TYPE)) {
-						// A rubric should be the same element in all syllabuses
-						SyllabusRubricElement existingRubric = syllabusDao.getRubric(element.getParentId(), element.getTemplateStructureId());
-
-						syllabusesWithExistingRubricMapping = getSyllabusesWithElementMapping(existingRubric);
-
-						if (existingRubric != null) {
-							existingRubric.setCommon(true);
-							existingRubric.setDisplayOrder(element.getDisplayOrder());
-							existingRubric.setElements(((SyllabusRubricElement) element).getElements());
-							element.copyFrom(existingRubric);
-						}
-					}
-
-					if (element.getId() == null || element.getId() < 0) {
-						createSyllabusElement(element);
-					}
-
+					createSyllabusElement(element);
 					createSyllabusElementMapping(syllabus.getId(), element, element.getDisplayOrder(), false);
 
 					// add mappings to all syllabi if this is a common syllabus
@@ -290,20 +273,34 @@ public class SyllabusServiceImpl implements SyllabusService {
 					}
 
 					if (mapping.getSyllabusElement().getCommon() && mapping.getSyllabusElement().isComposite() && syllabusDao.elementHasNonCommonChildren(mapping.getSyllabusElement())) {
-						// if the element has children in any other syllabus,
-						// simply remove the mapping
-						// keep the element and mark it non-common
-						mapping.getSyllabusElement().setCommon(false);
-						// delete each mapping for this element when there is no
-						// child
-						for (SyllabusElementMapping mappingWithoutChild : syllabusDao.getMappingsWithoutChildren(mapping.getSyllabusElement())) {
-							syllabusDao.deleteSyllabusObject(mappingWithoutChild);
-						}
 
-					} else {
-						// delete the element and all it's mappings
-						syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
+						AbstractSyllabusElement elem = mapping.getSyllabusElement();
+						List<AbstractSyllabusElement> children = syllabusDao.getChildrenForSyllabusElement((SyllabusCompositeElement)elem);
+						List<SyllabusElementMapping> mappings = syllabusDao.getMappingsForElement(mapping.getSyllabusElement());
+
+						for (SyllabusElementMapping m: mappings) {
+
+							// if this element is mapped in another syllabus, duplicate it and update mapping/children
+							if (m.getSyllabusId() != syllabus.getId()) {
+								AbstractSyllabusElement newElem = copyElement(elem);
+								newElem.setParentId(elem.getParentId());
+								newElem.setCommon(false);
+								syllabusDao.save(newElem);
+
+								m.setSyllabusElement(newElem);
+								//children list contains children from all syllabuses, so only update for this one
+								for (AbstractSyllabusElement child : children) {
+									if(syllabusDao.isElementMappedToSyllabus(child.getId(), m.getSyllabusId())) {
+										child.setParentId(newElem.getId());
+										syllabusDao.saveOrUpdate(child);
+									}
+								}
+							}
+						}
 					}
+
+					// delete the element and all it's mappings
+					syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
 				}
 			}
 		}
@@ -342,7 +339,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		// Copy elements
 		for (int i = 0; i < syllabus.getElements().size(); i++) {
-			createElementCopy(syllabus.getElements().get(i), null, i, copy, sakaiProxy.getCurrentUserId());
+			createElementCopyAndMappings(syllabus.getElements().get(i), null, i, copy, sakaiProxy.getCurrentUserId());
 		}
 	}
 
@@ -671,33 +668,41 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 	}
 
-	private void createElementCopy(AbstractSyllabusElement element, AbstractSyllabusElement parent, int displayOrder, Syllabus forSyllabus, String userId) {
+	private AbstractSyllabusElement copyElement(AbstractSyllabusElement element) {
+		// Create new element
+		AbstractSyllabusElement newElement = null;
+
+		try {
+			newElement = (AbstractSyllabusElement) element.getClass().newInstance();
+		} catch (IllegalAccessException e) {
+			// Should never happen
+			e.printStackTrace();
+
+			return null;
+		} catch (InstantiationException e) {
+			// Should never happen
+			e.printStackTrace();
+
+			return null;
+		}
+
+		newElement.copyFrom(element);
+		newElement.setId(null);
+		newElement.setPublishedId(null);
+		newElement.setEqualsPublished(false);
+		newElement.setLastModifiedDate(new Date());
+		newElement.setLastModifiedBy(sakaiProxy.getCurrentUserId());
+		newElement.setCreatedBy(sakaiProxy.getCurrentUserId());
+		newElement.setCreatedDate(new Date());
+
+		return newElement;
+	}
+
+	private void createElementCopyAndMappings(AbstractSyllabusElement element, AbstractSyllabusElement parent, int displayOrder, Syllabus forSyllabus, String userId) {
 		if (!element.getCommon()) {
-			// Create new element
-			AbstractSyllabusElement newElement = null;
-
-			try {
-				newElement = (AbstractSyllabusElement) element.getClass().newInstance();
-			} catch (IllegalAccessException e) {
-				// Should never happen
-				e.printStackTrace();
-
-				return;
-			} catch (InstantiationException e) {
-				// Should never happen
-				e.printStackTrace();
-
-				return;
-			}
-
-			newElement.copyFrom(element);
-			newElement.setId(null);
+			AbstractSyllabusElement newElement = copyElement(element);
 			newElement.setParentId(parent == null ? null : parent.getId());
-			newElement.setPublishedId(null);
-			newElement.setEqualsPublished(false);
-			newElement.setCreatedBy(userId);
-			newElement.setCreatedDate(new Date());
-			
+
 			syllabusDao.save(newElement);
 
 			createSyllabusElementMapping(forSyllabus.getId(), newElement, displayOrder, false);
@@ -712,7 +717,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 			for (int i = 0; i < comp.getElements().size(); i++) {
 				AbstractSyllabusElement child = comp.getElements().get(i);
 
-				createElementCopy(child, comp, i, forSyllabus, userId);
+				createElementCopyAndMappings(child, comp, i, forSyllabus, userId);
 			}
 		}
 	}
