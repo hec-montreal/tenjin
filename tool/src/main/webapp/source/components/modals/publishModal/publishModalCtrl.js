@@ -35,7 +35,7 @@ tenjinApp.controller('PublishModalCtrl', ['$scope', '$rootScope', '$uibModalInst
 
 	$scope.checkAnnouncementAndClose = function() {
 		if ($scope.announcementData.doAnnounce) {
-			PublishService.createAnnouncement($scope.announcementData.announceTitle, $scope.announcementData.announceMessage).then(function() {
+			PublishService.createAnnouncement($scope.announcementData.announceTitle, $scope.announcementData.announceMessage, $scope.syllabus.sections).then(function() {
 			       AlertService.showAlert('createAnnouncementSuccess');
 			}).catch(function(reason) {
 				AlertService.showAlert('cannotCreateAnnouncement');

@@ -17,7 +17,7 @@
 		<li data-ng-if="element.attributes.examOral === 'true' || element.attributes.examWritten === 'true'">
 			{{'EXAM_TERMS' | translate}}:
 			<span data-ng-if="element.attributes.examOral === 'true' " >{{'EXAM_ORAL' | translate}} </span>
-			<span daat-ng-if="element.attributes.examOral === 'true' && element.attributes.examWritten === 'true'" >{{slash}}</span>
+			<span data-ng-if="element.attributes.examOral === 'true' && element.attributes.examWritten === 'true'" >{{slash}}</span>
 			<span data-ng-if="element.attributes.examWritten === 'true'" >{{'EXAM_WRITTEN' | translate}} </span>
 		</li>
 

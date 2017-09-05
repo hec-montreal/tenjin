@@ -193,11 +193,6 @@ public class PublishServiceImpl implements PublishService {
 				if (mapping != null && element.getPublishedId() != null) {
 					// we assume the common elements are already published
 					AbstractPublishedSyllabusElement publishedElement = publishedSyllabusDao.getPublishedElement(element.getPublishedId());
-
-					if (publishedElement != null && !publishedElement.getCommon()) {
-						publishedElement.setCommon(true);
-					}
-
 					publishMapping(mapping, publishedElement);
 				} else {
 					log.error("No mapping exists for syllabus " + syllabus.getId() + " and element " + element.getId());

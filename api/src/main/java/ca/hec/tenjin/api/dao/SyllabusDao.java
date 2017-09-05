@@ -135,15 +135,6 @@ public interface SyllabusDao {
 	public boolean elementHasNonCommonChildren(AbstractSyllabusElement element);
 
 	/**
-	 * get a rubric for the given parent id and template structure id (there should be only one for all syllabi)
-	 * 
-	 * @param Long parentId
-	 * @param Long templateStructureId
-	 * @return SyllabusRubricElement The desired rubric for the given parentId and template structure
-	 */
-	public SyllabusRubricElement getRubric(Long parentId, Long templateStructureId);
-
-	/**
 	 * get syllabus element mappings for a given element
 	 * 
 	 * @param Long parentId
@@ -224,5 +215,14 @@ public interface SyllabusDao {
 	 * @return List<AbstractSyllabusElement>
 	 */
 	public List<AbstractSyllabusElement> getSyllabusElementsForTemplateStructureAndSite(Long templateStructureId, String siteId);
+
+	/**
+	 * return true if the element with the given id has a mapping to the syllabus
+	 *
+	 * @param Long elementId
+	 * @param String syllabusId
+	 * @return true or false
+	 */
+	public boolean isElementMappedToSyllabus(Long elementId, Long syllabusId);
 }
 

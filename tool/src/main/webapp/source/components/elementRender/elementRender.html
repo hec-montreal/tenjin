@@ -8,7 +8,7 @@
 		</div>
 
 		<!-- Not published notice -->
-		<div data-ng-if="element.type !== 'rubric' && !element.equalsPublished && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice warning not-published">
+		<div data-ng-if="isNotPublishedFlagVisible(element)" class="notice warning not-published">
 			<h3><span class="glyphicon glyphicon-flag"></span> {{ 'NOT_PUBLISHED' | translate }}</h3>
 		</div>
 

@@ -274,25 +274,6 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public SyllabusRubricElement getRubric(Long parentId, Long templateStructureId) {
-		DetachedCriteria dc = DetachedCriteria.forClass(SyllabusRubricElement.class);
-		dc.add(Restrictions.eq("parentId", parentId));
-		dc.add(Restrictions.eq("templateStructureId", templateStructureId));
-		
-		List<SyllabusRubricElement> l = (List<SyllabusRubricElement>) getHibernateTemplate().findByCriteria(dc);
-		if (l.size() > 1) { 
-			// Error! TODO exception?
-			log.error("More than one rubric for the given parent id and template structure id! This is very bad");
-			return null;
-		} else if (l.size() == 1) {
-			return l.get(0);
-		} else {
-			return null;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
 	public List<SyllabusElementMapping> getMappingsForElement(AbstractSyllabusElement element) {
 		DetachedCriteria dc = DetachedCriteria.forClass(SyllabusElementMapping.class);
 		dc.add(Restrictions.eq("syllabusElement", element));
@@ -415,5 +396,15 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 				(List<AbstractSyllabusElement>) getHibernateTemplate().find(query, siteId, templateStructureId);
 
 		return elements;
+	}
+
+	public boolean isElementMappedToSyllabus(Long elementId, Long syllabusId) {
+		String qry = "from SyllabusElementMapping mapping where mapping.syllabusElement.id = ? and mapping.syllabusId = ?";
+
+		List<SyllabusElementMapping> mappings = (List<SyllabusElementMapping>) getHibernateTemplate().find(
+				qry, elementId, syllabusId);
+
+		return mappings.size()>0;
+
 	}
 }
