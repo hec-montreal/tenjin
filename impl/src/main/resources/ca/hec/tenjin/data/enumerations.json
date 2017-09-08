@@ -29,7 +29,68 @@
 	}, {
 		"id": 9,
 		"name": "DOCUMENT_TYPE_PEDAGOGIC"
+	}, {
+		"id": 10,
+		"name": "DOCUMENT_TYPE_OTHER"
+	}, {
+		"id": 11,
+		"name": "DOCUMENT_TYPE_VIDEO"
+	}, {
+		"id": 12,
+		"name": "DOCUMENT_TYPE_THESIS"
+	}, {
+		"id": 13,
+		"name": "DOCUMENT_TYPE_WEBSITE"
+	}, {
+		"id": 14,
+		"name": "DOCUMENT_TYPE_GAME"
+	}, {
+		"id": 15,
+		"name": "DOCUMENT_TYPE_REPORT_ORGANIZATION"
+	}, {
+		"id": 16,
+		"name": "DOCUMENT_TYPE_REPORT_CONSULTANT"
+	}, {
+		"id": 17,
+		"name": "DOCUMENT_TYPE_REPORT_ANNUAL"
+	}, {
+		"id": 18,
+		"name": "DOCUMENT_TYPE_SOFTWARE"
+	}, {
+		"id": 19,
+		"name": "DOCUMENT_TYPE_BOOK"
+	}, {
+		"id": 20,
+		"name": "DOCUMENT_TYPE_IMAGE"
+	}, {
+		"id": 21,
+		"name": "DOCUMENT_TYPE_POLL"
+	}, {
+		"id": 22,
+		"name": "DOCUMENT_TYPE_AUDIO"
+	}, {
+		"id": 23,
+		"name": "DOCUMENT_TYPE_ARTICLE_UNPUBLISHED"
+	}, {
+		"id": 24,
+		"name": "DOCUMENT_TYPE_ARTICLE_PROFESSIONAL"
+	}, {
+		"id": 25,
+		"name": "DOCUMENT_TYPE_ARTICLE_SCIENCE"
+	}, {
+		"id": 26,
+		"name": "DOCUMENT_TYPE_ARTICLE_NEWS"
+	}, {
+		"id": 27,
+		"name": "DOCUMENT_TYPE_ARTICLE"
+	}, {
+		"id": 28,
+		"name": "DOCUMENT_TYPE_CONFERENCE_ACT"
+	}, {
+		"id": 29,
+		"name": "DOCUMENT_TYPE_REPORT_GOV"
 	}],
+
 
 	"hyperlinkTypes": [{
 		"id": -1,
