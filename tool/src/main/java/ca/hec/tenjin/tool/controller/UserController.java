@@ -139,7 +139,7 @@ public class UserController {
 		profile.put("sectionPublish", sectionPublish);
 
 		// check user permission on each syllabus
-		List<Syllabus> syllabusList = syllabusService.getSyllabusList(siteId);
+		List<Syllabus> syllabusList = syllabusService.getSyllabusListForUser(siteId, sakaiProxy.getCurrentUserId());
 		if (syllabusList != null) {
 			for (Syllabus syllabus : syllabusList) {
 				// The user has permissions in the site
