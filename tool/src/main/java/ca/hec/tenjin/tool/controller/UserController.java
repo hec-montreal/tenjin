@@ -107,7 +107,8 @@ public class UserController {
 			}
 
 			// Whether to allow import
-			profile.put("activateImportButton", importProvider != null);
+			profile.put("activateImportButton", importProvider != null &&
+					securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON, site));
 
 			// The user has permissions in the sections
 			boolean writeOnSite = securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS, site);
@@ -139,7 +140,7 @@ public class UserController {
 		profile.put("sectionPublish", sectionPublish);
 
 		// check user permission on each syllabus
-		List<Syllabus> syllabusList = syllabusService.getSyllabusList(siteId);
+		List<Syllabus> syllabusList = syllabusService.getSyllabusListForUser(siteId, sakaiProxy.getCurrentUserId());
 		if (syllabusList != null) {
 			for (Syllabus syllabus : syllabusList) {
 
