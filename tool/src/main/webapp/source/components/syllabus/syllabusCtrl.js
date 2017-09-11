@@ -78,7 +78,7 @@
 
 		if (published) {
 			post += '?published=true&locale=';
-		} else{
+		} else {
 			post += '?locale=';
 		}
 
@@ -93,15 +93,15 @@
 		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf-public.json' + post, '_blank');
 	};
 
-	$scope.showEditionView = function () {
+	$scope.showEditionView = function() {
 		SyllabusService.viewMode = "edit";
 	};
 
-	$scope.showStudentView = function () {
+	$scope.showStudentView = function() {
 		SyllabusService.viewMode = "student";
 	};
 
-	$scope.showPublicView = function () {
+	$scope.showPublicView = function() {
 		SyllabusService.viewMode = "public";
 	};
 
@@ -151,10 +151,14 @@
 	});
 
 	window.onbeforeunload = function() {
+		if (!SyllabusService || !$translate) {
+			return;
+		}
+
 		if (SyllabusService.isDirty()) {
 			return $translate.instant('WARNING_UNSAVED');
 		}
-	}
+	};
 
 	// remove unsaved warning when leaving tenjin
 	$scope.$on('$destroy', function() {
