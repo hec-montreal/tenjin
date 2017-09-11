@@ -10,6 +10,7 @@
           class="ca.hec.tenjin.impl.jobs.RefreshProvidedElementsJobImpl">
         <property name="syllabusService" ref="ca.hec.tenjin.api.SyllabusService" />
         <property name="templateService" ref="ca.hec.tenjin.api.TemplateService" />
+        <property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
     </bean>
 
     <bean id="org.sakaiproject.api.app.scheduler.JobBeanWrapper.tenjinRefreshJob"

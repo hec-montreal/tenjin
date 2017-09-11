@@ -11,6 +11,6 @@ import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
  */
 public interface ExternalDataProvider {
 
-	AbstractSyllabusElement getAbstractSyllabusElement(String siteId);
+	AbstractSyllabusElement getAbstractSyllabusElement(String siteId, String locale);
 
 }

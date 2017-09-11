@@ -52,7 +52,7 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 				if (templateStructure.getProvider() != null){
 					try {
 						ExternalDataProvider provider = (ExternalDataProvider)applicationContext.getBean(templateStructure.getProvider().getBeanName());
-						element = provider.getAbstractSyllabusElement(siteId);
+						element = provider.getAbstractSyllabusElement(siteId, locale);
 						if (element != null) {
 							element.setProviderId(templateStructure.getProvider().getProviderId());
 						}
@@ -117,7 +117,7 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 				if (templateStructure.getProvider() != null) {
 					try {
 						ExternalDataProvider provider = (ExternalDataProvider) applicationContext.getBean(templateStructure.getProvider().getBeanName());
-						el = provider.getAbstractSyllabusElement(siteId);
+						el = provider.getAbstractSyllabusElement(siteId, locale);
 						if (el != null) {
 							el.setProviderId(templateStructure.getProvider().getProviderId());
 						}

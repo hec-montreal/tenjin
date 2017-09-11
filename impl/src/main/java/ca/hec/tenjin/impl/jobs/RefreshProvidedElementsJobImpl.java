@@ -1,5 +1,6 @@
 package ca.hec.tenjin.impl.jobs;
 
+import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TemplateService;
 import ca.hec.tenjin.api.dao.SyllabusDao;
@@ -8,6 +9,7 @@ import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
 import ca.hec.tenjin.api.provider.ExternalDataProvider;
+import ca.hec.tenjin.impl.SakaiProxyImpl;
 import lombok.Setter;
 import org.apache.log4j.Logger;
 
@@ -17,6 +19,7 @@ import org.quartz.JobExecutionException;
 
 import ca.hec.tenjin.api.jobs.RefreshProvidedElementsJob;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.site.api.Site;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJob, ApplicationContextAware {
 
@@ -37,6 +41,9 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
 
     @Setter
     TemplateService templateService;
+
+    @Setter
+    SakaiProxy sakaiProxy;
 
     /*
      * Job to refresh a syllabus element's content from it's provider (site id and template structure id must
@@ -52,15 +59,31 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
     public void execute(JobExecutionContext context) throws JobExecutionException {
 
         String siteId = context.getMergedJobDataMap().getString("siteId");
+        Site site = null;
 
         Long templateStructureId = null;
         try {
             templateStructureId = context.getMergedJobDataMap().getLongFromString("templateStructureId");
+            site = sakaiProxy.getSite(siteId);
         } catch (NumberFormatException e) {
             log.error("NumberFormatException " + e.getMessage());
             return;
+        } catch (IdUnusedException e) {
+            log.error("Site id does not exist: " + siteId);
+            return;
         }
         log.info("Refresh provided elements for site : " + siteId + " and templateStructure " + templateStructureId);
+
+        // get locale in the same way as when creating the common syllabus
+        String locale = site.getProperties().getProperty("locale_string");
+        if (locale == null || locale.isEmpty()) {
+            String localePropName = sakaiProxy.getSakaiProperty("tenjin.syllabusLocale.sitePropertyName");
+            locale = site.getProperties().getProperty(localePropName);
+        }
+        if (locale == null || locale.isEmpty()) {
+            // use default server locale
+            locale = Locale.getDefault().toString();
+        }
 
         List<AbstractSyllabusElement> elementsToRefresh =
                 syllabusService.getSyllabusElementsForTemplateStructureAndSite(templateStructureId, siteId);
@@ -82,7 +105,7 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
         ExternalDataProvider provider =
                 (ExternalDataProvider) applicationContext.getBean(templateStructure.getProvider().getBeanName());
 
-        AbstractSyllabusElement refreshedElement = provider.getAbstractSyllabusElement(siteId);
+        AbstractSyllabusElement refreshedElement = provider.getAbstractSyllabusElement(siteId, locale);
 
             for (AbstractSyllabusElement e : elementsToRefresh) {
 
