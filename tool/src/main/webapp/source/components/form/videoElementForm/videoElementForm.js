@@ -26,6 +26,11 @@
 			$scope.element.preSave = function() {
 				if ($scope.inputMode === 'url') {
 					delete this.attributes.embedCode;
+
+					// Strip additional youtube parameters
+					if (this.attributes.videoUrl && this.attributes.videoUrl.indexOf('youtube') >= 0) {
+						this.attributes.videoUrl = this.attributes.videoUrl.substring(0, this.attributes.videoUrl.indexOf('&'));
+					}
 				}
 
 				if ($scope.inputMode === 'embed') {
@@ -37,7 +42,7 @@
 			$scope.element.validate = function() {
 				var ret = [];
 
-				if($scope.inputMode === 'url') {
+				if ($scope.inputMode === 'url') {
 					if (!this.attributes.videoUrl || this.attributes.videoUrl.length === 0) {
 						ret.push({
 							field: "videoUrl",
