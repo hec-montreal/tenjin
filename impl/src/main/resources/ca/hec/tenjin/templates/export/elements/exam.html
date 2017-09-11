@@ -27,17 +27,17 @@
 				<li>
 					<span class="label">{{str 'EXAM_SUBMISSION_TYPE'}}:</span>
 
-					{{#if element.attributes.examPaper}}
+					{{#if-eq element.attributes.examPaper 'true'}}
 						{{str 'EXAM_PAPER'}}
-					{{/if}}
+					{{/if-eq}}
 
 					{{#attr-cond this 'and' 'examPaper' 'examElectronic'}}
 						/
 					{{/attr-cond}}
 
-					{{#if element.attributes.examElectronic}}
+					{{#if-eq element.attributes.examElectronic 'true'}}
 						{{str 'EXAM_ELECTRONIC'}}
-					{{/if}}
+					{{/if-eq}}
 				</li>
 			{{/attr-cond}}
 
