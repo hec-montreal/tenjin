@@ -28,7 +28,7 @@
 					delete this.attributes.embedCode;
 
 					// Strip additional youtube parameters
-					if (this.attributes.videoUrl && this.attributes.videoUrl.indexOf('youtube') >= 0) {
+					if (this.attributes.videoUrl && this.attributes.videoUrl.indexOf('youtube') >= 0 && this.attributes.videoUrl.indexOf('&') > 0) {
 						this.attributes.videoUrl = this.attributes.videoUrl.substring(0, this.attributes.videoUrl.indexOf('&'));
 					}
 				}
