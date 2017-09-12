@@ -19,7 +19,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 
 			ret.reject();
 		});
-		
+
 		if (refreshResources === true) {
 			ResourcesService.loadResources(UserService.getProfile().siteId).then(function() {
 				CitationsService.loadCitations().then(function() {
@@ -50,6 +50,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 	AlertService.reset();
 
 	$scope.refresh = refresh;
+	$scope.working = false;
 
 	$scope.addSyllabus = function() {
 		ModalService.createSyllabus().result.then(function(data) {
@@ -61,7 +62,11 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 				}
 			}
 
+			$scope.working = true;
+
 			SyllabusService.create(UserService.getProfile().siteId, data.name, sections).then(function() {
+				$scope.working = false;
+
 				refresh();
 			}).catch(function(e) {
 				AlertService.showSyllabusSaveAlert(e);
