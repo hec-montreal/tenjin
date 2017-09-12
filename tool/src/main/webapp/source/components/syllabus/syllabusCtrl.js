@@ -151,7 +151,7 @@
 	});
 
 	window.onbeforeunload = function() {
-		if (!SyllabusService || !$translate) {
+		if (!window['SyllabusService'] || !window['$translate']) {
 			return;
 		}
 
