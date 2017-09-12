@@ -1,7 +1,9 @@
 package ca.hec.tenjin.impl.dao;
 
-import java.util.List;
-
+import ca.hec.tenjin.api.dao.TemplateDao;
+import ca.hec.tenjin.api.model.template.ExternalDataProviderDefinition;
+import ca.hec.tenjin.api.model.template.Template;
+import ca.hec.tenjin.api.model.template.TemplateStructure;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -9,10 +11,6 @@ import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.memory.api.Cache;
 import org.sakaiproject.memory.api.MemoryService;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
-import ca.hec.tenjin.api.dao.*;
-import ca.hec.tenjin.api.model.template.Template;
-import ca.hec.tenjin.api.model.template.TemplateStructure;
 
 public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao {
 
@@ -69,5 +67,15 @@ public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao 
 			templateStructureCache.put(templateStructureId, ts);
 		}
 		return ts;
+	}
+
+	@Override
+	public ExternalDataProviderDefinition getExternalDataProviderDefinition(Long providerId) throws IdUnusedException {
+		ExternalDataProviderDefinition e;
+
+		e = getHibernateTemplate().get(ExternalDataProviderDefinition.class, providerId);
+		if (e == null)
+			throw  new IdUnusedException(providerId.toString());
+		return e;
 	}
 }

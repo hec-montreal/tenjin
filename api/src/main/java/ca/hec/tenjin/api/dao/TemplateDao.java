@@ -20,10 +20,10 @@
  ******************************************************************************/
 package ca.hec.tenjin.api.dao;
 
-import org.sakaiproject.exception.IdUnusedException;
-
+import ca.hec.tenjin.api.model.template.ExternalDataProviderDefinition;
 import ca.hec.tenjin.api.model.template.Template;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
+import org.sakaiproject.exception.IdUnusedException;
 
 /**
  *
@@ -35,5 +35,7 @@ public interface TemplateDao {
 	public Template getTemplate(Long templateId) throws IdUnusedException;
 	
 	public TemplateStructure getTemplateStructure(Long templateStructureId) throws IdUnusedException;
+
+	public ExternalDataProviderDefinition getExternalDataProviderDefinition(Long providerId) throws IdUnusedException;
 }
 

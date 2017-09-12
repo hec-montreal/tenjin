@@ -1,12 +1,12 @@
 package ca.hec.tenjin.api;
 
-import java.util.HashMap;
-
-import org.sakaiproject.exception.IdUnusedException;
-
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.template.Template;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
+import org.sakaiproject.exception.IdUnusedException;
+
+import java.util.HashMap;
 
 /**
  * An interface to abstract all Template related operations
@@ -24,7 +24,9 @@ public interface TemplateService {
 	 */
 	public Syllabus getEmptySyllabusFromTemplate(Long templateId, String siteId, String locale);
 
-	/**
+	public AbstractSyllabusElement getProvidedElement (Long providerId, String siteId, String locale);
+
+		/**
 	 * Retrieves the template
 	 * @param templateId
 	 * @return

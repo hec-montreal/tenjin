@@ -1,22 +1,22 @@
 package ca.hec.tenjin.impl;
 
-import java.util.*;
-
-import ca.hec.tenjin.api.provider.ExternalDataProvider;
-import org.apache.log4j.Logger;
-import org.sakaiproject.exception.IdUnusedException;
-import org.springframework.context.ApplicationContext;
-
 import ca.hec.tenjin.api.TemplateService;
 import ca.hec.tenjin.api.dao.TemplateDao;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.tenjin.api.model.template.ExternalDataProviderDefinition;
 import ca.hec.tenjin.api.model.template.Template;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
+import ca.hec.tenjin.api.provider.ExternalDataProvider;
 import lombok.Setter;
+import org.apache.log4j.Logger;
+import org.sakaiproject.exception.IdUnusedException;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+
+import java.util.*;
 
 public class TemplateServiceImpl implements TemplateService, ApplicationContextAware {
 
@@ -103,6 +103,21 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 
 		return syllabus;
 	}
+
+	@Override
+	public AbstractSyllabusElement getProvidedElement(Long providerId, String siteId, String locale) {
+		try {
+			ExternalDataProviderDefinition dataProvider = templateDao.getExternalDataProviderDefinition(providerId);
+			ExternalDataProvider provider = (ExternalDataProvider)applicationContext.getBean(dataProvider.getBeanName());
+			AbstractSyllabusElement element = provider.getAbstractSyllabusElement(siteId, locale);
+		} catch (IdUnusedException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+
 
 	private void recursiveAddElements(TemplateStructure root, AbstractSyllabusElement element, String locale, long idElement, String siteId) {
 		

@@ -1,9 +1,14 @@
 package ca.hec.tenjin.impl;
 
-import java.util.*;
-
+import ca.hec.tenjin.api.*;
+import ca.hec.tenjin.api.dao.SyllabusDao;
+import ca.hec.tenjin.api.exception.*;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.provider.CourseOutlineProvider;
-import org.apache.commons.collections.ArrayStack;
+import lombok.Setter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.log4j.Logger;
@@ -13,24 +18,7 @@ import org.sakaiproject.site.api.Site;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.SyllabusLockService;
-import ca.hec.tenjin.api.SyllabusService;
-import ca.hec.tenjin.api.TemplateService;
-import ca.hec.tenjin.api.TenjinFunctions;
-import ca.hec.tenjin.api.TenjinSecurityService;
-import ca.hec.tenjin.api.dao.SyllabusDao;
-import ca.hec.tenjin.api.exception.DeniedAccessException;
-import ca.hec.tenjin.api.exception.NoSiteException;
-import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.exception.StructureSyllabusException;
-import ca.hec.tenjin.api.exception.SyllabusLockedException;
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
-import lombok.Setter;
+import java.util.*;
 
 /**
  * Implementation of {@link SyllabusService}
@@ -741,7 +729,12 @@ public class SyllabusServiceImpl implements SyllabusService {
 		AbstractSyllabusElement newElement = null;
 
 		try {
-			newElement = (AbstractSyllabusElement) element.getClass().newInstance();
+			if (element.getProviderId() != null) {
+				System.out.println("L'élément est provided " + element.getAttributes());
+				newElement = templateService.getProvidedElement(element.getProviderId(), element.getSiteId(), forSyllabus.getLocale());
+			}
+				else
+					newElement = (AbstractSyllabusElement) element.getClass().newInstance();
 		} catch (IllegalAccessException e) {
 			// Should never happen
 			e.printStackTrace();
