@@ -63,7 +63,7 @@ BEGIN
     END LOOP;
 
   n := n+1;
-  dbms_output.put_line('Inserted rubric ' || rubric_id || ' into common syllabus for site ' || site_id);
+  dbms_output.put_line('Inserted rubric ' || rubric_id || ' into common syllabus for site ' || site_id || ' locale = ' || locale);
   END LOOP;
   dbms_output.put_line('New rubric inserted in ' || n || ' syllabuses');
   CLOSE common_evaluation_elements_cur;
