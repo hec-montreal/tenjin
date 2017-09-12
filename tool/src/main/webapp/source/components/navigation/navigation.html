@@ -5,7 +5,7 @@
 		<a data-nodrag data-ng-click="treeService.selectElement(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }">
 			<div ng-class="{'numbered-title': isTitleNumbered(item.type)}">
 				<div data-ng-if="item.type === 'evaluation' || item.type ==='exam'" class="number">
-					{{ $index + 1 }}&nbsp;-&nbsp;
+					{{ item.$numero }}&nbsp;-&nbsp;
 				</div>
 
 				<div data-ng-if="(item.type === 'lecture' || item.type === 'tutorial') && item.attributes.numero" class="number">
