@@ -9,7 +9,6 @@ DECLARE
     AND s.common = 1
     AND e.common = 1
     AND e.templatestructure_id = 12
-    AND s.site_id LIKE '30-400-17.A2017'
     AND e.class_type = 'ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement';
     
   evaluations_element_id NUMBER(19,0);
