@@ -72,6 +72,12 @@ ul {
 	padding-bottom: 10px;
 }
 
+.element > .important {
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: bold;
+}
+
 .box-title {
 	font-size: 18px;
 	padding: 5px;

@@ -1,8 +1,8 @@
-(function () {
+(function() {
 	var $selectedElement = null;
 
-	$(document).ready(function () {
-		$(".navigation-element .click").click(function () {
+	$(document).ready(function() {
+		$(".navigation-element .click").click(function() {
 			selectElement(this);
 		});
 
@@ -11,7 +11,7 @@
 		updateElements();
 	});
 
-	var updateElements = function () {
+	var updateElements = function() {
 		// Hide all elements
 		$(".element").hide();
 
@@ -27,13 +27,11 @@
 		$selectedElement.find(".element-debug-info").hide();
 		$selectedElement.show();
 
-		console.log($selectedElement[0]);
-
 		$(".navigation-element").removeClass("selected");
 		$(".navigation-element[data-id='" + $selectedElement.attr("data-id") + "']").addClass("selected");
 	};
 
-	var selectElement = function (el) {
+	var selectElement = function(el) {
 		var $el = $(el).parents(".navigation-element");
 
 		$selectedElement = $(".element[data-id='" + $el.attr("data-id") + "']");

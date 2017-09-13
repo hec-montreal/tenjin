@@ -300,7 +300,9 @@
 		"VERSION_IN_EDITION": "Version in edition",
 		"VERSION_STUDENTS": "Version for students",
 		"VERSION_PUBLIC": "Version for public",
-		"VIEW": "View"
+		"VIEW": "View",
+		"PAGE": "Page",
+		"DE": "of"
 	},
 
 	"fr_CA": {
@@ -604,6 +606,8 @@
 		"VERSION_IN_EDITION": "Version en édition",
 		"VERSION_STUDENTS": "Version pour étudiants",
 		"VERSION_PUBLIC": "Version publique",
-		"VIEW": "Vue"
+		"VIEW": "Vue",
+		"PAGE": "Page",
+		"DE": "de"
 	}
 }

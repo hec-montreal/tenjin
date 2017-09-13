@@ -7,6 +7,15 @@
 			<style type="text/css">
 				{{> css/pdf.css}}
 			</style>
+
+			<!-- Pagination -->
+			<style type="text/css">
+				@page {
+					@bottom-right {
+						content: "{{str 'PAGE'}} " counter(page) " {{str 'DE'}} " counter(pages);
+					}
+				}
+			</style>
 		{{/if-eq}}
 
 		{{#if-eq mode 'html'}}

@@ -3,6 +3,12 @@
 		{{element.type}} ({{childrenCount}})
 	</div>
 
+	{{#if element.important}}
+		<div class="important">
+			{{str 'FORM_IMPORTANT'}}
+		</div>
+	{{/if}}
+
 	{{#if-eq element.type 'composite'}}
 		{{> elements/composite.html}}
 	{{/if-eq}}

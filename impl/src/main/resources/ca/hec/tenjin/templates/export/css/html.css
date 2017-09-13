@@ -30,6 +30,10 @@ body {
 	border-bottom: 4px solid #003366;
 }
 
+#footer {
+	display: none;
+}
+
 #course-title {
 	text-align: center;
 	padding-top: 40px;
@@ -84,6 +88,10 @@ body {
 .element {
 	padding-top: 10px;
 	padding-bottom: 10px;
+}
+
+.element > .important {
+	text-transform: uppercase;
 }
 
 .box-title {
