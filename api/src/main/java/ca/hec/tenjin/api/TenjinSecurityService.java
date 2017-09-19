@@ -1,7 +1,6 @@
 package ca.hec.tenjin.api;
 
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 
@@ -34,28 +33,4 @@ public interface TenjinSecurityService {
 	 * @return true or false
 	 */
 	public boolean checkOnSiteGroup(String userId, String permission, Site site);
-
-	/**
-	 * Checks whether the user has the permission to read the given syllabus.
-	 * @param userId
-	 * @param site
-	 * @return true or false
-	 */
-	public boolean canRead(String userId, AbstractSyllabus syllabus);
-
-	/**
-	 * Checks whether the user has the permission to write the given syllabus.
-	 * @param userId
-	 * @param site
-	 * @return true or false
-	 */
-	public boolean canWrite(String userId, AbstractSyllabus syllabus);
-
-	/**
-	 * Checks whether the user has the permission to publish the given syllabus.
-	 * @param userId
-	 * @param site
-	 * @return true or false
-	 */
-	public boolean canPublish(String userId, AbstractSyllabus syllabus);
 }

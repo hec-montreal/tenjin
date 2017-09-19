@@ -114,7 +114,7 @@ public class PublishServiceImpl implements PublishService {
 	public PublishedSyllabus getPublishedSyllabus(String siteId, String sectionId) throws NoSyllabusException, DeniedAccessException {
 		PublishedSyllabus ret = publishedSyllabusDao.getPublishedSyllabusOrNull(siteId, sectionId);
 
-		if (!securityService.canRead(sakaiProxy.getCurrentUserId(), ret))
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_READ, ret))
 			throw new DeniedAccessException();
 		if (ret == null) {
 			throw new NoSyllabusException();
@@ -140,7 +140,7 @@ public class PublishServiceImpl implements PublishService {
 
 		// throw an exception if current user does not have publish permission
 		// on the syllabus
-		if (!securityService.canPublish(sakaiProxy.getCurrentUserId(), syllabus))
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_PUBLISH, syllabus))
 			throw new DeniedAccessException();
 
 		// throw an exception if the common syllabus is not published

@@ -55,7 +55,7 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 			return null;
 		}
 
-		if (!securityService.canWrite(sakaiProxy.getCurrentUserId(), syllabus)) {
+		if (!securityService.check(sakaiProxy.getCurrentUserId(), TenjinFunctions.TENJIN_FUNCTION_WRITE, syllabus)) {
 			throw new DeniedAccessException();
 		}
 
