@@ -1,6 +1,7 @@
 package ca.hec.tenjin.api;
 
 import java.util.List;
+import java.util.Map;
 
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
@@ -132,7 +133,7 @@ public interface SyllabusService {
 	 * @throws StructureSyllabusException
 	 */
 	Syllabus transferCopySyllabus(String siteId, Long syllabusId, String title, boolean common, Long templateId, String locale, String courseTitle,
-							  String createdBy, String createdByName) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException;
+							  String createdBy, String createdByName, Map<Long, AbstractSyllabusElement> commonCopyMapping) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException;
 
 	/**
 	 * Retrieve the list of child elements for the given composite element

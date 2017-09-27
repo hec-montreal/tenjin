@@ -8,6 +8,7 @@ import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import lombok.Setter;
 import org.apache.log4j.Logger;
@@ -71,6 +72,9 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
         Map<String, String> transversalMap = new HashMap<String, String>();
         List<Syllabus> syllabiToCopy, syllabiInDestination ;
         Syllabus syllabusCopy = null;
+        Syllabus commonSyllabus = null;
+        Site toSite = null;
+        Map<Long, AbstractSyllabusElement> mappingCommonSyllabusOldNew = new HashMap<Long, AbstractSyllabusElement>();
 
         //Check if we have content to copy
         try {
@@ -89,7 +93,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
                 syllabiInDestination = syllabusService.getSyllabusList(toContext);
 
                 for (Syllabus syllabus: syllabiInDestination){
-                   syllabusDao.deleteSyllabusObject(syllabus);
+                   syllabusDao.softDeleteSyllabus(syllabus);
 
                 }
             } catch (NoSiteException e) {
@@ -99,32 +103,43 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
             }
         }
 
-        //copy syllabi
-        for(Syllabus syllabus: syllabiToCopy){
-            try {
-                Site toSite = sakaiProxy.getSite(toContext);
-                syllabusCopy = syllabusService.transferCopySyllabus(toContext, syllabus.getId(), syllabus.getTitle(),
-                        syllabus.getCommon(), syllabus.getTemplateId(), syllabus.getLocale(),toSite.getTitle(),
-                        sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName());
-                if (syllabusCopy.getCommon()){
-                    for (Group group: toSite.getGroups()){
-                        if (group.getProviderGroupId() != null){
-                            syllabusDao.addSection(syllabusCopy.getId().toString(),group.getId());
-                        }
-                    }
+        try {
+            toSite = sakaiProxy.getSite(toContext);
 
+            //copy common
+            commonSyllabus = syllabusService.getCommonSyllabus(fromContext);
+            syllabusCopy = syllabusService.transferCopySyllabus(toContext, commonSyllabus.getId(), commonSyllabus.getTitle(),
+                    commonSyllabus.getCommon(), commonSyllabus.getTemplateId(), commonSyllabus.getLocale(),toSite.getTitle(),
+                    sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew);
+            for (Group group: toSite.getGroups()){
+                if (group.getProviderGroupId() != null){
+                    syllabusDao.addSection(syllabusCopy.getId().toString(),group.getId());
                 }
-            } catch (DeniedAccessException e) {
-                e.printStackTrace();
-            } catch (IdUnusedException e) {
-                e.printStackTrace();
-            } catch (NoSyllabusException e) {
-                e.printStackTrace();
-            } catch (StructureSyllabusException e) {
-                e.printStackTrace();
             }
 
+
+            syllabiToCopy.remove(commonSyllabus);
+
+            if (syllabiToCopy.size()>0){
+
+            }
+
+            //copy rest of syllabi
+            for(Syllabus syllabus: syllabiToCopy){
+                syllabusCopy = syllabusService.transferCopySyllabus(toContext, syllabus.getId(), syllabus.getTitle(),
+                        syllabus.getCommon(), syllabus.getTemplateId(), syllabus.getLocale(),toSite.getTitle(),
+                        sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew);
+            }
+        } catch (DeniedAccessException e) {
+            e.printStackTrace();
+        } catch (IdUnusedException e) {
+            e.printStackTrace();
+        } catch (NoSyllabusException e) {
+            e.printStackTrace();
+        } catch (StructureSyllabusException e) {
+            e.printStackTrace();
         }
+
 
 
         return transversalMap;
@@ -168,7 +183,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
 
     @Override
     public void transferCopyEntities(String fromContext, String toContext, List<String> ids) {
-        transferCopyEntities(fromContext, toContext, ids, false);
+        transferCopyEntities(fromContext, toContext, ids, true);
     }
 
     @Override

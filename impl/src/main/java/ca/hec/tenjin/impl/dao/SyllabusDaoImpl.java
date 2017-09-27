@@ -230,9 +230,9 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	}
 
 	@Override
-	public void deleteSyllabusObject(Object o) {		
+	public void deleteSyllabusObject(Object o) {
 		try {
-			getHibernateTemplate().delete(o);		
+			getHibernateTemplate().delete(o);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -406,5 +406,13 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
 		return mappings.size()>0;
 
+	}
+
+	@Override
+	public boolean cleanupSite(String siteId) {
+		List<Syllabus> siteSyllabi = getSyllabusList(siteId);
+		List<AbstractSyllabusElement> syllabusElements;
+		List<SyllabusElementMapping> syllabusElementMappings;
+		return false;
 	}
 }

@@ -1,27 +1,16 @@
 package ca.hec.tenjin.impl.dao;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
+import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.model.syllabus.published.*;
+import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.content.api.ContentResource;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
-import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedDocumentElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedImageElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabusElementMapping;
-import lombok.Setter;
+import java.util.*;
 
 public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements PublishedSyllabusDao {
 	private Log log = LogFactory.getLog(PublishedSyllabusDaoImpl.class);
@@ -275,7 +264,21 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		// Update all the non-published elements
 		getHibernateTemplate().bulkUpdate("update AbstractSyllabusElement set equalsPublished = false, publishedId = null where common = false and id in (select syllabusElement.id from SyllabusElementMapping where syllabusId = ?)", syllabusId);
 	}
-	
+
+	@Override
+	public boolean cleanupPublishedSyllabus(String siteId) {
+		List<PublishedSyllabus> publishedSyllabi = getPublishedSyllabusList(siteId);
+		List<AbstractPublishedSyllabusElement> pubSyllabusElements;
+		List<PublishedSyllabusElementMapping> elementMappings;
+
+		for (PublishedSyllabus pubSyllabus: publishedSyllabi){
+			pubSyllabusElements = getStructuredPublishedSyllabusElements(pubSyllabus.getId(), false);
+
+		}
+
+		return false;
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<AbstractPublishedSyllabusElement> getChildPublishedElements(Long elementId) {
 		List<AbstractPublishedSyllabusElement> elements = (List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("from AbstractPublishedSyllabusElement where parent_id = ?", elementId);

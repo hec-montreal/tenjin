@@ -224,5 +224,12 @@ public interface SyllabusDao {
 	 * @return true or false
 	 */
 	public boolean isElementMappedToSyllabus(Long elementId, Long syllabusId);
+
+	/**
+	 * Cleanup course outlines associated to site - delete syllabus, elements, mapping and attributes
+	 * @param siteId
+	 * @return
+	 */
+	public boolean cleanupSite (String siteId);
 }
 

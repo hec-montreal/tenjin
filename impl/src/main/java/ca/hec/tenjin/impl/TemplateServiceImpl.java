@@ -110,6 +110,7 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 			ExternalDataProviderDefinition dataProvider = templateDao.getExternalDataProviderDefinition(providerId);
 			ExternalDataProvider provider = (ExternalDataProvider)applicationContext.getBean(dataProvider.getBeanName());
 			AbstractSyllabusElement element = provider.getAbstractSyllabusElement(siteId, locale);
+			return element;
 		} catch (IdUnusedException e) {
 			e.printStackTrace();
 		}
