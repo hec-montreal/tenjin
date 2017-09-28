@@ -1,0 +1,9 @@
+.dropdown-menu > li > a.link-deactivated {
+	color: grey;
+	cursor: default;
+}
+.dropdown-menu > li > a.link-deactivated:hover {
+	background-color: white;
+	color: grey;
+}
+

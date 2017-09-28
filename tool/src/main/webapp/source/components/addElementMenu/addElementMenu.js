@@ -22,26 +22,28 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 			$scope.addElement = function($type) {
 				$scope.isOpen = false;
 
-				// If the type is rubric, add now
+				// If the type is rubric, add now (if not already present)
 				if ($type.type === 'rubric') {
-					var element = {
-						'id': SyllabusService.getTemporaryId(),
-						'attributes': {},
-						'type': $type.type,
-						'composite': true,
-						'parentId': $scope.element.id,
-						'templateStructureId': $type.id,
-						'availabilityStartDate': Date.now(),
-						'title': $type.label,
-						'important': false,
-						'publicElement': true,
-						'common': $scope.syllabusService.syllabus.common
-					};
+					if (!$type.alreadyPresent) {
+						var element = {
+							'id': SyllabusService.getTemporaryId(),
+							'attributes': {},
+							'type': $type.type,
+							'composite': true,
+							'parentId': $scope.element.id,
+							'templateStructureId': $type.id,
+							'availabilityStartDate': Date.now(),
+							'title': $type.label,
+							'important': false,
+							'publicElement': true,
+							'common': $scope.syllabusService.syllabus.common
+						};
 
-					$scope.mode = 'creation';
+						$scope.mode = 'creation';
 
-					var result = SyllabusService.addRubricToSyllabusElement($scope.element, element);
-					SyllabusService.setDirty(true);
+						var result = SyllabusService.addRubricToSyllabusElement($scope.element, element);
+						SyllabusService.setDirty(true);
+					}
 
 				} else {
 					// hide menu

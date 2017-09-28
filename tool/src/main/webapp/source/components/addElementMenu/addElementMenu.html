@@ -7,7 +7,7 @@
 
     <ul uib-dropdown-menu class="list-menu-add" role="menu" aria-labelledby="simple-btn-keyboard-nav">		
 		<li role="menuitem" ng-repeat="type in syllabusService.getAddableElementsFromTemplateRules(element)" ng-if="!type.provided">
-			<a data-type="{{type}}" href="javascript:void(0);" class="{{type.alreadyPresent === true ? 'link-deactivated' : ''}}" ng-click="addElement(type)">{{ type.label }}</a>			
+			<a data-type="{{type}}" href="javascript:void(0);" ng-class="{'link-deactivated': type.alreadyPresent}" ng-click="addElement(type)">{{ type.label }}</a>
 		</li>
     </ul>
 </div>
