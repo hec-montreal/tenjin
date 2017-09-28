@@ -73,6 +73,10 @@
 				<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 				<property name="securityService" ref="ca.hec.tenjin.api.TenjinSecurityService" />
 				<property name="syllabusLockService" ref="ca.hec.tenjin.api.SyllabusLockService" />
+				<property name="hecCourseArchiveService"
+						  ref="ca.hec.archive.api.HecCourseArchiveService" />
+				<property name="syllabusExportService" ref="ca.hec.tenjin.api.SyllabusExportService"/>
+				<property name="cmService" ref="org.sakaiproject.coursemanagement.api.CourseManagementService"/>
 			</bean>
 		</property>
 

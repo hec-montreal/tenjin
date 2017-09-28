@@ -1,66 +1,30 @@
 package ca.hec.tenjin.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.transaction.annotation.Transactional;
-
-import ca.hec.tenjin.api.PublishService;
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.SyllabusLockService;
-import ca.hec.tenjin.api.SyllabusService;
-import ca.hec.tenjin.api.TenjinFunctions;
-import ca.hec.tenjin.api.TenjinSecurityService;
+import ca.hec.archive.api.HecCourseArchiveService;
+import ca.hec.commons.utils.FormatUtils;
+import ca.hec.tenjin.api.*;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusDao;
-import ca.hec.tenjin.api.exception.DeniedAccessException;
-import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
-import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.exception.StructureSyllabusException;
-import ca.hec.tenjin.api.exception.SyllabusLockedException;
-import ca.hec.tenjin.api.exception.UnknownElementTypeException;
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.model.syllabus.SyllabusCitationElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusContactInfoElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusDocumentElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.tenjin.api.model.syllabus.SyllabusEvaluationElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusExamElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusHyperlinkElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusImageElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusLectureElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusSakaiToolElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusTextElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusTutorialElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusVideoElement;
-import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedContactInfoElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedDocumentElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedEvaluationElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedExamElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedHyperlinkElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedImageElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedLectureElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedRubricElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedSakaiToolElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabusElementMapping;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedTextElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedTutorialElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedVideoElement;
+import ca.hec.tenjin.api.exception.*;
+import ca.hec.tenjin.api.model.syllabus.*;
+import ca.hec.tenjin.api.model.syllabus.published.*;
 import lombok.Setter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.authz.api.GroupNotDefinedException;
+import org.sakaiproject.content.api.ContentHostingService;
+import org.sakaiproject.content.api.ContentResourceEdit;
+import org.sakaiproject.coursemanagement.api.AcademicSession;
+import org.sakaiproject.coursemanagement.api.CourseManagementService;
+import org.sakaiproject.coursemanagement.api.CourseOffering;
+import org.sakaiproject.coursemanagement.api.Section;
+import org.sakaiproject.entity.api.ResourcePropertiesEdit;
+import org.sakaiproject.site.api.Group;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.*;
 
 public class PublishServiceImpl implements PublishService {
 	private Log log = LogFactory.getLog(PublishServiceImpl.class);
@@ -104,6 +68,15 @@ public class PublishServiceImpl implements PublishService {
 
 	@Setter
 	SyllabusLockService syllabusLockService;
+
+	@Setter
+	HecCourseArchiveService hecCourseArchiveService;
+
+	@Setter
+	SyllabusExportService syllabusExportService;
+
+	@Setter
+	CourseManagementService cmService;
 
 	@Override
 	public PublishedSyllabus getPublishedSyllabus(Long syllabusId) throws NoSyllabusException {
@@ -242,7 +215,98 @@ public class PublishServiceImpl implements PublishService {
 		syllabus.setPublishedBy(sakaiProxy.getCurrentUserId());
 		syllabusDao.update(syllabus);
 
+		//Archive published Syllabus pdfs
+		archiveSyllabus(getPublishedSyllabus(syllabusId), syllabus.getSections());
+		//Create archive entry
+		hecCourseArchiveService.saveCourseMetadataToArchive(syllabus.getSiteId(), syllabus.getId().toString(), syllabus.getSections());
 		return syllabus;
+	}
+
+	/**
+	 * Create pdfs from the published syllabus. There is as much pdfs as sections associated to the syllabus.
+	 * The PDFs are saved in the old path
+	 * @param publishedSyllabus
+	 * @param groups
+	 */
+	private void archiveSyllabus (PublishedSyllabus publishedSyllabus, Set<String> groups){
+		Group authzGroup = null;
+		Section section = null;
+		String siteName = null;
+		String pdfPathId = null;
+		ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+		ResourcePropertiesEdit resourceProperties = null;
+		ContentResourceEdit resourceEdit = null;
+
+		for (String group: groups){
+			try {
+				authzGroup = sakaiProxy.getGroup(group);
+				if (authzGroup.getProviderGroupId() != null){
+					section = cmService.getSection(authzGroup.getProviderGroupId());
+					siteName = getSiteName(section);
+					syllabusExportService.exportPdf(publishedSyllabus, (List<Object>) (List<?>)publishedSyllabus.getElements(),true, publishedSyllabus.getLocale(), byteOutputStream);
+					//Create Resource
+					//TODO: update after refactoring catalog_description
+					pdfPathId = ContentHostingService.ATTACHMENTS_COLLECTION + siteName
+							+ "/OpenSyllabus/"+siteName+"_public.pdf";
+					System.out.println ("La ressource " + pdfPathId);
+
+					resourceEdit = sakaiProxy.addResource(pdfPathId,"application/pdf",
+							new ByteArrayInputStream(byteOutputStream.toByteArray()),resourceProperties, 0);
+
+				}
+			} catch (GroupNotDefinedException e) {
+				e.printStackTrace();
+			} catch (ExportException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	//TODO: might need to be removed after catalog_description refactoring
+
+	/**
+	 * For a given section, builds the siteId that would have been used with OpenSyllabus
+	 * @param section
+	 * @return siteId built the old way
+	 */
+	private String getSiteName(Section section) {
+		String siteName = null;
+		String sectionId = section.getEid();
+		String courseOffId = section.getCourseOfferingEid();
+		CourseOffering courseOff = cmService.getCourseOffering(courseOffId);
+		String canCourseId = (courseOff.getCanonicalCourseEid()).trim();
+		AcademicSession session = courseOff.getAcademicSession();
+		String sessionId = session.getEid();
+
+		String courseId = FormatUtils.formatCourseId(canCourseId);
+		Date startDate = session.getStartDate();
+		String year = startDate.toString().substring(0, 4);
+		String sessionName = null;
+		if ((sessionId.charAt(3)) == '1')
+			sessionName = "H" + year;
+		if ((sessionId.charAt(3)) == '2')
+			sessionName = "E" + year;
+		if ((sessionId.charAt(3)) == '3')
+			sessionName = "A" + year;
+		String periode = null;
+		String groupe = null;
+
+		if (sessionId.matches(".*[pP].*")) {
+			periode = sessionId.substring(sessionId.length() - 2);
+		}
+
+		groupe = sectionId.substring(courseOffId.length());
+
+		if (periode == null)
+			siteName = courseId + "." + sessionName + "." + groupe;
+		else
+			siteName =
+					courseId + "." + sessionName + "." + periode + "."
+							+ groupe;
+
+		return siteName;
 	}
 
 	private List<Long> getPublishedSyllabusIdsForSite(String siteId) {

@@ -1,11 +1,11 @@
 package ca.hec.tenjin.api;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
+import ca.hec.tenjin.api.export.model.SakaiCitation;
+import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
 import org.sakaiproject.authz.api.GroupNotDefinedException;
 import org.sakaiproject.content.api.ContentResource;
+import org.sakaiproject.content.api.ContentResourceEdit;
+import org.sakaiproject.entity.api.ResourceProperties;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.exception.ServerOverloadException;
@@ -15,8 +15,10 @@ import org.sakaiproject.site.api.Site;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
-import ca.hec.tenjin.api.export.model.SakaiCitation;
-import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 /**
  * An interface to abstract all Sakai related API calls in a central method that
@@ -85,4 +87,6 @@ public interface SakaiProxy {
 	SakaiCitation getCitation(String citationListId, String citationId) throws ServerOverloadException;
 	
 	List<SakaiCitation> getSiteCitations(String siteId, Collection<EntityContent> siteResources) throws PermissionException, IdUnusedException, TypeException, ServerOverloadException;
+
+	public ContentResourceEdit addResource(String id, String type, InputStream content, ResourceProperties properties, int priority);
 }

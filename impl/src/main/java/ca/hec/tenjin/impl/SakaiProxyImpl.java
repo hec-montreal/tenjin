@@ -1,42 +1,25 @@
 package ca.hec.tenjin.impl;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.TenjinFunctions;
+import ca.hec.tenjin.api.ToolUtil;
+import ca.hec.tenjin.api.export.model.SakaiCitation;
+import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
+import ca.hec.tenjin.api.model.syllabusconstants.EntityDataUtils;
+import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sakaiproject.authz.api.AuthzGroup;
-import org.sakaiproject.authz.api.AuthzGroupService;
-import org.sakaiproject.authz.api.FunctionManager;
-import org.sakaiproject.authz.api.GroupNotDefinedException;
-import org.sakaiproject.authz.api.SecurityService;
+import org.sakaiproject.authz.api.*;
 import org.sakaiproject.citation.api.Citation;
 import org.sakaiproject.citation.api.CitationCollection;
 import org.sakaiproject.citation.api.CitationService;
 import org.sakaiproject.component.api.ServerConfigurationService;
-import org.sakaiproject.content.api.ContentCollection;
-import org.sakaiproject.content.api.ContentEntity;
-import org.sakaiproject.content.api.ContentHostingService;
-import org.sakaiproject.content.api.ContentResource;
+import org.sakaiproject.content.api.*;
 import org.sakaiproject.entity.api.EntityManager;
 import org.sakaiproject.entity.api.Reference;
 import org.sakaiproject.entity.api.ResourceProperties;
 import org.sakaiproject.event.api.EventTrackingService;
-import org.sakaiproject.exception.IdUnusedException;
-import org.sakaiproject.exception.PermissionException;
-import org.sakaiproject.exception.ServerOverloadException;
-import org.sakaiproject.exception.TypeException;
+import org.sakaiproject.exception.*;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
@@ -50,13 +33,11 @@ import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 import org.sakaiproject.util.ResourceLoader;
 
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.TenjinFunctions;
-import ca.hec.tenjin.api.ToolUtil;
-import ca.hec.tenjin.api.export.model.SakaiCitation;
-import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
-import ca.hec.tenjin.api.model.syllabusconstants.EntityDataUtils;
-import lombok.Setter;
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Setter
 public class SakaiProxyImpl implements SakaiProxy {
@@ -479,4 +460,25 @@ public class SakaiProxyImpl implements SakaiProxy {
 			return contentHostingService.newContentHostingComparator(ResourceProperties.PROP_DISPLAY_NAME, true);
 		}
 	}
+
+	public ContentResourceEdit addResource(String id, String type, InputStream content, ResourceProperties properties, int priority){
+		ContentResourceEdit resourceEdit = null;
+		try {
+			resourceEdit = (ContentResourceEdit) contentHostingService.addResource(id, type, content, properties, priority);
+		} catch (PermissionException e) {
+			e.printStackTrace();
+		} catch (IdUsedException e) {
+			e.printStackTrace();
+		} catch (IdInvalidException e) {
+			e.printStackTrace();
+		} catch (InconsistentException e) {
+			e.printStackTrace();
+		} catch (OverQuotaException e) {
+			e.printStackTrace();
+		} catch (ServerOverloadException e) {
+			e.printStackTrace();
+		}
+		return resourceEdit;
+	}
+
 }
