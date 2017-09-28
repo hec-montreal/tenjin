@@ -33,7 +33,8 @@ import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
 import org.sakaiproject.util.ResourceLoader;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -474,21 +475,20 @@ public class SakaiProxyImpl implements SakaiProxy {
 		}
 	}
 
-	public ContentResourceEdit addResource(String id, String type, InputStream content, ResourceProperties properties, int priority){
+	public ContentResourceEdit addResource(String id, String type, ByteArrayOutputStream content, ResourceProperties properties, int priority){
 		ContentResourceEdit resourceEdit = null;
 		try {
-			resourceEdit = (ContentResourceEdit) contentHostingService.addResource(id, type, content, properties, priority);
+			resourceEdit = (ContentResourceEdit) contentHostingService.addResource(id, type, new ByteArrayInputStream(content.toByteArray()), properties, priority);
 		} catch (PermissionException e) {
 			e.printStackTrace();
 		} catch (IdUsedException e) {
-			e.printStackTrace();
-		} catch (IdInvalidException e) {
-			e.printStackTrace();
-		} catch (InconsistentException e) {
-			e.printStackTrace();
-		} catch (OverQuotaException e) {
-			e.printStackTrace();
-		} catch (ServerOverloadException e) {
+			//just update content then
+			try {
+				resourceEdit = (ContentResourceEdit) contentHostingService.updateResource(id, type, content.toByteArray());
+			} catch (PermissionException | IdUnusedException | TypeException | InUseException | OverQuotaException | ServerOverloadException e1) {
+				e1.printStackTrace();
+			}
+		} catch (IdInvalidException | InconsistentException | OverQuotaException | ServerOverloadException e) {
 			e.printStackTrace();
 		}
 		return resourceEdit;

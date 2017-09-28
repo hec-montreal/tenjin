@@ -15,7 +15,7 @@ import org.sakaiproject.site.api.Site;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
-import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -88,5 +88,5 @@ public interface SakaiProxy {
 	
 	List<SakaiCitation> getSiteCitations(String siteId, Collection<EntityContent> siteResources) throws PermissionException, IdUnusedException, TypeException, ServerOverloadException;
 
-	public ContentResourceEdit addResource(String id, String type, InputStream content, ResourceProperties properties, int priority);
+	public ContentResourceEdit addResource(String id, String type, ByteArrayOutputStream content, ResourceProperties properties, int priority);
 }

@@ -19,10 +19,11 @@ import org.sakaiproject.coursemanagement.api.CourseManagementService;
 import org.sakaiproject.coursemanagement.api.CourseOffering;
 import org.sakaiproject.coursemanagement.api.Section;
 import org.sakaiproject.entity.api.ResourcePropertiesEdit;
+import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Group;
+import org.sakaiproject.site.api.Site;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.*;
 
@@ -216,7 +217,7 @@ public class PublishServiceImpl implements PublishService {
 		syllabusDao.update(syllabus);
 
 		//Archive published Syllabus pdfs
-		archiveSyllabus(getPublishedSyllabus(syllabusId), syllabus.getSections());
+		archiveSyllabus(syllabus);
 		//Create archive entry
 		hecCourseArchiveService.saveCourseMetadataToArchive(syllabus.getSiteId(), syllabus.getId().toString(), syllabus.getSections());
 		return syllabus;
@@ -225,11 +226,57 @@ public class PublishServiceImpl implements PublishService {
 	/**
 	 * Create pdfs from the published syllabus. There is as much pdfs as sections associated to the syllabus.
 	 * The PDFs are saved in the old path
-	 * @param publishedSyllabus
-	 * @param groups
+	 * @param syllabus
 	 */
-	private void archiveSyllabus (PublishedSyllabus publishedSyllabus, Set<String> groups){
+	private void archiveSyllabus (Syllabus syllabus){
+		Set<String> groups = null;
+		Site site = null;
 		Group authzGroup = null;
+		List<Syllabus> syllabi = null;
+		boolean updatedSyllabusGroup = false;
+
+		if (syllabus.getCommon()){
+			try {
+				site = sakaiProxy.getSite(syllabus.getSiteId());
+				syllabi = syllabusService.getSyllabusList(site.getId());
+				for (Group group: site.getGroups()){
+					updatedSyllabusGroup = false;
+					for (Syllabus syllabusItem: syllabi){
+						for (String syllabusSection: syllabusItem.getSections()) {
+							if (syllabusSection.contains(group.getId()) && getPublicSyllabus(syllabusItem.getId()) != null
+									&& !syllabusItem.getCommon()) {
+								createAndSavePdf(group, syllabusItem);
+								updatedSyllabusGroup = true;
+							}
+						}
+						if (!updatedSyllabusGroup)
+							createAndSavePdf(group, syllabus);
+					}
+				}
+			} catch (IdUnusedException e) {
+				e.printStackTrace();
+			} catch (DeniedAccessException e) {
+				e.printStackTrace();
+			} catch (NoSiteException e) {
+				e.printStackTrace();
+			} catch (NoSyllabusException e) {
+				e.printStackTrace();
+			}
+		}else{
+			groups = syllabus.getSections();
+		}
+		for (String group: groups){
+			try {
+				authzGroup = sakaiProxy.getGroup(group);
+				createAndSavePdf(authzGroup, syllabus);
+			} catch (GroupNotDefinedException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	private void createAndSavePdf (Group group, Syllabus syllabus){
 		Section section = null;
 		String siteName = null;
 		String pdfPathId = null;
@@ -237,33 +284,24 @@ public class PublishServiceImpl implements PublishService {
 		ResourcePropertiesEdit resourceProperties = null;
 		ContentResourceEdit resourceEdit = null;
 
-		for (String group: groups){
+		if (group.getProviderGroupId() != null){
+			section = cmService.getSection(group.getProviderGroupId());
+			siteName = getSiteName(section);
 			try {
-				authzGroup = sakaiProxy.getGroup(group);
-				if (authzGroup.getProviderGroupId() != null){
-					section = cmService.getSection(authzGroup.getProviderGroupId());
-					siteName = getSiteName(section);
-					syllabusExportService.exportPdf(publishedSyllabus, (List<Object>) (List<?>)publishedSyllabus.getElements(),true, publishedSyllabus.getLocale(), byteOutputStream);
-					//Create Resource
-					//TODO: update after refactoring catalog_description
-					pdfPathId = ContentHostingService.ATTACHMENTS_COLLECTION + siteName
-							+ "/OpenSyllabus/"+siteName+"_public.pdf";
-					System.out.println ("La ressource " + pdfPathId);
-
-					resourceEdit = sakaiProxy.addResource(pdfPathId,"application/pdf",
-							new ByteArrayInputStream(byteOutputStream.toByteArray()),resourceProperties, 0);
-
-				}
-			} catch (GroupNotDefinedException e) {
-				e.printStackTrace();
+				syllabusExportService.exportPdf(syllabus, (List<Object>) (List<?>)syllabus.getElements(),true, syllabus.getLocale(), byteOutputStream);
 			} catch (ExportException e) {
 				e.printStackTrace();
 			}
+			//Create Resource
+			//TODO: update after refactoring catalog_description
+			pdfPathId = ContentHostingService.ATTACHMENTS_COLLECTION + siteName
+					+ "/OpenSyllabus/"+siteName+"_public.pdf";
+
+			resourceEdit = sakaiProxy.addResource(pdfPathId,"application/pdf",
+					byteOutputStream,resourceProperties, 0);
 
 		}
-
 	}
-
 	//TODO: might need to be removed after catalog_description refactoring
 
 	/**
