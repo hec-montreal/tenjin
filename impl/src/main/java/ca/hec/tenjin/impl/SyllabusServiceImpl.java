@@ -218,6 +218,14 @@ public class SyllabusServiceImpl implements SyllabusService {
 						for (Syllabus s : syllabi) {
 							if (!s.getCommon() && (syllabusesWithExistingRubricMapping == null || !syllabusesWithExistingRubricMapping.contains(s.getId()))) {
 
+								// increment order of existing mappings to insert new mapping
+								List<SyllabusElementMapping> siblingMappings = syllabusDao.getSyllabusElementMappingsForParent(s.getId(), element.getParentId());
+								for (SyllabusElementMapping m : siblingMappings) {
+									if (m.getDisplayOrder() >= element.getDisplayOrder()) {
+										m.setDisplayOrder(m.getDisplayOrder()+1);
+									}
+								}
+
 								createSyllabusElementMapping(s.getId(), element, element.getDisplayOrder(), false);
 							}
 						}

@@ -49,6 +49,17 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	}
 
 	@Override
+	public List<SyllabusElementMapping> getSyllabusElementMappingsForParent(Long syllabusId, Long parentElementId) {
+		String query = "from SyllabusElementMapping mapping where syllabusId = ? and syllabusElement.parentId = ?";
+		query += " order by syllabusElement.parentId, displayOrder";
+
+		List<SyllabusElementMapping> mappings =
+				(List<SyllabusElementMapping>) getHibernateTemplate().find(query, syllabusId, parentElementId);
+
+		return mappings;
+	}
+
+	@Override
 	public Syllabus getSyllabus(Long id) throws NoSyllabusException {
 		Syllabus syllabus = getHibernateTemplate().get(Syllabus.class, id);
 		

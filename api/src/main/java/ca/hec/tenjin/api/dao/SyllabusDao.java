@@ -75,15 +75,24 @@ public interface SyllabusDao {
 	 * @return The list of syllabi associated with the site id, without their elements
 	 */
 	public List<Syllabus> getSyllabusList(String siteId);
-	
+
 	/**
 	 * Retrieves the syllabus element mappings for the specified syllabusId
-     *  
+	 *
 	 * @param String syllabusId
 	 * @param boolean hidden - include hidden elements
 	 * @return The list of syllabus element mappings
 	 */
 	public List<SyllabusElementMapping> getSyllabusElementMappings(Long syllabusId, boolean hidden);
+
+	/**
+	 * Retrieves the syllabus element mappings for the specified syllabusId and syllabusElementId
+	 *
+	 * @param String syllabusId
+	 * @param String syllabusElementId
+	 * @return The list of syllabus element mappings
+	 */
+	public List<SyllabusElementMapping> getSyllabusElementMappingsForParent(Long syllabusId, Long parentElementId);
 
 	/**
 	 * Retrieves a persistent syllabus element by id 
