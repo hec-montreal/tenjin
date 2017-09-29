@@ -243,9 +243,9 @@ public class PublishServiceImpl implements PublishService {
 					updatedSyllabusGroup = false;
 					for (Syllabus syllabusItem: syllabi){
 						for (String syllabusSection: syllabusItem.getSections()) {
-							if (syllabusSection.contains(group.getId()) && getPublicSyllabus(syllabusItem.getId()) != null
+							if (syllabusSection.contains(group.getId()) && syllabusItem.getPublishedDate() != null
 									&& !syllabusItem.getCommon()) {
-								createAndSavePdf(group, syllabusItem);
+								createAndSavePdf(group, syllabusService.getSyllabus(syllabusItem.getId()));
 								updatedSyllabusGroup = true;
 							}
 						}
@@ -261,19 +261,20 @@ public class PublishServiceImpl implements PublishService {
 				e.printStackTrace();
 			} catch (NoSyllabusException e) {
 				e.printStackTrace();
+			} catch (StructureSyllabusException e) {
+				e.printStackTrace();
 			}
 		}else{
 			groups = syllabus.getSections();
-		}
-		for (String group: groups){
-			try {
-				authzGroup = sakaiProxy.getGroup(group);
-				createAndSavePdf(authzGroup, syllabus);
-			} catch (GroupNotDefinedException e) {
-				e.printStackTrace();
+			for (String group: groups){
+				try {
+					authzGroup = sakaiProxy.getGroup(group);
+					createAndSavePdf(authzGroup, syllabus);
+				} catch (GroupNotDefinedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-
 	}
 
 	private void createAndSavePdf (Group group, Syllabus syllabus){
@@ -284,7 +285,8 @@ public class PublishServiceImpl implements PublishService {
 		ResourcePropertiesEdit resourceProperties = null;
 		ContentResourceEdit resourceEdit = null;
 
-		if (group.getProviderGroupId() != null){
+		if ((group.getProviderGroupId() != null) &&  (syllabus.getElements() != null)
+				&& syllabus.getPublishedDate() != null){
 			section = cmService.getSection(group.getProviderGroupId());
 			siteName = getSiteName(section);
 			try {
