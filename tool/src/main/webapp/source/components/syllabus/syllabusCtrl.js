@@ -151,10 +151,6 @@
 	});
 
 	window.onbeforeunload = function() {
-		if (!window['SyllabusService'] || !window['$translate']) {
-			return;
-		}
-
 		if (SyllabusService.isDirty()) {
 			return $translate.instant('WARNING_UNSAVED');
 		}
