@@ -133,6 +133,10 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 		ModalService.externalSyllabusImport();
 	};
 
+	$scope.openPermissionsModal = function() {
+		ModalService.openPermissionsModal();
+	};
+
 	$scope.checkStatus = function() {
 		$scope.disableDelete = true;
 		$scope.disableCopy = true;

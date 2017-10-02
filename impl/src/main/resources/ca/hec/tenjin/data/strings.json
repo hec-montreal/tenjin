@@ -105,6 +105,8 @@
 		"ERROR_TITLE_MANDATORY": "Title is mandatory",
 		"ERROR_TITLE_TOO_LONG": "Title is too long",
 		"ERROR_NO_PUBLISHED_SYLLABUS": "No published course outline",
+		"ERROR_PERMISSIONS_UPDATE": "An error occured when saving the new permissions",
+		"SUCCESS_PERMISSIONS_UPDATE": "Permissions updated",
 		"ALERT_ERROR": "An error has occurred. Please try later.",
 		"ALERT_SUCCESS": "The operation succeeded.",
 		"ALERT_SUCCESS_ADD_ELEMENT": "The element has been added.",
@@ -280,12 +282,14 @@
 		"WARNING": "Warning",
 		"WARNING_UNSASSIGN_SECTIONS": "Are you sure you want to unassign these sections ?",
 		"BUTTON_IMPORT_SYLLABUS": "Import",
+		"BUTTON_MODIFY_PERMISSIONS": "Permissions",
 		"MODAL_DESCRIPTION_IMPORT_SYLLABUS": "Import Course Outline",
 		"FORM_IMPORT_INSTRUCTIONS": "This tool serves to import a course outline from the former course outline tool (prior to fall 2017). Enter the site id you would like to import the course outline from. All resources in the original course outline will be copied to this site automatically.",
 		"FORM_IMPORT_WARNING": "Caution: the import will replace all existing course outlines in this site.",
 		"FORM_IMPORT_SITEID": "Original Site Id",
 		"FORM_IMPORT_SITEID_PLACEHOLDER": "9-999-99.A2017(.A01)",
 		"FORM_IMPORT_CONFIRM": "Are you sure you want to import this course outline? All existing course outlines in this site will be deleted and the common course outline will be replace.",
+		"MODAL_DESCRIPTION_PERMISSIONS": "Modify instructor permissions",
 		"ELEMENT_HIDDEN_BEFORE": "Element hidden before ",
 		"ELEMENT_HIDDEN_BETWEEN": "Element hidden before %1 and after %2",
 		"FROM_COMMON": "From common",
@@ -309,7 +313,11 @@
 		"VERSION_PUBLIC": "Version for public",
 		"VIEW": "View",
 		"PAGE": "Page",
-		"DE": "of"
+		"DE": "of",
+		"tenjin.read.common": "Read the common course outline before it is published",
+		"tenjin.write.common": "Edit the common course outline",
+		"tenjin.publish.common": "Publish the common course outline",
+		"tenjin.read.personalised": "Read personalised course outlines for all sections"
 	},
 
 	"fr_CA": {
@@ -417,6 +425,8 @@
 		"ERROR_URL_MANDATORY": "Le champ URL est obligatoire",
 		"ERROR_TITLE_MANDATORY": "Le champ titre est obligatoire",
 		"ERROR_TITLE_TOO_LONG": "Le champ titre est trop long",
+		"ERROR_PERMISSIONS_UPDATE": "Erreur lors de la mise à jour des droits d'accès",
+		"SUCCESS_PERMISSIONS_UPDATE": "Les droits d'accès ont été enregistré",
 		"ALERT_ERROR": "Une erreur s'est produite. Veuillez réessayer ultérieurement.",
 		"ALERT_SUCCESS": "L'opération a réussi.",
 		"ALERT_SUCCESS_ADD_ELEMENT": "L'élément a été ajouté.",
@@ -592,12 +602,14 @@
 		"WARNING": "Avertissement",
 		"WARNING_UNSASSIGN_SECTIONS": "Voulez-vous vraiment dissocier les sections du plan de cours? Les sections seront automatiquement associées au plan de cours commun.",
 		"BUTTON_IMPORT_SYLLABUS": "Importer",
+		"BUTTON_MODIFY_PERMISSIONS": "Droits d'accès",
 		"MODAL_DESCRIPTION_IMPORT_SYLLABUS": "Importer un plan de cours",
 		"FORM_IMPORT_INSTRUCTIONS": "Cette fonction sert à importer les plans de cours de l'ancien outil de plan de cours (antérieur à l'automne 2017). Entrez le sigle du cours que vous voulez importer. Les ressources contenues dans le plan de cours seront importées automatiquement.",
 		"FORM_IMPORT_WARNING": "Attention :  l'opération d'import remplacera tous les plans de cours du site.",
 		"FORM_IMPORT_SITEID": "Identifiant du site d'origine",
 		"FORM_IMPORT_SITEID_PLACEHOLDER": "9-999-99.A2017(.A01)",
 		"FORM_IMPORT_CONFIRM": "Êtes-vous certain de vouloir effectuer cet import? Les plans de cours existants du site actuel seront supprimés et le plan de cours commun sera remplacé par le plan de cours importé.",
+		"MODAL_DESCRIPTION_PERMISSIONS": "Modifier les droits d'accès des enseignants",
 		"ELEMENT_HIDDEN_BEFORE": "Caché avant le ",
 		"ELEMENT_HIDDEN_BETWEEN": "Caché avant le %1 et après le %2",
 		"FROM_COMMON": "Provenant du commun",
@@ -622,6 +634,10 @@
 		"VERSION_PUBLIC": "Version publique",
 		"VIEW": "Vue",
 		"PAGE": "Page",
-		"DE": "de"
+		"DE": "de",
+		"tenjin.read.common": "Lire le plan de cours commun avant la publication",
+		"tenjin.write.common": "Editer le plan de cours commun",
+        	"tenjin.publish.common": "Publier le plan de cours commun",
+		"tenjin.read.personalised": "Lires les plans de cours personnalisés des autres sections"
 	}
 }

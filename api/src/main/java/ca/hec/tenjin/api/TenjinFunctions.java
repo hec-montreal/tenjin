@@ -11,4 +11,5 @@ public interface TenjinFunctions {
 	public static final String TENJIN_FUNCTION_WRITE_PERS = TENJIN_FUNCTION_PREFIX + "write.personalised";
 	public static final String TENJIN_FUNCTION_PUBLISH_PERS = TENJIN_FUNCTION_PREFIX + "publish.personalised";
 	public static final String TENJIN_FUNCTION_VIEW_MANAGER = TENJIN_FUNCTION_PREFIX + "manager.view";
+	public static final String TENJIN_FUNCTION_MODIFY_PERMISSIONS = TENJIN_FUNCTION_PREFIX + "modify.permissions";
 }

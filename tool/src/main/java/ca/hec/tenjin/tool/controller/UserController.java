@@ -107,7 +107,11 @@ public class UserController {
 			}
 
 			// Whether to allow import
-			profile.put("activateImportButton", importProvider != null);
+			profile.put("activateImportButton", importProvider != null &&
+					securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON, site));
+
+			profile.put("canModifyPermissions",
+					securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_MODIFY_PERMISSIONS, site));
 
 			// The user has permissions in the sections
 			boolean writeOnSite = securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS, site);

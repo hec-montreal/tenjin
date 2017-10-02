@@ -2,6 +2,8 @@ package ca.hec.tenjin.api;
 
 import ca.hec.tenjin.api.export.model.SakaiCitation;
 import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
+import org.sakaiproject.authz.api.AuthzGroup;
+import org.sakaiproject.authz.api.AuthzPermissionException;
 import org.sakaiproject.authz.api.GroupNotDefinedException;
 import org.sakaiproject.content.api.ContentResource;
 import org.sakaiproject.content.api.ContentResourceEdit;
@@ -75,6 +77,12 @@ public interface SakaiProxy {
 	public User getUser(String id) throws UserNotDefinedException;
 
 	public Group getGroup(String groupId) throws GroupNotDefinedException;
+
+	public AuthzGroup getAuthzGroup(String reference) throws GroupNotDefinedException;
+
+	public Set<String> getAllowedFunctions(String role, Collection<String> azGroups);
+
+	public void saveAuthzGroup(AuthzGroup group) throws GroupNotDefinedException, AuthzPermissionException;
 
 	public String getSakaiProperty(String name);
 

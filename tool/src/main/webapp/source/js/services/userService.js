@@ -66,6 +66,9 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 		if ('syllabusWrite' === view){
 			return this.profile.syllabusWrite.length > 0;
 		}
+		if ('permissions' === view){
+			return this.profile.canModifyPermissions;
+		}
 
 	};
 

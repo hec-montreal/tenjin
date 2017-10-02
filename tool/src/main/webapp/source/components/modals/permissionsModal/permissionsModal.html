@@ -1,0 +1,19 @@
+<form class="tenjin-modal" data-ng-submit="ok()"> 
+	<div class="modal-header">
+		<h2>{{ 'MODAL_DESCRIPTION_PERMISSIONS' | translate }}</h2>
+	</div>
+	<div class="modal-body" ng-if="!loading">
+		<div class="permission" data-ng-repeat="permission in data">
+			<input type="checkbox" id="{{permission.name}}-checkbox" data-ng-model="permission.value"/><label for="{{permission.name}}-checkbox">{{ permission.name | translate }}</label>
+		</div>
+	</div>
+	<div class="modal-body" ng-if="loading">
+		<div class="loader">
+			<img src="/tenjin-tool/img/desktop/loader.gif">
+		</div>
+	</div>
+	<div class="modal-footer" ng-if="!loading">
+		<button type="submit">{{ 'BUTTON_OK' | translate}}</button>
+		<button type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
+	</div> 
+</form>

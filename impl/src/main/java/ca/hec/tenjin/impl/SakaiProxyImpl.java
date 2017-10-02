@@ -88,32 +88,12 @@ public class SakaiProxyImpl implements SakaiProxy {
 			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS, true);
 		}
 
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON, true);
-		}
-
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ_PERS)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ_PERS, true);
-		}
-
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON, true);
-		}
-
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS, true);
-		}
-
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_COMMON)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_COMMON, true);
-		}
-
-		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS)) {
-			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS, true);
-		}
-
 		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_VIEW_MANAGER)) {
 			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_VIEW_MANAGER, true);
+		}
+
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_MODIFY_PERMISSIONS)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_MODIFY_PERMISSIONS, true);
 		}
 
 	}
@@ -241,6 +221,21 @@ public class SakaiProxyImpl implements SakaiProxy {
 		// authzgroupservice.getGroup needs a regerence not an id
 		authzGroup = siteService.findGroup(groupId);
 		return (Group) authzGroup;
+	}
+
+	@Override
+	public AuthzGroup getAuthzGroup(String reference) throws GroupNotDefinedException {
+		return groupService.getAuthzGroup(reference);
+	}
+
+	@Override
+	public void saveAuthzGroup(AuthzGroup group) throws GroupNotDefinedException, AuthzPermissionException {
+		groupService.save(group);
+	}
+
+	@Override
+	public Set<String> getAllowedFunctions(String role, Collection<String> azGroups) {
+		return groupService.getAllowedFunctions(role, azGroups);
 	}
 
 	@Override

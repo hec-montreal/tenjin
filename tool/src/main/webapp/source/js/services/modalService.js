@@ -152,6 +152,18 @@
 		return modalInstance;
 	};
 
+	this.openPermissionsModal = function() {
+		var modalInstance = $uibModal.open({
+			animation: true,
+			templateUrl: 'modals/permissionsModal/permissionsModal.html',
+			controller: 'PermissionsModalCtrl',
+			size: '',
+			backdrop: 'static'
+		});
+
+		return modalInstance;
+	};
+
 	this.unassignSections = function(sections) {
 		var modalInstance = $uibModal.open({
 			animation: true,

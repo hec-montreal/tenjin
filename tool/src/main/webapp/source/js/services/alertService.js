@@ -79,7 +79,18 @@
     		'importSyllabusError': {
 	    		type: 'danger',
     			message: $translate.instant('ALERT_IMPORT_SYLLABUS_ERROR')
-	    	}
+		},
+
+		'permissionsUpdateError': {
+			    type: 'danger',
+			    message: $translate.instant('ERROR_PERMISSIONS_UPDATE')
+		},
+
+		'permissionsUpdateSuccess': {
+			    type: 'success',
+			    message: $translate.instant('SUCCESS_PERMISSIONS_UPDATE'),
+			    closeable: true
+		}
     	}
 	};
 
