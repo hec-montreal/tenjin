@@ -752,6 +752,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 			//copy provided element
 			if (element.getProviderId() != null ) {
 				newElement = templateService.getProvidedElement(element.getProviderId(), forSyllabus.getSiteId(), forSyllabus.getLocale());
+				if ( newElement == null)
+					newElement = (AbstractSyllabusElement) element.getClass().newInstance();;
 				newElement.setTemplateStructureId(element.getTemplateStructureId());
 				newElement.setTitle(element.getTitle());
 				newElement.setDescription(element.getDescription());
