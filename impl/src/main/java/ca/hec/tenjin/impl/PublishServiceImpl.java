@@ -398,13 +398,13 @@ public class PublishServiceImpl implements PublishService {
 	@Override
 	public void unpublishSyllabus(Long syllabusId) throws NoSyllabusException {
 		Syllabus syllabus = syllabusDao.getSyllabus(syllabusId);
-		
+
 		publishedSyllabusDao.unpublishSyllabusElements(syllabusId);
 		publishedSyllabusDao.deletePublishedSyllabus(syllabusId);
-		
+
 		syllabus.setPublishedBy(null);
 		syllabus.setPublishedDate(null);
-		
+
 		syllabusDao.save(syllabus);
 	}
 }

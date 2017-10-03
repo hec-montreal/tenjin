@@ -254,6 +254,54 @@
 		return ret.promise;
 	};
 
+
+	/**
+	 * Unpublish a list of syllabus
+	 * @param {Array} $syllabusList Syllabus list to unpublish
+	 * @return {Object} Promise
+	 */
+	this.unpublishSyllabusList = function(syllabusListToUnpublish) {
+		var idList = [];
+		var newSyllabusList = [];
+
+		for (var i = 0; i < syllabusListToUnpublish.length; i++) {
+			idList.push(syllabusListToUnpublish[i].id);
+		}
+
+		for (var i = 0; i < this.syllabusList.length; i++) {
+			var keep = true;
+
+			for (var j = 0; j < idList.length; j++) {
+				if (this.syllabusList[i].id === idList[j]) {
+					keep = false;
+
+					break;
+				}
+			}
+
+			if (keep) {
+				newSyllabusList.push(this.syllabusList[i]);
+			}
+		}
+
+		this.syllabusList = newSyllabusList;
+
+		var tthis = this;
+		var ret = $q.defer();
+
+		this.working = true;
+
+		$http.get('v1/syllabus/' + idList.join(',') + '/unpublish.json').success(function(data) {
+			ret.resolve(data);
+		}).error(function(data) {
+			ret.reject(data);
+		}).finally(function() {
+			tthis.working = false;
+		});
+
+		return ret.promise;
+	};
+
 	/**
 	 * Save current syllabus
 	 * @return {Object} Promise

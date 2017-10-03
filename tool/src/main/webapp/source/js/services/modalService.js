@@ -119,6 +119,27 @@
 		return modalInstance;
 	};
 
+	/**
+	 * Unpublish modal for a list of syllabus
+	 * @param {Array} $syllabusList List of syllabus to be unpublished
+	 */
+	this.unpublishSyllabus = function($syllabusList) {
+		var modalInstance = $uibModal.open({
+			animation: true,
+			templateUrl: 'modals/unpublishSyllabusModal/unpublishSyllabusModal.html',
+			controller: 'UnpublishSyllabusModalCtrl',
+			size: '',
+			backdrop: 'static',
+			resolve: {
+				syllabusList: {
+					'syllabusList': $syllabusList
+				}
+			}
+		});
+
+		return modalInstance;
+	};
+
 	this.externalSyllabusImport = function() {
 		var modalInstance = $uibModal.open({
 			animation: true,

@@ -92,6 +92,25 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 		});
 	};
 
+    $scope.unpublishSyllabus = function(){
+		var syllabusList = [];
+
+		for (var i = 0; i < SyllabusService.syllabusList.length; i++) {
+			if (SyllabusService.syllabusList[i].checked) {
+				syllabusList.push(SyllabusService.syllabusList[i]);
+			}
+		}
+
+        ModalService.unpublishSyllabus(syllabusList).result.then(function(syllabusToUnpublish) {
+			SyllabusService.unpublishSyllabusList(syllabusToUnpublish).catch(function(data) {
+				AlertService.showAlert('cannotUnpublishSyllabusList');
+			}).finally(function() {
+				$scope.refresh();
+			});
+		});
+    };
+
+
 	$scope.copySyllabus = function() {
 		var syllabus = null;
 

@@ -35,6 +35,11 @@
     			message: $translate.instant('ALERT_CANNOT_DELETE_SYLLABUS_LIST')
     		},
 
+	    	'cannotUnpublishSyllabusList': {
+    			type: 'danger',
+    			message: $translate.instant('ALERT_CANNOT_UNPUBLISH_SYLLABUS_LIST')
+    		},
+
     		'cannotCreateAnnouncement': {
     			type: 'danger',
     			message: $translate.instant('ALERT_CANNOT_CREATE_ANNOUNCEMENT')

@@ -1,9 +1,15 @@
 package ca.hec.tenjin.tool.controller;
 
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-
+import ca.hec.tenjin.api.PublishService;
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.SyllabusService;
+import ca.hec.tenjin.api.TenjinSecurityService;
+import ca.hec.tenjin.api.exception.*;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.tool.controller.util.CopySyllabusObject;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.exception.IdUnusedException;
@@ -12,31 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
-import ca.hec.tenjin.api.PublishService;
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.SyllabusService;
-import ca.hec.tenjin.api.TenjinSecurityService;
-import ca.hec.tenjin.api.exception.DeniedAccessException;
-import ca.hec.tenjin.api.exception.NoPublishedSyllabusException;
-import ca.hec.tenjin.api.exception.NoSiteException;
-import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.exception.StructureSyllabusException;
-import ca.hec.tenjin.api.exception.SyllabusLockedException;
-import ca.hec.tenjin.api.exception.UnknownElementTypeException;
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.tool.controller.util.CopySyllabusObject;
-import lombok.Getter;
-import lombok.Setter;
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 /******************************************************************************
  * $Id: $
@@ -125,6 +110,17 @@ public class SyllabusController {
 	public @ResponseBody void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException {
 		for (Long id : syllabusId) {
 			syllabusService.deleteSyllabus(id);
+		}
+	}
+
+	@RequestMapping(value = "/syllabus/{ids}/unpublish", method = RequestMethod.GET)
+	public @ResponseBody void unpublishSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException, StructureSyllabusException {
+		Syllabus syllabus = null;
+		for (Long id : syllabusId) {
+			syllabus = syllabusService.getSyllabus(id) ;
+			if (!syllabus.getCommon())
+				publishService.unpublishSyllabus(id);
+
 		}
 	}
 
