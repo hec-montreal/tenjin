@@ -1,0 +1,38 @@
+<form class="tenjin-modal" data-ng-submit="ok()"> 
+	<div class="modal-header">
+		<h2>{{ 'MODAL_DESCRIPTION_UNPUBLISH_SYLLABUS' | translate}}</h2>
+	</div>
+
+	<div class="modal-body">
+		<div data-ng-if="(syllabusToUnpublish.length > 0)">
+			<div>
+				<div>{{ 'UNPUBLISH_SYLLABUS_OK' | translate }} : </div>
+
+				<ul>
+					<li data-ng-repeat="syllabus in syllabusToUnpublish">
+					{{syllabus.title}}
+					</li>
+				</ul>
+			</div>
+
+			<div data-ng-if="(syllabusNotToUnpublish.length > 0)">
+				<div>{{ 'SOME_INVALID_SYLLABUS_TO_UNPUBLISH' | translate }} : </div>
+
+				<ul>
+					<li data-ng-repeat="syllabus in syllabusNotToUnpublish">
+					{{syllabus.title}}
+					</li>
+				<ul>
+			</div>
+		</div>
+
+		<div data-ng-if="(syllabusToUnpublish.length <= 0)">
+			{{'NO_VALID_SYLLABUS_TO_UNPUBLISH' | translate}}
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button data-ng-if="(syllabusToUnpublish.length > 0)" type="submit">OK</button>
+		<button type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
+	</div> 
+</form>
