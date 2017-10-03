@@ -16,11 +16,11 @@
 		</id>
 
 		<property name="syllabusId" not-null="true" type="long">
-			<column name="SYLLABUS_ID" />
+			<column name="SYLLABUS_ID" unique-key="uniqueSyllabusElementMapping" />
 		</property>
 
 		<many-to-one name="syllabusElement" class="ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement" not-null="true">
-			<column name="SYLLABUSELEMENT_ID" />	
+			<column name="SYLLABUSELEMENT_ID" unique-key="uniqueSyllabusElementMapping" />
 		</many-to-one>
 
 		<property name="displayOrder" not-null="true" type="int">
