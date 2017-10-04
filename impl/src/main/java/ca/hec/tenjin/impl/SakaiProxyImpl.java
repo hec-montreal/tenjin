@@ -475,7 +475,7 @@ public class SakaiProxyImpl implements SakaiProxy {
 		}
 	}
 
-	public ContentResourceEdit addResource(String id, String type, ByteArrayOutputStream content, ResourceProperties properties, int priority){
+	public ContentResourceEdit addPdfToArchive(String id, String type, ByteArrayOutputStream content, ResourceProperties properties, int priority){
 		ContentResourceEdit resourceEdit = null;
 		try {
 			resourceEdit = (ContentResourceEdit) contentHostingService.addResource(id, type, new ByteArrayInputStream(content.toByteArray()), properties, priority);
@@ -485,6 +485,7 @@ public class SakaiProxyImpl implements SakaiProxy {
 			//just update content then
 			try {
 				resourceEdit = (ContentResourceEdit) contentHostingService.updateResource(id, type, content.toByteArray());
+				contentHostingService.setPubView(resourceEdit.getId(), true);
 			} catch (PermissionException | IdUnusedException | TypeException | InUseException | OverQuotaException | ServerOverloadException e1) {
 				e1.printStackTrace();
 			}

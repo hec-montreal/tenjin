@@ -217,27 +217,28 @@ public class PublishServiceImpl implements PublishService {
 		syllabusDao.update(syllabus);
 
 		//Archive published Syllabus pdfs
-		archiveSyllabus(syllabus);
+		PublishedSyllabus publishedSyllabus = getPublishedSyllabus(syllabusId);
+		archiveSyllabus(publishedSyllabus);
 		//Create archive entry
-		hecCourseArchiveService.saveCourseMetadataToArchive(syllabus.getSiteId(), syllabus.getId().toString(), syllabus.getSections());
+		hecCourseArchiveService.saveCourseMetadataToArchive(publishedSyllabus.getSiteId(), publishedSyllabus.getId().toString(), publishedSyllabus.getSections());
 		return syllabus;
 	}
 
 	/**
 	 * Create pdfs from the published syllabus. There is as much pdfs as sections associated to the syllabus.
 	 * The PDFs are saved in the old path
-	 * @param syllabus
+	 * @param publishedSyllabus
 	 */
-	private void archiveSyllabus (Syllabus syllabus){
+	private void archiveSyllabus (PublishedSyllabus publishedSyllabus){
 		Set<String> groups = null;
 		Site site = null;
 		Group authzGroup = null;
 		List<Syllabus> syllabi = null;
 		boolean updatedSyllabusGroup = false;
 
-		if (syllabus.getCommon()){
+		if (publishedSyllabus.getCommon()){
 			try {
-				site = sakaiProxy.getSite(syllabus.getSiteId());
+				site = sakaiProxy.getSite(publishedSyllabus.getSiteId());
 				syllabi = syllabusService.getSyllabusList(site.getId());
 				for (Group group: site.getGroups()){
 					updatedSyllabusGroup = false;
@@ -245,12 +246,12 @@ public class PublishServiceImpl implements PublishService {
 						for (String syllabusSection: syllabusItem.getSections()) {
 							if (syllabusSection.contains(group.getId()) && syllabusItem.getPublishedDate() != null
 									&& !syllabusItem.getCommon()) {
-								createAndSavePdf(group, syllabusService.getSyllabus(syllabusItem.getId()));
+								createAndSavePdf(group, getPublishedSyllabus(syllabusItem.getId()));
 								updatedSyllabusGroup = true;
 							}
 						}
 						if (!updatedSyllabusGroup)
-							createAndSavePdf(group, syllabus);
+							createAndSavePdf(group, publishedSyllabus);
 					}
 				}
 			} catch (IdUnusedException e) {
@@ -261,15 +262,13 @@ public class PublishServiceImpl implements PublishService {
 				e.printStackTrace();
 			} catch (NoSyllabusException e) {
 				e.printStackTrace();
-			} catch (StructureSyllabusException e) {
-				e.printStackTrace();
 			}
 		}else{
-			groups = syllabus.getSections();
+			groups = publishedSyllabus.getSections();
 			for (String group: groups){
 				try {
 					authzGroup = sakaiProxy.getGroup(group);
-					createAndSavePdf(authzGroup, syllabus);
+					createAndSavePdf(authzGroup, publishedSyllabus);
 				} catch (GroupNotDefinedException e) {
 					e.printStackTrace();
 				}
@@ -277,7 +276,7 @@ public class PublishServiceImpl implements PublishService {
 		}
 	}
 
-	private void createAndSavePdf (Group group, Syllabus syllabus){
+	private void createAndSavePdf (Group group, PublishedSyllabus publishedSyllabus){
 		Section section = null;
 		String siteName = null;
 		String pdfPathId = null;
@@ -285,12 +284,12 @@ public class PublishServiceImpl implements PublishService {
 		ResourcePropertiesEdit resourceProperties = null;
 		ContentResourceEdit resourceEdit = null;
 
-		if ((group.getProviderGroupId() != null) &&  (syllabus.getElements() != null)
-				&& syllabus.getPublishedDate() != null){
+		if ((group.getProviderGroupId() != null) &&  (publishedSyllabus.getElements() != null)
+				&& publishedSyllabus.getPublishedDate() != null){
 			section = cmService.getSection(group.getProviderGroupId());
 			siteName = getSiteName(section);
 			try {
-				syllabusExportService.exportPdf(syllabus, (List<Object>) (List<?>)syllabus.getElements(),true, syllabus.getLocale(), byteOutputStream);
+				syllabusExportService.exportPdf(publishedSyllabus, (List<Object>) (List<?>)publishedSyllabus.getElements(),true, publishedSyllabus.getLocale(), byteOutputStream);
 			} catch (ExportException e) {
 				e.printStackTrace();
 			}
@@ -299,7 +298,7 @@ public class PublishServiceImpl implements PublishService {
 			pdfPathId = ContentHostingService.ATTACHMENTS_COLLECTION + siteName
 					+ "/OpenSyllabus/"+siteName+"_public.pdf";
 
-			resourceEdit = sakaiProxy.addResource(pdfPathId,"application/pdf",
+			resourceEdit = sakaiProxy.addPdfToArchive(pdfPathId,"application/pdf",
 					byteOutputStream,resourceProperties, 0);
 
 		}
