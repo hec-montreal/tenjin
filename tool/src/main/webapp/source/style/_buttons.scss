@@ -48,6 +48,10 @@
 		color: $color-button-disabled !important;
 	}
 
+    /* Button for a group - seperate buttons */
+    button.button-group {
+        border-color: #003c71 !important;
+    }
 	/* Button for a list */
 	button.list {
 		background-color: $color-button-list !important;

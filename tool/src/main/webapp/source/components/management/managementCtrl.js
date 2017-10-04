@@ -136,7 +136,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 	$scope.checkStatus = function() {
 		$scope.disableDelete = true;
 		$scope.disableCopy = true;
-
+        $scope.disableUnpublish = true;
 		var checkCount = 0;
 		var isCommonChecked = false;
 
@@ -150,6 +150,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 				}
 
 				$scope.disableDelete = false;
+				$scope.disableUnpublish = false;
 			}
 		}
 
@@ -315,6 +316,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 
 	$scope.disableDelete = true;
 	$scope.disableCopy = true;
+	$scope.disableUnpublish = true;
 
 	var lastModifiedSyllabus;
 	var lastModifiedSyllabusBeforeUpdate;
