@@ -65,11 +65,11 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 			};
 
 			$scope.checkRubricsAlreadyPresent = function() {
-				if ($scope.element.elements) {
-					for (var k = 0; k < $scope.syllabusService.template[$scope.element.templateStructureId].elements.length; k++) {
-						$scope.syllabusService.template[$scope.element.templateStructureId].elements[k].alreadyPresent = false;
-					}
+				for (var k = 0; k < $scope.syllabusService.template[$scope.element.templateStructureId].elements.length; k++) {
+					$scope.syllabusService.template[$scope.element.templateStructureId].elements[k].alreadyPresent = false;
+				}
 
+				if ($scope.element.elements) {
 					// mark rubric already present
 					for (var i = 0; i < $scope.element.elements.length; i++) {
 						for (var j = 0; j < $scope.syllabusService.template[$scope.element.templateStructureId].elements.length; j++) {
