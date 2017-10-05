@@ -217,7 +217,7 @@ public class PublishServiceImpl implements PublishService {
 		syllabusDao.update(syllabus);
 
 		//Archive published Syllabus pdfs
-		PublishedSyllabus publishedSyllabus = getPublishedSyllabus(syllabusId);
+		PublishedSyllabus publishedSyllabus = getPublicSyllabus(syllabusId);
 		archiveSyllabus(publishedSyllabus);
 		//Create archive entry
 		hecCourseArchiveService.saveCourseMetadataToArchive(publishedSyllabus.getSiteId(), publishedSyllabus.getId().toString(), publishedSyllabus.getSections());
@@ -246,7 +246,7 @@ public class PublishServiceImpl implements PublishService {
 						for (String syllabusSection: syllabusItem.getSections()) {
 							if (syllabusSection.contains(group.getId()) && syllabusItem.getPublishedDate() != null
 									&& !syllabusItem.getCommon()) {
-								createAndSavePdf(group, getPublishedSyllabus(syllabusItem.getId()));
+								createAndSavePdf(group, getPublicSyllabus(syllabusItem.getId()));
 								updatedSyllabusGroup = true;
 							}
 						}
