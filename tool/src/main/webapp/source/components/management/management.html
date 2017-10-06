@@ -55,7 +55,7 @@
 					</td>
 
 					<td class="th-select">
-						<input data-ng-if="!syllabus.common && userService.isAllowed('syllabusWrite', syllabus)" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="checkStatus()" />
+						<input data-ng-if="userService.isAllowed('syllabusWrite', syllabus)" type="checkbox" name="syllabus.id" data-ng-model="syllabus.checked" data-ng-click="checkStatus()" />
 					</td>
 				</tr>
 				<tr>

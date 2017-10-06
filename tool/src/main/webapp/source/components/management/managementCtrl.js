@@ -96,7 +96,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 		var syllabusList = [];
 
 		for (var i = 0; i < SyllabusService.syllabusList.length; i++) {
-			if (SyllabusService.syllabusList[i].checked) {
+			if (SyllabusService.syllabusList[i].checked || $scope.isCommonChecked) {
 				syllabusList.push(SyllabusService.syllabusList[i]);
 			}
 		}
@@ -142,7 +142,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 		$scope.disableCopy = true;
         $scope.disableUnpublish = true;
 		var checkCount = 0;
-		var isCommonChecked = false;
+		 $scope.isCommonChecked = false;
 
 		// if a syllabus is checked then the delete button should be enabled
 		for (var i = 0; i < $scope.syllabusService.syllabusList.length; i++) {
@@ -150,7 +150,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 				checkCount++;
 
 				if ($scope.syllabusService.syllabusList[i].common) {
-					isCommonChecked = true;
+					 $scope.isCommonChecked = true;
 				}
 
 				$scope.disableDelete = false;
@@ -158,9 +158,13 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 			}
 		}
 
-		if (checkCount === 1 && !isCommonChecked) {
+		if (checkCount === 1 && ! $scope.isCommonChecked) {
 			$scope.disableCopy = false;
 		}
+
+		if ( $scope.isCommonChecked){
+		    $scope.disableDelete = true;
+         }
 	};
 
 	/**

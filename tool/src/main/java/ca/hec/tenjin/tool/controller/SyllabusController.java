@@ -116,10 +116,20 @@ public class SyllabusController {
 	@RequestMapping(value = "/syllabus/{ids}/unpublish", method = RequestMethod.GET)
 	public @ResponseBody void unpublishSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException, StructureSyllabusException {
 		Syllabus syllabus = null;
+		List<Syllabus> siteSyllabi = null;
 		for (Long id : syllabusId) {
 			syllabus = syllabusService.getSyllabus(id) ;
-			if (!syllabus.getCommon())
+			if (syllabus.getCommon()){
+				siteSyllabi = syllabusService.getSyllabusList(syllabus.getSiteId());
+				for (Syllabus syll: siteSyllabi){
+					if (syll.getPublishedDate() != null && syll.getCommon() != null)
+						publishService.unpublishSyllabus(syll.getId());
+				}
 				publishService.unpublishSyllabus(id);
+			}else {
+				if (syllabus.getPublishedDate() != null)
+					publishService.unpublishSyllabus(id);
+			}
 
 		}
 	}
