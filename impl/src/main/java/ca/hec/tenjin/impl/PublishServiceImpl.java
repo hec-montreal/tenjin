@@ -217,28 +217,28 @@ public class PublishServiceImpl implements PublishService {
 		syllabusDao.update(syllabus);
 
 		//Archive published Syllabus pdfs
-		PublishedSyllabus publishedSyllabus = getPublicSyllabus(syllabusId);
-		archiveSyllabus(publishedSyllabus);
+		PublishedSyllabus publicSyllabus = getPublicSyllabus(syllabusId);
+		archiveSyllabus(publicSyllabus);
 		//Create archive entry
-		hecCourseArchiveService.saveCourseMetadataToArchive(publishedSyllabus.getSiteId(), publishedSyllabus.getId().toString(), publishedSyllabus.getSections());
+		hecCourseArchiveService.saveCourseMetadataToArchive(publicSyllabus.getSiteId(), publicSyllabus.getId().toString(), publicSyllabus.getSections());
 		return syllabus;
 	}
 
 	/**
 	 * Create pdfs from the published syllabus. There is as much pdfs as sections associated to the syllabus.
 	 * The PDFs are saved in the old path
-	 * @param publishedSyllabus
+	 * @param publicSyllabus
 	 */
-	private void archiveSyllabus (PublishedSyllabus publishedSyllabus){
+	private void archiveSyllabus (PublishedSyllabus publicSyllabus){
 		Set<String> groups = null;
 		Site site = null;
 		Group authzGroup = null;
 		List<Syllabus> syllabi = null;
 		boolean updatedSyllabusGroup = false;
 
-		if (publishedSyllabus.getCommon()){
+		if (publicSyllabus.getCommon()){
 			try {
-				site = sakaiProxy.getSite(publishedSyllabus.getSiteId());
+				site = sakaiProxy.getSite(publicSyllabus.getSiteId());
 				syllabi = syllabusService.getSyllabusList(site.getId());
 				for (Group group: site.getGroups()){
 					updatedSyllabusGroup = false;
@@ -251,7 +251,7 @@ public class PublishServiceImpl implements PublishService {
 							}
 						}
 						if (!updatedSyllabusGroup)
-							createAndSavePdf(group, publishedSyllabus);
+							createAndSavePdf(group, publicSyllabus);
 					}
 				}
 			} catch (IdUnusedException e) {
@@ -264,11 +264,11 @@ public class PublishServiceImpl implements PublishService {
 				e.printStackTrace();
 			}
 		}else{
-			groups = publishedSyllabus.getSections();
+			groups = publicSyllabus.getSections();
 			for (String group: groups){
 				try {
 					authzGroup = sakaiProxy.getGroup(group);
-					createAndSavePdf(authzGroup, publishedSyllabus);
+					createAndSavePdf(authzGroup, publicSyllabus);
 				} catch (GroupNotDefinedException e) {
 					e.printStackTrace();
 				}
@@ -276,7 +276,7 @@ public class PublishServiceImpl implements PublishService {
 		}
 	}
 
-	private void createAndSavePdf (Group group, PublishedSyllabus publishedSyllabus){
+	private void createAndSavePdf (Group group, PublishedSyllabus publicSyllabus){
 		Section section = null;
 		String siteName = null;
 		String pdfPathId = null;
@@ -284,12 +284,12 @@ public class PublishServiceImpl implements PublishService {
 		ResourcePropertiesEdit resourceProperties = null;
 		ContentResourceEdit resourceEdit = null;
 
-		if ((group.getProviderGroupId() != null) &&  (publishedSyllabus.getElements() != null)
-				&& publishedSyllabus.getPublishedDate() != null){
+		if ((group.getProviderGroupId() != null) &&  (publicSyllabus.getElements() != null)
+				&& publicSyllabus.getPublishedDate() != null){
 			section = cmService.getSection(group.getProviderGroupId());
 			siteName = getSiteName(section);
 			try {
-				syllabusExportService.exportPdf(publishedSyllabus, (List<Object>) (List<?>)publishedSyllabus.getElements(),true, publishedSyllabus.getLocale(), byteOutputStream);
+				syllabusExportService.exportPdf(publicSyllabus, (List<Object>) (List<?>)publicSyllabus.getElements(),true, publicSyllabus.getLocale(), byteOutputStream);
 			} catch (ExportException e) {
 				e.printStackTrace();
 			}
