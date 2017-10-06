@@ -96,8 +96,4 @@ public interface PublishedSyllabusDao {
 	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId);
 
 	public void unpublishSyllabusElements(Long syllabusId);
-
-
-	public boolean cleanupPublishedSyllabus (String siteId);
-
 }
