@@ -265,20 +265,6 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		getHibernateTemplate().bulkUpdate("update AbstractSyllabusElement set equalsPublished = false, publishedId = null where common = false and id in (select syllabusElement.id from SyllabusElementMapping where syllabusId = ?)", syllabusId);
 	}
 
-	@Override
-	public boolean cleanupPublishedSyllabus(String siteId) {
-		List<PublishedSyllabus> publishedSyllabi = getPublishedSyllabusList(siteId);
-		List<AbstractPublishedSyllabusElement> pubSyllabusElements;
-		List<PublishedSyllabusElementMapping> elementMappings;
-
-		for (PublishedSyllabus pubSyllabus: publishedSyllabi){
-			pubSyllabusElements = getStructuredPublishedSyllabusElements(pubSyllabus.getId(), false);
-
-		}
-
-		return false;
-	}
-
 	@SuppressWarnings("unchecked")
 	public List<AbstractPublishedSyllabusElement> getChildPublishedElements(Long elementId) {
 		List<AbstractPublishedSyllabusElement> elements = (List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("from AbstractPublishedSyllabusElement where parent_id = ?", elementId);
@@ -288,6 +274,6 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 
 	@SuppressWarnings("unchecked")
 	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId) {
-		return (List<PublishedSyllabus>) getHibernateTemplate().find("from PublishedSyllabus where site_id = ? and publishedDate is not null", siteId);
+		return (List<PublishedSyllabus>) getHibernateTemplate().find("from PublishedSyllabus where site_id = ? and publishedDate is not null and deleted = false", siteId);
 	}
 }
