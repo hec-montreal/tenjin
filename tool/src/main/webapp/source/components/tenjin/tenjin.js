@@ -27,15 +27,16 @@ tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', 'SyllabusLockSer
 				// Set locale
 				var availableLang = $translate.getAvailableLanguageKeys();
 				if (availableLang.indexOf(UserService.getProfile().locale) > -1){
-					$translate.use(UserService.getProfile().locale);
+					$translate.use(UserService.getProfile().locale).then(function() {
+					    AlertService.init();
+					});
 					tmhDynamicLocale.set(UserService.getProfile().locale);
-					AlertService.init();
-				}else{  
-					$translate.use(UserService.getProfile().defaultLocale);
+				}else{
+					$translate.use(UserService.getProfile().defaultLocale).then(function() {
+						AlertService.init();
+					});
 					tmhDynamicLocale.set(UserService.getProfile().defaultLocale);
-					AlertService.init();
 				}
-			
 			}).catch(function() {
 				AlertService.showAlert('cannotLoadBaseData');
 			}).finally(function() {
