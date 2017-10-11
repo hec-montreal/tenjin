@@ -285,21 +285,22 @@ public class PublishServiceImpl implements PublishService {
 
 		if ((group.getProviderGroupId() != null) &&  (publicSyllabus.getElements() != null)
 				&& publicSyllabus.getPublishedDate() != null){
-			section = cmService.getSection(group.getProviderGroupId());
-			siteName = getSiteName(section);
 			try {
+				section = cmService.getSection(group.getProviderGroupId());
+				siteName = getSiteName(section);
 				syllabusExportService.exportPdf(publicSyllabus, (List<Object>) (List<?>)publicSyllabus.getElements(),true, publicSyllabus.getLocale(), byteOutputStream);
-			} catch (ExportException e) {
+
+				//Create Resource
+				//TODO: update after refactoring catalog_description
+				pdfPathId = ContentHostingService.ATTACHMENTS_COLLECTION + siteName
+						+ "/OpenSyllabus/"+siteName+"_public.pdf";
+
+				resourceEdit = sakaiProxy.addPdfToArchive(pdfPathId,"application/pdf",
+						byteOutputStream,resourceProperties, 0);
+
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//Create Resource
-			//TODO: update after refactoring catalog_description
-			pdfPathId = ContentHostingService.ATTACHMENTS_COLLECTION + siteName
-					+ "/OpenSyllabus/"+siteName+"_public.pdf";
-
-			resourceEdit = sakaiProxy.addPdfToArchive(pdfPathId,"application/pdf",
-					byteOutputStream,resourceProperties, 0);
-
 		}
 	}
 	//TODO: might need to be removed after catalog_description refactoring
