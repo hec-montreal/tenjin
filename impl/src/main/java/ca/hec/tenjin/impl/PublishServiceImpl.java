@@ -216,25 +216,21 @@ public class PublishServiceImpl implements PublishService {
 		syllabus.setPublishedBy(sakaiProxy.getCurrentUserId());
 		syllabusDao.update(syllabus);
 
-		//Archive published Syllabus pdfs
-		PublishedSyllabus publicSyllabus = getPublicSyllabus(syllabusId);
-		archiveSyllabus(publicSyllabus);
-		//Create archive entry
-		hecCourseArchiveService.saveCourseMetadataToArchive(publicSyllabus.getSiteId(), publicSyllabus.getId().toString(), publicSyllabus.getSections());
 		return syllabus;
 	}
 
 	/**
 	 * Create pdfs from the published syllabus. There is as much pdfs as sections associated to the syllabus.
-	 * The PDFs are saved in the old path
+	 * The PDFs are saved in the old path and published in HEC Archive tool
 	 * @param publicSyllabus
 	 */
-	private void archiveSyllabus (PublishedSyllabus publicSyllabus){
+	public void archiveSyllabus(Long publishedSyllabusId) throws NoSyllabusException {
 		Set<String> groups = null;
 		Site site = null;
 		Group authzGroup = null;
 		List<Syllabus> syllabi = null;
 		boolean updatedSyllabusGroup = false;
+		PublishedSyllabus publicSyllabus = getPublicSyllabus(publishedSyllabusId);
 
 		if (publicSyllabus.getCommon()){
 			try {
@@ -274,6 +270,9 @@ public class PublishServiceImpl implements PublishService {
 				}
 			}
 		}
+
+		//Create archive entry
+		hecCourseArchiveService.saveCourseMetadataToArchive(publicSyllabus.getSiteId(), publicSyllabus.getId().toString(), publicSyllabus.getSections());
 	}
 
 	private void createAndSavePdf (Group group, PublishedSyllabus publicSyllabus){

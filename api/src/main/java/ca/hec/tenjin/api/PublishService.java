@@ -50,5 +50,12 @@ public interface PublishService {
 	 */
 	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, DeniedAccessException, StructureSyllabusException, SyllabusLockedException;
 
+	/**
+	 * Create PDF for archiving and add an entry to the HEC archive tool
+	 *
+	 * @param publishedSyllabusId
+	 */
+	public void archiveSyllabus(Long publishedSyllabusId) throws NoSyllabusException;
+
 	public void unpublishSyllabus(Long syllabusId) throws NoSyllabusException;
 }

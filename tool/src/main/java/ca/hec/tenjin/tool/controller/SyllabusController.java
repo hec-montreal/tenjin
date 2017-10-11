@@ -139,6 +139,7 @@ public class SyllabusController {
 		Syllabus syllabus = null;
 
 		syllabus = publishService.publishSyllabus(syllabusId);
+		publishService.archiveSyllabus(syllabusId);
 
 		return (syllabus);
 	}
