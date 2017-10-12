@@ -14,16 +14,6 @@
 					</li>
 				</ul>
 			</div>
-
-			<div data-ng-if="(syllabusNotToUnpublish.length > 0)">
-				<div>{{ 'SOME_INVALID_SYLLABUS_TO_UNPUBLISH' | translate }} : </div>
-
-				<ul>
-					<li data-ng-repeat="syllabus in syllabusNotToUnpublish">
-					{{syllabus.title}}
-					</li>
-				<ul>
-			</div>
 		</div>
 
 		<div data-ng-if="(syllabusToUnpublish.length <= 0)">

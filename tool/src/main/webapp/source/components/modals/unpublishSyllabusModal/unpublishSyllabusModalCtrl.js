@@ -4,14 +4,11 @@
 	$scope.syllabusList = syllabusList.syllabusList;
 
 	$scope.syllabusToUnpublish = [];
-	$scope.syllabusNotToUnpublish = []; // syllabus with assigned not published can't be unpublished
 
-	// Initialize a list with syllabus which can be unpublished, and another which cannot be unpublished
+	// Initialize a list with syllabus which to unpublished
 	for (var i = 0; i < $scope.syllabusList.length; i++) {
 		if ($scope.syllabusList[i].publishedDate) {
 			$scope.syllabusToUnpublish.push($scope.syllabusList[i]);
-		} else if ($scope.syllabusList[i].sections.length > 0) {
-			$scope.syllabusNotToUnpublish.push($scope.syllabusList[i]);
 		}
 	}
 
