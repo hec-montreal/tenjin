@@ -305,6 +305,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	@Override
+	@Transactional
 	public void copySyllabus(Long syllabusId, String title) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException {
 		Syllabus syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
 
@@ -704,8 +705,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	private void createElementCopyAndMappings(AbstractSyllabusElement element, AbstractSyllabusElement parent, int displayOrder, Syllabus forSyllabus, String userId) {
+		AbstractSyllabusElement newElement = null;
 		if (!element.getCommon()) {
-			AbstractSyllabusElement newElement = copyElement(element);
+			newElement = copyElement(element);
 			newElement.setParentId(parent == null ? null : parent.getId());
 
 			syllabusDao.save(newElement);
@@ -722,7 +724,11 @@ public class SyllabusServiceImpl implements SyllabusService {
 			for (int i = 0; i < comp.getElements().size(); i++) {
 				AbstractSyllabusElement child = comp.getElements().get(i);
 
-				createElementCopyAndMappings(child, comp, i, forSyllabus, userId);
+				if (newElement != null) {
+					createElementCopyAndMappings(child, newElement, i, forSyllabus, userId);
+				} else {
+					createElementCopyAndMappings(child, comp, i, forSyllabus, userId);
+				}
 			}
 		}
 	}
