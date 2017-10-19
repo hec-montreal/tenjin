@@ -77,7 +77,10 @@
 	</div> 
 
 	<div ng-if="element.attributes.activateOtherLink" class="other-link">
-		<a target="_blank" data-nodrag href={{element.attributes.otherLinkurl}}>{{'REFERENCE_OTHER_LINK' | translate}}</a>
+		<a target="_blank" data-nodrag href={{element.attributes.otherLinkurl}}>
+			<span data-ng-if="!element.attributes.otherLinkLabel">{{'REFERENCE_OTHER_LINK' | translate}}</span>
+			<span data-ng-if="element.attributes.otherLinkLabel">{{element.attributes.otherLinkLabel}}</span>
+		</a>
 	</div> 
 
 	<div ng-if="element.description" ng-bind-html="element.description" class="description"></div>
