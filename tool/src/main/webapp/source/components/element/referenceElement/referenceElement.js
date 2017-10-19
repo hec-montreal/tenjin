@@ -13,8 +13,8 @@ tenjinApp.directive('referenceElement', ['config',  '$translate','ResourcesServi
 		link: function($scope, $element) {
 			$scope.citation = ResourcesService.getResource($scope.element.attributes.citationId);
 
-			var citationTypeId = $scope.element.attributes.citationType;
-			$scope.citationType = $translate.instant(citationTypeId);
+			$scope.citationTypeId = $scope.element.attributes.citationType;
+			$scope.citationType = $translate.instant($scope.citationTypeId);
 
 			$scope.dot = ".";
 			$scope.comma = ',';
