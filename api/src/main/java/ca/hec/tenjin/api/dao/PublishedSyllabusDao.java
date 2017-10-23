@@ -25,6 +25,7 @@ import java.util.List;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabusElementMapping;
 
 /**
  *
@@ -96,4 +97,16 @@ public interface PublishedSyllabusDao {
 	public List<PublishedSyllabus> getPublishedSyllabusList(String siteId);
 
 	public void unpublishSyllabusElements(Long syllabusId);
+
+	List<PublishedSyllabusElementMapping> getMappingsForPublishedElement(AbstractPublishedSyllabusElement elem);
+
+	/**
+     * Retrieve the list of published syllabuses that have a mapping for the given element
+     *
+     * @param AbstractPublishedSyllabusElement
+     * @return The list of published syllabus objects
+     */
+	List<Long> getPublishedSyllabusesWithElementMapping(AbstractPublishedSyllabusElement element);
+
+	AbstractPublishedSyllabusElement getPublishedSyllabusElement(Long elementId);
 }

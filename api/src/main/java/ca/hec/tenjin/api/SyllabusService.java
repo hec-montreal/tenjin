@@ -142,4 +142,20 @@ public interface SyllabusService {
 	 * @return List<AbstractSyllabusElement>
 	 */
 	public List<AbstractSyllabusElement> getChildrenForSyllabusElement(SyllabusCompositeElement parent);
+
+	/**
+	 * Retrieve the list of course outlines with mappings to the given element
+	 *
+	 * @param AbstractSyllabusElement element
+	 * @return List<Long> - Ids of the course outlines
+	 */
+	public List<Long> getSyllabusesWithElementMapping(AbstractSyllabusElement element);
+
+	/**
+	 * Retrieve a Syllabus Element object by id
+	 *
+	 * @param Long id 
+	 * @return AbstractSyllabusElement
+	 */
+	public AbstractSyllabusElement getSyllabusElement(Long id);
 }

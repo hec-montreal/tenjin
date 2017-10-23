@@ -108,8 +108,10 @@
 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 	</bean>
 
-	<bean id="ca.hec.tenjin.api.dao.SyllabusConstantsDao" class="ca.hec.tenjin.impl.dao.SyllabusConstantsDaoImpl">
+	<bean id="ca.hec.tenjin.api.ReportingService" class="ca.hec.tenjin.impl.ReportingServiceImpl">
+	</bean>
 
+	<bean id="ca.hec.tenjin.api.dao.SyllabusConstantsDao" class="ca.hec.tenjin.impl.dao.SyllabusConstantsDaoImpl">
 	</bean>
 	
 	<bean id="ca.hec.tenjin.api.SyllabusExportService" class="ca.hec.tenjin.impl.SyllabusExportServiceImpl">

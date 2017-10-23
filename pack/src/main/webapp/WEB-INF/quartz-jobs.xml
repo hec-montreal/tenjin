@@ -84,4 +84,36 @@
         </property>
 
     </bean>
+
+    <bean id="generateCitationsReportJob"
+          class="ca.hec.tenjin.impl.jobs.GenerateCitationsReportJobImpl">
+    </bean>
+
+    <bean id="org.sakaiproject.api.app.scheduler.JobBeanWrapper.generateCitationsReportJob"
+          class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobBeanWrapper"
+          init-method="init">
+
+        <property name="beanId">
+            <value>generateCitationsReportJob</value>
+        </property>
+
+        <property name="jobName">
+            <value>Tenjin Generate Citations Report</value>
+        </property>
+
+        <property name="schedulerManager">
+            <ref bean="org.sakaiproject.api.app.scheduler.SchedulerManager" />
+        </property>
+        <property name="resourceBundleBase" value="ca.hec.tenjin.api.jobs.JobMessages"/>
+        <property name="configurableJobProperties">
+            <set>
+                <bean class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobProperty">
+                    <property name="required" value="false"/>
+                    <property name="labelResourceKey" value="lastModifiedDate"/>
+                    <property name="descriptionResourceKey" value="lastModifiedDate.description"/>
+                    <property name="defaultValue" value="2017/10/23"/>
+                </bean>
+            </set>
+        </property>
+    </bean>
 </beans>

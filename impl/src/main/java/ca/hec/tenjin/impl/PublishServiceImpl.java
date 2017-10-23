@@ -406,4 +406,14 @@ public class PublishServiceImpl implements PublishService {
 
 		syllabusDao.save(syllabus);
 	}
+
+	@Override
+	public List<Long> getPublishedSyllabusesWithElementMapping(AbstractPublishedSyllabusElement element) {
+		return publishedSyllabusDao.getPublishedSyllabusesWithElementMapping(element);
+	}
+
+	@Override
+	public AbstractPublishedSyllabusElement getPublishedSyllabusElement(Long id) {
+		return publishedSyllabusDao.getPublishedElement(id);
+	}
 }

@@ -494,7 +494,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		return true;
 	}
 
-	private List<Long> getSyllabusesWithElementMapping(AbstractSyllabusElement element) {
+	public List<Long> getSyllabusesWithElementMapping(AbstractSyllabusElement element) {
 		List<Long> syllabuses = new ArrayList<Long>();
 		List<SyllabusElementMapping> l = syllabusDao.getMappingsForElement(element);
 		for (SyllabusElementMapping mapping : l) {
@@ -852,5 +852,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 			}
 		}
 
+	}
+
+	public AbstractSyllabusElement getSyllabusElement(Long id) {
+		return syllabusDao.getSyllabusElement(id);
 	}
 }

@@ -7,7 +7,10 @@ import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.exception.SyllabusLockedException;
 import ca.hec.tenjin.api.exception.UnknownElementTypeException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
+
+import java.util.List;
 
 /**
  * An interface to abstract all publishing and published syllabus related
@@ -20,7 +23,7 @@ public interface PublishService {
 
 	/**
 	 * Retrieves the published syllabus by it's id
-	 * 
+	 *
 	 * @param syllabusId
 	 * @return the PublishedSyllabus element
 	 * @throws NoSyllabusException
@@ -29,7 +32,7 @@ public interface PublishService {
 
 	/**
 	 * Retreives the published syllabus for a siteId + sectionId (optional)
-	 * 
+	 *
 	 * @param siteId
 	 * @param sectionId
 	 * @return
@@ -37,16 +40,16 @@ public interface PublishService {
 	 */
 	public PublishedSyllabus getPublishedSyllabus(String siteId, String sectionId) throws NoSyllabusException, DeniedAccessException;
 
-	public PublishedSyllabus getPublicSyllabus(Long syllabusId) throws NoSyllabusException;	
-	
+	public PublishedSyllabus getPublicSyllabus(Long syllabusId) throws NoSyllabusException;
+
 	/**
 	 * Publish the syllabus with the given id
-	 * 
+	 *
 	 * @param syllabusId
 	 * @throws NoSyllabusException
 	 * @throws UnknownElementTypeException
-	 * @throws StructureSyllabusException 
-	 * @throws SyllabusLockedException 
+	 * @throws StructureSyllabusException
+	 * @throws SyllabusLockedException
 	 */
 	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, DeniedAccessException, StructureSyllabusException, SyllabusLockedException;
 
@@ -58,4 +61,8 @@ public interface PublishService {
 	public void archiveSyllabus(Long publishedSyllabusId) throws NoSyllabusException;
 
 	public void unpublishSyllabus(Long syllabusId) throws NoSyllabusException;
+
+	List<Long> getPublishedSyllabusesWithElementMapping(AbstractPublishedSyllabusElement element);
+
+	AbstractPublishedSyllabusElement getPublishedSyllabusElement(Long id);
 }

@@ -118,4 +118,23 @@
 			</props>
 		</property>
 	</bean>
+
+	<bean id="ca.hec.tenjin.api.dao.ReportingDao"
+		  class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"
+				  ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
+		<property name="target">
+			<bean class="ca.hec.tenjin.impl.dao.ReportingDaoImpl">
+				<property name="sessionFactory">
+					<ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
+				</property>
+			</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
 </beans>
