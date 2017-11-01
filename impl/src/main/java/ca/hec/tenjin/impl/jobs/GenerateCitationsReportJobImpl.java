@@ -65,7 +65,6 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
         session.setUserId("admin");
 
         List<PublishedCitationElement> citations = null;
-        Date now = new Date();
         Date d = null;
 
         String reportsDestinationFolder =
@@ -81,7 +80,7 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
             d = getDate(lastModifiedDateString);
         }
         if (d == null) {
-            d = now;
+            d = new Date();
             d.setDate(d.getDate()-7);
         }
         citations = reportingService.getPublishedCitationsModifiedSince(d);
@@ -203,6 +202,7 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
         }
 
         try {
+            Date now = new Date();
             String filename = "rapport_references_"+
                     now.toLocaleString().replace(' ', '_').replace(':', '.')+".xls";
 
