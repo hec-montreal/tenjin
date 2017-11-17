@@ -124,76 +124,93 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
         c.setCellValue("URL manuel");
 
         for (int i = 0; i < citations.size(); i++) {
-            PublishedCitationElement citation = citations.get(i);
-            List<Long> syllabusIds = publishService.getPublishedSyllabusesWithElementMapping(citation);
-            Citation citationResource = getCitation(citation.getAttributes().get("citationId"));
-
-            cellnum = 0;
-            r = sh.createRow(rownum++);
-
-            c = r.createCell(cellnum++);
-            c.setCellValue(citation.getLastModifiedDate().toString());
-
-            c = r.createCell(cellnum++);
-            c.setCellValue(citation.getSiteId());
-
-            c = r.createCell(cellnum++);
             try {
-                if (citation.getCommon()) {
-                    c.setCellValue("Commun");
-                } else {
-                    String syllabusTitles = "";
-                    for (Long syllabusId : syllabusIds) {
-                        Syllabus s = syllabusService.getSyllabus(syllabusId);
-                        syllabusTitles += s.getTitle();
+                PublishedCitationElement citation = citations.get(i);
+                List<Long> syllabusIds = publishService.getPublishedSyllabusesWithElementMapping(citation);
+                Citation citationResource = getCitation(citation.getAttributes().get("citationId"));
+
+                cellnum = 0;
+                r = sh.createRow(rownum++);
+
+                c = r.createCell(cellnum++);
+                c.setCellValue(citation.getLastModifiedDate().toString());
+
+                c = r.createCell(cellnum++);
+                c.setCellValue(citation.getSiteId());
+
+                c = r.createCell(cellnum++);
+                try {
+                    if (citation.getCommon()) {
+                        c.setCellValue("Commun");
+                    } else {
+                        String syllabusTitles = "";
+                        for (Long syllabusId : syllabusIds) {
+                            Syllabus s = syllabusService.getSyllabus(syllabusId);
+                            syllabusTitles += s.getTitle();
+                        }
+                        c.setCellValue(syllabusTitles);
                     }
-                    c.setCellValue(syllabusTitles);
+                } catch (Exception e) {
+                    c.setCellValue("Error retrieving course outline for citation");
                 }
-            } catch (Exception e) {
-                c.setCellValue("Error retrieving course outline for citation");
-            }
 
-            c = r.createCell(cellnum++);
-            AbstractPublishedSyllabusElement rubric = publishService.getPublishedSyllabusElement(citation.getParentId());
-            AbstractPublishedSyllabusElement page = publishService.getPublishedSyllabusElement(rubric.getParentId());
-            c.setCellValue(page.getTitle());
+                c = r.createCell(cellnum++);
+                AbstractPublishedSyllabusElement rubric = null;
+                AbstractPublishedSyllabusElement page = null;
 
-            c = r.createCell(cellnum++);
-            String type = citation.getAttributes().get("citationType");
-            if (type != null) {
-                // remove "REFERENCE_TYPE_"
-                type = type.toLowerCase();
-                c.setCellValue(type.startsWith("reference_type_") ? type.substring(15) : type);
-            }
+                if (citation.getParentId() != null) {
+                    rubric = publishService.getPublishedSyllabusElement(citation.getParentId());
+                }
+                if (rubric != null && rubric.getParentId() != null) {
+                    page = publishService.getPublishedSyllabusElement(rubric.getParentId());
+                }
+                if (page != null) {
+                    c.setCellValue(page.getTitle());
+                } else {
+                    c.setCellValue("");
+                }
 
-            c = r.createCell(cellnum++);
-            if (citation.getImportant() != null && citation.getImportant())
-                c.setCellValue("Oui");
-            else
-                c.setCellValue("Non");
+                c = r.createCell(cellnum++);
+                String type = citation.getAttributes().get("citationType");
+                if (type != null) {
+                    // remove "REFERENCE_TYPE_"
+                    type = type.toLowerCase();
+                    c.setCellValue(type.startsWith("reference_type_") ? type.substring(15) : type);
+                }
 
-            if (citationResource != null) {
                 c = r.createCell(cellnum++);
-                c.setCellValue(citationResource.getCreator());
-                c = r.createCell(cellnum++);
-                c.setCellValue((String)citationResource.getCitationProperty("date"));
-                c = r.createCell(cellnum++);
-                c.setCellValue(citationResource.getDisplayName());
-                c = r.createCell(cellnum++);
-                c.setCellValue((String)citationResource.getCitationProperty("isnIdentifier"));
-                if (citation.getAttributes().get("activateLibraryLink") != null &&
-                        citation.getAttributes().get("activateLibraryLink").equals("true")) {
+                if (citation.getImportant() != null && citation.getImportant())
+                    c.setCellValue("Oui");
+                else
+                    c.setCellValue("Non");
+
+                if (citationResource != null) {
                     c = r.createCell(cellnum++);
-                    c.setCellValue(citationResource.getOpenurl());
-                }
-                if (citation.getAttributes().get("activateOtherLink") != null &&
-                        citation.getAttributes().get("activateOtherLink").equals("true")) {
+                    c.setCellValue(citationResource.getCreator());
                     c = r.createCell(cellnum++);
-                    c.setCellValue(citation.getAttributes().get("otherLinkurl"));
+                    c.setCellValue((String) citationResource.getCitationProperty("date"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue(citationResource.getDisplayName());
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String) citationResource.getCitationProperty("isnIdentifier"));
+                    if (citation.getAttributes().get("activateLibraryLink") != null &&
+                            citation.getAttributes().get("activateLibraryLink").equals("true")) {
+                        c = r.createCell(cellnum++);
+                        c.setCellValue(citationResource.getOpenurl());
+                    }
+                    if (citation.getAttributes().get("activateOtherLink") != null &&
+                            citation.getAttributes().get("activateOtherLink").equals("true")) {
+                        c = r.createCell(cellnum++);
+                        c.setCellValue(citation.getAttributes().get("otherLinkurl"));
+                    }
+                } else {
+                    c = r.createCell(cellnum++);
+                    c.setCellValue("La citation n'existe pas dans l'outil ressources");
                 }
-            } else {
-                c = r.createCell(cellnum++);
-                c.setCellValue("La citation n'existe pas dans l'outil ressources");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                continue;
             }
         }
 
