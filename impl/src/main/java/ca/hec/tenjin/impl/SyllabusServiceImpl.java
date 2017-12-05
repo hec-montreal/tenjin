@@ -842,12 +842,13 @@ public class SyllabusServiceImpl implements SyllabusService {
 		if (element.isComposite()) {
 			SyllabusCompositeElement comp = (SyllabusCompositeElement) element;
 
+			// when copying the common syllabus, add composite elements to the map
+			if (commonCopyMapping != null && forSyllabus.getCommon()){
+				commonCopyMapping.put(element.getId(), newElement);
+			}
+
 			for (int i = 0; i < comp.getElements().size(); i++) {
 				AbstractSyllabusElement child = comp.getElements().get(i);
-
-				if (commonCopyMapping != null && forSyllabus.getCommon()){
-					commonCopyMapping.put(element.getId(), newElement);
-				}
 				transferCopyElement(child, newElement, i, forSyllabus, userId, commonCopyMapping);
 			}
 		}
