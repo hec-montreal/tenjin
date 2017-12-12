@@ -132,7 +132,7 @@ public interface SyllabusService {
 	 * @throws NoSyllabusException
 	 * @throws StructureSyllabusException
 	 */
-	Syllabus transferCopySyllabus(String siteId, Long syllabusId, String title, boolean common, Long templateId, String locale, String courseTitle,
+	Syllabus transferCopySyllabus(String fromSiteId, String toSiteId, Long syllabusId, String title, boolean common, Long templateId, String locale, String courseTitle,
 							  String createdBy, String createdByName, Map<Long, AbstractSyllabusElement> commonCopyMapping) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException;
 
 	/**

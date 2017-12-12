@@ -108,7 +108,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
 
             //copy common
             commonSyllabus = syllabusService.getCommonSyllabus(fromContext);
-            syllabusCopy = syllabusService.transferCopySyllabus(toContext, commonSyllabus.getId(), commonSyllabus.getTitle(),
+            syllabusCopy = syllabusService.transferCopySyllabus(fromContext, toContext, commonSyllabus.getId(), commonSyllabus.getTitle(),
                     commonSyllabus.getCommon(), commonSyllabus.getTemplateId(), commonSyllabus.getLocale(),toSite.getTitle(),
                     sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew);
             for (Group group: toSite.getGroups()){
@@ -126,7 +126,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
 
             //copy rest of syllabi
             for(Syllabus syllabus: syllabiToCopy){
-                syllabusCopy = syllabusService.transferCopySyllabus(toContext, syllabus.getId(), syllabus.getTitle(),
+                syllabusCopy = syllabusService.transferCopySyllabus(fromContext, toContext, syllabus.getId(), syllabus.getTitle(),
                         syllabus.getCommon(), syllabus.getTemplateId(), syllabus.getLocale(),toSite.getTitle(),
                         sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew);
             }

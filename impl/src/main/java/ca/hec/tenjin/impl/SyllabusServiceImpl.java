@@ -3,10 +3,7 @@ package ca.hec.tenjin.impl;
 import ca.hec.tenjin.api.*;
 import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.exception.*;
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
+import ca.hec.tenjin.api.model.syllabus.*;
 import ca.hec.tenjin.api.provider.CourseOutlineProvider;
 import lombok.Setter;
 import org.apache.commons.collections.CollectionUtils;
@@ -341,7 +338,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	@Override
-	public Syllabus transferCopySyllabus(String siteId, Long syllabusId, String title, boolean common, Long templateId,
+	public Syllabus transferCopySyllabus(String fromSiteId, String toSiteId, Long syllabusId, String title, boolean common, Long templateId,
 										 String locale, String courseTitle, String createdBy,
 										 String createdByName, Map<Long, AbstractSyllabusElement> commonCopyMapping) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException{
 		Syllabus syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
@@ -353,7 +350,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		Date now = new Date();
 		Syllabus copy = new Syllabus();
 
-		copy.setSiteId(siteId);
+		copy.setSiteId(toSiteId);
 		copy.setTitle(title);
 		copy.setCommon(common);
 		copy.setTemplateId(templateId);
@@ -373,7 +370,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		//Copy mappings if syllabus is not common
 		if (!copy.getCommon()){
-			Syllabus thecommon = getCommonSyllabus(siteId);
+			Syllabus thecommon = getCommonSyllabus(toSiteId);
 			List<SyllabusElementMapping> mappings = getSyllabusElementMappings(thecommon.getId(),true);
 			for (SyllabusElementMapping mapping: mappings){
 				createSyllabusElementMapping(copy.getId(), mapping.getSyllabusElement(),mapping.getDisplayOrder(),mapping.getHidden());
@@ -382,7 +379,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		// Copy elements
 		for (int i = 0; i < syllabus.getElements().size(); i++) {
-			transferCopyElement(syllabus.getElements().get(i), null, i, copy, createdBy, commonCopyMapping);
+			transferCopyElement(syllabus.getElements().get(i), null, i, copy, createdBy, commonCopyMapping, fromSiteId, toSiteId);
 		}
 
 		return copy;
@@ -748,7 +745,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		return syllabusDao.getChildrenForSyllabusElement(parent);
 	}
 
-	private void transferCopyElement(AbstractSyllabusElement element, AbstractSyllabusElement parent, int displayOrder, Syllabus forSyllabus, String userId, Map<Long, AbstractSyllabusElement> commonCopyMapping) {
+	private void transferCopyElement(AbstractSyllabusElement element, AbstractSyllabusElement parent, int displayOrder, Syllabus forSyllabus, String userId, Map<Long, AbstractSyllabusElement> commonCopyMapping, String fromSiteId, String toSiteId) {
 		// Create new element
 		AbstractSyllabusElement newElement = null;
 
@@ -797,6 +794,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 				newElement.setCreatedBy(userId);
 				newElement.setCreatedDate(new Date());
 			}
+
+			updateLinks(newElement, fromSiteId, toSiteId);
 		} catch (IllegalAccessException e) {
 		// Should never happen
 		e.printStackTrace();
@@ -849,10 +848,34 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 			for (int i = 0; i < comp.getElements().size(); i++) {
 				AbstractSyllabusElement child = comp.getElements().get(i);
-				transferCopyElement(child, newElement, i, forSyllabus, userId, commonCopyMapping);
+				transferCopyElement(child, newElement, i, forSyllabus, userId, commonCopyMapping, fromSiteId, toSiteId);
 			}
 		}
 
+	}
+
+	private void updateLinks(AbstractSyllabusElement newElement, String fromSiteId, String toSiteId) {
+
+		Map<String, String> attributes = newElement.getAttributes();
+		String newResourceId ;
+		String citationRefId, citationResourceId, newCitationResourceId, citationId;
+
+		if (attributes != null){
+			if (newElement instanceof SyllabusDocumentElement){
+				newResourceId = (attributes.get("documentId")).replace(fromSiteId, toSiteId);
+				attributes.put("documentId", newResourceId);
+			}
+			if (newElement instanceof SyllabusImageElement){
+				newResourceId = (attributes.get("imageId")).replace(fromSiteId, toSiteId);
+				attributes.put("imageId", newResourceId);
+			}
+			if (newElement instanceof SyllabusCitationElement){
+				// TODO citations is more complicated than this
+				citationRefId = attributes.get("citationId");
+				newCitationResourceId = citationRefId.replaceAll(fromSiteId, toSiteId);
+				attributes.put("citationId", newCitationResourceId);
+			}
+		}
 	}
 
 	public AbstractSyllabusElement getSyllabusElement(Long id) {
