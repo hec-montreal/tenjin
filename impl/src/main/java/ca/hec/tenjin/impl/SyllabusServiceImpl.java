@@ -22,6 +22,7 @@ import org.sakaiproject.exception.InUseException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ContextResource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -906,7 +907,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 				if (fromCitation != null) {
 					// TODO i18n
 					String destSiteCollectionRef = contentHostingService.getSiteCollection(toSiteId);
-					String citationListName = "Nouvelle liste de références";
+					String citationListName = "Références bibliographiques importé";
 					String destCitationCollectionRef = destSiteCollectionRef + citationListName;
 					CitationCollection destCitationCollection = getDestinationCitationCollection(destCitationCollectionRef, citationListName);
 
@@ -971,6 +972,22 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 
 		return destCitationCollection;
+	}
+
+	// remove all citation lists during import so they don't accumulate
+	public void deleteCitationLists(String siteId) {
+		Set<String> contextList = new HashSet<>();
+		contextList.add(siteId);
+		Collection<ContentResource> citationsLists =
+				contentHostingService.getContextResourcesOfType(CitationService.CITATION_LIST_ID, contextList);
+
+		for (ContentResource list : citationsLists) {
+			try {
+				contentHostingService.removeResource(list.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public AbstractSyllabusElement getSyllabusElement(Long id) {

@@ -105,6 +105,8 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
             }
         }
 
+        syllabusService.deleteCitationLists(toContext);
+
         try {
             toSite = sakaiProxy.getSite(toContext);
 

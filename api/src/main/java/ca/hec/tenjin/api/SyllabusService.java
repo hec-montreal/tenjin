@@ -158,4 +158,6 @@ public interface SyllabusService {
 	 * @return AbstractSyllabusElement
 	 */
 	public AbstractSyllabusElement getSyllabusElement(Long id);
+
+	void deleteCitationLists(String toContext);
 }
