@@ -9,7 +9,16 @@ import lombok.Setter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.log4j.Logger;
+import org.sakaiproject.citation.api.Citation;
+import org.sakaiproject.citation.api.CitationCollection;
+import org.sakaiproject.citation.api.CitationService;
+import org.sakaiproject.content.api.*;
+import org.sakaiproject.content.api.ContentHostingService;
+import org.sakaiproject.entity.api.ResourceProperties;
+import org.sakaiproject.entity.api.ResourcePropertiesEdit;
+import org.sakaiproject.event.api.NotificationService;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.exception.InUseException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +42,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 	private TemplateService templateService;
 	private TenjinSecurityService securityService;
 	private SyllabusLockService syllabusLockService;
+
+	private ContentHostingService contentHostingService;
+	private CitationService citationService;
 
 	@Autowired(required = false)
 	private CourseOutlineProvider importProvider;
@@ -340,7 +352,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	@Override
 	public Syllabus transferCopySyllabus(String fromSiteId, String toSiteId, Long syllabusId, String title, boolean common, Long templateId,
 										 String locale, String courseTitle, String createdBy,
-										 String createdByName, Map<Long, AbstractSyllabusElement> commonCopyMapping) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException{
+										 String createdByName, Map<Long, AbstractSyllabusElement> commonCopyMapping, Map<String, String> copiedCitationsMap) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException{
 		Syllabus syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
 
 		if (!securityService.canRead(sakaiProxy.getCurrentUserId(), syllabus)) {
@@ -379,7 +391,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		// Copy elements
 		for (int i = 0; i < syllabus.getElements().size(); i++) {
-			transferCopyElement(syllabus.getElements().get(i), null, i, copy, createdBy, commonCopyMapping, fromSiteId, toSiteId);
+			transferCopyElement(syllabus.getElements().get(i), null, i, copy, createdBy, commonCopyMapping, copiedCitationsMap, fromSiteId, toSiteId);
 		}
 
 		return copy;
@@ -745,7 +757,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		return syllabusDao.getChildrenForSyllabusElement(parent);
 	}
 
-	private void transferCopyElement(AbstractSyllabusElement element, AbstractSyllabusElement parent, int displayOrder, Syllabus forSyllabus, String userId, Map<Long, AbstractSyllabusElement> commonCopyMapping, String fromSiteId, String toSiteId) {
+	private void transferCopyElement(AbstractSyllabusElement element, AbstractSyllabusElement parent, int displayOrder, Syllabus forSyllabus, String userId, Map<Long, AbstractSyllabusElement> commonCopyMapping, Map<String, String> copiedCitationsMap, String fromSiteId, String toSiteId) {
 		// Create new element
 		AbstractSyllabusElement newElement = null;
 
@@ -795,7 +807,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 				newElement.setCreatedDate(new Date());
 			}
 
-			updateLinks(newElement, fromSiteId, toSiteId);
+			updateLinks(newElement, fromSiteId, toSiteId, copiedCitationsMap);
 		} catch (IllegalAccessException e) {
 		// Should never happen
 		e.printStackTrace();
@@ -848,17 +860,16 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 			for (int i = 0; i < comp.getElements().size(); i++) {
 				AbstractSyllabusElement child = comp.getElements().get(i);
-				transferCopyElement(child, newElement, i, forSyllabus, userId, commonCopyMapping, fromSiteId, toSiteId);
+				transferCopyElement(child, newElement, i, forSyllabus, userId, commonCopyMapping, copiedCitationsMap, fromSiteId, toSiteId);
 			}
 		}
 
 	}
 
-	private void updateLinks(AbstractSyllabusElement newElement, String fromSiteId, String toSiteId) {
+	private void updateLinks(AbstractSyllabusElement newElement, String fromSiteId, String toSiteId, Map<String, String> copiedCitationsMap) {
 
 		Map<String, String> attributes = newElement.getAttributes();
 		String newResourceId ;
-		String citationRefId, citationResourceId, newCitationResourceId, citationId;
 
 		if (attributes != null){
 			if (newElement instanceof SyllabusDocumentElement){
@@ -870,12 +881,96 @@ public class SyllabusServiceImpl implements SyllabusService {
 				attributes.put("imageId", newResourceId);
 			}
 			if (newElement instanceof SyllabusCitationElement){
-				// TODO citations is more complicated than this
-				citationRefId = attributes.get("citationId");
-				newCitationResourceId = citationRefId.replaceAll(fromSiteId, toSiteId);
-				attributes.put("citationId", newCitationResourceId);
+				String citationRefId = attributes.get("citationId");
+				String citationListId = citationRefId.substring(0, citationRefId.lastIndexOf('/'));
+				String citationId = citationRefId.substring(citationListId.length()+1, citationRefId.length());
+
+				ContentResource fromCitationListResource;
+				CitationCollection fromCitationCollection;
+				Citation fromCitation = null;
+
+				if (copiedCitationsMap.containsKey(citationRefId)) {
+					attributes.put("citationId", copiedCitationsMap.get(citationRefId));
+					return;
+				}
+
+				try {
+					fromCitationListResource = contentHostingService.getResource(citationListId);
+					fromCitationCollection = citationService.getCollection(new String(fromCitationListResource.getContent()));
+					fromCitation = fromCitationCollection.getCitation(citationId);
+				}
+				catch (Exception e ){
+					e.printStackTrace();
+				}
+
+				if (fromCitation != null) {
+					// TODO i18n
+					String destSiteCollectionRef = contentHostingService.getSiteCollection(toSiteId);
+					String citationListName = "Nouvelle liste de références";
+					String destCitationCollectionRef = destSiteCollectionRef + citationListName;
+					CitationCollection destCitationCollection = getDestinationCitationCollection(destCitationCollectionRef, citationListName);
+
+					if (destCitationCollection != null) {
+						Citation newCitation = citationService.copyCitation(fromCitation);
+						destCitationCollection.add(newCitation);
+						citationService.save(newCitation);
+						citationService.save(destCitationCollection);
+
+						attributes.put("citationId", destCitationCollectionRef+"/"+newCitation.getId());
+						copiedCitationsMap.put(citationRefId, destCitationCollectionRef+"/"+newCitation.getId());
+					}
+				}
 			}
 		}
+	}
+
+	// create or retrieve existing citation collection
+	private CitationCollection getDestinationCitationCollection(String destinationCitationListRef, String citationListName) {
+
+		CitationCollection destCitationCollection = null;
+
+		try {
+			ContentResourceEdit citationListResource = contentHostingService.editResource(destinationCitationListRef);
+			destCitationCollection = citationService.getCollection(new String(citationListResource.getContent()));
+		}
+		catch (InUseException iue) {
+			// list is locked
+			try {
+				ContentResource citationListResource = contentHostingService.getResource(destinationCitationListRef);
+				destCitationCollection = citationService.getCollection(new String(citationListResource.getContent()));
+			} catch (Exception e) { e.printStackTrace(); }
+		}
+		catch (IdUnusedException iue) {
+			log.info("Create new citation list " + destinationCitationListRef);
+
+			try {
+				ContentResourceEdit citationListResource = contentHostingService.addResource(destinationCitationListRef);
+
+				destCitationCollection = citationService.addCollection();
+				citationListResource.setContent(destCitationCollection.getId().getBytes());
+				citationListResource.setResourceType(CitationService.CITATION_LIST_ID);
+				citationListResource.setContentType(ResourceType.MIME_TYPE_HTML);
+
+				ResourcePropertiesEdit props = citationListResource.getPropertiesEdit();
+				props.addProperty(
+						ContentHostingService.PROP_ALTERNATE_REFERENCE,
+						org.sakaiproject.citation.api.CitationService.REFERENCE_ROOT);
+				props.addProperty(ResourceProperties.PROP_CONTENT_TYPE,
+						ResourceType.MIME_TYPE_HTML);
+				props.addProperty(ResourceProperties.PROP_DISPLAY_NAME,
+						citationListName);
+
+				contentHostingService.commitResource(citationListResource, NotificationService.NOTI_NONE);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return destCitationCollection;
 	}
 
 	public AbstractSyllabusElement getSyllabusElement(Long id) {

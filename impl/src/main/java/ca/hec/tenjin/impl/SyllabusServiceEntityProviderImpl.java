@@ -75,6 +75,8 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
         Syllabus commonSyllabus = null;
         Site toSite = null;
         Map<Long, AbstractSyllabusElement> mappingCommonSyllabusOldNew = new HashMap<Long, AbstractSyllabusElement>();
+        // map to prevent from copying a citation twice
+        Map<String, String> copiedCitationsMap = new HashMap();
 
         //Check if we have content to copy
         try {
@@ -110,7 +112,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
             commonSyllabus = syllabusService.getCommonSyllabus(fromContext);
             syllabusCopy = syllabusService.transferCopySyllabus(fromContext, toContext, commonSyllabus.getId(), commonSyllabus.getTitle(),
                     commonSyllabus.getCommon(), commonSyllabus.getTemplateId(), commonSyllabus.getLocale(),toSite.getTitle(),
-                    sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew);
+                    sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew, copiedCitationsMap);
             for (Group group: toSite.getGroups()){
                 if (group.getProviderGroupId() != null){
                     syllabusDao.addSection(syllabusCopy.getId().toString(),group.getId());
@@ -128,7 +130,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
             for(Syllabus syllabus: syllabiToCopy){
                 syllabusCopy = syllabusService.transferCopySyllabus(fromContext, toContext, syllabus.getId(), syllabus.getTitle(),
                         syllabus.getCommon(), syllabus.getTemplateId(), syllabus.getLocale(),toSite.getTitle(),
-                        sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew);
+                        sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew, copiedCitationsMap);
             }
         } catch (DeniedAccessException e) {
             e.printStackTrace();

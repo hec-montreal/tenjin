@@ -23,6 +23,8 @@
 				<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 				<property name="securityService" ref="ca.hec.tenjin.api.TenjinSecurityService" />
 				<property name="syllabusLockService" ref="ca.hec.tenjin.api.SyllabusLockService" />
+				<property name="contentHostingService" ref="org.sakaiproject.content.api.ContentHostingService" />
+				<property name="citationService" ref="org.sakaiproject.citation.api.CitationService" />
 			</bean>
 		</property>
 
