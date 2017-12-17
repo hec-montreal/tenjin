@@ -92,6 +92,8 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
         //Delete all syllabi in toContext if cleanup
         if (cleanup){
             try {
+                syllabusService.deleteCitationLists(toContext);
+
                 syllabiInDestination = syllabusService.getSyllabusList(toContext);
 
                 for (Syllabus syllabus: syllabiInDestination){
@@ -104,8 +106,6 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
                 log.debug(" You are not allowed to copy syllabi from " + toContext);
             }
         }
-
-        syllabusService.deleteCitationLists(toContext);
 
         try {
             toSite = sakaiProxy.getSite(toContext);

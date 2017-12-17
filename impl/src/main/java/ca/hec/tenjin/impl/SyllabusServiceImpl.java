@@ -907,7 +907,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 				if (fromCitation != null) {
 					// TODO i18n
 					String destSiteCollectionRef = contentHostingService.getSiteCollection(toSiteId);
-					String citationListName = "Références bibliographiques importé";
+					String citationListName = "Références bibliographiques importées";
 					String destCitationCollectionRef = destSiteCollectionRef + citationListName;
 					CitationCollection destCitationCollection = getDestinationCitationCollection(destCitationCollectionRef, citationListName);
 
