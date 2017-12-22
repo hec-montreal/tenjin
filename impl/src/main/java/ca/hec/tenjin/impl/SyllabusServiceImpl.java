@@ -883,8 +883,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 			if (newElement instanceof SyllabusImageElement){
 				String imageId = attributes.get("imageId");
 				if (imageId != null) {
-					newImageId = imageId.replace(fromSiteId, toSiteId);
-					attributes.put("imageId", newImageId);
+					newResourceId = imageId.replace(fromSiteId, toSiteId);
+					attributes.put("imageId", newResourceId);
 				}
 			}
 			if (newElement instanceof SyllabusCitationElement){
