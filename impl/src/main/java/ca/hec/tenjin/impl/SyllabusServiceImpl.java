@@ -874,15 +874,26 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		if (attributes != null){
 			if (newElement instanceof SyllabusDocumentElement){
-				newResourceId = (attributes.get("documentId")).replace(fromSiteId, toSiteId);
-				attributes.put("documentId", newResourceId);
+				String resourceId = attributes.get("documentId");
+				if (resourceId != null) {
+					newResourceId = resourceId.replace(fromSiteId, toSiteId);
+					attributes.put("documentId", newResourceId);
+				}
 			}
 			if (newElement instanceof SyllabusImageElement){
-				newResourceId = (attributes.get("imageId")).replace(fromSiteId, toSiteId);
-				attributes.put("imageId", newResourceId);
+				String imageId = attributes.get("imageId");
+				if (imageId != null) {
+					newImageId = imageId.replace(fromSiteId, toSiteId);
+					attributes.put("imageId", newImageId);
+				}
 			}
 			if (newElement instanceof SyllabusCitationElement){
 				String citationRefId = attributes.get("citationId");
+
+				if (citationRefId == null) {
+					return;
+				}
+
 				String citationListId = citationRefId.substring(0, citationRefId.lastIndexOf('/'));
 				String citationId = citationRefId.substring(citationListId.length()+1, citationRefId.length());
 
