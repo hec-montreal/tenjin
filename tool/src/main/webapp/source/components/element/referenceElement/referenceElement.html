@@ -24,7 +24,7 @@
 			<span data-ng-if="citation.values.publisher">{{::comma}} {{citation.values.publisher}}</span>
 			<span data-ng-if="citation.values.editor">{{::comma}} {{citation.values.editor}}</span>				
 			<span data-ng-if="citation.values.pages">{{citation.values.pages}} {{::pages}}</span>		
-			<div data-ng-if="citation.values.isnIdentifier">{{'REF_BIBLIO_ISSN' | translate}} {{citation.values.isnIdentifier}}</div>				
+			<div data-ng-if="citation.values.isnIdentifier">{{'REF_BIBLIO_ISBN' | translate}} {{citation.values.isnIdentifier}}</div>
 		</div>
 		<div data-ng-if="citation.citationType==='bookSection'||citation.citationType==='chapter'">
 			<span ng-repeat="author in citation.values.creator">
