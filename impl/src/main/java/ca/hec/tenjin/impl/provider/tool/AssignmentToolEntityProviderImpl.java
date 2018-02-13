@@ -27,7 +27,7 @@ public class AssignmentToolEntityProviderImpl implements AssignmentToolEntityPro
 
 			entity.setName(assignment.getTitle());
 			entity.setResourceId(assignment.getId());
-			entity.setUrl(assignment.getUrl());
+			entity.setUrl("/direct/assignment/" + assignment.getId());
 
 			if (assignment.getGroups() != null) {
 				for(Object strObj : assignment.getGroups()) {
