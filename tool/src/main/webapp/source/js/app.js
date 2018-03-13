@@ -73,6 +73,10 @@ tenjinApp.config(function($stateProvider, $urlRouterProvider) {
 		.state('syllabus-published', {
 			url: '/syllabus/:elementId',
 			templateUrl: 'syllabus/syllabus.html'
+		})
+		.state('resource-view', {
+			url: '/resources/:resourceId',
+			templateUrl: 'resourcesToolView/resourcesToolView.html'
 		});
 });
 

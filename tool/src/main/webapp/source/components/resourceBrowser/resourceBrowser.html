@@ -25,8 +25,8 @@
 <label class="label-text-title">
 	<span data-ng-if="title && title.length > 0">{{title}}</span>
 	<span data-ng-if="!title || title.length === 0">{{ 'RESOURCE_BROWSER_TITLE' | translate }}</span>
-	<span class="mandatory"></span>
 </label>
+<a class="open-resources-link" data-ng-if="type === 'document'" data-ng-click="openResourcesTool()">Gérer les ressources</a>
 
 <div class="container-browser-element">
 	<div class="browser-element" ui-tree="browserOptions" data-drag-enabled="false" data-nodrop-enabled="true" resourceBrowser>
