@@ -115,4 +115,8 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 		return '';
 	};
 
+	this.getResourcesToolId = function() {
+	    return this.profile.resourcesToolId;
+	};
+
 }]);
