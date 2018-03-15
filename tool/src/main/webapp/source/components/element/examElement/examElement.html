@@ -2,7 +2,7 @@
 	<div class="title-exam element-page syllabus-text">
 		<div class="sub">
 			<div>
-				{{element.$numero}} - <a href="" data-ng-click="treeService.selectElement(element);">{{element.title}}</a>
+				{{element.$numero}} - <a data-nodrag href="" data-ng-click="treeService.selectElement(element);">{{element.title}}</a>
 				<span data-ng-if="element.attributes.examWeight">({{element.attributes.examWeight}}%)</span>
 			</div>
 		</div>

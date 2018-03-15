@@ -41,7 +41,7 @@
 		<!-- BLOCK DROP OUTSIDE A RUBRIC IN AN EVALUATION, EXAM, LECTURE OR TUTORIAL -->
 		<span data-ng-if="treeService.selectedElement.type === 'tutorial' || treeService.selectedElement.type === 'lecture' || treeService.selectedElement.type === 'exam' || treeService.selectedElement.type === 'evaluation'">
 			<ol ui-tree-nodes="" ng-model="treeService.selectedElement.elements" class="list-element" data-nodrop-enabled="true"
-			 >{{treeService.selectedElement.type}}
+			 >
 				<li ng-repeat="item in treeService.selectedElement.elements"  ui-tree-node class="panel-element">
 					<element-render data-element="item" data-index="$index"></element-render>
 
@@ -56,7 +56,7 @@
 		<!-- ALLOW DRAG AND DROP IN ORGANISATION DU COURS -->
 		<span data-ng-if="treeService.selectedElement.type !== 'tutorial' && treeService.selectedElement.type !== 'lecture' && treeService.selectedElement.type !== 'exam' && treeService.selectedElement.type !== 'evaluation'">
 			<ol ui-tree-nodes="" ng-model="treeService.selectedElement.elements" class="list-element" 
-			 >{{treeService.selectedElement.type}}
+			 >
 				<li ng-repeat="item in treeService.selectedElement.elements"  ui-tree-node class="panel-element">
 					<element-render data-element="item" data-index="$index"></element-render>
 
