@@ -34,7 +34,7 @@
 		"modernizr": "3.3.1",
 		"ng-dialog" : "0.6.4",
 		"js-base64": "2.1.9",
-		"moment": "2.17.1",
+		"moment": "2.21.0",
 		"moment-range": "3.0.1"
 	},
 
