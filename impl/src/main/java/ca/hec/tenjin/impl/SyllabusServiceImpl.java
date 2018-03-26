@@ -17,8 +17,7 @@ import org.sakaiproject.content.api.ContentHostingService;
 import org.sakaiproject.entity.api.ResourceProperties;
 import org.sakaiproject.entity.api.ResourcePropertiesEdit;
 import org.sakaiproject.event.api.NotificationService;
-import org.sakaiproject.exception.IdUnusedException;
-import org.sakaiproject.exception.InUseException;
+import org.sakaiproject.exception.*;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -952,7 +951,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 				destCitationCollection = citationService.getCollection(new String(citationListResource.getContent()));
 			} catch (Exception e) { e.printStackTrace(); }
 		}
-		catch (IdUnusedException iue) {
+		catch (PermissionException | IdUnusedException iue) {
+			// allowUpdateResource rewrites the IdUnusedException into a PermissionException, catch both here
 			log.info("Create new citation list " + destinationCitationListRef);
 
 			try {
