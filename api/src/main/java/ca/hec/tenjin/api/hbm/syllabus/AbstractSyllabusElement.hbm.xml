@@ -85,8 +85,8 @@
 
 		<map name="attributes" table="TENJIN_SYLLABUSELEM_ATTRIBUTE" cascade="all">
 			<key column="SYLLABUSELEMENT_ID" />
-			<map-key column="name" type="string" />
-			<element column="value" type="materialized_clob" />
+			<map-key column="name" type="string"  />
+			<element column="value" type="materialized_clob" not-null="true"/>
 		</map>
 
 	</class>

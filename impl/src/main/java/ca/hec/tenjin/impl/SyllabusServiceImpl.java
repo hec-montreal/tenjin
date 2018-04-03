@@ -247,6 +247,17 @@ public class SyllabusServiceImpl implements SyllabusService {
 					// Remove this element from the map.
 					// Remaining elements at the end will be deleted
 					existingSyllabusElementMappings.remove(element.getId());
+
+					//if attribute is null, remove it
+					/*Set<String> removedAttributes = new HashSet<String>();
+					for (String attribute: element.getAttributes().keySet()){
+						if (element.getAttributes().get(attribute) == null || element.getAttributes().get(attribute).isEmpty())
+							removedAttributes.add(attribute);
+					}
+					for (String attribute: removedAttributes){
+						element.getAttributes().remove(attribute);
+					}*/
+
 				}
 
 				// add this element's children to the search queue

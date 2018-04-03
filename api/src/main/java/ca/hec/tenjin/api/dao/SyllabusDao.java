@@ -240,5 +240,6 @@ public interface SyllabusDao {
 	 * @return
 	 */
 	public boolean cleanupSite (String siteId);
+
 }
 
