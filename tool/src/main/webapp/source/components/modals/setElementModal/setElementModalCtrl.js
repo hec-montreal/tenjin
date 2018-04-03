@@ -37,6 +37,15 @@
 			$scope.element.preSave.call($scope.element);
 		}
 
+
+        //delete empty attributes
+        var keys = Object.keys($scope.element.attributes);
+        for (var j=0; j < keys.length; j++){
+            if ($scope.element.attributes[keys[j]] === ""){
+                delete $scope.element.attributes[keys[j]];
+            }
+        }
+
 		// Ensure the public field has a value
 		if ($scope.element.publicElement === null || $scope.element.publicElement === undefined) {
 			$scope.element.publicElement = true;
