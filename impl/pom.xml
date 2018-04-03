@@ -181,11 +181,6 @@
             <artifactId>hec-utils</artifactId>
             <version>1.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>4.1.9.RELEASE</version>
-        </dependency>
 
     </dependencies>
 	

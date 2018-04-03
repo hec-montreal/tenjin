@@ -37,10 +37,11 @@
 		</div>
 	</div>
 
-	<div ui-tree="treeOptions" data-drag-enabled="true" data-ng-model="treeService.selectedElement" >
-		<!-- BLOCK DROP OUTSIDE A RUBRIC IN AN EVALUATION, EXAM, LECTURE OR TUTORIAL 
-		<span data-ng-if="treeService.selectedElement.type === 'composite'">-->
-			<ol ui-tree-nodes="" ng-model="treeService.selectedElement.elements" class="list-element" >
+	<div ui-tree="treeOptions" data-drag-enabled="true" data-ng-model="treeService.selectedElement">
+		<!-- BLOCK DROP OUTSIDE A RUBRIC IN AN EVALUATION, EXAM, LECTURE OR TUTORIAL -->
+		<span data-ng-if="treeService.selectedElement.type === 'tutorial' || treeService.selectedElement.type === 'lecture' || treeService.selectedElement.type === 'exam' || treeService.selectedElement.type === 'evaluation'">
+			<ol ui-tree-nodes="" ng-model="treeService.selectedElement.elements" class="list-element" data-nodrop-enabled="true"
+			 >
 				<li ng-repeat="item in treeService.selectedElement.elements"  ui-tree-node class="panel-element">
 					<element-render data-element="item" data-index="$index"></element-render>
 
@@ -51,22 +52,22 @@
 					</ol>
 				</li>
 			</ol>
-		<!--</span>
-		 ALLOW DRAG AND DROP IN ORGANISATION DU COURS 
-		<span data-ng-if="treeService.selectedElement.type !== 'composite'">
+		</span>
+		<!-- ALLOW DRAG AND DROP IN ORGANISATION DU COURS -->
+		<span data-ng-if="treeService.selectedElement.type !== 'tutorial' && treeService.selectedElement.type !== 'lecture' && treeService.selectedElement.type !== 'exam' && treeService.selectedElement.type !== 'evaluation'">
 			<ol ui-tree-nodes="" ng-model="treeService.selectedElement.elements" class="list-element" 
-			 >{{treeService.selectedElement.type}}{{treeService.selectedElement.providerId}}
+			 >
 				<li ng-repeat="item in treeService.selectedElement.elements"  ui-tree-node class="panel-element">
 					<element-render data-element="item" data-index="$index"></element-render>
 
-					<ol class="listing" ui-tree-nodes="" data-ng-model="item.elements" class="list-element list-element-leaf" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite' || item.type === 'rubric' || item.type === 'cluster'" >{{item.type}}{{item.providerId}}
+					<ol class="listing" ui-tree-nodes="" data-ng-model="item.elements" class="list-element list-element-leaf" data-ng-class="{hidden: collapsed}" data-ng-if="item.type === 'composite' || item.type === 'rubric' || item.type === 'cluster'" >
 						<li data-ng-repeat="item in item.elements" data-nodrag="{{!userService.canEditElement(item, syllabusService.syllabus)}}" ui-tree-node >
 							<element-render data-element="item" data-index="$index"></element-render>
 						</li>
 					</ol>
 				</li>
 			</ol>
-		</span>-->
+		</span>
 	</div>
 
 	<div class="content-padding"></div>

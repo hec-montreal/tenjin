@@ -15,7 +15,6 @@ import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.sakaiproject.exception.IdUnusedException;
-import org.springframework.dao.*;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		// these must be ordered by display order for each parent id for getStructuredSyllabusElements()
 		query += " order by syllabusElement.parentId, displayOrder";
 		
-		List<SyllabusElementMapping> mappings =
+		List<SyllabusElementMapping> mappings = 
 				(List<SyllabusElementMapping>) getHibernateTemplate().find(query, syllabusId);
 
 		return mappings;
@@ -63,7 +62,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	@Override
 	public Syllabus getSyllabus(Long id) throws NoSyllabusException {
 		Syllabus syllabus = getHibernateTemplate().get(Syllabus.class, id);
-
+		
 		if (syllabus == null || syllabus.getDeleted()) {
 			throw new NoSyllabusException(id);
 		}
@@ -76,10 +75,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		Syllabus syllabus = getSyllabus(id);
 		
 		try {
-			syllabus.setElements(new ArrayList<AbstractSyllabusElement>());
 			syllabus.setElements(getStructuredSyllabusElements(syllabus));
-		//} catch (DataIntegrityViolationException dive){
-		//	log.warn ("An empty attribute is being inserted: " + dive.getMessage());
 		} catch (Exception e) {
 			throw new StructureSyllabusException(e);
 		}
@@ -216,11 +212,8 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
 	@Override
 	public Object save(Object o) {
-		Object saved;
 		try {
-			saved = getHibernateTemplate().save(o);
-			//deleteEmptyAttributes((Syllabus)o);
-			return saved;
+			return getHibernateTemplate().save(o);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -231,7 +224,6 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	public void update(Object o) {
 		try {
 			getHibernateTemplate().update(o);
-			//deleteEmptyAttributes((Syllabus)o);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -241,7 +233,6 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	public boolean saveOrUpdate(Object o) {
 		try {
 			getHibernateTemplate().saveOrUpdate(o);
-			//deleteEmptyAttributes((Syllabus)o);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -434,15 +425,5 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		List<AbstractSyllabusElement> syllabusElements;
 		List<SyllabusElementMapping> syllabusElementMappings;
 		return false;
-	}
-
-	public void deleteEmptyAttributes (Syllabus syllabus){
-		Query query = getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(
-				"delete  from TENJIN_SYLLABUSELEM_ATTRIBUTE where SYLLABUSELEMENT_ID in " +
-						"(select SYLLABUSELEMENT_ID from TENJIN_SYLLABUSELEMENTMAPPING where SYLLABUS_ID = :syllabusId) and value is null;");
-		query.setParameter("syllabusId", syllabus.getId());
-
-		query.executeUpdate();
-
 	}
 }

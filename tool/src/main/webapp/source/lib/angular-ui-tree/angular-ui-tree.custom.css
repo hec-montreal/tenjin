@@ -13,10 +13,3 @@
 	min-height: auto;
 	line-height: normal;
 }
-
-.angular-ui-tree-drag{
-	position:absolute;
-	pointer-events:none;
-	z-index:999;
-	opacity:.8
-}

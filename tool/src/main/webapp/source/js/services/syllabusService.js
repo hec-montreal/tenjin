@@ -52,7 +52,7 @@
 		$http.post(url, syllabus).success(function(data) {
 			tthis.updateCurrentSyllabus(data);
 
-            $rootScope.$broadcast('syllabusService:save');
+			$rootScope.$broadcast('syllabusService:save');
 
 			ret.resolve(data);
 		}).error(function(data) {
