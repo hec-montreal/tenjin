@@ -168,8 +168,6 @@ public class UserController {
 
 		profile.put("lockRenewDelaySeconds", lockRenewDelaySeconds);
 
-		profile.put("resourcesToolId", sakaiProxy.getCurrentSiteResourcesToolId());
-
 		return profile;
 	}
 

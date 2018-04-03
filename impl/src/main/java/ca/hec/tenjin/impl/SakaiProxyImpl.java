@@ -318,11 +318,6 @@ public class SakaiProxyImpl implements SakaiProxy {
 		return null;
 	}
 
-	public String getCurrentSiteResourcesToolId() {
-		Site currentSite = getCurrentSite();
-		return currentSite.getToolForCommonId("sakai.resources").getId();
-	}
-
 	@Override
 	public List<EntityContent> getSiteResources(String siteId, String timestamp, String depth, String resourceId) {
 		@SuppressWarnings("deprecation")
