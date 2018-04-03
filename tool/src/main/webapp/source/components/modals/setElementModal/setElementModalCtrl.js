@@ -112,9 +112,4 @@
 	$scope.cancel = function() {
 		$uibModalInstance.dismiss('cancel');
 	};
-
-	// close the modal so we can display the resources tool
-	$scope.$on('openResourcesTool', function() {
-	    $scope.cancel();
-	})
 }]);

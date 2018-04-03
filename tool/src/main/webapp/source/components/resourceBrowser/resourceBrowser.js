@@ -1,4 +1,4 @@
-tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService', 'UserService', 'SyllabusService', '$timeout', '$translate', '$state', function(SakaiToolsService, ResourcesService, UserService, SyllabusService, $timeout, $translate, $state) {
+tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService', 'UserService', 'SyllabusService', '$timeout', '$translate', function(SakaiToolsService, ResourcesService, UserService, SyllabusService, $timeout, $translate) {
 	'use strict';
 
 	return {
@@ -111,17 +111,7 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 				}
 
 				return ret.length > 0 ? "(" + ret + ")" : "";
-			};
-
-			$scope.openResourcesTool = function() {
-				$state.go('resource-view');
-
-				// TODO save state so we can come back (or pass params)
-				// $state.go('resource-view', { 'origin': { 'syllabusId': element.syllabusId, 'elementId': element.id } });
-
-				// emit this event to close the add document form
-				$scope.$emit('openResourcesTool');
-			};
+			}
 		},
 
 		link: function($scope, $element) {
