@@ -48,7 +48,28 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 			return false;
 		},*/
 
+		beforeDrop: function (e){
+			var movedElementType = e.dest.nodesScope.$modelValue[e.dest.index].type;
+			//console.table(event.source.nodeScope.item);
+			console.log(e);
+			//console.table(event.dest.nodesScope.$nodeScope);
+			//Do not drop out of current tree
 
+			//Check if the node is moved into into a provided rubric
+			if (e.dest.nodesScope.$nodeScope &&  e.dest.nodesScope.$nodeScope.$modelValue && 
+				e.dest.nodesScope.$nodeScope.$modelValue !== null && e.dest.nodesScope.$nodeScope.$modelValue.providerId !== null){
+				return false;
+			}
+			//Check if moving at first position
+			else if (e.dest.nodesScope.$nodeScope === null && (movedElementType === 'composite' || movedElementType === 'tutorial'
+			|| movedElementType === 'exam' || movedElementType === 'lecture' || movedElementType === 'evaluation' )){
+				return true;
+			}
+			else {
+				return false;
+			}
+			
+		},
 		dropped: function(event) {
 			var srcItem = event.source.nodesScope.item;
 			var destItem = event.dest.nodesScope.item;
