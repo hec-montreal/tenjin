@@ -13,3 +13,7 @@
 	min-height: auto;
 	line-height: normal;
 }
+
+.angular-ui-tree-drag .img{
+   width:30%;
+}
