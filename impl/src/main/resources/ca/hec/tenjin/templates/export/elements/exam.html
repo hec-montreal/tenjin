@@ -9,17 +9,17 @@
 				<li>
 					<span class="label">{{str 'EXAM_LOCATION'}}:</span>
 
-					{{#if element.attributes.examInClass}}
+					{{#if-eq element.attributes.examInClass 'true'}}
 						{{str 'EXAM_INCLASS'}}
-					{{/if}}
+					{{/if-eq}}
 
 					{{#attr-cond this 'and' 'examInClass' 'examAtHome'}}
 						/
 					{{/attr-cond}}
 
-					{{#if element.attributes.examAtHome}}
+					{{#if-eq element.attributes.examAtHome 'true'}}
 						{{str 'EXAM_ATHOME'}}
-					{{/if}}
+					{{/if-eq}}
 				</li>
 			{{/attr-cond}}
 
@@ -45,17 +45,17 @@
 				<li>
 					<span class="label">{{str 'EXAM_TERMS'}}:</span>
 
-					{{#if element.attributes.examOral}}
+					{{#if-eq element.attributes.examOral 'true'}}
 						{{str 'EXAM_ORAL'}}
-					{{/if}}
+					{{/if-eq}}
 
 					{{#attr-cond this 'and' 'examOral' 'examWritten'}}
 						/
 					{{/attr-cond}}
 
-					{{#if element.attributes.examWritten}}
+					{{#if-eq element.attributes.examWritten 'true'}}
 						{{str 'EXAM_WRITTEN'}}
-					{{/if}}
+					{{/if-eq}}
 				</li>
 			{{/attr-cond}}
 
