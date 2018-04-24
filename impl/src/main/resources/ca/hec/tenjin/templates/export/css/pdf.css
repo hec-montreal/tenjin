@@ -146,3 +146,11 @@ ul {
 .citation .book .title {
 	font-weight: bold;
 }
+
+.error {
+    color: red;
+    border-style: solid;
+    border-width: 1px;
+    border-color: red;
+    padding: 5px;
+}

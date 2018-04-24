@@ -1,4 +1,5 @@
 <div class="citation">
+	{{#if citation}}
 	{{#if-eq citation.type 'article'}}
 		<div class="article">
 			{{#if citation.props.creator}}
@@ -430,6 +431,11 @@
 	{{#if element.description}}
 		<div class="syllabus-text">
 			{{{html element.description}}}
+		</div>
+	{{/if}}
+	{{else}}
+		<div class="error">
+			{{str 'ERROR_CITATION_DOESNT_EXIST'}}
 		</div>
 	{{/if}}
 </div>
