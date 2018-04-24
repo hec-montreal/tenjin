@@ -311,7 +311,7 @@ public class SakaiProxyImpl implements SakaiProxy {
 					return new SakaiCitation(citation);
 				}
 			}
-		} catch (IdUnusedException e) {
+		} catch (IdUnusedException | NullPointerException e) {
 			return null;
 		}
 		
