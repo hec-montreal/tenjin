@@ -15,17 +15,17 @@
 				<li>
 					<span class="label">{{str 'EVALUATION_LOCATION'}}:</span>
 
-					{{#if element.attributes.evaluationInClass}}
+					{{#if-eq element.attributes.evaluationInClass 'true'}}
 						{{str 'EVALUATION_INCLASS'}}
-					{{/if}}
+					{{/if-eq}}
 
 					{{#attr-cond this 'and' 'evaluationInClass' 'evaluationAtHome'}}
 						/
 					{{/attr-cond}}
 
-					{{#if element.attributes.evaluationAtHome}}
+					{{#if-eq element.attributes.evaluationAtHome 'true'}}
 						{{str 'EVALUATION_ATHOME'}}
-					{{/if}}
+					{{/if-eq}}
 				</li>
 			{{/attr-cond}}
 
@@ -33,17 +33,17 @@
 				<li>
 					<span class="label">{{str 'EVALUATION_SUBMISSION_TYPE'}}:</span>
 
-					{{#if element.attributes.evaluationPaper}}
+					{{#if-eq element.attributes.evaluationPaper 'true'}}
 						{{str 'EVALUATION_PAPER'}}
-					{{/if}}
+					{{/if-eq}}
 
 					{{#attr-cond this 'and' 'evaluationPaper' 'evaluationElectronic'}}
 						/
 					{{/attr-cond}}
 
-					{{#if element.attributes.evaluationElectronic}}
+					{{#if-eq element.attributes.evaluationElectronic 'true'}}
 						{{str 'EVALUATION_ELECTRONIC'}}
-					{{/if}}
+					{{/if-eq}}
 				</li>
 			{{/attr-cond}}
 
@@ -51,17 +51,17 @@
 				<li>
 					<span class="label">{{str 'EVALUATION_TERMS'}}:</span>
 
-					{{#if element.attributes.evaluationOral}}
+					{{#if-eq element.attributes.evaluationOral 'true'}}
 						{{str 'EVALUATION_ORAL'}}
-					{{/if}}
+					{{/if-eq}}
 
 					{{#attr-cond this 'and' 'evaluationOral' 'evaluationWritten'}}
 						/
 					{{/attr-cond}}
 
-					{{#if element.attributes.evaluationWritten}}
+					{{#if-eq element.attributes.evaluationWritten 'true'}}
 						{{str 'EVALUATION_WRITTEN'}}
-					{{/if}}
+					{{/if-eq}}
 				</li>
 			{{/attr-cond}}
 
