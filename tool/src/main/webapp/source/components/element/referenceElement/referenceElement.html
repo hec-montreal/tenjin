@@ -76,10 +76,10 @@
 		<a target="_blank" data-nodrag href={{citation.values.openUrl}}>{{'REFERENCE_LIBRARY_LINK' | translate}}</a>
 	</div> 
 
-	<div ng-if="element.attributes.activateOtherLink" class="other-link">
+	<div ng-if="element.attributes.activateOtherLink==='true'" class="other-link">
 		<a target="_blank" data-nodrag href={{element.attributes.otherLinkurl}}>
-			<span data-ng-if="!element.attributes.otherLinkLabel">{{'REFERENCE_OTHER_LINK' | translate}}</span>
-			<span data-ng-if="element.attributes.otherLinkLabel">{{element.attributes.otherLinkLabel}}</span>
+			<span data-ng-if="element.attributes.otherLinkLabel!=='true'">{{'REFERENCE_OTHER_LINK' | translate}}</span>
+			<span data-ng-if="element.attributes.otherLinkLabel==='true'">{{element.attributes.otherLinkLabel}}</span>
 		</a>
 	</div> 
 
