@@ -1,6 +1,12 @@
 .angular-ui-tree-placeholder {
-	border: 1px dashed #000;
+    background: #f0f9ff;
+    border: 2px dashed #bed2db;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 1px;
 }
+
 .angular-ui-tree-node {
 	min-height: 0;
 }
