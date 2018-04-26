@@ -13,6 +13,7 @@
 			$scope.treeService = TreeService;
 			$scope.closed = false;
 			$scope.userService = UserService;
+			$scope.acceptDrop = null;
 
 			$scope.isTitleNumbered = function($type) {
 				if ($type === 'exam' || $type === 'evaluation' ||
@@ -38,40 +39,45 @@
 				TreeService.selectElement(TreeService.findElementByPosition(TreeService.lastSelectedPosition));
 			});
 
+
 			$scope.treeOptions = {
 				name: 'navigationTree',
 
 				accept: function(sourceNodeScope, destNodesScope, destIndex) {
-					if (sourceNodeScope.treeOptions.name === destNodesScope.treeOptions.name) {
-						if (destNodesScope.item && destNodesScope.item.type === 'composite') {
-							// get ancestor for the source node
-							var ancestorSrc = $scope.getAncestor(sourceNodeScope);
-							// get ancestor for the destination node
-							var ancestorDest = $scope.getAncestor(destNodesScope);
+					var sourceRubricElement = null;
+					var sourceComposite = null;
+					var destComposite = null;
+					var destTemplateRules = null;
+					var templateRuleAddableElements = [];
 
-							if (sourceNodeScope.item && sourceNodeScope.item.type === 'composite') {
-								if (!destNodesScope.$parentNodeScope) {
-									return true;
-								} else {
-									return false;
-								}
-							} else {
-								if (ancestorSrc && ancestorSrc.item && ancestorDest && ancestorDest.item && ancestorSrc.item.id === ancestorDest.item.id) {
-									return true;
-								}
-							}
-
+					sourceRubricElement = $scope.treeService.findElementParent(sourceNodeScope.$modelValue);
+					sourceComposite = $scope.treeService.findElementParent(sourceRubricElement);
+					destComposite = destNodesScope.$modelValue[destIndex];
+					
+					//Do not allow drop under the same element
+					if (destComposite && destComposite.templateStructureId){
+						if (sourceComposite.id === destComposite.id){
+							$scope.acceptDrop = null;
+							return false;
+						}
+						//Check if same rubric is allowed by the template in source and destination element
+						destTemplateRules = $scope.syllabusService.getAddableElementsFromTemplateRules(destComposite);
+						angular.forEach(destTemplateRules, function(s){
+							if (s.label === sourceRubricElement.title)
+								templateRuleAddableElements.push(s.id);
+ 						});
+ 						//Allow drop if the same rubric is allowed in both
+						if (templateRuleAddableElements.length > 0){
+							$scope.acceptDrop = destComposite.id;
+							return true;
 						}
 					}
-
+				
+					$scope.acceptDrop = null;
 					return false;
-				},
-
-				dropped: function(event) {
-					// Numbering
-					SyllabusService.numberSyllabus(SyllabusService.syllabus);
+					
 				}
-			}
+			};
 		}
 	};
 }]);

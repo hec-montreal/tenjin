@@ -68,6 +68,14 @@
 		}
 	}
 
+	.menu-item-drop {
+		background-color: #bed2db !important;
+
+		a {
+			color: $font-color-navigation-active !important;
+		}
+	}
+
 	.menu-item-parent {
 		a {
 			color: $font-color-navigation-composite !important;
