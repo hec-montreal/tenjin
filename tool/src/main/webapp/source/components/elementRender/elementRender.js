@@ -167,6 +167,12 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 
 				return false;
 			};
+
+			$scope.isElementDragged = function (element){
+				if (element.dragged && element.dragged === true)
+					return true;
+				return false;
+			}
 		}
 	};
 }]);

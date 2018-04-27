@@ -148,5 +148,5 @@
 		pos[pos.length - 1] = tail + 1;
 
 		return this.findElementByPosition(pos);
-	};
+	};	
 }]);
