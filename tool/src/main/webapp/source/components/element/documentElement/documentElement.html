@@ -9,4 +9,13 @@
 	</div>
 
 	<div data-ng-if="element.description" ng-bind-html="element.description" class="syllabus-text"></div>
+	<button ng-click="submitForm()">props</button>
+
+	<!-- hide a form in case we want to see the resource properites -->
+	<!--<form action="{{ resourcesToolUrl }}" method="post">-->
+	<form id="resourcePropertiesForm" action="http://localhost:8080/portal/site/!admin/tool/!admin-510" method="post" target="_blank">
+		<input type="hidden" name="rt_action" value="org.sakaiproject.content.types.fileUpload:properties" />
+		<input type="hidden" name="sakai_action" value="doDispatchAction" />
+		<input type="hidden" name="selectedItemId" value="/public/accueil.css" />
+	</form>
 </div>
