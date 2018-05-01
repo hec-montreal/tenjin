@@ -1,7 +1,7 @@
 <!-- Node renderer -->
 <script type="text/ng-template" id="node-renderer.html">
 	<!-- Display items composite, evaluation, exam, lecture and tutorial -->
-	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" data-ng-class="['menu-item', {'item-selected': item.$selected, 'menu-item-selected': item.$selected, 'menu-item-parent': syllabusService.itemHasChildInMenu(item), 'menu-item-toplevel': !syllabusService.itemHasParentInMenu(item) }]">
+	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" data-ng-class="['menu-item', {'item-selected': item.$selected, 'menu-item-selected': item.$selected, 'menu-item-parent': syllabusService.itemHasChildInMenu(item), 'menu-item-toplevel': !syllabusService.itemHasParentInMenu(item), 'menu-item-drop': acceptDrop === item.id, 'menu-item': acceptDrop !== item.id}]">
 		<a data-nodrag data-ng-click="treeService.selectElement(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }">
 			<div ng-class="{'numbered-title': isTitleNumbered(item.type)}">
 				<div data-ng-if="item.type === 'evaluation' || item.type ==='exam'" class="number">
@@ -17,11 +17,11 @@
 		</a>
 
 		<!-- No drag and drop for the first level element -->
-		<span ui-tree-handle class="tree-node tree-node-content" data-ng-if="!item.parentId"></span>
+		<span class="tree-node tree-node-content" data-ng-if="!item.parentId"></span>
 	</div>
 
 	<ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-if="item.type === 'composite'">
-		<li ui-tree-handle data-ng-repeat="item in item.elements" data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" ui-tree-node data-ng-include="'node-renderer.html'"></li>
+		<li data-ng-repeat="item in item.elements" data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" ui-tree-node data-ng-include="'node-renderer.html'"></li>
 	</ol>
 </script>
 
@@ -37,7 +37,7 @@
 			</div>
 		</div>
 
-		<div class="items" ui-tree="treeOptions" data-drag-enabled="true">
+		<div class="items" ui-tree="treeOptions" >
 			<ol ui-tree-nodes="" ng-model="syllabusService.syllabus.elements">
 				<li data-ng-repeat="item in syllabusService.syllabus.elements" ui-tree-node data-nodrag="{{!userServicecanEditElement(item, syllabusService.syllabus)}}" ng-include="'node-renderer.html'"></li> 
 			</ol>

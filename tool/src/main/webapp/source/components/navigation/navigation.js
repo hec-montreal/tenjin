@@ -1,4 +1,4 @@
-﻿tenjinApp.directive('navigation', ['TreeService', 'SyllabusService', 'UserService', function(TreeService, SyllabusService, UserService) {
+﻿tenjinApp.directive('navigation', ['TreeService', 'SyllabusService', 'UserService', '$timeout', function(TreeService, SyllabusService, UserService, $timeout) {
 	'use strict';
 
 	return {
@@ -53,9 +53,20 @@
 					sourceRubricElement = $scope.treeService.findElementParent(sourceNodeScope.$modelValue);
 					sourceComposite = $scope.treeService.findElementParent(sourceRubricElement);
 					destComposite = destNodesScope.$modelValue[destIndex];
+
+					if (destComposite === undefined){
+							$scope.acceptDrop = null;
+							return false;
+					}
+                    //Do not drop under a composite or a cluster
+					if (destComposite && (destComposite.type === 'composite' || destComposite.type === 'cluster')){
+							$scope.acceptDrop = null;
+							return false;
+						}
+
 					
-					//Do not allow drop under the same element
 					if (destComposite && destComposite.templateStructureId){
+						//Do not allow drop under the same element
 						if (sourceComposite.id === destComposite.id){
 							$scope.acceptDrop = null;
 							return false;
@@ -69,6 +80,10 @@
  						//Allow drop if the same rubric is allowed in both
 						if (templateRuleAddableElements.length > 0){
 							$scope.acceptDrop = destComposite.id;
+							//Remove course/evaluation dropzone highlight
+							$timeout(function(){
+                              $scope.acceptDrop=null;
+                                  },1000,true);
 							return true;
 						}
 					}

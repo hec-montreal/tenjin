@@ -37,7 +37,7 @@
 		</div>
 	</div>
 
-	<div ui-tree="treeOptions" data-ng-model="treeService.selectedElement" data-empty-placeholder-enabled="true" >
+	<div ui-tree="treeOptions" data-ng-model="treeService.selectedElement">
 		<ol ui-tree-nodes ng-model="treeService.selectedElement.elements" class="list-element" >
 			<li ng-repeat="item in treeService.selectedElement.elements"  ui-tree-node ui-tree-handle class="panel-element">
 				<element-render data-element="item" data-index="$index"></element-render>

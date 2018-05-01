@@ -64,6 +64,19 @@
 		return ret.promise;
 	};
 
+    this.cleanUpDraggedElements = function(syllabus){
+
+        forEachElement(SyllabusService.getSyllabus(), function(element) {
+        			if (element.id === id) {
+        				tthis.selectElement(element);
+
+        				// Break
+        				return true;
+        			}
+        		});
+    };
+
+
 	this.updateSections = function(syllabus) {
 		var tthis = this;
 		var ret = $q.defer();
