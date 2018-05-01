@@ -117,6 +117,8 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		},
 		dropped: function(event) {
 			var destTreeName = event.dest.nodesScope.$treeScope.$parent.treeOptions.name;
+			//Reset element published status
+			event.source.nodeScope.$modelValue.equalsPublished = false;
 			//Drag and drop between 2 trees
 			if (destTreeName === "navigationTree"){ 	
 				movedElement = event.source.nodeScope.$modelValue;
