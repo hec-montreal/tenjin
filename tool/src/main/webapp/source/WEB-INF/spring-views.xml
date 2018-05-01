@@ -4,11 +4,4 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-<!--  don't need this if we use Jackson
-	<bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">
-		<property name="contentType" value="application/json" />
-	</bean>
-
-<bean name="lenient" class="net.sf.json.util.CycleDetectionStrategy$LenientCycleDetectionStrategy"/>
-	 -->
 </beans>

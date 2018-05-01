@@ -92,6 +92,8 @@ public interface SakaiProxy {
 
 	public String getDefaultLocale();
 
+	public String getCurrentSiteResourcesToolId();
+
 	SakaiCitation getCitation(String citationListId, String citationId) throws ServerOverloadException;
 	
 	List<SakaiCitation> getSiteCitations(String siteId, Collection<EntityContent> siteResources) throws PermissionException, IdUnusedException, TypeException, ServerOverloadException;

@@ -25,8 +25,12 @@
 <label class="label-text-title">
 	<span data-ng-if="title && title.length > 0">{{title}}</span>
 	<span data-ng-if="!title || title.length === 0">{{ 'RESOURCE_BROWSER_TITLE' | translate }}</span>
-	<span class="mandatory"></span>
 </label>
+<div class="manage-resources-buttons" data-ng-if="type === 'document'">
+	<a data-ng-click="refreshResources()" data-ng-class="{'disabled': refreshing}"><span class="glyphicon glyphicon-refresh" data-ng-class="{'glyphicon-refresh-animate': refreshing}"></span><span>{{ 'RESOURCE_REFRESH_BUTTON'| translate }}</span></a>
+	<a data-ng-click="openResourceProperties()" data-ng-class="{'disabled': !element.$selectedResource}"><span class="glyphicon glyphicon-list-alt"></span><span>{{ 'RESOURCE_PROPERTIES_BUTTON' | translate }}</span></a>
+	<a data-ng-click="openResourcesTool()"><span class="glyphicon icon-sakai--sakai-resources"></span><span>{{ 'RESOURCE_TOOL_BUTTON' | translate }}</span></a>
+</div>
 
 <div class="container-browser-element">
 	<div class="browser-element" ui-tree="browserOptions" data-drag-enabled="false" data-nodrop-enabled="true" resourceBrowser>
@@ -41,3 +45,10 @@
 		{{ 'RESOURCE_BROWSER_SELECTED' | translate }} : {{element.$selectedResource.name || '?'}}
 	</div>
 </div>
+
+<form id="resourcePropertiesForm" action="{{ resourcesUrl }}" method="post" target="_blank">
+	<input type="hidden" name="sakai_csrf_token" value="{{ csrf_token }}"/>
+	<input type="hidden" name="rt_action" value="org.sakaiproject.content.types.fileUpload:properties"/>
+	<input type="hidden" name="sakai_action" value="doDispatchAction"/>
+	<input id="selectedItemIdInput" type="hidden" name="selectedItemId"/>
+</form>
