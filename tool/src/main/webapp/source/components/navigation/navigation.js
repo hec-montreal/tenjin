@@ -42,7 +42,6 @@
 
 			$scope.treeOptions = {
 				name: 'navigationTree',
-
 				accept: function(sourceNodeScope, destNodesScope, destIndex) {
 					var sourceRubricElement = null;
 					var sourceComposite = null;
@@ -52,19 +51,18 @@
 
 					sourceRubricElement = $scope.treeService.findElementParent(sourceNodeScope.$modelValue);
 					sourceComposite = $scope.treeService.findElementParent(sourceRubricElement);
+					//Element will be moved in previous sibling of destination
 					destComposite = destNodesScope.$modelValue[destIndex];
 
-					if (destComposite === undefined){
-							$scope.acceptDrop = null;
-							return false;
-					}
-                    //Do not drop under a composite or a cluster
-					if (destComposite && (destComposite.type === 'composite' || destComposite.type === 'cluster')){
-							$scope.acceptDrop = null;
-							return false;
-						}
+					if (destComposite === undefined)
+						return false;
 
-					
+					if (destComposite.parentId === null)
+						return false;
+
+					if (destComposite.type === 'composite' || destComposite.type === 'cluster')
+						return false;
+
 					if (destComposite && destComposite.templateStructureId){
 						//Do not allow drop under the same element
 						if (sourceComposite.id === destComposite.id){

@@ -48,6 +48,15 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
                 }
             }
 
+            
+	            var ancestor = $scope.syllabusService.getParent(parent);
+	             for (var j=0; j < ancestor.elements.length; j++){
+	                if (ancestor.elements[j].id === movedElement.id){
+	                    ancestor.elements.splice(j,1);
+	                }
+		        }
+			
+
             //Make sure the destination is ready to add element
             if (!destComposite.elements){
                 destComposite.elements = [];
@@ -97,6 +106,26 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		item: TreeService.selectedElement,
 
 		beforeDrop: function (e){
+
+			var destTreeName = e.dest.nodesScope.$treeScope.$parent.treeOptions.name;
+			//Drag and drop between 2 trees
+			if (destTreeName === "navigationTree"){ 
+				var destinationComposite = e.dest.nodesScope.$modelValue[e.dest.index];
+
+				if (destinationComposite === undefined){
+					return false;
+				}
+
+				if (destinationComposite.type === 'composite' || destinationComposite.type === 'rubric'){
+					return false;
+				}
+
+				if (destinationComposite.parentId === null){
+					return false;
+				}
+				return true;
+			}
+
 			//Check if the node is moved into into a provided rubric
 			if (e.dest.nodesScope.$nodeScope &&  e.dest.nodesScope.$nodeScope.$modelValue && 
 				e.dest.nodesScope.$nodeScope.$modelValue !== null && e.dest.nodesScope.$nodeScope.$modelValue.providerId !== null){

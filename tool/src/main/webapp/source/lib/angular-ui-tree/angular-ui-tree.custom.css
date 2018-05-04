@@ -23,3 +23,7 @@
 .angular-ui-tree-drag .img{
    width:30%;
 }
+
+.angular-ui-tree {
+  height: 100%;
+}
