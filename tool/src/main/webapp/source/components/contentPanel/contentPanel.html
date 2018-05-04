@@ -38,7 +38,7 @@
 	</div>
 
 	<div ui-tree="treeOptions" data-ng-model="treeService.selectedElement">
-		<ol ui-tree-nodes ng-model="treeService.selectedElement.elements" class="list-element" >
+		<ol ui-tree-nodes ng-model="treeService.selectedElement.elements" class="list-element"  data-nodrop-enabled="true">
 			<li ng-repeat="item in treeService.selectedElement.elements"  ui-tree-node ui-tree-handle class="panel-element">
 				<element-render data-element="item" data-index="$index"></element-render>
 
