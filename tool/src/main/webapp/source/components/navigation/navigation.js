@@ -49,19 +49,28 @@
 					var destTemplateRules = null;
 					var templateRuleAddableElements = [];
 
+					//Do not allow drop under blocked node
+					if (destNodesScope.nodropEnabled){
+						return false;
+					}
 					sourceRubricElement = $scope.treeService.findElementParent(sourceNodeScope.$modelValue);
 					sourceComposite = $scope.treeService.findElementParent(sourceRubricElement);
 					//Element will be moved in previous sibling of destination
 					destComposite = destNodesScope.$modelValue[destIndex];
-
-					if (destComposite === undefined)
+					//Do not allow drop if destination is undefined
+					if (destComposite === undefined){
 						return false;
+					}
 
-					if (destComposite.parentId === null)
+					//Top level of tree
+					if (destComposite.templateId){
 						return false;
+					}
 
-					if (destComposite.type === 'composite' || destComposite.type === 'cluster')
+					//Under Evaluations, Organisation du cours ou Regroupements
+					if (destComposite.templateStructureId === 12 || destComposite.templateStructureId === 14 || destComposite.templateStructureId === 17){
 						return false;
+					}
 
 					if (destComposite && destComposite.templateStructureId){
 						//Do not allow drop under the same element

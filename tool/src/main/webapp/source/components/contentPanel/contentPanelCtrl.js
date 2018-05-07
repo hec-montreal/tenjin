@@ -36,11 +36,10 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 
 	$scope.$watch('syllabusService.syllabus',
 		function(newValue, oldValue) {
-
 		var foundElement = null;
-        if (backupSyllabus && !angular.equals(oldValue, backupSyllabus ) && $scope.dropped){
+        if (backupSyllabus && !angular.equals(oldValue, backupSyllabus ) && !angular.equals(newValue, backupSyllabus ) && $scope.dropped){
          if ( movedElement){
-            //Removed dropped element from top level tree
+           //Removed dropped element from top level tree
             var parent = $scope.syllabusService.getParent(destComposite);
             for (var j=0; j < parent.elements.length; j++){
                 if (parent.elements[j].id === movedElement.id){
@@ -48,14 +47,14 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
                 }
             }
 
-            
-	            var ancestor = $scope.syllabusService.getParent(parent);
+            var ancestor = $scope.syllabusService.getParent(parent);
+            if (ancestor != null){
 	             for (var j=0; j < ancestor.elements.length; j++){
 	                if (ancestor.elements[j].id === movedElement.id){
 	                    ancestor.elements.splice(j,1);
 	                }
 		        }
-			
+			}
 
             //Make sure the destination is ready to add element
             if (!destComposite.elements){
@@ -105,30 +104,6 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		name: "contentPanelTree",
 		item: TreeService.selectedElement,
 
-		beforeDrop: function (e){
-
-			var destTreeName = e.dest.nodesScope.$treeScope.$parent.treeOptions.name;
-			//Drag and drop between 2 trees
-			if (destTreeName === "navigationTree"){ 
-				var destinationComposite = e.dest.nodesScope.$modelValue[e.dest.index];
-
-				if (destinationComposite === undefined){
-					return false;
-				}
-
-				if (destinationComposite.type === 'composite' || destinationComposite.type === 'rubric'){
-					return false;
-				}
-
-				if (destinationComposite.parentId === null){
-					return false;
-				}
-				return true;
-			}
-
-    		return true;
-
-		},
 		accept: function (sourceNodeScope, destNodesScope, destIndex) {
 		    // don't allow drop outside rubrics or in provided elements
             var nodropEnabled = destNodesScope.$element.attr('data-donotdrop');
