@@ -126,23 +126,21 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 				return true;
 			}
 
-			//Check if the node is moved into into a provided rubric
-			if (e.dest.nodesScope.$nodeScope &&  e.dest.nodesScope.$nodeScope.$modelValue && 
-				e.dest.nodesScope.$nodeScope.$modelValue !== null && e.dest.nodesScope.$nodeScope.$modelValue.providerId !== null){
-				return false;
-			}
-			//Check if moving at first position
-			else if (e.dest.index === 0 && e.dest.nodesScope.$nodeScope === null &&
-				(e.dest.nodesScope.$modelValue[e.dest.index].type !== 'lecture'
-					&& e.dest.nodesScope.$modelValue[e.dest.index].type !== 'tutorial'
-					&& e.dest.nodesScope.$modelValue[e.dest.index].type !== 'exam'
-					&& e.dest.nodesScope.$modelValue[e.dest.index].type !== 'evaluation')){
-				return false;
-			}
-			else {
-				return true;
-			}
-			
+    		return true;
+
+		},
+		accept: function (sourceNodeScope, destNodesScope, destIndex) {
+		    // don't allow drop outside rubrics or in provided elements
+            var nodropEnabled = destNodesScope.$element.attr('data-donotdrop');
+            var providerId = destNodesScope.$element.attr('data-provider-id');
+            console.log(providerId);
+            if (nodropEnabled) {
+                return false;
+            } else if (typeof providerId != 'undefined' && providerId !== null && providerId !== "") {
+                return false;
+            } else {
+                return true;
+            }
 		},
 		dropped: function(event) {
 			var destTreeName = event.dest.nodesScope.$treeScope.$parent.treeOptions.name;
@@ -165,5 +163,4 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		
 		}
 	};
-
 }]);
