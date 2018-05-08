@@ -43,61 +43,30 @@
 			$scope.treeOptions = {
 				name: 'navigationTree',
 				accept: function(sourceNodeScope, destNodesScope, destIndex) {
-					var sourceRubricElement = null;
-					var sourceComposite = null;
-					var destComposite = null;
-					var destTemplateRules = null;
-					var templateRuleAddableElements = [];
-
-					//Do not allow drop under blocked node
-					if (destNodesScope.nodropEnabled){
+					//Do not allow drop under blocked node or at first place
+					if (destIndex === 0 || destNodesScope.$element.attr('data-nodrop-enabled') || destNodesScope.nodropEnabled){
+						$scope.acceptDrop = null;
 						return false;
-					}
-					sourceRubricElement = $scope.treeService.findElementParent(sourceNodeScope.$modelValue);
-					sourceComposite = $scope.treeService.findElementParent(sourceRubricElement);
-					//Element will be moved in previous sibling of destination
-					destComposite = destNodesScope.$modelValue[destIndex];
-					//Do not allow drop if destination is undefined
-					if (destComposite === undefined){
-						return false;
-					}
-
-					//Top level of tree
-					if (destComposite.templateId){
-						return false;
-					}
-
-					//Under Evaluations, Organisation du cours ou Regroupements
-					if (destComposite.templateStructureId === 12 || destComposite.templateStructureId === 14 || destComposite.templateStructureId === 17){
-						return false;
-					}
-
-					if (destComposite && destComposite.templateStructureId){
-						//Do not allow drop under the same element
-						if (sourceComposite.id === destComposite.id){
-							$scope.acceptDrop = null;
+					}else {
+						var parentSource = $scope.treeService.findElementParent(sourceNodeScope.$modelValue);
+						var ancestorSource = $scope.treeService.findElementParent(parentSource);
+						var destComposite = destComposite = destNodesScope.$modelValue[destIndex];
+						if (typeof destComposite === 'undefined'){
 							return false;
 						}
-						//Check if same rubric is allowed by the template in source and destination element
-						destTemplateRules = $scope.syllabusService.getAddableElementsFromTemplateRules(destComposite);
-						angular.forEach(destTemplateRules, function(s){
-							if (s.label === sourceRubricElement.title)
-								templateRuleAddableElements.push(s.id);
- 						});
- 						//Allow drop if the same rubric is allowed in both
-						if (templateRuleAddableElements.length > 0){
-							$scope.acceptDrop = destComposite.id;
-							//Remove course/evaluation dropzone highlight
-							$timeout(function(){
-                              $scope.acceptDrop=null;
-                                  },1000,true);
-							return true;
+						//Only drop content from a tutorial and a lecture
+						if (ancestorSource.type !== 'tutorial' && ancestorSource.type !== 'lecture'){
+							return false;
 						}
+
+						$scope.acceptDrop = destComposite.id;
+						//Remove course dropzone highlight
+						$timeout(function(){
+                          $scope.acceptDrop=null;
+                        },1000,true);
+ 
+						return true;
 					}
-				
-					$scope.acceptDrop = null;
-					return false;
-					
 				}
 			};
 		}
