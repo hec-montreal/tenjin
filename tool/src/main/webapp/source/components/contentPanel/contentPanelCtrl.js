@@ -137,12 +137,15 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 				movedElement = event.source.nodeScope.$modelValue;
                 sourceRubric = $scope.treeService.findElementParent(movedElement);
 				destComposite = event.dest.nodesScope.$modelValue[event.dest.index-1];
+				//If we are moving under a cluster, go to last element of the cluster
+				if (destComposite.templateStructureId === 17){
+					destComposite = destComposite.elements[destComposite.elements.length-1];
+				}
 				destRubric = null;
 				existingRubric = false;
 				$scope.$emit('elementDropped');
 				$scope.dropped = true;
 				backupSyllabus = angular.copy($scope.syllabusService.syllabus);
-
 			}
 		}
 	};

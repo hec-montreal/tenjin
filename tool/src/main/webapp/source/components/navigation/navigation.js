@@ -44,7 +44,7 @@
 				name: 'navigationTree',
 				accept: function(sourceNodeScope, destNodesScope, destIndex) {
 					//Do not allow drop under blocked node or at first place
-					if (destIndex === 0 || destNodesScope.$element.attr('data-nodrop-enabled') || destNodesScope.nodropEnabled){
+					if (destIndex === 0 || destIndex >= destNodesScope.$modelValue.length || destNodesScope.$element.attr('data-nodrop-enabled') || destNodesScope.nodropEnabled){
 						$scope.acceptDrop = null;
 						return false;
 					}else {
