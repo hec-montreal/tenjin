@@ -97,6 +97,10 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
          }
             $scope.dropped = false;
         }
+
+		// Renumbering in case evaluations changed position
+		SyllabusService.numberSyllabus(SyllabusService.syllabus);
+
   	 }, true);
 
 
@@ -139,10 +143,7 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 				$scope.dropped = true;
 				backupSyllabus = angular.copy($scope.syllabusService.syllabus);
 
-			}	
-			// Numbering
-				SyllabusService.numberSyllabus(SyllabusService.syllabus);		
-		
+			}
 		}
 	};
 }]);

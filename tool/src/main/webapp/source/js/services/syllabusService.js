@@ -596,14 +596,7 @@
 	var numberSyllabus = function($rootTree, $numberingInfo) {
 		if ($rootTree.elements) {
 			for (var i = 0; i < $rootTree.elements.length; i++) {
-				if ($rootTree.elements[i].type === 'lecture') {
-					$numberingInfo.nbLecture++;
-					$rootTree.elements[i].$numero = $numberingInfo.nbLecture;
-				} else if ($rootTree.elements[i].type === 'tutorial') {
-					$numberingInfo.nbTutorial++;
-					String.fromCharCode('65');
-					$rootTree.elements[i].$numero = String.fromCharCode(64 + $numberingInfo.nbTutorial);
-				} else if ($rootTree.elements[i].type === 'evaluation' || $rootTree.elements[i].type === 'exam') {
+				if ($rootTree.elements[i].type === 'evaluation' || $rootTree.elements[i].type === 'exam') {
 					$rootTree.elements[i].$numero = $numberingInfo.nbEvalAndExam++;
 				}
 
@@ -618,8 +611,6 @@
 	 */
 	this.numberSyllabus = function($data) {
 		var numberingInfo = {
-			'nbLecture': 0,
-			'nbTutorial': 0,
 			'nbEvalAndExam': 1
 		};
 
