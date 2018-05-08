@@ -105,17 +105,24 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		item: TreeService.selectedElement,
 
 		accept: function (sourceNodeScope, destNodesScope, destIndex) {
-		    // don't allow drop outside rubrics or in provided elements
-            var nodropEnabled = destNodesScope.$element.attr('data-donotdrop');
-            var providerId = destNodesScope.$element.attr('data-provider-id');
-            console.log(providerId);
-            if (nodropEnabled) {
-                return false;
-            } else if (typeof providerId != 'undefined' && providerId !== null && providerId !== "") {
-                return false;
-            } else {
-                return true;
-            }
+			// don't allow drop outside rubrics or in provided elements
+			var templateStructureId = destNodesScope.$element.attr('data-templatestructure-id');
+			var providerId = destNodesScope.$element.attr('data-provider-id');
+
+			var addableTypes = SyllabusService.getAddableElementsFromTemplateRuleId(templateStructureId);
+
+			if (typeof providerId != 'undefined' && providerId !== null && providerId !== "") {
+				return false;
+			} else if (addableTypes !== null && addableTypes.length > 0) {
+				for (var i = 0; i < addableTypes.length; i++) {
+					if (addableTypes[i].type === sourceNodeScope.$modelValue.type) {
+						return true;
+					}
+				}
+			}
+
+			return false;
+
 		},
 		dropped: function(event) {
 			var destTreeName = event.dest.nodesScope.$treeScope.$parent.treeOptions.name;

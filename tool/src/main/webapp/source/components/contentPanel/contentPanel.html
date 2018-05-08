@@ -38,11 +38,15 @@
 	</div>
 
 	<div ui-tree="treeOptions" data-ng-model="treeService.selectedElement">
-		<ol ui-tree-nodes ng-model="treeService.selectedElement.elements" class="list-element" data-donotdrop="true">
+		<ol ui-tree-nodes ng-model="treeService.selectedElement.elements" class="list-element"
+			data-templatestructure-id="{{treeService.selectedElement.templateStructureId}}"
+			data-provider-id="{{treeService.selectedElement.providerId}}" >
+
 			<li ng-repeat="item in treeService.selectedElement.elements"  ui-tree-node class="panel-element">
 				<element-render data-element="item" data-index="$index"></element-render>
 
-				<ol class="listing" ui-tree-nodes data-ng-model="item.elements" class="list-element list-element-leaf" data-ng-class="{hidden: collapsed, 'cluster-padding': item.type === 'composite'}" data-ng-if="item.type === 'composite' || item.type === 'rubric' || item.type === 'cluster'" data-provider-id="{{item.providerId}}">
+				<ol class="listing" ui-tree-nodes data-ng-model="item.elements" class="list-element list-element-leaf" data-ng-class="{hidden: collapsed, 'cluster-padding': item.type === 'composite'}" data-ng-if="item.type === 'composite' || item.type === 'rubric' || item.type === 'cluster'"
+					data-provider-id="{{item.providerId}}" data-templatestructure-id="{{item.templateStructureId}}">
 
 					<li data-ng-repeat="item in item.elements" data-nodrag="{{!userService.canEditElement(item, syllabusService.syllabus)}}" ui-tree-node ui-tree-handle data-ng-class="[{'no-drag': item.common === true && syllabusService.syllabus.common !== true}]">
 						<element-render data-element="item" data-index="$index"></element-render>

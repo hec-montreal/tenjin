@@ -360,6 +360,10 @@
 		return this.template[element.templateStructureId].elements;
 	};
 
+	this.getAddableElementsFromTemplateRuleId = function(templateStructureId) {
+		return this.template[templateStructureId].elements;
+	};
+
 	/**
 	 * Get the syllabus list
 	 * @return {Array} Syllabus list
