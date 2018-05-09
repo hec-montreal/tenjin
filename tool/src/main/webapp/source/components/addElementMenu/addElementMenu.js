@@ -36,7 +36,8 @@ tenjinApp.directive('addElementMenu', ['ModalService', 'UserService', 'SyllabusS
 							'title': $type.label,
 							'important': false,
 							'publicElement': true,
-							'common': $scope.syllabusService.syllabus.common
+							'common': $scope.syllabusService.syllabus.common,
+							'elements': []
 						};
 
 						$scope.mode = 'creation';
