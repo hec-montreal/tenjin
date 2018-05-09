@@ -63,7 +63,7 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 
             //Check if destination has the rubric
             for (var i=0; i < destComposite.elements.length; i++){
-                if (destComposite.elements[i].templateStructureId === sourceRubric.templateStructureId){
+                if (destComposite.elements[i].title === sourceRubric.title){
                     existingRubric = true;
                     destRubric = destComposite.elements[i];
                 }
@@ -141,6 +141,8 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 				if (destComposite.templateStructureId === 17){
 					destComposite = destComposite.elements[destComposite.elements.length-1];
 				}
+				console.log(destComposite);
+				console.log(movedElement);
 				destRubric = null;
 				existingRubric = false;
 				$scope.$emit('elementDropped');
