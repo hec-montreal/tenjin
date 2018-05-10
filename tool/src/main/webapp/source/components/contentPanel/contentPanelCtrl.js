@@ -109,8 +109,6 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		item: TreeService.selectedElement,
 
 		accept: function (sourceNodeScope, destNodesScope, destIndex) {
-			console.log(destIndex);
-			console.log(destNodesScope);
 			// don't allow drop outside rubrics or in provided elements
 			var templateStructureId = destNodesScope.$element.attr('data-templatestructure-id');
 			var providerId = destNodesScope.$element.attr('data-provider-id');
