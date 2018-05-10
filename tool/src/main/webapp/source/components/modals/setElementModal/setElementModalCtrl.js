@@ -28,6 +28,10 @@
 			'common': SyllabusService.syllabus.common
 		};
 
+		if (type.type === 'composite') {
+		    $scope.element.elements = [];
+		}
+
 		$scope.mode = 'creation';
 		$scope.title = $translate.instant('MODAL_CREATE_ELEMENT_TITLE');
 	}
