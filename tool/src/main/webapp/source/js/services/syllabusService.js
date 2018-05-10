@@ -364,6 +364,14 @@
 		return this.template[templateStructureId].elements;
 	};
 
+	this.getTemplateStructureId = function (parent, title){
+		var children = this.template[parent.templateStructureId].elements;
+		for (var i = 0; i < children.length; i++) {
+				if (children[i].label === title) {
+					return children[i].id;
+				}
+			}
+	}
 	/**
 	 * Get the syllabus list
 	 * @return {Array} Syllabus list
