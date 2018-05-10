@@ -71,13 +71,14 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 
             //Add rubric if not the case
             if (!existingRubric){
+            	var destinationTemplateStructureId = $scope.syllabusService.getTemplateStructureId(destComposite, sourceRubric.title);
                 destRubric = {
                     'id': $scope.syllabusService.getTemporaryId(),
                     'attributes': {},
                     'type': sourceRubric.type,
                     'composite': true,
                     'parentId': destComposite.id,
-                    'templateStructureId': sourceRubric.templateStructureId,
+                    'templateStructureId': destinationTemplateStructureId,
                     'availabilityStartDate': Date.now(),
                     'title': sourceRubric.title,
                     'important': false,
@@ -97,7 +98,6 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
          }
             $scope.dropped = false;
         }
-
 		// Renumbering in case evaluations changed position
 		SyllabusService.numberSyllabus(SyllabusService.syllabus);
 
@@ -109,6 +109,8 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		item: TreeService.selectedElement,
 
 		accept: function (sourceNodeScope, destNodesScope, destIndex) {
+			console.log(destIndex);
+			console.log(destNodesScope);
 			// don't allow drop outside rubrics or in provided elements
 			var templateStructureId = destNodesScope.$element.attr('data-templatestructure-id');
 			var providerId = destNodesScope.$element.attr('data-provider-id');
