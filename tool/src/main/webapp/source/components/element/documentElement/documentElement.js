@@ -17,10 +17,6 @@ tenjinApp.directive('documentElement', ['config', '$translate', 'ResourcesServic
             if (documentTypeId) {
 				$scope.documentType = $translate.instant(documentTypeId);
             }
-
-            $scope.submitForm = function(){
-                document.getElementById('resourcePropertiesForm').submit();
-            }
         }
     };
 }]);
