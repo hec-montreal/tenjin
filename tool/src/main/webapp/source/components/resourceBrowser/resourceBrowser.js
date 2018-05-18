@@ -21,6 +21,7 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 			} else {
 				$scope.resources = ResourcesService.resources;
 				$scope.resourcesUrl = '/portal/tool/' + UserService.getResourcesToolId()+'?panel=Main';
+				$scope.resetResourcesUrl = '/portal/tool-reset/' + UserService.getResourcesToolId()+'?panel=Main';
 				$scope.csrf_token = UserService.getCSRFToken();
 			}
 
@@ -118,7 +119,7 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 			};
 
 			$scope.openResourcesTool = function() {
-			    window.open($scope.resourcesUrl, '_blank');
+			    window.open($scope.resetResourcesUrl, '_blank');
 			};
 
 			$scope.openResourceProperties = function() {
