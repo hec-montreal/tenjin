@@ -250,8 +250,7 @@ public class SakaiProxyImpl implements SakaiProxy {
 		Site site = getSite(siteId);
 		Collection<Group> siteGroups = site.getGroups();
 		for (Group group : siteGroups) {
-			if (group.getProviderGroupId() != null
-					&& (group.getModifiedBy() != null && group.getModifiedBy().getEid().equalsIgnoreCase("admin"))) {
+			if (group.getProviderGroupId() != null) {
 				groups.add(group.getId());
 			}
 		}

@@ -122,8 +122,7 @@ public class UserController {
 			boolean publishOnSite = securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS, site);
 			usersGroup = site.getGroups();
 			for (Group group : usersGroup) {
-				if (group.getProviderGroupId() != null
-						&& (group.getModifiedBy() != null && group.getModifiedBy().getEid().equalsIgnoreCase("admin"))) {
+				if (group.getProviderGroupId() != null) {
 					if (writeOnSite || securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS, group)) {
 						section = new HashMap<String, String>();
 						section.put("id", group.getId());
@@ -189,8 +188,7 @@ public class UserController {
 		Map<String, String> section;
 		for (Group group : site.getGroups()) {
 			section = new HashMap<String, String>();
-			if (group.getProviderGroupId() != null
-					&& (group.getModifiedBy() != null && group.getModifiedBy().getEid().equalsIgnoreCase("admin"))) {
+			if (group.getProviderGroupId() != null) {
 				section.put("id", group.getId());
 				section.put("name", group.getTitle());
 				sections.add(section);
