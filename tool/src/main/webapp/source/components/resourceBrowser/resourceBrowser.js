@@ -1,4 +1,4 @@
-tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService', 'UserService', 'SyllabusService', '$timeout', '$translate', function(SakaiToolsService, ResourcesService, UserService, SyllabusService, $timeout, $translate) {
+tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService', 'UserService', 'SyllabusService', 'CitationsService', '$timeout', '$translate', function(SakaiToolsService, ResourcesService, UserService, SyllabusService, CitationsService, $timeout, $translate) {
 	'use strict';
 
 	return {
@@ -144,6 +144,9 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 					var resourceId = $scope.element.$selectedResource.resourceId;
 					$scope.element.$selectedResource = ResourcesService.getResource(resourceId);
 				}
+
+				CitationsService.loadCitations();
+
 				$scope.refreshing = false;
 		            }, function(error) {
 		                console.log('Error refreshing resources:', error);
