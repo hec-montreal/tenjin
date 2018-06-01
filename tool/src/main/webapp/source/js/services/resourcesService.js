@@ -18,6 +18,7 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 	 */
 	var getResourceType = function(resource) {
 		var name = resource.name;
+		var filename = resource.reference;
 
 		if (resource.type === 'org.sakaiproject.citation.impl.CitationList') {
 			return 'citationList';
@@ -26,7 +27,7 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 		} else if (resource.type === 'org.sakaiproject.content.types.TextDocumentType' || resource.type === 'org.sakaiproject.content.types.HtmlDocumentType') {
 			return 'document';
 		} else if (resource.type === 'org.sakaiproject.content.types.fileUpload') {
-			var extension = getExtension(name);
+			var extension = getExtension(filename);
 
 			if (extension) {
 				for (var i = 0; i < config.extensionsImage.length; i++) {
