@@ -155,6 +155,11 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 		},
 
 		link: function($scope, $element) {
+
+			$scope.$on('refreshResources',function(event, someData) {
+				$scope.refreshResources();
+			});
+
 			var resource;
 
 			if ($scope.element.attributes.documentId) {
