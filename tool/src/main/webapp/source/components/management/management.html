@@ -28,8 +28,8 @@
 					<td>
 						<a class="action" data-ng-if="userService.canEditElement(syllabus, syllabus) && !syllabus.common" editable-text="syllabus.title" onbeforesave="updateTitle($data, syllabus)"><span class="glyphicon glyphicon-pencil"></span></a>
 						
-						<a data-ng-if="userService.isAllowed('syllabusWrite', syllabus) || syllabus.publishedDate != null" ui-sref="syllabus-edit({ id: syllabus.id })">{{syllabus.title}}</a>
-						<span data-ng-if="!userService.isAllowed('syllabusWrite', syllabus) && syllabus.publishedDate == null">{{syllabus.title}}</span>
+						<a data-ng-if="userService.isAllowed('syllabusWrite', syllabus) || userService.isAllowed('syllabusRead', syllabus)" ui-sref="syllabus-edit({ id: syllabus.id })">{{syllabus.title}}</a>
+						<span data-ng-if="!userService.isAllowed('syllabusWrite', syllabus) && !userService.isAllowed('syllabusRead', syllabus)">{{syllabus.title}}</span>
 					</td>
 
 					<td>{{syllabus.createdByName}}</td>

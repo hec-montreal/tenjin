@@ -328,7 +328,7 @@
 		"VIEW": "View",
 		"PAGE": "Page",
 		"DE": "of",
-		"tenjin.read.common": "Read the common course outline before it is published",
+		"tenjin.read.common.unpublished": "Read the common course outline before it is published",
 		"tenjin.write.common": "Edit the common course outline",
 		"tenjin.publish.common": "Publish the common course outline",
 		"tenjin.read.personalised": "Read personalised course outlines for all sections"
@@ -663,9 +663,9 @@
 		"VIEW": "Vue",
 		"PAGE": "Page",
 		"DE": "de",
-		"tenjin.read.common": "Lire le plan de cours commun avant la publication",
+		"tenjin.read.common.unpublished": "Lire le plan de cours commun avant la publication",
 		"tenjin.write.common": "Editer le plan de cours commun",
-        	"tenjin.publish.common": "Publier le plan de cours commun",
+        "tenjin.publish.common": "Publier le plan de cours commun",
 		"tenjin.read.personalised": "Lire les plans de cours personnalisés des autres sections"
 	}
 }

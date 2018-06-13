@@ -64,6 +64,10 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 		List<String> registered = functionManager.getRegisteredFunctions();
 
+		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON_UNPUBLISHED)) {
+			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON_UNPUBLISHED, true);
+		}
+
 		if (!registered.contains(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON)) {
 			functionManager.registerFunction(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON, true);
 		}

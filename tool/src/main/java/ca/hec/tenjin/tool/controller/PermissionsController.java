@@ -69,7 +69,7 @@ public class PermissionsController {
 
 		if (role != null && !role.isEmpty()) {
 			Set<String> perms = sakaiProxy.getAllowedFunctions(role, Arrays.asList(site.getReference()));
-			permissions.add(new Permission(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON, perms.contains(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON)));
+			permissions.add(new Permission(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON_UNPUBLISHED, perms.contains(TenjinFunctions.TENJIN_FUNCTION_READ_COMMON_UNPUBLISHED)));
 			permissions.add(new Permission(TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON, perms.contains(TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON)));
 			permissions.add(new Permission(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_COMMON, perms.contains(TenjinFunctions.TENJIN_FUNCTION_PUBLISH_COMMON)));
 			permissions.add(new Permission(TenjinFunctions.TENJIN_FUNCTION_READ_PERS, perms.contains(TenjinFunctions.TENJIN_FUNCTION_READ_PERS)));

@@ -47,13 +47,13 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			};
 
 			$scope.isNotPublishedFlagVisible = function(element) {
-				// Is element = published
-				if (element.equalsPublished) {
+				// Is element = published or equalsPublished is undefined meaning it's the published syllabus
+				if (element.equalsPublished || typeof element.equalsPublished === 'undefined') {
 					return false;
 				}
 
 				// Only show flag in edit mode
-				if (!UserService.isAllowed('syllabusWrite', SyllabusService.syllabus) || TenjinService.viewState.stateName !== 'syllabus-edit') {
+				if (TenjinService.viewState.stateName !== 'syllabus-edit') {
 					return false;
 				}
 
