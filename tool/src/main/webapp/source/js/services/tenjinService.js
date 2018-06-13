@@ -69,7 +69,15 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 							ret.reject(e);
 						});
 					});
-				} else {
+				}
+				else if (UserService.getProfile().syllabusReadUnpublished.indexOf(parseInt(ctx.syllabusId)) > -1) {
+					SyllabusService.loadSyllabus(ctx.syllabusId).then(function() {
+						ret.resolve();
+					}).catch(function(e) {
+						ret.reject(e);
+					});
+				}
+				else if (UserService.getProfile().syllabusRead.indexOf(parseInt(ctx.syllabusId)) > -1) {
 					SyllabusService.loadPublishedSyllabus(ctx.syllabusId).then(function() {
 						ret.resolve();
 					}).catch(function(e) {

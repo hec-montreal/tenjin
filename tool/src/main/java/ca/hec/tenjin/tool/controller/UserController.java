@@ -87,6 +87,7 @@ public class UserController {
 		Map<String, String> section;
 
 		// Syllabus permissions
+		List<Long> syllabusReadUnpublished = new ArrayList<Long>();
 		List<Long> syllabusRead = new ArrayList<Long>();
 		List<Long> syllabusWrite = new ArrayList<Long>();
 		List<Long> syllabusPublish = new ArrayList<Long>();
@@ -153,7 +154,12 @@ public class UserController {
 
 				// The user has permissions in the site
 				if (securityService.canRead(currentUserId, syllabus)) {
-					syllabusRead.add(syllabus.getId());
+					if (syllabus.getPublishedDate() == null) {
+						syllabusReadUnpublished.add(syllabus.getId());
+					}
+					else {
+						syllabusRead.add(syllabus.getId());
+					}
 				}
 				if (securityService.canWrite(currentUserId, syllabus)) {
 					syllabusWrite.add(syllabus.getId());
@@ -164,6 +170,7 @@ public class UserController {
 			}
 		}
 
+		profile.put("syllabusReadUnpublished", syllabusReadUnpublished);
 		profile.put("syllabusRead", syllabusRead);
 		profile.put("syllabusWrite", syllabusWrite);
 		profile.put("syllabusPublish", syllabusPublish);

@@ -3,7 +3,8 @@ package ca.hec.tenjin.api;
 public interface TenjinFunctions {
 
 	public static final String TENJIN_FUNCTION_PREFIX = "tenjin.";
-	
+
+	public static final String TENJIN_FUNCTION_READ_COMMON_UNPUBLISHED = TENJIN_FUNCTION_PREFIX + "read.common.unpublished";
 	public static final String TENJIN_FUNCTION_READ_COMMON = TENJIN_FUNCTION_PREFIX + "read.common";
 	public static final String TENJIN_FUNCTION_WRITE_COMMON = TENJIN_FUNCTION_PREFIX + "write.common";
 	public static final String TENJIN_FUNCTION_PUBLISH_COMMON = TENJIN_FUNCTION_PREFIX + "publish.common";
