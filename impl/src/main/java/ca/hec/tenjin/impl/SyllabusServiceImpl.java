@@ -55,8 +55,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 		syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
 
-		// throw denied access if no write permission on syllabus
-		if (!securityService.canWrite(sakaiProxy.getCurrentUserId(), syllabus))
+		// throw denied access if no write or read unpublished permission on syllabus
+		if (!securityService.canWrite(sakaiProxy.getCurrentUserId(), syllabus) &&
+				!securityService.canReadUnpublished(sakaiProxy.getCurrentUserId(), syllabus))
 			throw new DeniedAccessException();
 
 		return syllabus;

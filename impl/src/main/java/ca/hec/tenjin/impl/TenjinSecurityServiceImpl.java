@@ -109,11 +109,16 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 	}
 
 	@Override
+	public boolean canReadUnpublished(String userId, AbstractSyllabus syllabus) {
+		if (syllabus.getCommon()) {
+			return check(userId, TenjinFunctions.TENJIN_FUNCTION_READ_COMMON_UNPUBLISHED, syllabus);
+		}
+		return false;
+	}
+
+	@Override
 	public boolean canRead(String userId, AbstractSyllabus syllabus) {
 		if (syllabus.getCommon()) {
-			if (syllabus.getPublishedDate() == null) {
-				return check(userId, TenjinFunctions.TENJIN_FUNCTION_READ_COMMON_UNPUBLISHED, syllabus);
-			}
 			return check(userId, TenjinFunctions.TENJIN_FUNCTION_READ_COMMON, syllabus);
 		} else {
 			return check(userId, TenjinFunctions.TENJIN_FUNCTION_READ_PERS, syllabus);

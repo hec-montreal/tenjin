@@ -36,6 +36,14 @@ public interface TenjinSecurityService {
 	public boolean checkOnSiteGroup(String userId, String permission, Site site);
 
 	/**
+	 * Checks whether the user has the permission to read the given syllabus and it's unpublished elements.
+	 * @param userId
+	 * @param site
+	 * @return true or false
+	 */
+	public boolean canReadUnpublished(String userId, AbstractSyllabus syllabus);
+
+	/**
 	 * Checks whether the user has the permission to read the given syllabus.
 	 * @param userId
 	 * @param site

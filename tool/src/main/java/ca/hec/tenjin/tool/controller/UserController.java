@@ -152,14 +152,11 @@ public class UserController {
 		if (syllabusList != null) {
 			for (Syllabus syllabus : syllabusList) {
 
-				// The user has permissions in the site
+				if (securityService.canReadUnpublished(currentUserId, syllabus)) {
+					syllabusReadUnpublished.add(syllabus.getId());
+				}
 				if (securityService.canRead(currentUserId, syllabus)) {
-					if (syllabus.getPublishedDate() == null) {
-						syllabusReadUnpublished.add(syllabus.getId());
-					}
-					else {
-						syllabusRead.add(syllabus.getId());
-					}
+					syllabusRead.add(syllabus.getId());
 				}
 				if (securityService.canWrite(currentUserId, syllabus)) {
 					syllabusWrite.add(syllabus.getId());
