@@ -138,6 +138,8 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 
 				if (profile.syllabusWrite.length > 0) {
 					SyllabusService.loadSyllabus(profile.syllabusWrite[0]).then(success).catch(fail);
+				} else if (profile.syllabusReadUnpublished.length > 0) {
+					SyllabusService.loadSyllabus(profile.syllabusReadUnpublished[0]).then(success).catch(fail);
 				} else if (profile.syllabusRead.length > 0) {
 					SyllabusService.loadPublishedSyllabus(profile.syllabusRead[0]).then(success).catch(fail);
 				} else {

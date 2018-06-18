@@ -77,7 +77,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	}
 
 	@Override
-	public List<Syllabus> getSyllabusListForUser(String siteId, String currentUserId) throws NoSiteException, DeniedAccessException {
+	public List<Syllabus> getSyllabusListForUser(String siteId, String userId) throws NoSiteException, DeniedAccessException {
 		List<Syllabus> syllabusList = null;
 		List<Syllabus> finalSyllabusList = new ArrayList<Syllabus>();
 		syllabusList = syllabusDao.getSyllabusList(siteId);
@@ -88,7 +88,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 				site = sakaiProxy.getSite(siteId);
 
-				if (securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON, site)) {
+				if (securityService.checkOnSiteGroup(userId, TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON, site)) {
 					Syllabus common = createCommonSyllabus(siteId);
 					createOrUpdateSyllabus(common);
 					syllabusList.add(common);
@@ -106,8 +106,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 		// remove syllabi the user does not have access to
 		for (Syllabus syllabus : syllabusList) {
 			// if user has read or write it should be in the list
-			if (securityService.canRead(currentUserId, syllabus) ||
-					securityService.canWrite(currentUserId, syllabus)) {
+			if (securityService.canRead(userId, syllabus) ||
+					securityService.canReadUnpublished(userId, syllabus) ||
+					securityService.canWrite(userId, syllabus)) {
 
 				finalSyllabusList.add(syllabus);
 			}
