@@ -406,7 +406,7 @@ public class SakaiProxyImpl implements SakaiProxy {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	private EntityContent getResourceDetails(ContentEntity entity, int currentDepth, int requestedDepth, Time timeStamp) {
 		boolean allowed = (entity.isCollection()) ?
 				(contentHostingService.allowGetCollection(entity.getId()) ||
@@ -422,6 +422,16 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 		tempRd.setOriginalEntity(entity);
 
+		//propagate parent collection retract and release date
+		ContentCollection cc = entity.getContainingCollection();
+		if ((cc.getRetractDate() != null && cc.getRetractDate().after(tempRd.getRetract()))){
+			tempRd.setRetract(cc.getRetractDate());
+		}
+		if ((cc.getReleaseDate() != null  && cc.getReleaseDate().before(tempRd.getRelease()))){
+			tempRd.setRelease(cc.getReleaseDate());
+		}
+		
+		
 		// Set the resource public access flag
 		tempRd.setPublicAccess(contentHostingService.isRoleView(entity.getId(), AuthzGroupService.ANON_ROLE));
 
