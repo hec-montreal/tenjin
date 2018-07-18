@@ -63,7 +63,7 @@ public class SyllabusExportController {
 			response.setHeader("Content-Disposition", "attachment; filename=\"syllabus.pdf\"");
 			response.setHeader("Content-type", "application/pdf");
 			
-			exportService.exportPdf(syllabus, elements, false,  syllabus.getLocale(), response.getOutputStream());
+			exportService.exportPdf(syllabus, elements, false, locale, response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -91,7 +91,7 @@ public class SyllabusExportController {
 			response.setHeader("Content-Disposition", "attachment; filename=\"syllabus.pdf\"");
 			response.setHeader("Content-type", "application/pdf");
 			
-			exportService.exportPdf(syllabus, elements, true, syllabus.getLocale(), response.getOutputStream());
+			exportService.exportPdf(syllabus, elements, true, locale, response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -119,7 +119,7 @@ public class SyllabusExportController {
 				elements = (List<Object>) (List<?>) ((Syllabus) syllabus).getElements();
 			}
 
-			response.getWriter().append(exportService.exportPdfHtml(syllabus, elements, syllabus.getLocale()));
+			response.getWriter().append(exportService.exportPdfHtml(syllabus, elements,locale));
 		} catch (Exception e) {
 			e.printStackTrace();
 
