@@ -424,11 +424,13 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 		//propagate parent collection retract and release date
 		ContentCollection cc = entity.getContainingCollection();
-		if ((cc.getRetractDate() != null && cc.getRetractDate().after(tempRd.getRetract()))){
-			tempRd.setRetract(cc.getRetractDate());
+		if (cc.getRetractDate() != null){
+			if (tempRd.getRetract() == null || cc.getRetractDate().after(tempRd.getRetract()))
+				tempRd.setRetract(cc.getRetractDate());
 		}
-		if ((cc.getReleaseDate() != null  && cc.getReleaseDate().before(tempRd.getRelease()))){
-			tempRd.setRelease(cc.getReleaseDate());
+		if (cc.getReleaseDate() != null){
+			if (tempRd.getRelease() == null ||  cc.getReleaseDate().before(tempRd.getRelease()))
+				tempRd.setRelease(cc.getReleaseDate());
 		}
 		
 		
