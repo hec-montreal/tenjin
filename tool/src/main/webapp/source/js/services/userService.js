@@ -29,9 +29,12 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 				return $syllabus.id === syllabus.id;}).length > 0;
 		} 
 		if ('syllabusRead' === view){
-			return this.profile.syllabusRead.filter(
-				function(syllabusId){ 
-					return syllabusId ===syllabus.id;}).length > 0;
+		    var readContains = this.profile.syllabusRead.filter(
+		        function(syllabusId){return syllabusId ===syllabus.id;}).length > 0;
+		    var readUnpublishedContains = this.profile.syllabusReadUnpublished.filter(
+		        function(syllabusId){return syllabusId ===syllabus.id;}).length > 0;
+
+			return (syllabus.publishedDate != null && readContains) || (syllabus.publishedDate === null && readUnpublishedContains);
 		}
 		//Write syllabus
 		if ('syllabusWrite' === view){
@@ -113,6 +116,14 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 			return filteredSection[0].name;
 		}
 		return '';
+	};
+
+	this.getResourcesToolId = function() {
+	    return this.profile.resourcesToolId;
+	};
+
+	this.getCSRFToken = function() {
+	    return this.profile.csrf_token;
 	};
 
 }]);

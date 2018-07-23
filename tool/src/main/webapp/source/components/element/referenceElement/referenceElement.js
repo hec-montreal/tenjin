@@ -1,4 +1,4 @@
-tenjinApp.directive('referenceElement', ['config',  '$translate','ResourcesService', function(config, $translate, ResourcesService) {
+tenjinApp.directive('referenceElement', ['config',  '$translate','ResourcesService', 'SyllabusService', function(config, $translate, ResourcesService, SyllabusService) {
 	'use strict';
 
 	return {
@@ -26,6 +26,16 @@ tenjinApp.directive('referenceElement', ['config',  '$translate','ResourcesServi
 			$scope.volume = 'vol.';
 			$scope.issue = 'no';
 			$scope.edition = 'ed.';
+        	var currentLanguage = $translate.use();
+        	$translate.use(SyllabusService.syllabus.locale).then(function() {
+        		 $scope.REF_BIBLIO_FROM_TRANSLATE = $translate.instant('REF_BIBLIO_FROM', null, null, SyllabusService.syllabus.locale);
+        		 $scope.REF_BIBLIO_FROM2_TRANSLATE = $translate.instant('REF_BIBLIO_FROM2', null, null, SyllabusService.syllabus.locale);
+        		 $scope.REFERENCE_LIBRARY_LINK_TRANSLATE = $translate.instant('REFERENCE_LIBRARY_LINK', null, null, SyllabusService.syllabus.locale);
+        		 $scope.REFERENCE_OTHER_LINK_TRANSLATE = $translate.instant('REFERENCE_OTHER_LINK', null, null, SyllabusService.syllabus.locale);
+        		 
+        	});
+        	$translate.use(currentLanguage);
+			
 		}
 	};
 }]);

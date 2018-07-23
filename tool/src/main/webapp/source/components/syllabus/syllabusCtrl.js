@@ -82,13 +82,13 @@
 			post += '?locale=';
 		}
 
-		post += UserService.getProfile().locale;
+		post +=  SyllabusService.getSyllabus().locale;
 
 		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf.pdf' + post, '_blank');
 	};
 
 	$scope.pdfPublic = function() {
-		var post = '?locale=' + UserService.getProfile().locale;
+		var post = '?locale=' +  SyllabusService.getSyllabus().locale;
 
 		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf-public.json' + post, '_blank');
 	};

@@ -1,4 +1,4 @@
-tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService', 'UserService', 'SyllabusService', '$timeout', '$translate', function(SakaiToolsService, ResourcesService, UserService, SyllabusService, $timeout, $translate) {
+tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService', 'UserService', 'SyllabusService', 'CitationsService', '$timeout', '$translate', function(SakaiToolsService, ResourcesService, UserService, SyllabusService, CitationsService, $timeout, $translate) {
 	'use strict';
 
 	return {
@@ -14,10 +14,15 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 		templateUrl: 'resourceBrowser/resourceBrowser.html',
 
 		controller: function($scope) {
+			$scope.refreshing = false;
+
 			if ($scope.type === 'sakai_entity') {
 				$scope.resources = SakaiToolsService.getToolEntities();
 			} else {
 				$scope.resources = ResourcesService.resources;
+				$scope.resourcesUrl = '/portal/tool/' + UserService.getResourcesToolId()+'?panel=Main';
+				$scope.resetResourcesUrl = '/portal/tool-reset/' + UserService.getResourcesToolId()+'?panel=Main';
+				$scope.csrf_token = UserService.getCSRFToken();
 			}
 
 			$scope.browserOptions = {
@@ -111,10 +116,50 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 				}
 
 				return ret.length > 0 ? "(" + ret + ")" : "";
-			}
+			};
+
+			$scope.openResourcesTool = function() {
+			    window.open($scope.resetResourcesUrl, '_blank');
+			};
+
+			$scope.openResourceProperties = function() {
+			    if (!$scope.element.$selectedResource) {
+				return false;
+			    }
+
+			    var selectedItemIdInput = document.getElementById('selectedItemIdInput');
+			    selectedItemIdInput.value = $scope.element.$selectedResource.resourceId;
+
+			    var form = document.getElementById('resourcePropertiesForm');
+			    form.submit();
+
+			};
+
+			$scope.refreshResources = function() {
+				$scope.refreshing = true;
+				ResourcesService.loadResources(SyllabusService.getSyllabus().siteId).then(function() {
+				$scope.resources = ResourcesService.resources;
+
+				if ($scope.element.$selectedResource) {
+					var resourceId = $scope.element.$selectedResource.resourceId;
+					$scope.element.$selectedResource = ResourcesService.getResource(resourceId);
+				}
+
+				CitationsService.loadCitations();
+
+				$scope.refreshing = false;
+		            }, function(error) {
+		                console.log('Error refreshing resources:', error);
+		            });
+		        };
 		},
 
 		link: function($scope, $element) {
+
+			$scope.$on('refreshResources',function(event, someData) {
+				$scope.refreshResources();
+			});
+
 			var resource;
 
 			if ($scope.element.attributes.documentId) {

@@ -119,7 +119,7 @@ public class SyllabusExportController {
 				elements = (List<Object>) (List<?>) ((Syllabus) syllabus).getElements();
 			}
 
-			response.getWriter().append(exportService.exportPdfHtml(syllabus, elements, locale));
+			response.getWriter().append(exportService.exportPdfHtml(syllabus, elements,locale));
 		} catch (Exception e) {
 			e.printStackTrace();
 

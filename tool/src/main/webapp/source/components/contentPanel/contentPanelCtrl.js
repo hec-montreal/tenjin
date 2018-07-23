@@ -1,4 +1,4 @@
-tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', 'UserService', 'SyllabusService', 'config', function($scope, $timeout, TreeService, UserService, SyllabusService, config) {
+tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', 'UserService', 'SyllabusService', 'config', '$translate', function($scope, $timeout, TreeService, UserService, SyllabusService, config, $translate) {
 	'use strict';
 
 	$scope.syllabusService = SyllabusService;
@@ -16,6 +16,12 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 	var existingRubric = false;
 
 	var backupSyllabus = null;
+	var currentLanguage = $translate.use();
+	$translate.use(SyllabusService.syllabus.locale).then(function() {
+		 $scope.DETAILS_TRANSLATE = $translate.instant('DETAILS', null, null, SyllabusService.syllabus.locale);
+		 
+	});
+	$translate.use(currentLanguage);
 
 	$scope.getAncestor = function($node) {
 		if ($node.$parentNodeScope) {

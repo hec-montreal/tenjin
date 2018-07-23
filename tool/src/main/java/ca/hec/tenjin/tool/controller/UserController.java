@@ -35,13 +35,17 @@ import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.tool.api.SessionManager;
+import org.sakaiproject.tool.api.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.sakaiproject.event.cover.UsageSessionService;
 
 import java.util.*;
+import javax.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping(value = "v1")
@@ -83,6 +87,7 @@ public class UserController {
 		Map<String, String> section;
 
 		// Syllabus permissions
+		List<Long> syllabusReadUnpublished = new ArrayList<Long>();
 		List<Long> syllabusRead = new ArrayList<Long>();
 		List<Long> syllabusWrite = new ArrayList<Long>();
 		List<Long> syllabusPublish = new ArrayList<Long>();
@@ -147,7 +152,9 @@ public class UserController {
 		if (syllabusList != null) {
 			for (Syllabus syllabus : syllabusList) {
 
-				// The user has permissions in the site
+				if (securityService.canReadUnpublished(currentUserId, syllabus)) {
+					syllabusReadUnpublished.add(syllabus.getId());
+				}
 				if (securityService.canRead(currentUserId, syllabus)) {
 					syllabusRead.add(syllabus.getId());
 				}
@@ -160,6 +167,7 @@ public class UserController {
 			}
 		}
 
+		profile.put("syllabusReadUnpublished", syllabusReadUnpublished);
 		profile.put("syllabusRead", syllabusRead);
 		profile.put("syllabusWrite", syllabusWrite);
 		profile.put("syllabusPublish", syllabusPublish);
@@ -167,6 +175,13 @@ public class UserController {
 		String lockRenewDelaySeconds = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_LOCK_RENEW_DELAY_SECONDS);
 
 		profile.put("lockRenewDelaySeconds", lockRenewDelaySeconds);
+
+		profile.put("resourcesToolId", sakaiProxy.getCurrentSiteResourcesToolId());
+
+		// TODO is this secure?
+		Session session = sessionManager.getCurrentSession();
+		String token = (String)session.getAttribute(UsageSessionService.SAKAI_CSRF_SESSION_ATTRIBUTE);
+		profile.put("csrf_token", token);
 
 		return profile;
 	}

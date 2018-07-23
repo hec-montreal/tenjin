@@ -42,11 +42,14 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 			Site site = sakaiProxy.getSite(syllabus.getSiteId());
 
 			//If syllabus is common check on site
-			if (syllabus.getCommon() && 
-					permission == TenjinFunctions.TENJIN_FUNCTION_READ_COMMON &&
-					checkOnSiteGroup(userId, TenjinFunctions.TENJIN_FUNCTION_READ_COMMON, site)) {
+			if (syllabus.getCommon() &&
+					(permission == TenjinFunctions.TENJIN_FUNCTION_READ_COMMON_UNPUBLISHED ||
+					permission == TenjinFunctions.TENJIN_FUNCTION_READ_COMMON)) {
 
-				return true;
+				if (checkOnSiteGroup(userId, permission, site))
+				{
+					return true;
+				}
 			}
 
 			// if user has the appropriate permission on the site realm return true
@@ -103,6 +106,14 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 		if (userId == null || syllabus.getId() == null)
 			return false;
 		return (syllabus.getCreatedBy()).equalsIgnoreCase(userId);
+	}
+
+	@Override
+	public boolean canReadUnpublished(String userId, AbstractSyllabus syllabus) {
+		if (syllabus.getCommon()) {
+			return check(userId, TenjinFunctions.TENJIN_FUNCTION_READ_COMMON_UNPUBLISHED, syllabus);
+		}
+		return false;
 	}
 
 	@Override

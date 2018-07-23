@@ -42,6 +42,10 @@
 		},
 
 		link: function($scope, $element) {
+			$scope.$on('$destroy', function() {
+				$scope.$broadcast('refreshResources', null);
+			});
+
 			// Retrieve the document type for the given document type id
 			if ($scope.element.attributes.documentType) {
 				$scope.currentType = $scope.element.attributes.documentType

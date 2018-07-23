@@ -7,6 +7,9 @@
 		"MODAL_EDIT_ELEMENT_TITLE": "Edit Element",
 		"RESOURCE_BROWSER_TITLE": "Resource",
 		"RESOURCE_BROWSER_SELECTED": "Selected Resource",
+		"RESOURCE_TOOL_BUTTON": "Manage resources",
+		"RESOURCE_PROPERTIES_BUTTON": "Modify properties",
+		"RESOURCE_REFRESH_BUTTON": "Refresh",
 		"CITATION_BROWSER_TITLE": "Citation",
 		"BIBLIO_BROWSER_SELECTED": "Selected Citation",
 		"ERROR_SAKAI_TOOL": "A tool must be selected",
@@ -325,7 +328,7 @@
 		"VIEW": "View",
 		"PAGE": "Page",
 		"DE": "of",
-		"tenjin.read.common": "Read the common course outline before it is published",
+		"tenjin.read.common.unpublished": "Read the common course outline before it is published",
 		"tenjin.write.common": "Edit the common course outline",
 		"tenjin.publish.common": "Publish the common course outline",
 		"tenjin.read.personalised": "Read personalised course outlines for all sections"
@@ -339,6 +342,9 @@
 		"MODAL_EDIT_ELEMENT_TITLE": "Modification élément",
 		"RESOURCE_BROWSER_TITLE": "Ressource",
 		"RESOURCE_BROWSER_SELECTED": "Ressource sélectionnée",
+		"RESOURCE_TOOL_BUTTON": "Gérer les ressources",
+		"RESOURCE_PROPERTIES_BUTTON": "Modifier propriétés",
+		"RESOURCE_REFRESH_BUTTON": "Rafraîchir",
 		"CITATION_BROWSER_TITLE": "Ressource bibliographique",
 		"BIBLIO_BROWSER_SELECTED": "Ressource bibliographique sélectionnée",
 		"ERROR_SAKAI_TOOL": "Un outil doit être sélectionné",
@@ -657,9 +663,9 @@
 		"VIEW": "Vue",
 		"PAGE": "Page",
 		"DE": "de",
-		"tenjin.read.common": "Lire le plan de cours commun avant la publication",
+		"tenjin.read.common.unpublished": "Lire le plan de cours commun avant la publication",
 		"tenjin.write.common": "Editer le plan de cours commun",
-        	"tenjin.publish.common": "Publier le plan de cours commun",
+        "tenjin.publish.common": "Publier le plan de cours commun",
 		"tenjin.read.personalised": "Lire les plans de cours personnalisés des autres sections"
 	}
 }

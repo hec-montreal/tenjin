@@ -40,3 +40,32 @@
 		box-shadow: 0!important;
 	}
 }
+
+.manage-resources-buttons {
+	float: right;
+
+	a {
+		cursor: pointer;
+		color: #003c71;
+		&:hover {
+			color: #005eb8;
+		}
+	}
+
+
+
+	span {
+		margin-right: 5px;
+	}
+}
+
+.glyphicon-refresh-animate {
+	animation: spin .7s infinite linear;
+}
+
+a.disabled {
+	cursor: default;
+	&:hover {
+		color: #003c71;
+	}
+}
