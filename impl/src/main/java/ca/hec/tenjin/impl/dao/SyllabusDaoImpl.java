@@ -312,7 +312,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	public Map<String, Object> getSectionsBySyllabus(String siteId) {
 		Query query = getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(
 				"select TENJIN_SYLLABUSSECTION.SECTION, TENJIN_SYLLABUS.SYLLABUS_ID from TENJIN_SYLLABUSSECTION, TENJIN_SYLLABUS " +
-						"where TENJIN_SYLLABUS.SYLLABUS_ID = TENJIN_SYLLABUSSECTION.SYLLABUS_ID AND TENJIN_SYLLABUS.SITE_ID like ?");
+						"where TENJIN_SYLLABUS.SYLLABUS_ID = TENJIN_SYLLABUSSECTION.SYLLABUS_ID AND TENJIN_SYLLABUS.DELETED = 0 and TENJIN_SYLLABUS.SITE_ID like ?");
 		List<Object[]> queryResult = query.setString(0, siteId).list();
 
 		Map<String, Object> sectionsAndSyllabi = new HashMap<>();

@@ -109,6 +109,7 @@ public class SyncSectionsInTenjinImpl implements SyncSectionsInTenjin {
 
             } while (createdOn.after(startingDate));
         } catch (NoSyllabusException e) {
+        	log.error("the site " + site.getId() + " could not be synchronized");
             e.printStackTrace();
         } finally {
             session.clear();
