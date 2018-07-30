@@ -62,59 +62,62 @@ public class SyncSectionsInTenjinImpl implements SyncSectionsInTenjin {
 
         Session session = sessionManager.getCurrentSession();
 
-        try {
-            session.setUserEid("admin");
-            session.setUserId("admin");
+		try {
+			session.setUserEid("admin");
+			session.setUserId("admin");
 
-            do {
-                site = allSites.get(counter++);
-                createdOn = site.getCreatedDate();
-                if (createdOn.before(startingDate))
-                    break;
-                if (site.getProviderGroupId() == null || site.getProviderGroupId().isEmpty())
-                    continue;
-                siteGroups = site.getGroups();
-                newProviderIds = new ArrayList<String>();
-                sectionsBySyllabus = syllabusDao.getSectionsBySyllabus(site.getId());
-                if (sectionsBySyllabus != null && sectionsBySyllabus.keySet().size() >0) {
-                    common = syllabusDao.getCommonSyllabus(site.getId());
+			do {
+				try {
+					site = allSites.get(counter++);
+					createdOn = site.getCreatedDate();
+					if (createdOn.before(startingDate))
+						break;
+					if (site.getProviderGroupId() == null || site.getProviderGroupId().isEmpty())
+						continue;
+					siteGroups = site.getGroups();
+					newProviderIds = new ArrayList<String>();
+					sectionsBySyllabus = syllabusDao.getSectionsBySyllabus(site.getId());
+					if (sectionsBySyllabus != null && sectionsBySyllabus.keySet().size() > 0) {
+						common = syllabusDao.getCommonSyllabus(site.getId());
 
-                    //Make sure all the sections in Tenjin are up to date
-                    for (Group group : siteGroups) {
-                        //If there is no providerId, the group does not come from an official section
-                        if (group.getProviderGroupId() == null)
-                            continue;
-                        if (sectionsBySyllabus.containsKey(group.getId())) {
-                            sectionsBySyllabus.remove(group.getId());
+						// Make sure all the sections in Tenjin are up to date
+						for (Group group : siteGroups) {
+							// If there is no providerId, the group does not
+							// come from an official section
+							if (group.getProviderGroupId() == null)
+								continue;
+							if (sectionsBySyllabus.containsKey(group.getId())) {
+								sectionsBySyllabus.remove(group.getId());
 
-                            log.info("Section ou groupId " + group.getProviderGroupId() + " est correctement enregistré");
+								log.info("Section ou groupId " + group.getProviderGroupId()
+										+ " est correctement enregistré");
 
-                        } else {
-                            //Add new section to common
-                            newProviderIds.add(group.getId());
-                            syllabusDao.addSection(common.getId().toString(), group.getId());
-                            log.info("Section ou groupId " + group.getProviderGroupId() + " est ajouté au common");
+							} else {
+								// Add new section to common
+								newProviderIds.add(group.getId());
+								syllabusDao.addSection(common.getId().toString(), group.getId());
+								log.info("Section ou groupId " + group.getProviderGroupId() + " est ajouté au common");
 
-                        }
-                    }
+							}
+						}
 
-                    //Delete cancelled sections
-                    for (String sectionId : sectionsBySyllabus.keySet()) {
-                        syllabusDao.deleteSection(sectionsBySyllabus.get(sectionId).toString(), sectionId);
-                        log.info("Section ou groupId " + sectionId + " pour le site " + site.getId()
-                                + " du syllabus " + sectionsBySyllabus.get(sectionId) + " a été retiré");
+						// Delete cancelled sections
+						for (String sectionId : sectionsBySyllabus.keySet()) {
+							syllabusDao.deleteSection(sectionsBySyllabus.get(sectionId).toString(), sectionId);
+							log.info("Section ou groupId " + sectionId + " pour le site " + site.getId()
+									+ " du syllabus " + sectionsBySyllabus.get(sectionId) + " a été retiré");
 
-                    }
-                }
+						}
+					}
 
-            } while (createdOn.after(startingDate));
-        } catch (NoSyllabusException e) {
-        	log.error("the site " + site.getId() + " could not be synchronized");
-            e.printStackTrace();
-        } finally {
-            session.clear();
-        }
-
+				} catch (NoSyllabusException e) {
+					log.error("the site " + site.getId() + " could not be synchronized");
+					e.printStackTrace();
+				}
+			} while (createdOn.after(startingDate));
+		} finally {
+			session.clear();
+		}
 
     }
 
