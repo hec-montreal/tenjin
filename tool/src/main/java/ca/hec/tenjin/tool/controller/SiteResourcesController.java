@@ -30,6 +30,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
@@ -54,4 +57,12 @@ public class SiteResourcesController {
 	public @ResponseBody List<EntityContent> getResources(@PathVariable String siteId, @RequestParam(value = "resourceId", required = false) String resourceId, @RequestParam(value = "depth", required = false) String depth, @RequestParam(value = "timestamp", required = false) String timestamp) {
 		return sakaiProxy.getSiteResources(siteId, timestamp, depth, resourceId);
 	}
+
+	@ExceptionHandler(SecurityException.class)
+	@ResponseStatus(value = HttpStatus.FORBIDDEN)
+	public @ResponseBody String handleSecurityException(SecurityException ex)
+	{
+		return "resourcesSecurityException";
+	}
 }
+
