@@ -446,7 +446,8 @@ public class SakaiProxyImpl implements SakaiProxy {
 		// Set the copyright flag
 		String copyright = (String) tempRd.getProperties().get(ResourceProperties.PROP_COPYRIGHT_CHOICE);
 
-		tempRd.setCopyright(copyright != null && (copyright.equals("rights.IHoldCopyright") || copyright.equals("rights.SaviaStatement")));
+		tempRd.setCopyright(copyright != null && (copyright.equals("rights.IHoldCopyright") || copyright.equals("rights.SaviaStatement")
+				 || copyright.equals("rights.IObtainedRights")));
 
 		// If it's a collection recurse down into it.
 		if ((requestedDepth > currentDepth) && entity.isCollection()) {
