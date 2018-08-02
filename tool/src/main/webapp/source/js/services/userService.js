@@ -14,7 +14,7 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 
 			ret.resolve(data);
 		}).error(function (data) {
-			ret.reject(data);
+			ret.reject('cannotLoadBaseData');
 		});
 
 		return ret.promise;
