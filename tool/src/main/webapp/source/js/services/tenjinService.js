@@ -180,7 +180,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 		.then(() => {
 		    ret.resolve();
 		})
-		.catch(function(e) {
+		.catch((e) => {
 			ret.reject(e);
 		})
 
