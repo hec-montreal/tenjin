@@ -22,6 +22,10 @@ tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', 'SyllabusLockSer
 
 			$scope.baseDataLoaded = false;
 
+					// TODO do this better (fix promise hell)
+					$translate.use('fr_CA').then(function() {
+					    AlertService.init();
+
 			TenjinService.loadData().then(function() {
 				$scope.baseDataLoaded = true;
 				// Set locale
@@ -37,11 +41,13 @@ tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', 'SyllabusLockSer
 					});
 					tmhDynamicLocale.set(UserService.getProfile().defaultLocale);
 				}
-			}).catch(function() {
-				AlertService.showAlert('cannotLoadBaseData');
+			}).catch(function(e) {
+				console.log(e);
+				AlertService.showAlert(e);
 			}).finally(function() {
 				$scope.hideGlobalLoading();
 			});
+					});
 		}
 	};
 }]);

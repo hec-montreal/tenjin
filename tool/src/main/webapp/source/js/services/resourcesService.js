@@ -72,8 +72,8 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 			tthis.setResources(res);
 
 			ret.resolve(tthis);
-		}).error(function(data) {
-			ret.reject(data);
+		}).error(function(error, status) {
+			ret.reject(error);
 		})
 
 		return ret.promise;
