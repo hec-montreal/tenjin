@@ -22,32 +22,19 @@ tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', 'SyllabusLockSer
 
 			$scope.baseDataLoaded = false;
 
-					// TODO do this better (fix promise hell)
-					$translate.use('fr_CA').then(function() {
-					    AlertService.init();
-
-			TenjinService.loadData().then(function() {
+			// use fr_CA by default
+			$translate.use('fr_CA').then(() => {
+				AlertService.init();
+				return TenjinService.loadData();
+			})
+			.then(() => {
 				$scope.baseDataLoaded = true;
-				// Set locale
-				var availableLang = $translate.getAvailableLanguageKeys();
-				if (availableLang.indexOf(UserService.getProfile().locale) > -1){
-					$translate.use(UserService.getProfile().locale).then(function() {
-					    AlertService.init();
-					});
-					tmhDynamicLocale.set(UserService.getProfile().locale);
-				}else{
-					$translate.use(UserService.getProfile().defaultLocale).then(function() {
-						AlertService.init();
-					});
-					tmhDynamicLocale.set(UserService.getProfile().defaultLocale);
-				}
 			}).catch(function(e) {
 				console.log(e);
 				AlertService.showAlert(e);
 			}).finally(function() {
 				$scope.hideGlobalLoading();
 			});
-					});
 		}
 	};
 }]);

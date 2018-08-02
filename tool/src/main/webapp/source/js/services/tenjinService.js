@@ -1,4 +1,4 @@
-tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'DataService', 'SyllabusService', 'SyllabusLockService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'AlertService', function($q, config, $state, UserService, DataService, SyllabusService, SyllabusLockService, ResourcesService, SakaiToolsService, CitationsService, PublishService, AlertService) {
+tenjinApp.service('TenjinService', ['$q', '$translate', 'tmhDynamicLocale', 'config', '$state', 'UserService', 'DataService', 'SyllabusService', 'SyllabusLockService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'AlertService', function($q, $translate, tmhDynamicLocale, config, $state, UserService, DataService, SyllabusService, SyllabusLockService, ResourcesService, SakaiToolsService, CitationsService, PublishService, AlertService) {
 	'use strict';
 
 	var makeRoute = function(route, params) {
@@ -174,6 +174,22 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 			return UserService.loadProfile();
 		})
 		.then(() => {
+			// Set locale based on user profile
+			var availableLang = $translate.getAvailableLanguageKeys();
+			var useLang = 'fr_CA';
+
+			if (availableLang.indexOf(UserService.getProfile().locale) > -1){
+				useLang = UserService.getProfile().locale;
+			}
+			else {
+				useLang = UserService.getProfile().defaultLocale;
+			}
+
+			tmhDynamicLocale.set(useLang);
+			return $translate.use(useLang);
+		})
+		.then(() => {
+		    AlertService.init();
 		    tthis.viewState = tthis.findViewStateFromProfile();
 		    return tthis.viewState.loadViewData(UserService.getProfile().siteId);
 		})
@@ -182,7 +198,7 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 		})
 		.catch((e) => {
 			ret.reject(e);
-		})
+		});
 
 		return ret.promise;
 	};
