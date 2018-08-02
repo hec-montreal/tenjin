@@ -332,7 +332,8 @@
 		"tenjin.write.common": "Edit the common course outline",
 		"tenjin.publish.common": "Publish the common course outline",
 		"tenjin.read.personalised": "Read personalised course outlines for all sections",
-		"RESOURCES_SECURITY_EXCEPTION": "You do not have permission to read this site's resources, please contact your instructor"
+		"RESOURCES_SECURITY_EXCEPTION": "You do not have permission to read this site's resources, please contact your instructor",
+		"RESOURCES_LOAD_ERROR": "An error occurred loading the site's resources, please contact the help desk"
 	},
 
 	"fr_CA": {
@@ -668,6 +669,7 @@
 		"tenjin.write.common": "Editer le plan de cours commun",
 		"tenjin.publish.common": "Publier le plan de cours commun",
 		"tenjin.read.personalised": "Lire les plans de cours personnalisés des autres sections",
-		"RESOURCES_SECURITY_EXCEPTION": "Vous n'avez pas le droit de consulter les ressources de ce site, communiquez avec votre professeur"
+		"RESOURCES_SECURITY_EXCEPTION": "Vous n'avez pas le droit de consulter les ressources de ce site, communiquez avec votre professeur",
+		"RESOURCES_LOAD_ERROR": "Une erreur est survenu à la récupération des ressources, veuillez contacter le CAT"
 	}
 }
