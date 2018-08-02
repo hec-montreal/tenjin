@@ -95,7 +95,13 @@
 		'resourcesSecurityException': {
 			type: 'danger',
 			message: $translate.instant('RESOURCES_SECURITY_EXCEPTION')
+		},
+
+		'resourcesLoadError': {
+			type: 'danger',
+			message: $translate.instant('RESOURCES_LOAD_ERROR')
 		}
+
     	}
 	};
 
@@ -117,6 +123,10 @@
 	this.showAlert = function(name, messageVariables) {
 		if (!name) {
 			name = 'default';
+		}
+		if (!(name in alerts)) {
+		    console.log("showAlert error not found");
+		    name = 'default';
 		}
 
 		this.currentAlert = alerts[name];
