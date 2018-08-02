@@ -167,23 +167,20 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 		var tthis = this;
 		var ret = $q.defer();
 
-		// Load enumerations and strings
-		DataService.load().then(function() {
+		// Load enumerations
+		DataService.load().then(() => {
+
 			// We must load the profile before loading anything else
-			UserService.loadProfile().then(function() {
-				var siteId = UserService.getProfile().siteId;
-
-				tthis.viewState = tthis.findViewStateFromProfile()
-
-				tthis.viewState.loadViewData(siteId).then(function() {
-					ret.resolve();
-				}).catch(function(e) {
-					ret.reject(e);
-				});
-			}).catch(function(e) {
-				ret.reject(e);
-			});
-		}).catch(function(e) {
+			return UserService.loadProfile();
+		})
+		.then(() => {
+		    tthis.viewState = tthis.findViewStateFromProfile();
+		    return tthis.viewState.loadViewData(UserService.getProfile().siteId);
+		})
+		.then(() => {
+		    ret.resolve();
+		})
+		.catch(function(e) {
 			ret.reject(e);
 		})
 
