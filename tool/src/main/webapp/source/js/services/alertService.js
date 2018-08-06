@@ -110,7 +110,13 @@
 		'userProfileLoadError': {
 			type: 'danger',
 			message: $translate.instant('USER_PROFILE_LOAD_ERROR')
+		},
+
+		'sakaiToolsLoadError': {
+			type: 'danger',
+			message: $translate.instant('SAKAI_TOOLS_LOAD_ERROR')
 		}
+
     	}
 	};
 
