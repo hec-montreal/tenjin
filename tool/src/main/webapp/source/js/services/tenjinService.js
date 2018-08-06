@@ -30,8 +30,8 @@ tenjinApp.service('TenjinService', ['$q', '$translate', 'tmhDynamicLocale', 'con
 					// Finally load the citations
 					CitationsService.loadCitations().then(function() {
 						ret.resolve();
-					}).catch(function() {
-						ret.reject();
+					}).catch(function(e) {
+						ret.reject(e);
 					});
 
 					SyllabusService.loadTemplate().then(function() {
@@ -108,8 +108,8 @@ tenjinApp.service('TenjinService', ['$q', '$translate', 'tmhDynamicLocale', 'con
 					// Finally load the citations
 					CitationsService.loadCitations().then(function() {
 						ret.resolve();
-					}).catch(function() {
-						ret.reject();
+					}).catch(function(e) {
+						ret.reject(e);
 					});
 
 					SyllabusService.loadTemplate().then(function() {

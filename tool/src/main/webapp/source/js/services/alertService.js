@@ -115,6 +115,11 @@
 		'sakaiToolsLoadError': {
 			type: 'danger',
 			message: $translate.instant('SAKAI_TOOLS_LOAD_ERROR')
+		},
+
+		'citationsLoadError': {
+			type: 'danger',
+			message: $translate.instant('CITATIONS_LOAD_ERROR')
 		}
 
     	}

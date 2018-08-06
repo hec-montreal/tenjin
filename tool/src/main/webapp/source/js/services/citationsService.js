@@ -100,7 +100,7 @@ tenjinApp.service('CitationsService', ['$q', '$http', '$translate', 'ResourcesSe
 
 			ret.resolve();
 		}).catch(function() {
-			ret.reject();
+			ret.reject('citationsLoadError');
 		});
 
 		return ret.promise;
