@@ -100,8 +100,12 @@
 		'resourcesLoadError': {
 			type: 'danger',
 			message: $translate.instant('RESOURCES_LOAD_ERROR')
-		}
+		},
 
+		'userProfileLoadError': {
+			type: 'danger',
+			message: $translate.instant('USER_PROFILE_LOAD_ERROR')
+		}
     	}
 	};
 
