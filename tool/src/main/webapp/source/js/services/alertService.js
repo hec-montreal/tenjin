@@ -20,6 +20,11 @@
 			    message: $translate.instant("ALERT_NO_SYLLABUS")
     		},
 
+	    	'noPublishedSyllabus': {
+		    	type: 'danger',
+			    message: $translate.instant("ALERT_NO_PUBLISHED_SYLLABUS")
+    		},
+
 	    	'cannotSaveSyllabus': {
 		    	type: 'danger',
 			    message: $translate.instant('ALERT_CANNOT_SAVE_SYLLABUS')
@@ -168,7 +173,10 @@
 			this.showAlert('syllabusLocked', [data.lock.createdByName]);
 		} else if (data.locked) {
 			this.showAlert('noSyllabusLock');
-		} else {
+		} else if (data === 'noPublishedSyllabus') {
+		    this.showAlert('noPublishedSyllabus');
+		}
+		else {
 			this.showAlert('noSyllabus');
 		}
 	};

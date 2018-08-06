@@ -191,8 +191,11 @@
 		$http.get(getUrl).success(function(data) {
 			tthis.setSyllabus(data);
 			ret.resolve(tthis.getSyllabus());
-		}).error(function(data) {
-			ret.reject(data);
+		}).error(function(data, status) {
+		    if (status === 404)
+			    ret.reject('noPublishedSyllabus');
+			else
+			    ret.reject(data);
 		}).finally(function() {
 			tthis.working = false;
 		});
