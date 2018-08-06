@@ -73,8 +73,7 @@ tenjinApp.service('ResourcesService', ['$rootScope', '$http', '$location', 'conf
 
 			ret.resolve(tthis);
 		}).error(function(error, status) {
-
-		    if (status === '403') {
+		    if (status === 403) {
 		        ret.reject('resourcesSecurityException');
 		    }
 		    else {
