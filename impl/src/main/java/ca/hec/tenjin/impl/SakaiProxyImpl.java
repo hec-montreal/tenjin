@@ -22,6 +22,7 @@ import org.sakaiproject.event.api.EventTrackingService;
 import org.sakaiproject.exception.*;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
+import org.sakaiproject.site.api.ToolConfiguration;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.time.api.Time;
 import org.sakaiproject.time.api.TimeService;
@@ -324,7 +325,12 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 	public String getCurrentSiteResourcesToolId() {
 		Site currentSite = getCurrentSite();
-		return currentSite.getToolForCommonId("sakai.resources").getId();
+		ToolConfiguration t = currentSite.getToolForCommonId("sakai.resources");
+
+		if (null != t)
+			return t.getId();
+		else
+			return null;
 	}
 
 	@Override
