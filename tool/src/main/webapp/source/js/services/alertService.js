@@ -1,7 +1,7 @@
 ﻿tenjinApp.service('AlertService', ['$translate', function($translate) {
 	'use strict';
 
-	var alerts;
+	var alerts = {};
 
 	this.init = function() {
         alerts = {
@@ -82,15 +82,26 @@
 		},
 
 		'permissionsUpdateError': {
-			    type: 'danger',
-			    message: $translate.instant('ERROR_PERMISSIONS_UPDATE')
+			type: 'danger',
+			message: $translate.instant('ERROR_PERMISSIONS_UPDATE')
 		},
 
 		'permissionsUpdateSuccess': {
-			    type: 'success',
-			    message: $translate.instant('SUCCESS_PERMISSIONS_UPDATE'),
-			    closeable: true
+			type: 'success',
+			message: $translate.instant('SUCCESS_PERMISSIONS_UPDATE'),
+			closeable: true
+		},
+
+		'resourcesSecurityException': {
+			type: 'danger',
+			message: $translate.instant('RESOURCES_SECURITY_EXCEPTION')
+		},
+
+		'resourcesLoadError': {
+			type: 'danger',
+			message: $translate.instant('RESOURCES_LOAD_ERROR')
 		}
+
     	}
 	};
 
@@ -112,6 +123,10 @@
 	this.showAlert = function(name, messageVariables) {
 		if (!name) {
 			name = 'default';
+		}
+		if (!(name in alerts)) {
+		    console.log("showAlert error not found");
+		    name = 'default';
 		}
 
 		this.currentAlert = alerts[name];
@@ -161,6 +176,4 @@
 	this.getCurrentAlertMessage = function() {
 		return this.currentAlert.renderedMessage;
 	};
-
-	this.init();
 }]);

@@ -26,7 +26,7 @@
 	<span data-ng-if="title && title.length > 0">{{title}}</span>
 	<span data-ng-if="!title || title.length === 0">{{ 'RESOURCE_BROWSER_TITLE' | translate }}</span>
 </label>
-<div class="manage-resources-buttons" data-ng-if="type === 'document'">
+<div class="manage-resources-buttons" data-ng-if="type === 'document' && resourcesUrl">
 	<a data-ng-click="refreshResources()" data-ng-class="{'disabled': refreshing}"><span class="glyphicon glyphicon-refresh" data-ng-class="{'glyphicon-refresh-animate': refreshing}"></span><span>{{ 'RESOURCE_REFRESH_BUTTON'| translate }}</span></a>
 	<a data-ng-click="openResourceProperties()" data-ng-class="{'disabled': !element.$selectedResource}"><span class="glyphicon glyphicon-list-alt"></span><span>{{ 'RESOURCE_PROPERTIES_BUTTON' | translate }}</span></a>
 	<a data-ng-click="openResourcesTool()"><span class="glyphicon icon-sakai--sakai-resources"></span><span>{{ 'RESOURCE_TOOL_BUTTON' | translate }}</span></a>
