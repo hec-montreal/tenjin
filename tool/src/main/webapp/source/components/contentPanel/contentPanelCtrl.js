@@ -14,6 +14,7 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 	var destRubric = null;
 	//New rubric or existing rubric
 	var existingRubric = false;
+	var moved = false;
 
 	var backupSyllabus = null;
 	var currentLanguage = $translate.use();
@@ -115,6 +116,11 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		item: TreeService.selectedElement,
 
 		accept: function (sourceNodeScope, destNodesScope, destIndex) {
+			//don't allow move of common elements in not common syllabus
+			if (sourceNodeScope.$modelValue.common === true && SyllabusService.syllabus.common !== true){
+				return false;
+			}
+			
 			// don't allow drop outside rubrics or in provided elements
 			var templateStructureId = destNodesScope.$element.attr('data-templatestructure-id');
 			var providerId = destNodesScope.$element.attr('data-provider-id');
@@ -126,18 +132,20 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 			} else if (addableTypes !== null && addableTypes.length > 0) {
 				for (var i = 0; i < addableTypes.length; i++) {
 					if (addableTypes[i].type === sourceNodeScope.$modelValue.type) {
+						moved = true;
 						return true;
 					}
 				}
 			}
-
 			return false;
 
 		},
 		dropped: function(event) {
 			var destTreeName = event.dest.nodesScope.$treeScope.$parent.treeOptions.name;
 			//Reset element published status
-			event.source.nodeScope.$modelValue.equalsPublished = false;
+			if (moved === true){
+				event.source.nodeScope.$modelValue.equalsPublished = false;
+			}
 			//Drag and drop between 2 trees
 			if (destTreeName === "navigationTree"){ 	
 				movedElement = event.source.nodeScope.$modelValue;
@@ -147,8 +155,6 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 				if (destComposite.templateStructureId === 17){
 					destComposite = destComposite.elements[destComposite.elements.length-1];
 				}
-				console.log(destComposite);
-				console.log(movedElement);
 				destRubric = null;
 				existingRubric = false;
 				$scope.$emit('elementDropped');
