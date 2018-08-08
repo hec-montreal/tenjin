@@ -110,8 +110,10 @@ public class SyncSectionsInTenjinImpl implements SyncSectionsInTenjin {
 						}
 					}
 
-				} catch (NoSyllabusException e) {
-					log.error("the site " + site.getId() + " could not be synchronized");
+				} catch (Exception e) {
+					if (site != null)
+						log.error("the site " + site.getId() + " could not be synchronized");
+
 					e.printStackTrace();
 				}
 			} while (createdOn.after(startingDate));
