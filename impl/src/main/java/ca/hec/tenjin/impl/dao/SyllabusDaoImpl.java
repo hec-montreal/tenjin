@@ -94,7 +94,11 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		if(syllabi == null){
 			throw new NoSyllabusException();
 		}
-		return syllabi.get(0);
+
+		if (syllabi.size() > 0)
+			return syllabi.get(0);
+		else
+			return null;
 	}
 	
 	@SuppressWarnings("unchecked")
