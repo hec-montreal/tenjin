@@ -337,7 +337,7 @@
 		"RESOURCES_LOAD_ERROR": "An error occurred loading the site's resources, please contact the help desk",
 		"USER_PROFILE_LOAD_ERROR": "An error occurred loading the user profile, please contact the help desk",
 		"SAKAI_TOOLS_LOAD_ERROR": "An error occurred loading the list of tools, please contact the help desk",
-		"CITATIONS_LOAD_ERROR": "An error occurred loading the citations lists, please contact the help desk"
+		"CITATIONS_LOAD_ERROR": "An error occurred loading the citation lists, please contact the help desk"
 	},
 
 	"fr_CA": {
@@ -674,10 +674,10 @@
 		"tenjin.write.common": "Editer le plan de cours commun",
 		"tenjin.publish.common": "Publier le plan de cours commun",
 		"tenjin.read.personalised": "Lire les plans de cours personnalisés des autres sections",
-		"RESOURCES_SECURITY_EXCEPTION": "Vous n'avez pas le droit de consulter les ressources de ce site, communiquez avec votre professeur",
-		"RESOURCES_LOAD_ERROR": "Une erreur est survenu à la récupération des ressources, veuillez contacter le CAT",
-		"USER_PROFILE_LOAD_ERROR": "Une erreur est survenu à la récupération du profil de l'usager, veuillez contacter le CAT",
-		"SAKAI_TOOLS_LOAD_ERROR": "Une erreur est survenu à la récupération de la liste des outils, veuillez contacter le CAT",
-		"CITATIONS_LOAD_ERROR": "Une erreur est survenu à la récupération des listes de références bibliographiques, veuillez contacter le CAT"
+		"RESOURCES_SECURITY_EXCEPTION": "Vous n'avez pas les permissions requises pour consulter les ressources de ce site, veuillez communiquer avec votre enseignant",
+		"RESOURCES_LOAD_ERROR": "Une erreur est survenue à la récupération des ressources, veuillez contacter le centre d'assistance technique",
+		"USER_PROFILE_LOAD_ERROR": "Une erreur est survenue à la récupération du profil de l'usager, veuillez contacter le centre d'assistance technique",
+		"SAKAI_TOOLS_LOAD_ERROR": "Une erreur est survenue à la récupération de la liste des outils, veuillez contacter le centre d'assistance technique",
+		"CITATIONS_LOAD_ERROR": "Une erreur est survenue à la récupération des listes de références bibliographiques, veuillez contacter le centre d'assistance technique"
 	}
 }
