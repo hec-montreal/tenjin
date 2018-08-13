@@ -15,6 +15,7 @@ import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.Session;
 import org.sakaiproject.tool.api.SessionManager;
+import org.sakaiproject.javax.PagingPosition;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,7 +54,6 @@ public class SyncSectionsInTenjinImpl implements SyncSectionsInTenjin {
         List<String> providerIds;
 
 
-        List<Site> allSites = siteService.getSites(SiteService.SelectionType.NON_USER, "course", null, null, SiteService.SortType.CREATED_ON_DESC, null);
         Map<String, Object> sectionsBySyllabus;
         Syllabus common = null;
         //Use groupIds
@@ -61,14 +61,29 @@ public class SyncSectionsInTenjinImpl implements SyncSectionsInTenjin {
         Collection<Group> siteGroups = null;
 
         Session session = sessionManager.getCurrentSession();
+	int totalcount = 0;
 
 		try {
 			session.setUserEid("admin");
 			session.setUserId("admin");
 
+			PagingPosition paging = new PagingPosition(1, 500);
+			// get the first 500
+			List<Site> allSites = siteService.getSites(SiteService.SelectionType.NON_USER, "course", null, null, SiteService.SortType.CREATED_ON_DESC, paging);
+
 			do {
 				try {
-					site = allSites.get(counter++);
+
+					if (counter == 500) {
+						paging.adjustPostition(500);
+						counter = 0;
+						allSites = siteService.getSites(SiteService.SelectionType.NON_USER, "course", null, null, SiteService.SortType.CREATED_ON_DESC, paging);
+					}
+
+					site = allSites.get(counter);
+					counter += 1;
+					totalcount++;
+
 					createdOn = site.getCreatedDate();
 					if (createdOn.before(startingDate))
 						break;
@@ -119,6 +134,7 @@ public class SyncSectionsInTenjinImpl implements SyncSectionsInTenjin {
 			} while (createdOn.after(startingDate));
 		} finally {
 			session.clear();
+			log.info("Tenjin Sections sync handled "+totalcount+" sites.");
 		}
 
     }
