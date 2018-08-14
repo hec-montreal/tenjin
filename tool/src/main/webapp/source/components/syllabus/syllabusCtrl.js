@@ -74,6 +74,11 @@
 	};
 
 	$scope.pdf = function(published) {
+	    if (published && SyllabusService.getSyllabus().publishedDate === null) {
+	        // syllabus must be published
+	        return;
+	    }
+
 		var post = '';
 
 		if (published) {
@@ -88,6 +93,11 @@
 	};
 
 	$scope.pdfPublic = function() {
+	    if (SyllabusService.getSyllabus().publishedDate === null) {
+	        // syllabus must be published
+	        return;
+	    }
+
 		var post = '?locale=' +  SyllabusService.getSyllabus().locale;
 
 		window.open('v1/syllabus/' + SyllabusService.getSyllabus().id + '/pdf-public.json' + post, '_blank');
