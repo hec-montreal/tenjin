@@ -37,6 +37,8 @@ import org.sakaiproject.site.api.Site;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -75,7 +77,7 @@ public class UserController {
 
 	@RequestMapping(value = "/userProfile", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> getUserProfile() throws DeniedAccessException, NoSiteException {
-		Map<String, Object> profile = new HashMap<String, Object>();
+		Map<String, Object> profile = null; //new HashMap<String, Object>();
 		String currentUserId = sakaiProxy.getCurrentUserId();
 		String siteId = sakaiProxy.getCurrentSiteId();
 		Site site = null;
@@ -148,7 +150,7 @@ public class UserController {
 
 		} catch (Exception e) {
 			log.error("Site " + siteId + " could not be retrieved: " + e.getMessage());
-			return null;
+			return (Map<String, Object>) new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		profile.put("sections", sections);
