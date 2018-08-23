@@ -77,7 +77,7 @@ public class UserController {
 
 	@RequestMapping(value = "/userProfile", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> getUserProfile() throws DeniedAccessException, NoSiteException {
-		Map<String, Object> profile = null; //new HashMap<String, Object>();
+		Map<String, Object> profile = new HashMap<String, Object>();
 		String currentUserId = sakaiProxy.getCurrentUserId();
 		String siteId = sakaiProxy.getCurrentSiteId();
 		Site site = null;
