@@ -15,6 +15,7 @@ import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.Session;
 import org.sakaiproject.tool.api.SessionManager;
+import org.sakaiproject.javax.PagingPosition;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,7 +54,6 @@ public class SyncSectionsInTenjinImpl implements SyncSectionsInTenjin {
         List<String> providerIds;
 
 
-        List<Site> allSites = siteService.getSites(SiteService.SelectionType.NON_USER, "course", null, null, SiteService.SortType.CREATED_ON_DESC, null);
         Map<String, Object> sectionsBySyllabus;
         Syllabus common = null;
         //Use groupIds
@@ -61,59 +61,81 @@ public class SyncSectionsInTenjinImpl implements SyncSectionsInTenjin {
         Collection<Group> siteGroups = null;
 
         Session session = sessionManager.getCurrentSession();
+	int totalcount = 0;
 
-        try {
-            session.setUserEid("admin");
-            session.setUserId("admin");
+		try {
+			session.setUserEid("admin");
+			session.setUserId("admin");
 
-            do {
-                site = allSites.get(counter++);
-                createdOn = site.getCreatedDate();
-                if (createdOn.before(startingDate))
-                    break;
-                if (site.getProviderGroupId() == null || site.getProviderGroupId().isEmpty())
-                    continue;
-                siteGroups = site.getGroups();
-                newProviderIds = new ArrayList<String>();
-                sectionsBySyllabus = syllabusDao.getSectionsBySyllabus(site.getId());
-                if (sectionsBySyllabus != null && sectionsBySyllabus.keySet().size() >0) {
-                    common = syllabusDao.getCommonSyllabus(site.getId());
+			PagingPosition paging = new PagingPosition(1, 500);
+			// get the first 500
+			List<Site> allSites = siteService.getSites(SiteService.SelectionType.NON_USER, "course", null, null, SiteService.SortType.CREATED_ON_DESC, paging);
 
-                    //Make sure all the sections in Tenjin are up to date
-                    for (Group group : siteGroups) {
-                        //If there is no providerId, the group does not come from an official section
-                        if (group.getProviderGroupId() == null)
-                            continue;
-                        if (sectionsBySyllabus.containsKey(group.getId())) {
-                            sectionsBySyllabus.remove(group.getId());
+			do {
+				try {
 
-                            log.info("Section ou groupId " + group.getProviderGroupId() + " est correctement enregistré");
+					if (counter == 500) {
+						paging.adjustPostition(500);
+						counter = 0;
+						allSites = siteService.getSites(SiteService.SelectionType.NON_USER, "course", null, null, SiteService.SortType.CREATED_ON_DESC, paging);
+					}
 
-                        } else {
-                            //Add new section to common
-                            newProviderIds.add(group.getId());
-                            syllabusDao.addSection(common.getId().toString(), group.getId());
-                            log.info("Section ou groupId " + group.getProviderGroupId() + " est ajouté au common");
+					site = allSites.get(counter);
+					counter += 1;
+					totalcount++;
 
-                        }
-                    }
+					createdOn = site.getCreatedDate();
+					if (createdOn.before(startingDate))
+						break;
+					if (site.getProviderGroupId() == null || site.getProviderGroupId().isEmpty())
+						continue;
+					siteGroups = site.getGroups();
+					newProviderIds = new ArrayList<String>();
+					sectionsBySyllabus = syllabusDao.getSectionsBySyllabus(site.getId());
+					if (sectionsBySyllabus != null && sectionsBySyllabus.keySet().size() > 0) {
+						common = syllabusDao.getCommonSyllabus(site.getId());
 
-                    //Delete cancelled sections
-                    for (String sectionId : sectionsBySyllabus.keySet()) {
-                        syllabusDao.deleteSection(sectionsBySyllabus.get(sectionId).toString(), sectionId);
-                        log.info("Section ou groupId " + sectionId + " pour le site " + site.getId()
-                                + " du syllabus " + sectionsBySyllabus.get(sectionId) + " a été retiré");
+						// Make sure all the sections in Tenjin are up to date
+						for (Group group : siteGroups) {
+							// If there is no providerId, the group does not
+							// come from an official section
+							if (group.getProviderGroupId() == null)
+								continue;
+							if (sectionsBySyllabus.containsKey(group.getId())) {
+								sectionsBySyllabus.remove(group.getId());
 
-                    }
-                }
+								log.info("Section ou groupId " + group.getProviderGroupId()
+										+ " est correctement enregistré");
 
-            } while (createdOn.after(startingDate));
-        } catch (NoSyllabusException e) {
-            e.printStackTrace();
-        } finally {
-            session.clear();
-        }
+							} else {
+								// Add new section to common
+								newProviderIds.add(group.getId());
+								syllabusDao.addSection(common.getId().toString(), group.getId());
+								log.info("Section ou groupId " + group.getProviderGroupId() + " est ajouté au common");
 
+							}
+						}
+
+						// Delete cancelled sections
+						for (String sectionId : sectionsBySyllabus.keySet()) {
+							syllabusDao.deleteSection(sectionsBySyllabus.get(sectionId).toString(), sectionId);
+							log.info("Section ou groupId " + sectionId + " pour le site " + site.getId()
+									+ " du syllabus " + sectionsBySyllabus.get(sectionId) + " a été retiré");
+
+						}
+					}
+
+				} catch (Exception e) {
+					if (site != null)
+						log.error("the site " + site.getId() + " could not be synchronized");
+
+					e.printStackTrace();
+				}
+			} while (createdOn.after(startingDate));
+		} finally {
+			session.clear();
+			log.info("Tenjin Sections sync handled "+totalcount+" sites.");
+		}
 
     }
 

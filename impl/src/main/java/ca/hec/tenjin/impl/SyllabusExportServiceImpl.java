@@ -46,8 +46,11 @@ import ca.hec.tenjin.impl.export.template.IfEqTemplateHelper;
 import ca.hec.tenjin.impl.export.template.StringTemplateHelper;
 import ca.hec.tenjin.impl.export.template.UnescapeHtmlTemplateHelper;
 import lombok.Setter;
+import org.apache.log4j.Logger;
 
 public class SyllabusExportServiceImpl implements SyllabusExportService {
+
+	private static final Logger log = Logger.getLogger(SyllabusExportServiceImpl.class);
 
 	@Setter
 	private SakaiProxy sakaiProxy;
@@ -69,8 +72,9 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 
 	@Override
 	public void exportPdf(AbstractSyllabus syllabus, List<Object> elements, boolean publicOnly, String locale, OutputStream outputStream) throws ExportException {
+		String template = null;
 		try {
-			String template = makeTemplate(makeTemplateContext(syllabus, elements, "pdf", publicOnly, locale), templateLoader);
+			template = makeTemplate(makeTemplateContext(syllabus, elements, "pdf", publicOnly, locale), templateLoader);
 			ITextRenderer renderer = new ITextRenderer();
 			Document doc = XMLResource.load(new ByteArrayInputStream(template.getBytes(Charset.forName("utf-8")))).getDocument();
 
@@ -79,6 +83,10 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 
 			renderer.createPDF(outputStream);
 		} catch (Exception e) {
+			if (template != null) {
+				log.error(template);
+			}
+
 			throw new ExportException(e);
 		}
 	}

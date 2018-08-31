@@ -1,4 +1,4 @@
-tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'DataService', 'SyllabusService', 'SyllabusLockService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'AlertService', function($q, config, $state, UserService, DataService, SyllabusService, SyllabusLockService, ResourcesService, SakaiToolsService, CitationsService, PublishService, AlertService) {
+tenjinApp.service('TenjinService', ['$q', '$translate', 'tmhDynamicLocale', 'config', '$state', 'UserService', 'DataService', 'SyllabusService', 'SyllabusLockService', 'ResourcesService', 'SakaiToolsService', 'CitationsService', 'PublishService', 'AlertService', function($q, $translate, tmhDynamicLocale, config, $state, UserService, DataService, SyllabusService, SyllabusLockService, ResourcesService, SakaiToolsService, CitationsService, PublishService, AlertService) {
 	'use strict';
 
 	var makeRoute = function(route, params) {
@@ -30,8 +30,8 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 					// Finally load the citations
 					CitationsService.loadCitations().then(function() {
 						ret.resolve();
-					}).catch(function() {
-						ret.reject();
+					}).catch(function(e) {
+						ret.reject(e);
 					});
 
 					SyllabusService.loadTemplate().then(function() {
@@ -104,12 +104,12 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 				dataToLoad.push(ResourcesService.loadResources(siteId));
 				dataToLoad.push(SakaiToolsService.loadToolEntities(siteId));
 
-				$q.allSettled(dataToLoad).then(function() {
+				$q.all(dataToLoad).then(function() {
 					// Finally load the citations
 					CitationsService.loadCitations().then(function() {
 						ret.resolve();
-					}).catch(function() {
-						ret.reject();
+					}).catch(function(e) {
+						ret.reject(e);
 					});
 
 					SyllabusService.loadTemplate().then(function() {
@@ -117,6 +117,8 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 					}).catch(function() {
 						ret.reject();
 					});
+				}, function(error) {
+				    ret.reject(error);
 				}).catch(function(e) {
 					ret.reject(e);
 				});
@@ -158,36 +160,45 @@ tenjinApp.service('TenjinService', ['$q', 'config', '$state', 'UserService', 'Da
 	this.viewState = null;
 
 	this.loadData = function() {
-		return this.loadDataForViewState(null);
+		return this.loadDataForViewState();
 	};
 
-	this.loadDataForViewState = function(viewState) {
+	this.loadDataForViewState = function() {
 		var tthis = this;
 		var ret = $q.defer();
 
-		// Load enumerations and strings
-		DataService.load().then(function() {
+		// Load enumerations
+		DataService.load().then(() => {
+
 			// We must load the profile before loading anything else
-			UserService.loadProfile().then(function() {
-				var siteId = UserService.getProfile().siteId;
-
-				if (viewState) {
-					tthis.viewState = viewState;
-				} else {
-					tthis.viewState = tthis.findViewStateFromProfile()
-				}
-
-				tthis.viewState.loadViewData(siteId).then(function() {
-					ret.resolve();
-				}).catch(function(e) {
-					ret.reject(e);
-				});
-			}).catch(function(e) {
-				ret.reject(e);
-			});
-		}).catch(function(e) {
-			ret.reject(e);
+			return UserService.loadProfile();
 		})
+		.then(() => {
+			// Set locale based on user profile
+			var availableLang = $translate.getAvailableLanguageKeys();
+			var useLang = 'fr_CA';
+
+			if (availableLang.indexOf(UserService.getProfile().locale) > -1){
+				useLang = UserService.getProfile().locale;
+			}
+			else {
+				useLang = UserService.getProfile().defaultLocale;
+			}
+
+			tmhDynamicLocale.set(useLang);
+			return $translate.use(useLang);
+		})
+		.then(() => {
+		    AlertService.init();
+		    tthis.viewState = tthis.findViewStateFromProfile();
+		    return tthis.viewState.loadViewData(UserService.getProfile().siteId);
+		})
+		.then(() => {
+		    ret.resolve();
+		})
+		.catch((e) => {
+			ret.reject(e);
+		});
 
 		return ret.promise;
 	};

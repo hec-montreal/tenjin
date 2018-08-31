@@ -1,6 +1,8 @@
 <div class="evaluation element-host">
 	<div class="title box-title">
-		{{element.title}}
+		{{element.title}} {{#if element.attributes.evaluationWeight}}
+					 		({{element.attributes.evaluationWeight}}%)
+						  {{/if}}
 	</div>
 
 	<div class="details">

@@ -54,11 +54,11 @@
 								</li>
 
 								<li role="menuitem">
-									<a href="javascript:void(0);" ng-click="pdf(true)">{{ 'VERSION_STUDENTS' | translate }}</a>
+									<a ng-class="{disabled: syllabusService.syllabus.publishedDate === null}" href="javascript:void(0);" ng-click="pdf(true)">{{ 'VERSION_STUDENTS' | translate }}</a>
 								</li>
 
 								<li role="menuitem">
-									<a href="javascript:void(0);" ng-click="pdfPublic()">{{ 'VERSION_PUBLIC' | translate }}</a>
+									<a ng-class="{disabled: syllabusService.syllabus.publishedDate === null}" href="javascript:void(0);" ng-click="pdfPublic()">{{ 'VERSION_PUBLIC' | translate }}</a>
 								</li>
 							</ul>
 						</div>

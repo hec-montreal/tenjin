@@ -1,7 +1,7 @@
 ﻿tenjinApp.service('AlertService', ['$translate', function($translate) {
 	'use strict';
 
-	var alerts;
+	var alerts = {};
 
 	this.init = function() {
         alerts = {
@@ -18,6 +18,11 @@
 	    	'noSyllabus': {
 		    	type: 'danger',
 			    message: $translate.instant("ALERT_NO_SYLLABUS")
+    		},
+
+	    	'noPublishedSyllabus': {
+		    	type: 'danger',
+			    message: $translate.instant("ALERT_NO_PUBLISHED_SYLLABUS")
     		},
 
 	    	'cannotSaveSyllabus': {
@@ -82,15 +87,41 @@
 		},
 
 		'permissionsUpdateError': {
-			    type: 'danger',
-			    message: $translate.instant('ERROR_PERMISSIONS_UPDATE')
+			type: 'danger',
+			message: $translate.instant('ERROR_PERMISSIONS_UPDATE')
 		},
 
 		'permissionsUpdateSuccess': {
-			    type: 'success',
-			    message: $translate.instant('SUCCESS_PERMISSIONS_UPDATE'),
-			    closeable: true
+			type: 'success',
+			message: $translate.instant('SUCCESS_PERMISSIONS_UPDATE'),
+			closeable: true
+		},
+
+		'resourcesSecurityException': {
+			type: 'danger',
+			message: $translate.instant('RESOURCES_SECURITY_EXCEPTION')
+		},
+
+		'resourcesLoadError': {
+			type: 'danger',
+			message: $translate.instant('RESOURCES_LOAD_ERROR')
+		},
+
+		'userProfileLoadError': {
+			type: 'danger',
+			message: $translate.instant('USER_PROFILE_LOAD_ERROR')
+		},
+
+		'sakaiToolsLoadError': {
+			type: 'danger',
+			message: $translate.instant('SAKAI_TOOLS_LOAD_ERROR')
+		},
+
+		'citationsLoadError': {
+			type: 'danger',
+			message: $translate.instant('CITATIONS_LOAD_ERROR')
 		}
+
     	}
 	};
 
@@ -112,6 +143,10 @@
 	this.showAlert = function(name, messageVariables) {
 		if (!name) {
 			name = 'default';
+		}
+		if (!(name in alerts)) {
+		    console.log("showAlert error not found");
+		    name = 'default';
 		}
 
 		this.currentAlert = alerts[name];
@@ -149,7 +184,10 @@
 			this.showAlert('syllabusLocked', [data.lock.createdByName]);
 		} else if (data.locked) {
 			this.showAlert('noSyllabusLock');
-		} else {
+		} else if (data === 'noPublishedSyllabus') {
+		    this.showAlert('noPublishedSyllabus');
+		}
+		else {
 			this.showAlert('noSyllabus');
 		}
 	};
@@ -161,6 +199,4 @@
 	this.getCurrentAlertMessage = function() {
 		return this.currentAlert.renderedMessage;
 	};
-
-	this.init();
 }]);

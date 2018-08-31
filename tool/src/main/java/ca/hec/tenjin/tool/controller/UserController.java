@@ -37,6 +37,8 @@ import org.sakaiproject.site.api.Site;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.tool.api.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,6 +84,7 @@ public class UserController {
 		Collection<Group> usersGroup;
 
 		// Section permissions
+		List<Object> sections = new ArrayList<Object>();
 		List<Object> sectionWrite = new ArrayList<Object>();
 		List<Object> sectionPublish = new ArrayList<Object>();
 		Map<String, String> section;
@@ -103,8 +106,6 @@ public class UserController {
 
 			profile.put("defaultLocale", sakaiProxy.getDefaultLocale());
 
-			profile.put("sections", getSiteSections(site));
-
 			if (securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_VIEW_MANAGER, site)) {
 				profile.put("managerView", true);
 			} else {
@@ -121,19 +122,27 @@ public class UserController {
 			// The user has permissions in the sections
 			boolean writeOnSite = securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS, site);
 			boolean publishOnSite = securityService.checkOnSiteGroup(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS, site);
+
 			usersGroup = site.getGroups();
+
 			for (Group group : usersGroup) {
-				if (group.getProviderGroupId() != null) {
+
+				// Groups created in site info have this property = true
+				// Taken from SiteAction.java in site-manage
+				Object gProp = group.getProperties().getProperty(group.GROUP_PROP_WSETUP_CREATED);
+
+				if (group.getProviderGroupId() != null &&
+						(gProp == null || gProp.equals(Boolean.FALSE.toString()))) {
+
+					section = new HashMap<String, String>();
+					section.put("id", group.getId());
+					section.put("name", group.getTitle());
+					sections.add(section);
+
 					if (writeOnSite || securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_WRITE_PERS, group)) {
-						section = new HashMap<String, String>();
-						section.put("id", group.getId());
-						section.put("name", group.getTitle());
 						sectionWrite.add(section);
 					}
 					if (publishOnSite || securityService.check(currentUserId, TenjinFunctions.TENJIN_FUNCTION_PUBLISH_PERS, group)) {
-						section = new HashMap<String, String>();
-						section.put("id", group.getId());
-						section.put("name", group.getTitle());
 						sectionPublish.add(section);
 					}
 				}
@@ -141,9 +150,10 @@ public class UserController {
 
 		} catch (Exception e) {
 			log.error("Site " + siteId + " could not be retrieved: " + e.getMessage());
-			return null;
+			return (Map<String, Object>) new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
+		profile.put("sections", sections);
 		profile.put("sectionAssign", sectionWrite);
 		profile.put("sectionPublish", sectionPublish);
 
@@ -184,20 +194,5 @@ public class UserController {
 		profile.put("csrf_token", token);
 
 		return profile;
-	}
-
-	private List<Object> getSiteSections(Site site) {
-		List<Object> sections = new ArrayList<Object>();
-
-		Map<String, String> section;
-		for (Group group : site.getGroups()) {
-			section = new HashMap<String, String>();
-			if (group.getProviderGroupId() != null) {
-				section.put("id", group.getId());
-				section.put("name", group.getTitle());
-				sections.add(section);
-			}
-		}
-		return sections;
 	}
 }

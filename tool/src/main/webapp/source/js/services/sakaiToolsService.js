@@ -17,7 +17,7 @@ tenjinApp.service('SakaiToolsService', ['$rootScope', '$q', '$http', function ( 
 
 			ret.resolve(tthis.getToolEntities());
 		}).error(function (data) {
-			ret.reject(data);
+			ret.reject('sakaiToolsLoadError');
 		});
 
 		return ret.promise;

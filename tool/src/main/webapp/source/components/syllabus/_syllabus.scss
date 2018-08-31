@@ -45,6 +45,10 @@
 	}
 }
 
+.dropdown-menu > li > a.disabled:hover  {
+    background-color: white;
+}
+
 .view-dropdown {
 	float: right;
 

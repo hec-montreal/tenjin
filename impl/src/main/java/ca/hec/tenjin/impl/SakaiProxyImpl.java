@@ -22,6 +22,7 @@ import org.sakaiproject.event.api.EventTrackingService;
 import org.sakaiproject.exception.*;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
+import org.sakaiproject.site.api.ToolConfiguration;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.time.api.Time;
 import org.sakaiproject.time.api.TimeService;
@@ -324,7 +325,12 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 	public String getCurrentSiteResourcesToolId() {
 		Site currentSite = getCurrentSite();
-		return currentSite.getToolForCommonId("sakai.resources").getId();
+		ToolConfiguration t = currentSite.getToolForCommonId("sakai.resources");
+
+		if (null != t)
+			return t.getId();
+		else
+			return null;
 	}
 
 	@Override
@@ -446,7 +452,8 @@ public class SakaiProxyImpl implements SakaiProxy {
 		// Set the copyright flag
 		String copyright = (String) tempRd.getProperties().get(ResourceProperties.PROP_COPYRIGHT_CHOICE);
 
-		tempRd.setCopyright(copyright != null && (copyright.equals("rights.IHoldCopyright") || copyright.equals("rights.SaviaStatement")));
+		tempRd.setCopyright(copyright != null && (copyright.equals("rights.IHoldCopyright") || copyright.equals("rights.SaviaStatement")
+				 || copyright.equals("rights.IObtainedRights")));
 
 		// If it's a collection recurse down into it.
 		if ((requestedDepth > currentDepth) && entity.isCollection()) {
