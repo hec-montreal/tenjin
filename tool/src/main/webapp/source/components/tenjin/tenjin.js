@@ -23,11 +23,11 @@ tenjinApp.directive('tenjin', ['TenjinService', 'AlertService', 'SyllabusLockSer
 			$scope.baseDataLoaded = false;
 
 			// use fr_CA by default
-			$translate.use('fr_CA').then(() => {
+			$translate.use('fr_CA').then(function() {
 				AlertService.init();
 				return TenjinService.loadData();
 			})
-			.then(() => {
+			.then(function() {
 				$scope.baseDataLoaded = true;
 			}).catch(function(e) {
 				console.log(e);
