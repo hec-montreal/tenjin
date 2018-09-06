@@ -196,7 +196,7 @@ tenjinApp.service('TenjinService', ['$q', '$translate', 'tmhDynamicLocale', 'con
 		.then(function() {
 		    ret.resolve();
 		})
-		.catch(function(e) => {
+		.catch(function(e) {
 			ret.reject(e);
 		});
 
