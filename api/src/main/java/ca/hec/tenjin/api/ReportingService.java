@@ -21,9 +21,16 @@ import java.util.List;
 public interface ReportingService {
 
 	/**
-	 * Retrieve the list of citations that have been modified since the given date
+	 * Retrieve the list of published citations that have been modified since the given date
 	 * @param Date date
 	 * @return List<SyllabusCitationElement>
 	 */
 	List<PublishedCitationElement> getPublishedCitationsModifiedSince(Date date);
+
+	/**
+	 * Retrieve the list of citations that have been modified since the given date
+	 * @param Date date
+	 * @return List<SyllabusCitationElement>
+	 */
+	List<SyllabusCitationElement> getCitationsModifiedSince(Date date);
 }
