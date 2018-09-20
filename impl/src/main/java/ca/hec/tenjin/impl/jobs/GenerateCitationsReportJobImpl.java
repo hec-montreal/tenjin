@@ -3,8 +3,8 @@ package ca.hec.tenjin.impl.jobs;
 import ca.hec.tenjin.api.*;
 import ca.hec.tenjin.api.jobs.GenerateCitationsReportJob;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusCitationElement;
 import lombok.Setter;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.*;
@@ -45,10 +45,6 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
 
     @Setter
     @Autowired
-    PublishService publishService;
-
-    @Setter
-    @Autowired
     ReportingService reportingService;
 
     /*
@@ -64,7 +60,7 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
         session.setUserEid("admin");
         session.setUserId("admin");
 
-        List<PublishedCitationElement> citations = null;
+        List<SyllabusCitationElement> citations = null;
         Date d = null;
 
         String reportsDestinationFolder =
@@ -83,7 +79,7 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
             d = new Date();
             d.setDate(d.getDate()-7);
         }
-        citations = reportingService.getPublishedCitationsModifiedSince(d);
+        citations = reportingService.getCitationsModifiedSince(d);
 
         // init excel file
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -105,6 +101,8 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
         c = r.createCell(cellnum++);
         c.setCellValue("Plan de cours");
         c = r.createCell(cellnum++);
+        c.setCellValue("Publié");
+        c = r.createCell(cellnum++);
         c.setCellValue("Titre de page");
         c = r.createCell(cellnum++);
         c.setCellValue("Type");
@@ -125,8 +123,8 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
 
         for (int i = 0; i < citations.size(); i++) {
             try {
-                PublishedCitationElement citation = citations.get(i);
-                List<Long> syllabusIds = publishService.getPublishedSyllabusesWithElementMapping(citation);
+                SyllabusCitationElement citation = citations.get(i);
+                List<Long> syllabusIds = syllabusService.getSyllabusesWithElementMapping(citation);
                 Citation citationResource = getCitation(citation.getAttributes().get("citationId"));
 
                 cellnum = 0;
@@ -155,14 +153,17 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
                 }
 
                 c = r.createCell(cellnum++);
-                AbstractPublishedSyllabusElement rubric = null;
-                AbstractPublishedSyllabusElement page = null;
+                c.setCellValue(citation.getEqualsPublished()?"Publié":"Non-Publié");
+
+                c = r.createCell(cellnum++);
+                AbstractSyllabusElement rubric = null;
+                AbstractSyllabusElement page = null;
 
                 if (citation.getParentId() != null) {
-                    rubric = publishService.getPublishedSyllabusElement(citation.getParentId());
+                    rubric = syllabusService.getSyllabusElement(citation.getParentId());
                 }
                 if (rubric != null && rubric.getParentId() != null) {
-                    page = publishService.getPublishedSyllabusElement(rubric.getParentId());
+                    page = syllabusService.getSyllabusElement(rubric.getParentId());
                 }
                 if (page != null) {
                     c.setCellValue(page.getTitle());

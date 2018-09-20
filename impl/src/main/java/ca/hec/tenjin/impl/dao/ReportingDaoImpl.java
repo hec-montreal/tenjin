@@ -22,4 +22,14 @@ public class ReportingDaoImpl extends HibernateDaoSupport implements ReportingDa
 
         return citations;
     }
+
+    @Override
+    public List<SyllabusCitationElement> getCitationsModifiedSince(Date date) {
+        String query = "from SyllabusCitationElement where lastModifiedDate >= ? order by site_id";
+
+        List<SyllabusCitationElement> citations =
+                (List<SyllabusCitationElement>) getHibernateTemplate().find(query, date);
+
+        return citations;
+    }
 }

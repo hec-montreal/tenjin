@@ -12,4 +12,6 @@ import java.util.List;
 public interface ReportingDao {
 
     List<PublishedCitationElement> getPublishedCitationsModifiedSince(Date date);
+
+    List<SyllabusCitationElement> getCitationsModifiedSince(Date date);
 }

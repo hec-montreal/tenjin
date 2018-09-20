@@ -168,12 +168,12 @@ tenjinApp.service('TenjinService', ['$q', '$translate', 'tmhDynamicLocale', 'con
 		var ret = $q.defer();
 
 		// Load enumerations
-		DataService.load().then(() => {
+		DataService.load().then(function () {
 
 			// We must load the profile before loading anything else
 			return UserService.loadProfile();
 		})
-		.then(() => {
+		.then(function() {
 			// Set locale based on user profile
 			var availableLang = $translate.getAvailableLanguageKeys();
 			var useLang = 'fr_CA';
@@ -188,15 +188,15 @@ tenjinApp.service('TenjinService', ['$q', '$translate', 'tmhDynamicLocale', 'con
 			tmhDynamicLocale.set(useLang);
 			return $translate.use(useLang);
 		})
-		.then(() => {
+		.then(function() {
 		    AlertService.init();
 		    tthis.viewState = tthis.findViewStateFromProfile();
 		    return tthis.viewState.loadViewData(UserService.getProfile().siteId);
 		})
-		.then(() => {
+		.then(function() {
 		    ret.resolve();
 		})
-		.catch((e) => {
+		.catch(function(e) {
 			ret.reject(e);
 		});
 
