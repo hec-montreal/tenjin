@@ -17,5 +17,6 @@
         <property name="description" type="string">
             <column name="DESCRIPTION" />
         </property>
+        <property name="createEvent" type="boolean" column="create_event" not-null="true"/>
     </class>
 </hibernate-mapping>

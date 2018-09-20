@@ -218,6 +218,7 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 					language = Locale.getDefault().toString();
 				}
 				elementObject.put("label", structure.getTemplateElement().getLabels().get(language));
+				elementObject.put("createEvent", structure.getTemplateElement().getType().getCreateEvent());
 			}
 			
 			// add template structure to the main map
@@ -238,7 +239,6 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 				Map<String, Object> templateElementMap = new HashMap<String, Object>();
 				templateElementMap.put("id", structure.getId());
 				templateElementMap.put("type", structure.getTemplateElement().getType().getTitle());
-
 				templateElementMap.put("provided", structure.getProvider() == null ? false:true);
 
 				if (structure.getTemplateElement().getLabels().containsKey(language)) {

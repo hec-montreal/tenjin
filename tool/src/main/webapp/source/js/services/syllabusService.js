@@ -76,6 +76,20 @@
         		});
     };
 
+    
+	this.createReadEvent = function(syllabusId, elementId) {
+		var tthis = this;
+		var ret = $q.defer();
+
+		$http.post('v1/syllabus/postEvent/' + syllabusId + '/' + elementId + '.json').success(function(data) {
+			ret.resolve(data);
+		}).error(function(data, status) {
+			ret.reject(status);
+		});
+
+		return ret.promise;
+	};
+
 
 	this.updateSections = function(syllabus) {
 		var tthis = this;

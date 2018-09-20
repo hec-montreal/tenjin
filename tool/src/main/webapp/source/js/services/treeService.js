@@ -26,7 +26,10 @@
 
 		this.selectedElement = element;
 		this.lastSelectedPosition = this.findSelectedElementPosition();
-
+		if (SyllabusService.getTemplate()[element.templateStructureId].createEvent === true){
+			SyllabusService.createReadEvent(SyllabusService.syllabus.id, element.id);
+		}
+		
 		$state.transitionTo(TenjinService.viewState.stateName, {
 			id: SyllabusService.getSyllabus().id,
 			elementId: this.selectedElement.id

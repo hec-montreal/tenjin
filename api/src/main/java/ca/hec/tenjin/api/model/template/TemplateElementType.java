@@ -38,5 +38,7 @@ public class TemplateElementType {
     @NonNull private String title;
 
     private String description;
+    
+    private Boolean createEvent;
 }
 

@@ -99,4 +99,6 @@ public interface SakaiProxy {
 	List<SakaiCitation> getSiteCitations(String siteId, Collection<EntityContent> siteResources) throws PermissionException, IdUnusedException, TypeException, ServerOverloadException;
 
 	public ContentResourceEdit addPdfToArchive(String id, String type, ByteArrayOutputStream content, ResourceProperties properties, int priority);
+	
+	public String getSyllabusReference (Long  syllabusId, Long elementId);
 }

@@ -518,4 +518,15 @@ public class SakaiProxyImpl implements SakaiProxy {
 		return resourceEdit;
 	}
 
+	public String getSyllabusReference (Long syllabusId, Long elementId) {
+		String syllabusReference = getCurrentSiteId() + "/syllabus/";
+		if (syllabusId != null) {
+			syllabusReference += syllabusId;
+		}
+		if (elementId != null) {
+			syllabusReference += "/"+elementId+"/";
+		}
+		
+		return syllabusReference;
+	}
 }
