@@ -111,6 +111,7 @@ public class SyllabusController {
 	public @ResponseBody void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException {
 		for (Long id : syllabusId) {
 			syllabusService.deleteSyllabus(id);
+			sakaiProxy.postEvent(TenjinEvents.TENJIN_DELETE_EVENT, sakaiProxy.getSyllabusReference(id, null), true);
 		}
 	}
 
@@ -137,7 +138,7 @@ public class SyllabusController {
 
 	@RequestMapping(value = "/syllabus/postEvent/{syllabusId}/{elementId}", method = RequestMethod.POST)
 	public @ResponseBody void createReadEvent (@PathVariable("syllabusId") Long syllabusId, @PathVariable("elementId") Long elementId) {
-		sakaiProxy.postEvent(TenjinEvents.TENJIN_READ_EVENT, "/site/" + sakaiProxy.getSyllabusReference(syllabusId, elementId), false);
+		sakaiProxy.postEvent(TenjinEvents.TENJIN_READ_EVENT,sakaiProxy.getSyllabusReference(syllabusId, elementId), false);
 	}
 	
 	
