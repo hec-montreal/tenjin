@@ -111,7 +111,6 @@ public class SyllabusController {
 	public @ResponseBody void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException {
 		for (Long id : syllabusId) {
 			syllabusService.deleteSyllabus(id);
-			sakaiProxy.postEvent(TenjinEvents.TENJIN_DELETE_EVENT, sakaiProxy.getSyllabusReference(id, null), true);
 		}
 	}
 

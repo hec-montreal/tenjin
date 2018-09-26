@@ -216,6 +216,8 @@ public class PublishServiceImpl implements PublishService {
 		syllabus.setPublishedBy(sakaiProxy.getCurrentUserId());
 		syllabusDao.update(syllabus);
 
+		sakaiProxy.postEvent(TenjinEvents.TENJIN_PUBLISH_EVENT, sakaiProxy.getSyllabusReference(syllabus.getId(), null), true);
+
 		return syllabus;
 	}
 
@@ -405,6 +407,7 @@ public class PublishServiceImpl implements PublishService {
 		syllabus.setPublishedDate(null);
 
 		syllabusDao.save(syllabus);
+		sakaiProxy.postEvent(TenjinEvents.TENJIN_UNPUBLISH_EVENT, sakaiProxy.getSyllabusReference(syllabusId, null), true);
 	}
 
 	@Override

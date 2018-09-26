@@ -24,6 +24,7 @@ package ca.hec.tenjin.tool.controller;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.TenjinFunctions;
+import ca.hec.tenjin.api.TenjinEvents;
 import ca.hec.tenjin.api.TenjinSecurityService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
@@ -103,6 +104,7 @@ public class PermissionsController {
 
 			sakaiProxy.saveAuthzGroup(azGroup);
 		}
+		sakaiProxy.postEvent(TenjinEvents.TENJIN_PERMISSIONS_EDIT_EVENT, "/site/"+site.getId(), true);
 		return permissions;
 	}
 

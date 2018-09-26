@@ -163,6 +163,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 			syllabus.setDeleted(false);
 
 			syllabusDao.save(syllabus);
+			sakaiProxy.postEvent(TenjinEvents.TENJIN_CREATE_EVENT, sakaiProxy.getSyllabusReference(syllabus.getId(), null), false);
+
 
 			// if this call is to create a non-common syllabus, copy the
 			// common's mappings and return the syllabus
@@ -190,6 +192,11 @@ public class SyllabusServiceImpl implements SyllabusService {
 				}
 
 				reassignSections(syllabi, existingSyllabus.getSections(), syllabus.getSections());
+				sakaiProxy.postEvent(TenjinEvents.TENJIN_SECTION_EDIT_EVENT, sakaiProxy.getSyllabusReference(syllabus.getId(), null), true);
+			}
+
+			if (!existingSyllabus.getTitle().equals(syllabus.getTitle())) {
+				sakaiProxy.postEvent(TenjinEvents.TENJIN_TITLE_EDIT_EVENT, sakaiProxy.getSyllabusReference(syllabus.getId(), null), true);
 			}
 
 			// update persistent object, save handled by hibernate at end of
@@ -312,6 +319,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 			}
 		}
 
+		sakaiProxy.postEvent(TenjinEvents.TENJIN_EDIT_EVENT, sakaiProxy.getSyllabusReference(syllabus.getId(), null), true);
 		return getSyllabus(syllabus.getId());
 	}
 
@@ -349,6 +357,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 		for (int i = 0; i < syllabus.getElements().size(); i++) {
 			createElementCopyAndMappings(syllabus.getElements().get(i), null, i, copy, sakaiProxy.getCurrentUserId());
 		}
+
+		sakaiProxy.postEvent(TenjinEvents.TENJIN_DUPLICATE_EVENT,
+				sakaiProxy.getSyllabusReference(syllabus.getId(), null)+","+sakaiProxy.getSyllabusReference(copy.getId(), null), true);
 	}
 
 	@Override
@@ -424,6 +435,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 		syllabusLockService.unlockSyllabus(syllabusId);
 		
 		syllabusDao.softDeleteSyllabus(syllabus);
+
+		sakaiProxy.postEvent(TenjinEvents.TENJIN_DELETE_EVENT, sakaiProxy.getSyllabusReference(syllabus.getId(), null), true);
 	}
 
 	@Override
@@ -667,6 +680,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		if (sectionsToUnassign != null) {
 			unassignSections(syllabuses, sectionsToUnassign);
 		}
+
 	}
 
 	// These are called on persistent syllabuses, and so any modifications are
