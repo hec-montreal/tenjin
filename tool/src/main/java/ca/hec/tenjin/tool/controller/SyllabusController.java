@@ -123,7 +123,7 @@ public class SyllabusController {
 			if (syllabus.getCommon()){
 				siteSyllabi = syllabusService.getSyllabusList(syllabus.getSiteId());
 				for (Syllabus syll: siteSyllabi){
-					if (syll.getPublishedDate() != null && syll.getCommon() != null)
+					if (syll.getPublishedDate() != null && syll.getCommon() == false)
 						publishService.unpublishSyllabus(syll.getId());
 				}
 				publishService.unpublishSyllabus(id);
