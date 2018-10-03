@@ -1,4 +1,5 @@
 <div class="document">
+	{{#if element}}
 	{{#if resource}}
 	<a target="_blank" href="{{resource.url}}">
 		{{#if element.title}}
@@ -12,14 +13,15 @@
 		({{resource.title}})
 	</div>
 
-	{{#if element.description}}
+		{{#if element.description}}
 		<div class="description syllabus-text">
 			{{{html element.description}}}
 		</div>
-	{{/if}}
+		{{/if}}
 	{{else}}
 	<div class="error">
 		{{str 'ERROR_RESOURCE_DOESNT_EXIST'}}
 	</div>
+	{{/if}}
 	{{/if}}
 </div>

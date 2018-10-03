@@ -178,7 +178,10 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 			List<Object> children = ret.<List<Object>>call("getElements");
 
 			for (Object child : children) {
-				ret.getChildren().add(buildElement(child, syllabusTemplate, publicOnly));
+				SyllabusElement el = buildElement(child, syllabusTemplate, publicOnly);
+				if (el != null) {
+					ret.getChildren().add(el);
+				}
 			}
 		}
 
@@ -196,7 +199,9 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 		if (type.equals("image")) {
 			prepareImageElement(ret, publicOnly);
 		} else if (type.equals("document")) {
-			prepareDocumentElement(ret, publicOnly);
+			if (!prepareDocumentElement(ret, publicOnly)) {
+				return null;
+			}
 		} else if (type.equals("citation")) {
 			prepareCitationElement(ret);
 		}
@@ -260,23 +265,27 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 		e.getResource().setContentType(res.getProperties().getProperty(ResourceProperties.PROP_CONTENT_TYPE));
 	}
 
-	private void prepareDocumentElement(SyllabusElement e, boolean publicOnly) {
+	private boolean prepareDocumentElement(SyllabusElement e, boolean publicOnly) {
 		String resourceId = e.getAttribute("documentId");
 		ContentResource res = sakaiProxy.getResource(resourceId);
 
 		if (res == null) {
-			return;
+			// don't remove the element, an error will be printed
+			return true;
 		}
 
 		if (publicOnly) {
 			if(!sakaiProxy.isResourcePublic(res)) {
-				return;
+				//false removes element from resulting document
+				return false;
 			}
 		}
 
 		e.setResource(new SakaiResource());
 		e.getResource().setTitle(res.getProperties().getProperty(ResourceProperties.PROP_DISPLAY_NAME));
 		e.getResource().setUrl(res.getUrl());
+
+		return true;
 	}
 
 	private void prepareCitationElement(SyllabusElement e) throws ServerOverloadException {
