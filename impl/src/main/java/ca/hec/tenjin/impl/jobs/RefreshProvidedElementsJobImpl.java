@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Arrays;
 
 public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJob, ApplicationContextAware {
 
@@ -58,64 +59,76 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
     @Transactional
     public void execute(JobExecutionContext context) throws JobExecutionException {
 
-        String siteId = context.getMergedJobDataMap().getString("siteId");
-        Site site = null;
+        String siteIdsString = context.getMergedJobDataMap().getString("siteId");
+        List<String> siteIds = Arrays.asList(siteIdsString.split(","));
 
-        Long templateStructureId = null;
-        try {
-            templateStructureId = context.getMergedJobDataMap().getLongFromString("templateStructureId");
-            site = sakaiProxy.getSite(siteId);
-        } catch (NumberFormatException e) {
-            log.error("NumberFormatException " + e.getMessage());
-            return;
-        } catch (IdUnusedException e) {
-            log.error("Site id does not exist: " + siteId);
-            return;
-        }
-        log.info("Refresh provided elements for site : " + siteId + " and templateStructure " + templateStructureId);
+        for (String siteId : siteIds) {
+            try {
+                Site site = null;
 
-        // get locale in the same way as when creating the common syllabus
-        String locale = site.getProperties().getProperty("locale_string");
-        if (locale == null || locale.isEmpty()) {
-            String localePropName = sakaiProxy.getSakaiProperty("tenjin.syllabusLocale.sitePropertyName");
-            locale = site.getProperties().getProperty(localePropName);
-        }
-        if (locale == null || locale.isEmpty()) {
-            // use default server locale
-            locale = Locale.getDefault().toString();
-        }
+                Long templateStructureId = null;
+                try {
+                    templateStructureId = context.getMergedJobDataMap().getLongFromString("templateStructureId");
+                    site = sakaiProxy.getSite(siteId);
+                } catch (NumberFormatException e) {
+                    log.error("NumberFormatException " + e.getMessage());
+                    return;
+                } catch (IdUnusedException e) {
+                    log.error("Site id does not exist: " + siteId);
+                    return;
+                }
+                log.info("Refresh provided elements for site : " + siteId + " and templateStructure " + templateStructureId);
 
-        List<AbstractSyllabusElement> elementsToRefresh =
-                syllabusService.getSyllabusElementsForTemplateStructureAndSite(templateStructureId, siteId);
+                if (site == null)
+                    continue;
 
-        TemplateStructure templateStructure = null;
-        try {
-            templateStructure =
-                    templateService.getTemplateStructure(templateStructureId);
-        } catch (IdUnusedException e) {
-            log.error("Template structure " + templateStructureId + " does not exist.");
-            return;
-        }
+                // get locale in the same way as when creating the common syllabus
+                String locale = site.getProperties().getProperty("locale_string");
+                if (locale == null || locale.isEmpty()) {
+                    String localePropName = sakaiProxy.getSakaiProperty("tenjin.syllabusLocale.sitePropertyName");
+                    locale = site.getProperties().getProperty(localePropName);
+                }
+                if (locale == null || locale.isEmpty()) {
+                    // use default server locale
+                    locale = Locale.getDefault().toString();
+                }
 
-        if (templateStructure.getProvider() == null) {
-            log.error("TemplateStructure has no official data provider");
-            return;
-        }
+                List<AbstractSyllabusElement> elementsToRefresh =
+                        syllabusService.getSyllabusElementsForTemplateStructureAndSite(templateStructureId, siteId);
 
-        ExternalDataProvider provider =
-                (ExternalDataProvider) applicationContext.getBean(templateStructure.getProvider().getBeanName());
+                TemplateStructure templateStructure = null;
+                try {
+                    templateStructure =
+                            templateService.getTemplateStructure(templateStructureId);
+                } catch (IdUnusedException e) {
+                    log.error("Template structure " + templateStructureId + " does not exist.");
+                    return;
+                }
 
-        AbstractSyllabusElement refreshedElement = provider.getAbstractSyllabusElement(siteId, locale);
+                if (templateStructure.getProvider() == null) {
+                    log.error("TemplateStructure has no official data provider");
+                    return;
+                }
 
-            for (AbstractSyllabusElement e : elementsToRefresh) {
+                ExternalDataProvider provider =
+                        (ExternalDataProvider) applicationContext.getBean(templateStructure.getProvider().getBeanName());
 
-                // copy important data
-                copyData(e, refreshedElement);
+                AbstractSyllabusElement refreshedElement = provider.getAbstractSyllabusElement(siteId, locale);
 
-                if (e.isComposite() && refreshedElement.isComposite()) {
-                    refreshChildren((SyllabusCompositeElement)e, (SyllabusCompositeElement)refreshedElement);
+                for (AbstractSyllabusElement e : elementsToRefresh) {
+
+                    // copy important data
+                    copyData(e, refreshedElement);
+
+                    if (e.isComposite() && refreshedElement.isComposite()) {
+                        refreshChildren((SyllabusCompositeElement) e, (SyllabusCompositeElement) refreshedElement);
+                    }
                 }
             }
+            catch (Exception e) {
+		        e.printStackTrace();
+            }
+        }
     }
 
     private void refreshChildren(SyllabusCompositeElement original, SyllabusCompositeElement refreshed) {
