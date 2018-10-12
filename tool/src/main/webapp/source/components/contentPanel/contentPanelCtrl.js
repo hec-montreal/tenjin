@@ -116,20 +116,19 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		item: TreeService.selectedElement,
 
 		accept: function (sourceNodeScope, destNodesScope, destIndex) {
-			//don't allow move of common elements in not common syllabus
-			if (sourceNodeScope.$modelValue.common === true && SyllabusService.syllabus.common !== true){
-				return false;
-			}
-			
+
 			// don't allow drop outside rubrics or in provided elements
 			var templateStructureId = destNodesScope.$element.attr('data-templatestructure-id');
 			var providerId = destNodesScope.$element.attr('data-provider-id');
+			var common = destNodesScope.$element.attr('data-common');
 
 			var addableTypes = SyllabusService.getAddableElementsFromTemplateRuleId(templateStructureId);
 
 			if (typeof providerId != 'undefined' && providerId !== null && providerId !== "") {
 				return false;
-			} else if (addableTypes !== null && addableTypes.length > 0) {
+			} else if (sourceNodeScope.$modelValue.common === true && common === 'false') {
+			    return false;
+		    } else if (addableTypes !== null && addableTypes.length > 0) {
 				for (var i = 0; i < addableTypes.length; i++) {
 					if (addableTypes[i].type === sourceNodeScope.$modelValue.type) {
 						moved = true;
