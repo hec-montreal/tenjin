@@ -206,6 +206,9 @@ tenjinApp.service('TenjinService', ['$q', '$translate', 'tmhDynamicLocale', 'con
 	this.dispatchUser = function() {
 		var route = this.viewState.getHomeRoute();
 
+		// when dispatching user to home, send access event to sakai
+		SyllabusService.createAccessEvent();
+
 		$state.go(route['route'], route['params']);
 	};
 

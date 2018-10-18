@@ -135,12 +135,6 @@ public class SyllabusController {
 		}
 	}
 
-	@RequestMapping(value = "/syllabus/postEvent/{syllabusId}/{elementId}", method = RequestMethod.POST)
-	public @ResponseBody void createReadEvent (@PathVariable("syllabusId") Long syllabusId, @PathVariable("elementId") Long elementId) {
-		sakaiProxy.postEvent(TenjinEvents.TENJIN_READ_EVENT,sakaiProxy.getSyllabusReference(syllabusId, elementId), false);
-	}
-	
-	
 	@RequestMapping(value = "/syllabus/{id}/publish", method = RequestMethod.POST)
 	public @ResponseBody Syllabus publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, SyllabusLockedException {
 		Syllabus syllabus = null;

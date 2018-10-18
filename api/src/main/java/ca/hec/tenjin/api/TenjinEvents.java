@@ -2,6 +2,7 @@ package ca.hec.tenjin.api;
 
 public interface TenjinEvents {
 	
+	public static final String TENJIN_ACCESS_EVENT           = "tenjin.access";
 	public static final String TENJIN_READ_EVENT             = "tenjin.read";
 	public static final String TENJIN_CREATE_EVENT           = "tenjin.create";
 	public static final String TENJIN_DUPLICATE_EVENT        = "tenjin.duplicate";

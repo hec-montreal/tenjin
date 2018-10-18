@@ -81,7 +81,20 @@
 		var tthis = this;
 		var ret = $q.defer();
 
-		$http.post('v1/syllabus/postEvent/' + syllabusId + '/' + elementId + '.json').success(function(data) {
+		$http.post('v1/event/read/' + syllabusId + '/' + elementId + '.json').success(function(data) {
+			ret.resolve(data);
+		}).error(function(data, status) {
+			ret.reject(status);
+		});
+
+		return ret.promise;
+	};
+
+	this.createAccessEvent = function() {
+		var tthis = this;
+		var ret = $q.defer();
+
+		$http.post('v1/event/access.json').success(function(data) {
 			ret.resolve(data);
 		}).error(function(data, status) {
 			ret.reject(status);
