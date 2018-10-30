@@ -28,12 +28,24 @@ public interface SyllabusService {
 	 * Retrieves the syllabus associated to a specific section and sectionId.
 	 * 
 	 * @param syllabusId
-	 * @return Syllabus - the syllabus object with elements
+	 * @return Syllabus - the syllabus object with structured elements
 	 * @throws NoSyllabusException - no syllabus exists for the given id
 	 * @throws DeniedAccessException 
 	 * @throws StructureSyllabusException 
 	 */
 	public Syllabus getSyllabus(Long syllabusId) throws NoSyllabusException, DeniedAccessException, StructureSyllabusException;
+
+	/**
+	 * Retrieves the syllabus associated to a specific section and sectionId.
+	 * 
+	 * @param syllabusId
+	 * @param boolean replaceUnpublishedCommonElements - when retrieving elements, replace the unpublished common elements with the published version in the personalised course outlines 
+	 * @return Syllabus - the syllabus object with elements
+	 * @throws NoSyllabusException - no syllabus exists for the given id
+	 * @throws DeniedAccessException 
+	 * @throws StructureSyllabusException 
+	 */
+	public Syllabus getSyllabus(Long syllabusId, boolean replaceUnpublishedCommonElements) throws NoSyllabusException, DeniedAccessException, StructureSyllabusException;
 
 	/**
 	 * Retrieves the common syllabus for a site (without elements).

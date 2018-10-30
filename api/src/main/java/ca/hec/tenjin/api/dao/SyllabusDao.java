@@ -49,6 +49,17 @@ public interface SyllabusDao {
 	 * Retrieve a syllabus and it's structured syllabus elements  
 	 * 
 	 * @param Long id
+	 * @param boolean replaceUnpublishedCommonElements - if true, replace unpublished common elements with their published versions in the personalised course outlines
+	 * @return The syllabus object with it's structured child elements
+	 * @throws NoSyllabusException 
+	 * @throws StructureSyllabusException 
+	 */
+	public Syllabus getStructuredSyllabus(Long id, boolean replaceUnpublishedCommonElements) throws NoSyllabusException, StructureSyllabusException;
+	
+	/**
+	 * Retrieve a syllabus and it's structured syllabus elements  
+	 * 
+	 * @param Long id
 	 * @return The syllabus object with it's structured child elements
 	 * @throws NoSyllabusException 
 	 * @throws StructureSyllabusException 

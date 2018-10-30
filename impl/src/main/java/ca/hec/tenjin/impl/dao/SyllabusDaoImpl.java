@@ -72,10 +72,15 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	
 	@Override
 	public Syllabus getStructuredSyllabus(Long id) throws NoSyllabusException, StructureSyllabusException {
+		return getStructuredSyllabus(id, true);
+	}
+
+	@Override
+	public Syllabus getStructuredSyllabus(Long id, boolean replaceUnpublishedCommonElements) throws NoSyllabusException, StructureSyllabusException {
 		Syllabus syllabus = getSyllabus(id);
 		
 		try {
-			syllabus.setElements(getStructuredSyllabusElements(syllabus));
+			syllabus.setElements(getStructuredSyllabusElements(syllabus, replaceUnpublishedCommonElements));
 		} catch (Exception e) {
 			throw new StructureSyllabusException(e);
 		}
@@ -123,7 +128,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return element;
 	}
 
-	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Syllabus syllabus) throws InstantiationException, IllegalAccessException, IdUnusedException {
+	private List<AbstractSyllabusElement> getStructuredSyllabusElements(Syllabus syllabus, boolean replaceUnpublishedCommonElements) throws InstantiationException, IllegalAccessException, IdUnusedException {
 
 		List<SyllabusElementMapping> elementMappings = this.getSyllabusElementMappings(syllabus.getId(), true);
 		
@@ -184,7 +189,11 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
     			}
     			
 				// if the common element is not equal to the published version, replace it with that one
-				if (!syllabus.getCommon() && currElement.getCommon() && !currElement.getEqualsPublished() && currElement.getPublishedId() != null) {
+				if (replaceUnpublishedCommonElements && 
+						!syllabus.getCommon() && currElement.getCommon() && 
+						!currElement.getEqualsPublished() && 
+						currElement.getPublishedId() != null) {
+
 					AbstractSyllabusElement tempElem;
 
 					tempElem = currElement.getClass().newInstance();
