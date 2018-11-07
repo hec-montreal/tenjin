@@ -251,7 +251,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 				} else if (existingSyllabusElementMappings != null && existingSyllabusElementMappings.containsKey(element.getId())) {
 
-					compareAndUpdateSyllabusElementMapping(existingSyllabusElementMappings.get(element.getId()), element);
+					compareAndUpdateSyllabusElementMapping(existingSyllabusElementMappings.get(element.getId()), element, syllabus.getCommon());
 
 					// Remove this element from the map.
 					// Remaining elements at the end will be deleted
@@ -578,7 +578,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	 * Update a Persistent syllabus element mapping (including the syllabus
 	 * element)
 	 */
-	private void compareAndUpdateSyllabusElementMapping(SyllabusElementMapping existingElementMapping, AbstractSyllabusElement newElement) {
+	private void compareAndUpdateSyllabusElementMapping(SyllabusElementMapping existingElementMapping, AbstractSyllabusElement newElement, Boolean isCommonSyllabus) {
 
 		// update display order and hidden (before comparing the objects!)
 		if (existingElementMapping.getDisplayOrder() != newElement.getDisplayOrder()) {
@@ -603,11 +603,13 @@ public class SyllabusServiceImpl implements SyllabusService {
 		if (existingElement.getProviderId() == null && !newElement.equals(existingElement)) {
 
 			// update persistent object, save handled by hibernate at end of
-			// transaction
-			existingElement.copyFrom(newElement);
-			existingElement.setLastModifiedBy(sakaiProxy.getCurrentUserId());
-			existingElement.setLastModifiedDate(new Date());
-			existingElement.setEqualsPublished(false);
+			// transaction.  Do not update element if it's common and the syllabus is not 
+			if (isCommonSyllabus || !existingElement.getCommon()) {
+				existingElement.copyFrom(newElement);
+				existingElement.setLastModifiedBy(sakaiProxy.getCurrentUserId());
+				existingElement.setLastModifiedDate(new Date());
+				existingElement.setEqualsPublished(false);
+			}
 		}
 	}
 

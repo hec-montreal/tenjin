@@ -14,7 +14,6 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 	var destRubric = null;
 	//New rubric or existing rubric
 	var existingRubric = false;
-	var moved = false;
 
 	var backupSyllabus = null;
 	var currentLanguage = $translate.use();
@@ -131,7 +130,6 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		    } else if (addableTypes !== null && addableTypes.length > 0) {
 				for (var i = 0; i < addableTypes.length; i++) {
 					if (addableTypes[i].type === sourceNodeScope.$modelValue.type) {
-						moved = true;
 						return true;
 					}
 				}
@@ -141,10 +139,6 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 		},
 		dropped: function(event) {
 			var destTreeName = event.dest.nodesScope.$treeScope.$parent.treeOptions.name;
-			//Reset element published status
-			if (moved === true){
-				event.source.nodeScope.$modelValue.equalsPublished = false;
-			}
 			//Drag and drop between 2 trees
 			if (destTreeName === "navigationTree"){ 	
 				movedElement = event.source.nodeScope.$modelValue;
