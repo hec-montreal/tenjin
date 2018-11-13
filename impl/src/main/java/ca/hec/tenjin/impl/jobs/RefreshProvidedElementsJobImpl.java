@@ -20,6 +20,7 @@ import org.quartz.JobExecutionException;
 import ca.hec.tenjin.api.jobs.RefreshProvidedElementsJob;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;
+import org.sakaiproject.site.api.SiteService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Arrays;
 
 public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJob, ApplicationContextAware {
@@ -45,6 +47,9 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
 
     @Setter
     SakaiProxy sakaiProxy;
+    
+    @Setter
+    SiteService siteService;
 
     /*
      * Job to refresh a syllabus element's content from it's provider (site id and template structure id must
@@ -59,8 +64,20 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
     @Transactional
     public void execute(JobExecutionContext context) throws JobExecutionException {
 
+    	List<String> siteIds = null;
         String siteIdsString = context.getMergedJobDataMap().getString("siteId");
-        List<String> siteIds = Arrays.asList(siteIdsString.split(","));
+        String session = context.getMergedJobDataMap().getString("session");
+
+        if (session != null && !session.equals("")) {
+        	Map<String, String> props = new HashMap<String, String>();
+        	props.put("term", session);
+        	siteIds = siteService.getSiteIds(SiteService.SelectionType.NON_USER, "course", null, props, SiteService.SortType.CREATED_ON_DESC, null);
+        } else if (siteIdsString != null && !siteIdsString.equals("")) {
+        	siteIds = Arrays.asList(siteIdsString.split(","));
+        } else {
+        	log.error("Specify a session or site ID(s)");
+        	return;
+        }
 
         for (String siteId : siteIds) {
             try {
@@ -114,9 +131,14 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
                         (ExternalDataProvider) applicationContext.getBean(templateStructure.getProvider().getBeanName());
 
                 AbstractSyllabusElement refreshedElement = provider.getAbstractSyllabusElement(siteId, locale);
+                
+                if (refreshedElement == null) {
+                	log.debug("Provided element is null for " + siteId);
+                	continue;
+                }
 
                 for (AbstractSyllabusElement e : elementsToRefresh) {
-
+                	
                     // copy important data
                     copyData(e, refreshedElement);
 

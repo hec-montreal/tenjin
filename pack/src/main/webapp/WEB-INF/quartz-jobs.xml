@@ -11,6 +11,7 @@
         <property name="syllabusService" ref="ca.hec.tenjin.api.SyllabusService" />
         <property name="templateService" ref="ca.hec.tenjin.api.TemplateService" />
         <property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+        <property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
     </bean>
 
     <bean id="org.sakaiproject.api.app.scheduler.JobBeanWrapper.tenjinRefreshJob"
@@ -32,9 +33,15 @@
         <property name="configurableJobProperties">
             <set>
                 <bean class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobProperty">
-                    <property name="required" value="true"/>
+                    <property name="required" value="false"/>
                     <property name="labelResourceKey" value="siteId"/>
                     <property name="descriptionResourceKey" value="siteId.description"/>
+                    <property name="defaultValue" value=""/>
+                </bean>
+                <bean class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobProperty">
+                    <property name="required" value="false"/>
+                    <property name="labelResourceKey" value="session"/>
+                    <property name="descriptionResourceKey" value="session.description"/>
                     <property name="defaultValue" value=""/>
                 </bean>
                 <bean class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobProperty">
