@@ -63,10 +63,12 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
     @Override
     @Transactional
     public void execute(JobExecutionContext context) throws JobExecutionException {
+    	log.info("Start RefreshProvidedElementsJob");
 
     	List<String> siteIds = null;
         String siteIdsString = context.getMergedJobDataMap().getString("siteId");
         String session = context.getMergedJobDataMap().getString("session");
+        int refreshedElementCount = 0;
 
         if (session != null && !session.equals("")) {
         	Map<String, String> props = new HashMap<String, String>();
@@ -141,7 +143,9 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
                 	
                     // copy important data
                     copyData(e, refreshedElement);
+                    refreshedElementCount++;
 
+                    // if provided element has children, copy them also
                     if (e.isComposite() && refreshedElement.isComposite()) {
                         refreshChildren((SyllabusCompositeElement) e, (SyllabusCompositeElement) refreshedElement);
                     }
@@ -151,6 +155,7 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
 		        e.printStackTrace();
             }
         }
+        log.info("End RefreshProvidedElementJob, refreshed "+refreshedElementCount+" elements");
     }
 
     private void refreshChildren(SyllabusCompositeElement original, SyllabusCompositeElement refreshed) {
@@ -171,6 +176,7 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
         destination.setDescription(source.getDescription());
         destination.setLastModifiedDate(new Date());
         destination.setLastModifiedBy("admin");
+        destination.setEqualsPublished(false);
         if (source.getAttributes() != null) {
             destination.setAttributes(new HashMap<String, String>(source.getAttributes()));
         }
