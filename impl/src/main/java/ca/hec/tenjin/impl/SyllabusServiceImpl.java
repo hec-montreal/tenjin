@@ -548,10 +548,19 @@ public class SyllabusServiceImpl implements SyllabusService {
 			locale = Locale.getDefault().toString();
 		}
 
-		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(1L, siteId, locale);
+		String templateIdStr = site.getProperties().getProperty("tenjin_template");
+		Long templateId;
+		if (templateIdStr == null || templateIdStr.isEmpty()) {
+			templateId = 1L;
+		}
+		else {
+			templateId = new Long(templateIdStr);
+		}
+
+		Syllabus newCommonSyllabus = templateService.getEmptySyllabusFromTemplate(templateId, siteId, locale);
 
 		if (newCommonSyllabus != null) {
-			newCommonSyllabus.setTemplateId(1L);
+			newCommonSyllabus.setTemplateId(templateId);
 			newCommonSyllabus.setSiteId(siteId);
 			newCommonSyllabus.setCommon(true);
 			newCommonSyllabus.setCreatedBy("Admin");

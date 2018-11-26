@@ -372,7 +372,7 @@
 		// use the language of the common syllabus to get the locale of the rules
 		var common = this.getCommonSyllabus();
 
-		$http.get('v1/template/1/rules.json' + (common ? '?locale=' + common.locale : '')).success(function(data) {
+		$http.get('v1/template/'+common.templateId+'/rules.json' + (common ? '?locale=' + common.locale : '')).success(function(data) {
 			tthis.setTemplate(data);
 
 			ret.resolve(tthis.getTemplate());
