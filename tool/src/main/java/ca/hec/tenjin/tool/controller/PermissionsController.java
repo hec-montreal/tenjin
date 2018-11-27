@@ -97,8 +97,16 @@ public class PermissionsController {
 				}
 				if (p.getValue()) {
 					roleToUpdate.allowFunction(p.getName());
+					if (p.getName().equals("tenjin.publish.common")) {
+						roleToUpdate.allowFunction("annc.new");
+						roleToUpdate.allowFunction("annc.all.groups");
+					}
 				} else {
 					roleToUpdate.disallowFunction(p.getName());
+					if (p.getName().equals("tenjin.publish.common")) {
+						roleToUpdate.disallowFunction("annc.new");
+						roleToUpdate.disallowFunction("annc.all.groups");
+					}
 				}
 			}
 
