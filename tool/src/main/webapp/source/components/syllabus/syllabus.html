@@ -11,6 +11,16 @@
 
 		<div class="row" ng-if="syllabusLoaded">
 			<div class="toolbar col-xs-12">
+				<div class="autosave-info">
+					<div class="autosaving" ng-if="autosaving">
+						<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {{ 'AUTOSAVING' | translate }}
+					</div>
+
+					<div class="autosaved" ng-if="!autosaving" ng-class="{'invisible' : lastAutosaveTime.length === 0}">
+						{{ 'LAST_AUTOSAVE' | translate }} {{lastAutosaveTime}}
+					</div>
+				</div>
+
 				<div class="toolbar-wrapper">
 					<div class="toolbar-left">
 						<!-- Management button -->

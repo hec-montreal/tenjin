@@ -57,6 +57,16 @@
 	}
 }
 
+.autosave-info {
+	text-align: right;
+	font-size: 1.1em;
+	padding: 0 20px 0 0;
+}
+
+.autosave-info .invisible {
+	visibility: hidden;
+}
+
 .list-menu-pdf {
 	li.selected {
 		.glyphicon {

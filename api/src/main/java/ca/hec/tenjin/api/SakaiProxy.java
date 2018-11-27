@@ -34,6 +34,7 @@ public interface SakaiProxy {
 	public final static String PROPERTY_SYLLABUS_LOCK_DELAY_SECONDS = "tenjin.syllabusLockDelaySeconds";
 	public final static String PROPERTY_SYLLABUS_LOCK_RENEW_DELAY_SECONDS = "tenjin.syllabusLockRenewDelaySeconds";
 	public final static String PROPERTY_SYLLABUS_LOCK_CHECK_COMMON_LOCK = "tenjin.syllabusLockCheckCommonLock";
+	public final static String PROPERTY_SYLLABUS_AUTOSAVE_DELAY_SECONDS = "tenjin.syllabusAutosaveDelaySeconds";
 
 	/**
 	 * Is the current user a superUser? (anyone in admin realm)

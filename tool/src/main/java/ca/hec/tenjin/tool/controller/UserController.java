@@ -185,6 +185,22 @@ public class UserController {
 		String lockRenewDelaySeconds = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_LOCK_RENEW_DELAY_SECONDS);
 
 		profile.put("lockRenewDelaySeconds", lockRenewDelaySeconds);
+		
+		String autosaveDelaySeconds = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_AUTOSAVE_DELAY_SECONDS);
+		
+		if (autosaveDelaySeconds == null)
+		{
+			autosaveDelaySeconds = "0";
+		}
+		
+		try
+		{
+			profile.put("autosaveDelaySeconds", Integer.parseInt(autosaveDelaySeconds));
+		}
+		catch(NumberFormatException e)
+		{
+			profile.put("autosaveDelaySeconds", 0);
+		}
 
 		profile.put("resourcesToolId", sakaiProxy.getCurrentSiteResourcesToolId());
 

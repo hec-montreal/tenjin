@@ -337,7 +337,9 @@
 		"RESOURCES_LOAD_ERROR": "An error occurred loading the site's resources, please contact the help desk",
 		"USER_PROFILE_LOAD_ERROR": "An error occurred loading the user profile, please contact the help desk",
 		"SAKAI_TOOLS_LOAD_ERROR": "An error occurred loading the list of tools, please contact the help desk",
-		"CITATIONS_LOAD_ERROR": "An error occurred loading the citation lists, please contact the help desk"
+		"CITATIONS_LOAD_ERROR": "An error occurred loading the citation lists, please contact the help desk",
+		"AUTOSAVING": "Autosaving...",
+		"LAST_AUTOSAVE": "Last autosave : "
 	},
 
 	"fr_CA": {
@@ -678,7 +680,9 @@
 		"RESOURCES_LOAD_ERROR": "Une erreur est survenue à la récupération des ressources, veuillez contacter le centre d'assistance technique",
 		"USER_PROFILE_LOAD_ERROR": "Une erreur est survenue à la récupération du profil de l'usager, veuillez contacter le centre d'assistance technique",
 		"SAKAI_TOOLS_LOAD_ERROR": "Une erreur est survenue à la récupération de la liste des outils, veuillez contacter le centre d'assistance technique",
-		"CITATIONS_LOAD_ERROR": "Une erreur est survenue à la récupération des listes de références bibliographiques, veuillez contacter le centre d'assistance technique"
+		"CITATIONS_LOAD_ERROR": "Une erreur est survenue à la récupération des listes de références bibliographiques, veuillez contacter le centre d'assistance technique",
+		"AUTOSAVING": "Sauvegarde automatique",
+		"LAST_AUTOSAVE": "Dernière sauvegarde automatique : "
 	},
 
 	"es_ES": {
@@ -1019,6 +1023,8 @@
 		"RESOURCES_LOAD_ERROR": "Une erreur est survenue à la récupération des ressources, veuillez contacter le centre d'assistance technique",
 		"USER_PROFILE_LOAD_ERROR": "Une erreur est survenue à la récupération du profil de l'usager, veuillez contacter le centre d'assistance technique",
 		"SAKAI_TOOLS_LOAD_ERROR": "Une erreur est survenue à la récupération de la liste des outils, veuillez contacter le centre d'assistance technique",
-		"CITATIONS_LOAD_ERROR": "Une erreur est survenue à la récupération des listes de références bibliographiques, veuillez contacter le centre d'assistance technique"
+		"CITATIONS_LOAD_ERROR": "Une erreur est survenue à la récupération des listes de références bibliographiques, veuillez contacter le centre d'assistance technique",
+		"AUTOSAVING": "Sauvegarde automatique",
+		"LAST_AUTOSAVE": "Dernière sauvegarde automatique : "
 	}
 }

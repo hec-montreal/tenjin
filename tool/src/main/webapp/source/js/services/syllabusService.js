@@ -500,7 +500,7 @@
 	 * Get the value of the dirty flag
 	 * @return {Boolean} Dirty flag value
 	 */
-	this.isDirty = function($dirty) {
+	this.isDirty = function() {
 		return this.dirty;
 	};
 
@@ -756,7 +756,5 @@
 				break;
 			}
 		}
-	};
-
-	window.sss = this;
+	};	
 }]);

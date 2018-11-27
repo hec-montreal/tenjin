@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('SyllabusCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', '$translate', 'SyllabusService', 'SyllabusLockService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'PublishService', 'TenjinService', 'config', 'AlertService', 'ModalService', function($rootScope, $scope, $timeout, $q, $state, $translate, SyllabusService, SyllabusLockService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, PublishService, TenjinService, config, AlertService, ModalService) {
+﻿tenjinApp.controller('SyllabusCtrl', ['$rootScope', '$scope', '$timeout', '$q', '$state', '$translate', '$interval', 'SyllabusService', 'SyllabusLockService', 'TreeService', 'ResourcesService', 'CitationsService', 'SakaiToolsService', 'UserService', 'PublishService', 'TenjinService', 'config', 'AlertService', 'ModalService', function($rootScope, $scope, $timeout, $q, $state, $translate, $interval, SyllabusService, SyllabusLockService, TreeService, ResourcesService, CitationsService, SakaiToolsService, UserService, PublishService, TenjinService, config, AlertService, ModalService) {
 	'use strict';
 
 	$scope.syllabusService = SyllabusService;
@@ -9,6 +9,9 @@
 	$scope.showNavigation = true;
 	$scope.alertService = AlertService;
 	$scope.saving = false;
+
+	$scope.autosaving = false;
+	$scope.lastAutosaveTime = '';
 
 	$scope.mode = 'edit';
 
@@ -22,6 +25,10 @@
 			syllabusId: syllabusId
 		}).then(function() {
 			$scope.syllabusLoaded = true;
+
+			if (TenjinService.viewState.stateName === 'syllabus-edit') {
+				startAutosaveLoop(UserService.getProfile().autosaveDelaySeconds);
+			}
 
 			ret.resolve();
 		}).catch(function(e) {
@@ -71,6 +78,10 @@
 		}).finally(function() {
 			$scope.saving = false;
 		});
+	};
+
+	$scope.autosave = function () {
+		$scope.autosaving = true;
 	};
 
 	$scope.pdf = function(published) {
@@ -172,6 +183,40 @@
 	});
 
 	$scope.showGlobalLoading();
+
+	var autosave = function () {
+		var ret = $q.defer();
+
+		$scope.autosaving = true;
+
+		$scope.syllabusService.saveCurrent().then(function () {
+			$scope.autosaving = false;
+			$scope.lastAutosaveTime = moment().format('HH:mm');
+		});		
+
+		return ret.promise;
+	};
+
+	var startAutosaveLoop = function (delay) {
+		// Disable autosave when delay is 0
+		if (delay === 0) {
+			return;
+		}
+
+		console.log('Starting autosave loop with delay: ' + delay + 'sec');
+
+		delay = delay * 1000;
+
+		var interval = $interval(function () {
+			// Only autosave if the syllabus is dirty and not already saving
+			if(!$scope.saving && 
+			   SyllabusService.isDirty() && 
+			   !SyllabusLockService.lockError) {
+
+				autosave();
+			}
+		}, delay);
+	};
 
 	loadSyllabus($state.params.id || -1).finally(function() {
 		$scope.hideGlobalLoading();
