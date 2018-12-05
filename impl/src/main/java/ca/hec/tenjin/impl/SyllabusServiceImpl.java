@@ -551,7 +551,14 @@ public class SyllabusServiceImpl implements SyllabusService {
 		String templateIdStr = site.getProperties().getProperty("tenjin_template");
 		Long templateId;
 		if (templateIdStr == null || templateIdStr.isEmpty()) {
-			templateId = 1L;
+			String defaultTemplateId = sakaiProxy.getSakaiProperty("tenjin.default.templateId");
+
+			if (defaultTemplateId == null || defaultTemplateId.isEmpty()) {
+				log.error("No default course outline template specified");
+				return null;
+			}
+
+			templateId = new Long(defaultTemplateId);
 		}
 		else {
 			templateId = new Long(templateIdStr);

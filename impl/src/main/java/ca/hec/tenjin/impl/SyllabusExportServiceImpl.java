@@ -42,6 +42,7 @@ import ca.hec.tenjin.impl.export.template.AttributeConditionTemplateHelper;
 import ca.hec.tenjin.impl.export.template.AttributeEnumTemplateHelper;
 import ca.hec.tenjin.impl.export.template.DateAttributeTemplateHelper;
 import ca.hec.tenjin.impl.export.template.ElementNavigationTitleHelper;
+import ca.hec.tenjin.impl.export.template.EvaluationNumberingHelper;
 import ca.hec.tenjin.impl.export.template.IfEqTemplateHelper;
 import ca.hec.tenjin.impl.export.template.StringTemplateHelper;
 import ca.hec.tenjin.impl.export.template.UnescapeHtmlTemplateHelper;
@@ -128,6 +129,7 @@ public class SyllabusExportServiceImpl implements SyllabusExportService {
 		handlebars.registerHelper("attr-date", new DateAttributeTemplateHelper());
 		handlebars.registerHelper("attr-enum", new AttributeEnumTemplateHelper(syllabusConstantsDao, context.getLocale()));
 		handlebars.registerHelper("navigation-title", new ElementNavigationTitleHelper());
+		handlebars.registerHelper("eval-num", new EvaluationNumberingHelper());
 
 		try {
 			Template template = handlebars.compile("syllabus.html");
