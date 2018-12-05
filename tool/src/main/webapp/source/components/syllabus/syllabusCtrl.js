@@ -12,6 +12,8 @@
 
 	$scope.autosaving = false;
 	$scope.lastAutosaveTime = '';
+	$scope.lastSaveTime = '';
+	$scope.saveMode = '';
 
 	$scope.mode = 'edit';
 
@@ -73,15 +75,15 @@
 
 	$scope.save = function() {
 		$scope.saving = true;
+
 		SyllabusService.saveCurrent().catch(function(e) {
 			AlertService.showSyllabusSaveAlert(e);
 		}).finally(function() {
 			$scope.saving = false;
-		});
-	};
 
-	$scope.autosave = function () {
-		$scope.autosaving = true;
+			$scope.lastSaveTime = moment().format('HH:mm');
+			$scope.saveMode = 'save';
+		});
 	};
 
 	$scope.pdf = function(published) {
@@ -189,9 +191,12 @@
 
 		$scope.autosaving = true;
 
+		console.log('Autosaving...');
+
 		$scope.syllabusService.saveCurrent().then(function () {
 			$scope.autosaving = false;
 			$scope.lastAutosaveTime = moment().format('HH:mm');
+			$scope.saveMode = 'autosave';
 		});		
 
 		return ret.promise;

@@ -339,7 +339,8 @@
 		"SAKAI_TOOLS_LOAD_ERROR": "An error occurred loading the list of tools, please contact the help desk",
 		"CITATIONS_LOAD_ERROR": "An error occurred loading the citation lists, please contact the help desk",
 		"AUTOSAVING": "Autosaving...",
-		"LAST_AUTOSAVE": "Last autosave : "
+		"LAST_AUTOSAVE": "Last autosave : ",
+		"LAST_SAVE": "Last save : "
 	},
 
 	"fr_CA": {
@@ -682,7 +683,8 @@
 		"SAKAI_TOOLS_LOAD_ERROR": "Une erreur est survenue à la récupération de la liste des outils, veuillez contacter le centre d'assistance technique",
 		"CITATIONS_LOAD_ERROR": "Une erreur est survenue à la récupération des listes de références bibliographiques, veuillez contacter le centre d'assistance technique",
 		"AUTOSAVING": "Sauvegarde automatique",
-		"LAST_AUTOSAVE": "Dernière sauvegarde automatique : "
+		"LAST_AUTOSAVE": "Dernière sauvegarde automatique : ",
+		"LAST_SAVE": "Dernière sauvegarde"
 	},
 
 	"es_ES": {
@@ -1025,6 +1027,7 @@
 		"SAKAI_TOOLS_LOAD_ERROR": "Une erreur est survenue à la récupération de la liste des outils, veuillez contacter le centre d'assistance technique",
 		"CITATIONS_LOAD_ERROR": "Une erreur est survenue à la récupération des listes de références bibliographiques, veuillez contacter le centre d'assistance technique",
 		"AUTOSAVING": "Sauvegarde automatique",
-		"LAST_AUTOSAVE": "Dernière sauvegarde automatique : "
+		"LAST_AUTOSAVE": "Dernière sauvegarde automatique : ",
+		"LAST_SAVE": "Dernière sauvegarde"
 	}
 }
