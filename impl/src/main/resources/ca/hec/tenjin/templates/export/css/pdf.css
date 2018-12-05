@@ -90,6 +90,10 @@ ul {
 	text-align: justify;
 }
 
+.syllabus-text ol {
+	list-style-position: inside;
+}
+
 .syllabus-text ul {
 	list-style: disc;
 	list-style-position: inside;
