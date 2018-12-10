@@ -1,4 +1,4 @@
-tenjinApp.service('PermissionsService', ['$q', '$http', 'config', function($q, $http, config) {
+tenjinApp.service('PermissionsService', ['$q', '$http', 'config', 'UserService', function($q, $http, config, UserService) {
 	'use strict';
 
     this.permissions = null;
@@ -25,7 +25,12 @@ tenjinApp.service('PermissionsService', ['$q', '$http', 'config', function($q, $
 
 		this.working = true;
 
-		$http.post(url, data).success(function(data) {
+		var wrap = {
+			permissions: data,
+			csrfToken: UserService.getCsrfToken()
+		};
+
+		$http.post(url, wrap).success(function(data) {
 			tthis.permissions = data;
 			ret.resolve(data);
 		}).error(function(data) {

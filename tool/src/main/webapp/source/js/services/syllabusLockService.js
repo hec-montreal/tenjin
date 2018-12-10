@@ -8,11 +8,19 @@ tenjinApp.service('SyllabusLockService', ['$q', '$http', 'AlertService', 'UserSe
 	};
 
 	this.lockSyllabus = function(syllabusId) {
-		return $http.post('v1/syllabus/' + syllabusId + '/lock.json');
+		var wrap = {
+			csrfToken: UserService.getCsrfToken()
+		};
+
+		return $http.post('v1/syllabus/' + syllabusId + '/lock.json', wrap);
 	};
 
 	this.renewSyllabusLock = function(syllabusId) {
-		return $http.post('v1/syllabus/' + syllabusId + '/lock/renew.json');
+		var wrap = {
+			csrfToken: UserService.getCsrfToken()
+		};
+
+		return $http.post('v1/syllabus/' + syllabusId + '/lock/renew.json', wrap);
 	};
 
 	this.startRenewLoop = function(syllabusId) {

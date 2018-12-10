@@ -2,11 +2,13 @@ package ca.hec.tenjin.tool.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.tool.api.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +24,8 @@ import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.exception.SyllabusLockedException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.SyllabusLock;
+import ca.hec.tenjin.tool.controller.util.CsrfToken;
+import ca.hec.tenjin.tool.controller.util.CsrfUtil;
 import lombok.Setter;
 
 @Controller
@@ -35,6 +39,10 @@ public class SyllabusLockController {
 	@Setter
 	@Autowired
 	private SyllabusService syllabusService;
+	
+	@Setter
+	@Autowired
+	private SessionManager sessionManager;
 
 	@Setter
 	@Autowired
@@ -70,7 +78,9 @@ public class SyllabusLockController {
 	}
 
 	@RequestMapping(value = "/syllabus/{syllabusId}/lock", method = RequestMethod.POST)
-	public @ResponseBody SyllabusLock lockSyllabus(@PathVariable Long syllabusId) throws SyllabusLockedException, DeniedAccessException, NoSyllabusException, StructureSyllabusException {
+	public @ResponseBody SyllabusLock lockSyllabus(@PathVariable Long syllabusId, @RequestBody CsrfToken csrfToken) throws SyllabusLockedException, DeniedAccessException, NoSyllabusException, StructureSyllabusException {
+		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
+		
 		SyllabusLock lock = syllabusLockService.getSyllabusLock(syllabusId);
 
 		// Verify the lock for the syllabus
@@ -94,7 +104,9 @@ public class SyllabusLockController {
 	}
 
 	@RequestMapping(value = "/syllabus/{syllabusId}/lock/renew", method = RequestMethod.POST)
-	public @ResponseBody SyllabusLock renewSyllabusLock(@PathVariable Long syllabusId) throws SyllabusLockedException, NoSyllabusLockException, DeniedAccessException {
+	public @ResponseBody SyllabusLock renewSyllabusLock(@PathVariable Long syllabusId, @RequestBody CsrfToken csrfToken) throws SyllabusLockedException, NoSyllabusLockException, DeniedAccessException {
+		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
+		
 		SyllabusLock lock = syllabusLockService.getSyllabusLock(syllabusId);
 
 		// No lock

@@ -14,7 +14,11 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 
 		this.working = true;
 
-		$http.post('v1/syllabus/' + SyllabusService.syllabus.id + '/publish.json', {}).success(function(data) {
+		var wrap = {
+			csrfToken: UserService.getCsrfToken()
+		};
+
+		$http.post('v1/syllabus/' + SyllabusService.syllabus.id + '/publish.json', wrap).success(function(data) {
 			tthis.working = false;
 
 			ret.resolve(data);
@@ -35,7 +39,8 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 		var announcement = {
 			'title': title,
 			'message': message,
-			'groups': groups
+			'groups': groups,
+			'csrfToken': UserService.getCsrfToken()
 		};
 
 		$http.post('v1/announcement/' + SyllabusService.syllabus.siteId + '.json', announcement).success(function(data) {

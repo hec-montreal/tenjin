@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class CopySyllabusObject {
 	private String title;
+	private String csrfToken;
 }

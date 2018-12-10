@@ -1,4 +1,4 @@
-﻿tenjinApp.service('SyllabusService', ['AlertService', 'ResourcesService', 'SyllabusLockService', '$translate', '$q', '$http', '$rootScope', function(AlertService, ResourcesService, SyllabusLockService, $translate, $q, $http, $rootScope) {
+﻿tenjinApp.service('SyllabusService', ['AlertService', 'ResourcesService', 'UserService', '$translate', '$q', '$http', '$rootScope', function(AlertService, ResourcesService, UserService, $translate, $q, $http, $rootScope) {
 	'use strict';
 
 	this.syllabus = null;
@@ -49,7 +49,12 @@
 
 		this.working = true;
 
-		$http.post(url, syllabus).success(function(data) {
+		var wrap = {
+			syllabus: syllabus,
+			csrfToken: UserService.getCsrfToken()
+		};
+
+		$http.post(url, wrap).success(function(data) {
 			tthis.updateCurrentSyllabus(data);
 
 			$rootScope.$broadcast('syllabusService:save');
@@ -81,7 +86,11 @@
 		var tthis = this;
 		var ret = $q.defer();
 
-		$http.post('v1/event/read/' + syllabusId + '/' + elementId + '.json').success(function(data) {
+		var wrapper = {
+			csrfToken: UserService.getCsrfToken()
+		};
+
+		$http.post('v1/event/read/' + syllabusId + '/' + elementId + '.json', wrapper).success(function(data) {
 			ret.resolve(data);
 		}).error(function(data, status) {
 			ret.reject(status);
@@ -94,7 +103,11 @@
 		var tthis = this;
 		var ret = $q.defer();
 
-		$http.post('v1/event/access.json').success(function(data) {
+		var wrapper = {
+			csrfToken: UserService.getCsrfToken()
+		};
+
+		$http.post('v1/event/access.json', wrapper).success(function(data) {
 			ret.resolve(data);
 		}).error(function(data, status) {
 			ret.reject(status);
@@ -108,9 +121,14 @@
 		var tthis = this;
 		var ret = $q.defer();
 
+		var wrap = {
+			syllabus: syllabus,
+			csrfToken: UserService.getCsrfToken()
+		};
+
 		this.working = true;
 
-		$http.post('v1/syllabus/sections.json', syllabus).success(function(data) {
+		$http.post('v1/syllabus/sections.json', wrap).success(function(data) {
 			$rootScope.$broadcast('syllabusService:save');
 
 			ret.resolve(data);
@@ -145,7 +163,8 @@
 		var ret = $q.defer();
 
 		$http.post('v1/syllabus/copy/' + id + '.json', {
-			'title': newTitle
+			'title': newTitle,
+			'csrfToken': UserService.getCsrfToken()
 		}).then(function(data) {
 			ret.resolve(data);
 		});
@@ -158,7 +177,11 @@
 		var ret = $q.defer();
 		var url = 'v1/import/' + siteId + '.json';
 
-		$http.post(url, siteId).success(function(data) {
+		var wrap = {
+			csrfToken: UserService.getCsrfToken()
+		};
+
+		$http.post(url, wrap).success(function(data) {
 			ret.resolve(data);
 		}).error(function(data, status) {
 			ret.reject(status);
@@ -286,7 +309,11 @@
 
 		this.working = true;
 
-		$http.get('v1/syllabus/' + idList.join(',') + '/delete.json').success(function(data) {
+		var wrap = {
+			csrfToken: UserService.getCsrfToken()
+		};
+
+		$http.post('v1/syllabus/' + idList.join(',') + '/delete.json', wrap).success(function(data) {
 			ret.resolve(data);
 		}).error(function(data) {
 			ret.reject(data);
@@ -334,7 +361,11 @@
 
 		this.working = true;
 
-		$http.get('v1/syllabus/' + idList.join(',') + '/unpublish.json').success(function(data) {
+		var wrap = {
+			csrfToken: UserService.getCsrfToken()
+		};
+
+		$http.post('v1/syllabus/' + idList.join(',') + '/unpublish.json', wrap).success(function(data) {
 			ret.resolve(data);
 		}).error(function(data) {
 			ret.reject(data);

@@ -21,8 +21,10 @@
 package ca.hec.tenjin.tool.controller;
 
 import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.provider.tool.AssignmentToolEntityProvider;
 import ca.hec.tenjin.api.provider.tool.SamigoToolEntityProvider;
+import ca.hec.tenjin.tool.controller.util.CsrfUtil;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,6 +37,7 @@ import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.PermissionException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.SiteService;
+import org.sakaiproject.tool.api.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +69,10 @@ public class SiteToolsController {
 	@Autowired
 	private AnnouncementService announcementService;
 
+	@Setter
+	@Autowired
+	private SessionManager sessionManager;
+	
 	@Setter
 	@Autowired
 	private SamigoToolEntityProvider samigoToolEntityProvider;
@@ -100,7 +107,10 @@ public class SiteToolsController {
 	}
 
 	@RequestMapping(value = "/announcement/{siteId}", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity createAnnouncement(@RequestBody Map<String, Object> announcement, @PathVariable String siteId) {
+	public @ResponseBody ResponseEntity createAnnouncement(@RequestBody Map<String, Object> announcement, @PathVariable String siteId) throws DeniedAccessException {
+		
+		CsrfUtil.checkCsrfToken(sessionManager, (String) announcement.get("csrfToken"));
+		
 		String title = (String) announcement.get("title");
 		String message = (String) announcement.get("message");
 		ArrayList<String> groups = (ArrayList<String>) announcement.get("groups");

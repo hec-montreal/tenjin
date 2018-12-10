@@ -29,6 +29,7 @@ import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.provider.CourseOutlineProvider;
+import ca.hec.tenjin.tool.controller.util.CsrfUtil;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -205,8 +206,8 @@ public class UserController {
 		profile.put("resourcesToolId", sakaiProxy.getCurrentSiteResourcesToolId());
 
 		// TODO is this secure?
-		Session session = sessionManager.getCurrentSession();
-		String token = (String)session.getAttribute(UsageSessionService.SAKAI_CSRF_SESSION_ATTRIBUTE);
+		String token = CsrfUtil.getSessionCsrfToken(sessionManager);
+		
 		profile.put("csrf_token", token);
 
 		return profile;

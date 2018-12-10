@@ -122,7 +122,7 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 	    return this.profile.resourcesToolId;
 	};
 
-	this.getCSRFToken = function() {
+	this.getCsrfToken = function() {
 	    return this.profile.csrf_token;
 	};
 

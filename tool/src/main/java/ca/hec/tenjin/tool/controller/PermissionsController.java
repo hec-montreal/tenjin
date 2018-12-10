@@ -30,6 +30,7 @@ import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.provider.CourseOutlineProvider;
+import ca.hec.tenjin.tool.controller.util.CsrfUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -61,6 +62,10 @@ public class PermissionsController {
 	@Autowired
 	private TenjinSecurityService securityService = null;
 
+	@Setter
+	@Autowired
+	private SessionManager sessionManager;
+	
 	@RequestMapping(value = "/siteRealmPermissions", method = RequestMethod.GET)
 	public @ResponseBody List<Permission> getSiteRealmPermissions() {
 
@@ -80,8 +85,10 @@ public class PermissionsController {
 	}
 
 	@RequestMapping(value = "/siteRealmPermissions", method = RequestMethod.POST)
-	public @ResponseBody List<Permission> setSiteRealmPermissions(@RequestBody List<Permission> permissions) throws GroupNotDefinedException, AuthzPermissionException {
+	public @ResponseBody List<Permission> setSiteRealmPermissions(@RequestBody PermissionsWithCsrfToken permissions) throws GroupNotDefinedException, AuthzPermissionException, DeniedAccessException {
 
+		CsrfUtil.checkCsrfToken(sessionManager, permissions.getCsrfToken());
+		
 		Site site = sakaiProxy.getCurrentSite();
 		AuthzGroup azGroup = null;
 		azGroup = sakaiProxy.getAuthzGroup(site.getReference());
@@ -90,7 +97,7 @@ public class PermissionsController {
 		if (role != null && !role.isEmpty()) {
 
 			Role roleToUpdate = azGroup.getRole(role);
-			for (Permission p : permissions) {
+			for (Permission p : permissions.getPermissions()) {
 				if (!p.getName().startsWith("tenjin.")) {
 					// at least check that the permission we're changing starts with "tenjin".
 					throw new AuthzPermissionException(sakaiProxy.getCurrentUserId(), p.getName(), site.getReference());
@@ -112,8 +119,10 @@ public class PermissionsController {
 
 			sakaiProxy.saveAuthzGroup(azGroup);
 		}
+		
 		sakaiProxy.postEvent(TenjinEvents.TENJIN_PERMISSIONS_EDIT_EVENT, "/site/"+site.getId(), true);
-		return permissions;
+		
+		return permissions.getPermissions();
 	}
 
 	@ExceptionHandler(AuthzPermissionException.class)
@@ -138,4 +147,12 @@ public class PermissionsController {
 		Boolean value;
 	}
 
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	static class PermissionsWithCsrfToken
+	{
+		List<Permission> permissions;
+		String csrfToken;
+	}
 }

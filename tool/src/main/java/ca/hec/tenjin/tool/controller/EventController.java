@@ -30,6 +30,8 @@ import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.provider.CourseOutlineProvider;
+import ca.hec.tenjin.tool.controller.util.CsrfToken;
+import ca.hec.tenjin.tool.controller.util.CsrfUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -61,13 +63,21 @@ public class EventController {
 	@Autowired
 	private TenjinSecurityService securityService = null;
 
+	@Setter
+	@Autowired
+	private SessionManager sessionManager;
+	
 	@RequestMapping(value = "/event/read/{syllabusId}/{elementId}", method = RequestMethod.POST)
-	public @ResponseBody void createReadEvent (@PathVariable("syllabusId") Long syllabusId, @PathVariable("elementId") Long elementId) {
+	public @ResponseBody void createReadEvent (@PathVariable("syllabusId") Long syllabusId, @PathVariable("elementId") Long elementId, @RequestBody CsrfToken csrfToken) throws DeniedAccessException {
+		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
+		
 		sakaiProxy.postEvent(TenjinEvents.TENJIN_READ_EVENT,sakaiProxy.getSyllabusReference(syllabusId, elementId), false);
 	}
 
 	@RequestMapping(value = "/event/access", method = RequestMethod.POST)
-	public @ResponseBody void createAccessEvent () {
+	public @ResponseBody void createAccessEvent (@RequestBody CsrfToken csrfToken) throws DeniedAccessException {
+		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
+		
 		sakaiProxy.postEvent(TenjinEvents.TENJIN_ACCESS_EVENT,"/site/"+sakaiProxy.getCurrentSite().getId(), false);
 	}
 }

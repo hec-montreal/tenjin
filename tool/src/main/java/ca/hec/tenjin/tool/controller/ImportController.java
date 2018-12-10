@@ -22,6 +22,8 @@
 package ca.hec.tenjin.tool.controller;
 
 import ca.hec.tenjin.api.provider.CourseOutlineProvider;
+import ca.hec.tenjin.tool.controller.util.CsrfToken;
+import ca.hec.tenjin.tool.controller.util.CsrfUtil;
 import ca.hec.tenjin.api.SyllabusService;
 
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
@@ -36,11 +38,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import lombok.Setter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.sakaiproject.tool.api.SessionManager;
 
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.SyllabusLockedException;
@@ -58,10 +62,16 @@ public class ImportController {
 	@Setter
 	@Autowired(required=false)
 	private CourseOutlineProvider importProvider;
+	
+	@Setter
+	@Autowired
+	private SessionManager sessionManager;
 
 	@RequestMapping(value = "/import/{siteId}", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<Syllabus> importSyllabus(@PathVariable("siteId") String siteId) 
+	public @ResponseBody ResponseEntity<Syllabus> importSyllabus(@PathVariable("siteId") String siteId, @RequestBody CsrfToken csrfToken) 
 			throws DeniedAccessException, SyllabusLockedException {
+		
+		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
 		
 		if (importProvider == null) {
 			return new ResponseEntity<Syllabus>(HttpStatus.NOT_IMPLEMENTED);

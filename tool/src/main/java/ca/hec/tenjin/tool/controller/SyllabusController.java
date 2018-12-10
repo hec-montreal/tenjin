@@ -9,11 +9,17 @@ import ca.hec.tenjin.api.exception.*;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabus;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.tool.controller.util.CopySyllabusObject;
+import ca.hec.tenjin.tool.controller.util.CsrfToken;
+import ca.hec.tenjin.tool.controller.util.CsrfUtil;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.util.ResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -69,6 +75,10 @@ public class SyllabusController {
 
 	@Setter
 	@Autowired
+	private SessionManager sessionManager;
+	
+	@Setter
+	@Autowired
 	private TenjinSecurityService securityService = null;
 
 	private ResourceLoader msgs = null;
@@ -103,19 +113,25 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {
-		return syllabusService.createOrUpdateSyllabus(syllabus);
+	public @ResponseBody Syllabus createSyllabus(@RequestBody SyllabusWithCsrfToken syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {
+		CsrfUtil.checkCsrfToken(sessionManager, syllabus.getCsrfToken());
+		
+		return syllabusService.createOrUpdateSyllabus(syllabus.getSyllabus());
 	}
 
-	@RequestMapping(value = "/syllabus/{ids}/delete", method = RequestMethod.GET)
-	public @ResponseBody void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException {
+	@RequestMapping(value = "/syllabus/{ids}/delete", method = RequestMethod.POST)
+	public @ResponseBody void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId, @RequestBody CsrfToken csrfToken) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException {
+		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
+		
 		for (Long id : syllabusId) {
 			syllabusService.deleteSyllabus(id);
 		}
 	}
 
-	@RequestMapping(value = "/syllabus/{ids}/unpublish", method = RequestMethod.GET)
-	public @ResponseBody void unpublishSyllabusList(@PathVariable("ids") List<Long> syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException, StructureSyllabusException {
+	@RequestMapping(value = "/syllabus/{ids}/unpublish", method = RequestMethod.POST)
+	public @ResponseBody void unpublishSyllabusList(@PathVariable("ids") List<Long> syllabusId, @RequestBody CsrfToken csrfToken) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException, StructureSyllabusException {
+		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
+		
 		Syllabus syllabus = null;
 		List<Syllabus> siteSyllabi = null;
 		for (Long id : syllabusId) {
@@ -136,7 +152,9 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/{id}/publish", method = RequestMethod.POST)
-	public @ResponseBody Syllabus publishSyllabus(@PathVariable("id") Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, SyllabusLockedException {
+	public @ResponseBody Syllabus publishSyllabus(@PathVariable("id") Long syllabusId, @RequestBody CsrfToken csrfToken) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, SyllabusLockedException {
+		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
+		
 		Syllabus syllabus = null;
 
 		syllabus = publishService.publishSyllabus(syllabusId);
@@ -160,16 +178,20 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/{courseId}", method = RequestMethod.POST)
-	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {
-		return syllabusService.createOrUpdateSyllabus(syllabus);
+	public @ResponseBody Syllabus createOrUpdateSyllabus(@RequestBody SyllabusWithCsrfToken syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {
+		CsrfUtil.checkCsrfToken(sessionManager, syllabus.getCsrfToken());
+		
+		return syllabusService.createOrUpdateSyllabus(syllabus.getSyllabus());
 	}
 	
 	@RequestMapping(value = "/syllabus/sections", method = RequestMethod.POST)
-	public @ResponseBody Syllabus updateSyllabusSections(@RequestBody Syllabus syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {				
-		Syllabus ret = syllabusService.createOrUpdateSyllabus(syllabus);
+	public @ResponseBody Syllabus updateSyllabusSections(@RequestBody SyllabusWithCsrfToken syllabus) throws NoSyllabusException, DeniedAccessException, NoSiteException, StructureSyllabusException, SyllabusLockedException {				
+		CsrfUtil.checkCsrfToken(sessionManager, syllabus.getCsrfToken());
+		
+		Syllabus ret = syllabusService.createOrUpdateSyllabus(syllabus.getSyllabus());
 		
 		// 'Unpublish' other syllabuses with no sections
-		List<Syllabus> list = syllabusService.getSyllabusList(syllabus.getSiteId());
+		List<Syllabus> list = syllabusService.getSyllabusList(syllabus.getSyllabus().getSiteId());
 		
 		for(Syllabus syl : list) {
 			if (syl.getSections().size() == 0 && !syl.getCommon()) {
@@ -182,6 +204,8 @@ public class SyllabusController {
 
 	@RequestMapping(value = "/syllabus/copy/{syllabusId}", method = RequestMethod.POST)
 	public @ResponseBody void copySyllabus(@PathVariable("syllabusId") Long syllabusId, @RequestBody CopySyllabusObject copyObject) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException {
+		CsrfUtil.checkCsrfToken(sessionManager, copyObject.getCsrfToken());
+		
 		syllabusService.copySyllabus(syllabusId, copyObject.getTitle());
 	}
 
@@ -214,5 +238,14 @@ public class SyllabusController {
 	public @ResponseBody Object handleStructureSyllabusException(StructureSyllabusException ex) {
 		ex.printStackTrace();
 		return null;
+	}
+	
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	static class SyllabusWithCsrfToken
+	{
+		Syllabus syllabus;
+		String csrfToken;
 	}
 }
