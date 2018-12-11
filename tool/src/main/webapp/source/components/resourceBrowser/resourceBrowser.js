@@ -23,7 +23,7 @@ tenjinApp.directive('resourceBrowser', ['SakaiToolsService', 'ResourcesService',
 				if (UserService.getResourcesToolId() != null) {
 				    $scope.resourcesUrl = '/portal/tool/' + UserService.getResourcesToolId()+'?panel=Main';
 				    $scope.resetResourcesUrl = '/portal/tool-reset/' + UserService.getResourcesToolId()+'?panel=Main';
-				    $scope.csrf_token = UserService.getCSRFToken();
+				    $scope.csrf_token = UserService.getCsrfToken();
 				}
 			}
 
