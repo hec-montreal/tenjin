@@ -20,10 +20,7 @@
 		<span class="tree-node tree-node-content" data-ng-if="!item.parentId"></span>
 	</div>
 
-	<ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-if="item.type === 'composite' && (item.templateStructureId === 14 || item.templateStructureId === 17)">
-		<li data-ng-repeat="item in item.elements" data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" ui-tree-node data-ng-include="'node-renderer.html'"></li>
-	</ol>
-	<ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-if="item.type === 'composite' && (item.templateStructureId !== 14 && item.templateStructureId !== 17)" data-nodrop-enabled>
+	<ol ui-tree-nodes="" data-ng-model="item.elements" data-ng-if="item.type === 'composite'">
 		<li data-ng-repeat="item in item.elements" data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" ui-tree-node data-ng-include="'node-renderer.html'"></li>
 	</ol>
 </script>
