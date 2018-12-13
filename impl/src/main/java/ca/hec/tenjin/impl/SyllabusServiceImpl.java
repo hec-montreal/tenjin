@@ -90,14 +90,16 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 				if (securityService.checkOnSiteGroup(userId, TenjinFunctions.TENJIN_FUNCTION_WRITE_COMMON, site)) {
 					Syllabus common = createCommonSyllabus(siteId);
-					createOrUpdateSyllabus(common);
-					syllabusList.add(common);
+					// missing default template could cause null, 
+					// error already printed
+					if (common != null) {
+						createOrUpdateSyllabus(common);
+						syllabusList.add(common);
+					}
 				}
 			} catch (IdUnusedException e) {
 				throw new NoSiteException();
 			} catch (Exception e) {
-				// should not be possible, only happens when we try to update a
-				// syllabus that doesn't exist
 				log.error("Error saving new common syllabus for site: " + siteId);
 				e.printStackTrace();
 			}
