@@ -215,7 +215,8 @@
 		var interval = $interval(function () {
 			// Only autosave if the syllabus is dirty and not already saving
 			if(!$scope.saving && 
-			   SyllabusService.isDirty() && 
+			   SyllabusService.isDirty() &&
+			   !SyllabusService.editingElement && 
 			   !SyllabusLockService.lockError) {
 
 				autosave();

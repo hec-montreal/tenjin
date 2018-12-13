@@ -1,4 +1,4 @@
-﻿tenjinApp.service('ModalService', ['$uibModal', function($uibModal) {
+﻿tenjinApp.service('ModalService', ['$uibModal', 'SyllabusService', function($uibModal, SyllabusService) {
 	'use strict';
 
 	/**

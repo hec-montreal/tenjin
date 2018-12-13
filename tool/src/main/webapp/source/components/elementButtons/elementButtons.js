@@ -22,6 +22,8 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'Alert
 			$scope.confirmDelete = function($element) {
 				var parent = SyllabusService.getParent($element);
 
+				SyllabusService.editingElement = true;
+
 				ModalService.confirmDeleteElement(parent, $element).result.then(function() {
 					// identify and remove element from it's parent
 					for (var i = 0; i < parent.elements.length; i++) {
@@ -30,6 +32,10 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'Alert
 						}
 					}
 					SyllabusService.setDirty(true);
+
+					SyllabusService.editingElement = false;
+				}).finally(function () {
+					SyllabusService.editingElement = false;
 				});
 			};
 

@@ -3,6 +3,8 @@
 
 	$scope.parent = parent;
 
+	SyllabusService.editingElement = true;
+
 	// Edit or create mode
 	if (element) {
 		// Edit mode
@@ -58,6 +60,8 @@
 		var errors = $scope.validateElement();
 
 		if (errors.length <= 0) {
+			SyllabusService.editingElement = false;
+
 			$uibModalInstance.close({
 				element: $scope.element,
 				parent: $scope.parent
@@ -123,6 +127,8 @@
 	};
 
 	$scope.cancel = function() {
+		SyllabusService.editingElement = false;
+		
 		$uibModalInstance.dismiss('cancel');
 	};
 }]);

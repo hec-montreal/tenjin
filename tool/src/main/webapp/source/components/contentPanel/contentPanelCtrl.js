@@ -113,6 +113,13 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 	$scope.treeOptions = {
 		name: "contentPanelTree",
 		item: TreeService.selectedElement,
+		dragStart: function () {
+			SyllabusService.editingElement = true;
+		}, 
+
+		dragStop: function () {
+			SyllabusService.editingElement = false;
+		},
 
 		accept: function (sourceNodeScope, destNodesScope, destIndex) {
 
