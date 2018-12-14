@@ -13,6 +13,7 @@
 			controller: 'DeleteElementModalCtrl',
 			size: '',
 			backdrop: 'static',
+			keyboard: false,
 			resolve: {
 				parent: function() {
 					return $parent;
@@ -39,6 +40,7 @@
 			controller: 'SetElementModalCtrl',
 			size: '',
 			backdrop: 'static',
+			keyboard: false,
 			resolve: {
 				type: function() {
 					return $type;
@@ -67,6 +69,7 @@
 			controller: 'SetElementModalCtrl',
 			size: '',
 			backdrop: 'static',
+			keyboard: false,
 			resolve: {
 				type: function() {
 					return undefined;
@@ -92,7 +95,8 @@
 			templateUrl: 'modals/createSyllabusModal/createSyllabusModal.html',
 			controller: 'CreateSyllabusModalCtrl',
 			size: '',
-			backdrop: 'static'
+			backdrop: 'static',
+			keyboard: false
 		});
 
 		return modalInstance;
@@ -109,6 +113,7 @@
 			controller: 'DeleteSyllabusModalCtrl',
 			size: '',
 			backdrop: 'static',
+			keyboard: false,
 			resolve: {
 				syllabusList: {
 					'syllabusList': $syllabusList
@@ -130,6 +135,7 @@
 			controller: 'UnpublishSyllabusModalCtrl',
 			size: '',
 			backdrop: 'static',
+			keyboard: false,
 			resolve: {
 				syllabusList: {
 					'syllabusList': $syllabusList
@@ -146,7 +152,8 @@
 			templateUrl: 'modals/externalImportModal/externalImportModal.html',
 			controller: 'ExternalImportModalCtrl',
 			size: '',
-			backdrop: 'static'
+			backdrop: 'static',
+			keyboard: false
 		});
 
 		return modalInstance;
@@ -158,7 +165,8 @@
 			templateUrl: 'modals/permissionsModal/permissionsModal.html',
 			controller: 'PermissionsModalCtrl',
 			size: '',
-			backdrop: 'static'
+			backdrop: 'static',
+			keyboard: false
 		});
 
 		return modalInstance;
@@ -170,7 +178,8 @@
 			templateUrl: 'modals/unassignSectionsModal/unassignSectionsModal.html',
 			controller: 'UnassignSectionsModalCtrl',
 			size: '',
-			backdrop: 'static'
+			backdrop: 'static',
+			keyboard: false
 		});
 
 		return modalInstance;
@@ -182,7 +191,8 @@
 			templateUrl: 'modals/publishModal/publishModal.html',
 			controller: 'PublishModalCtrl',
 			size: '',
-			backdrop: 'static'
+			backdrop: 'static',
+			keyboard: false
 		});
 	};
 
@@ -195,7 +205,8 @@
 			backdrop: 'static',
 			resolve: {
 				'syllabusToCopy': syllabusToCopy
-			}
+			},
+			keyboard: false
 		});
 	};
 }]);

@@ -17,6 +17,8 @@
 
 	$scope.mode = 'edit';
 
+	var interval = null;
+
 	// Load syllabus
 	var loadSyllabus = function(syllabusId) {
 		var ret = $q.defer();
@@ -56,6 +58,10 @@
 
 	$scope.goToManagement = function() {
 		if (confirmLeave()) {
+			if(interval) {
+				$interval.cancel(interval);
+			}
+			
 			$state.go('management');
 		}
 	}
@@ -186,12 +192,18 @@
 
 	$scope.showGlobalLoading();
 
+	var autosaveLog = function (s) {
+		if (console && console.log && typeof console.log === 'function') {
+			console.log(s);
+		}
+	};
+
 	var autosave = function () {
 		var ret = $q.defer();
 
 		$scope.autosaving = true;
 
-		console.log('Autosaving...');
+		autosaveLog('Autosaving...');
 
 		$scope.syllabusService.saveCurrent().then(function () {
 			$scope.autosaving = false;
@@ -208,11 +220,13 @@
 			return;
 		}
 
-		console.log('Starting autosave loop with delay: ' + delay + 'sec');
+		autosaveLog('Starting autosave loop with delay: ' + delay + 'sec');
 
 		delay = delay * 1000;
 
-		var interval = $interval(function () {
+		interval = $interval(function () {
+			autosaveLog('Checking for autosave...');
+
 			// Only autosave if the syllabus is dirty and not already saving
 			if(!$scope.saving && 
 			   SyllabusService.isDirty() &&
