@@ -3,6 +3,7 @@
 
 	this.syllabus = null;
 	this.syllabusSaved = null;
+	this.loadedTemplateId = null;
 	this.template = null;
 	this.syllabusList = null;
 
@@ -403,15 +404,20 @@
 		var ret = $q.defer();
 
 		// use the language of the common syllabus to get the locale of the rules
-		var common = this.getCommonSyllabus();
+		var currentSyllabus = this.getSyllabus();
 
-		$http.get('v1/template/'+common.templateId+'/rules.json' + (common ? '?locale=' + common.locale : '')).success(function(data) {
-			tthis.setTemplate(data);
+		if (currentSyllabus.templateId === this.loadedTemplateId) {
+		    ret.resolve(this.getTemplate());
+		}
+		else {
+			$http.get('v1/template/'+currentSyllabus.templateId+'/rules.json' + (currentSyllabus ? '?locale=' + currentSyllabus.locale : '')).success(function(data) {
+				tthis.setTemplate(currentSyllabus.templateId, data);
 
-			ret.resolve(tthis.getTemplate());
-		}).error(function(data) {
-			ret.reject(data);
-		});
+				ret.resolve(tthis.getTemplate());
+			}).error(function(data) {
+				ret.reject(data);
+			});
+		}
 
 		return ret.promise;
 	};
@@ -420,11 +426,21 @@
 	 * Get the list of elements that can be added to a composite element (according to the template rules)
 	 */
 	this.getAddableElementsFromTemplateRules = function(element) {
-		return this.template[element.templateStructureId].elements;
+		if (this.template !== null) {
+			return this.template[element.templateStructureId].elements;
+		}
+		else {
+			return null;
+		}
 	};
 
 	this.getAddableElementsFromTemplateRuleId = function(templateStructureId) {
-		return this.template[templateStructureId].elements;
+		if (this.template !== null) {
+			return this.template[templateStructureId].elements;
+		}
+		else {
+			return null;
+		}
 	};
 
 	this.getTemplateStructureId = function (parent, title){
@@ -505,11 +521,19 @@
 		return this.template;
 	};
 
+	this.getTemplateStructureElement = function(id) {
+	    if (this.template !== null) {
+			return this.template[id];
+		}
+		else return null;
+	};
+
 	/**
 	 * Set the template rules
 	 * @param {Object} $template The template rules
 	 */
-	this.setTemplate = function($template) {
+	this.setTemplate = function(id, $template) {
+		this.loadedTemplateId = id;
 		this.template = $template;
 	};
 

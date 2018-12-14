@@ -18,12 +18,13 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			$scope.tenjinService = TenjinService;
 			$scope.config = config;
 
-			var template = SyllabusService.template[$scope.element.templateStructureId];
+			var templateStructureElement = 
+				SyllabusService.getTemplateStructureElement($scope.element.templateStructureId);
 
 			$scope.displayButtons = {
 				deleteButton: function() {
 					return ($scope.userService.isAllowed('syllabusWrite', SyllabusService.syllabus) &&
-							!SyllabusService.template[$scope.element.templateStructureId].mandatory) &&
+							templateStructureElement && !TemplateStructureElement.mandatory) &&
 						(SyllabusService.syllabus.common ||
 							(!SyllabusService.syllabus.common &&
 								!$scope.element.common));
@@ -33,11 +34,11 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 					return ($scope.element.type !== 'rubric') &&
 						((SyllabusService.syllabus.common &&
 								$scope.userService.isAllowed('syllabusWrite', SyllabusService.syllabus) &&
-								!SyllabusService.template[$scope.element.templateStructureId].mandatory) ||
+								templateStructureElement && !templateStructureElement.mandatory) ||
 							(!SyllabusService.syllabus.common &&
 								$scope.userService.isAllowed('syllabusWrite', SyllabusService.syllabus) &&
 								!$scope.element.common &&
-								!SyllabusService.template[$scope.element.templateStructureId].mandatory));
+								templateStructureElement && !templateStructureElement.mandatory));
 
 				},
 
