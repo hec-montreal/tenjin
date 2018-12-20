@@ -192,6 +192,10 @@
 		<property name="entityManager">
 			<ref bean="org.sakaiproject.entity.api.EntityManager" />
 		</property>
+		
+		<property name="discussionForumManager">
+            <ref bean="org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager"/>
+        </property> 
 	</bean>
 
 </beans>

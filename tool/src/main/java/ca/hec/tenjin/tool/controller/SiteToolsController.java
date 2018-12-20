@@ -25,6 +25,8 @@ import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.provider.tool.AssignmentToolEntityProvider;
 import ca.hec.tenjin.api.provider.tool.SamigoToolEntityProvider;
 import ca.hec.tenjin.tool.controller.util.CsrfUtil;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,6 +34,8 @@ import org.sakaiproject.announcement.api.AnnouncementChannel;
 import org.sakaiproject.announcement.api.AnnouncementMessageEdit;
 import org.sakaiproject.announcement.api.AnnouncementMessageHeaderEdit;
 import org.sakaiproject.announcement.api.AnnouncementService;
+import org.sakaiproject.api.app.messageforums.DiscussionForum;
+import org.sakaiproject.api.app.messageforums.DiscussionTopic;
 import org.sakaiproject.component.cover.ServerConfigurationService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.exception.PermissionException;
@@ -56,10 +60,6 @@ import java.util.*;
 public class SiteToolsController {
 
 	private static Log log = LogFactory.getLog(SiteToolsController.class);
-
-	public final String BLOCKED_FORUM_TOPIC = "forum_topic";
-
-	public final String BLOCKED_TOPIC = "topic";
 
 	@Setter
 	@Autowired
@@ -100,9 +100,23 @@ public class SiteToolsController {
 		assignment.put("type", "folder");
 		assignment.put("resourceChildren", assignmentToolEntityProvider.getEntities(siteId, sakaiProxy.getCurrentUserId()));
 		tools.add(assignment);
+	
+		List<Forum> forums = new ArrayList<>();
+		List<DiscussionForum> rawForums = sakaiProxy.getSiteForums();
+		
+		for (DiscussionForum forum : rawForums)
+		{
+			forums.add(new Forum(forum));
+		}
+		
+		Map<String, Object> forum = new HashMap<>();
+		forum.put("name", "FORUM");
+		forum.put("type", "folder");
+		forum.put("resourceChildren", forums);
+		tools.add(forum);
 		
 		ret.put("resourceChildren", tools);
-		
+	
 		return ret;
 	}
 
@@ -166,4 +180,50 @@ public class SiteToolsController {
 		return channel;
 	}
 
+	@Data
+	public static abstract class ForumNode
+	{
+		private String resourceId;
+		private String name;
+		private String type;
+		
+		public String getUrl()
+		{
+			return "/direct/" + type + "/" + resourceId;
+		}
+	}
+	
+	@Data
+	@EqualsAndHashCode(callSuper = true)
+	public static class Forum extends ForumNode
+	{
+		private List<Topic> resourceChildren;
+		
+		@SuppressWarnings("unchecked")
+		public Forum (DiscussionForum forum)
+		{
+			setResourceId(String.valueOf(forum.getId()));
+			setName(forum.getTitle());
+			setType("forum");
+			
+			this.resourceChildren = new ArrayList<>();
+			
+			for (DiscussionTopic topic : (List<DiscussionTopic>) (List<?>) forum.getTopics())
+			{
+				this.resourceChildren.add(new Topic(topic));
+			}
+		}
+	}
+	
+	@Data
+	@EqualsAndHashCode(callSuper = true)
+	public static class Topic extends ForumNode
+	{		
+		public Topic (DiscussionTopic topic)
+		{
+			setResourceId(String.valueOf(topic.getId()));
+			setName(topic.getTitle());
+			setType("forum_topic");
+		}
+	}
 }

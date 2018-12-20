@@ -2,6 +2,10 @@ package ca.hec.tenjin.api;
 
 import ca.hec.tenjin.api.export.model.SakaiCitation;
 import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
+
+import org.sakaiproject.api.app.messageforums.DiscussionForum;
+import org.sakaiproject.api.app.messageforums.DiscussionTopic;
+import org.sakaiproject.api.app.messageforums.Topic;
 import org.sakaiproject.authz.api.AuthzGroup;
 import org.sakaiproject.authz.api.AuthzPermissionException;
 import org.sakaiproject.authz.api.GroupNotDefinedException;
@@ -20,6 +24,7 @@ import org.sakaiproject.user.api.UserNotDefinedException;
 import java.io.ByteArrayOutputStream;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -102,4 +107,8 @@ public interface SakaiProxy {
 	public ContentResourceEdit addPdfToArchive(String id, String type, ByteArrayOutputStream content, ResourceProperties properties, int priority);
 	
 	public String getSyllabusReference (Long  syllabusId, Long elementId);
+	
+	public Map<String, String> getSomeForumInfo ();
+	
+	public List<DiscussionForum> getSiteForums ();
 }

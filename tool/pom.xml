@@ -163,6 +163,11 @@
 			<groupId>org.sakaiproject.message</groupId>
 			<artifactId>sakai-message-api</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.sakaiproject.msgcntr</groupId>
+			<artifactId>messageforums-api</artifactId>
+		</dependency>
 	</dependencies>
 
 	<repositories>

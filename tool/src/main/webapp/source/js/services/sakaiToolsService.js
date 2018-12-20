@@ -68,4 +68,8 @@ tenjinApp.service('SakaiToolsService', ['$rootScope', '$q', '$http', function ( 
 
 		return undefined;
 	};
+
+	var getForums = function () {
+		return toolsEntities.forums.forums;
+	};
 }]);

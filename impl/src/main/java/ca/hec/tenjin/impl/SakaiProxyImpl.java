@@ -3,6 +3,12 @@ package ca.hec.tenjin.impl;
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.TenjinFunctions;
 import ca.hec.tenjin.api.ToolUtil;
+
+import org.sakaiproject.api.app.messageforums.DiscussionForum;
+import org.sakaiproject.api.app.messageforums.DiscussionTopic;
+import org.sakaiproject.api.app.messageforums.Topic;
+import org.sakaiproject.api.app.messageforums.ui.DiscussionForumManager;
+
 import ca.hec.tenjin.api.export.model.SakaiCitation;
 import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
 import ca.hec.tenjin.api.model.syllabusconstants.EntityDataUtils;
@@ -60,6 +66,7 @@ public class SakaiProxyImpl implements SakaiProxy {
 	private PreferencesService preferencesService;
 	private TimeService timeService;
 	private EntityManager entityManager;
+	private DiscussionForumManager discussionForumManager;
 
 	public void init() {
 
@@ -528,5 +535,37 @@ public class SakaiProxyImpl implements SakaiProxy {
 		}
 		
 		return syllabusReference;
+	}
+
+	@Override
+	// http://zcpilote.hec.ca/portal/site/30-400-17.H2018-AL/tool/bd26c4a1-2cda-4d4e-8c8e-36a22a91b1a7/discussionForum/forumsOnly/dfForums
+	// http://localhost:8080/portal/site/30-400-17.H2018-AL/tool/87b7a380-9e9f-4591-84a3-927787b8cae9/index.jsp?sakai.tool.placement.id=87b7a380-9e9f-4591-84a3-927787b8cae9#/syllabus/2651/52008
+	public Map<String, String> getSomeForumInfo() {
+		Map<String, String> ret = new HashMap<>();
+		List forums = discussionForumManager.getDiscussionForumsWithTopics(getCurrentSiteId());
+	
+		ret.put("forums.size", "" + forums.size());
+		
+		if (forums.size() > 0)
+		{
+			ret.put("forums.type", forums.get(0).getClass().getName());
+			
+			List topics = discussionForumManager.getTopicsByIdWithMessages(((DiscussionForum)forums.get(0)).getId());
+			
+			ret.put("forums[0].topics.size", "" + topics.size());
+			
+			if (topics.size() > 0)
+			{
+				ret.put("forums[0].topics.type", topics.get(0).getClass().getName());
+			}
+		}
+
+		return ret;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DiscussionForum> getSiteForums () {
+		return (List<DiscussionForum>) (List<?>) discussionForumManager.getDiscussionForumsWithTopics(getCurrentSiteId());
 	}
 }

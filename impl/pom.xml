@@ -147,6 +147,11 @@
 			<version>11.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.sakaiproject.msgcntr</groupId>
+			<artifactId>messageforums-api</artifactId>
+		</dependency>
+
 		<!-- spring and hibernate -->
 		<dependency>
 			<groupId>org.springframework</groupId>
