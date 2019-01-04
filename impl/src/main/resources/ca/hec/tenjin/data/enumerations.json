@@ -240,5 +240,9 @@
 	}, {
 		"id": 16,
 		"name": "CONTACT_VISITOR_PROFESSOR"
+	}, {
+		"id": 17,
+		"name": "CONTACT_TITLE_PRINCIPALSECRETARY"
+
 	}]
 }
