@@ -17,14 +17,14 @@
 		{{::item.name}}
 	</div>
 
-	<div data-ng-if="item.type === 'forum'" class="folder" data-ng-click="setSelectedResource(item)">
+	<div data-ng-if="item.type === 'forum'" class="folder" data-ng-click="setSelectedResource(item)" data-ng-class="{'item-selected': (element.$selectedResource.resourceId === item.resourceId) }">
 		<a class="btn btn-success btn-xs" data-ng-click="toggleTree(this)">
 			<span class="glyphicon" data-ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>
 			{{::item.name | translate}}
 		</a>
 	</div>
 
-	<div data-ng-if="item.type === 'forum_topic'" data-ng-click="setSelectedResource(item)" class="select-resource" data-ng-class="{'item-selected': (element.$selectedResource.resourceId === item.resourceId) }"">
+	<div data-ng-if="item.type === 'forum_topic'" data-ng-click="setSelectedResource(item)" class="select-resource" data-ng-class="{'item-selected': (element.$selectedResource.resourceId === item.resourceId) }">
 		{{::item.name}}
 	</div>
 
