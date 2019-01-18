@@ -47,7 +47,11 @@ tenjinApp.service('TenjinService', ['$q', '$translate', 'tmhDynamicLocale', 'con
 
 				var success = function() {
 					SyllabusService.loadTemplate().then(function() {
-						ret.resolve();
+						UserService.loadAnnotations(SyllabusService.getSyllabus()).then(function () {
+							ret.resolve();
+						}).catch(function (e) {
+							ret.reject(e);
+						});
 					}).catch(function(e) {
 						ret.reject(e);
 					});

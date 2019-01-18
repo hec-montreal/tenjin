@@ -1,11 +1,14 @@
 tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, config) {
 	'use strict';
 
+	this.profile = null;
+	this.annotations = null;
+
 	/**
 	 * Load and set the current user profile
 	 * @return The async promise
 	 */
-	this.loadProfile = function() {
+	this.loadProfile = function () {
 		var tthis = this;
 		var ret = $q.defer();
 
@@ -15,6 +18,39 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 			ret.resolve(data);
 		}).error(function (data) {
 			ret.reject('userProfileLoadError');
+		});
+
+		return ret.promise;
+	};
+
+	this.loadAnnotations = function (syllabus) {
+		var tthis = this;
+		var ret = $q.defer();
+
+		$http.get('v1/user-annotations/' + syllabus.id + '.json').success(function (data) {
+			tthis.annotations = data;
+
+			ret.resolve(data);
+		}).error(function (data) {
+			ret.reject('annotationsLoadError');
+		});
+
+		return ret.promise;
+	};
+
+	this.createAnnotation = function (syllabusId, publishedElementId) {
+		var ret = $q.defer();
+
+		var annotation = {
+			'syllabusId': syllabusId,
+			'publishedElementId': publishedElementId,
+			'type' :'CHECK'
+		};
+
+		$http.post('v1/user-annotations.json', annotation).success(function (data) {
+			ret.resolve(data);
+		}).error(function (data) {
+			ret.reject('annotationCreateError');
 		});
 
 		return ret.promise;

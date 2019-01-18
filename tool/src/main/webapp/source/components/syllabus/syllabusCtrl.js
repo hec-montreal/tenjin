@@ -92,6 +92,14 @@
 		});
 	};
 
+	$scope.createAnnotation = function () {
+		var s = SyllabusService.getSyllabus();
+
+		UserService.createAnnotation(s.id, s.elements[0].id).then(function () {
+			alert('Ok');
+		});
+	};
+
 	$scope.pdf = function(published) {
 	    if (published && SyllabusService.getSyllabus().publishedDate === null) {
 	        // syllabus must be published

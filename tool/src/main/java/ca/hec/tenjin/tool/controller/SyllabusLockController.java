@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.view.RedirectView;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusLockService;
@@ -131,6 +132,11 @@ public class SyllabusLockController {
 		return lock;
 	}
 
+	@RequestMapping(value = "/syllabus/{syllabusId}/lock/renew", method = RequestMethod.GET)
+	public RedirectView handleAnnoyingGet () {
+		return new RedirectView("/");
+	}
+	
 	@ExceptionHandler(SyllabusLockedException.class)
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 	public @ResponseBody SyllabusLockedException handleSyllabusLockedException(SyllabusLockedException ex) {
