@@ -202,8 +202,10 @@ public class UserController {
 				Map<String, Object> typeMap = new HashMap<>();
 				String typeName = type.name().toLowerCase();
 
-				typeMap.put(typeName + "EnabledElementTypes", userAnnotationService.getEnabledElementTypesForAnnotationType(type));
-				typeMap.put(typeName + "DefaultElementTypes", userAnnotationService.getDefaultElementTypesForAnnotationType(type));
+				typeMap.put("attributeName", type.getAttributeName());
+				typeMap.put("attributeStringKey", type.getAttributeStringKey());
+				typeMap.put("enabledElementTypes", userAnnotationService.getEnabledElementTypesForAnnotationType(type));
+				typeMap.put("defaultElementTypes", userAnnotationService.getDefaultElementTypesForAnnotationType(type));
 			
 				userAnnotationTypes.put(typeName, typeMap);
 			}

@@ -1,3 +1,4 @@
+<textarea>{{element}}</textarea>
 <div data-ng-if="!isElementDragged(element) ">
 	<div data-ng-if="!isElementHiddenByViewMode(element) " ui-tree-handle data-ng-class="['tree-node', 'tree-node-content', {'no-drag': element.providerId != null || !userService.isAllowed('syllabusWrite', syllabusService.syllabus) || syllabusLockService.lockError}]">
 		<div data-ng-switch="element.type" data-nodrag="{{syllabusLockService.lockError || element.type === 'composite'}}" data-ng-class="['element-host', {'important': element.important, 'no-buttons': !userService.canEditElement(element,syllabusService.syllabus)}]">
