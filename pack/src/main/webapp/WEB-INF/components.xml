@@ -115,7 +115,8 @@
 		<property name="target">
 			<bean class="ca.hec.tenjin.impl.UserAnnotationServiceImpl">
 				<!-- API injection -->
-				<property name="UserAnnotationDao" ref="ca.hec.tenjin.api.dao.UserAnnotationDao" />
+				<property name="userAnnotationDao" ref="ca.hec.tenjin.api.dao.UserAnnotationDao" />
+				<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 			</bean>
 		</property>
 		

@@ -3,6 +3,7 @@ package ca.hec.tenjin.api;
 import java.util.List;
 
 import ca.hec.tenjin.api.model.userdata.UserAnnotation;
+import ca.hec.tenjin.api.model.userdata.UserAnnotationTypes;
 
 public interface UserAnnotationService {
 
@@ -36,5 +37,14 @@ public interface UserAnnotationService {
 	 * @param annotation
 	 */
 	public void delete(UserAnnotation annotation);
-
+	
+	/*
+	 * Get enabled element types list for annotation type
+	 */
+	public List<String> getEnabledElementTypesForAnnotationType(UserAnnotationTypes type);
+	
+	/*
+	 * Get default enabled element types list for annotation type
+	 */
+	public List<String> getDefaultElementTypesForAnnotationType(UserAnnotationTypes type);
 }
