@@ -49,6 +49,7 @@ import ca.hec.tenjin.api.UserAnnotationService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.userdata.UserAnnotation;
 import ca.hec.tenjin.api.model.userdata.UserAnnotationTypes;
 import ca.hec.tenjin.api.provider.CourseOutlineProvider;
 import ca.hec.tenjin.tool.controller.util.CsrfUtil;
@@ -104,6 +105,9 @@ public class UserController {
 		List<Long> syllabusRead = new ArrayList<Long>();
 		List<Long> syllabusWrite = new ArrayList<Long>();
 		List<Long> syllabusPublish = new ArrayList<Long>();
+		
+		// User annotations
+		Map<Long, List<UserAnnotation>> userAnnotations = new HashMap<>();
 
 		// Permissions to the site and sections
 		try {
@@ -169,6 +173,7 @@ public class UserController {
 
 		// check user permission on each syllabus
 		List<Syllabus> syllabusList = syllabusService.getSyllabusListForUser(siteId, sakaiProxy.getCurrentUserId());
+		
 		if (syllabusList != null) {
 			for (Syllabus syllabus : syllabusList) {
 
@@ -184,6 +189,8 @@ public class UserController {
 				if (securityService.canPublish(currentUserId, syllabus)) {
 					syllabusPublish.add(syllabus.getId());
 				}
+				
+				userAnnotations.put(syllabus.getId(), userAnnotationService.getAnnotationsForUserAndSyllabus(currentUserId, syllabus.getId()));
 			}
 		}
 
@@ -191,6 +198,8 @@ public class UserController {
 		profile.put("syllabusRead", syllabusRead);
 		profile.put("syllabusWrite", syllabusWrite);
 		profile.put("syllabusPublish", syllabusPublish);
+		
+		profile.put("userAnnotations", userAnnotations);
 		
 		// User annotations active on these elements (editor only)
 		Map<String, Object> userAnnotationTypes = new HashMap<>();
@@ -210,8 +219,8 @@ public class UserController {
 				userAnnotationTypes.put(typeName, typeMap);
 			}
 		}
-		
-		profile.put("userAnnotationTypes", userAnnotationTypes);
+				
+		profile.put("userAnnotationTypes", userAnnotationTypes);		
 		
 		// Lock
 		String lockRenewDelaySeconds = sakaiProxy.getSakaiProperty(TenjinProperties.PROPERTY_SYLLABUS_LOCK_RENEW_DELAY_SECONDS);

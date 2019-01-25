@@ -55,10 +55,6 @@
 							<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
 						</button>
 
-						<button class="action" data-ng-click="createAnnotation()">
-							CREATE ANNOTATION
-						</button>
-
 						<div uib-dropdown class="pdf-dropdown">
 							<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" type="button" class="btn action-list" uib-dropdown-toggle ng-click="popPdf()" ng-disabled="syllabusService.isWorking()">
 								<img src="img/icon-pdf.png"></img>

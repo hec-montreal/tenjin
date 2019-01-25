@@ -17,9 +17,12 @@ tenjinApp.directive('elementCommonAttributes', ['$anchorScroll', '$location', 'M
 		templateUrl: 'elementCommonAttributes/elementCommonAttributes.html',
 
 		controller: function($scope) {
+			$scope.mode = $scope.$parent.$parent.mode;
+
 			if ($scope.element.attributes.evalDate) {
 				$scope.element.attributes.evalDate = new Date($scope.element.attributes.evalDate);
 			}
+
 			if ($scope.element.availabilityEndDate) {
 				$scope.element.hasEndDate = true;
 			}
@@ -77,13 +80,18 @@ tenjinApp.directive('elementCommonAttributes', ['$anchorScroll', '$location', 'M
 			};
 
 			$scope.isUserAnnotationTypeChecked = function (annotationType) {
-				for (var i = 0; i < annotationType.defaultElementTypes.length; i++) {
-					if (annotationType.defaultElementTypes[i] === $scope.element.type) {
-						return true;
+				// Use default value when creation an element
+				if ($scope.mode === 'creation') {
+					for (var i = 0; i < annotationType.defaultElementTypes.length; i++) {
+						if (annotationType.defaultElementTypes[i] === $scope.element.type) {
+							return true;
+						}
 					}
-				}
 
-				return false;
+					return false;
+				};
+
+				return'' + $scope.element.attributes[annotationType.attributeName] === 'true';
 			};
 		},
 

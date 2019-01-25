@@ -44,6 +44,10 @@
 					<h3>{{ 'FORM_IMPORTANT' | translate }}</h3>
 				</div>
 
+				<div data-ng-if="element.attributes['checkable'] === 'true'">
+					<input type="checkbox" ng-click="checkOrUncheckElement()" ng-checked="isElementCheckedByAnnotation()" />
+				</div>
+
 				<cluster-element data-ng-switch-when="composite" data-cluster-element="element"></cluster-element>
 
 				<!-- Lecture element -->

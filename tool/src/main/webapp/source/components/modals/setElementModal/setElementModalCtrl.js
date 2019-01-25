@@ -43,7 +43,6 @@
 			$scope.element.preSave.call($scope.element);
 		}
 
-
         //delete empty attributes
         var keys = Object.keys($scope.element.attributes);
         for (var j=0; j < keys.length; j++){

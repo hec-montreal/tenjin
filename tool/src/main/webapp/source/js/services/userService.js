@@ -38,13 +38,14 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 		return ret.promise;
 	};
 
-	this.createAnnotation = function (syllabusId, publishedElementId) {
+	this.createAnnotation = function (syllabusId, publishedElementId, annotationType, annotationValue) {
 		var ret = $q.defer();
 
 		var annotation = {
 			'syllabusId': syllabusId,
 			'publishedElementId': publishedElementId,
-			'type' :'CHECK'
+			'type' : annotationType,
+			'value': annotationValue
 		};
 
 		$http.post('v1/user-annotations.json', annotation).success(function (data) {
@@ -54,6 +55,40 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 		});
 
 		return ret.promise;
+	};
+
+	this.deleteAnnotation = function (annotation) {
+		$http.post('v1/user-annotations/' + annotation.id + '/delete.json').success(function (data) {
+			ret.resolve(data);
+		}).error(function (data) {
+			ret.reject('annotationDeleteError');
+		});
+	};
+
+	this.getAnnotationsForElement = function (syllabusId, publishedElementId) {
+		var ret = [];
+
+		for (var i = 0; i < this.profile.userAnnotations[syllabusId].length; i++) {
+			var annotation = this.profile.userAnnotations[syllabusId][i];
+
+			if (annotation.publishedElementId === publishedElementId) {
+				ret.push(annotation);
+			}
+		}
+
+		return ret;
+	};
+
+	this.isElementCheckedByAnnotation = function (syllabusId, publishedElementId) {
+		for (var i = 0; i < this.profile.userAnnotations[syllabusId]; i++) {
+			var annotation = this.profile.userAnnotations[syllabusId][i];
+
+			if (annotation.publishedElementId === publishedElementId) {
+				return true;
+			}
+		}
+
+		return false;
 	};
 
 	/**
