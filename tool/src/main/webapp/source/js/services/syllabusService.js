@@ -73,15 +73,14 @@
 	};
 
     this.cleanUpDraggedElements = function(syllabus){
-
         forEachElement(SyllabusService.getSyllabus(), function(element) {
-        			if (element.id === id) {
-        				tthis.selectElement(element);
+			if (element.id === id) {
+				tthis.selectElement(element);
 
-        				// Break
-        				return true;
-        			}
-        		});
+				// Break
+				return true;
+			}
+		});
     };
 
     

@@ -11,7 +11,7 @@
 	</div>
 
 	<div ng-repeat="atype in userAnnotationTypes" ng-if="isUserAnnotationTypeVisible(atype)">
-		<input type="checkbox" name="{{atype.attributeName}}" id="{{atype.attributeName}}Checkbox" data-ng-model="element.attributes[atype.attributeName]" ng-checked="isUserAnnotationTypeChecked(atype)" ng-true-value="true" ng-false-value="false"/>
+		<input type="checkbox" name="{{atype.attributeName}}" id="{{atype.attributeName}}Checkbox" data-ng-model="element.attributes[atype.attributeName]" ng-checked="isUserAnnotationTypeChecked(atype)" ng-true-value="'true'" ng-false-value="'false'"/>
 		<label for="{{atype.attributeName}}Checkbox">{{ atype.attributeStringKey | translate }}</label> 
 	</div>
 

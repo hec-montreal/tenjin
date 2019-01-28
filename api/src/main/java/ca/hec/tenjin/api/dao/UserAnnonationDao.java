@@ -15,6 +15,8 @@ public interface UserAnnonationDao {
 	 */
 	public List<UserAnnotation> getAnnotationsForUserAndSyllabus(String userId, Long syllabusId);
 	
+	public List<UserAnnotation> getAnnotationsForSyllabusElement(Long syllabusElementId);
+	
 	/**
 	 * Get an annotation by id
 	 * 

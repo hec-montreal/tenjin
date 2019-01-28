@@ -1,8 +1,10 @@
 tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, config) {
 	'use strict';
 
+	window.us = this;
+
 	this.profile = null;
-	this.annotations = null;
+	this.annotations = [];
 
 	/**
 	 * Load and set the current user profile
@@ -40,15 +42,19 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 
 	this.createAnnotation = function (syllabusId, publishedElementId, annotationType, annotationValue) {
 		var ret = $q.defer();
+		var tthis = this;
 
 		var annotation = {
 			'syllabusId': syllabusId,
-			'publishedElementId': publishedElementId,
+			'elementId': publishedElementId, // will be replaced in the back-end with the unpublished element id
 			'type' : annotationType,
 			'value': annotationValue
 		};
 
 		$http.post('v1/user-annotations.json', annotation).success(function (data) {
+			// Dont forget to push the new annotation
+			tthis.annotations.push(data);
+
 			ret.resolve(data);
 		}).error(function (data) {
 			ret.reject('annotationCreateError');
@@ -58,37 +64,26 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 	};
 
 	this.deleteAnnotation = function (annotation) {
+		var ret = $q.defer();
+		var tthis = this;
+
 		$http.post('v1/user-annotations/' + annotation.id + '/delete.json').success(function (data) {
+			// Dont forget to remove the new annotation
+			tthis.annotations.splice(tthis.annotations.indexOf(annotation), 1);
+
 			ret.resolve(data);
 		}).error(function (data) {
 			ret.reject('annotationDeleteError');
 		});
+
+		return ret.promise;
 	};
 
-	this.getAnnotationsForElement = function (syllabusId, publishedElementId) {
-		var ret = [];
-
-		for (var i = 0; i < this.profile.userAnnotations[syllabusId].length; i++) {
-			var annotation = this.profile.userAnnotations[syllabusId][i];
-
-			if (annotation.publishedElementId === publishedElementId) {
-				ret.push(annotation);
-			}
-		}
-
-		return ret;
-	};
-
-	this.isElementCheckedByAnnotation = function (syllabusId, publishedElementId) {
-		for (var i = 0; i < this.profile.userAnnotations[syllabusId]; i++) {
-			var annotation = this.profile.userAnnotations[syllabusId][i];
-
-			if (annotation.publishedElementId === publishedElementId) {
-				return true;
-			}
-		}
-
-		return false;
+	this.getAnnotationsForElement = function (syllabusId, publishedElementId, annotationType) {
+		return this.annotations.filter(function (a) {
+			return (a.elementId === publishedElementId) && 
+				   (!annotationType || (a.type === annotationType));
+		});
 	};
 
 	/**

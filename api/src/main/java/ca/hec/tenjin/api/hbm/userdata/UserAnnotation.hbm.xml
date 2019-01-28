@@ -16,9 +16,9 @@
 
 		<property name="userId" type="string" column="USER_ID" not-null="true" />
 
-		<property name="publishedElementId" type="long" column="PUBSYLLABUSELEMENT_ID" not-null="true" />
+		<property name="elementId" type="long" column="SYLLABUSELEMENT_ID" not-null="true" />
 
-		<property name="type" column="ANNOTATION_TYPE">
+		<property name="type" column="ANNOTATION_TYPE" not-null="true">
 			<type name="org.hibernate.type.EnumType">
 				<param name="enumClass">ca.hec.tenjin.api.model.userdata.UserAnnotationTypes</param>
 			</type>

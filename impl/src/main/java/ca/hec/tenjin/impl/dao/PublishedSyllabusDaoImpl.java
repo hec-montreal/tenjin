@@ -1,12 +1,11 @@
 package ca.hec.tenjin.impl.dao;
 
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
-import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.tenjin.api.model.syllabus.published.*;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -14,7 +13,18 @@ import org.hibernate.criterion.Restrictions;
 import org.sakaiproject.content.api.ContentResource;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import java.util.*;
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
+import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedDocumentElement;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedImageElement;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabus;
+import ca.hec.tenjin.api.model.syllabus.published.PublishedSyllabusElementMapping;
+import lombok.Setter;
 
 public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements PublishedSyllabusDao {
 	private Log log = LogFactory.getLog(PublishedSyllabusDaoImpl.class);
@@ -281,6 +291,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		return (List<PublishedSyllabus>) getHibernateTemplate().find("from PublishedSyllabus where site_id = ? and publishedDate is not null and deleted = false", siteId);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<PublishedSyllabusElementMapping> getMappingsForPublishedElement(AbstractPublishedSyllabusElement element) {
 		DetachedCriteria dc = DetachedCriteria.forClass(PublishedSyllabusElementMapping.class);
 		dc.add(Restrictions.eq("publishedSyllabusElement", element));
@@ -298,10 +309,23 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		return syllabuses;
 	}
 
+	@SuppressWarnings("unchecked")
 	public AbstractPublishedSyllabusElement getPublishedSyllabusElement(Long elementId) {
 		List<AbstractPublishedSyllabusElement> elements;
 		elements = (List<AbstractPublishedSyllabusElement>) getHibernateTemplate().find("from AbstractPublishedSyllabusElement where id = ?", elementId);
 		AbstractPublishedSyllabusElement element = elements.get(0);
 		return element;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public AbstractSyllabusElement getSyllabusElementForPublishedSyllabusElementId(Long elementId) {
+		List<AbstractSyllabusElement> ret = (List<AbstractSyllabusElement>) getHibernateTemplate().find("from AbstractSyllabusElement where publishedId = ?", elementId);
+		
+		if (ret.size() == 0) {
+			return null;
+		}
+		
+		return ret.get(0);
 	}
 }

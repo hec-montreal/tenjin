@@ -14,6 +14,7 @@ import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.UserAnnotationService;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoUserAnnotationException;
+import ca.hec.tenjin.api.exception.SyllabusException;
 import ca.hec.tenjin.api.model.userdata.UserAnnotation;
 import lombok.Setter;
 
@@ -33,14 +34,16 @@ public class UserAnnotationsController {
 	public @ResponseBody List<UserAnnotation> getAnnotationsForUserAndSyllabus(@PathVariable Long syllabusId) {
 		String userId = sakaiProxy.getCurrentUserId();
 		
-		return userAnnotationService.getAnnotationsForUserAndSyllabus(userId, syllabusId);
+		return userAnnotationService.getAnnotationsForStudent(userId, syllabusId);
 	}
 	
 	@RequestMapping(value = "/user-annotations", method = RequestMethod.POST)
-	public @ResponseBody void createAnnotation(@RequestBody UserAnnotation annotation) throws DeniedAccessException {
+	public @ResponseBody UserAnnotation createAnnotation(@RequestBody UserAnnotation annotation) throws SyllabusException {
 		annotation.setUserId(sakaiProxy.getCurrentUserId());
 		
-		userAnnotationService.save(annotation);
+		userAnnotationService.createAnnotation(annotation);
+		
+		return annotation;
 	}
 	
 	@RequestMapping(value = "/user-annotations/{id}/delete", method = RequestMethod.POST)

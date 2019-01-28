@@ -2,6 +2,7 @@ package ca.hec.tenjin.api;
 
 import java.util.List;
 
+import ca.hec.tenjin.api.exception.SyllabusException;
 import ca.hec.tenjin.api.model.userdata.UserAnnotation;
 import ca.hec.tenjin.api.model.userdata.UserAnnotationTypes;
 
@@ -16,6 +17,8 @@ public interface UserAnnotationService {
 	 */
 	public List<UserAnnotation> getAnnotationsForUserAndSyllabus(String userId, Long syllabusId);
 	
+	public List<UserAnnotation> getAnnotationsForStudent(String userId, Long syllabusId);
+	
 	/**
 	 * Get an annotation by id
 	 * 
@@ -23,6 +26,8 @@ public interface UserAnnotationService {
 	 * @return
 	 */
 	public UserAnnotation getAnnotationById(Long id);
+	
+	public void createAnnotation(UserAnnotation annotation) throws SyllabusException;
 	
 	/**
 	 * Save an annotation
@@ -37,6 +42,8 @@ public interface UserAnnotationService {
 	 * @param annotation
 	 */
 	public void delete(UserAnnotation annotation);
+	
+	public void deleteForSyllabusElement(Long syllabusElementId);
 	
 	/*
 	 * Get enabled element types list for annotation type

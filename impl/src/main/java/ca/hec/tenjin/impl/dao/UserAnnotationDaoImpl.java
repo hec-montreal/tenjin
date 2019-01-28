@@ -15,6 +15,12 @@ public class UserAnnotationDaoImpl extends HibernateDaoSupport implements UserAn
 		return (List<UserAnnotation>) getHibernateTemplate().find("from UserAnnotation where userId = ? and syllabusId = ?", userId, syllabusId);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserAnnotation> getAnnotationsForSyllabusElement(Long syllabusElementId) {
+		return (List<UserAnnotation>) getHibernateTemplate().find("from UserAnnotation where elementId = ?", syllabusElementId);
+	}
+	
 	@Override
 	public UserAnnotation getAnnotationById(Long id) {
 		return getHibernateTemplate().get(UserAnnotation.class, id);
