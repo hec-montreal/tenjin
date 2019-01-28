@@ -1,4 +1,15 @@
 ﻿<div class="element-form"> 
+	<!-- Title -->
+	<div class="row field">
+		<div class="col-md-2">
+			<label for="videoTitle" class="label-text-title">{{ 'FORM_TITLE' | translate }}</label>
+		</div>
+
+		<div class="col-md-10">
+			<input id="videoTitle" type="text" name="title" data-ng-model="element.title" class="input-text-title" />
+		</div>
+	</div>
+
 	<div class="row field">
 		<div class="col-md-2">
 			<label for="inputMode">{{ 'SOURCE' | translate }}</label>
