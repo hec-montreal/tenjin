@@ -101,7 +101,7 @@ public class UserController {
 			site = sakaiProxy.getSite(siteId);
 
 			profile.put("siteId", siteId);
-			profile.put("courseTitle", site.getTitle());
+			profile.put("courseTitle", site.getProperties().get("title"));
 
 			profile.put("locale", sakaiProxy.getCurrentUserLocale());
 

@@ -126,4 +126,12 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 	    return this.profile.csrf_token;
 	};
 
+	this.getSiteId = function() {
+	    return this.profile.siteId;
+	};
+
+	this.getCourseTitle = function() {
+	    return this.profile.courseTitle;
+	};
+
 }]);
