@@ -3,15 +3,9 @@
 		<div class="element-title syllabus-text" data-ng-if="element.title">
 			{{ element.title }}
 		</div>
-		<div class="row embed" data-ng-if="element.attributes.videoUrl">
-			<iframe height="220" src="{{videoUrl}}" frameborder="0" allowfullscreen ng-if="isIframe" class="col-sm-3 col-xs-12"></iframe>
-			<span ng-bind-html="videoUrl" ng-if="!isIframe"></span>
+		<div class="row embed" data-ng-if="videoEmbedHtml">
+			<span ng-bind-html="videoEmbedHtml"></span>
 			<span ng-bind-html="element.description" class="col-sm-9 col-xs-12 comment syllabus-text"></span>
-		</div>
-
-		<div class="row embed" data-ng-if="embedCode" data-nodrag>
-			<span ng-bind-html="embedCode" class="col-md-12 "></span>
-			<span ng-bind-html="element.description" class="col-md-12 comment syllabus-text"></span>
 		</div>
 	</div>
 </div>

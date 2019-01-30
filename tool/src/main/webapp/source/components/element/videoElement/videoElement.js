@@ -9,26 +9,13 @@ tenjinApp.directive('videoElement', ['$sce', function($sce) {
 		templateUrl: 'element/videoElement/videoElement.html',
 
 		controller: function($scope) {
-			$scope.isIframe = true;
-
 			// Url validation
 			if ($scope.element.attributes.videoUrl) {
 				var videoEmbedUrl;
 
 				// look for the source (youtube, vimeo, dailymotion)
-				// Embed ou iframe 
-				if ($scope.element.attributes.videoUrl.indexOf('<object') > -1 || $scope.element.attributes.videoUrl.indexOf('<iframe') > -1) {
-					$scope.isIframe = false;
-
-					// Set default height and width to 300*220
-					var res = $scope.element.attributes.videoUrl.replace(/height="[0-9]*"/g, "height=220");
-					// replace pixel width by classes containing width percentages
-					var res2 = res.replace(/width=(")*[0-9]*(")*/g, "class='col-sm-3 col-xs-12'");
-
-					videoEmbedUrl = res2;
-				}
 				// YOUTUBE
-				else if ($scope.element.attributes.videoUrl.indexOf('youtube') > -1 || $scope.element.attributes.videoUrl.indexOf('youtu.be') > -1) {
+				if ($scope.element.attributes.videoUrl.indexOf('youtube') > -1 || $scope.element.attributes.videoUrl.indexOf('youtu.be') > -1) {
 					var res = $scope.element.attributes.videoUrl.replace("watch?v=", "embed/");
 					videoEmbedUrl = res.replace("&feature=youtu.be", "");
 				} // VIMEO 
@@ -54,9 +41,9 @@ tenjinApp.directive('videoElement', ['$sce', function($sce) {
 					}
 				}
 
-				$scope.videoUrl = videoEmbedUrl;
+				$scope.videoEmbedHtml = $sce.trustAsHtml('<iframe height="220" src="'+videoEmbedUrl+'" frameborder="0" allowfullscreen class="col-sm-3 col-xs-12"></iframe>');
 			} else if ($scope.element.attributes.embedCode) {
-				$scope.embedCode = $sce.trustAsHtml($scope.element.attributes.embedCode);
+				$scope.videoEmbedHtml = $sce.trustAsHtml($scope.element.attributes.embedCode);
 			}
 		}
 	};
