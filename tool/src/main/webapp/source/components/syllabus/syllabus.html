@@ -2,7 +2,7 @@
 	<div id="syllabus">
 		<div class="row">
 			<h1 class="course-title col-xs-12 mobile-toggle">
-				{{userService.getSiteId()}}<span data-ng-if="userService.getCourseTitle() !== null"> - {{ userService.getCourseTitle() }}</span> 
+				{{ ::userService.getSiteId() }}<span data-ng-if="userService.getCourseTitle() !== null"> - {{ ::userService.getCourseTitle() }}</span> 
 
 				<span class="student-view-title" data-ng-if="syllabusService.viewMode === 'student'">({{'VERSION_STUDENTS' | translate}})</span>
 				<span class="student-view-title" data-ng-if="syllabusService.viewMode === 'public'">({{'VERSION_PUBLIC' | translate}})</span>
