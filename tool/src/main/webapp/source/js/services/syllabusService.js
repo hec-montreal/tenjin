@@ -155,7 +155,7 @@
 			'common': false,
 			'templateId': (common ? common.templateId : null),
 			'elements': null,
-			'locale': 'fr_CA'
+			'locale': common.locale
 		};
 
 		return this.save(newSyllabus);
