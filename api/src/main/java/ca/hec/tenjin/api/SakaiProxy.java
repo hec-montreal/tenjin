@@ -1,11 +1,12 @@
 package ca.hec.tenjin.api;
 
-import ca.hec.tenjin.api.export.model.SakaiCitation;
-import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
+import java.io.ByteArrayOutputStream;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.sakaiproject.api.app.messageforums.DiscussionForum;
-import org.sakaiproject.api.app.messageforums.DiscussionTopic;
-import org.sakaiproject.api.app.messageforums.Topic;
 import org.sakaiproject.authz.api.AuthzGroup;
 import org.sakaiproject.authz.api.AuthzPermissionException;
 import org.sakaiproject.authz.api.GroupNotDefinedException;
@@ -21,11 +22,8 @@ import org.sakaiproject.site.api.Site;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import ca.hec.tenjin.api.export.model.SakaiCitation;
+import ca.hec.tenjin.api.model.syllabusconstants.EntityContent;
 
 /**
  * An interface to abstract all Sakai related API calls in a central method that
@@ -35,11 +33,6 @@ import java.util.Set;
  *
  */
 public interface SakaiProxy {
-
-	public final static String PROPERTY_SYLLABUS_LOCK_DELAY_SECONDS = "tenjin.syllabusLockDelaySeconds";
-	public final static String PROPERTY_SYLLABUS_LOCK_RENEW_DELAY_SECONDS = "tenjin.syllabusLockRenewDelaySeconds";
-	public final static String PROPERTY_SYLLABUS_LOCK_CHECK_COMMON_LOCK = "tenjin.syllabusLockCheckCommonLock";
-	public final static String PROPERTY_SYLLABUS_AUTOSAVE_DELAY_SECONDS = "tenjin.syllabusAutosaveDelaySeconds";
 
 	/**
 	 * Is the current user a superUser? (anyone in admin realm)

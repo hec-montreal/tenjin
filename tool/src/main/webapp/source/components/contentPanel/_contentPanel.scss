@@ -83,6 +83,24 @@
 		opacity: $opacity-not-published-element;
 	}
 
+	.check-gutter {
+		float: left;
+	}
+
+	.check-gutter input {
+		margin: 0 10px 0 0;
+	}
+
+	.next-to-check {
+		float: left;
+	}
+
+	.element-wrapper:after {
+		content: "";
+		clear: both;
+		display: table;
+	}
+
 	.notice {
 		padding-bottom: 5px;
 		h3 {

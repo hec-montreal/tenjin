@@ -23,6 +23,7 @@
 				<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 				<property name="securityService" ref="ca.hec.tenjin.api.TenjinSecurityService" />
 				<property name="syllabusLockService" ref="ca.hec.tenjin.api.SyllabusLockService" />
+				<property name="userAnnotationService" ref="ca.hec.tenjin.api.UserAnnotationService" />
 				<property name="contentHostingService" ref="org.sakaiproject.content.api.ContentHostingService" />
 				<property name="citationService" ref="org.sakaiproject.citation.api.CitationService" />
 			</bean>
@@ -54,13 +55,12 @@
 			</props>
 		</property>
 	</bean>
-	<bean id="ca.hec.tenjin.api.SyllabusServiceEntityProvider" class="ca.hec.tenjin.impl.SyllabusServiceEntityProviderImpl"
-		  init-method="init">
+	
+	<bean id="ca.hec.tenjin.api.SyllabusServiceEntityProvider" class="ca.hec.tenjin.impl.SyllabusServiceEntityProviderImpl" init-method="init">
 		<property name="entityManager" ref="org.sakaiproject.entity.api.EntityManager"/>
 		<property name="syllabusService" ref="ca.hec.tenjin.api.SyllabusService" />
 		<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
-
 	</bean>
 
 	<bean id="ca.hec.tenjin.api.PublishService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
@@ -110,10 +110,27 @@
 		<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
 	</bean>
 
-	<bean id="ca.hec.tenjin.api.ReportingService" class="ca.hec.tenjin.impl.ReportingServiceImpl">
+	<bean id="ca.hec.tenjin.api.UserAnnotationService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager" />
+
+		<property name="target">
+			<bean class="ca.hec.tenjin.impl.UserAnnotationServiceImpl">
+				<!-- API injection -->
+				<property name="userAnnotationDao" ref="ca.hec.tenjin.api.dao.UserAnnotationDao" />
+				<property name="publishedSyllabusDao" ref="ca.hec.tenjin.api.dao.PublishedSyllabusDao" />
+				<property name="syllabusDao" ref="ca.hec.tenjin.api.dao.SyllabusDao" />
+				<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+			</bean>
+		</property>
+		
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
 	</bean>
 
-	<bean id="ca.hec.tenjin.api.dao.SyllabusConstantsDao" class="ca.hec.tenjin.impl.dao.SyllabusConstantsDaoImpl">
+	<bean id="ca.hec.tenjin.api.ReportingService" class="ca.hec.tenjin.impl.ReportingServiceImpl">
 	</bean>
 	
 	<bean id="ca.hec.tenjin.api.SyllabusExportService" class="ca.hec.tenjin.impl.SyllabusExportServiceImpl">
@@ -129,6 +146,10 @@
 	
 	<bean id="ca.hec.tenjin.api.AssignmentToolEntityProvider" class="ca.hec.tenjin.impl.provider.tool.AssignmentToolEntityProviderImpl">
 		<property name="assignmentService" ref="org.sakaiproject.assignment.api.AssignmentService" />
+	</bean>
+	
+	<!-- Non database dao (json files) -->
+	<bean id="ca.hec.tenjin.api.dao.SyllabusConstantsDao" class="ca.hec.tenjin.impl.dao.SyllabusConstantsDaoImpl">
 	</bean>
 	
 	<bean name="ca.hec.tenjin.api.SakaiProxy" class="ca.hec.tenjin.impl.SakaiProxyImpl" init-method="init">

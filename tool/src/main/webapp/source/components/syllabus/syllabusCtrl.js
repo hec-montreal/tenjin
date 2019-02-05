@@ -17,6 +17,8 @@
 
 	$scope.mode = 'edit';
 
+	$scope.showCheckAnnotationsSummary = false;
+
 	var interval = null;
 
 	// Load syllabus
@@ -70,7 +72,7 @@
 		if (confirmLeave()) {
 			$state.go(TenjinService.viewState.stateName, {
 				id: syllabus.id,
-				elementId: undefined
+				elementId: null
 			});
 		}
 	};
@@ -136,6 +138,14 @@
 
 	$scope.startPublish = function() {
 		ModalService.prePublishSyllabus();
+	};
+
+	$scope.goToCheckAnnotationsSummary = function () {
+		$scope.showCheckAnnotationsSummary = true;
+	};
+
+	$scope.goToSyllabus = function () {
+		$scope.showCheckAnnotationsSummary = false;
 	};
 
 	$scope.$watch('syllabusService.syllabus', function(newValue, oldValue) {
