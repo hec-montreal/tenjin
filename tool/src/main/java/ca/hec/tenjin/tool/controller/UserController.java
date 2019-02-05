@@ -86,6 +86,7 @@ public class UserController {
 	@Autowired
 	private UserAnnotationService userAnnotationService;
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/userProfile", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> getUserProfile() throws DeniedAccessException, NoSiteException {
 		Map<String, Object> profile = new HashMap<String, Object>();
@@ -209,14 +210,13 @@ public class UserController {
 			for(UserAnnotationTypes type : UserAnnotationTypes.values())
 			{
 				Map<String, Object> typeMap = new HashMap<>();
-				String typeName = type.name().toLowerCase();
 
 				typeMap.put("attributeName", type.getAttributeName());
 				typeMap.put("attributeStringKey", type.getAttributeStringKey());
 				typeMap.put("enabledElementTypes", userAnnotationService.getEnabledElementTypesForAnnotationType(type));
 				typeMap.put("defaultElementTypes", userAnnotationService.getDefaultElementTypesForAnnotationType(type));
 			
-				userAnnotationTypes.put(typeName, typeMap);
+				userAnnotationTypes.put(type.name(), typeMap);
 			}
 		}
 				

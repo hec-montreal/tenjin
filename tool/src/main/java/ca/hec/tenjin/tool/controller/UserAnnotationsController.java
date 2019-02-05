@@ -16,6 +16,7 @@ import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoUserAnnotationException;
 import ca.hec.tenjin.api.exception.SyllabusException;
 import ca.hec.tenjin.api.model.userdata.UserAnnotation;
+import ca.hec.tenjin.api.model.userdata.UserAnnotationTypes;
 import lombok.Setter;
 
 @Controller
@@ -34,7 +35,7 @@ public class UserAnnotationsController {
 	public @ResponseBody List<UserAnnotation> getAnnotationsForUserAndSyllabus(@PathVariable Long syllabusId) {
 		String userId = sakaiProxy.getCurrentUserId();
 		
-		return userAnnotationService.getAnnotationsForStudent(userId, syllabusId);
+		return userAnnotationService.getAnnotationsForUserAndSyllabus(userId, syllabusId);
 	}
 	
 	@RequestMapping(value = "/user-annotations", method = RequestMethod.POST)
@@ -46,19 +47,15 @@ public class UserAnnotationsController {
 		return annotation;
 	}
 	
-	@RequestMapping(value = "/user-annotations/{id}/delete", method = RequestMethod.POST)
-	public @ResponseBody void deleteAnnotation(@PathVariable("id") Long id) throws DeniedAccessException, NoUserAnnotationException {
-		UserAnnotation annotation = userAnnotationService.getAnnotationById(id);
+	@RequestMapping(value = "/user-annotations/{publishedElementId}/{type}/delete", method = RequestMethod.POST)
+	public @ResponseBody void deleteAnnotationWithType(@PathVariable("publishedElementId") Long elementId, @PathVariable("type") String type) throws DeniedAccessException, NoUserAnnotationException {
+		UserAnnotationTypes uat = UserAnnotationTypes.valueOf(type);
+		List<UserAnnotation> annotations = userAnnotationService.getAnnotationsForUserAndPublishedSyllabusElement(sakaiProxy.getCurrentUserId(), elementId);
 		
-		if (annotation == null)
-		{
-			throw new NoUserAnnotationException();
+		for (UserAnnotation annotation : annotations) {
+			if (annotation.getType() == uat) {
+				userAnnotationService.delete(annotation);
+			}
 		}
-		
-		if (!annotation.getUserId().equals(sakaiProxy.getCurrentUserId())) {
-			throw new DeniedAccessException();
-		}
-		
-		userAnnotationService.delete(annotation);
 	}
 }

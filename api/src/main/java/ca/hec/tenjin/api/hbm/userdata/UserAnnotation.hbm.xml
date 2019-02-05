@@ -23,5 +23,7 @@
 				<param name="enumClass">ca.hec.tenjin.api.model.userdata.UserAnnotationTypes</param>
 			</type>
 		</property>
+		
+		<property name="value" type="string" column="VALUE" />
 	</class>
 </hibernate-mapping>

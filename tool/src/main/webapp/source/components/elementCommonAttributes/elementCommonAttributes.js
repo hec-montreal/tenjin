@@ -78,21 +78,6 @@ tenjinApp.directive('elementCommonAttributes', ['$anchorScroll', '$location', 'M
 
 				return false;
 			};
-
-			$scope.isUserAnnotationTypeChecked = function (annotationType) {
-				// Use default value when creation an element
-				if ($scope.mode === 'creation') {
-					for (var i = 0; i < annotationType.defaultElementTypes.length; i++) {
-						if (annotationType.defaultElementTypes[i] === $scope.element.type) {
-							return true;
-						}
-					}
-
-					return false;
-				};
-
-				return'' + $scope.element.attributes[annotationType.attributeName] === 'true';
-			};
 		},
 
 		link: function($scope, $element) {

@@ -18,8 +18,6 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 	var backupSyllabus = null;
 	var currentLanguage = $translate.use();
 
-	console.log('Using locale ' + currentLanguage);
-
 	$translate.use(SyllabusService.syllabus.locale).then(function() {
 		 $scope.DETAILS_TRANSLATE = $translate.instant('DETAILS', null, null, SyllabusService.syllabus.locale);
 		 

@@ -17,17 +17,10 @@ public interface UserAnnotationService {
 	 */
 	public List<UserAnnotation> getAnnotationsForUserAndSyllabus(String userId, Long syllabusId);
 	
-	public List<UserAnnotation> getAnnotationsForStudent(String userId, Long syllabusId);
-	
-	/**
-	 * Get an annotation by id
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public UserAnnotation getAnnotationById(Long id);
+	public List<UserAnnotation> getAnnotationsForUserAndPublishedSyllabusElement(String userId, Long publishedSyllabusElement);
 	
 	public void createAnnotation(UserAnnotation annotation) throws SyllabusException;
+	
 	
 	/**
 	 * Save an annotation

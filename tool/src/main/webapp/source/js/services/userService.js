@@ -42,18 +42,19 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 
 	this.createAnnotation = function (syllabusId, publishedElementId, annotationType, annotationValue) {
 		var ret = $q.defer();
-		var tthis = this;
 
 		var annotation = {
 			'syllabusId': syllabusId,
-			'elementId': publishedElementId, // will be replaced in the back-end with the unpublished element id
+			'publishedElementId': publishedElementId,
 			'type' : annotationType,
-			'value': annotationValue
+			'value': annotationValue || null
 		};
 
+		this.annotations.push(annotation);
+
 		$http.post('v1/user-annotations.json', annotation).success(function (data) {
-			// Dont forget to push the new annotation
-			tthis.annotations.push(data);
+			// set the id
+			annotation.id = data.id;
 
 			ret.resolve(data);
 		}).error(function (data) {
@@ -65,12 +66,10 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 
 	this.deleteAnnotation = function (annotation) {
 		var ret = $q.defer();
-		var tthis = this;
 
-		$http.post('v1/user-annotations/' + annotation.id + '/delete.json').success(function (data) {
-			// Dont forget to remove the new annotation
-			tthis.annotations.splice(tthis.annotations.indexOf(annotation), 1);
+		this.annotations.splice(this.annotations.indexOf(annotation), 1);
 
+		$http.post('v1/user-annotations/' + annotation.publishedElementId + '/' + annotation.type + '/delete.json').success(function (data) {
 			ret.resolve(data);
 		}).error(function (data) {
 			ret.reject('annotationDeleteError');
@@ -81,7 +80,7 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 
 	this.getAnnotationsForElement = function (syllabusId, publishedElementId, annotationType) {
 		return this.annotations.filter(function (a) {
-			return (a.elementId === publishedElementId) && 
+			return (a.publishedElementId === publishedElementId) && 
 				   (!annotationType || (a.type === annotationType));
 		});
 	};

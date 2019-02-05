@@ -1,5 +1,7 @@
 package ca.hec.tenjin.api.model.userdata;
 
+import javax.persistence.Transient;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +17,10 @@ public class UserAnnotation {
 	private String userId;
 	private Long elementId;
 	private UserAnnotationTypes type;
+	private String value;
+	
+	@Transient
+	private Long publishedElementId;
 	
 	public UserAnnotation clone() {
 		UserAnnotation ret = new UserAnnotation();
@@ -23,7 +29,9 @@ public class UserAnnotation {
 		ret.setSyllabusId(syllabusId);
 		ret.setUserId(userId);
 		ret.setElementId(elementId);
+		ret.setPublishedElementId(publishedElementId);
 		ret.setType(type);
+		ret.setValue(value);
 		
 		return ret;
 	}

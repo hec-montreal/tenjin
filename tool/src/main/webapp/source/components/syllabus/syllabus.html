@@ -44,6 +44,11 @@
 								</li> 
 							</ul>
 						</div>
+
+						<!-- Progress -->
+						<div class="check-progress-bar" ng-if="!userService.isAllowedView('syllabusWrite') && syllabusService.countCheckableElements() > 0">
+							<check-progress-bar></check-progress-bar>
+						</div>
 					</div>
 
 					<div class="toolbar-right">
@@ -77,7 +82,17 @@
 							</ul>
 						</div>
 
-						<button data-ng-click="pdf(true)" data-ng-show="userService.isAllowed('syllabusRead', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-published'">
+						<button data-ng-click="goToCheckAnnotationsSummary()" data-ng-show="userService.isAllowed('syllabusRead', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-published' && !showCheckAnnotationsSummary">
+							<img src="img/icon-check.png"></img>
+							<span>{{ 'TASKS' | translate }}</span>
+						</button>
+
+						<button data-ng-click="goToSyllabus()" data-ng-show="userService.isAllowed('syllabusRead', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-published' && showCheckAnnotationsSummary">
+							<img src="img/icon-check.png"></img>
+							<span>{{ 'SYLLABUS' | translate }}</span>
+						</button>
+
+						<button data-ng-click="pdf(true)" data-ng-show="userService.isAllowed('syllabusRead', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-published' && !showCheckAnnotationsSummary">
 							<img src="img/icon-pdf.png"></img>
 							<span class="">PDF</span>
 						</button>
@@ -113,7 +128,7 @@
 			</div>
 		</div>
 
-		<div class="row col-equal-height" ng-if="syllabusLoaded">
+		<div class="row col-equal-height" ng-if="syllabusLoaded && !showCheckAnnotationsSummary">
 			<div class="navigation-host col-md-3 pull-left" data-ng-if="showNavigation">
 				<navigation></navigation>
 			</div>
@@ -123,6 +138,10 @@
 			</div>
 
 			<div ng-include="'contentPanel/contentPanel.html'" data-mode="mode" data-ng-class="['col-xs-12', 'pull-left', {'col-md-9': showNavigation, 'all-width': !showNavigation}]" id="contentPanel"></div>
+		</div>
+
+		<div class="row col-equal-height" ng-if="syllabusLoaded && showCheckAnnotationsSummary">
+			<check-annotations-summary></check-annotations-summary>
 		</div>
 	</div>
 </div>

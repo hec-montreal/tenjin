@@ -189,19 +189,27 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			};
 
 			$scope.checkOrUncheckElement = function () {
-				console.log('Check or uncheck element');
-				
-				var annotations = $scope.userService.getAnnotationsForElement($scope.syllabusService.getSyllabus().id, $scope.element.id, 'CHECK');
+				var tthis = this;
+
+				if (this.checkLock) {
+					return;
+				}
+
+				var annotations = UserService.getAnnotationsForElement(SyllabusService.getSyllabus().id, $scope.element.id, 'CHECK');
 
 				if (annotations.length > 0) {
-					$scope.userService.deleteAnnotation(annotations[0]);
+					UserService.deleteAnnotation(annotations[0]).finally(function () {
+
+					});
 				} else {
-					$scope.userService.createAnnotation($scope.syllabusService.getSyllabus().id, $scope.element.id, 'CHECK');
+					UserService.createAnnotation(SyllabusService.getSyllabus().id, $scope.element.id, 'CHECK').finally(function () {
+
+					});
 				}
 			};
 
 			$scope.isElementCheckedByAnnotation = function () {
-				return $scope.userService.getAnnotationsForElement($scope.syllabusService.getSyllabus().id, $scope.element.id, 'CHECK').length > 0;
+				return UserService.getAnnotationsForElement(SyllabusService.getSyllabus().id, $scope.element.id, 'CHECK').length > 0;
 			};
 		}
 	};

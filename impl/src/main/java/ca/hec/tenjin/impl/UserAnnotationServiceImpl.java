@@ -33,22 +33,15 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
 
 	@Override
 	public List<UserAnnotation> getAnnotationsForUserAndSyllabus(String userId, Long syllabusId) {
-		return userAnnotationDao.getAnnotationsForUserAndSyllabus(userId, syllabusId);
-	}
-	
-	@Override
-	public List<UserAnnotation> getAnnotationsForStudent(String userId, Long syllabusId) {
 		List<UserAnnotation> ret = new ArrayList<>();
 		
-		// Swap ids for published elements
-		for (UserAnnotation annotation : getAnnotationsForUserAndSyllabus(userId, syllabusId)) {
-			
+		for (UserAnnotation annotation : userAnnotationDao.getAnnotationsForUserAndSyllabus(userId, syllabusId)) {
 			AbstractSyllabusElement element = syllabusDao.getSyllabusElement(annotation.getElementId());
 			AbstractPublishedSyllabusElement publishedElement = publishedSyllabusDao.getPublishedElement(element.getPublishedId());
 			
 			UserAnnotation clone = annotation.clone();
 			
-			clone.setElementId(publishedElement.getId());
+			clone.setPublishedElementId(publishedElement.getId());
 			
 			ret.add(clone);
 		}
@@ -57,15 +50,34 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
 	}
 
 	@Override
-	public UserAnnotation getAnnotationById(Long id) {
-		return userAnnotationDao.getAnnotationById(id);
+	public List<UserAnnotation> getAnnotationsForUserAndPublishedSyllabusElement(String userId, Long publishedSyllabusElementId) {
+		List<UserAnnotation> ret = new ArrayList<>();
+		AbstractSyllabusElement element = publishedSyllabusDao.getSyllabusElementForPublishedSyllabusElementId(publishedSyllabusElementId);
+		
+		for (UserAnnotation annotation : userAnnotationDao.getAnnotationsForUserAndSyllabusElement(userId, element.getId())) {
+			UserAnnotation clone = annotation.clone();
+			
+			clone.setPublishedElementId(publishedSyllabusElementId);
+			
+			ret.add(clone);
+		}
+		
+		return ret;
 	}
-
+	
 	public void createAnnotation(UserAnnotation annotation) throws SyllabusException	{
-		AbstractSyllabusElement element = publishedSyllabusDao.getSyllabusElementForPublishedSyllabusElementId(annotation.getElementId());
+		AbstractSyllabusElement element = publishedSyllabusDao.getSyllabusElementForPublishedSyllabusElementId(annotation.getPublishedElementId());
 		
 		if (element == null) {
 			throw new SyllabusException("Cannot find element for published element");
+		}
+		
+		List<UserAnnotation> dupCheck = userAnnotationDao.getAnnotationsForUserAndSyllabusElement(sakaiProxy.getCurrentUserId(), element.getId());
+		
+		for (UserAnnotation dup : dupCheck) {
+			if (dup.getType() == annotation.getType()) {
+				throw new SyllabusException("Cannot create a duplicate annotation with the same type on the same element");
+			}
 		}
 		
 		annotation.setElementId(element.getId());
