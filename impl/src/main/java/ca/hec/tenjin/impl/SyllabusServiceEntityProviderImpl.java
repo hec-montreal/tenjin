@@ -53,7 +53,26 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
 
     @Override
     public void hardDelete(String siteId) {
+    	List<Syllabus> syllabusList;
 
+    	try {
+    		syllabusList = syllabusService.getSyllabusList(siteId);
+
+    		for (Syllabus s : syllabusList) {
+    			try {
+    				syllabusService.deleteSyllabus(s.getId());
+    			} catch (NoSyllabusException e) {
+    				log.error("Cannot delete syllabus with id " + s.getId() + " because it does not exist.");
+    			} catch (DeniedAccessException e) {
+    				log.error("You do not have permission to delete the syllabus: " + s.getId());
+    			}
+    		}
+
+    	} catch (NoSiteException e) {
+    		log.error("Site " + siteId + " does not exist.");
+    	} catch (DeniedAccessException e) {
+    		log.error("You do not have permission to delete syllabuses for site: " + siteId);
+    	}
     }
 
     @Override

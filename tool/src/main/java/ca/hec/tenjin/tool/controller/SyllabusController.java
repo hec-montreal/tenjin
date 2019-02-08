@@ -124,7 +124,11 @@ public class SyllabusController {
 		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
 		
 		for (Long id : syllabusId) {
-			syllabusService.deleteSyllabus(id);
+			syllabus = syllabusService.getSyllabus(id) ;
+			// only allow admins to delete common syllabus
+			if (!syllabus.getCommon() || sakaiProxy.isSuperUser()) {
+				syllabusService.deleteSyllabus(id);
+			}
 		}
 	}
 
