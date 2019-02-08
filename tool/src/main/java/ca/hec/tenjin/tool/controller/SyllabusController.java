@@ -120,11 +120,11 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/{ids}/delete", method = RequestMethod.POST)
-	public @ResponseBody void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId, @RequestBody CsrfToken csrfToken) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException {
+	public @ResponseBody void deleteSyllabusList(@PathVariable("ids") List<Long> syllabusId, @RequestBody CsrfToken csrfToken) throws NoSyllabusException, DeniedAccessException, NoSiteException, SyllabusLockedException, StructureSyllabusException {
 		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
 		
 		for (Long id : syllabusId) {
-			syllabus = syllabusService.getSyllabus(id) ;
+			Syllabus syllabus = syllabusService.getSyllabus(id) ;
 			// only allow admins to delete common syllabus
 			if (!syllabus.getCommon() || sakaiProxy.isSuperUser()) {
 				syllabusService.deleteSyllabus(id);
