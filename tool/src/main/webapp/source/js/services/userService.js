@@ -199,4 +199,8 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 	    return this.profile.courseTitle;
 	};
 
+	this.isStudent = function () {
+		return !this.isAllowedView('syllabusWrite');
+	};
+
 }]);

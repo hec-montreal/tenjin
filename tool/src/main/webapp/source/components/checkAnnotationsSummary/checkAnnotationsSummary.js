@@ -24,6 +24,10 @@ tenjinApp.directive('checkAnnotationsSummary', ['SyllabusService', 'UserService'
 			}
 
 			$scope.checkOrUncheckElement = function (element) {
+				if (!UserService.isStudent()) {
+					return;
+				}
+
 				var annotations = UserService.getAnnotationsForElement(SyllabusService.getSyllabus().id, element.id, 'CHECK');
 
 				if (annotations.length > 0) {

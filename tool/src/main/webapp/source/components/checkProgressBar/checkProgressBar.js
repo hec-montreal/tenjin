@@ -9,6 +9,8 @@ tenjinApp.directive('checkProgressBar', ['SyllabusService', 'UserService', funct
 		templateUrl: 'checkProgressBar/checkProgressBar.html',
 
 		controller: function($scope, $rootScope) {
+			$scope.widthCache = 0;
+
 			$scope.calculateWidth = function () {
 				var checkables = 0;
 				var checked = 0;
@@ -25,8 +27,14 @@ tenjinApp.directive('checkProgressBar', ['SyllabusService', 'UserService', funct
 					}
 				});
 
-				return (checked / checkables) * 100;
+				$scope.widthCache = (checked / checkables) * 100;
+
+				return $scope.widthCache;
 			};
+
+			$scope.getLabel = function () {
+				return Math.floor($scope.widthCache) + ' %';
+			}
 		}
 	};
 }]);

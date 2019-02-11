@@ -55,10 +55,11 @@
 }
 
 .view-dropdown {
-	float: right;
+	position: relative;
+	display: inline-block;
 
 	button {
-
+		margin: 0;
 	}
 }
 
