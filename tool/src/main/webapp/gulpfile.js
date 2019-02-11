@@ -6,7 +6,10 @@ var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	gutil = require('gulp-util'),
 	rename = require('gulp-rename'),
-	md5 = require('gulp-md5-assets');
+	md5 = require('gulp-md5-assets'),
+	sourcemaps = require('gulp-sourcemaps'),
+	uglify = require('gulp-uglify'),
+	ngAnnotate = require('gulp-ng-annotate');
 
 // Images
 gulp.task('images', function() {
@@ -71,6 +74,7 @@ gulp.task('js:lib', function() {
 			'./source/lib/modernizr/modernizr-custom.js'
 		])
 		.pipe(concat('tenjinlib.js'))
+		.pipe(uglify())
 		.pipe(gulp.dest('./dest/lib'));
 });
 
@@ -86,7 +90,11 @@ gulp.task('js:locale', function() {
 
 gulp.task('js:app', ['js:htmltemplates'], function() {
 	return gulp.src(['source/js/app.js', 'source/components/**/*.js', 'source/js/*.js', 'source/js/services/*.js', 'build/js/*.js'])
+		.pipe(sourcemaps.init())
 		.pipe(concat('tenjin.js'))
+		.pipe(ngAnnotate())
+		.pipe(uglify())
+		.pipe(sourcemaps.write('./maps'))
 		.pipe(gulp.dest('./dest/js/'));
 });
 
