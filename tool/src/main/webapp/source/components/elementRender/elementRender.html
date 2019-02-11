@@ -1,5 +1,5 @@
-<div data-ng-if="!isElementDragged() ">
-	<div data-ng-if="!isElementHiddenByViewMode() " ui-tree-handle data-ng-class="['tree-node', 'tree-node-content', {'no-drag': element.providerId != null || !userService.isAllowed('syllabusWrite', syllabusService.syllabus) || syllabusLockService.lockError}]">
+<div data-ng-if="!isElementDragged(element) ">
+	<div data-ng-if="!isElementHiddenByViewMode(element) " ui-tree-handle data-ng-class="['tree-node', 'tree-node-content', {'no-drag': element.providerId != null || !userService.isAllowed('syllabusWrite', syllabusService.syllabus) || syllabusLockService.lockError}]">
 		<div data-ng-switch="element.type" data-nodrag="{{syllabusLockService.lockError || element.type === 'composite'}}" data-ng-class="['element-host', {'important': element.important, 'no-buttons': !userService.canEditElement(element,syllabusService.syllabus)}]">
 			<element-buttons data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError && syllabusService.viewMode === 'edit'" data-element-buttons="element" data-noedit="!userService.canEditElement(element,syllabusService.syllabus) || element.type === 'rubric'" data-nodelete="!userService.canEditElement(element,syllabusService.syllabus)" data-nodrag="!userService.canEditElement(element,syllabusService.syllabus)" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite && element.type !== 'lecture' && element.type !== 'exam' && element.type != 'evaluation' && element.type != 'tutorial', 'has-notice': element.type !== 'rubric' && !element.equalsPublished}]"></element-buttons>
 
@@ -9,18 +9,18 @@
 			</div>
 
 			<!-- Not published notice -->
-			<div data-ng-if="isNotPublishedFlagVisible()" class="notice warning not-published">
+			<div data-ng-if="isNotPublishedFlagVisible(element)" class="notice warning not-published">
 				<h3><span class="glyphicon glyphicon-flag"></span> {{ 'NOT_PUBLISHED' | translate }}</h3>
 			</div>
 
 			<!-- Hidden by resource flag -->
-			<div data-ng-if="isElementHiddenByResourceFlag() && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice hidden-by-resource-flag">
+			<div data-ng-if="isElementHiddenByResourceFlag(element) && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice hidden-by-resource-flag">
 				<h3><span class="glyphicon glyphicon-flag"></span> {{ 'HIDDEN_BY_RESOURCE_FLAG' | translate }}</h3>
 			</div>
 
 			<!-- Hidden by date notice -->
-			<div data-ng-if="isElementHiddenByDate() && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice warning hidden-by-date">
-				<h3><span class="glyphicon glyphicon-flag"></span> {{ getElementHiddenByDateMessage() }}</h3>
+			<div data-ng-if="isElementHiddenByDate(element) && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice warning hidden-by-date">
+				<h3><span class="glyphicon glyphicon-flag"></span> {{ getElementHiddenByDateMessage(element) }}</h3>
 			</div>
 
 			<!-- Error to indicate missing Sakai resource -->
@@ -34,72 +34,66 @@
 			</div>
 
 			<!-- Error to indicate missing Sakai entity -->
-			<div data-ng-if="element.type === 'sakai_entity' && isSakaiEntityMissing() && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice error">
+			<div data-ng-if="element.type === 'sakai_entity' && isSakaiEntityMissing(element) && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice error">
 				<h3><span class="glyphicon glyphicon-flag"></span> {{ 'MISSING_SAKAI_ENTITY_FLAG' | translate }} </h3>
 			</div>
 
-			<div data-ng-class="['element-wrapper', {'important': element.important, 'hidden-by-date': isElementHiddenByDate() && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus), 'not-published': isElementFadedOut() && userService.isAllowed('syllabusWrite', syllabusService.syllabus)}]">
+			<div data-ng-class="['element-wrapper', {'important': element.important, 'hidden-by-date': isElementHiddenByDate(element) && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus), 'not-published': isElementFadedOut(element) && userService.isAllowed('syllabusWrite', syllabusService.syllabus)}]">
 				<div data-ng-if="element.important" class="important-notice">
 					<h3>{{ 'FORM_IMPORTANT' | translate }}</h3>
 				</div>
 
-				<div class="check-gutter" data-ng-if="element.attributes['checkable'] === 'true'">
-					<input type="checkbox" ng-click="checkOrUncheckElement()" ng-checked="isElementCheckedByAnnotation()" />
-				</div>
+				<cluster-element data-ng-switch-when="composite" data-cluster-element="element"></cluster-element>
 
-				<div ng-class="['element-wrapper-inner', {'next-to-check': element.attributes['checkable'] === 'true'}]">
-					<cluster-element data-ng-switch-when="composite" data-cluster-element="element"></cluster-element>
+				<!-- Lecture element -->
+				<course-element data-ng-switch-when="lecture" data-course-element="element"></course-element>
 
-					<!-- Lecture element -->
-					<course-element data-ng-switch-when="lecture" data-course-element="element"></course-element>
+				<!-- Tutorial element -->
+				<course-element data-ng-switch-when="tutorial" data-course-element="element"></course-element>
 
-					<!-- Tutorial element -->
-					<course-element data-ng-switch-when="tutorial" data-course-element="element"></course-element>
+				<!-- Evaluation element -->
+				<div data-ng-switch-when="evaluation" data-evaluation-element="element" data-index="$index"></div>
+				
+				<!-- Exam element -->
+				<div data-ng-switch-when="exam" data-exam-element="element" data-index="$index"></div>
 
-					<!-- Evaluation element -->
-					<div data-ng-switch-when="evaluation" data-evaluation-element="element" data-index="$index"></div>
-					
-					<!-- Exam element -->
-					<div data-ng-switch-when="exam" data-exam-element="element" data-index="$index"></div>
+				<!-- Rubric element -->
+				<rubric-element data-nodrag data-ng-switch-when="rubric" data-rubric-element="element"></rubric-element>
 
-					<!-- Rubric element -->
-					<rubric-element data-nodrag data-ng-switch-when="rubric" data-rubric-element="element"></rubric-element>
+				<!-- Text element -->
+				<text-element data-ng-switch-when="text" data-text-element="element"></text-element>
 
-					<!-- Text element -->
-					<text-element data-ng-switch-when="text" data-text-element="element"></text-element>
+				<!-- Document element -->
+				<document-element data-ng-switch-when="document" data-document-element="element"></document-element>
 
-					<!-- Document element -->
-					<document-element data-ng-switch-when="document" data-document-element="element"></document-element>
+				<!-- Citation element -->
+				<div data-ng-switch-when="citation" data-reference-element="element"></div>
+				
+				<!-- Hyperlink element -->
+				<hyperlink-element data-ng-switch-when="hyperlink" data-hyperlink-element="element"></hyperlink-element>
 
-					<!-- Citation element -->
-					<div data-ng-switch-when="citation" data-reference-element="element"></div>
-					
-					<!-- Hyperlink element -->
-					<hyperlink-element data-ng-switch-when="hyperlink" data-hyperlink-element="element"></hyperlink-element>
+				<!-- Image element -->
+				<image-element data-ng-switch-when="image" data-image-element="element"></image-element>
+				
+				<!-- Video element -->
+				<video-element data-ng-switch-when="video" data-video-element="element"></video-element>
 
-					<!-- Image element -->
-					<image-element data-ng-switch-when="image" data-image-element="element"></image-element>
-					
-					<!-- Video element -->
-					<video-element data-ng-switch-when="video" data-video-element="element"></video-element>
+				<!-- Contact element -->
+				<div data-ng-switch-when="contact_info" data-contact-element="element"></div>
 
-					<!-- Contact element -->
-					<div data-ng-switch-when="contact_info" data-contact-element="element"></div>
+				<!-- Tool element -->
+				<tool-element data-ng-switch-when="sakai_entity" data-tool-element="element"></tool-element>
 
-					<!-- Tool element -->
-					<tool-element data-ng-switch-when="sakai_entity" data-tool-element="element"></tool-element>
-
-					<div ng-switch-default>
-						<!-- Attributes -->
-						<div class="attributs" data-ng-switch="element.type">
-							<div data-ng-switch-when="text">
-							</div>
-							<ul ng-switch-default>
-								<li data-ng-repeat="(key, value) in element.attributes">
-									{{key}} : {{value}}
-								</li>
-							</ul>
+				<div ng-switch-default>
+					<!-- Attributes -->
+					<div class="attributs" data-ng-switch="element.type">
+						<div data-ng-switch-when="text">
 						</div>
+						<ul ng-switch-default>
+							<li data-ng-repeat="(key, value) in element.attributes">
+								{{key}} : {{value}}
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>

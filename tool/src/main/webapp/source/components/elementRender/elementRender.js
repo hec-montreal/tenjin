@@ -47,9 +47,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				}
 			};
 
-			$scope.isNotPublishedFlagVisible = function() {
-				var element = $scope.element;
-
+			$scope.isNotPublishedFlagVisible = function(element) {
 				// Is element = published or equalsPublished is undefined meaning it's the published syllabus
 				if (element.equalsPublished || typeof element.equalsPublished === 'undefined') {
 					return false;
@@ -74,8 +72,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				return true;
 			};
 
-			$scope.isElementHiddenByResourceFlag = function() {
-				var element = $scope.element;
+			$scope.isElementHiddenByResourceFlag = function(element) {
 				var res = SyllabusService.getElementResource(element);
 
 				if (res === null) {
@@ -85,8 +82,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				return res.hidden;
 			};
 
-			$scope.isElementHiddenByResourcePublicFlag = function() {
-				var element = $scope.element;
+			$scope.isElementHiddenByResourcePublicFlag = function(element) {
 				var res = SyllabusService.getElementResource(element);
 
 				if (res === null) {
@@ -96,14 +92,11 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				return !res.publicAccess;
 			};
 
-			$scope.isSakaiEntityMissing = function() {
-				var element = $scope.element;
-
+			$scope.isSakaiEntityMissing = function(element) {
 				return SakaiToolsService.getEntity(element.attributes.sakaiToolId) == null;
 			};
 
-			$scope.isElementHiddenByDate = function() {
-				var element = $scope.element;
+			$scope.isElementHiddenByDate = function(element) {
 				var dates = SyllabusService.getElementVisibilityDates(element);
 
 				if (!dates.start) {
@@ -123,8 +116,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				return !range.contains(now);
 			};
 
-			$scope.getElementHiddenByDateMessage = function() {
-				var element = $scope.element;
+			$scope.getElementHiddenByDateMessage = function(element) {
 				var dates = SyllabusService.getElementVisibilityDates(element);
 				var fmt = 'YYYY-MM-DD';
 
@@ -141,9 +133,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 					.replace('%2', dates.end.format(fmt));
 			};
 
-			$scope.isElementFadedOut = function() {
-				var element = $scope.element;
-
+			$scope.isElementFadedOut = function(element) {
 				if (element.composite && (element.type !== 'exam' && element.type !== 'evaluation')) {
 					return false;
 				}
@@ -151,9 +141,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				return !element.equalsPublished;
 			};
 
-			$scope.isElementHiddenByViewMode = function() {
-				var element = $scope.element;
-
+			$scope.isElementHiddenByViewMode = function(element) {
 				if (SyllabusService.viewMode === 'edit') {
 					return false;
 				}
@@ -173,44 +161,19 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 						return true;
 					}
 
+
+
 					return false;
 				}
 
 				return false;
 			};
 
-			$scope.isElementDragged = function () {
-				var element = $scope.element;
-
+			$scope.isElementDragged = function (element){
 				if (element.dragged && element.dragged === true)
 					return true;
-
 				return false;
-			};
-
-			$scope.checkOrUncheckElement = function () {
-				var tthis = this;
-
-				if (this.checkLock) {
-					return;
-				}
-
-				var annotations = UserService.getAnnotationsForElement(SyllabusService.getSyllabus().id, $scope.element.id, 'CHECK');
-
-				if (annotations.length > 0) {
-					UserService.deleteAnnotation(annotations[0]).finally(function () {
-
-					});
-				} else {
-					UserService.createAnnotation(SyllabusService.getSyllabus().id, $scope.element.id, 'CHECK').finally(function () {
-
-					});
-				}
-			};
-
-			$scope.isElementCheckedByAnnotation = function () {
-				return UserService.getAnnotationsForElement(SyllabusService.getSyllabus().id, $scope.element.id, 'CHECK').length > 0;
-			};
+			}
 		}
 	};
 }]);

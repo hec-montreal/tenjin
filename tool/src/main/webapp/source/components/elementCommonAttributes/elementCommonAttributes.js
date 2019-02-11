@@ -1,4 +1,4 @@
-tenjinApp.directive('elementCommonAttributes', ['$anchorScroll', '$location', 'ModalService', 'UserService', function($anchorScroll, $location, ModalService, UserService) {
+tenjinApp.directive('elementCommonAttributes', ['$anchorScroll', '$location', 'ModalService', function($anchorScroll, $location, ModalService) {
 	'use strict';
 
 	return {
@@ -17,17 +17,12 @@ tenjinApp.directive('elementCommonAttributes', ['$anchorScroll', '$location', 'M
 		templateUrl: 'elementCommonAttributes/elementCommonAttributes.html',
 
 		controller: function($scope) {
-			$scope.mode = $scope.$parent.$parent.mode;
-
 			if ($scope.element.attributes.evalDate) {
 				$scope.element.attributes.evalDate = new Date($scope.element.attributes.evalDate);
 			}
-
 			if ($scope.element.availabilityEndDate) {
 				$scope.element.hasEndDate = true;
 			}
-
-			$scope.userAnnotationTypes = UserService.profile.userAnnotationTypes;
 
 			$scope.formats = ['dd-MMMM-yyyy HH:mm'];
 			$scope.format = $scope.formats[0];
@@ -67,16 +62,6 @@ tenjinApp.directive('elementCommonAttributes', ['$anchorScroll', '$location', 'M
 
 			$scope.updateDateEnd = function($event) {
 				$scope.element.availabilityEndDate = "";
-			};
-
-			$scope.isUserAnnotationTypeVisible = function (annotationType) {
-				for (var i = 0; i < annotationType.enabledElementTypes.length; i++) {
-					if (annotationType.enabledElementTypes[i] === $scope.element.type) {
-						return true;
-					}
-				}
-
-				return false;
 			};
 		},
 

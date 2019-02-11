@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.view.RedirectView;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusLockService;
 import ca.hec.tenjin.api.SyllabusService;
-import ca.hec.tenjin.api.TenjinProperties;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.NoSyllabusLockException;
@@ -90,7 +88,7 @@ public class SyllabusLockController {
 			validateLock(lock, sakaiProxy.getCurrentUserId());
 		}
 		
-		String checkCommonLockProp = sakaiProxy.getSakaiProperty(TenjinProperties.PROPERTY_SYLLABUS_LOCK_CHECK_COMMON_LOCK);
+		String checkCommonLockProp = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_LOCK_CHECK_COMMON_LOCK);
 
 		if(checkCommonLockProp != null && checkCommonLockProp.toLowerCase().equals("true")) {
 			Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
@@ -133,11 +131,6 @@ public class SyllabusLockController {
 		return lock;
 	}
 
-	@RequestMapping(value = "/syllabus/{syllabusId}/lock/renew", method = RequestMethod.GET)
-	public RedirectView handleAnnoyingGet () {
-		return new RedirectView("/");
-	}
-	
 	@ExceptionHandler(SyllabusLockedException.class)
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 	public @ResponseBody SyllabusLockedException handleSyllabusLockedException(SyllabusLockedException ex) {

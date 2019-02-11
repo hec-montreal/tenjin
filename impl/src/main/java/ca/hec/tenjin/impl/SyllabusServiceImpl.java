@@ -1,62 +1,30 @@
 package ca.hec.tenjin.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Queue;
-import java.util.ResourceBundle;
-import java.util.Set;
-
+import ca.hec.tenjin.api.*;
+import ca.hec.tenjin.api.dao.SyllabusDao;
+import ca.hec.tenjin.api.exception.*;
+import ca.hec.tenjin.api.model.syllabus.*;
+import ca.hec.tenjin.api.provider.CourseOutlineProvider;
+import lombok.Setter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.log4j.Logger;
 import org.sakaiproject.citation.api.Citation;
 import org.sakaiproject.citation.api.CitationCollection;
 import org.sakaiproject.citation.api.CitationService;
+import org.sakaiproject.content.api.*;
 import org.sakaiproject.content.api.ContentHostingService;
-import org.sakaiproject.content.api.ContentResource;
-import org.sakaiproject.content.api.ContentResourceEdit;
-import org.sakaiproject.content.api.ResourceType;
 import org.sakaiproject.entity.api.ResourceProperties;
 import org.sakaiproject.entity.api.ResourcePropertiesEdit;
 import org.sakaiproject.event.api.NotificationService;
-import org.sakaiproject.exception.IdUnusedException;
-import org.sakaiproject.exception.InUseException;
-import org.sakaiproject.exception.PermissionException;
+import org.sakaiproject.exception.*;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ContextResource;
 import org.springframework.transaction.annotation.Transactional;
 
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.SyllabusLockService;
-import ca.hec.tenjin.api.SyllabusService;
-import ca.hec.tenjin.api.TemplateService;
-import ca.hec.tenjin.api.TenjinEvents;
-import ca.hec.tenjin.api.TenjinFunctions;
-import ca.hec.tenjin.api.TenjinSecurityService;
-import ca.hec.tenjin.api.UserAnnotationService;
-import ca.hec.tenjin.api.dao.SyllabusDao;
-import ca.hec.tenjin.api.exception.DeniedAccessException;
-import ca.hec.tenjin.api.exception.NoSiteException;
-import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.exception.StructureSyllabusException;
-import ca.hec.tenjin.api.exception.SyllabusLockedException;
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.model.syllabus.SyllabusCitationElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusDocumentElement;
-import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
-import ca.hec.tenjin.api.model.syllabus.SyllabusImageElement;
-import ca.hec.tenjin.api.provider.CourseOutlineProvider;
-import lombok.Setter;
+import java.util.*;
 
 /**
  * Implementation of {@link SyllabusService}
@@ -74,7 +42,6 @@ public class SyllabusServiceImpl implements SyllabusService {
 	private TemplateService templateService;
 	private TenjinSecurityService securityService;
 	private SyllabusLockService syllabusLockService;
-	private UserAnnotationService userAnnotationService;
 
 	private ContentHostingService contentHostingService;
 	private CitationService citationService;
@@ -347,10 +314,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 							}
 						}
 					}
-					
-					// delete the user annotations on element
-					userAnnotationService.deleteForSyllabusElement(mapping.getSyllabusElement().getId());
-					
+
 					// delete the element and all it's mappings
 					syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
 				}

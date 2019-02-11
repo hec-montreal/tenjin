@@ -1,4 +1,4 @@
-﻿tenjinApp.controller('SetElementModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'type', 'parent', 'element', 'SyllabusService', 'UserService', 'config', function($scope, $uibModalInstance, $translate, type, parent, element, SyllabusService, UserService, config) {
+﻿tenjinApp.controller('SetElementModalCtrl', ['$scope', '$uibModalInstance', '$translate', 'type', 'parent', 'element', 'SyllabusService', 'config', function($scope, $uibModalInstance, $translate, type, parent, element, SyllabusService, config) {
 	'use strict';
 
 	$scope.parent = parent;
@@ -36,23 +36,13 @@
 
 		$scope.mode = 'creation';
 		$scope.title = $translate.instant('MODAL_CREATE_ELEMENT_TITLE');
-
-		// Is element checkable by default
-		var annotationTypeCheck = UserService.profile.userAnnotationTypes['CHECK'];
-		
-		for (var i = 0; i < annotationTypeCheck.defaultElementTypes.length; i++) {
-			if (annotationTypeCheck.defaultElementTypes[i] === $scope.element.type) {
-				$scope.element.attributes['checkable'] = 'true';
-
-				break;
-			}
-		}
 	}
 
 	$scope.ok = function() {
 		if ($scope.element.preSave) {
 			$scope.element.preSave.call($scope.element);
 		}
+
 
         //delete empty attributes
         var keys = Object.keys($scope.element.attributes);

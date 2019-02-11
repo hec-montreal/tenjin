@@ -20,22 +20,12 @@
 	 * Select a Tree element
 	 */
 	this.selectElement = function(element) {
-		console.log('Selecting');
-		console.log(element);
-
-		if (!element) {
-			this.selectFirstElement();
-
-			return;
-		}
-
 		this.unselectAllElements();
 
 		element.$selected = true;
 
 		this.selectedElement = element;
 		this.lastSelectedPosition = this.findSelectedElementPosition();
-		
 		if (SyllabusService.getTemplate()[element.templateStructureId].createEvent === true){
 			SyllabusService.createReadEvent(SyllabusService.syllabus.id, element.id);
 		}
@@ -51,27 +41,17 @@
 		});
 	};
 
-	this.selectFirstElement = function () {
-		this.selectElement(this.findElementByPosition([0]));
-	};
-
 	this.selectElementById = function(id) {
-		var foundElement = null;
+		var tthis = this;
 
 		SyllabusService.forEachElement(SyllabusService.getSyllabus(), function(element) {
 			if (element.id === id) {
-				foundElement = element;
+				tthis.selectElement(element);
 
 				// Break
 				return true;
 			}
 		});
-
-		if (foundElement) {
-			this.selectElement(foundElement);
-		} else {
-			this.selectFirstElement();
-		}
 	};
 
 	this.findElementByPosition = function(position) {
