@@ -419,10 +419,6 @@ public class SyllabusServiceImpl implements SyllabusService {
 			throw new NoSyllabusException(syllabusId);
 		}
 
-		if (syllabus.getSections() != null && syllabus.getSections().size() > 0) {
-			throw new DeniedAccessException();
-		}
-		
 		boolean canDelete = sakaiProxy.getCurrentUserId().equals(syllabus.getCreatedBy()) ||
 							securityService.canWrite(sakaiProxy.getCurrentUserId(), syllabus);
 		

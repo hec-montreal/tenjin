@@ -125,8 +125,14 @@ public class SyllabusController {
 		
 		for (Long id : syllabusId) {
 			Syllabus syllabus = syllabusService.getSyllabus(id) ;
-			// only allow admins to delete common syllabus
-			if (!syllabus.getCommon() || sakaiProxy.isSuperUser()) {
+			Boolean hasSections = false;
+
+			if (syllabus.getSections() != null && syllabus.getSections().size() > 0) {
+				hasSections = true;
+			}
+
+			// only allow admins to delete common syllabus or syllabus with sections
+			if (sakaiProxy.isSuperUser() || (!hasSections && !syllabus.getCommon())) {
 				syllabusService.deleteSyllabus(id);
 			}
 		}
