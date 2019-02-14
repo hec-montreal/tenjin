@@ -68,16 +68,20 @@ public class EventController {
 	private SessionManager sessionManager;
 	
 	@RequestMapping(value = "/event/read/{syllabusId}/{elementId}", method = RequestMethod.POST)
-	public @ResponseBody void createReadEvent (@PathVariable("syllabusId") Long syllabusId, @PathVariable("elementId") Long elementId, @RequestBody CsrfToken csrfToken) throws DeniedAccessException {
-		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
-		
-		sakaiProxy.postEvent(TenjinEvents.TENJIN_READ_EVENT,sakaiProxy.getSyllabusReference(syllabusId, elementId), false);
+	public @ResponseBody void createReadEvent (@PathVariable("syllabusId") Long syllabusId, @PathVariable("elementId") Long elementId, @RequestBody CsrfToken csrfToken) {
+		try {
+			CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
+			sakaiProxy.postEvent(TenjinEvents.TENJIN_READ_EVENT,sakaiProxy.getSyllabusReference(syllabusId, elementId), false);
+		}
+		catch (DeniedAccessException dae) {}
 	}
 
 	@RequestMapping(value = "/event/access", method = RequestMethod.POST)
-	public @ResponseBody void createAccessEvent (@RequestBody CsrfToken csrfToken) throws DeniedAccessException {
-		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
-		
-		sakaiProxy.postEvent(TenjinEvents.TENJIN_ACCESS_EVENT,"/site/"+sakaiProxy.getCurrentSite().getId(), false);
+	public @ResponseBody void createAccessEvent (@RequestBody CsrfToken csrfToken) {
+		try {
+			CsrfUtil.checkCsrfToken(sessionManager, csrfToken);		
+			sakaiProxy.postEvent(TenjinEvents.TENJIN_ACCESS_EVENT,"/site/"+sakaiProxy.getCurrentSite().getId(), false);
+		}
+		catch (DeniedAccessException dae) {}
 	}
 }
