@@ -10,6 +10,7 @@ import org.sakaiproject.exception.IdUnusedException;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
 import ca.hec.tenjin.api.exception.NoSiteException;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.PublishedSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.exception.SyllabusLockedException;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
@@ -160,4 +161,11 @@ public interface SyllabusService {
 	public AbstractSyllabusElement getSyllabusElement(Long id);
 
 	void deleteCitationLists(String toContext);
+
+	/**
+	 * transform the figen syllabus into the common in it's site and delete other syllabuses
+	 *
+	 * @param Long id 
+	 */
+	public void transformPersonalizedToCommon(Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, IdUnusedException, PublishedSyllabusException;
 }

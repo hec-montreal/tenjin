@@ -219,6 +219,13 @@ public class SyllabusController {
 		syllabusService.copySyllabus(syllabusId, copyObject.getTitle());
 	}
 
+	@RequestMapping(value = "/syllabus/makeCommon/{syllabusId}", method = RequestMethod.POST)
+	public @ResponseBody void copySyllabus(@PathVariable("syllabusId") Long syllabusId, @RequestBody String csrfToken) throws NoSyllabusException, DeniedAccessException, NoSiteException, IdUnusedException, PublishedSyllabusException {
+		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
+
+		syllabusService.transformPersonalizedToCommon(syllabusId);
+	}
+
 	@ExceptionHandler(NoSiteException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public @ResponseBody Object handleNoSiteException(NoSiteException ex) {
@@ -241,6 +248,12 @@ public class SyllabusController {
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 	public @ResponseBody SyllabusLockedException handleSyllabusLockedException(SyllabusLockedException ex) {
 		return ex;
+	}
+
+	@ExceptionHandler(PublishedSyllabusException.class)
+	@ResponseStatus(value = HttpStatus.PRECONDITION_FAILED)
+	public @ResponseBody PublishedSyllabusException handlePublishedSyllabusException(PublishedSyllabusException ex) {
+		return msgs.getString("tenjin.error.published");
 	}
 
 	@ExceptionHandler(Exception.class)

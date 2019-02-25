@@ -20,6 +20,7 @@ import org.sakaiproject.event.api.NotificationService;
 import org.sakaiproject.exception.*;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
+import org.sakaiproject.site.cover.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ContextResource;
 import org.springframework.transaction.annotation.Transactional;
@@ -532,15 +533,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 			return null;
 		}
 
-		String locale = site.getProperties().getProperty("locale_string");
-		if (locale == null || locale.isEmpty()) {
-			String localePropName = sakaiProxy.getSakaiProperty("tenjin.syllabusLocale.sitePropertyName");
-			locale = site.getProperties().getProperty(localePropName);
-		}
-		if (locale == null || locale.isEmpty()) {
-			// use default server locale
-			locale = Locale.getDefault().toString();
-		}
+		String locale = getSyllabusLanguageForSite(site);
 
 		String templateIdStr = site.getProperties().getProperty("tenjin_template");
 		Long templateId;
@@ -582,6 +575,22 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 
 		return newCommonSyllabus;
+	}
+
+	private String getSyllabusLanguageForSite(Site site) {
+		String locale = null;
+		if (null != site) {
+			locale = site.getProperties().getProperty("locale_string");
+			if (locale == null || locale.isEmpty()) {
+				String localePropName = sakaiProxy.getSakaiProperty("tenjin.syllabusLocale.sitePropertyName");
+				locale = site.getProperties().getProperty(localePropName);
+			}
+		}
+		if (locale == null || locale.isEmpty()) {
+			// use default server locale
+			locale = Locale.getDefault().toString();
+		}
+		return locale;
 	}
 
 	/**
@@ -1031,5 +1040,45 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 	public AbstractSyllabusElement getSyllabusElement(Long id) {
 		return syllabusDao.getSyllabusElement(id);
+	}
+
+	public void transformPersonalizedToCommon(Long syllabusId) throws NoSyllabusException, DeniedAccessException, NoSiteException, IdUnusedException, PublishedSyllabusException {
+		Syllabus newCommon = syllabusDao.getSyllabus(syllabusId);
+
+		Syllabus oldCommon = getCommonSyllabus(newCommon.getSiteId());
+		if (oldCommon.getPublishedDate() != null) {
+			throw new PublishedSyllabusException(oldCommon.getId());
+		}
+		if (newCommon.getPublishedDate() != null) {
+			throw new PublishedSyllabusException(newCommon.getId());
+		}
+
+		List<Syllabus> siteSyllabuses = getSyllabusList(newCommon.getSiteId());
+		for (Syllabus s : siteSyllabuses) {
+			if (s.getId() != syllabusId) {
+				deleteSyllabus(s.getId());
+
+				// assign all sections to the new common
+				assignSectionsToSyllabus(newCommon, s.getSections());
+			}
+		}
+
+		Site site = null;
+		String newSyllabusLocale;
+		try {
+			site = sakaiProxy.getSite(newCommon.getSiteId());
+		} catch (Exception e) {
+			log.error("Site " + newCommon.getSiteId() + " could not be retrieved.");
+		}
+
+		newSyllabusLocale = getSyllabusLanguageForSite(site);
+		ResourceBundle rb = ResourceBundle.getBundle("tenjin", LocaleUtils.toLocale(newSyllabusLocale));
+		newCommon.setTitle(rb.getString("tenjin.common.title"));
+		newCommon.setCommon(true);
+
+		List<SyllabusElementMapping> mappings = getSyllabusElementMappings(syllabusId, true);
+		for (SyllabusElementMapping m : mappings) {
+			m.getSyllabusElement().setCommon(true);
+		}
 	}
 }
