@@ -220,7 +220,7 @@ public class SyllabusController {
 	}
 
 	@RequestMapping(value = "/syllabus/makeCommon/{syllabusId}", method = RequestMethod.POST)
-	public @ResponseBody void copySyllabus(@PathVariable("syllabusId") Long syllabusId, @RequestBody String csrfToken) throws NoSyllabusException, DeniedAccessException, NoSiteException, IdUnusedException, PublishedSyllabusException {
+	public @ResponseBody void makeSyllabusCommon(@PathVariable("syllabusId") Long syllabusId, @RequestBody CsrfToken csrfToken) throws NoSyllabusException, DeniedAccessException, NoSiteException, IdUnusedException, PublishedSyllabusException {
 		CsrfUtil.checkCsrfToken(sessionManager, csrfToken);
 
 		syllabusService.transformPersonalizedToCommon(syllabusId);
@@ -252,7 +252,7 @@ public class SyllabusController {
 
 	@ExceptionHandler(PublishedSyllabusException.class)
 	@ResponseStatus(value = HttpStatus.PRECONDITION_FAILED)
-	public @ResponseBody PublishedSyllabusException handlePublishedSyllabusException(PublishedSyllabusException ex) {
+	public @ResponseBody String handlePublishedSyllabusException(PublishedSyllabusException ex) {
 		return msgs.getString("tenjin.error.published");
 	}
 

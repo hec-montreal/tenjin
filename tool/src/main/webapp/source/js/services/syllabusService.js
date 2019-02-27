@@ -193,6 +193,24 @@
 		return ret.promise;
 	}
 
+	this.makeSyllabusCommon = function(syllabusId) {
+		var tthis = this;
+		var ret = $q.defer();
+		var url = 'v1/syllabus/makeCommon/' + syllabusId + '.json';
+
+		var wrap = {
+			csrfToken: UserService.getCsrfToken()
+		};
+
+		$http.post(url, wrap).success(function(data) {
+			ret.resolve(data);
+		}).error(function(data, status) {
+			ret.reject(status);
+		});
+
+		return ret.promise;
+	}
+
 	// Load a syllabus and set it as the current one
 	this.loadSyllabus = function(id) {
 		var tthis = this;
