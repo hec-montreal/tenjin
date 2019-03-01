@@ -1,0 +1,20 @@
+<form class="tenjin-modal" data-ng-submit="ok()"> 
+	<div class="modal-header">
+		<h2>{{ 'MODAL_MAKE_COMMON_TITLE' | translate}}</h2> 
+	</div>
+
+	<div class="modal-body" data-ng-if="!loading">
+		{{ 'MODAL_MAKE_COMMON_WARNING' | translate }}
+    </div>
+    
+	<div class="modal-body" data-ng-if="loading">
+		<div class="loader">
+			<img src="/tenjin-tool/img/desktop/loader.gif">
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button type="submit">{{ 'BUTTON_OK' | translate}}</button> 
+		<button type="button" ng-click="cancel()">{{ 'BUTTON_CANCEL' | translate}}</button>
+	</div> 
+</form>
