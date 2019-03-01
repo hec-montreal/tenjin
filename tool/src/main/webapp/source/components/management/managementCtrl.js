@@ -143,7 +143,7 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 			return;
 		}
 
-		SyllabusService.makeSyllabusCommon(syllabus.id);
+		ModalService.confirmMakeSyllabusCommon(syllabus.id);
 	}
 
 	$scope.externalSyllabusImport = function() {
@@ -317,6 +317,14 @@ tenjinApp.controller('ManagementCtrl', ['$scope', '$rootScope', '$timeout', '$tr
 		SyllabusService.copy(data.data.syllabusId, data.data.name).then(function() {
 			refresh().then(function() {
 				$rootScope.$broadcast('copied');
+			})
+		});
+	});
+
+	$scope.$on('makeCommon', function(e, data) {
+		SyllabusService.makeSyllabusCommon(data.data.syllabusId).then(function() {
+			refresh().then(function() {
+				$rootScope.$broadcast('newCommonComplete');
 			})
 		});
 	});

@@ -159,6 +159,24 @@
 		return modalInstance;
 	};
 
+	this.confirmMakeSyllabusCommon = function(syllabusId) {
+		var modalInstance = $uibModal.open({
+			animation: true,
+			templateUrl: 'modals/makeSyllabusCommonModal/makeSyllabusCommonModal.html',
+			controller: 'MakeSyllabusCommonCtrl',
+			resolve: {
+				params: function () {
+					return {'syllabusId': syllabusId};
+				}
+			},
+			size: '',
+			backdrop: 'static',
+			keyboard: false
+		});
+
+		return modalInstance;
+	};
+
 	this.openPermissionsModal = function() {
 		var modalInstance = $uibModal.open({
 			animation: true,
