@@ -21,32 +21,6 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			var templateStructureElement = 
 				SyllabusService.getTemplateStructureElement($scope.element.templateStructureId);
 
-			$scope.displayButtons = {
-				deleteButton: function() {
-					return ($scope.userService.isAllowed('syllabusWrite', SyllabusService.syllabus) &&
-							templateStructureElement && !TemplateStructureElement.mandatory) &&
-						(SyllabusService.syllabus.common ||
-							(!SyllabusService.syllabus.common &&
-								!$scope.element.common));
-				},
-
-				editButton: function() {
-					return ($scope.element.type !== 'rubric') &&
-						((SyllabusService.syllabus.common &&
-								$scope.userService.isAllowed('syllabusWrite', SyllabusService.syllabus) &&
-								templateStructureElement && !templateStructureElement.mandatory) ||
-							(!SyllabusService.syllabus.common &&
-								$scope.userService.isAllowed('syllabusWrite', SyllabusService.syllabus) &&
-								!$scope.element.common &&
-								templateStructureElement && !templateStructureElement.mandatory));
-
-				},
-
-				dragButton: function() {
-					return ($scope.element.type !== 'rubric');
-				}
-			};
-
 			$scope.isNotPublishedFlagVisible = function(element) {
 				// Is element = published or equalsPublished is undefined meaning it's the published syllabus
 				if (element.equalsPublished || typeof element.equalsPublished === 'undefined') {
@@ -147,23 +121,15 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				}
 
 				if (SyllabusService.viewMode === 'student') {
-					return $scope.isElementHiddenByDate(element) || $scope.isElementHiddenByResourceFlag(element);
+					return element.hidden || $scope.isElementHiddenByDate(element) || $scope.isElementHiddenByResourceFlag(element);
 				}
 
 				if (SyllabusService.viewMode === 'public') {
-					if ($scope.isElementHiddenByDate(element) ||
+					return element.hidden || 
+						!element.publicElement ||
+						$scope.isElementHiddenByDate(element) ||
 						$scope.isElementHiddenByResourceFlag(element) ||
-						$scope.isElementHiddenByResourcePublicFlag(element)) {
-						return true;
-					}
-
-					if (element['publicElement'] === false) {
-						return true;
-					}
-
-
-
-					return false;
+						$scope.isElementHiddenByResourcePublicFlag(element);
 				}
 
 				return false;
@@ -173,6 +139,16 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				if (element.dragged && element.dragged === true)
 					return true;
 				return false;
+			}
+
+			$scope.toggleElementHidden = function (element) {
+				if (element.hidden) {
+					element.hidden = false;
+				}
+				else {
+					element.hidden = true;
+				}
+				element.equalsPublished = false;
 			}
 		}
 	};
