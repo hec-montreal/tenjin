@@ -72,7 +72,8 @@ tenjinApp.service('PublishService', ['UserService', 'SyllabusService', 'ngDialog
 
 		var changedPages = syllabus.elements.filter(function changed($element) {
 			if (!$element.elements || $element.elements.length === 0) {
-				return !$element.equalsPublished;
+				return !$element.equalsPublished ||
+					($element.mappingEqualsPublished != null && !$element.mappingEqualsPublished);
 			} else {
 				$element.elements = $element.elements.filter(changed);
 				return $element.elements.length > 0;

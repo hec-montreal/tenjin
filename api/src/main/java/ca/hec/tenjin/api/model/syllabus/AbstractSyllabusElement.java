@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Transient;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -34,13 +36,18 @@ public abstract class AbstractSyllabusElement {
 	private Boolean common;
 	private Boolean publicElement;
 	private Boolean important;
+	private Boolean optional;
 
 	private Long publishedId;
 	private Boolean equalsPublished;
 
 	// not mapped by hibernate because it's actually from SyllabusElementMapping
+	@Transient
 	private Boolean hidden;
+	@Transient
 	private Integer displayOrder;
+	@Transient
+	private Boolean mappingEqualsPublished;
 
 	private Boolean hasDatesInterval;
 
@@ -74,10 +81,12 @@ public abstract class AbstractSyllabusElement {
 		this.setCommon(e.getCommon());
 		this.setPublicElement(e.getPublicElement());
 		this.setImportant(e.getImportant());
+		this.setOptional(e.getOptional());
 		this.setPublishedId(e.getPublishedId());
 		this.setEqualsPublished(e.getEqualsPublished());
 		this.setDisplayOrder(e.getDisplayOrder());
 		this.setHidden(e.getHidden());
+		this.setMappingEqualsPublished(e.getMappingEqualsPublished());
 		this.setAvailabilityStartDate(e.getAvailabilityStartDate());
 		this.setAvailabilityEndDate(e.getAvailabilityEndDate());
 		this.setCreatedDate(e.getCreatedDate());

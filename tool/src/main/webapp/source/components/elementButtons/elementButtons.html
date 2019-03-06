@@ -1,4 +1,10 @@
 <div class="buttons" data-ng-if="tenjinService.viewState.stateName === 'syllabus-edit'">
+
+	<!-- Optional element notice -->
+	<div data-ng-if="isOptionalFlagVisible(element)" class="notice info">
+		<h3><span class="glyphicon glyphicon-flag"></span> {{ 'OPTIONAL_FLAG' | translate }}</h3>
+	</div>
+
 	<!-- Add -->
 	<add-element-menu ng-if="element.type === 'rubric' || element.type === 'composite'" data-add-element-menu="element" data-ng-class="['element-add-element-menu', 'no-bg', {'alone': nodelete, 'composite': element.type==='composite'}]"></add-element-menu>
 

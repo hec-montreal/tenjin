@@ -87,7 +87,7 @@
 		padding-bottom: 5px;
 		h3 {
 			display: inline-block;
-			padding: 3px 3px 0 3px;
+			padding: 0 3px 0 3px;
 			margin-bottom: 3px;
 			color: $font-color-not-published-element-notice;
 			font-weight: normal!important;
@@ -100,6 +100,15 @@
 		}
 		h3 {
 			border: 1px dashed $color-flag-danger;
+		}
+	}
+
+	.info {
+		.glyphicon {
+			color: $color-flag-info;
+		}
+		h3 {
+			border: 1px dashed $color-flag-info;
 		}
 	}
 
@@ -129,11 +138,4 @@
 		display: block;
 		clear: both;
 	}
-}
-
-.from-common {
-	text-align: right;
-	color: $color-alert-notice;
-	padding-right: 15px;
-	font-size: 1.2em;
 }

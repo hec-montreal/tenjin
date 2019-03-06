@@ -605,8 +605,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 		}
 		if (existingElementMapping.getHidden() != newElement.getHidden()) {
 			existingElementMapping.setHidden(newElement.getHidden());
+			existingElementMapping.setEqualsPublished(false);
 		}
-
+		
 		// compare element from the new syllabus to what is in the database
 		AbstractSyllabusElement existingElement = existingElementMapping.getSyllabusElement();
 
@@ -628,7 +629,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 				existingElement.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 				existingElement.setLastModifiedDate(new Date());
 				existingElement.setEqualsPublished(false);
-			}
+			} 
 		}
 	}
 
@@ -650,6 +651,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 		mapping.setSyllabusElement(syllabusElement);
 		mapping.setDisplayOrder(displayOrder);
 		mapping.setHidden(hidden);
+		mapping.setEqualsPublished(false);
 
 		syllabusDao.save(mapping);
 		return mapping;

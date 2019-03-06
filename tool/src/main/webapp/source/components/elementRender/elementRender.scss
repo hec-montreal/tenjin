@@ -1,0 +1,25 @@
+.from-common {
+	text-align: right;
+	color: $color-alert-notice;
+	padding-right: 15px;
+	font-size: 1.2em;
+	margin-bottom: 5px;
+}
+
+.toggle-hidden:hover {
+	background-color: #005eb8;
+}
+
+.toggle-hidden {
+	cursor: pointer;
+	padding: 4px;
+	color: white;
+	background-color: #009fdf;
+	display: inline;
+	margin-right: 5px;
+	border-radius: 5px;
+}
+
+#tenjin .glyphicon-flag {
+	top: 1px;
+}

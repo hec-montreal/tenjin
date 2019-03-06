@@ -137,20 +137,23 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		if (currElement.getTemplateStructureId() != null && currElement.getTemplateStructureId() > 0)
 			templateStructure = templateService.getTemplateStructure(currElement.getTemplateStructureId());
 
-		// for non-common syllabuses, skip common element if it is not published
-		// (and is not a rubric, from the template, or provided)
+			// for non-common syllabuses, skip common element if it is not published
+			// (and is not a rubric, from the template, or provided)
     		if (!syllabus.getCommon() &&
-			currElement.getCommon() &&
+				currElement.getCommon() &&
     			currElement.getPublishedId() == null &&
-			currElement.getProviderId() == null &&
-			!(currElement instanceof SyllabusRubricElement) && 
-			(templateStructure != null && !templateStructure.getMandatory())) {
+				currElement.getProviderId() == null &&
+				!(currElement instanceof SyllabusRubricElement) && 
+				(templateStructure != null && !templateStructure.getMandatory())) {
     			continue;
     		}
 	    		
-    		// set the hidden property for the element (from the mapping) so it can be used in UI
+    		// set the hidden, equalsPublished and display order property for the element (from the mapping) so it can be used in UI
     		currElement.setHidden(currElementMapping.getHidden());
-    		currElement.setDisplayOrder(currElementMapping.getDisplayOrder());
+			currElement.setDisplayOrder(currElementMapping.getDisplayOrder());
+			if (currElementMapping.getEqualsPublished() != null && currElementMapping.getEqualsPublished() == false) {
+				currElement.setMappingEqualsPublished(false);
+			}
     		
     		// Add current element to the lookup map (only needed if it's composite), or replace the dummy one that was inserted previously
     		if (currElement.isComposite()) {

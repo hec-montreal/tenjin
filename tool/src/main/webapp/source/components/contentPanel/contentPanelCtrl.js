@@ -3,7 +3,7 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 
 	$scope.syllabusService = SyllabusService;
 	$scope.treeService = TreeService;
-    $scope.dropped = false;
+	$scope.dropped = false;
 	//Variables used for drag and drop
 	var movedElement = null;
 	//Rubric where the element originally was
@@ -136,8 +136,8 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 			if (typeof providerId != 'undefined' && providerId !== null && providerId !== "") {
 				return false;
 			} else if (sourceNodeScope.$modelValue.common === true && common === 'false') {
-			    return false;
-		    } else if (addableTypes !== null && addableTypes.length > 0) {
+				return false;
+			} else if (addableTypes !== null && addableTypes.length > 0) {
 				for (var i = 0; i < addableTypes.length; i++) {
 					if (addableTypes[i].type === sourceNodeScope.$modelValue.type) {
 						return true;
@@ -152,7 +152,7 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 			//Drag and drop between 2 trees
 			if (destTreeName === "navigationTree"){ 	
 				movedElement = event.source.nodeScope.$modelValue;
-                sourceRubric = $scope.treeService.findElementParent(movedElement);
+				sourceRubric = $scope.treeService.findElementParent(movedElement);
 				destComposite = event.dest.nodesScope.$modelValue[event.dest.index-1];
 				//If we are moving under a cluster, go to last element of the cluster
 				if (destComposite.templateStructureId === 17){

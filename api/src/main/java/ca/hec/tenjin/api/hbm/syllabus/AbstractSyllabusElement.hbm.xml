@@ -51,6 +51,10 @@
 			<column name="IMPORTANT" />
 		</property>
 
+		<property name="optional" type="boolean">
+			<column name="OPTIONAL" />
+		</property>
+
 		<property name="equalsPublished" type="boolean">
 			<column name="EQUALS_PUBLISHED" not-null="true" />
 		</property>

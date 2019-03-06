@@ -10,4 +10,5 @@ public class SyllabusElementMapping {
 	private AbstractSyllabusElement syllabusElement;
 	private Integer displayOrder;
 	private Boolean hidden;
+	private Boolean equalsPublished;
 }
