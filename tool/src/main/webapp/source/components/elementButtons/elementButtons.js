@@ -59,6 +59,16 @@ tenjinApp.directive('elementButtons', ['ModalService', 'SyllabusService', 'Alert
 					SyllabusService.setDirty(true);
 				});
 			}
-		}
+
+			$scope.toggleOptional = function(element) {
+				if (element.optional)  {
+					element.optional = false;
+				}
+				else {
+					element.optional = true;
+				}
+				element.equalsPublished = false;
+			}
+ 		}
 	};
 }]);

@@ -599,17 +599,16 @@ public class SyllabusServiceImpl implements SyllabusService {
 	 */
 	private void compareAndUpdateSyllabusElementMapping(SyllabusElementMapping existingElementMapping, AbstractSyllabusElement newElement, Boolean isCommonSyllabus) {
 
-		// compare element from the new syllabus to what is in the database
-		AbstractSyllabusElement existingElement = existingElementMapping.getSyllabusElement();
-
 		// update display order and hidden (before comparing the objects!)
 		if (existingElementMapping.getDisplayOrder() != newElement.getDisplayOrder()) {
 			existingElementMapping.setDisplayOrder(newElement.getDisplayOrder());
 		}
 		if (existingElementMapping.getHidden() != newElement.getHidden()) {
 			existingElementMapping.setHidden(newElement.getHidden());
-			existingElement.setEqualsPublished(false);
 		}
+
+		// compare element from the new syllabus to what is in the database
+		AbstractSyllabusElement existingElement = existingElementMapping.getSyllabusElement();
 
 		// hidden & display order come from the mapping, don't make the equals
 		// fail for them

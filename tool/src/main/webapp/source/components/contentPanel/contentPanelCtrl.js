@@ -90,7 +90,7 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
                     'templateStructureId': destinationTemplateStructureId,
                     'availabilityStartDate': Date.now(),
                     'title': sourceRubric.title,
-                    'important': false,
+					'important': false,
                     'publicElement': true,
                     'common': $scope.syllabusService.syllabus.common
                 };

@@ -25,6 +25,13 @@
 	button {
 		margin: 0;
 		padding: 0;
+
+		.toggle-optional { 
+			color: red !important;
+		}
+		.optional {
+			color: green !important;
+		}
 	}
 
 	.buttons {
