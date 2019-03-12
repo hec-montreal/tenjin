@@ -5,7 +5,10 @@
 
 			<!-- From common notice -->
 			<div data-ng-if="!syllabusService.syllabus.common && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !userService.canEditElement(element,syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit' && element.type !== 'rubric'" class="from-common">
-				<span data-ng-if="element.optional" class="glyphicon glyphicon-asterisk toggle-hidden" data-ng-click="toggleElementHidden(element)"></span>
+				<div data-ng-if="element.optional" class="toggle-hidden" data-ng-click="toggleElementHidden(element)">
+					<span data-ng-if="!element.hidden">Cacher</span>
+					<span data-ng-if="element.hidden">Montrer</span>
+				</div>
 				<span data-ng-if="!element.hidden" class="glyphicon glyphicon-eye-open" title="{{ 'FROM_COMMON' | translate }}"></span>
 				<span data-ng-if="element.hidden" class="glyphicon glyphicon-eye-close" title="{{ 'FROM_COMMON_HIDDEN' | translate }}"></span>
 			</div>
@@ -44,7 +47,6 @@
 				<div data-ng-if="element.important" class="important-notice">
 					<h3>{{ 'FORM_IMPORTANT' | translate }}</h3>
 				</div>
-				{{ element.optional }}
 
 				<cluster-element data-ng-switch-when="composite" data-cluster-element="element"></cluster-element>
 

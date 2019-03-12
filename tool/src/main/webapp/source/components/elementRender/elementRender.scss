@@ -5,6 +5,15 @@
 	font-size: 1.2em;
 }
 
+.toggle-hidden:hover {
+	background-color: #005eb8;
+}
+
 .toggle-hidden {
-    cursor: pointer;
+	cursor: pointer;
+	padding: 4px;
+	color: white;
+	background-color: #4a8db3;
+	display: inline;
+	margin-right: 5px;
 }
