@@ -254,25 +254,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 				} else if (existingSyllabusElementMappings != null && existingSyllabusElementMappings.containsKey(element.getId())) {
 
-					SyllabusElementMapping mappingToUpdate = existingSyllabusElementMappings.get(element.getId());
-
-					// unhide the element everywhere if it's no longer optional
-					if ((mappingToUpdate.getSyllabusElement().getOptional() != null && mappingToUpdate.getSyllabusElement().getOptional()) && 
-					 	(element.getOptional() == null || !element.getOptional())) {
-
-						List<SyllabusElementMapping> mappings = 
-							syllabusDao.getMappingsForElement(mappingToUpdate.getSyllabusElement());
-						
-						for (SyllabusElementMapping mapping : mappings) {
-							if (mapping.getHidden()) {
-								mapping.setHidden(false);
-								mapping.getSyllabusElement().setEqualsPublished(false);
-							}
-						}
-
-					}
-
-					compareAndUpdateSyllabusElementMapping(mappingToUpdate, element, syllabus.getCommon());
+					compareAndUpdateSyllabusElementMapping(existingSyllabusElementMappings.get(element.getId()), element, syllabus.getCommon());
 
 					// Remove this element from the map.
 					// Remaining elements at the end will be deleted
@@ -628,9 +610,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 		// compare element from the new syllabus to what is in the database
 		AbstractSyllabusElement existingElement = existingElementMapping.getSyllabusElement();
 
-		// hidden & display order come from the mapping, don't make the equals
-		// fail for them
-		existingElement.setHidden(existingElementMapping.getHidden());
+		// display order come from the mapping, don't make the equals fail for them further down
+		// hidden not included because it should setEqualsPublished to false
 		existingElement.setDisplayOrder(existingElementMapping.getDisplayOrder());
 
 		// user may not update the publishedId
