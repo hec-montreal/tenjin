@@ -51,6 +51,11 @@
 		</div>
 	</div>
 
+	<div>
+		<input type="checkbox" name="optional" id="optionalCheckbox" data-ng-model="element.optional" data-ng-disabled="element.id > 0" />
+		<label for="optionalCheckbox">{{ 'FORM_OPTIONAL_CHECKBOX' | translate }}</label> 
+	</div>
+
 	<!-- Resource attributes -->
 	<div class="readonly-attrs" ng-if="!!resource">
 		<div><strong>{{ 'DATA_MODIFIABLE_IN_RESOURCES' | translate }}</strong></div>

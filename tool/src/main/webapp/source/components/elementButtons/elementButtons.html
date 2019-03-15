@@ -3,11 +3,6 @@
 	<add-element-menu ng-if="element.type === 'rubric' || element.type === 'composite'" data-add-element-menu="element" data-ng-class="['element-add-element-menu', 'no-bg', {'alone': nodelete, 'composite': element.type==='composite'}]"></add-element-menu>
 
 	<!-- Edition -->
-	<button ng-if="!noedit" ng-click="toggleOptional(element)" ng-disabled="disabled" class="action toggle-optional">
-		<span ng-class="{ 'optional': element.optional === 'true' }" class="glyphicon glyphicon-lock"></span>
-	</button>
-
-	<!-- Edition -->
 	<button ng-if="!noedit" ng-click="edit(element)" ng-disabled="disabled" class="action edit">
 		<span class="glyphicon glyphicon-pencil"></span>
 	</button>

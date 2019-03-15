@@ -254,7 +254,25 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 				} else if (existingSyllabusElementMappings != null && existingSyllabusElementMappings.containsKey(element.getId())) {
 
-					compareAndUpdateSyllabusElementMapping(existingSyllabusElementMappings.get(element.getId()), element, syllabus.getCommon());
+					SyllabusElementMapping mappingToUpdate = existingSyllabusElementMappings.get(element.getId());
+
+					// unhide the element everywhere if it's no longer optional
+					if ((mappingToUpdate.getSyllabusElement().getOptional() != null && mappingToUpdate.getSyllabusElement().getOptional()) && 
+					 	(element.getOptional() == null || !element.getOptional())) {
+
+						List<SyllabusElementMapping> mappings = 
+							syllabusDao.getMappingsForElement(mappingToUpdate.getSyllabusElement());
+						
+						for (SyllabusElementMapping mapping : mappings) {
+							if (mapping.getHidden()) {
+								mapping.setHidden(false);
+								mapping.getSyllabusElement().setEqualsPublished(false);
+							}
+						}
+
+					}
+
+					compareAndUpdateSyllabusElementMapping(mappingToUpdate, element, syllabus.getCommon());
 
 					// Remove this element from the map.
 					// Remaining elements at the end will be deleted
