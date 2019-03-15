@@ -52,8 +52,11 @@
 	</div>
 
 	<div>
-		<input type="checkbox" name="optional" id="optionalCheckbox" data-ng-model="element.optional" data-ng-disabled="element.id > 0" />
-		<label for="optionalCheckbox">{{ 'FORM_OPTIONAL_CHECKBOX' | translate }}</label> 
+		<label for="optionalCheckbox">
+			<!-- disable this checkbox once the element is saved -->
+			<input type="checkbox" name="optional" id="optionalCheckbox" data-ng-model="element.optional" data-ng-disabled="element.id > 0" />
+			{{ 'FORM_OPTIONAL_CHECKBOX' | translate }}
+		</label> 
 	</div>
 
 	<!-- Resource attributes -->
