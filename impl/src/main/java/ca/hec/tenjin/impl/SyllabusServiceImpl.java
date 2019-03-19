@@ -610,8 +610,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 		// compare element from the new syllabus to what is in the database
 		AbstractSyllabusElement existingElement = existingElementMapping.getSyllabusElement();
 
-		// display order come from the mapping, don't make the equals fail for them further down
-		// hidden not included because it should setEqualsPublished to false
+		// hidden & display order come from the mapping, don't make the equals
+		// fail for them
+		existingElement.setHidden(existingElementMapping.getHidden());
 		existingElement.setDisplayOrder(existingElementMapping.getDisplayOrder());
 
 		// user may not update the publishedId
@@ -627,7 +628,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 				existingElement.setLastModifiedBy(sakaiProxy.getCurrentUserId());
 				existingElement.setLastModifiedDate(new Date());
 				existingElement.setEqualsPublished(false);
-			}
+			} 
 		}
 	}
 
