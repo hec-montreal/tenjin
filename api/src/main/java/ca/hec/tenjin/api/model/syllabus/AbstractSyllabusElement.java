@@ -46,6 +46,8 @@ public abstract class AbstractSyllabusElement {
 	private Boolean hidden;
 	@Transient
 	private Integer displayOrder;
+	@Transient
+	private Boolean mappingEqualsPublished;
 
 	private Boolean hasDatesInterval;
 

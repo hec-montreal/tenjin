@@ -370,6 +370,11 @@ public class PublishServiceImpl implements PublishService {
 
 			syllabusDao.save(publishedMapping);
 		}
+		if (mapping.getEqualsPublished() == null || mapping.getEqualsPublished() != true) {
+			// even if we didn't publish the mapping because it was hidden, set equalsPublished for the attempt
+			mapping.setEqualsPublished(true);
+			syllabusDao.save(mapping);
+		}
 	}
 
 	private AbstractPublishedSyllabusElement publishElement(AbstractSyllabusElement syllabusElement, Long newParentId) throws UnknownElementTypeException {

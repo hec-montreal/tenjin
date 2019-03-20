@@ -30,5 +30,8 @@
 		<property name="hidden" not-null="true" type="boolean">
 			<column name="HIDDEN" />
 		</property>
-	</class>
+
+		<property name="equalsPublished" type="boolean">
+			<column name="EQUALS_PUBLISHED" />
+		</property>	</class>
 </hibernate-mapping>
