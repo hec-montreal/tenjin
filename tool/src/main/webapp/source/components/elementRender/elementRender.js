@@ -22,7 +22,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				SyllabusService.getTemplateStructureElement($scope.element.templateStructureId);
 
 			$scope.isOptionalFlagVisible = function(element) {
-				return element.optional && syllabusService.getSyllabus().common;
+				return element.optional && SyllabusService.getSyllabus().common;
 			}
 
 			$scope.isNotPublishedFlagVisible = function(element) {
