@@ -21,6 +21,10 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			var templateStructureElement = 
 				SyllabusService.getTemplateStructureElement($scope.element.templateStructureId);
 
+			$scope.isOptionalFlagVisible = function(element) {
+				return element.optional && syllabusService.getSyllabus().common;
+			}
+
 			$scope.isNotPublishedFlagVisible = function(element) {
 				// Is element = published or equalsPublished is undefined meaning it's the published syllabus
 				if ((element.equalsPublished || typeof element.equalsPublished === 'undefined') &&

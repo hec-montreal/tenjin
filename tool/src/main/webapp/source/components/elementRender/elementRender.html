@@ -18,6 +18,11 @@
 				<h3><span class="glyphicon glyphicon-flag"></span> {{ 'NOT_PUBLISHED' | translate }}</h3>
 			</div>
 
+			<!-- Optional element notice -->
+			<div data-ng-if="isOptionalFlagVisible(element)" class="notice warning">
+				<h3><span class="glyphicon glyphicon-flag"></span> {{ 'OPTIONAL_FLAG' | translate }}</h3>
+			</div>
+
 			<!-- Hidden by resource flag -->
 			<div data-ng-if="isElementHiddenByResourceFlag(element) && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice hidden-by-resource-flag">
 				<h3><span class="glyphicon glyphicon-flag"></span> {{ 'HIDDEN_BY_RESOURCE_FLAG' | translate }}</h3>
