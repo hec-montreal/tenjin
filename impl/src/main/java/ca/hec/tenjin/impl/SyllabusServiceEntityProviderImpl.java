@@ -28,7 +28,7 @@ import java.util.*;
  * Created by 11091096 on 2017-07-18.
  */
 public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityProvider, ContextObserver, EntityTransferrer,
-        SiteContentAdvisorProvider, SiteContentAdvisorTypeRegistry, EntityTransferrerRefMigrator, HardDeleteAware {
+        SiteContentAdvisorProvider, SiteContentAdvisorTypeRegistry, HardDeleteAware {
 
     private static final Logger log = Logger.getLogger("SyllabusServiceEntityProviderImpl");
 
@@ -76,19 +76,13 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
     }
 
     @Override
-    public void updateEntityReferences(String toContext, Map<String, String> transversalMap) {
-
+    public void transferCopyEntities(String fromContext, String toContext, List<String> ids) {
+        transferCopyEntities(fromContext, toContext, ids, false);
     }
 
     @Override
-    public Map<String, String> transferCopyEntitiesRefMigrator(String fromContext, String toContext, List<String> ids) {
-        return transferCopyEntitiesRefMigrator(fromContext, toContext, ids, false);
-    }
+    public void transferCopyEntities(String fromContext, String toContext, List<String> ids, boolean cleanup) {
 
-    @Override
-    public Map<String, String> transferCopyEntitiesRefMigrator(String fromContext, String toContext, List<String> ids, boolean cleanup) {
-
-        Map<String, String> transversalMap = new HashMap<String, String>();
         List<Syllabus> syllabiToCopy, syllabiInDestination ;
         Syllabus syllabusCopy = null;
         Syllabus commonSyllabus = null;
@@ -100,12 +94,29 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
         //Check if we have content to copy
         try {
             syllabiToCopy = syllabusService.getSyllabusList(fromContext);
+
+            toSite = sakaiProxy.getSite(toContext);
+
+            String templateIdStr = toSite.getProperties().getProperty("tenjin_template");
+            if (templateIdStr != null && !templateIdStr.isEmpty()) {
+                Long templateId = new Long(templateIdStr);
+                for (Syllabus s : syllabiToCopy) {
+                    if (s.getCommon() && s.getTemplateId() != templateId) {
+                        log.error("Tenjin import error: the destination site is configured for a different course outline template");
+                        return;
+                    }
+                }
+            }
+
         } catch (NoSiteException e) {
             log.error("The site " + fromContext + " does not exist");
-            return transversalMap;
+            return;
         } catch (DeniedAccessException e) {
             log.error(" You are not allowed to copy syllabi from " + fromContext);
-            return transversalMap;
+            return;
+        } catch (IdUnusedException e) {
+            log.error(" Site with Id " + toContext + " does not exist");
+            return;
         }
 
         //Delete all syllabi in toContext if cleanup
@@ -127,8 +138,6 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
         }
 
         try {
-            toSite = sakaiProxy.getSite(toContext);
-
             //copy common
             commonSyllabus = syllabusService.getCommonSyllabus(fromContext);
             syllabusCopy = syllabusService.transferCopySyllabus(fromContext, toContext, commonSyllabus.getId(), commonSyllabus.getTitle(),
@@ -140,12 +149,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
                 }
             }
 
-
             syllabiToCopy.remove(commonSyllabus);
-
-            if (syllabiToCopy.size()>0){
-
-            }
 
             //copy rest of syllabi
             for(Syllabus syllabus: syllabiToCopy){
@@ -163,9 +167,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
             e.printStackTrace();
         }
 
-
-
-        return transversalMap;
+        return;
     }
 
     @Override
@@ -197,16 +199,6 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
     public String[] myToolIds() {
         String[] toolIds = { "sakai.tenjin" };
         return toolIds;
-    }
-
-    @Override
-    public void transferCopyEntities(String fromContext, String toContext, List<String> ids, boolean cleanup) {
-        transferCopyEntitiesRefMigrator(fromContext, toContext, ids, cleanup);
-    }
-
-    @Override
-    public void transferCopyEntities(String fromContext, String toContext, List<String> ids) {
-        transferCopyEntities(fromContext, toContext, ids, true);
     }
 
     @Override
