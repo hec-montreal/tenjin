@@ -1,0 +1,2 @@
+tenjin.userData.checkEnabledElementTypes=citation,contact_info,document,exam,hyperlink,image,lecture,rubric,sakai_entity,text,tutorial,video
+tenjin.userData.checkDefaultElementTypes=citation,document,hyperlink,sakai_entity

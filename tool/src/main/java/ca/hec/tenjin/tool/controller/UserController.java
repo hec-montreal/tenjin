@@ -21,22 +21,17 @@
 
 package ca.hec.tenjin.tool.controller;
 
-import ca.hec.tenjin.api.SakaiProxy;
-import ca.hec.tenjin.api.SyllabusService;
-import ca.hec.tenjin.api.TenjinFunctions;
-import ca.hec.tenjin.api.TenjinSecurityService;
-import ca.hec.tenjin.api.exception.DeniedAccessException;
-import ca.hec.tenjin.api.exception.NoSiteException;
-import ca.hec.tenjin.api.model.syllabus.Syllabus;
-import ca.hec.tenjin.api.provider.CourseOutlineProvider;
-import ca.hec.tenjin.tool.controller.util.CsrfUtil;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.tool.api.SessionManager;
-import org.sakaiproject.tool.api.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +39,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.sakaiproject.event.cover.UsageSessionService;
 
-import java.util.*;
-import javax.servlet.http.HttpSession;
+import ca.hec.tenjin.api.SakaiProxy;
+import ca.hec.tenjin.api.SyllabusService;
+import ca.hec.tenjin.api.TenjinFunctions;
+import ca.hec.tenjin.api.TenjinProperties;
+import ca.hec.tenjin.api.TenjinSecurityService;
+import ca.hec.tenjin.api.UserAnnotationService;
+import ca.hec.tenjin.api.exception.DeniedAccessException;
+import ca.hec.tenjin.api.exception.NoSiteException;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.userdata.UserAnnotation;
+import ca.hec.tenjin.api.model.userdata.UserAnnotationTypes;
+import ca.hec.tenjin.api.provider.CourseOutlineProvider;
+import ca.hec.tenjin.tool.controller.util.CsrfUtil;
+import lombok.Setter;
 
 
 @Controller
@@ -75,7 +81,12 @@ public class UserController {
 	@Setter
 	@Autowired
 	private TenjinSecurityService securityService = null;
+	
+	@Setter
+	@Autowired
+	private UserAnnotationService userAnnotationService;
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/userProfile", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> getUserProfile() throws DeniedAccessException, NoSiteException {
 		Map<String, Object> profile = new HashMap<String, Object>();
@@ -95,6 +106,9 @@ public class UserController {
 		List<Long> syllabusRead = new ArrayList<Long>();
 		List<Long> syllabusWrite = new ArrayList<Long>();
 		List<Long> syllabusPublish = new ArrayList<Long>();
+		
+		// User annotations
+		Map<Long, List<UserAnnotation>> userAnnotations = new HashMap<>();
 
 		// Permissions to the site and sections
 		try {
@@ -160,6 +174,7 @@ public class UserController {
 
 		// check user permission on each syllabus
 		List<Syllabus> syllabusList = syllabusService.getSyllabusListForUser(siteId, sakaiProxy.getCurrentUserId());
+		
 		if (syllabusList != null) {
 			for (Syllabus syllabus : syllabusList) {
 
@@ -175,6 +190,8 @@ public class UserController {
 				if (securityService.canPublish(currentUserId, syllabus)) {
 					syllabusPublish.add(syllabus.getId());
 				}
+				
+				userAnnotations.put(syllabus.getId(), userAnnotationService.getAnnotationsForUserAndSyllabus(currentUserId, syllabus.getId()));
 			}
 		}
 
@@ -182,12 +199,35 @@ public class UserController {
 		profile.put("syllabusRead", syllabusRead);
 		profile.put("syllabusWrite", syllabusWrite);
 		profile.put("syllabusPublish", syllabusPublish);
+		
+		profile.put("userAnnotations", userAnnotations);
+		
+		// User annotations active on these elements (editor only)
+		Map<String, Object> userAnnotationTypes = new HashMap<>();
+		
+		if (!syllabusWrite.isEmpty())
+		{
+			for(UserAnnotationTypes type : UserAnnotationTypes.values())
+			{
+				Map<String, Object> typeMap = new HashMap<>();
 
-		String lockRenewDelaySeconds = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_LOCK_RENEW_DELAY_SECONDS);
+				typeMap.put("attributeName", type.getAttributeName());
+				typeMap.put("attributeStringKey", type.getAttributeStringKey());
+				typeMap.put("enabledElementTypes", userAnnotationService.getEnabledElementTypesForAnnotationType(type));
+				typeMap.put("defaultElementTypes", userAnnotationService.getDefaultElementTypesForAnnotationType(type));
+			
+				userAnnotationTypes.put(type.name(), typeMap);
+			}
+		}
+				
+		profile.put("userAnnotationTypes", userAnnotationTypes);		
+		
+		// Lock
+		String lockRenewDelaySeconds = sakaiProxy.getSakaiProperty(TenjinProperties.PROPERTY_SYLLABUS_LOCK_RENEW_DELAY_SECONDS);
 
 		profile.put("lockRenewDelaySeconds", lockRenewDelaySeconds);
 		
-		String autosaveDelaySeconds = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_AUTOSAVE_DELAY_SECONDS);
+		String autosaveDelaySeconds = sakaiProxy.getSakaiProperty(TenjinProperties.PROPERTY_SYLLABUS_AUTOSAVE_DELAY_SECONDS);
 		
 		if (autosaveDelaySeconds == null)
 		{
@@ -205,7 +245,7 @@ public class UserController {
 
 		profile.put("resourcesToolId", sakaiProxy.getCurrentSiteResourcesToolId());
 
-		// TODO is this secure?
+		// Csrf token
 		String token = CsrfUtil.getSessionCsrfToken(sessionManager);
 		
 		profile.put("csrf_token", token);
