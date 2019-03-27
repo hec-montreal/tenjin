@@ -44,44 +44,8 @@
 								</li> 
 							</ul>
 						</div>
-					</div>
 
-					<div class="toolbar-right">
-						<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError && tenjinService.viewState.stateName === 'syllabus-edit'" class="action" ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
-							<span class="glyphicon" ng-class="{'glyphicon-floppy-disk': !saving, 'glyphicon-refresh glyphicon-refresh-animate': saving}"></span> {{ 'BUTTON_SAVE' | translate }}
-						</button>
-
-						<button data-ng-show="userService.isAllowed('syllabusPublish', syllabusService.syllabus) && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError  && tenjinService.viewState.stateName === 'syllabus-edit'" ng-disabled="syllabusService.isDirty() || syllabusService.working || (!syllabusService.syllabus.common && (!syllabusService.syllabus.sections || syllabusService.syllabus.sections.length === 0))" class="action" ng-click="startPublish()">
-							<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
-						</button>
-
-						<div uib-dropdown class="pdf-dropdown">
-							<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" type="button" class="btn action-list" uib-dropdown-toggle ng-click="popPdf()" ng-disabled="syllabusService.isWorking()">
-								<img src="img/icon-pdf.png"></img>
-								<span class="">PDF</span>
-								<span class="caret"></span>
-							</button>
-
-							<ul data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" uib-dropdown-menu class="list-menu-pdf" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-								<li role="menuitem">
-									<a href="javascript:void(0);" ng-click="pdf(false)">{{ 'VERSION_IN_EDITION' | translate }}</a>
-								</li>
-
-								<li role="menuitem">
-									<a ng-class="{disabled: syllabusService.syllabus.publishedDate === null}" href="javascript:void(0);" ng-click="pdf(true)">{{ 'VERSION_STUDENTS' | translate }}</a>
-								</li>
-
-								<li role="menuitem">
-									<a ng-class="{disabled: syllabusService.syllabus.publishedDate === null}" href="javascript:void(0);" ng-click="pdfPublic()">{{ 'VERSION_PUBLIC' | translate }}</a>
-								</li>
-							</ul>
-						</div>
-
-						<button data-ng-click="pdf(true)" data-ng-show="userService.isAllowed('syllabusRead', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-published'">
-							<img src="img/icon-pdf.png"></img>
-							<span class="">PDF</span>
-						</button>
-
+						<!-- View -->
 						<div uib-dropdown class="view-dropdown">
 							<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" type="button" class="btn action-list" uib-dropdown-toggle ng-click="popPdf()" ng-disabled="syllabusService.isWorking()">
 								<span class="glyphicon glyphicon-eye-open"></span> {{ 'VIEW' | translate }}
@@ -102,6 +66,58 @@
 								</li>
 							</ul>
 						</div>
+
+						<!-- Progress -->
+						<div class="check-progress-bar" ng-if="isCheckFeatureVisible()">
+							<check-progress-bar></check-progress-bar>
+						</div>
+					</div>
+
+					<div class="toolbar-right">
+						<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError && tenjinService.viewState.stateName === 'syllabus-edit' && syllabusService.viewMode === 'edit'" class="action" ng-click="save()" ng-disabled="(!syllabusService.dirty || syllabusService.working)">
+							<span class="glyphicon" ng-class="{'glyphicon-floppy-disk': !saving, 'glyphicon-refresh glyphicon-refresh-animate': saving}"></span> {{ 'BUTTON_SAVE' | translate }}
+						</button>
+
+						<button data-ng-show="userService.isAllowed('syllabusPublish', syllabusService.syllabus) && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError && tenjinService.viewState.stateName === 'syllabus-edit' && syllabusService.viewMode === 'edit'" ng-disabled="syllabusService.isDirty() || syllabusService.working || (!syllabusService.syllabus.common && (!syllabusService.syllabus.sections || syllabusService.syllabus.sections.length === 0))" class="action" ng-click="startPublish()">
+							<span class="glyphicon glyphicon-save"></span> {{ 'BUTTON_PUBLISH' | translate }}
+						</button>
+
+						<div uib-dropdown class="pdf-dropdown">
+							<button data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && syllabusService.viewMode === 'edit'" type="button" class="btn action-list" uib-dropdown-toggle ng-click="popPdf()" ng-disabled="syllabusService.isWorking()">
+								<img src="img/icon-pdf.png"></img>
+								<span class="">PDF</span>
+								<span class="caret"></span>
+							</button>
+
+							<ul data-ng-show="userService.isAllowed('syllabusWrite', syllabusService.syllabus)" uib-dropdown-menu class="list-menu-pdf" role="menu" aria-labelledby="simple-btn-keyboard-nav">
+								<li role="menuitem">
+									<a href="javascript:void(0);" ng-click="pdf(false)">{{ 'VERSION_IN_EDITION' | translate }}</a>
+								</li>
+
+								<li role="menuitem">
+									<a ng-class="{disabled: syllabusService.syllabus.publishedDate === null}" href="javascript:void(0);" ng-click="pdf(true)">{{ 'VERSION_STUDENTS' | translate }}</a>
+								</li>
+
+								<li role="menuitem">
+									<a ng-class="{disabled: syllabusService.syllabus.publishedDate === null}" href="javascript:void(0);" ng-click="pdfPublic()">{{ 'VERSION_PUBLIC' | translate }}</a>
+								</li>
+							</ul>
+						</div>
+
+						<button data-ng-click="goToCheckAnnotationsSummary()" data-ng-show="isCheckFeatureVisible() && !showCheckAnnotationsSummary">
+							<img src="img/icon-check.png"></img>
+							<span>{{ 'TASKS' | translate }}</span>
+						</button>
+
+						<button data-ng-click="goToSyllabus()" data-ng-show="isCheckFeatureVisible() && showCheckAnnotationsSummary">
+							<img src="img/icon-check.png"></img>
+							<span>{{ 'SYLLABUS' | translate }}</span>
+						</button>
+
+						<button data-ng-click="pdf(true)" data-ng-show="userService.isAllowed('syllabusRead', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-published' && !showCheckAnnotationsSummary">
+							<img src="img/icon-pdf.png"></img>
+							<span class="">PDF</span>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -113,7 +129,7 @@
 			</div>
 		</div>
 
-		<div class="row col-equal-height" ng-if="syllabusLoaded">
+		<div class="row col-equal-height" ng-if="syllabusLoaded && !showCheckAnnotationsSummary">
 			<div class="navigation-host col-md-3 pull-left" data-ng-if="showNavigation">
 				<navigation></navigation>
 			</div>
@@ -123,6 +139,10 @@
 			</div>
 
 			<div ng-include="'contentPanel/contentPanel.html'" data-mode="mode" data-ng-class="['col-xs-12', 'pull-left', {'col-md-9': showNavigation, 'all-width': !showNavigation}]" id="contentPanel"></div>
+		</div>
+
+		<div class="row col-equal-height" ng-if="syllabusLoaded && showCheckAnnotationsSummary">
+			<check-annotations-summary></check-annotations-summary>
 		</div>
 	</div>
 </div>

@@ -1,0 +1,34 @@
+<!-- Node renderer -->
+<script type="text/ng-template" id="element-renderer.html">
+<div class="element">
+	<div class="line" ng-if="isTitleVisible(element)">
+		<div class="check" ng-if="element.attributes['checkable'] === 'true'">
+			<input type="checkbox" id="el_{{element.id}}" ng-click="checkOrUncheckElement(element)" ng-checked="isElementCheckedByAnnotation(element)" />
+		</div>
+
+		<div class="render" ng-class="{'title': element.elements.length > 0, 'checkable': element.attributes['checkable'] === 'true'}">
+			<label for="el_{{element.id}}">{{extractTitle(element)}}</label>
+		</div>
+	</div>
+
+	<c:if test="element.elements.length > 0">
+		<ul>
+			<li ng-repeat="element in element.elements" ng-include="'element-renderer.html'">
+
+			</li>
+		</ul>
+	</c:if>
+</div>
+</script>
+
+<section class="check-annotations-summary">
+	<div class="inner">
+		<div class="items">
+			<ul>
+				<li ng-repeat="element in syllabusService.getSyllabus().elements" ng-include="'element-renderer.html'">
+
+				</li>
+			</ul>
+		</div>
+	</div>
+</section>

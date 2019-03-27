@@ -1,11 +1,16 @@
 tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, config) {
 	'use strict';
 
+	window.us = this;
+
+	this.profile = null;
+	this.annotations = [];
+
 	/**
 	 * Load and set the current user profile
 	 * @return The async promise
 	 */
-	this.loadProfile = function() {
+	this.loadProfile = function () {
 		var tthis = this;
 		var ret = $q.defer();
 
@@ -18,6 +23,66 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 		});
 
 		return ret.promise;
+	};
+
+	this.loadAnnotations = function (syllabus) {
+		var tthis = this;
+		var ret = $q.defer();
+
+		$http.get('v1/user-annotations/' + syllabus.id + '.json').success(function (data) {
+			tthis.annotations = data;
+
+			ret.resolve(data);
+		}).error(function (data) {
+			ret.reject('annotationsLoadError');
+		});
+
+		return ret.promise;
+	};
+
+	this.createAnnotation = function (syllabusId, publishedElementId, annotationType, annotationValue) {
+		var ret = $q.defer();
+
+		var annotation = {
+			'syllabusId': syllabusId,
+			'publishedElementId': publishedElementId,
+			'type' : annotationType,
+			'value': annotationValue || null
+		};
+
+		this.annotations.push(annotation);
+
+		$http.post('v1/user-annotations.json', annotation).success(function (data) {
+			// set the id
+			annotation.id = data.id;
+
+			ret.resolve(data);
+		}).error(function (data) {
+			ret.reject('annotationCreateError');
+		});
+
+		return ret.promise;
+	};
+
+	this.deleteAnnotation = function (annotation) {
+		var ret = $q.defer();
+
+		this.annotations.splice(this.annotations.indexOf(annotation), 1);
+
+		$http.post('v1/user-annotations/' + annotation.publishedElementId + '/' + annotation.type + '/delete.json').success(function (data) {
+			ret.resolve(data);
+		}).error(function (data) {
+			ret.reject('annotationDeleteError');
+		});
+
+		return ret.promise;
+	};
+
+	this.getAnnotationsForElement = function (syllabusId, publishedElementId, annotationType) {
+		return this.annotations.filter(function (a) {
+			return (a.publishedElementId === publishedElementId) && 
+				   (!annotationType || (a.type === annotationType));
+		});
 	};
 
 	/**
@@ -132,6 +197,10 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 
 	this.getCourseTitle = function() {
 	    return this.profile.courseTitle;
+	};
+
+	this.isStudent = function () {
+		return !this.isAllowedView('syllabusWrite');
 	};
 
 }]);

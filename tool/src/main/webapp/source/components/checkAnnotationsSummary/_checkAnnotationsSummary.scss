@@ -1,0 +1,35 @@
+.check-annotations-summary {
+	font-size: 1.2em;
+
+	ul {
+		list-style: none;
+	}
+
+	.check {
+		float: left;
+		padding-right: 10px;
+	}
+
+	.render {
+		float: left;
+		padding-top: 5px;
+	}
+
+	.line:after {
+		content: "";
+		clear: both;
+		display: table;
+	}
+
+	.title {
+		font-weight: bold;
+	}
+
+	.checkable label {
+		font-weight: normal;
+	}
+
+	input[type='checkbox'] {
+		margin-top: 10px;
+	}
+}

@@ -15,7 +15,7 @@
 	$scope.lastSaveTime = '';
 	$scope.saveMode = '';
 
-	$scope.mode = 'edit';
+	$scope.showCheckAnnotationsSummary = false;
 
 	var interval = null;
 
@@ -70,7 +70,7 @@
 		if (confirmLeave()) {
 			$state.go(TenjinService.viewState.stateName, {
 				id: syllabus.id,
-				elementId: undefined
+				elementId: null
 			});
 		}
 	};
@@ -123,6 +123,8 @@
 	};
 
 	$scope.showEditionView = function() {
+		$scope.showCheckAnnotationsSummary = false;
+
 		SyllabusService.viewMode = "edit";
 	};
 
@@ -136,6 +138,22 @@
 
 	$scope.startPublish = function() {
 		ModalService.prePublishSyllabus();
+	};
+
+	$scope.goToCheckAnnotationsSummary = function () {
+		$scope.showCheckAnnotationsSummary = true;
+	};
+
+	$scope.goToSyllabus = function () {
+		$scope.showCheckAnnotationsSummary = false;
+	};
+
+	$scope.isCheckFeatureVisible = function () {
+		if (UserService.isStudent()) {
+			return SyllabusService.countCheckableElements() > 0;
+		} else {
+			return SyllabusService.viewMode === 'student' && SyllabusService.countCheckableElements() > 0;
+		}
 	};
 
 	$scope.$watch('syllabusService.syllabus', function(newValue, oldValue) {

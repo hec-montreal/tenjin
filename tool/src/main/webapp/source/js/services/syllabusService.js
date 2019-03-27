@@ -73,18 +73,16 @@
 	};
 
     this.cleanUpDraggedElements = function(syllabus){
-
         forEachElement(SyllabusService.getSyllabus(), function(element) {
-        			if (element.id === id) {
-        				tthis.selectElement(element);
+			if (element.id === id) {
+				tthis.selectElement(element);
 
-        				// Break
-        				return true;
-        			}
-        		});
+				// Break
+				return true;
+			}
+		});
     };
 
-    
 	this.createReadEvent = function(syllabusId, elementId) {
 		var tthis = this;
 		var ret = $q.defer();
@@ -444,7 +442,7 @@
 	 * Get the list of elements that can be added to a composite element (according to the template rules)
 	 */
 	this.getAddableElementsFromTemplateRules = function(element) {
-		if (this.template !== null) {
+		if (element && this.template !== null) {
 			return this.template[element.templateStructureId].elements;
 		}
 		else {
@@ -831,5 +829,17 @@
 				break;
 			}
 		}
-	};	
+	};
+
+	this.countCheckableElements = function () {
+		var ret = 0;
+
+		this.forEachElement(this.syllabus, function (el) {
+			if (el.attributes['checkable'] === 'true') {
+				ret++;
+			}
+		});
+
+		return ret;
+	}
 }]);

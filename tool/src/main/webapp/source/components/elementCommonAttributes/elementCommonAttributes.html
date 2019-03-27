@@ -10,6 +10,11 @@
 		<label for="visibilityCheckbox">{{ 'FORM_VISIBILITY' | translate }}</label> 
 	</div>
 
+	<div ng-repeat="atype in userAnnotationTypes" ng-if="isUserAnnotationTypeVisible(atype)">
+		<input type="checkbox" name="{{atype.attributeName}}" id="{{atype.attributeName}}Checkbox" data-ng-model="element.attributes[atype.attributeName]" ng-true-value="'true'" ng-false-value="'false'"/>
+		<label for="{{atype.attributeName}}Checkbox">{{ atype.attributeStringKey | translate }}</label> 
+	</div>
+
 	<div ng-show="!nodate">
 		<input id="radioNoDate" type="radio" name="display" class="radio-date" data-ng-model="element.hasDatesInterval" data-ng-value="false" /> <label for="radioNoDate">{{ 'FORM_DISPLAY_DEFAULT' | translate  }}</label>
 	</div>

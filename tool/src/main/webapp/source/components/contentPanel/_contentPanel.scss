@@ -83,6 +83,26 @@
 		opacity: $opacity-not-published-element;
 	}
 
+	.check-gutter {
+		float: left;
+		width: 5%;
+	}
+
+	.check-gutter input {
+		margin: 0 10px 0 0;
+	}
+
+	.next-to-check {
+		float: left;
+		width: 95%;
+	}
+
+	.element-wrapper:after {
+		content: "";
+		clear: both;
+		display: table;
+	}
+
 	.notice {
 		padding-bottom: 5px;
 		h3 {
@@ -138,4 +158,11 @@
 		display: block;
 		clear: both;
 	}
+}
+
+.from-common {
+	text-align: right;
+	color: $color-alert-notice;
+	padding-right: 15px;
+	font-size: 1.2em;
 }

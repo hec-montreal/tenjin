@@ -6,7 +6,7 @@ import java.util.List;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusLockService;
-import ca.hec.tenjin.api.TenjinFunctions;
+import ca.hec.tenjin.api.TenjinProperties;
 import ca.hec.tenjin.api.dao.SyllabusDao;
 import ca.hec.tenjin.api.dao.SyllabusLockDao;
 import ca.hec.tenjin.api.exception.DeniedAccessException;
@@ -101,7 +101,7 @@ public class SyllabusLockServiceImpl implements SyllabusLockService {
 		
 		Calendar cal = Calendar.getInstance();
 
-		String delayProp = sakaiProxy.getSakaiProperty(SakaiProxy.PROPERTY_SYLLABUS_LOCK_DELAY_SECONDS);
+		String delayProp = sakaiProxy.getSakaiProperty(TenjinProperties.PROPERTY_SYLLABUS_LOCK_DELAY_SECONDS);
 		int delay;
 
 		if (delayProp == null || delayProp.length() == 0) {

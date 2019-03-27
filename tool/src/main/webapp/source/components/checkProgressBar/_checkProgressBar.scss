@@ -1,0 +1,33 @@
+.tenjin-progress-bar {
+	width: 600px;
+	height: 25px;
+	background-color: #ccc;
+
+	.tenjin-progress {
+		height: 25px;
+
+		background: repeating-linear-gradient(
+			130deg,
+			#45a8d1,
+			#45a8d1 10px,
+			#60B3E3 10px,
+			#60B3E3 20px
+		);
+	}
+}
+
+.tenjin-progress-bar:after {
+	content: '';
+	clear: both;
+	display: table;
+}
+
+.tenjin-progress-label {
+	width: 100%;
+	position: relative;
+	top: -25px;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	padding-top: 3px;
+}

@@ -33,6 +33,11 @@
 	animation: spin .7s infinite linear;
 }
 
+.check-progress-bar {
+	padding-top: 20px;
+	padding-right: 20px;
+}
+
 .pdf-dropdown {
 	float: right;
 
@@ -50,10 +55,11 @@
 }
 
 .view-dropdown {
-	float: right;
+	position: relative;
+	display: inline-block;
 
 	button {
-
+		margin: 0;
 	}
 }
 
