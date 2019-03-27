@@ -219,7 +219,7 @@ public class UserController {
 				userAnnotationTypes.put(type.name(), typeMap);
 			}
 		}
-				
+
 		profile.put("userAnnotationTypes", userAnnotationTypes);		
 		
 		// Lock
