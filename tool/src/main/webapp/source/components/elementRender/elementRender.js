@@ -21,10 +21,10 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			var templateStructureElement = 
 				SyllabusService.getTemplateStructureElement($scope.element.templateStructureId);
 
-			$scope.isNotPublishedFlagVisible = function(element) {
+			$scope.isNotPublishedFlagVisible = function() {
 				// Is element = published or equalsPublished is undefined meaning it's the published syllabus
-				if ((element.equalsPublished || typeof element.equalsPublished === 'undefined') &&
-					(element.mappingEqualsPublished || typeof element.mappingEqualsPublished === 'undefined' || element.mappingEqualsPublished === null)) {
+				if (($scope.element.equalsPublished || typeof $scope.element.equalsPublished === 'undefined') &&
+					($scope.element.mappingEqualsPublished || typeof $scope.element.mappingEqualsPublished === 'undefined' || $scope.element.mappingEqualsPublished === null)) {
 					return false;
 				}
 
@@ -34,7 +34,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 				}
 
 				// Dont show flag on rubrics
-				if (element.type === 'rubric') {
+				if ($scope.element.type === 'rubric') {
 					return false;
 				}
 
@@ -48,8 +48,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			};
 
 			$scope.isElementHiddenByResourceFlag = function() {
-				var element = $scope.element;
-				var res = SyllabusService.getElementResource(element);
+				var res = SyllabusService.getElementResource($scope.element);
 
 				if (res === null) {
 					return false;
@@ -59,8 +58,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			};
 
 			$scope.isElementHiddenByResourcePublicFlag = function() {
-				var element = $scope.element;
-				var res = SyllabusService.getElementResource(element);
+				var res = SyllabusService.getElementResource($scope.element);
 
 				if (res === null) {
 					return false;
@@ -70,14 +68,11 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			};
 
 			$scope.isSakaiEntityMissing = function() {
-				var element = $scope.element;
-
-				return SakaiToolsService.getEntity(element.attributes.sakaiToolId) == null;
+				return SakaiToolsService.getEntity($scope.element.attributes.sakaiToolId) == null;
 			};
 
 			$scope.isElementHiddenByDate = function() {
-				var element = $scope.element;
-				var dates = SyllabusService.getElementVisibilityDates(element);
+				var dates = SyllabusService.getElementVisibilityDates($scope.element);
 
 				if (!dates.start) {
 					return false;
@@ -97,8 +92,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			};
 
 			$scope.getElementHiddenByDateMessage = function() {
-				var element = $scope.element;
-				var dates = SyllabusService.getElementVisibilityDates(element);
+				var dates = SyllabusService.getElementVisibilityDates($scope.element);
 				var fmt = 'YYYY-MM-DD';
 
 				if (!dates.start) {
@@ -115,51 +109,48 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			};
 
 			$scope.isElementFadedOut = function() {
-				var element = $scope.element;
-
-				if (element.composite && (element.type !== 'exam' && element.type !== 'evaluation')) {
+				if ($scope.element.composite && ($scope.element.type !== 'exam' && $scope.element.type !== 'evaluation')) {
 					return false;
 				}
 
-				return !element.equalsPublished;
+				return !$scope.element.equalsPublished;
 			};
 
 			$scope.isElementHiddenByViewMode = function() {
-				var element = $scope.element;
-
 				if (SyllabusService.viewMode === 'edit') {
 					return false;
 				}
 
 				if (SyllabusService.viewMode === 'student') {
-					return element.hidden || $scope.isElementHiddenByDate(element) || $scope.isElementHiddenByResourceFlag(element);
+					return $scope.element.hidden || $scope.isElementHiddenByDate() || $scope.isElementHiddenByResourceFlag();
 				}
 
 				if (SyllabusService.viewMode === 'public') {
-					return element.hidden || 
-						!element.publicElement ||
-						$scope.isElementHiddenByDate(element) ||
-						$scope.isElementHiddenByResourceFlag(element) ||
-						$scope.isElementHiddenByResourcePublicFlag(element);
+					return $scope.element.hidden || 
+						!$scope.element.publicElement ||
+						$scope.isElementHiddenByDate() ||
+						$scope.isElementHiddenByResourceFlag() ||
+						$scope.isElementHiddenByResourcePublicFlag();
 				}
 
 				return false;
 			};
 
-			$scope.isElementDragged = function (element){
-				if (element.dragged && element.dragged === true)
+			$scope.isElementDragged = function () {
+				if ($scope.element.dragged && $scope.element.dragged === true)
 					return true;
+
 				return false;
 			};
 
-			$scope.toggleElementHidden = function (element) {
-				if (element.hidden) {
-					element.hidden = false;
+			$scope.toggleElementHidden = function () {
+				if ($scope.element.hidden) {
+					$scope.element.hidden = false;
 				} else {
-					element.hidden = true;
+					$scope.element.hidden = true;
 				}
 
-				element.equalsPublished = false;
+				$scope.element.equalsPublished = false;
 			};
 
 			$scope.checkOrUncheckElement = function () {
