@@ -1,13 +1,13 @@
 <!-- Node renderer -->
 <script type="text/ng-template" id="element-renderer.html">
 <div class="element">
-	<div class="line">
+	<div class="line" ng-if="isTitleVisible(element)">
 		<div class="check" ng-if="element.attributes['checkable'] === 'true'">
-			<input type="checkbox" ng-click="checkOrUncheckElement(element)" ng-checked="isElementCheckedByAnnotation(element)" />
+			<input type="checkbox" id="el_{{element.id}}" ng-click="checkOrUncheckElement(element)" ng-checked="isElementCheckedByAnnotation(element)" />
 		</div>
 
-		<div class="render">
-			{{extractTitle(element)}}
+		<div class="render" ng-class="{'title': element.elements.length > 0, 'checkable': element.attributes['checkable'] === 'true'}">
+			<label for="el_{{element.id}}">{{extractTitle(element)}}</label>
 		</div>
 	</div>
 

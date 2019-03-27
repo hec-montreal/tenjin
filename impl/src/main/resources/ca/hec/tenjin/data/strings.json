@@ -343,8 +343,8 @@
 		"LAST_AUTOSAVE": "Last autosave : ",
 		"LAST_SAVE": "Last save : ",
 		"USER_DATA_CHECKABLE_ELEMENT": "Tâche à inclure dans le suivi",
-		"TASKS": "Suivi",
-		"SYLLABUS": "Plan de cours"
+		"TASKS": "Tasks",
+		"SYLLABUS": "Syllabus"
 	},
 
 	"fr_CA": {
@@ -691,7 +691,7 @@
 		"LAST_AUTOSAVE": "Dernière sauvegarde automatique : ",
 		"LAST_SAVE": "Dernière sauvegarde",
 		"USER_DATA_CHECKABLE_ELEMENT": "Tâche à inclure dans le suivi",
-		"TASKS": "Tasks",
+		"TASKS": "Suivi des tâches",
 		"SYLLABUS": "Plan de cours"
 	},
 
@@ -1039,7 +1039,7 @@
 		"LAST_AUTOSAVE": "Dernière sauvegarde automatique : ",
 		"LAST_SAVE": "Dernière sauvegarde",
 		"USER_DATA_CHECKABLE_ELEMENT": "Tâche à inclure dans le suivi",
-		"TASKS": "Suivi",
+		"TASKS": "Suivi des tâches",
 		"SYLLABUS": "Plan de cours"
 	}
 }

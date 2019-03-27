@@ -1,5 +1,5 @@
 .check-annotations-summary {
-	font-size: 1.5em;
+	font-size: 1.2em;
 
 	ul {
 		list-style: none;
@@ -19,5 +19,17 @@
 		content: "";
 		clear: both;
 		display: table;
+	}
+
+	.title {
+		font-weight: bold;
+	}
+
+	.checkable label {
+		font-weight: normal;
+	}
+
+	input[type='checkbox'] {
+		margin-top: 10px;
 	}
 }

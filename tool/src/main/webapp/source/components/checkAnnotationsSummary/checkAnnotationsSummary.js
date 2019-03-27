@@ -20,10 +20,14 @@ tenjinApp.directive('checkAnnotationsSummary', ['SyllabusService', 'UserService'
 
 				div.innerHTML = element.description;
 
-				return $scope.truncateString(div.textContent || div.innerText || '', 20);
+				return $scope.truncateString(div.textContent || div.innerText || '', 50);
 			}
 
 			$scope.checkOrUncheckElement = function (element) {
+				if (!UserService.isStudent()) {
+					return;
+				}
+
 				var annotations = UserService.getAnnotationsForElement(SyllabusService.getSyllabus().id, element.id, 'CHECK');
 
 				if (annotations.length > 0) {
@@ -43,6 +47,22 @@ tenjinApp.directive('checkAnnotationsSummary', ['SyllabusService', 'UserService'
 				}
 
 				return str.substring(0, length) + '...';
+			}
+
+			$scope.isTitleVisible = function (element) {
+				if (element.attributes['checkable'] === 'true') {
+					return true;
+				}
+
+				if (!element.elements || element.elements.length === 0) {
+					return false;
+				}
+
+				for (var i = 0; i < element.elements.length; i++) {
+					if ($scope.isTitleVisible(element.elements[i])) {
+						return true;
+					}
+				}
 			}
 		}
 	};

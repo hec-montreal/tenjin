@@ -5,6 +5,7 @@
 
 	.tenjin-progress {
 		height: 25px;
+
 		background: repeating-linear-gradient(
 			130deg,
 			#45a8d1,
@@ -19,4 +20,14 @@
 	content: '';
 	clear: both;
 	display: table;
+}
+
+.tenjin-progress-label {
+	width: 100%;
+	position: relative;
+	top: -25px;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	padding-top: 3px;
 }
