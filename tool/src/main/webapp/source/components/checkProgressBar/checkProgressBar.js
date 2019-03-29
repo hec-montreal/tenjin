@@ -1,3 +1,5 @@
+/* Not used for now */
+
 tenjinApp.directive('checkProgressBar', ['SyllabusService', 'UserService', function(SyllabusService, UserService) {
 	'use strict';
 

@@ -50,7 +50,7 @@
 					}else {
 						var parentSource = $scope.treeService.findElementParent(sourceNodeScope.$modelValue);
 						var ancestorSource = $scope.treeService.findElementParent(parentSource);
-						var destComposite = destComposite = destNodesScope.$modelValue[destIndex];
+						var destComposite = destNodesScope.$modelValue[destIndex];
 						if (typeof destComposite === 'undefined'){
 							return false;
 						}
@@ -69,6 +69,24 @@
 					}
 				}
 			};
+
+			$scope.isCheckIconVisible = function (item) {
+				return SyllabusService.isCheckFeatureVisibleForStudent() && (item.type === 'lecture' || item.type ==='tutorial');
+			}
+
+			$scope.getCheckableLectureClass = function (item) {
+				var checkable = SyllabusService.countCheckableElements(item);
+
+				if (checkable === 0) {
+					return 'completed glyphicon-minus'
+				}
+
+				if (checkable === SyllabusService.countCheckedElements(item)) {
+					return 'completed glyphicon-ok';
+				}
+
+				return "not-completed glyphicon-ok";
+			}
 		}
 	};
 }]);

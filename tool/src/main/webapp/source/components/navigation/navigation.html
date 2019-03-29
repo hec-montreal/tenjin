@@ -4,6 +4,8 @@
 	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" data-ng-class="['menu-item', {'item-selected': item.$selected, 'menu-item-selected': item.$selected, 'menu-item-parent': syllabusService.itemHasChildInMenu(item), 'menu-item-toplevel': !syllabusService.itemHasParentInMenu(item), 'menu-item-drop': acceptDrop === item.id, 'menu-item': acceptDrop !== item.id}]">
 		<a data-nodrag data-ng-click="treeService.selectElement(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }">
 			<div ng-class="{'numbered-title': isTitleNumbered(item.type)}">
+				<i data-ng-if="isCheckIconVisible(item)" class="{{getCheckableLectureClass(item)}} check-status glyphicon"></i>
+
 				<div data-ng-if="item.type === 'evaluation' || item.type ==='exam'" class="number">
 					{{ item.$numero }}&nbsp;-&nbsp;
 				</div>

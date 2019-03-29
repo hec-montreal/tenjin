@@ -1,7 +1,9 @@
 <!-- Node renderer -->
 <script type="text/ng-template" id="element-renderer.html">
 <div class="element">
-	<div class="line" ng-if="isTitleVisible(element)">
+	<div class="line {{getLineClass(element)}}" ng-if="isTitleVisible(element)">
+		<i data-ng-if="isCheckIconVisible(element)" class="{{getCheckableLectureClass(element)}} check-status glyphicon"></i>
+
 		<div class="check" ng-if="element.attributes['checkable'] === 'true'">
 			<input type="checkbox" id="el_{{element.id}}" ng-click="checkOrUncheckElement(element)" ng-checked="isElementCheckedByAnnotation(element)" />
 		</div>
@@ -13,9 +15,7 @@
 
 	<c:if test="element.elements.length > 0">
 		<ul>
-			<li ng-repeat="element in element.elements" ng-include="'element-renderer.html'">
-
-			</li>
+			<li ng-repeat="element in element.elements" ng-include="'element-renderer.html'"></li>
 		</ul>
 	</c:if>
 </div>
@@ -25,9 +25,7 @@
 	<div class="inner">
 		<div class="items">
 			<ul>
-				<li ng-repeat="element in syllabusService.getSyllabus().elements" ng-include="'element-renderer.html'">
-
-				</li>
+				<li ng-repeat="element in syllabusService.getSyllabus().elements" ng-include="'element-renderer.html'"></li>
 			</ul>
 		</div>
 	</div>

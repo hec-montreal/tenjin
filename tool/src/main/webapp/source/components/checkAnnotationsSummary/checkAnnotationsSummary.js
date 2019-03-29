@@ -13,7 +13,13 @@ tenjinApp.directive('checkAnnotationsSummary', ['SyllabusService', 'UserService'
 
 			$scope.extractTitle = function (element) {
 				if (element.title && element.title.length > 0) {
-					return element.title;
+					var prefix = '';
+
+					if (element.attributes.numero && (element.type === 'lecture' || element.type === 'tutorial')) {
+						prefix = element.attributes.numero + ' - ';
+					}
+
+					return prefix + element.title;
 				}
 
 				var div = document.createElement('div');
@@ -63,6 +69,33 @@ tenjinApp.directive('checkAnnotationsSummary', ['SyllabusService', 'UserService'
 						return true;
 					}
 				}
+			}
+
+			$scope.getLineClass = function (element) {
+				if (element.type === 'lecture' || element.type === 'tutorial') {
+					return 'separator';
+				}
+
+				return '';
+			}
+
+			
+			$scope.isCheckIconVisible = function (item) {
+				return SyllabusService.isCheckFeatureVisibleForStudent() && (item.type === 'lecture' || item.type ==='tutorial');
+			}
+
+			$scope.getCheckableLectureClass = function (item) {
+				var checkable = SyllabusService.countCheckableElements(item);
+
+				if (checkable === 0) {
+					return 'completed glyphicon-minus'
+				}
+
+				if (checkable === SyllabusService.countCheckedElements(item)) {
+					return 'completed glyphicon-ok';
+				}
+
+				return "not-completed glyphicon-ok";
 			}
 		}
 	};

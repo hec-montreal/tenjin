@@ -20,9 +20,6 @@
 	 * Select a Tree element
 	 */
 	this.selectElement = function(element) {
-		console.log('Selecting');
-		console.log(element);
-
 		if (!element) {
 			this.selectFirstElement();
 

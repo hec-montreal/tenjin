@@ -149,11 +149,7 @@
 	};
 
 	$scope.isCheckFeatureVisible = function () {
-		if (UserService.isStudent()) {
-			return SyllabusService.countCheckableElements() > 0;
-		} else {
-			return SyllabusService.viewMode === 'student' && SyllabusService.countCheckableElements() > 0;
-		}
+		return SyllabusService.isCheckFeatureVisibleForStudent();
 	};
 
 	$scope.$watch('syllabusService.syllabus', function(newValue, oldValue) {

@@ -32,4 +32,26 @@
 	input[type='checkbox'] {
 		margin-top: 10px;
 	}
+
+	.separator {
+		width: 100%;
+		border-top: 1px solid #ccc;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+
+	.check-status {
+		display: inline;
+		float: left;
+		margin-right: 5px;
+		margin-top: 5px;
+	}
+
+	.completed {
+		color: #5c5;
+	}
+
+	.not-completed  {
+		color: #ccc;
+	}
 }

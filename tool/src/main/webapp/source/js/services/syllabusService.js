@@ -22,8 +22,8 @@
 		'level': 1
 	};
 
-	this.forEachElement = function(syllabus, fn, position) {
-		if (!syllabus || !syllabus.elements) {
+	this.forEachElement = function(item, fn, position) {
+		if (!item || !item.elements) {
 			return;
 		}
 
@@ -31,8 +31,8 @@
 			position = [];
 		}
 
-		for (var i = 0; i < syllabus.elements.length; i++) {
-			var element = syllabus.elements[i];
+		for (var i = 0; i < item.elements.length; i++) {
+			var element = item.elements[i];
 			var currentPosition = position.concat([i]);
 
 			// If fn returns true, we break (gives a way for fn to break the loop)
@@ -831,15 +831,48 @@
 		}
 	};
 
-	this.countCheckableElements = function () {
+	this.countCheckableElements = function (item) {
 		var ret = 0;
 
-		this.forEachElement(this.syllabus, function (el) {
+		if (!item) {
+			item = this.syllabus;
+		}
+
+		this.forEachElement(item, function (el) {
 			if (el.attributes['checkable'] === 'true') {
 				ret++;
 			}
 		});
 
 		return ret;
+	};
+
+	this.countCheckedElements = function (item) {
+		var tthis = this;
+		var ret = 0;
+
+		if (!item) {
+			item = this.syllabus;
+		}
+
+		this.forEachElement(item, function (el) {
+			if (el.attributes['checkable'] === 'true') {
+				var annotations = UserService.getAnnotationsForElement(tthis.getSyllabus(), el.id, 'CHECK');
+
+				if (annotations.length > 0) {
+					ret++;
+				}
+			}
+		});
+
+		return ret;
 	}
+
+	this.isCheckFeatureVisibleForStudent = function () {
+		if (UserService.isStudent()) {
+			return this.countCheckableElements() > 0;
+		} else {
+			return this.viewMode === 'student' && this.countCheckableElements() > 0;
+		}
+	};
 }]);
