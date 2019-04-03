@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 /* Return the value of the path in an object */
 function path(p, obj) {
 	p = p.replace(/\$/g, '');
@@ -87,11 +89,72 @@ function template(str, model) {
 	return str;
 }
 
-var Sql = function() {
+var tables = {
+	template: {
+		name: 'TENJIN_TEMPLATE',
+		columns: ['TEMPLATE_ID', 'TITLE', 'DESCRIPTION', 'ACTIVE'],
+		nextId: 3
+	},
+
+	templateElement: {
+		name: 'TENJIN_TEMPLATEELEMENT',
+		columns: ['TEMPLATEELEMENT_ID', 'TEMPLATEELEMENTTYPE_ID'],
+		nextId: 48
+	},
+
+	templateElementI18n: {
+		name: 'TENJIN_TEMPLATEELEMENT_I18N',
+		columns: ['TEMPLATEELEMENT_ID', 'LABEL', 'LOCALE']
+	},
+
+	templateStructure: {
+		name: 'TENJIN_TEMPLATESTRUCTURE',
+		columns: ['TEMPLATESTRUCTURE_ID', 'MANDATORY', 'DISPLAY_IN_MENU', 'PARENT_ID', 'TEMPLATEELEMENT_ID', 'PROVIDER_ID', 'TEMPLATE_ID', 'DISPLAY_ORDER'],
+		nextId: 1394
+	}
+};
+
+var elementTypes = {
+	composite: 1,
+	rubric: 13
+};
+
+var locales = {
+	en: 'en_US',
+	fr: 'fr_CA',
+	es: 'es_ES'
+};
+
+var elements = {
+	text: 2,
+	document: 3,
+	image: 16,
+	video: 17,
+	link: 4,
+	tool: 15,
+	citation: 8,
+	description: 18,
+	objectives: 19,
+	approche: 20,
+	coordinator: 21,
+	teacher: 22,
+	teacherAssistant: 23,
+	speaker: 24,
+	secretary: 25,
+	contact: 6,
+	regroupement: 14,
+	seance: 12,
+	tutorial: 13,
+	beforeSeance: 35,
+	duringSeance: 36,
+	afterSeance: 37
+};
+
+var TemplateGenerator = function() {
 	this.creationBuffer = '';
 };
 
-Sql.prototype = {
+TemplateGenerator.prototype = {
 	addLine: function(line) {
 		this.creationBuffer += line + ';\n';
 	},
@@ -100,6 +163,12 @@ Sql.prototype = {
 		var nl = this.creationBuffer.length > 0 ? '\n' : '';
 
 		this.creationBuffer += nl + '-- ' + comment + '\n';
+	},
+
+	save: function(filename) {
+		this.addComment('Generated ' + new Date());
+
+		fs.writeFileSync(filename, this.creationBuffer);
 	},
 
 	insert: function(table, values) {
@@ -125,9 +194,29 @@ Sql.prototype = {
 		this.addLine(template('insert into $$table.name ($$table.columns) values ($values)', model));
 
 		return ret;
+	},
+
+	createTemplate: function(name, description) {
+		return this.insert(tables.template, ['#', name, description, 1]);
+	},
+
+	createElement: function(type, names) {
+		var ret = this.insert(tables.templateElement, ['#', type]);
+
+		this.insert(tables.templateElementI18n, [ret, names['fr'], locales.fr]);
+		this.insert(tables.templateElementI18n, [ret, names['en'], locales.en]);
+		this.insert(tables.templateElementI18n, [ret, names['es'], locales.es]);
+
+		return ret;
+	},
+
+	createElementStructure: function(elementId, displayOrder, opts) {
+		return this.insert(tables.templateStructure, ['#', opts.mandatory ? 1 : 0, opts.displayInMenu ? 1 : 0, opts.parentId ? opts.parentId : null, elementId, null, opts.templateId ? opts.templateId : null, displayOrder]);
 	}
 };
 
 module.exports = {
-	Sql: Sql
+	TemplateGenerator: TemplateGenerator,
+	elementTypes: elementTypes,
+	elements: elements
 };
