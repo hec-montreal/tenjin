@@ -56,7 +56,7 @@
 		</div>
 	</div>
 
-	<div>
+	<div data-ng-if="element.common">
 		<label for="optionalCheckbox">
 			<!-- disable this checkbox once the element is saved -->
 			<input type="checkbox" name="optional" id="optionalCheckbox" data-ng-model="element.optional" data-ng-disabled="element.id > 0" />
