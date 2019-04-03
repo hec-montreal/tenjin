@@ -24,7 +24,7 @@ public class UserAnnotationDaoImpl extends HibernateDaoSupport implements UserAn
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserAnnotation> getAnnotationsForSyllabusElement(Long syllabusElementId) {
-		return (List<UserAnnotation>) getHibernateTemplate().find("from UserAnnotation where and elementId = ?", syllabusElementId);
+		return (List<UserAnnotation>) getHibernateTemplate().find("from UserAnnotation where elementId = ?", syllabusElementId);
 	}
 	
 	@Override
