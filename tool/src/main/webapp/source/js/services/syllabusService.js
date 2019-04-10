@@ -875,4 +875,14 @@
 			return this.viewMode === 'student' && this.countCheckableElements() > 0;
 		}
 	};
+
+	this.getElementTypeTitle = function (element) {
+		var s = this.template[element.templateStructureId];
+
+		if (s) {
+			return s.label;
+		}
+
+		return '';
+	};
 }]);

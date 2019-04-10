@@ -49,7 +49,9 @@
 				</div>
 
 				<div class="check-gutter" data-ng-if="element.attributes['checkable'] === 'true'">
-					<input type="checkbox" ng-click="checkOrUncheckElement()" ng-checked="isElementCheckedByAnnotation()" />
+					<input data-ng-if="userService.isStudent()" type="checkbox" ng-click="checkOrUncheckElement()" ng-checked="isElementCheckedByAnnotation()" />
+					
+					<span class="editor-check glyphicon glyphicon-ok" data-ng-if="!userService.isStudent()"></span>
 				</div>
 
 				<div ng-class="['element-wrapper-inner', {'next-to-check': element.attributes['checkable'] === 'true'}]">

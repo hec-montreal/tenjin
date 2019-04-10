@@ -12,11 +12,15 @@ tenjinApp.directive('checkAnnotationsSummary', ['SyllabusService', 'UserService'
 			$scope.syllabusService = SyllabusService;
 
 			$scope.extractTitle = function (element) {
+				var typeName = SyllabusService.getElementTypeTitle(element) + ': ';
+
 				if (element.title && element.title.length > 0) {
 					var prefix = '';
 
 					if (element.attributes.numero && (element.type === 'lecture' || element.type === 'tutorial')) {
 						prefix = element.attributes.numero + ' - ';
+					} else if ((!element.elements) || (element.elements.length === 0)) {
+						prefix = typeName;
 					}
 
 					return prefix + element.title;
@@ -26,7 +30,7 @@ tenjinApp.directive('checkAnnotationsSummary', ['SyllabusService', 'UserService'
 
 				div.innerHTML = element.description;
 
-				return $scope.truncateString(div.textContent || div.innerText || '', 50);
+				return typeName + $scope.truncateString(div.textContent || div.innerText || '', 50);
 			}
 
 			$scope.checkOrUncheckElement = function (element) {

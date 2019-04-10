@@ -8,7 +8,7 @@
 			<input type="checkbox" id="el_{{element.id}}" ng-click="checkOrUncheckElement(element)" ng-checked="isElementCheckedByAnnotation(element)" />
 		</div>
 
-		<div class="render" ng-class="{'title': element.elements.length > 0, 'checkable': element.attributes['checkable'] === 'true'}">
+		<div class="render" ng-class="{'title': element.elements.length > 0, 'checkable': element.attributes['checkable'] === 'true', 'seance': element.attributes.numero && (element.type === 'lecture' || element.type === 'tutorial')}">
 			<label for="el_{{element.id}}">{{extractTitle(element)}}</label>
 		</div>
 	</div>
