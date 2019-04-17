@@ -78,7 +78,7 @@
 				var checkable = SyllabusService.countCheckableElements(item);
 
 				if (checkable === 0) {
-					return 'completed glyphicon-minus'
+					return 'not-completed glyphicon-minus'
 				}
 
 				if (checkable === SyllabusService.countCheckedElements(item)) {
