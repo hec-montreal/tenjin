@@ -61,6 +61,64 @@ function populateWithStandardElements(structureId, elements) {
 	}
 }
 
+function createSeanceLikeElement(structureId, element, index) {
+	var seanceStructureId = tg.createElementStructure(element, index, {
+		mandatory: false,
+		displayInMenu: true,
+		parentId: structureId
+	});
+
+	tg.addComment('Séance -> description');
+
+	var descriptionStructureId = tg.createElementStructure(elements.description, 0, {
+		mandatory: false,
+		displayInMenu: false,
+		parentId: seanceStructureId
+	});
+
+	populateWithStandardElements(descriptionStructureId, ['text', 'document', 'image', 'video', 'link', 'tool', 'citation']);
+
+	tg.addComment('Séance -> objectives');
+
+	var objectivesStructureId = tg.createElementStructure(elements.objectives, 1, {
+		mandatory: false,
+		displayInMenu: false,
+		parentId: seanceStructureId
+	});
+
+	populateWithStandardElements(objectivesStructureId, ['text', 'document', 'image', 'video', 'link', 'tool', 'citation']);
+
+	tg.addComment('Séance -> avant la séance');
+
+	var beforeSeanceStructureId = tg.createElementStructure(elements.beforeSeance, 2, {
+		mandatory: false,
+		displayInMenu: false,
+		parentId: seanceStructureId
+	});
+
+	populateWithStandardElements(beforeSeanceStructureId, ['text', 'document', 'image', 'video', 'link', 'tool', 'citation']);
+
+	tg.addComment('Séance -> durant la séance');
+
+	var duringSeanceStructureId = tg.createElementStructure(elements.duringSeance, 3, {
+		mandatory: false,
+		displayInMenu: false,
+		parentId: seanceStructureId
+	});
+
+	populateWithStandardElements(duringSeanceStructureId, ['text', 'document', 'image', 'video', 'link', 'tool', 'citation']);
+
+	tg.addComment('Séance -> après la séance');
+
+	var afterSeanceStructureId = tg.createElementStructure(elements.afterSeance, 4, {
+		mandatory: false,
+		displayInMenu: false,
+		parentId: seanceStructureId
+	});
+
+	populateWithStandardElements(afterSeanceStructureId, ['text', 'document', 'image', 'video', 'link', 'tool', 'citation']);
+}
+
 // Template
 tg.addComment('Template');
 
@@ -219,60 +277,14 @@ var regroupementStructureId = tg.createElementStructure(elements.regroupement, 0
 
 tg.addComment('Oganisation du cours -> regroupement -> séance');
 
-var seanceStructureId = tg.createElementStructure(elements.seance, 0, {
-	mandatory: false,
-	displayInMenu: true,
-	parentId: regroupementStructureId
-});
+createSeanceLikeElement(regroupementStructureId, elements.seance, 0);
 
-tg.addComment('Oganisation du cours -> regroupement -> séance -> description');
+tg.addComment('Oganisation du cours -> séance de cours');
 
-descriptionStructureId = tg.createElementStructure(elements.description, 0, {
-	mandatory: false,
-	displayInMenu: false,
-	parentId: seanceStructureId
-});
+createSeanceLikeElement(organisationStructureId, elements.seance, 1);
 
-populateWithStandardElements(descriptionStructureId, ['text', 'document', 'image', 'video', 'link', 'tool', 'citation']);
+tg.addComment('Oganisation du cours -> séance de traveaux pratiques');
 
-tg.addComment('Oganisation du cours -> regroupement -> séance -> objectives');
-
-objectivesStructureId = tg.createElementStructure(elements.objectives, 1, {
-	mandatory: false,
-	displayInMenu: false,
-	parentId: seanceStructureId
-});
-
-populateWithStandardElements(objectivesStructureId, ['text', 'document', 'image', 'video', 'link', 'tool', 'citation']);
-
-tg.addComment('Oganisation du cours -> regroupement -> séance -> avant la séance');
-
-beforeSeanceStructureId = tg.createElementStructure(elements.beforeSeance, 2, {
-	mandatory: false,
-	displayInMenu: false,
-	parentId: seanceStructureId
-});
-
-populateWithStandardElements(beforeSeanceStructureId, ['text', 'document', 'image', 'video', 'link', 'tool', 'citation']);
-
-tg.addComment('Oganisation du cours -> regroupement -> séance -> durant la séance');
-
-duringSeanceStructureId = tg.createElementStructure(elements.duringSeance, 3, {
-	mandatory: false,
-	displayInMenu: false,
-	parentId: seanceStructureId
-});
-
-populateWithStandardElements(duringSeanceStructureId, ['text', 'document', 'image', 'video', 'link', 'tool', 'citation']);
-
-tg.addComment('Oganisation du cours -> regroupement -> séance -> après la séance');
-
-afterSeanceStructureId = tg.createElementStructure(elements.afterSeance, 4, {
-	mandatory: false,
-	displayInMenu: false,
-	parentId: seanceStructureId
-});
-
-populateWithStandardElements(afterSeanceStructureId, ['text', 'document', 'image', 'video', 'link', 'tool', 'citation']);
+createSeanceLikeElement(organisationStructureId, elements.tutorial, 2);
 
 tg.save('script.sql');
