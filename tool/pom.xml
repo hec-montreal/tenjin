@@ -5,33 +5,33 @@
 	<parent>
 		<artifactId>tenjin</artifactId>
 		<groupId>ca.hec</groupId>
-		<version>1.0-SNAPSHOT</version>
+		<version>19.0</version>
 	</parent>
 	
 	<groupId>ca.hec</groupId>
 	<artifactId>tenjin-tool</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>19.0</version>
 	<packaging>war</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${kernel.spring.version}</version>
+			<version>${sakai.spring.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${kernel.spring.version}</version>
+			<version>${sakai.spring.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${kernel.spring.version}</version>
+			<version>${sakai.spring.version}</version>
 		</dependency>
      
 		<dependency>
@@ -60,6 +60,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
+			<version>${sakai.servletapi.version}</version>
 		</dependency>
 
 		<!-- We need this special package to run the jsps in Sakai -->
@@ -156,7 +157,7 @@
 		<dependency>
 			<groupId>org.sakaiproject.announcement</groupId>
 			<artifactId>sakai-announcement-api</artifactId>
-			<version>11.3</version>
+			<version>19.0</version>
 		</dependency>
 		
 		<dependency>

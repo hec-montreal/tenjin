@@ -1,16 +1,17 @@
 package ca.hec.tenjin.impl.dao;
 
-import ca.hec.tenjin.api.dao.TemplateDao;
-import ca.hec.tenjin.api.model.template.ExternalDataProviderDefinition;
-import ca.hec.tenjin.api.model.template.Template;
-import ca.hec.tenjin.api.model.template.TemplateStructure;
-import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.memory.api.Cache;
 import org.sakaiproject.memory.api.MemoryService;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+
+import ca.hec.tenjin.api.dao.TemplateDao;
+import ca.hec.tenjin.api.model.template.ExternalDataProviderDefinition;
+import ca.hec.tenjin.api.model.template.Template;
+import ca.hec.tenjin.api.model.template.TemplateStructure;
+import lombok.Setter;
 
 public class TemplateDaoImpl extends HibernateDaoSupport implements TemplateDao {
 

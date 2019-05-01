@@ -1,26 +1,31 @@
 package ca.hec.tenjin.impl.dao;
 
-import ca.hec.tenjin.api.TemplateService;
-import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
-import ca.hec.tenjin.api.dao.SyllabusDao;
-import ca.hec.tenjin.api.exception.NoSyllabusException;
-import ca.hec.tenjin.api.exception.StructureSyllabusException;
-import ca.hec.tenjin.api.model.syllabus.*;
-import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
-import ca.hec.tenjin.api.model.template.TemplateStructure;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.sakaiproject.exception.IdUnusedException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import ca.hec.tenjin.api.TemplateService;
+import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
+import ca.hec.tenjin.api.dao.SyllabusDao;
+import ca.hec.tenjin.api.exception.NoSyllabusException;
+import ca.hec.tenjin.api.exception.StructureSyllabusException;
+import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.Syllabus;
+import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
+import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
+import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
+import ca.hec.tenjin.api.model.template.TemplateStructure;
+import lombok.Setter;
 
 public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao {
 

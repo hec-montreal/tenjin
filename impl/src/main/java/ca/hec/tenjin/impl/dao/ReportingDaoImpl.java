@@ -1,12 +1,13 @@
 package ca.hec.tenjin.impl.dao;
 
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+
 import ca.hec.tenjin.api.dao.ReportingDao;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCitationElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by curtis on 23/10/17.

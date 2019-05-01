@@ -7,7 +7,7 @@
 	<parent>
 		<artifactId>tenjin</artifactId>
 		<groupId>ca.hec</groupId>
-		<version>1.0-SNAPSHOT</version>
+		<version>19.0</version>
 	</parent>
 	
 	<groupId>ca.hec</groupId>
@@ -108,37 +108,37 @@
 		<dependency>
 			<groupId>org.sakaiproject.samigo</groupId>
 			<artifactId>samigo-api</artifactId>
-			<version>11.3</version>
+			<version>19.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.sakaiproject.samigo</groupId>
 			<artifactId>samigo-impl</artifactId>
-			<version>11.3</version>
+			<version>19.0</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.sakaiproject.samigo</groupId>
 			<artifactId>samigo-services</artifactId>
-			<version>11.3</version>
+			<version>19.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.sakaiproject.samigo</groupId>
 			<artifactId>samigo-hibernate</artifactId>
-			<version>11.3</version>
+			<version>19.0</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.sakaiproject.assignment</groupId>
 			<artifactId>sakai-assignment-api</artifactId>
-			<version>11.3</version>
+			<version>19.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.sakaiproject</groupId>
 			<artifactId>sakai-citations-api</artifactId>
-			<version>11.3</version>
+			<version>19.0</version>
 		</dependency>
 
 		<dependency>
@@ -150,14 +150,14 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>${kernel.spring.version}</version>
+			<version>${sakai.spring.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>${kernel.hibernate.version}</version>
+			<version>${sakai.hibernate.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -168,17 +168,17 @@
         <dependency>
             <groupId>org.sakaiproject.edu-services.course-management</groupId>
             <artifactId>coursemanagement-api</artifactId>
-            <version>11.3</version>
+            <version>19.0</version>
         </dependency>
         <dependency>
             <groupId>ca.hec</groupId>
             <artifactId>hec-course-archive-api</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <version>19.0</version>
         </dependency>
         <dependency>
             <groupId>ca.hec</groupId>
             <artifactId>hec-utils</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <version>19.0</version>
         </dependency>
 
     </dependencies>

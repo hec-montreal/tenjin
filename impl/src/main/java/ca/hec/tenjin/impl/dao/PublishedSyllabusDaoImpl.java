@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.sakaiproject.content.api.ContentResource;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;

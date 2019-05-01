@@ -1,10 +1,11 @@
 package ca.hec.tenjin.impl.provider.tool;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import org.sakaiproject.assignment.api.Assignment;
 import org.sakaiproject.assignment.api.AssignmentService;
+import org.sakaiproject.assignment.api.model.Assignment;
 
 import ca.hec.tenjin.api.ToolUtil;
 import ca.hec.tenjin.api.provider.tool.AssignmentToolEntity;
@@ -18,7 +19,7 @@ public class AssignmentToolEntityProviderImpl implements AssignmentToolEntityPro
 
 	@Override
 	public List<ToolEntity> getEntities(String siteId, String currentUserId) {
-		List<?> assignments = assignmentService.getListAssignmentsForContext(siteId);
+		Collection<?> assignments = assignmentService.getAssignmentsForContext(siteId);
 		List<ToolEntity> ret = new ArrayList<>();
 
 		for (Object assignmentObj : assignments) {

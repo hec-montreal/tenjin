@@ -2,7 +2,7 @@ package ca.hec.tenjin.impl.dao;
 
 import java.util.List;
 
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import ca.hec.tenjin.api.dao.UserAnnonationDao;
 import ca.hec.tenjin.api.model.userdata.UserAnnotation;
