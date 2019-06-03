@@ -101,7 +101,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
             if (templateIdStr != null && !templateIdStr.isEmpty()) {
                 Long templateId = new Long(templateIdStr);
                 for (Syllabus s : syllabiToCopy) {
-                    if (s.getCommon() && s.getTemplateId() != templateId) {
+                    if (s.getCommon() && s.getTemplateId().compareTo(templateId) != 0) {
                         log.error("Tenjin import error: the destination site is configured for a different course outline template");
                         return;
                     }
