@@ -85,10 +85,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 					return dates.start.isAfter(now);
 				}
 
-				// Between start and end
-				var range = moment.range(dates.start, dates.end);
-
-				return !range.contains(now);
+				return now.isBefore(dates.start) || now.isAfter(dates.end);
 			};
 
 			$scope.getElementHiddenByDateMessage = function() {

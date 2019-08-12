@@ -66,8 +66,6 @@ gulp.task('js:lib', function() {
 			'./node_modules/es6-shim/es6-shim.js',
 			'./node_modules/ng-dialog/js/ngDialog.min.js',
 			'./node_modules/js-base64/base64.js',
-			'./node_modules/moment/min/moment.min.js',
-			'./node_modules/moment-range/dist/moment-range.js',
 			'./source/lib/angular-ui/ui-bootstrap-custom-tpls-1.1.0.js',
 			'./source/lib/xeditable/xeditable.min.js',
 			'./source/lib/ng-ckeditor-master/ng-ckeditor.js',
