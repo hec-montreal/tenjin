@@ -13,7 +13,7 @@
 	<script type="text/ng-template" id="nodes_renderer_mobile.html">
 		<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu">
 			<div data-ng-click="selectElement(item)" data-ng-class="['menu-item', {'item-selected': item.$selected, 'enum': isEnumeration(item)}]">
-				<span data-ng-if="item.type === 'evaluation' || item.type ==='exam'">{{$index+1}} - </span>
+				<span data-ng-if="item.type === 'evaluation' || item.type ==='exam'">{{$index}} - </span>
 				<span data-ng-if="item.type === 'lecture' || item.type === 'tutorial'">{{item.$numero}} - </span>
 				<span>{{item.title}}</span>
 			</div>
