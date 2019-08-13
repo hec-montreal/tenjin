@@ -43,7 +43,7 @@
 				<h3><span class="glyphicon glyphicon-flag"></span> {{ 'MISSING_SAKAI_ENTITY_FLAG' | translate }} </h3>
 			</div>
 
-			<div data-ng-class="['element-wrapper', {'important': element.important, 'hidden-by-date': isElementHiddenByDate() && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus), 'not-published': isElementFadedOut() && userService.isAllowed('syllabusWrite', syllabusService.syllabus)}]">
+			<div class="element-wrapper" data-ng-class="[{'important': element.important, 'hidden-by-date': isElementHiddenByDate() && !element.composite && userService.isAllowed('syllabusWrite', syllabusService.syllabus), 'not-published': isElementFadedOut() && userService.isAllowed('syllabusWrite', syllabusService.syllabus)}]">
 				<div data-ng-if="element.important" class="important-notice">
 					<h3>{{ 'FORM_IMPORTANT' | translate }}</h3>
 				</div>
@@ -54,7 +54,7 @@
 					<span class="editor-check glyphicon glyphicon-ok" data-ng-if="!userService.isStudent()"></span>
 				</div>
 
-				<div ng-class="['element-wrapper-inner', {'next-to-check': element.attributes['checkable'] === 'true'}]">
+				<div class="element-wrapper-inner" ng-class="[{'next-to-check': element.attributes['checkable'] === 'true'}]">
 					<cluster-element data-ng-switch-when="composite" data-cluster-element="element"></cluster-element>
 
 					<!-- Lecture element -->
