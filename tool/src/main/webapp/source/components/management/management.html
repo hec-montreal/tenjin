@@ -27,7 +27,7 @@
 
 				<tr data-ng-repeat="syllabus in syllabusService.syllabusList track by syllabus.id">
 					<td>
-						<a class="action" data-ng-if="userService.canEditElement(syllabus, syllabus) && !syllabus.common" editable-text="syllabus.title" onbeforesave="updateTitle($data, syllabus)"><span class="glyphicon glyphicon-pencil"></span></a>
+						<a class="action" data-ng-if="syllabusService.canEditElement(syllabus, syllabus) && !syllabus.common" editable-text="syllabus.title" onbeforesave="updateTitle($data, syllabus)"><span class="glyphicon glyphicon-pencil"></span></a>
 						
 						<a data-ng-if="userService.isAllowed('syllabusWrite', syllabus) || userService.isAllowed('syllabusRead', syllabus)" ui-sref="syllabus-edit({ id: syllabus.id })">{{syllabus.title}}</a>
 						<span data-ng-if="!userService.isAllowed('syllabusWrite', syllabus) && !userService.isAllowed('syllabusRead', syllabus)">{{syllabus.title}}</span>
@@ -37,10 +37,10 @@
 
 					<td>
 						<!-- if common syllabus and no write permission on site -->
-						<span data-ng-if="!userService.canEditElement(syllabus,syllabus)">{{ showSections(syllabus) }}</span>
+						<span data-ng-if="!syllabusService.canEditElement(syllabus,syllabus)">{{ showSections(syllabus) }}</span>
 
 						<!-- if not common syllabus or common syllabus with write permissions -->
-						<a data-ng-if="userService.canEditElement(syllabus,syllabus)" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in userSections" onbeforesave="updateSections($data, syllabus)" onaftersave="updateSyllabusList(syllabus)">
+						<a data-ng-if="syllabusService.canEditElement(syllabus,syllabus)" href="" editable-checklist="syllabus.sections" e-ng-options="s.id as s.name for s in userSections" onbeforesave="updateSections($data, syllabus)" onaftersave="updateSyllabusList(syllabus)">
 							{{ showSections(syllabus) }}
 						</a>
 					</td>

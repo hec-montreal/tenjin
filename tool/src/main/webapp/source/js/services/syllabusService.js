@@ -885,4 +885,20 @@
 
 		return '';
 	};
+
+	this.canEditElement= function(element, syllabus){
+		if (this.viewMode === 'student') {
+			return false;
+		}
+
+		if (element.providerId != null) {
+			return false;
+		}
+
+		if (element.common === syllabus.common) {
+			return UserService.isAllowed('syllabusWrite', syllabus);
+		}
+	
+        return false;
+	};
 }]);
