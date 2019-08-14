@@ -887,7 +887,7 @@
 	};
 
 	this.canEditElement= function(element, syllabus){
-		if (this.viewMode === 'student') {
+		if (this.viewMode === 'student' || this.viewMode === 'public') {
 			return false;
 		}
 
