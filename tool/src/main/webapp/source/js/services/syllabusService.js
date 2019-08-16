@@ -785,14 +785,17 @@
 				}
 			}
 		}
-		// Use the element date fields
-		else if (element.hasDatesInterval) {
-			if (element.availabilityStartDate) {
-				start = moment(element.availabilityStartDate);
-			}
+		
+		if (start == null && end == null) {
+			// Use the element date fields
+			if (element.hasDatesInterval) {
+				if (element.availabilityStartDate) {
+					start = moment(element.availabilityStartDate);
+				}
 
-			if (element.availabilityEndDate) {
-				end = moment(element.availabilityEndDate);
+				if (element.availabilityEndDate) {
+					end = moment(element.availabilityEndDate);
+				}
 			}
 		}
 
