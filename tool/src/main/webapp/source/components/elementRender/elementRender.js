@@ -73,36 +73,35 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 
 			$scope.isElementHiddenByDate = function() {
 				var dates = SyllabusService.getElementVisibilityDates($scope.element);
-
-				if (!dates.start) {
-					return false;
-				}
-
 				var now = moment();
+				var hidden = false;
 
-				// No ending date
-				if (!dates.end) {
-					return dates.start.isAfter(now);
+				if (dates.start) {
+					hidden = now.isBefore(dates.start);
 				}
 
-				return now.isBefore(dates.start) || now.isAfter(dates.end);
+				if (dates.end) {
+					hidden = hidden || now.isAfter(dates.end);
+				}
+
+				return hidden;
 			};
 
 			$scope.getElementHiddenByDateMessage = function() {
 				var dates = SyllabusService.getElementVisibilityDates($scope.element);
 				var fmt = 'YYYY-MM-DD';
 
-				if (!dates.start) {
+				if (dates.start && dates.end) {
+					return $translate.instant('ELEMENT_HIDDEN_BETWEEN')
+						.replace('%1', dates.start.format(fmt))
+						.replace('%2', dates.end.format(fmt));
+				} else if(dates.start) {
+					return $translate.instant('ELEMENT_HIDDEN_BEFORE') + dates.start.format(fmt);
+				} else if (dates.end) {
+					return $translate.instant('ELEMENT_HIDDEN_AFTER') + dates.end.format(fmt);
+				} else {
 					return "";
 				}
-
-				if (!dates.end) {
-					return $translate.instant('ELEMENT_HIDDEN_BEFORE') + dates.start.format(fmt);
-				}
-
-				return $translate.instant('ELEMENT_HIDDEN_BETWEEN')
-					.replace('%1', dates.start.format(fmt))
-					.replace('%2', dates.end.format(fmt));
 			};
 
 			$scope.isElementFadedOut = function() {
