@@ -82,7 +82,7 @@
         <property name="configurableJobProperties">
             <set>
                 <bean class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobProperty">
-                    <property name="required" value="false"/>
+                    <property name="required" value="true"/>
                     <property name="labelResourceKey" value="syncSectionsInTenjin.startDate"/>
                     <property name="descriptionResourceKey" value="syncSectionsInTenjin.startDate.description"/>
                     <property name="defaultValue" value=""/>
