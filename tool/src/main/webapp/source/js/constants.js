@@ -17,7 +17,7 @@
 	// Loaded from the backend
 	contactInfoTitles: [],
 
-	extensionsImage: ['jpg', 'jpeg', 'bmp', 'gif', 'png'],
+	extensionsImage: ['jpg', 'jpeg', 'jfif', 'bmp', 'gif', 'png'],
 
 	statusLabel: {
 		1: "PUBLISHED_SYLLABUS",

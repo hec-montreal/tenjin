@@ -86,6 +86,8 @@
 		background-color: $color-button-action !important;
 		border-color: $color-button-action !important;
 		color: $color-button !important;
+		padding: 0!important;
+		margin-top: -10px;
 	}
 
 	button.action-list:hover {
