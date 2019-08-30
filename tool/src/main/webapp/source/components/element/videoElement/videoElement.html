@@ -3,9 +3,13 @@
 		<div class="element-title syllabus-text" data-ng-if="element.title">
 			{{ element.title }}
 		</div>
+
+		<div class="row" data-ng-if="videoEmbedHtml">
+			<span ng-bind-html="element.description" class="col-sm-9 col-xs-12 comment syllabus-text"></span>
+		</div>
+
 		<div class="row embed" data-ng-if="videoEmbedHtml">
 			<span ng-bind-html="videoEmbedHtml"></span>
-			<span ng-bind-html="element.description" class="col-sm-9 col-xs-12 comment syllabus-text"></span>
 		</div>
 	</div>
 </div>
