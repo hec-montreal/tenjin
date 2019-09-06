@@ -243,6 +243,9 @@
 	}, {
 		"id": 17,
 		"name": "CONTACT_TITLE_PRINCIPALSECRETARY"
+	}, {
+		"id": 18,
+		"name": "CONTACT_TITLE_CERTIFICATE_SECRETARY"
 
 	}]
 }
