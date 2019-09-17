@@ -246,6 +246,8 @@
 	}, {
 		"id": 18,
 		"name": "CONTACT_TITLE_CERTIFICATE_SECRETARY"
-
+	}, {
+		"id": 19,
+		"name": "CONTACT_TITLE_OTHER_SECRETARY"
 	}]
 }
