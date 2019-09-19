@@ -74,14 +74,14 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
 		AbstractSyllabusElement element = publishedSyllabusDao.getSyllabusElementForPublishedSyllabusElementId(annotation.getPublishedElementId());
 		
 		if (element == null) {
-			throw new SyllabusException("Cannot find element for published element");
+			return;
 		}
 		
 		List<UserAnnotation> dupCheck = userAnnotationDao.getAnnotationsForUserAndSyllabusElement(sakaiProxy.getCurrentUserId(), element.getId());
 		
 		for (UserAnnotation dup : dupCheck) {
 			if (dup.getType() == annotation.getType()) {
-				throw new SyllabusException("Cannot create a duplicate annotation with the same type on the same element");
+				return;
 			}
 		}
 		
