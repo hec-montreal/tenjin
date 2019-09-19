@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.TenjinProperties;
 import ca.hec.tenjin.api.UserAnnotationService;
@@ -32,6 +34,7 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
 	private SakaiProxy sakaiProxy;
 
 	@Override
+	@Transactional
 	public List<UserAnnotation> getAnnotationsForUserAndSyllabus(String userId, Long syllabusId) {
 		List<UserAnnotation> ret = new ArrayList<>();
 		
@@ -50,6 +53,7 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
 	}
 
 	@Override
+	@Transactional
 	public List<UserAnnotation> getAnnotationsForUserAndPublishedSyllabusElement(String userId, Long publishedSyllabusElementId) {
 		List<UserAnnotation> ret = new ArrayList<>();
 		AbstractSyllabusElement element = publishedSyllabusDao.getSyllabusElementForPublishedSyllabusElementId(publishedSyllabusElementId);
@@ -65,6 +69,7 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
 		return ret;
 	}
 	
+	@Transactional
 	public void createAnnotation(UserAnnotation annotation) throws SyllabusException	{
 		AbstractSyllabusElement element = publishedSyllabusDao.getSyllabusElementForPublishedSyllabusElementId(annotation.getPublishedElementId());
 		
@@ -86,16 +91,19 @@ public class UserAnnotationServiceImpl implements UserAnnotationService {
 	}
 	
 	@Override
+	@Transactional
 	public void save(UserAnnotation annotation) {
 		userAnnotationDao.save(annotation);
 	}
 
 	@Override
+	@Transactional
 	public void delete(UserAnnotation annotation) {
 		userAnnotationDao.delete(annotation);
 	}
 
 	@Override
+	@Transactional
 	public void deleteForSyllabusElement(Long syllabusElementId) {
 		List<UserAnnotation> annotations = userAnnotationDao.getAnnotationsForSyllabusElement(syllabusElementId);
 		

@@ -39,6 +39,6 @@ public class UserAnnotationDaoImpl extends HibernateDaoSupport implements UserAn
 
 	@Override
 	public void delete(UserAnnotation annotation) {
-		getHibernateTemplate().delete(annotation);
+		getHibernateTemplate().delete(getHibernateTemplate().contains(annotation) ? annotation : getHibernateTemplate().merge(annotation));
 	}
 }
