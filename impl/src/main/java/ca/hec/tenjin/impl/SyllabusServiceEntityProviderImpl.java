@@ -1,5 +1,30 @@
 package ca.hec.tenjin.impl;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
+
+import org.apache.log4j.Logger;
+import org.sakaiproject.content.api.providers.SiteContentAdvisor;
+import org.sakaiproject.content.api.providers.SiteContentAdvisorProvider;
+import org.sakaiproject.content.api.providers.SiteContentAdvisorTypeRegistry;
+import org.sakaiproject.entity.api.ContextObserver;
+import org.sakaiproject.entity.api.Entity;
+import org.sakaiproject.entity.api.EntityManager;
+import org.sakaiproject.entity.api.EntityTransferrer;
+import org.sakaiproject.entity.api.HardDeleteAware;
+import org.sakaiproject.entity.api.HttpAccess;
+import org.sakaiproject.entity.api.Reference;
+import org.sakaiproject.entity.api.ResourceProperties;
+import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.site.api.Group;
+import org.sakaiproject.site.api.Site;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.SyllabusService;
 import ca.hec.tenjin.api.SyllabusServiceEntityProvider;
@@ -11,18 +36,6 @@ import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import lombok.Setter;
-import org.apache.log4j.Logger;
-import org.sakaiproject.content.api.providers.SiteContentAdvisor;
-import org.sakaiproject.content.api.providers.SiteContentAdvisorProvider;
-import org.sakaiproject.content.api.providers.SiteContentAdvisorTypeRegistry;
-import org.sakaiproject.entity.api.*;
-import org.sakaiproject.exception.IdUnusedException;
-import org.sakaiproject.site.api.Group;
-import org.sakaiproject.site.api.Site;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import java.util.*;
 
 /**
  * Created by 11091096 on 2017-07-18.
@@ -86,6 +99,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
         List<Syllabus> syllabiToCopy, syllabiInDestination ;
         Syllabus syllabusCopy = null;
         Syllabus commonSyllabus = null;
+        Site fromSite = null;
         Site toSite = null;
         Map<Long, AbstractSyllabusElement> mappingCommonSyllabusOldNew = new HashMap<Long, AbstractSyllabusElement>();
         // map to prevent from copying a citation twice
@@ -95,8 +109,18 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
         try {
             syllabiToCopy = syllabusService.getSyllabusList(fromContext);
 
+            fromSite = sakaiProxy.getSite(fromContext);
             toSite = sakaiProxy.getSite(toContext);
-
+            
+            String fromLocale = fromSite.getProperties().getProperty("hec_syllabus_locale");
+            String toLocale = toSite.getProperties().getProperty("hec_syllabus_locale");
+      
+            if (!fromLocale.equals(toLocale)) {
+            	log.error("Cannot copy syllabus from site with locale " + fromLocale + " to site with locale " + toLocale);
+            	
+            	return;
+            }
+      
             String templateIdStr = toSite.getProperties().getProperty("tenjin_template");
             if (templateIdStr != null && !templateIdStr.isEmpty()) {
                 Long templateId = new Long(templateIdStr);
