@@ -99,7 +99,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
         List<Syllabus> syllabiToCopy, syllabiInDestination ;
         Syllabus syllabusCopy = null;
         Syllabus commonSyllabus = null;
-        Site fromSite = null;
+        // Site fromSite = null;
         Site toSite = null;
         Map<Long, AbstractSyllabusElement> mappingCommonSyllabusOldNew = new HashMap<Long, AbstractSyllabusElement>();
         // map to prevent from copying a citation twice
@@ -109,17 +109,17 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
         try {
             syllabiToCopy = syllabusService.getSyllabusList(fromContext);
 
-            fromSite = sakaiProxy.getSite(fromContext);
+            // fromSite = sakaiProxy.getSite(fromContext);
             toSite = sakaiProxy.getSite(toContext);
             
-            String fromLocale = fromSite.getProperties().getProperty("hec_syllabus_locale");
+            /*String fromLocale = fromSite.getProperties().getProperty("hec_syllabus_locale");
             String toLocale = toSite.getProperties().getProperty("hec_syllabus_locale");
       
             if (!fromLocale.equals(toLocale)) {
             	log.error("Cannot copy syllabus from site with locale " + fromLocale + " to site with locale " + toLocale);
             	
             	return;
-            }
+            }*/
       
             String templateIdStr = toSite.getProperties().getProperty("tenjin_template");
             if (templateIdStr != null && !templateIdStr.isEmpty()) {
