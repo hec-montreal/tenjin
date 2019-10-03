@@ -112,15 +112,15 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
             fromSite = sakaiProxy.getSite(fromContext);
             toSite = sakaiProxy.getSite(toContext);
             
-            String fromLocale = fromSite.getProperties().getProperty("hec_syllabus_locale");
-            String toLocale = toSite.getProperties().getProperty("hec_syllabus_locale");
+            String fromLocale = nullGuard(fromSite.getProperties().getProperty("hec_syllabus_locale"));
+            String toLocale = nullGuard(toSite.getProperties().getProperty("hec_syllabus_locale"));
       
             if (!fromLocale.equals(toLocale)) {
             	log.error("Cannot copy syllabus from site with locale " + fromLocale + " to site with locale " + toLocale);
             	
             	return;
             }
-      
+            
             String templateIdStr = toSite.getProperties().getProperty("tenjin_template");
             if (templateIdStr != null && !templateIdStr.isEmpty()) {
                 Long templateId = new Long(templateIdStr);
@@ -194,6 +194,14 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
         return;
     }
 
+    private String nullGuard(String s) {
+    	if (s == null) {
+    		return "";
+    	}
+    	
+    	return s;
+    }
+    
     @Override
     public void registerSiteContentAdvisorProvidor(SiteContentAdvisorProvider advisor, String type) {
         siteContentAdvisorsProviders.put(type, advisor);
