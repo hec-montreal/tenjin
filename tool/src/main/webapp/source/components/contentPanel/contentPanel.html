@@ -49,7 +49,7 @@
 				<ol class="listing" ui-tree-nodes data-ng-model="item.elements" class="list-element list-element-leaf" data-ng-class="{hidden: collapsed, 'cluster-padding': item.type === 'composite'}" data-ng-if="item.type === 'composite' || item.type === 'rubric' || item.type === 'cluster'"
 					data-provider-id="{{item.providerId}}" data-templatestructure-id="{{item.templateStructureId}}" data-common="{{item.common}}">
 
-					<li data-ng-repeat="item in item.elements" data-nodrag="{{!syllabusService.canEditElement(item, syllabusService.syllabus)}}" ui-tree-node ui-tree-handle data-ng-class="[{'no-drag': item.common === true && syllabusService.syllabus.common !== true}]">
+					<li data-ng-repeat="item in item.elements" data-nodrag="{{item.type === 'rubric' || item.providerId !== null}}" ui-tree-node ui-tree-handle data-ng-class="[{'no-drag': item.type === 'rubric'}]">
 						<element-render data-element="item" data-index="$index"></element-render>
 					</li>
 				</ol>
