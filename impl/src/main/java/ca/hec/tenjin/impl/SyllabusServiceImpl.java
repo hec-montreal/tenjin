@@ -247,6 +247,10 @@ public class SyllabusServiceImpl implements SyllabusService {
 			// add top-level elements to the search queue (breadth-first
 			// traversal)
 			Queue<AbstractSyllabusElement> searchQueue = new LinkedList<AbstractSyllabusElement>();
+
+			// Element ids that we need to correct the child display orders
+			Set<Long> renumberChildren = new HashSet<Long>();
+
 			int order = 0;
 			for (AbstractSyllabusElement element : syllabus.getElements()) {
 				// correct site id and display order
@@ -284,6 +288,8 @@ public class SyllabusServiceImpl implements SyllabusService {
 							}
 						}
 					}
+
+					renumberChildren.add(element.getParentId());
 
 				} else if (existingSyllabusElementMappings != null && existingSyllabusElementMappings.containsKey(element.getId())) {
 
@@ -345,6 +351,12 @@ public class SyllabusServiceImpl implements SyllabusService {
 										syllabusDao.saveOrUpdate(child);
 									}
 								}
+
+								// renumber personalised children of deleted element
+								// because we probably deleted some common ones.
+								if (!children.isEmpty()) {
+									renumberChildren.add(newElem.getId());
+								}
 							}
 						}
 					}
@@ -352,11 +364,19 @@ public class SyllabusServiceImpl implements SyllabusService {
 					// delete the user annotations on element
 					userAnnotationService.deleteForSyllabusElement(mapping.getSyllabusElement().getId());
 					
+					// remember the parentid to renumber children later
+					renumberChildren.add(mapping.getSyllabusElement().getParentId());
+
 					// delete the element and all it's mappings
 					syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
 				}
 			}
-		}
+
+			// fix display order numbering issues
+			for (Long l : renumberChildren) {
+				syllabusDao.renumberChildren(l);
+			}
+	}
 
 		sakaiProxy.postEvent(TenjinEvents.TENJIN_EDIT_EVENT, sakaiProxy.getSyllabusReference(syllabus.getId(), null), true);
 		return getSyllabus(syllabus.getId());
