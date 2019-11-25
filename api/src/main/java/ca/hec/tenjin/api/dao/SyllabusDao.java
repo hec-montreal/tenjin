@@ -240,5 +240,12 @@ public interface SyllabusDao {
 	 * @return
 	 */
 	public boolean cleanupSite (String siteId);
+
+	/**
+	 * Renumber the displayOrder of the children of the given parent id (usually after a reorder or delete)
+	 * Affects child lists in all course outlines
+	 * @param parentId
+	 */
+	public void renumberChildren(Long parentId);
 }
 
