@@ -27,8 +27,7 @@
 			'parentId': $scope.parent.id,
 			'templateStructureId': $scope.type.id,
 			'availabilityStartDate': new Date(),
-			'common': SyllabusService.syllabus.common,
-			'providerId': null
+			'common': SyllabusService.syllabus.common
 		};
 
 		if (type.type === 'composite') {
