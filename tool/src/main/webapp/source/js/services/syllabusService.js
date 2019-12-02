@@ -14,8 +14,6 @@
 
 	this.editingElement = false;
 
-	this.tabIndex = 1;
-
 	// temporary id to use for new elements, decremented after every use
 	var tempId = -1;
 
@@ -74,8 +72,8 @@
 		return ret.promise;
 	};
 
-	this.cleanUpDraggedElements = function(syllabus) {
-		forEachElement(SyllabusService.getSyllabus(), function(element) {
+    this.cleanUpDraggedElements = function(syllabus){
+        forEachElement(SyllabusService.getSyllabus(), function(element) {
 			if (element.id === id) {
 				tthis.selectElement(element);
 
@@ -83,7 +81,7 @@
 				return true;
 			}
 		});
-	};
+    };
 
 	this.createReadEvent = function(syllabusId, elementId) {
 		var tthis = this;
@@ -263,10 +261,10 @@
 			tthis.setSyllabus(data);
 			ret.resolve(tthis.getSyllabus());
 		}).error(function(data, status) {
-			if (status === 404)
-				ret.reject('noPublishedSyllabus');
+		    if (status === 404)
+			    ret.reject('noPublishedSyllabus');
 			else
-				ret.reject(data);
+			    ret.reject(data);
 		}).finally(function() {
 			tthis.working = false;
 		});
@@ -425,9 +423,10 @@
 		var currentSyllabus = this.getSyllabus();
 
 		if (currentSyllabus.templateId === this.loadedTemplateId) {
-			ret.resolve(this.getTemplate());
-		} else {
-			$http.get('v1/template/' + currentSyllabus.templateId + '/rules.json' + (currentSyllabus ? '?locale=' + currentSyllabus.locale : '')).success(function(data) {
+		    ret.resolve(this.getTemplate());
+		}
+		else {
+			$http.get('v1/template/'+currentSyllabus.templateId+'/rules.json' + (currentSyllabus ? '?locale=' + currentSyllabus.locale : '')).success(function(data) {
 				tthis.setTemplate(currentSyllabus.templateId, data);
 
 				ret.resolve(tthis.getTemplate());
@@ -445,7 +444,8 @@
 	this.getAddableElementsFromTemplateRules = function(element) {
 		if (element && this.template !== null) {
 			return this.template[element.templateStructureId].elements;
-		} else {
+		}
+		else {
 			return null;
 		}
 	};
@@ -453,23 +453,24 @@
 	this.getAddableElementsFromTemplateRuleId = function(templateStructureId) {
 		if (this.template !== null) {
 			return this.template[templateStructureId].elements;
-		} else {
+		}
+		else {
 			return null;
 		}
 	};
 
-	this.getTemplateStructureId = function(parent, title) {
-			var children = this.template[parent.templateStructureId].elements;
-			for (var i = 0; i < children.length; i++) {
+	this.getTemplateStructureId = function (parent, title){
+		var children = this.template[parent.templateStructureId].elements;
+		for (var i = 0; i < children.length; i++) {
 				if (children[i].label === title) {
 					return children[i].id;
 				}
 			}
-		}
-		/**
-		 * Get the syllabus list
-		 * @return {Array} Syllabus list
-		 */
+	}
+	/**
+	 * Get the syllabus list
+	 * @return {Array} Syllabus list
+	 */
 	this.getSyllabusList = function() {
 		return this.syllabusList;
 	};
@@ -537,9 +538,10 @@
 	};
 
 	this.getTemplateStructureElement = function(id) {
-		if (this.template !== null) {
+	    if (this.template !== null) {
 			return this.template[id];
-		} else return null;
+		}
+		else return null;
 	};
 
 	/**
@@ -783,7 +785,7 @@
 				}
 			}
 		}
-
+		
 		if (start == null && end == null) {
 			// Use the element date fields
 			if (element.hasDatesInterval) {
@@ -832,14 +834,14 @@
 		}
 	};
 
-	this.countCheckableElements = function(item) {
+	this.countCheckableElements = function (item) {
 		var ret = 0;
 
 		if (!item) {
 			item = this.syllabus;
 		}
 
-		this.forEachElement(item, function(el) {
+		this.forEachElement(item, function (el) {
 			if (el.attributes['checkable'] === 'true') {
 				ret++;
 			}
@@ -848,7 +850,7 @@
 		return ret;
 	};
 
-	this.countCheckedElements = function(item) {
+	this.countCheckedElements = function (item) {
 		var tthis = this;
 		var ret = 0;
 
@@ -856,7 +858,7 @@
 			item = this.syllabus;
 		}
 
-		this.forEachElement(item, function(el) {
+		this.forEachElement(item, function (el) {
 			if (el.attributes['checkable'] === 'true') {
 				var annotations = UserService.getAnnotationsForElement(tthis.getSyllabus(), el.id, 'CHECK');
 
@@ -869,7 +871,7 @@
 		return ret;
 	}
 
-	this.isCheckFeatureVisibleForStudent = function() {
+	this.isCheckFeatureVisibleForStudent = function () {
 		if (UserService.isStudent()) {
 			return this.countCheckableElements() > 0;
 		} else {
@@ -877,7 +879,7 @@
 		}
 	};
 
-	this.getElementTypeTitle = function(element) {
+	this.getElementTypeTitle = function (element) {
 		var s = this.template[element.templateStructureId];
 
 		if (s) {
@@ -887,7 +889,7 @@
 		return '';
 	};
 
-	this.canEditElement = function(element, syllabus) {
+	this.canEditElement= function(element, syllabus){
 		if (this.viewMode === 'student' || this.viewMode === 'public') {
 			return false;
 		}
@@ -899,7 +901,7 @@
 		if (element.common === syllabus.common) {
 			return UserService.isAllowed('syllabusWrite', syllabus);
 		}
-
-		return false;
+	
+        return false;
 	};
 }]);
