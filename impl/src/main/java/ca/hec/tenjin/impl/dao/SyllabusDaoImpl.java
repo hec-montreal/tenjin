@@ -306,6 +306,9 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
 	@Override
 	public void renumberChildren(Long parentId) {
+		if (parentId == null) 
+			return;
+
 		String qry = "from SyllabusElementMapping mapping where mapping.syllabusElement.parentId = ? " + 
 			"order by mapping.syllabusId, mapping.displayOrder";
 

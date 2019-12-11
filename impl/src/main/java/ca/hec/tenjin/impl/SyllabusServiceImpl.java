@@ -289,7 +289,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 						}
 					}
 
-					renumberChildren.add(element.getParentId());
+					if (element.getParentId() != null) {
+						renumberChildren.add(element.getParentId());
+					}
 
 				} else if (existingSyllabusElementMappings != null && existingSyllabusElementMappings.containsKey(element.getId())) {
 
@@ -354,7 +356,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 								// renumber personalised children of deleted element
 								// because we probably deleted some common ones.
-								if (!children.isEmpty()) {
+								if (!children.isEmpty() && newElem.getId() != null) {
 									renumberChildren.add(newElem.getId());
 								}
 							}
@@ -365,7 +367,9 @@ public class SyllabusServiceImpl implements SyllabusService {
 					userAnnotationService.deleteForSyllabusElement(mapping.getSyllabusElement().getId());
 					
 					// remember the parentid to renumber children later
-					renumberChildren.add(mapping.getSyllabusElement().getParentId());
+					if (mapping.getSyllabusElement().getParentId() != null) {
+						renumberChildren.add(mapping.getSyllabusElement().getParentId());
+					}
 
 					// delete the element and all it's mappings
 					syllabusDao.deleteElementAndMappings(mapping.getSyllabusElement());
