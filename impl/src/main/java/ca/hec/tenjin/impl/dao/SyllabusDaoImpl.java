@@ -304,6 +304,25 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return (List<SyllabusElementMapping>) getHibernateTemplate().findByCriteria(dc);		
 	}
 
+	@Override
+	public void renumberChildren(Long parentId) {
+		String qry = "from SyllabusElementMapping mapping where mapping.syllabusElement.parentId = ? " + 
+			"order by mapping.syllabusId, mapping.displayOrder";
+
+		List<SyllabusElementMapping> mappings = (List<SyllabusElementMapping>) getHibernateTemplate().find(qry, parentId);
+
+		int i = 0;
+		Long syllabusId = null;
+		// fixup display order following deletes, additions and reordering
+		for (SyllabusElementMapping mapping : mappings) {
+			if (!mapping.getSyllabusId().equals(syllabusId)) {
+				syllabusId = mapping.getSyllabusId();
+				i = 0;
+			}
+			mapping.setDisplayOrder(i++);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public SyllabusElementMapping getMappingForSyllabusAndElement(Long syllabusId, Long elementId) {
