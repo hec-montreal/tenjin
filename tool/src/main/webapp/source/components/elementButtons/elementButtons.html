@@ -14,7 +14,7 @@
 	</button>
 
 	<!-- Delete -->
-	<button ng-if="!nodelete" ng-click="confirmDelete(element)" ng-disabled="disabled" class="action delete">
+	<button ng-if="!nodelete" ng-click="confirmDelete(element)" ng-disabled="disabled"  title="{{ 'DELETE_BUTTON_TITLE' | translate }}" class="action delete">
 		<span class="glyphicon glyphicon-trash"></span>
 	</button>
 </div> 
