@@ -9,12 +9,12 @@
 	<add-element-menu ng-if="element.type === 'rubric' || element.type === 'composite'" data-add-element-menu="element" data-ng-class="['element-add-element-menu', 'no-bg', {'alone': nodelete, 'composite': element.type==='composite'}]"></add-element-menu>
 
 	<!-- Edition -->
-	<button ng-if="!noedit" ng-click="edit(element)" ng-disabled="disabled" class="action edit">
+	<button ng-if="!noedit" ng-click="edit(element)" ng-disabled="disabled" title="{{ 'EDIT_BUTTON_TITLE' | translate }}" class="action edit">
 		<span class="glyphicon glyphicon-pencil"></span>
 	</button>
 
 	<!-- Delete -->
-	<button ng-if="!nodelete" ng-click="confirmDelete(element)" ng-disabled="disabled"  title="{{ 'DELETE_BUTTON_TITLE' | translate }}" class="action delete">
+	<button ng-if="!nodelete" ng-click="confirmDelete(element)" ng-disabled="disabled" title="{{ 'DELETE_BUTTON_TITLE' | translate }}" class="action delete">
 		<span class="glyphicon glyphicon-trash"></span>
 	</button>
 </div> 

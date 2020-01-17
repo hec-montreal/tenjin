@@ -2,6 +2,7 @@
 	"en_US": {
 		"MENU_LABEL": "Course Menu",
 		"DELETE_BUTTON_TITLE": "Trash",
+		"EDIT_BUTTON_TITLE": "Edit",
 		"MODAL_DELETE_CONFIRM_TITLE": "Delete Element",
 		"MODAL_DELETE_CONFIRM_MESSAGE": "Are you sure you want to delete the element",
 		"MODAL_CREATE_ELEMENT_TITLE": "Add Element",
@@ -364,6 +365,7 @@
 	"fr_CA": {
 		"MENU_LABEL": "Menu du cours",
 		"DELETE_BUTTON_TITLE": "Poubelle",
+		"EDIT_BUTTON_TITLE": "Éditer",
 		"MODAL_DELETE_CONFIRM_TITLE": "Suppression de l'élément",
 		"MODAL_DELETE_CONFIRM_MESSAGE": "Êtes-vous sûr de vouloir supprimer l'élément",
 		"MODAL_CREATE_ELEMENT_TITLE": "Ajout élément",
@@ -726,6 +728,7 @@
 	"es_ES": {
 		"MENU_LABEL": "Menu du cours",
 		"DELETE_BUTTON_TITLE": "Poubelle",
+		"EDIT_BUTTON_TITLE": "Éditer",
 		"MODAL_DELETE_CONFIRM_TITLE": "Suppression de l'élément",
 		"MODAL_DELETE_CONFIRM_MESSAGE": "Êtes-vous sûr de vouloir supprimer l'élément",
 		"MODAL_CREATE_ELEMENT_TITLE": "Ajout élément",
