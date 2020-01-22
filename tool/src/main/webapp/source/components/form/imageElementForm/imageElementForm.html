@@ -14,26 +14,16 @@
 	</div>
 
 	<!-- Title -->
-	<div class="row field">
-		<div class="col-md-2">
-			<label for="imageTitle" class="label-text-title">{{ 'FORM_CLICKABLE_TEXT' | translate }}</label>
-		</div>
-
-		<div class="col-md-10">
-			<input id="imageTitle" type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" />
-		</div>
+	<div class="field">
+		<div class="label-text-title">{{ 'FORM_CLICKABLE_TEXT' | translate }}</div>
+		<input id="imageTitle" type="text" name="title" placeholder="{{element.$selectedResource.name}}" data-ng-model="element.title" class="input-text-title" style="width: 100%;" />
 	</div>
 
 	<!-- Alt Attribute -->
-	<div class="row field">
-		<div class="col-md-2">
-			<label for="imageAltAttribute" class="label-text-altAttribute">{{ 'FORM_IMAGE_DESCRIPTION' | translate }}</label>
-		</div>
-
-		<div class="col-md-10">
-			<input id="imageAltAttribute" type="text" name="altAttribute" placeholder="{{element.$selectedResource.attributes.altAttribute}}" data-ng-model="element.attributes.altAttribute" class="input-text-altAttribute" />
-		</div>
-	</div>
+	<div class="field">
+		<div class="label-text-altAttribute">{{ 'FORM_IMAGE_DESCRIPTION' | translate }}</div>
+	    <input id="imageAltAttribute" type="text" name="altAttribute" placeholder="{{element.$selectedResource.attributes.altAttribute}}" data-ng-model="element.attributes.altAttribute" class="input-text-altAttribute" style="width: 100%;"/>
+    </div>
 
 
     <!-- Description -->
