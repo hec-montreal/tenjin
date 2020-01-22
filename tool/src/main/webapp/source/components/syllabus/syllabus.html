@@ -136,7 +136,7 @@
 			</div>
 
 			<div class="navigation-drawer" data-ng-if="!showNavigation">
-				<button data-ng-click="toggleNavigation()"><span class="glyphicon glyphicon-chevron-right"></span></button>
+				<button data-ng-click="toggleNavigation()" title="{{ 'TOGGLE_RIGHT_BUTTON_TITLE' | translate}}"><span class="glyphicon glyphicon-chevron-right"></span></button>
 			</div>
 
 			<div ng-include="'contentPanel/contentPanel.html'" data-mode="mode" data-ng-class="['col-xs-12', 'pull-left', {'col-md-9': showNavigation, 'all-width': !showNavigation}]" id="contentPanel"></div>
