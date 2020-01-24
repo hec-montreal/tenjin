@@ -185,15 +185,14 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
     }
 
     private void copyData(AbstractSyllabusElement destination, AbstractSyllabusElement source) {
-    	//Check if the description is null or the same in source and destination
-    	boolean checkDescription = ((destination.getDescription() == null && source.getDescription() == null)) ||
-    			destination.getDescription().equalsIgnoreCase(source.getDescription());
-    	//Check if the title is null or the same in source and destination
-    	boolean checkTitle = ((destination.getTitle() == null && source.getTitle() == null)) ||
-    			destination.getTitle().equalsIgnoreCase(source.getTitle());
-    	
+    	String destinationDescription = destination.getDescription();
+    	String sourceDescription = source.getDescription();
+    	String destinationTitle = destination.getTitle();
+    	String sourceTitle = source.getTitle();
+    	    	
     	//update only if content has changed
-    	if (!checkDescription || !checkTitle) {
+    	if (!(destinationDescription == null || destinationDescription.equalsIgnoreCase(sourceDescription)) || 
+    			!(destinationTitle == null || destinationTitle.equalsIgnoreCase(sourceTitle) )){
 	        destination.setTitle(source.getTitle());
 	        destination.setDescription(source.getDescription());
 	        destination.setLastModifiedDate(new Date());
