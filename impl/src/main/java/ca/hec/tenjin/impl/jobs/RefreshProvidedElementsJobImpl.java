@@ -18,6 +18,9 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import ca.hec.tenjin.api.jobs.RefreshProvidedElementsJob;
+
+import org.sakaiproject.coursemanagement.api.AcademicSession;
+import org.sakaiproject.coursemanagement.api.CourseManagementService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SiteService;
@@ -50,7 +53,10 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
     
     @Setter
     SiteService siteService;
-
+    
+    @Setter
+    CourseManagementService cmService;
+    
     /*
      * Job to refresh a syllabus element's content from it's provider (site id and template structure id must
      * be specified).
@@ -68,15 +74,25 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
     	List<String> siteIds = null;
         String siteIdsString = context.getMergedJobDataMap().getString("siteId");
         String session = context.getMergedJobDataMap().getString("session");
+    	Map<String, String> props = new HashMap<String, String>();
 
         if (session != null && !session.equals("")) {
-        	Map<String, String> props = new HashMap<String, String>();
         	props.put("term", session);
         	siteIds = siteService.getSiteIds(SiteService.SelectionType.NON_USER, "course", null, props, SiteService.SortType.CREATED_ON_DESC, null);
         } else if (siteIdsString != null && !siteIdsString.equals("")) {
         	siteIds = Arrays.asList(siteIdsString.split(","));
-        } else {
-        	log.error("Specify a session or site ID(s)");
+        } else if ((session == null || session.isEmpty()) && (siteIdsString == null || siteIdsString.isEmpty())) {
+        	List <AcademicSession> academicSessions = cmService.getCurrentAcademicSessions();
+        	if (academicSessions == null || academicSessions.size() == 0) {
+                log.error("There is no current session, no site will be treated");
+            	return;      		
+        	}
+         	//There is supposed to be only one current session at a time
+        	session = academicSessions.get(0).getTitle();
+        	props.put("term", session);
+        	siteIds = siteService.getSiteIds(SiteService.SelectionType.NON_USER, "course", null, props, SiteService.SortType.CREATED_ON_DESC, null);
+        }else {
+            log.error("Specify a session or site ID(s)");
         	return;
         }
 
@@ -139,7 +155,6 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
                 }
 
                 for (AbstractSyllabusElement e : elementsToRefresh) {
-                	
                     // copy important data
                     copyData(e, refreshedElement);
 
@@ -153,7 +168,7 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
 		        e.printStackTrace();
             }
         }
-        log.info("End RefreshProvidedElementJob");
+        log.info("End RefreshProvidedElementJob ");
     }
 
     private void refreshChildren(SyllabusCompositeElement original, SyllabusCompositeElement refreshed) {
@@ -170,14 +185,24 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
     }
 
     private void copyData(AbstractSyllabusElement destination, AbstractSyllabusElement source) {
-        destination.setTitle(source.getTitle());
-        destination.setDescription(source.getDescription());
-        destination.setLastModifiedDate(new Date());
-        destination.setLastModifiedBy("admin");
-        destination.setEqualsPublished(false);
-        if (source.getAttributes() != null) {
-            destination.setAttributes(new HashMap<String, String>(source.getAttributes()));
-        }
-        syllabusService.saveOrUpdateElement(destination);
+    	//Check if the description is null or the same in source and destination
+    	boolean checkDescription = ((destination.getDescription() == null && source.getDescription() == null)) ||
+    			destination.getDescription().equalsIgnoreCase(source.getDescription());
+    	//Check if the title is null or the same in source and destination
+    	boolean checkTitle = ((destination.getTitle() == null && source.getTitle() == null)) ||
+    			destination.getTitle().equalsIgnoreCase(source.getTitle());
+    	
+    	//update only if content has changed
+    	if (!checkDescription || !checkTitle) {
+	        destination.setTitle(source.getTitle());
+	        destination.setDescription(source.getDescription());
+	        destination.setLastModifiedDate(new Date());
+	        destination.setLastModifiedBy("admin");
+	        destination.setEqualsPublished(false);
+	        if (source.getAttributes() != null) {
+	            destination.setAttributes(new HashMap<String, String>(source.getAttributes()));
+	        }
+	        syllabusService.saveOrUpdateElement(destination);
+    	}
     }
 }
