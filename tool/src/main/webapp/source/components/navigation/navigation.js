@@ -14,11 +14,12 @@
 			$scope.closed = false;
 			$scope.userService = UserService;
 			$scope.acceptDrop = null;
+			$scope.tabIndex = 1;
 
 			$scope.isTitleNumbered = function($type) {
 				if ($type === 'exam' || $type === 'evaluation' ||
 					$type === 'lecture' || $type === 'tutorial') {
-						return true;
+					return true;
 				}
 				return false;
 			}
@@ -44,37 +45,37 @@
 				name: 'navigationTree',
 				accept: function(sourceNodeScope, destNodesScope, destIndex) {
 					//Do not allow drop under blocked node or at first place
-					if (destIndex === 0 || destIndex >= destNodesScope.$modelValue.length || destNodesScope.$element.attr('data-nodrop-enabled') || destNodesScope.nodropEnabled){
+					if (destIndex === 0 || destIndex >= destNodesScope.$modelValue.length || destNodesScope.$element.attr('data-nodrop-enabled') || destNodesScope.nodropEnabled) {
 						$scope.acceptDrop = null;
 						return false;
-					}else {
+					} else {
 						var parentSource = $scope.treeService.findElementParent(sourceNodeScope.$modelValue);
 						var ancestorSource = $scope.treeService.findElementParent(parentSource);
 						var destComposite = destNodesScope.$modelValue[destIndex];
-						if (typeof destComposite === 'undefined'){
+						if (typeof destComposite === 'undefined') {
 							return false;
 						}
 						//Only drop content from a tutorial and a lecture
-						if (ancestorSource.type !== 'tutorial' && ancestorSource.type !== 'lecture'){
+						if (ancestorSource.type !== 'tutorial' && ancestorSource.type !== 'lecture') {
 							return false;
 						}
 
 						$scope.acceptDrop = destComposite.id;
 						//Remove course dropzone highlight
-						$timeout(function(){
-                          $scope.acceptDrop=null;
-                        },1000,true);
- 
+						$timeout(function() {
+							$scope.acceptDrop = null;
+						}, 1000, true);
+
 						return true;
 					}
 				}
 			};
 
-			$scope.isCheckIconVisible = function (item) {
-				return SyllabusService.isCheckFeatureVisibleForStudent() && (item.type === 'lecture' || item.type ==='tutorial');
+			$scope.isCheckIconVisible = function(item) {
+				return SyllabusService.isCheckFeatureVisibleForStudent() && (item.type === 'lecture' || item.type === 'tutorial');
 			}
 
-			$scope.getCheckableLectureClass = function (item) {
+			$scope.getCheckableLectureClass = function(item) {
 				var checkable = SyllabusService.countCheckableElements(item);
 
 				if (checkable === 0) {
