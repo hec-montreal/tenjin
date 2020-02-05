@@ -175,7 +175,11 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
         List<AbstractSyllabusElement> originalChildren = syllabusService.getChildrenForSyllabusElement(original);
         List<AbstractSyllabusElement> refreshedChildren = refreshed.getElements();
 
-        for (int i = 0; i < originalChildren.size(); i++) {
+        if (originalChildren.size() != refreshedChildren.size()) {
+            log.error("Children count unequal for element "+original.getId()+" from site "+original.getSiteId());
+        }
+
+        for (int i = 0; i < originalChildren.size() && i < refreshedChildren.size(); i++) {
             copyData(originalChildren.get(i), refreshedChildren.get(i));
 
             if (originalChildren.get(i).isComposite() && refreshedChildren.get(i).isComposite()) {
