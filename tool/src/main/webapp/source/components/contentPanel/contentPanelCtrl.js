@@ -128,12 +128,17 @@ tenjinApp.controller('ContentPanelCtrl', ['$scope', '$timeout', 'TreeService', '
 			var templateStructureId = destNodesScope.$element.attr('data-templatestructure-id');
 			var providerId = destNodesScope.$element.attr('data-provider-id');
 			var common = destNodesScope.$element.attr('data-common');
+			var destElemId = destNodesScope.$element.attr('data-elem-id');
+			var isSyllabusCommon = SyllabusService.getSyllabus().common;
 
 			var addableTypes = SyllabusService.getAddableElementsFromTemplateRuleId(templateStructureId);
 
+			console.log("parentid:" + sourceNodeScope.$modelValue.parentId + " destid: "+destElemId);
 			if (typeof providerId != 'undefined' && providerId !== null && providerId !== "") {
 				return false;
 			} else if (sourceNodeScope.$modelValue.common === true && common === 'false') {
+				return false;
+			} else if (sourceNodeScope.$modelValue.common === true && !isSyllabusCommon && sourceNodeScope.$modelValue.parentId != destElemId) {
 				return false;
 			} else if (addableTypes !== null && addableTypes.length > 0) {
 				for (var i = 0; i < addableTypes.length; i++) {
