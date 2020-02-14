@@ -52,9 +52,16 @@
 						var parentSource = $scope.treeService.findElementParent(sourceNodeScope.$modelValue);
 						var ancestorSource = $scope.treeService.findElementParent(parentSource);
 						var destComposite = destNodesScope.$modelValue[destIndex];
+						var isSyllabusCommon = $scope.syllabusService.getSyllabus().common;
+
 						if (typeof destComposite === 'undefined') {
 							return false;
+						} else if (sourceNodeScope.$modelValue.common === true && destComposite.common === 'false') {
+							return false;
+						} else if (sourceNodeScope.$modelValue.common && !isSyllabusCommon) {
+							return false;
 						}
+
 						//Only drop content from a tutorial and a lecture
 						if (ancestorSource.type !== 'tutorial' && ancestorSource.type !== 'lecture') {
 							return false;
