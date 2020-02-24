@@ -102,8 +102,12 @@
 		clear: both;
 		display: table;
 	}
-
-	.notice {
+    .panel-element {
+   
+        padding-right: 10px;
+		padding-bottom: 40px;
+	}
+ 	.notice {
 		padding-bottom: 5px;
 		h3 {
 			display: inline-block;
