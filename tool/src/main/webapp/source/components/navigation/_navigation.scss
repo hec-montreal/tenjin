@@ -50,7 +50,7 @@
 		}
 
 		.number {
-			float: left;
+			vertical-align: bottom;
 		}
 	}
 
@@ -100,11 +100,10 @@
 	}
 
 	.check-status {
-		display: inline;
-		float: left;
-		margin-right: 10px;
+        vertical-align: top;
+ 		margin-right: 10px;
 		margin-top: -5px;
-	}
+ 	}
 
 	.completed {
 		color: #5c5;

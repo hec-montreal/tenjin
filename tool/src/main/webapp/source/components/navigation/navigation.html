@@ -3,20 +3,36 @@
 	<!-- Display items composite, evaluation, exam, lecture and tutorial -->
 	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" data-ng-class="['menu-item', {'item-selected': item.$selected, 'menu-item-selected': item.$selected, 'menu-item-parent': syllabusService.itemHasChildInMenu(item), 'menu-item-toplevel': !syllabusService.itemHasParentInMenu(item), 'menu-item-drop': acceptDrop === item.id, 'menu-item': acceptDrop !== item.id}]">
 		<a tabindex="0" data-nodrag data-ng-click="treeService.selectElement(item)" data-ng-keyup="$event.keyCode == 13 && treeService.selectElement(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }">
-			<div ng-class="{'numbered-title': isTitleNumbered(item.type)}">
-				<i data-ng-if="isCheckIconVisible(item)" class="{{getCheckableLectureClass(item)}} check-status glyphicon"></i>
-
-				<div data-ng-if="item.type === 'evaluation' || item.type ==='exam'" class="number">
-					{{ item.$numero }}&nbsp;-&nbsp;
-				</div>
-
-				<div data-ng-if="(item.type === 'lecture' || item.type === 'tutorial') && item.attributes.numero" class="number">
-					{{ item.attributes.numero }}&nbsp;-&nbsp;
-				</div>
-
-				<div class="item-title">{{ item.title }}</div>
-			</div>
-		</a>
+			<div ng-class="{'numbered-title': isTitleNumbered(item.type)}" style=" display:inline-block;">
+ 			<table>
+				<tr class="item-title">
+                   <td style=" position: relative;  height: 100%;">
+                       <i data-ng-if="isCheckIconVisible(item)" class="{{getCheckableLectureClass(item)}} check-status glyphicon">
+                       </i>
+                    </td>
+                    <td>
+                        <div data-ng-switch on="item.type" class="number" >
+                            <div  data-ng-switch-when="exam">
+                                {{ item.$numero }}&nbsp;-&nbsp;{{ item.title }}
+                            </div>
+                            <div data-ng-switch-when="evaluation">
+                                {{ item.$numero }}&nbsp;-&nbsp;{{ item.title }}
+                            </div>
+                            <div data-ng-switch-when="tutorial">
+                                {{ item.attributes.numero }}&nbsp;-&nbsp;{{ item.title }}
+                            </div>
+                            <div data-ng-switch-when="lecture">
+                                {{ item.attributes.numero }}&nbsp;-&nbsp;{{ item.title }}
+                            </div>
+                            <div data-ng-switch-default >
+                                {{ item.title }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </a>
 
 		<!-- No drag and drop for the first level element -->
 		<span class="tree-node tree-node-content" data-ng-if="!item.parentId"></span>
