@@ -73,7 +73,7 @@
 	<div ng-if="citationTypeId && citationTypeId !== 'REFERENCE_TYPE_DEFAULT'" class="citation-type">[{{ citationType }}]</div>
 
 	<div ng-if="element.attributes.activateLibraryLink==='true'" class="library-link">
-		<a target="_blank" data-nodrag href={{citation.values.openUrl}}>{{REFERENCE_LIBRARY_LINK_TRANSLATE}}</a>
+		<a target="_blank" data-nodrag href={{url}}>{{REFERENCE_LIBRARY_LINK_TRANSLATE}}</a>
 	</div> 
 
 	<div ng-if="element.attributes.activateOtherLink==='true'" class="other-link">
