@@ -1,32 +1,32 @@
 <div class="element-evaluationattr">
 	<ul>
 		<li data-ng-if="element.attributes.evaluationDate">
-			{{EVALUATION_DATE_TRANSLATE}}: {{element.attributes.evaluationDate | date:dateFormat}}
+			{{EVALUATION_DATE_TRANSLATE}} : {{element.attributes.evaluationDate | date:dateFormat}}
 		</li>
 
 		<li data-ng-if="element.attributes.evaluationInClass === 'true' || element.attributes.evaluationAtHome === 'true'">
-			{{EVALUATION_LOCATION_TRANSLATE}}:
+			{{EVALUATION_LOCATION_TRANSLATE}} :
 			<span data-ng-if="element.attributes.evaluationInClass === 'true' ">{{EVALUATION_INCLASS_TRANSLATE}} </span>
 			<span data-ng-if="element.attributes.evaluationInClass === 'true' && element.attributes.evaluationAtHome === 'true'">{{slash}}</span>
 			<span data-ng-if="element.attributes.evaluationAtHome === 'true'">{{EVALUATION_ATHOME_TRANSLATE}} </span>
 		</li>
 
 		<li data-ng-if="element.attributes.evaluationPaper === 'true' || element.attributes.evaluationElectronic === 'true'">
-			{{EVALUATION_SUBMISSION_TYPE_TRANSLATE}}:
+			{{EVALUATION_SUBMISSION_TYPE_TRANSLATE}} :
 			<span data-ng-if="element.attributes.evaluationPaper === 'true' ">{{EVALUATION_PAPER_TRANSLATE}}</span>
 			<span data-ng-if="element.attributes.evaluationPaper === 'true' && element.attributes.evaluationElectronic === 'true'">{{slash}}</span>
 			<span data-ng-if="element.attributes.evaluationElectronic === 'true'">{{EVALUATION_ELECTRONIC_TRANSLATE}}</span>
 		</li>
 
 		<li data-ng-if="element.attributes.evaluationOral === 'true' || element.attributes.evaluationWritten === 'true'">
-			{{EVALUATION_TERMS_TRANSLATE}}:
+			{{EVALUATION_TERMS_TRANSLATE}} :
 			<span data-ng-if="element.attributes.evaluationOral === 'true' ">{{EVALUATION_ORAL_TRANSLATE}}</span>
 			<span data-ng-if="element.attributes.evaluationOral === 'true' && element.attributes.evaluationWritten === 'true'">{{slash}}</span>
 			<span data-ng-if="element.attributes.evaluationWritten === 'true'">{{EVALUATION_WRITTEN_TRANSLATE}} </span>
 		</li>
 
 		<li data-ng-if="element.attributes.evaluationMode">
-			{{EVALUATION_ASSESSMENT_TYPE_TRANSLATE}}:
+			{{EVALUATION_ASSESSMENT_TYPE_TRANSLATE}} :
 			<span data-ng-if="element.attributes.evaluationMode === 'team' ">{{EVALUATION_TEAM_TRANSLATE}} </span>
 			<span data-ng-if="element.attributes.evaluationMode === 'individual'">{{EVALUATION_INDIVIDUAL_TRANSLATE}} </span>
 		</li>
