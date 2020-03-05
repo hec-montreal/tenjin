@@ -1,7 +1,7 @@
 <div class="evaluation element-host">
 	<div class="title box-title">
 		{{eval-num}} - {{element.title}} {{#if element.attributes.evaluationWeight}}
-					 		({{element.attributes.evaluationWeight}} %)
+					 		({{element.attributes.evaluationWeight}}&nbsp;%)
 						  {{/if}}
 	</div>
 
@@ -15,7 +15,7 @@
 
 			{{#attr-cond this 'or' 'evaluationInClass' 'evaluationAtHome'}}
 				<li>
-					<span class="label">{{str 'EVALUATION_LOCATION'}} :</span>
+					<span class="label">{{str 'EVALUATION_LOCATION'}}&nbsp;:</span>
 
 					{{#if-eq element.attributes.evaluationInClass 'true'}}
 						{{str 'EVALUATION_INCLASS'}}
@@ -33,7 +33,7 @@
 
 			{{#attr-cond this 'or' 'evaluationPaper' 'evaluationElectronic'}}
 				<li>
-					<span class="label">{{str 'EVALUATION_SUBMISSION_TYPE'}} :</span>
+					<span class="label">{{str 'EVALUATION_SUBMISSION_TYPE'}}&nbsp;:</span>
 
 					{{#if-eq element.attributes.evaluationPaper 'true'}}
 						{{str 'EVALUATION_PAPER'}}
@@ -51,7 +51,7 @@
 
 			{{#attr-cond this 'or' 'evaluationOral' 'evaluationWritten'}}
 				<li>
-					<span class="label">{{str 'EVALUATION_TERMS'}} :</span>
+					<span class="label">{{str 'EVALUATION_TERMS'}}&nbsp;:</span>
 
 					{{#if-eq element.attributes.evaluationOral 'true'}}
 						{{str 'EVALUATION_ORAL'}}
@@ -68,7 +68,7 @@
 			{{/attr-cond}}
 
 			{{#if element.attributes.evaluationMode}}
-				<span class="label">{{str 'EVALUATION_ASSESSMENT_TYPE'}} :</span>
+				<span class="label">{{str 'EVALUATION_ASSESSMENT_TYPE'}}&nbsp;:</span>
 
 				{{#if-eq element.attributes.evaluationMode 'team'}}
 					{{str 'EVALUATION_TEAM'}}
