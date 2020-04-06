@@ -7,7 +7,7 @@
 	<parent>
 		<artifactId>tenjin</artifactId>
 		<groupId>ca.hec</groupId>
-		<version>19.3</version>
+		<version>19.4</version>
 	</parent>
 	
 	<groupId>ca.hec</groupId>
@@ -108,37 +108,37 @@
 		<dependency>
 			<groupId>org.sakaiproject.samigo</groupId>
 			<artifactId>samigo-api</artifactId>
-			<version>19.3</version>
+			<version>19.4</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.sakaiproject.samigo</groupId>
 			<artifactId>samigo-impl</artifactId>
-			<version>19.3</version>
+			<version>19.4</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.sakaiproject.samigo</groupId>
 			<artifactId>samigo-services</artifactId>
-			<version>19.3</version>
+			<version>19.4</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.sakaiproject.samigo</groupId>
 			<artifactId>samigo-hibernate</artifactId>
-			<version>19.3</version>
+			<version>19.4</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.sakaiproject.assignment</groupId>
 			<artifactId>sakai-assignment-api</artifactId>
-			<version>19.3</version>
+			<version>19.4</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.sakaiproject</groupId>
 			<artifactId>sakai-citations-api</artifactId>
-			<version>19.3</version>
+			<version>19.4</version>
 		</dependency>
 
 		<dependency>
@@ -168,17 +168,17 @@
         <dependency>
             <groupId>org.sakaiproject.edu-services.course-management</groupId>
             <artifactId>coursemanagement-api</artifactId>
-            <version>19.3</version>
+            <version>19.4</version>
         </dependency>
         <dependency>
             <groupId>ca.hec</groupId>
             <artifactId>hec-course-archive-api</artifactId>
-            <version>19.3</version>
+            <version>19.4</version>
         </dependency>
         <dependency>
             <groupId>ca.hec</groupId>
             <artifactId>hec-utils</artifactId>
-            <version>19.3</version>
+            <version>19.4</version>
         </dependency>
 
     </dependencies>
