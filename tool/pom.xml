@@ -5,12 +5,12 @@
 	<parent>
 		<artifactId>tenjin</artifactId>
 		<groupId>ca.hec</groupId>
-		<version>19.4</version>
+		<version>19.3</version>
 	</parent>
 	
 	<groupId>ca.hec</groupId>
 	<artifactId>tenjin-tool</artifactId>
-	<version>19.4</version>
+	<version>19.3</version>
 	<packaging>war</packaging>
 
 	<dependencies>
@@ -157,7 +157,7 @@
 		<dependency>
 			<groupId>org.sakaiproject.announcement</groupId>
 			<artifactId>sakai-announcement-api</artifactId>
-			<version>19.4</version>
+			<version>19.3</version>
 		</dependency>
 		
 		<dependency>
