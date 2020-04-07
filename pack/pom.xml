@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>tenjin</artifactId>
 		<groupId>ca.hec</groupId>
-		<version>19.3</version>
+		<version>19.4</version>
 	</parent>
 	
 	<groupId>ca.hec</groupId>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>ca.hec</groupId>
 			<artifactId>tenjin-impl</artifactId>
-			<version>19.3</version>
+			<version>19.4</version>
 		</dependency>
 	</dependencies>
 
