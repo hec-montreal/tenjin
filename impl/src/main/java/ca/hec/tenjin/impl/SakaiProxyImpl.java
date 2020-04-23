@@ -262,7 +262,10 @@ public class SakaiProxyImpl implements SakaiProxy {
 		Site site = getSite(siteId);
 		Collection<Group> siteGroups = site.getGroups();
 		for (Group group : siteGroups) {
-			if (group.getProviderGroupId() != null) {
+			// only add official sections
+			String gProp = group.getProperties().getProperty(Group.GROUP_PROP_WSETUP_CREATED);
+			if (group.getProviderGroupId() != null &&
+				(gProp == null || gProp.equals(Boolean.FALSE.toString()))) {
 				groups.add(group.getId());
 			}
 		}

@@ -604,7 +604,11 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 			newCommonSyllabus.setSections(new HashSet<String>());
 			for (Group g : site.getGroups()) {
-				if (g.getProviderGroupId() != null && !g.getProviderGroupId().isEmpty()) {
+				// Only add official sections (not those created by worksite setup)
+				String gProp = g.getProperties().getProperty(Group.GROUP_PROP_WSETUP_CREATED);
+				if (g.getProviderGroupId() != null && !g.getProviderGroupId().isEmpty() &&
+					(gProp == null || gProp.equals(Boolean.FALSE.toString()))) {
+
 					newCommonSyllabus.getSections().add(g.getId());
 				}
 			}

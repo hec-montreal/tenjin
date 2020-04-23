@@ -97,10 +97,12 @@ public class SyncSectionsInTenjinImpl implements SyncSectionsInTenjin {
 
 						// Make sure all the sections in Tenjin are up to date
 						for (Group group : siteGroups) {
-							// If there is no providerId, the group does not
-							// come from an official section
-							if (group.getProviderGroupId() == null)
-								continue;
+							// skip if not official section
+							String gProp = group.getProperties().getProperty(Group.GROUP_PROP_WSETUP_CREATED);
+							if (group.getProviderGroupId() == null ||
+								(gProp != null && gProp.equals(Boolean.TRUE.toString())))	{
+									continue;
+							}
 							if (sectionsBySyllabus.containsKey(group.getId())) {
 								sectionsBySyllabus.remove(group.getId());
 

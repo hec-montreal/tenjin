@@ -144,7 +144,7 @@ public class UserController {
 
 				// Groups created in site info have this property = true
 				// Taken from SiteAction.java in site-manage
-				Object gProp = group.getProperties().getProperty(group.GROUP_PROP_WSETUP_CREATED);
+				Object gProp = group.getProperties().getProperty(Group.GROUP_PROP_WSETUP_CREATED);
 
 				if (group.getProviderGroupId() != null &&
 						(gProp == null || gProp.equals(Boolean.FALSE.toString()))) {
