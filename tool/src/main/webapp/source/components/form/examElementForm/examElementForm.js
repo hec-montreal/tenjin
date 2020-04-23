@@ -14,6 +14,19 @@ tenjinApp.directive('examElementForm', ['SyllabusService', function(SyllabusServ
 		controller: function($scope) {
 			var templateType = SyllabusService.template[$scope.element.templateStructureId];
 
+            // Validation
+			$scope.element.validate = function() {
+				var ret = [];
+
+               if ($scope.element.title && $scope.element.title.length > 255) {
+                        ret.push({
+                            field: "title",
+                            message: "ERROR_TITLE_TOO_LONG"
+                        });
+                }
+				return ret;
+			};
+            
 			if (!$scope.element.title || $scope.element.title.length === 0) {
 				$scope.element.title = templateType.label
 			}

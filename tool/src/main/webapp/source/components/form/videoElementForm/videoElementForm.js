@@ -57,6 +57,14 @@
 						});
 					}
 				}
+                
+                if (this.title && this.title.length > 255) {
+					ret.push({
+						field: "title",
+						message: "ERROR_TITLE_TOO_LONG"
+					});
+				}
+				
 
 				if (this.attributes.videoUrl) {
 					var url = this.attributes.videoUrl;

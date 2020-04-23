@@ -15,6 +15,19 @@ tenjinApp.directive('evaluationElementForm',['SyllabusService', function(Syllabu
 			$scope.formats = ['dd-MM-yyyy'];
 			$scope.format = $scope.formats[0];
 
+            // Validation
+			$scope.element.validate = function() {
+				var ret = [];
+
+               if ($scope.element.title && $scope.element.title.length > 255) {
+                        ret.push({
+                            field: "title",
+                            message: "ERROR_TITLE_TOO_LONG"
+                        });
+                }
+				return ret;
+			};
+            
 			var templateType = SyllabusService.template[$scope.element.templateStructureId];
 
 			if (!$scope.element.title || $scope.element.title.length === 0) {

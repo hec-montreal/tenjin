@@ -38,6 +38,12 @@
 					}
 				}
 
+                if (this.title && this.title.length > 255) {
+					ret.push({
+						field: "title",
+						message: "ERROR_CLICKABLE_TEXT_TOO_LONG"
+					});
+				}
 				return ret;
 			};
 		},
