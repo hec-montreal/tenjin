@@ -80,7 +80,8 @@ public class SyncSectionsInTenjinImpl implements SyncSectionsInTenjin {
 						allSites = siteService.getSites(SiteService.SelectionType.NON_USER, "course", null, null, SiteService.SortType.CREATED_ON_DESC, paging);
 					}
 
-					site = allSites.get(counter);
+					// retrieve the site anew, otherwise group properties are not populated
+					site = siteService.getSite(allSites.get(counter).getId());
 					counter += 1;
 					totalcount++;
 
