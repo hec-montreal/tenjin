@@ -29,7 +29,12 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 		if (sakaiProxy.isSuperUser())
 			return true;
 
-		return sakaiProxy.isAllowed(userId, permission, sectionRef.getReference());
+		if (sectionRef != null) {
+			return sakaiProxy.isAllowed(userId, permission, sectionRef.getReference());
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
@@ -66,7 +71,7 @@ public class TenjinSecurityServiceImpl implements TenjinSecurityService {
 				for (String sectionId : sectionIds) {
 					Group group = null;
 					group = site.getGroup(sectionId);
-					if (check(userId, permission, group))
+					if (group != null && check(userId, permission, group))
 						return true;
 				}
 			}
