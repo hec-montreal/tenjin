@@ -72,11 +72,11 @@
 	</div>
 	<div ng-if="citationTypeId && citationTypeId !== 'REFERENCE_TYPE_DEFAULT'" class="citation-type">[{{ citationType }}]</div>
 
-	<div ng-if="element.attributes.activateLibraryLink==='true'" class="library-link">
+	<div ng-if="element.attributes.activateLibraryLink==='true' && citation.values.openUrl && citation.values.openUrl !== ''" class="library-link">
 		<a target="_blank" data-nodrag href={{citation.values.openUrl}}>{{REFERENCE_LIBRARY_LINK_TRANSLATE}}</a>
 	</div> 
 
-	<div ng-if="element.attributes.activateOtherLink==='true'" class="other-link">
+	<div ng-if="element.attributes.activateOtherLink==='true' && element.attributes.otherLinkurl && element.attributes.otherLinkurl !== ''" class="other-link">
 		<a target="_blank" data-nodrag href={{element.attributes.otherLinkurl}}>
 			<span data-ng-if="!element.attributes.otherLinkLabel">{{REFERENCE_OTHER_LINK_TRANSLATE}}</span>
 			<span data-ng-if="element.attributes.otherLinkLabel">{{element.attributes.otherLinkLabel}}</span>
