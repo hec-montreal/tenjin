@@ -16,12 +16,6 @@ tenjinApp.directive('referenceElement', ['config',  '$translate','ResourcesServi
 			$scope.citationTypeId = $scope.element.attributes.citationType;
 			$scope.citationType = $translate.instant($scope.citationTypeId);
 
-			$scope.url = $scope.citation.values['hecUrl'];
-
-			if (!$scope.url || $scope.url.length === 0) {
-				$scope.url = $scope.citation.values['openUrl'];
-			}
-
 			$scope.dot = ".";
 			$scope.comma = ',';
 			$scope.openParenthesis = '(';
