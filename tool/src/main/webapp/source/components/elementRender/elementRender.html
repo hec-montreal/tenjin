@@ -5,7 +5,7 @@
 
 			<!-- From common notice -->
 			<div data-ng-if="!syllabusService.syllabus.common && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusService.canEditElement(element,syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit' && element.type !== 'rubric'" class="from-common">
-				<div data-ng-if="element.optional && syllabusService.viewMode === 'edit'" class="toggle-hidden" data-ng-click="toggleElementHidden()">
+				<div data-ng-if="element.optional && syllabusService.viewMode === 'edit'" class="toggle-hidden" data-ng-click="toggleElementHidden()" data-nodrag>
 					<span data-ng-if="!element.hidden">{{ 'BUTTON_HIDE' | translate }}</span>
 					<span data-ng-if="element.hidden">{{ 'BUTTON_SHOW' | translate }}</span>
 				</div>
