@@ -249,5 +249,11 @@
 	}, {
 		"id": 19,
 		"name": "CONTACT_TITLE_OTHER_SECRETARY"
+	}, {
+		"id": 20,
+		"name": "CONTACT_TITLE_PROGRAM_DIRECTOR"
+	}, {
+		"id": 21,
+		"name": "CONTACT_TITLE_HEAD_TEACHER"
 	}]
 }
