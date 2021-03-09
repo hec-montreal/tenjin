@@ -35,7 +35,15 @@ tenjinApp.controller('PublishModalCtrl', ['$scope', '$rootScope', '$uibModalInst
 
 	$scope.checkAnnouncementAndClose = function() {
 		if ($scope.announcementData.doAnnounce) {
-			PublishService.createAnnouncement($scope.announcementData.announceTitle, $scope.announcementData.announceMessage, $scope.syllabus.sections).then(function() {
+
+			var sections = [];
+			if ($scope.syllabus.common != true) {
+				console.log("not common");
+				sections = $scope.syllabus.sections;
+			}
+
+			//PublishService.createAnnouncement($scope.announcementData.announceTitle, $scope.announcementData.announceMessage, sections).then(function() {
+			PublishService.createAnnouncement($scope.announcementData.announceTitle, $scope.announcementData.announceMessage, sections).then(function() {
 			       AlertService.showAlert('createAnnouncementSuccess');
 			}).catch(function(reason) {
 				AlertService.showAlert('cannotCreateAnnouncement');
