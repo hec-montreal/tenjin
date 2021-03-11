@@ -101,6 +101,12 @@ tenjinApp.service('UserService', ['$q', '$http', 'config', function($q, $http, c
 
 			return (syllabus.publishedDate != null && readContains) || (syllabus.publishedDate === null && readUnpublishedContains);
 		}
+		if ('syllabusReadUnpublished' === view){
+		    var readUnpublishedContains = this.profile.syllabusReadUnpublished.filter(
+		        function(syllabusId){return syllabusId ===syllabus.id;}).length > 0;
+
+			return readUnpublishedContains;
+		}
 		//Write syllabus
 		if ('syllabusWrite' === view){
 			return this.profile.syllabusWrite.filter(

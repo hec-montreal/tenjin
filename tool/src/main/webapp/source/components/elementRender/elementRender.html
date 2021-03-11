@@ -24,7 +24,7 @@
 			</div>
 
 			<!-- Hidden by date notice -->
-			<div data-ng-if="isElementHiddenByDate() && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice warning hidden-by-date">
+			<div data-ng-if="isElementHiddenByDate() && (userService.isAllowed('syllabusWrite', syllabusService.syllabus) || userService.isAllowed('syllabusReadUnpublished', syllabusService.syllabus)) && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice warning hidden-by-date">
 				<h3><span class="glyphicon glyphicon-flag"></span> {{ getElementHiddenByDateMessage() }}</h3>
 			</div>
 
