@@ -4,7 +4,7 @@
 			<element-buttons data-ng-if="userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusLockService.lockError && syllabusService.viewMode === 'edit'" data-element-buttons="element" data-noedit="!syllabusService.canEditElement(element,syllabusService.syllabus) || element.type === 'rubric'" data-nodelete="!syllabusService.canEditElement(element,syllabusService.syllabus)" data-nodrag="element.type === 'rubric'" data-disabled="syllabusService.working" data-ng-class="['element-buttons', {'composite': element.composite && element.type !== 'lecture' && element.type !== 'exam' && element.type != 'evaluation' && element.type != 'tutorial', 'has-notice': element.type !== 'rubric' && !element.equalsPublished}]"></element-buttons>
 
 			<!-- From common notice -->
-			<div data-ng-if="!syllabusService.syllabus.common && userService.isAllowed('syllabusWrite', syllabusService.syllabus) && !syllabusService.canEditElement(element,syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit' && element.type !== 'rubric'" class="from-common">
+			<div data-ng-if="!syllabusService.syllabus.common && !syllabusService.canEditElement(element,syllabusService.syllabus) && tenjinService.viewState.stateName === 'syllabus-edit' && element.type !== 'rubric'" class="from-common">
 				<div data-ng-if="element.optional && syllabusService.viewMode === 'edit'" class="toggle-hidden" data-ng-click="toggleElementHidden()" data-nodrag>
 					<span data-ng-if="!element.hidden">{{ 'BUTTON_HIDE' | translate }}</span>
 					<span data-ng-if="element.hidden">{{ 'BUTTON_SHOW' | translate }}</span>
@@ -24,22 +24,22 @@
 			</div>
 
 			<!-- Hidden by date notice -->
-			<div data-ng-if="isElementHiddenByDate() && (userService.isAllowed('syllabusWrite', syllabusService.syllabus) || userService.isAllowed('syllabusReadUnpublished', syllabusService.syllabus)) && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice warning hidden-by-date">
+			<div data-ng-if="isElementHiddenByDate() && tenjinService.viewState.stateName === 'syllabus-edit'" class="notice warning hidden-by-date">
 				<h3><span class="glyphicon glyphicon-flag"></span> {{ getElementHiddenByDateMessage() }}</h3>
 			</div>
 
 			<!-- Error to indicate missing Sakai resource -->
-			<div data-ng-if="element.type === 'document' && syllabusService.getElementResource(element) === null && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice error">
+			<div data-ng-if="element.type === 'document' && syllabusService.getElementResource(element) === null" class="notice error">
 				<h3><span class="glyphicon glyphicon-flag"></span> {{ 'MISSING_SAKAI_RESOURCE_FLAG' | translate }} </h3>
 			</div>
 
 			<!-- Error to indicate missing Sakai citation -->
-			<div data-ng-if="element.type === 'citation' && syllabusService.getElementResource(element) === null && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice error">
+			<div data-ng-if="element.type === 'citation' && syllabusService.getElementResource(element) === null" class="notice error">
 				<h3><span class="glyphicon glyphicon-flag"></span> {{ 'MISSING_SAKAI_CITATION_FLAG' | translate }} </h3>
 			</div>
 
 			<!-- Error to indicate missing Sakai entity -->
-			<div data-ng-if="element.type === 'sakai_entity' && isSakaiEntityMissing() && userService.isAllowed('syllabusWrite', syllabusService.syllabus)" class="notice error">
+			<div data-ng-if="element.type === 'sakai_entity' && isSakaiEntityMissing()" class="notice error">
 				<h3><span class="glyphicon glyphicon-flag"></span> {{ 'MISSING_SAKAI_ENTITY_FLAG' | translate }} </h3>
 			</div>
 
