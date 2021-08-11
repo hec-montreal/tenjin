@@ -11,7 +11,7 @@ tenjinApp.directive('textElement',  ['$sce', function($sce) {
         controller: function($scope) {
         	$scope.content;
         	if ($scope.element.description)
-        		$scope.content = $sce.trustAsHtml($scope.element.description.replace("<a", "<a data-nodrag"));
+        		$scope.content = $sce.trustAsHtml($scope.element.description.replaceAll("<a", "<a data-nodrag"));
         }
     };
 }]);
