@@ -130,6 +130,11 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
                 List<AbstractSyllabusElement> elementsToRefresh =
                         syllabusService.getSyllabusElementsForTemplateStructureAndSite(templateStructureId, siteId);
 
+                if (elementsToRefresh.size() <= 0) {
+                    log.debug("No elements to refresh for " + siteId);
+                    continue;
+                }
+
                 TemplateStructure templateStructure = null;
                 try {
                     templateStructure =
