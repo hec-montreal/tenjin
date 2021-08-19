@@ -12,7 +12,7 @@ import ca.hec.tenjin.api.provider.ExternalDataProvider;
 import ca.hec.tenjin.impl.SakaiProxyImpl;
 import lombok.Setter;
 import org.apache.log4j.Logger;
-
+import org.elasticsearch.common.lang3.StringUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -199,17 +199,28 @@ public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJo
     	String destinationTitle = destination.getTitle();
     	String sourceTitle = source.getTitle();
     	    	
-    	//update only if content has changed
-    	if (!(destinationDescription == null || destinationDescription.equalsIgnoreCase(sourceDescription)) || 
-    			!(destinationTitle == null || destinationTitle.equalsIgnoreCase(sourceTitle) )){
-	        destination.setTitle(source.getTitle());
-	        destination.setDescription(source.getDescription());
+        boolean updated = false;
+
+    	//update only if content has changed (and new one isn't blank)
+        if (sourceTitle != null &&
+            (destinationTitle == null || !destinationTitle.equals(sourceTitle))) {
+            destination.setTitle(source.getTitle());
+            updated = true;
+        }
+        if (sourceDescription != null &&
+            (destinationDescription == null || !destinationDescription.equals(sourceDescription))) {
+            destination.setDescription(source.getDescription());
+            updated = true;
+        }
+        if (source.getAttributes() != null &&
+            (destination.getAttributes() == null || !destination.getAttributes().equals(source.getAttributes()))) {
+            destination.setAttributes(new HashMap<String, String>(source.getAttributes()));
+            updated = true;
+        }
+        if (updated) {
 	        destination.setLastModifiedDate(new Date());
 	        destination.setLastModifiedBy("admin");
 	        destination.setEqualsPublished(false);
-	        if (source.getAttributes() != null) {
-	            destination.setAttributes(new HashMap<String, String>(source.getAttributes()));
-	        }
 	        syllabusService.saveOrUpdateElement(destination);
     	}
     }
