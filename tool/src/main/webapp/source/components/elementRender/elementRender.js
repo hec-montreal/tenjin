@@ -1,4 +1,4 @@
-tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 'UserService', 'TenjinService', 'SakaiToolsService', 'config', '$translate', function(SyllabusService, SyllabusLockService, UserService, TenjinService, SakaiToolsService, config, $translate) {
+tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 'UserService', 'TenjinService', 'SakaiToolsService', 'config', '$translate', '$sce', function(SyllabusService, SyllabusLockService, UserService, TenjinService, SakaiToolsService, config, $translate, $sce) {
 	'use strict';
 
 	return {
@@ -20,6 +20,10 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 
 			var templateStructureElement = 
 				SyllabusService.getTemplateStructureElement($scope.element.templateStructureId);
+			
+        	$scope.elementDescription;
+        	if ($scope.element.description)
+        		$scope.elementDescription = $sce.trustAsHtml($scope.element.description.replaceAll("<a", "<a data-nodrag"));
 
 			$scope.isNotPublishedFlagVisible = function() {
 				// Is element = published or equalsPublished is undefined meaning it's the published syllabus

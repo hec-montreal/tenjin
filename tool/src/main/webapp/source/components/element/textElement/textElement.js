@@ -9,9 +9,6 @@ tenjinApp.directive('textElement',  ['$sce', function($sce) {
         templateUrl: 'element/textElement/textElement.html',
 
         controller: function($scope) {
-        	$scope.content;
-        	if ($scope.element.description)
-        		$scope.content = $sce.trustAsHtml($scope.element.description.replaceAll("<a", "<a data-nodrag"));
         }
     };
 }]);
