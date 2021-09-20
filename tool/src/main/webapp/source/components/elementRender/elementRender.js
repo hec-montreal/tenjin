@@ -23,7 +23,7 @@ tenjinApp.directive('elementRender', ['SyllabusService', 'SyllabusLockService', 
 			
         	$scope.elementDescription;
         	if ($scope.element.description)
-        		$scope.elementDescription = $sce.trustAsHtml($scope.element.description.replaceAll("<a", "<a data-nodrag"));
+			$scope.elementDescription = $sce.trustAsHtml($scope.element.description.replace('/<a/g', '<a data-nodrag'));
 
 			$scope.isNotPublishedFlagVisible = function() {
 				// Is element = published or equalsPublished is undefined meaning it's the published syllabus
