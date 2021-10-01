@@ -2,6 +2,7 @@ package ca.hec.tenjin.impl;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -167,11 +168,15 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
             syllabusCopy = syllabusService.transferCopySyllabus(fromContext, toContext, commonSyllabus.getId(), commonSyllabus.getTitle(),
                     commonSyllabus.getCommon(), commonSyllabus.getTemplateId(), commonSyllabus.getLocale(),toSite.getTitle(),
                     sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew, copiedCitationsMap);
+
+            HashSet<String> sectionList = new HashSet<String>();
             for (Group group: toSite.getGroups()){
-                if (group.getProviderGroupId() != null){
-                    syllabusDao.addSection(syllabusCopy.getId().toString(),group.getId());
+                String wsetupProp = group.getProperties().getProperty(Group.GROUP_PROP_WSETUP_CREATED);
+                if (wsetupProp == null || wsetupProp.equals(Boolean.FALSE.toString())) {
+                    sectionList.add(group.getId());
                 }
             }
+            syllabusCopy.setSections(sectionList);
 
             syllabiToCopy.remove(commonSyllabus);
 
