@@ -144,22 +144,20 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
             return;
         }
 
-        //Delete all syllabi in toContext if cleanup
-        if (cleanup){
-            try {
-                syllabusService.deleteCitationLists(toContext);
+	// Always delete existing syllabi (doesn't make sense to merge data in tenjin)
+	// interface is clear that this is done
+        try {
+            syllabusService.deleteCitationLists(toContext);
 
-                syllabiInDestination = syllabusService.getSyllabusList(toContext);
+            syllabiInDestination = syllabusService.getSyllabusList(toContext);
 
-                for (Syllabus syllabus: syllabiInDestination){
-                   syllabusDao.softDeleteSyllabus(syllabus);
-
-                }
-            } catch (NoSiteException e) {
-                log.debug("The site " + toContext + " does not exist");
-            } catch (DeniedAccessException e) {
-                log.debug(" You are not allowed to copy syllabi from " + toContext);
+            for (Syllabus syllabus: syllabiInDestination){
+                syllabusDao.softDeleteSyllabus(syllabus);
             }
+        } catch (NoSiteException e) {
+            log.debug("The site " + toContext + " does not exist");
+        } catch (DeniedAccessException e) {
+            log.debug(" You are not allowed to copy syllabi from " + toContext);
         }
 
         try {
