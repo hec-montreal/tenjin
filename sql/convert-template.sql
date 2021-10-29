@@ -45,7 +45,10 @@ BEGIN
     
           update TENJIN_SYLLABUSELEMENT set TEMPLATESTRUCTURE_ID = newTemplateStructureId where syllabuselement_id = syllabusElements(idx).syllabuselement_id;
           --DBMS_OUTPUT.PUT_LINE( 'The syllabusElement has been updated ' || syllabusElements(idx).TEMPLATESTRUCTURE_ID || ' to templateStructure ' || newTemplateStructureId);                          
-          end if;
+        end if;
+        if (syllabusElements(idx).PROVIDER_ID = 1) then
+          update TENJIN_SYLLABUSELEMENT set PROVIDER_ID = NULL where syllabuselement_id = syllabusElements(idx).syllabuselement_id;
+        end if;
      end loop;
    else
     DBMS_OUTPUT.PUT_LINE( 'Pas de plan de cours');
