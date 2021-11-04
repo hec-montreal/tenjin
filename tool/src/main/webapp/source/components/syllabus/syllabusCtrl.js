@@ -152,45 +152,48 @@
 		return SyllabusService.isCheckFeatureVisibleForStudent();
 	};
 
-	$scope.$watch('syllabusService.syllabus', function(newValue, oldValue) {
-		var syllabusSaved = SyllabusService.getSyllabusSaved();
+	if (TenjinService.viewState.stateName === 'syllabus-edit') {
 
-		if (syllabusSaved) {
-			if (angular.equals(newValue, syllabusSaved)) {
-				SyllabusService.setDirty(false);
-			} else {
-				SyllabusService.setDirty(true);
+		$scope.$watch('syllabusService.syllabus', function(newValue, oldValue) {
+			var syllabusSaved = SyllabusService.getSyllabusSaved();
+
+			if (syllabusSaved) {
+				if (angular.equals(newValue, syllabusSaved)) {
+					SyllabusService.setDirty(false);
+				} else {
+					SyllabusService.setDirty(true);
+				}
 			}
-		}
-	}, true);
+		}, true);
+
+		$scope.$on('publish', function() {
+			PublishService.publish().then(function(data) {
+				SyllabusService.reloadSyllabus().then(function() {
+					TreeService.selectElement(TreeService.findElementByPosition(TreeService.lastSelectedPosition));
+	
+					// Refresh management ui
+					UserService.loadProfile().then(function() {
+						SyllabusService.loadSyllabusList().catch(function() {
+							AlertService.showAlert("cannotLoadBaseData");
+						});
+					}).catch(function() {
+						AlertService.showAlert("cannotLoadBaseData");
+					});
+	
+					$rootScope.$broadcast('published', {
+						data: data
+					});
+				});
+			}).catch(function(data) {
+				AlertService.showAlert('cannotPublishSyllabus');
+	
+				$rootScope.$broadcast('cannotPublishSyllabus');
+			});
+		});
+	}
 
 	$scope.$on('navigationToggled', function() {
 		$scope.toggleNavigation();
-	});
-
-	$scope.$on('publish', function() {
-		PublishService.publish().then(function(data) {
-			SyllabusService.reloadSyllabus().then(function() {
-				TreeService.selectElement(TreeService.findElementByPosition(TreeService.lastSelectedPosition));
-
-				// Refresh management ui
-				UserService.loadProfile().then(function() {
-					SyllabusService.loadSyllabusList().catch(function() {
-						AlertService.showAlert("cannotLoadBaseData");
-					});
-				}).catch(function() {
-					AlertService.showAlert("cannotLoadBaseData");
-				});
-
-				$rootScope.$broadcast('published', {
-					data: data
-				});
-			});
-		}).catch(function(data) {
-			AlertService.showAlert('cannotPublishSyllabus');
-
-			$rootScope.$broadcast('cannotPublishSyllabus');
-		});
 	});
 
 	window.onbeforeunload = function() {
