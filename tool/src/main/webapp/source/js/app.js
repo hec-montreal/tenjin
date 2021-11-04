@@ -48,7 +48,10 @@ tenjinApp.config(['$compileProvider', 'tmhDynamicLocaleProvider', function($comp
 }]);
 
 tenjinApp.config(function($stateProvider, $urlRouterProvider) {
-	$urlRouterProvider.otherwise('/home');
+	$urlRouterProvider.otherwise( function($injector, $location) {
+		var $state = $injector.get("$state");
+	        $state.go("home");
+	});
 
 	$stateProvider
 		.state('home', {
