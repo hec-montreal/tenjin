@@ -106,6 +106,7 @@ public class PublishServiceImpl implements PublishService {
 	public Syllabus publishSyllabus(Long syllabusId) throws NoSyllabusException, NoPublishedSyllabusException, UnknownElementTypeException, DeniedAccessException, StructureSyllabusException, SyllabusLockedException {
 
 		Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
+		List<AbstractSyllabusElement> elementsToUpdate = new ArrayList<AbstractSyllabusElement>();
 
 		// Check the lock
 		if (!syllabusLockService.checkIfUserHasLock(syllabus, sakaiProxy.getCurrentUserId())) {
@@ -189,7 +190,9 @@ public class PublishServiceImpl implements PublishService {
 			Long oldPublishedId = element.getPublishedId();
 			element.setPublishedId(elementToPublish.getId());
 			element.setEqualsPublished(true);
-			syllabusDao.update(element);
+			//syllabusDao.update(element);
+			elementsToUpdate.add(element);
+			
 
 			// create mapping for published element
 			List<SyllabusElementMapping> existingMappings = syllabusDao.getMappingsForElement(element);
@@ -212,6 +215,11 @@ public class PublishServiceImpl implements PublishService {
 			}
 		}
 
+		try {
+		    syllabusDao.batchUpdateAfterPublish(elementsToUpdate);
+		}catch (Exception e) {
+		    System.out.println(e.getMessage() + " erreur update");
+		}
 		syllabus.setPublishedDate(new Date());
 		syllabus.setPublishedBy(sakaiProxy.getCurrentUserId());
 		syllabusDao.update(syllabus);

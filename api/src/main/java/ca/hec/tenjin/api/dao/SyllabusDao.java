@@ -24,6 +24,7 @@ import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.exception.StructureSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.*;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -117,6 +118,14 @@ public interface SyllabusDao {
 	 * @return The saved object
 	 */
 	public Object save(Object o);
+	
+	/**
+	 * Save with jdbc a list of elements
+	 * @param os
+	 * @return
+	 * @throws SqlException 
+	 */
+	public void batchUpdateAfterPublish (List<AbstractSyllabusElement> os) throws SQLException;
 	
 	public void detach(Object o);
 

@@ -1,5 +1,9 @@
 package ca.hec.tenjin.impl.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.sakaiproject.db.api.SqlService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
@@ -26,6 +31,7 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusRubricElement;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
 import lombok.Setter;
+import osid.sql.SqlException;
 
 public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao {
 
@@ -36,6 +42,11 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	
 	@Setter
 	private TemplateService templateService;
+	
+	@Setter
+	private SqlService sqlService;
+
+
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -224,6 +235,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
 	@Override
 	public Object save(Object o) {
+	    System.out.println(" save");
 		try {
 			return getHibernateTemplate().save(o);
 		} catch (Exception e) {
@@ -235,6 +247,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	@Override
 	public void update(Object o) {
 		try {
+		    	System.out.println(" update");
 			getHibernateTemplate().update(o);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -243,6 +256,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
 	@Override
 	public boolean saveOrUpdate(Object o) {
+	    System.out.println(" saveOrUpdate");
 		try {
 			getHibernateTemplate().saveOrUpdate(o);
 		} catch (Exception e) {
@@ -437,5 +451,42 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		List<AbstractSyllabusElement> syllabusElements;
 		List<SyllabusElementMapping> syllabusElementMappings;
 		return false;
+	}
+
+	@Override
+	public void batchUpdateAfterPublish(List<AbstractSyllabusElement> elements) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int count = 0;
+
+		try {
+		    conn = sqlService.borrowConnection();
+
+		    pstmt = conn.prepareStatement("update TENJIN_SYLLABUSELEMENT set PUBLISHED_ID=?,"
+			    + "EQUALS_PUBLISHED=? where SYLLABUSELEMENT_ID=?");
+		    for (AbstractSyllabusElement el : elements) {
+			pstmt.setLong(1, el.getPublishedId());//PUBLISHED_ID	NUMBER(19,0)			
+			pstmt.setBoolean(2, el.getEqualsPublished());//EQUALS_PUBLISHED	NUMBER(1,0)
+			pstmt.setLong(3, el.getId());// SYLLABUSELEMENT_ID
+			pstmt.addBatch();
+			
+			if (++count % 10 ==0 ) {
+			    pstmt.executeBatch();
+			}
+			    
+		    }
+		    
+
+		    pstmt.executeBatch();
+		    
+		} catch (SQLException e) {
+		    throw e;
+		} catch (Exception e) {
+		    e.printStackTrace();
+		} finally {
+		    sqlService.returnConnection(conn);
+		    conn.close();
+		}
+
 	}
 }

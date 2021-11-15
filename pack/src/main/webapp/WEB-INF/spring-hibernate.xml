@@ -52,6 +52,7 @@
 				<!-- API injection -->
 				<property name="publishedSyllabusDao" ref="ca.hec.tenjin.api.dao.PublishedSyllabusDao" />
 				<property name="templateService" ref="ca.hec.tenjin.api.TemplateService" />
+				<property name="sqlService" ref="org.sakaiproject.db.api.SqlService" />
 			</bean>
 		</property>
 		<property name="transactionAttributes">
@@ -92,6 +93,7 @@
 					<ref bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory" />
 				</property>
 				<property name="sakaiProxy" ref="ca.hec.tenjin.api.SakaiProxy" />
+				<!--<property name="sqlService" ref="org.sakaiproject.db.api.SqlService" />-->
 			</bean>
 		</property>
 		<property name="transactionAttributes">
