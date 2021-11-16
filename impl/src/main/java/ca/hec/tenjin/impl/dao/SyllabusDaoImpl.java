@@ -235,7 +235,6 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
 	@Override
 	public Object save(Object o) {
-	    System.out.println(" save");
 		try {
 			return getHibernateTemplate().save(o);
 		} catch (Exception e) {
@@ -247,7 +246,6 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	@Override
 	public void update(Object o) {
 		try {
-		    	System.out.println(" update");
 			getHibernateTemplate().update(o);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -256,7 +254,6 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
 	@Override
 	public boolean saveOrUpdate(Object o) {
-	    System.out.println(" saveOrUpdate");
 		try {
 			getHibernateTemplate().saveOrUpdate(o);
 		} catch (Exception e) {
@@ -472,6 +469,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 			
 			if (++count % 10 ==0 ) {
 			    pstmt.executeBatch();
+			    System.out.println("batch update");
 			}
 			    
 		    }
