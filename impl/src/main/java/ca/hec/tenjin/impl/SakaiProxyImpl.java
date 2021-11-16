@@ -46,7 +46,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+import org.sakaiproject.tool.api.Session;
 @Setter
 public class SakaiProxyImpl implements SakaiProxy {
 
@@ -570,5 +570,11 @@ public class SakaiProxyImpl implements SakaiProxy {
 	@Override
 	public List<DiscussionForum> getSiteForums () {
 		return (List<DiscussionForum>) (List<?>) discussionForumManager.getDiscussionForumsWithTopics(getCurrentSiteId());
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setCurrentSession (Session userSession) {
+	    sessionManager.setCurrentSession(userSession);
 	}
 }
