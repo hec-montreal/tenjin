@@ -19,6 +19,7 @@ import org.sakaiproject.exception.ServerOverloadException;
 import org.sakaiproject.exception.TypeException;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
+import org.sakaiproject.tool.api.Session;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserNotDefinedException;
 
@@ -104,4 +105,6 @@ public interface SakaiProxy {
 	public Map<String, String> getSomeForumInfo ();
 	
 	public List<DiscussionForum> getSiteForums ();
+	
+	public void setCurrentSession (Session userSession);
 }

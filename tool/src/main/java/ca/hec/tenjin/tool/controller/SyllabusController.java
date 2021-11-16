@@ -19,6 +19,7 @@ import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.exception.IdUnusedException;
+import org.sakaiproject.tool.api.Session;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.util.ResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,8 +169,16 @@ public class SyllabusController {
 		Syllabus syllabus = null;
 
 		syllabus = publishService.publishSyllabus(syllabusId);
-		publishService.archiveSyllabus(syllabusId);
-
+		final Session userSession = sessionManager.getCurrentSession();
+		
+		new Thread(() -> {
+		    try {
+			sakaiProxy.setCurrentSession(userSession);
+			publishService.archiveSyllabus(syllabusId);
+		    } catch (NoSyllabusException e) {
+			e.printStackTrace();
+		    }
+		}).start();
 		return (syllabus);
 	}
 
