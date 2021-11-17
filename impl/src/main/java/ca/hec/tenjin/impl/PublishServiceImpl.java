@@ -107,6 +107,8 @@ public class PublishServiceImpl implements PublishService {
 
 		Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
 		List<AbstractSyllabusElement> elementsToUpdate = new ArrayList<AbstractSyllabusElement>();
+		Queue<AbstractPublishedSyllabusElement> elementsToPublish = new LinkedList<AbstractPublishedSyllabusElement>();
+		Long previousParentId = null;
 
 		// Check the lock
 		if (!syllabusLockService.checkIfUserHasLock(syllabus, sakaiProxy.getCurrentUserId())) {
@@ -181,16 +183,15 @@ public class PublishServiceImpl implements PublishService {
 				continue;
 			}
 
-			AbstractPublishedSyllabusElement elementToPublish = publishElement(element, publishedIdMap.get(element.getParentId()));
+			//batch publish pending elements when we encounter a new parentId
+			//to ensure the publishedIdMap always contains required ids
+			if (element.getParentId() != previousParentId) {
+				publishAll(elementsToPublish, publishedIdMap);
+			}
 
-			// add the new element's id to the map so we can use it later
-			publishedIdMap.put(element.getId(), elementToPublish.getId());
+			elementsToPublish.add(createPublishedElement(element, publishedIdMap.get(element.getParentId())));
 
-			// Update existing element
-			Long oldPublishedId = element.getPublishedId();
-			element.setPublishedId(elementToPublish.getId());
-			element.setEqualsPublished(true);
-			//syllabusDao.update(element);
+			// list of elements requiring updated publishedId
 			elementsToUpdate.add(element);
 			
 
@@ -201,6 +202,7 @@ public class PublishServiceImpl implements PublishService {
 				if (mapping.getSyllabusId().equals(syllabus.getId()) || 
 						publishedSyllabusIdsForSite.contains(mapping.getSyllabusId())) {
 
+					mappingsToPublish.add(mapping); // treat at end
 					publishMapping(mapping, elementToPublish);
 				}
 			}
@@ -216,7 +218,7 @@ public class PublishServiceImpl implements PublishService {
 		}
 
 		try {
-		    syllabusDao.batchUpdateAfterPublish(elementsToUpdate);
+		    syllabusDao.batchUpdateAfterPublish(elementsToUpdate, publishedIdMap);
 		}catch (Exception e) {
 		    System.out.println(e.getMessage() + " erreur update");
 		}
@@ -227,6 +229,20 @@ public class PublishServiceImpl implements PublishService {
 		sakaiProxy.postEvent(TenjinEvents.TENJIN_PUBLISH_EVENT, sakaiProxy.getSyllabusReference(syllabus.getId(), null), true);
 
 		return syllabus;
+	}
+
+	private void publishAll(List<AbstractPublishedSyllabusElement> elementsToPublish,
+			HashMap<Long, Long> publishedIdMap) {
+
+		while (!elementsToPublish.isEmpty()) {
+			AbstractPublishedSyllabusElement
+
+			// add the new element's id to the map so we can use it later
+			publishedIdMap.put(element.getId(), elementToPublish.getId());
+		}
+
+
+
 	}
 
 	/**
@@ -385,7 +401,7 @@ public class PublishServiceImpl implements PublishService {
 		}
 	}
 
-	private AbstractPublishedSyllabusElement publishElement(AbstractSyllabusElement syllabusElement, Long newParentId) throws UnknownElementTypeException {
+	private AbstractPublishedSyllabusElement createPublishedElement(AbstractSyllabusElement syllabusElement, Long newParentId) throws UnknownElementTypeException {
 
 		AbstractPublishedSyllabusElement publishedElement = null;
 		Class<?> publishedElementClass = ELEMENTS_PUBLICATION_MAPPING.get(syllabusElement.getClass().getName());
@@ -404,7 +420,7 @@ public class PublishServiceImpl implements PublishService {
 		publishedElement.setId(null);
 		publishedElement.setParentId(newParentId);
 
-		syllabusDao.save(publishedElement);
+		//syllabusDao.save(publishedElement);
 
 		return publishedElement;
 	}

@@ -451,7 +451,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	}
 
 	@Override
-	public void batchUpdateAfterPublish(List<AbstractSyllabusElement> elements) throws SQLException {
+	public void batchUpdateAfterPublish(List<AbstractSyllabusElement> elements, Map<String, ) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int count = 0;
@@ -476,11 +476,12 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		    
 
 		    pstmt.executeBatch();
-		    
+		    //commit? is autocommit on?
 		} catch (SQLException e) {
 		    throw e;
 		} catch (Exception e) {
 		    e.printStackTrace();
+			//rollback?
 		} finally {
 		    sqlService.returnConnection(conn);
 		    conn.close();
