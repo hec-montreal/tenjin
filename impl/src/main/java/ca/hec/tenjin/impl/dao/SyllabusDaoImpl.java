@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.jdbc.Work;
 import org.sakaiproject.db.api.SqlService;
 import org.sakaiproject.exception.IdUnusedException;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
@@ -254,6 +255,7 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 
 	@Override
 	public boolean saveOrUpdate(Object o) {
+	    System.out.println(" saveOrUpdate");
 		try {
 			getHibernateTemplate().saveOrUpdate(o);
 		} catch (Exception e) {
@@ -450,41 +452,36 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 		return false;
 	}
 
-	@Override
-	public void batchUpdateAfterPublish(List<AbstractSyllabusElement> elements) throws SQLException {
-		Connection conn = null;
+    @Override
+    public void batchUpdateAfterPublish(List<AbstractSyllabusElement> elements)
+	    throws SQLException {
+	currentSession().doWork(new Work() {
+	    @Override
+	    public void execute(Connection conn) throws SQLException {
 		PreparedStatement pstmt = null;
 		int count = 0;
-
 		try {
-		    conn = sqlService.borrowConnection();
-
-		    pstmt = conn.prepareStatement("update TENJIN_SYLLABUSELEMENT set PUBLISHED_ID=?,"
-			    + "EQUALS_PUBLISHED=? where SYLLABUSELEMENT_ID=?");
+		    pstmt = conn.prepareStatement(
+			    "update TENJIN_SYLLABUSELEMENT set PUBLISHED_ID=?,"
+				    + "EQUALS_PUBLISHED=? where SYLLABUSELEMENT_ID=?");
 		    for (AbstractSyllabusElement el : elements) {
-			pstmt.setLong(1, el.getPublishedId());//PUBLISHED_ID	NUMBER(19,0)			
-			pstmt.setBoolean(2, el.getEqualsPublished());//EQUALS_PUBLISHED	NUMBER(1,0)
+			pstmt.setLong(1, el.getPublishedId());// PUBLISHED_ID NUMBER(19,0)
+			pstmt.setBoolean(2, el.getEqualsPublished());// EQUALS_PUBLISHED NUMBER(1,0)
 			pstmt.setLong(3, el.getId());// SYLLABUSELEMENT_ID
 			pstmt.addBatch();
-			
-			if (++count % 10 ==0 ) {
-			    pstmt.executeBatch();
-			    System.out.println("batch update");
-			}
-			    
+
 		    }
-		    
 
 		    pstmt.executeBatch();
-		    
+
 		} catch (SQLException e) {
 		    throw e;
 		} catch (Exception e) {
 		    e.printStackTrace();
-		} finally {
-		    sqlService.returnConnection(conn);
-		    conn.close();
 		}
 
-	}
+	    }
+	});
+
+    }
 }

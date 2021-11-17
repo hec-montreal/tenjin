@@ -190,7 +190,6 @@ public class PublishServiceImpl implements PublishService {
 			Long oldPublishedId = element.getPublishedId();
 			element.setPublishedId(elementToPublish.getId());
 			element.setEqualsPublished(true);
-			//syllabusDao.update(element);
 			elementsToUpdate.add(element);
 			
 
@@ -218,7 +217,7 @@ public class PublishServiceImpl implements PublishService {
 		try {
 		    syllabusDao.batchUpdateAfterPublish(elementsToUpdate);
 		}catch (Exception e) {
-		    System.out.println(e.getMessage() + " erreur update");
+		    e.printStackTrace();
 		}
 		syllabus.setPublishedDate(new Date());
 		syllabus.setPublishedBy(sakaiProxy.getCurrentUserId());
