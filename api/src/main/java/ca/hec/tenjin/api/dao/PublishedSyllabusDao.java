@@ -20,6 +20,7 @@
  ******************************************************************************/
 package ca.hec.tenjin.api.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import ca.hec.tenjin.api.exception.NoSyllabusException;
@@ -119,5 +120,6 @@ public interface PublishedSyllabusDao {
 	 */
 	public void batchUpdateParentId (Long oldParentId, Long newParentId) ;
 	
+	public void batchUpdateMapping (List<PublishedSyllabusElementMapping> mappings) throws SQLException ;
 
 }

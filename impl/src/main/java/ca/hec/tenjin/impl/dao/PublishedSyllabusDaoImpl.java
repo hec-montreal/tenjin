@@ -339,4 +339,38 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			+ "where parentId = ?", oldParentId,newParentId);
 
 	}
+
+	@Override
+	public void batchUpdateMapping(
+		List<PublishedSyllabusElementMapping> mappings) throws SQLException {
+		currentSession().doWork(new Work() {
+		    @Override
+		    public void execute(Connection conn) throws SQLException {
+			PreparedStatement pstmt = null;
+			int count = 0;
+			try {
+			    pstmt = conn.prepareStatement(
+				    "insert into TENJIN_PUBSYLLABUSELEM_MAPPING" + 
+				    "(SYLLABUS_ID, PUBSYLLABUSELEMENT_ID, DISPLAY_ORDER) " + 
+				    "  VALUES (?,?,?,?);");
+			    for (PublishedSyllabusElementMapping mapping : mappings) {
+				pstmt.setLong(1, mapping.getSyllabusId());
+				pstmt.setLong(2, mapping.getPublishedSyllabusElement().getId());
+				pstmt.setLong(3, mapping.getDisplayOrder());
+				pstmt.addBatch();
+
+			    }
+
+			    pstmt.executeBatch();
+
+			} catch (SQLException e) {
+			    throw e;
+			} catch (Exception e) {
+			    e.printStackTrace();
+			}
+
+		    }
+		});
+
+	}
 }

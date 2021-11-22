@@ -249,5 +249,8 @@ public interface SyllabusDao {
 	 * @return
 	 */
 	public boolean cleanupSite (String siteId);
+	
+	public void batchUpdateMapping (List<SyllabusElementMapping> mappings) throws SQLException ;
+
 }
 

@@ -484,4 +484,35 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 	});
 
     }
+	@Override
+	public void batchUpdateMapping(
+		List<SyllabusElementMapping> mappings) throws SQLException {
+		currentSession().doWork(new Work() {
+		    @Override
+		    public void execute(Connection conn) throws SQLException {
+			PreparedStatement pstmt = null;
+			int count = 0;
+			try {
+			    pstmt = conn.prepareStatement(
+				    "update TENJIN_SYLLABUSELEMENTMAPPING set EQUALS_PUBLISHED=?"
+				    + " where SYLLABUSELEMENT_ID = ? and SYLLABUS_ID=?");
+			    for (SyllabusElementMapping mapping : mappings) {
+				pstmt.setBoolean(1, true);
+				pstmt.setLong(2, mapping.getSyllabusElement().getId());
+				pstmt.setLong(3, mapping.getSyllabusId());
+				pstmt.addBatch();
+			    }
+			    pstmt.executeBatch();
+
+			} catch (SQLException e) {
+			    throw e;
+			} catch (Exception e) {
+			    e.printStackTrace();
+			}
+
+		    }
+		});
+
+	}
+
 }
