@@ -1,5 +1,8 @@
 package ca.hec.tenjin.impl.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.jdbc.Work;
 import org.sakaiproject.content.api.ContentResource;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
@@ -327,5 +331,12 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 		}
 		
 		return ret.get(0);
+	}
+
+	@Override
+	public void batchUpdateParentId(Long oldParentId, Long newParentId) {
+		getHibernateTemplate().bulkUpdate("update AbstractPublishedSyllabusElement set parentId = ?"
+			+ "where parentId = ?", oldParentId,newParentId);
+
 	}
 }

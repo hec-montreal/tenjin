@@ -207,10 +207,7 @@ public class PublishServiceImpl implements PublishService {
 			if (syllabus.getCommon() && oldPublishedId != null) {
 				// Update parentId for previously published child elements
 				List<AbstractPublishedSyllabusElement> childPublishedElements = publishedSyllabusDao.getChildPublishedElements(oldPublishedId);
-				for (AbstractPublishedSyllabusElement elem : childPublishedElements) {
-					elem.setParentId(elementToPublish.getId());
-					syllabusDao.update(elem);
-				}
+				publishedSyllabusDao.batchUpdateParentId(oldPublishedId, elementToPublish.getId());
 			}
 		}
 

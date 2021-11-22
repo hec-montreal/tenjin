@@ -112,4 +112,12 @@ public interface PublishedSyllabusDao {
 	AbstractPublishedSyllabusElement getPublishedSyllabusElement(Long elementId);
 	
 	public AbstractSyllabusElement getSyllabusElementForPublishedSyllabusElementId(Long elementId);
+	/**
+	 * Used during publication to update parentId for previously published child elements
+	 * @param oldParentId
+	 * @param newParentId
+	 */
+	public void batchUpdateParentId (Long oldParentId, Long newParentId) ;
+	
+
 }
