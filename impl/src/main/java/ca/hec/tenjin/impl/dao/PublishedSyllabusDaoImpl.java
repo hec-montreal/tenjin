@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,6 +22,7 @@ import ca.hec.tenjin.api.SakaiProxy;
 import ca.hec.tenjin.api.dao.PublishedSyllabusDao;
 import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
+import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.model.syllabus.published.AbstractPublishedSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCitationElement;
 import ca.hec.tenjin.api.model.syllabus.published.PublishedCompositeElement;
@@ -342,7 +344,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 
 	@Override
 	public void batchUpdateMapping(
-		List<PublishedSyllabusElementMapping> mappings) throws SQLException {
+		Map<AbstractPublishedSyllabusElement, SyllabusElementMapping> mappings) throws SQLException {
 		currentSession().doWork(new Work() {
 		    @Override
 		    public void execute(Connection conn) throws SQLException {
@@ -353,9 +355,11 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 				    "insert into TENJIN_PUBSYLLABUSELEM_MAPPING" + 
 				    "(PUBSYLLABUSELEMENTMAPPING_ID,SYLLABUS_ID, PUBSYLLABUSELEMENT_ID, DISPLAY_ORDER) " + 
 				    "  VALUES (TENJIN_PUBSYLLABUSELMAP_ID_SEQ.nextval, ?,?,?)");
-			    for (PublishedSyllabusElementMapping mapping : mappings) {
+			    Set<AbstractPublishedSyllabusElement> keys = mappings.keySet();
+			    SyllabusElementMapping mapping = null;
+			    for (AbstractPublishedSyllabusElement key : keys) {
 				pstmt.setLong(1, mapping.getSyllabusId());
-				pstmt.setLong(2, mapping.getPublishedSyllabusElement().getId());
+				pstmt.setLong(2, key.getId());
 				pstmt.setLong(3, mapping.getDisplayOrder());
 				pstmt.addBatch();
 

@@ -108,7 +108,7 @@ public class PublishServiceImpl implements PublishService {
 		Syllabus syllabus = syllabusService.getSyllabus(syllabusId);
 		List<AbstractSyllabusElement> elementsToUpdate = new ArrayList<AbstractSyllabusElement>();
 		List<SyllabusElementMapping> mappingsToUpdate = new ArrayList<SyllabusElementMapping>();
-		List<PublishedSyllabusElementMapping> mappingToCreate = new ArrayList<PublishedSyllabusElementMapping>();
+		Map<AbstractPublishedSyllabusElement, SyllabusElementMapping> mappingToCreate = new HashMap<AbstractPublishedSyllabusElement, SyllabusElementMapping>();
 
 		// Check the lock
 		if (!syllabusLockService.checkIfUserHasLock(syllabus, sakaiProxy.getCurrentUserId())) {
@@ -170,13 +170,8 @@ public class PublishServiceImpl implements PublishService {
 				if (mapping != null && element.getPublishedId() != null) {
 					// we assume the common elements are already published
 					AbstractPublishedSyllabusElement publishedElement = publishedSyllabusDao.getPublishedElement(element.getPublishedId());
-					//publishMapping(mapping, publishedElement);
 					if (!mapping.getHidden()) {
-						PublishedSyllabusElementMapping publishedMapping = new PublishedSyllabusElementMapping();
-						publishedMapping.setSyllabusId(mapping.getSyllabusId());
-						publishedMapping.setPublishedSyllabusElement(publishedElement);
-						publishedMapping.setDisplayOrder(mapping.getDisplayOrder());
-						mappingToCreate.add(publishedMapping);
+						mappingToCreate.put(publishedElement, mapping);
 					}
 					if (mapping.getEqualsPublished() == null || mapping.getEqualsPublished() != true) {
 						// even if we didn't publish the mapping because it was hidden, set equalsPublished for the attempt
@@ -212,14 +207,8 @@ public class PublishServiceImpl implements PublishService {
 			for (SyllabusElementMapping mapping : existingMappings) {
 				if (mapping.getSyllabusId().equals(syllabus.getId()) || 
 						publishedSyllabusIdsForSite.contains(mapping.getSyllabusId())) {
-
-					//publishMapping(mapping, elementToPublish);
 					if (!mapping.getHidden()) {
-						PublishedSyllabusElementMapping publishedMapping = new PublishedSyllabusElementMapping();
-						publishedMapping.setSyllabusId(mapping.getSyllabusId());
-						publishedMapping.setPublishedSyllabusElement(elementToPublish);
-						publishedMapping.setDisplayOrder(mapping.getDisplayOrder());
-						mappingToCreate.add(publishedMapping);
+						mappingToCreate.put(elementToPublish, mapping);
 					}
 					if (mapping.getEqualsPublished() == null || mapping.getEqualsPublished() != true) {
 						// even if we didn't publish the mapping because it was hidden, set equalsPublished for the attempt
@@ -391,22 +380,6 @@ public class PublishServiceImpl implements PublishService {
 		return ids;
 	}
  
-	private void publishMapping(SyllabusElementMapping mapping, AbstractPublishedSyllabusElement publishedElement) {
-		if (!mapping.getHidden()) {
-			PublishedSyllabusElementMapping publishedMapping = new PublishedSyllabusElementMapping();
-			publishedMapping.setSyllabusId(mapping.getSyllabusId());
-			publishedMapping.setPublishedSyllabusElement(publishedElement);
-			publishedMapping.setDisplayOrder(mapping.getDisplayOrder());
-
-			syllabusDao.save(publishedMapping);
-		}
-		if (mapping.getEqualsPublished() == null || mapping.getEqualsPublished() != true) {
-			// even if we didn't publish the mapping because it was hidden, set equalsPublished for the attempt
-			mapping.setEqualsPublished(true);
-			syllabusDao.save(mapping);
-		}
-	}
-
 	private AbstractPublishedSyllabusElement publishElement(AbstractSyllabusElement syllabusElement, Long newParentId) throws UnknownElementTypeException {
 
 		AbstractPublishedSyllabusElement publishedElement = null;
