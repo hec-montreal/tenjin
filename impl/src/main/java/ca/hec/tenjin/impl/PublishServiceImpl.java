@@ -227,6 +227,7 @@ public class PublishServiceImpl implements PublishService {
 
 		try {
 		    syllabusDao.batchUpdateAfterPublish(elementsToUpdate);
+		    syllabusDao.batchUpdateMapping(mappingsToUpdate);
 		    publishedSyllabusDao.batchUpdateMapping(mappingToCreate);
 		}catch (Exception e) {
 		    e.printStackTrace();
