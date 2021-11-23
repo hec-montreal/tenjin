@@ -358,6 +358,7 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			    Set<AbstractPublishedSyllabusElement> keys = mappings.keySet();
 			    SyllabusElementMapping mapping = null;
 			    for (AbstractPublishedSyllabusElement key : keys) {
+				mapping = mappings.get(key);
 				pstmt.setLong(1, mapping.getSyllabusId());
 				pstmt.setLong(2, key.getId());
 				pstmt.setLong(3, mapping.getDisplayOrder());
