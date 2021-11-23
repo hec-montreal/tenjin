@@ -469,7 +469,10 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 			pstmt.setBoolean(2, el.getEqualsPublished());// EQUALS_PUBLISHED NUMBER(1,0)
 			pstmt.setLong(3, el.getId());// SYLLABUSELEMENT_ID
 			pstmt.addBatch();
-
+			count++;			             
+		        if (count % 50 == 0) {
+		            pstmt.executeBatch();
+		        }
 		    }
 
 		    pstmt.executeBatch();
@@ -501,6 +504,10 @@ public class SyllabusDaoImpl extends HibernateDaoSupport implements SyllabusDao 
 				pstmt.setLong(2, mapping.getSyllabusElement().getId());
 				pstmt.setLong(3, mapping.getSyllabusId());
 				pstmt.addBatch();
+				count++;			             
+			        if (count % 50 == 0) {
+			            pstmt.executeBatch();
+			        }
 			    }
 			    pstmt.executeBatch();
 

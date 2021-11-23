@@ -363,7 +363,10 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 				pstmt.setLong(2, key.getId());
 				pstmt.setLong(3, mapping.getDisplayOrder());
 				pstmt.addBatch();
-
+				count++;			             
+			        if (count % 50 == 0) {
+			            pstmt.executeBatch();
+			        }
 			    }
 
 			    pstmt.executeBatch();
