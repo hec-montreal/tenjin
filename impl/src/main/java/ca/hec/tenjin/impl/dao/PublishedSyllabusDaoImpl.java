@@ -351,8 +351,8 @@ public class PublishedSyllabusDaoImpl extends HibernateDaoSupport implements Pub
 			try {
 			    pstmt = conn.prepareStatement(
 				    "insert into TENJIN_PUBSYLLABUSELEM_MAPPING" + 
-				    "(SYLLABUS_ID, PUBSYLLABUSELEMENT_ID, DISPLAY_ORDER) " + 
-				    "  VALUES (?,?,?,?);");
+				    "(PUBSYLLABUSELEMENTMAPPING_ID,SYLLABUS_ID, PUBSYLLABUSELEMENT_ID, DISPLAY_ORDER) " + 
+				    "  VALUES (TENJIN_PUBSYLLABUSELMAP_ID_SEQ.nextval, ?,?,?)");
 			    for (PublishedSyllabusElementMapping mapping : mappings) {
 				pstmt.setLong(1, mapping.getSyllabusId());
 				pstmt.setLong(2, mapping.getPublishedSyllabusElement().getId());
