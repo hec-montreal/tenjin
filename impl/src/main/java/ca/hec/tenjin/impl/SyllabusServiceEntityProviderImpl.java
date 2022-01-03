@@ -161,12 +161,6 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
         }
 
         try {
-            //copy common
-            commonSyllabus = syllabusService.getCommonSyllabus(fromContext);
-            syllabusCopy = syllabusService.transferCopySyllabus(fromContext, toContext, commonSyllabus.getId(), commonSyllabus.getTitle(),
-                    commonSyllabus.getCommon(), commonSyllabus.getTemplateId(), commonSyllabus.getLocale(),toSite.getTitle(),
-                    sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew, copiedCitationsMap);
-
             HashSet<String> sectionList = new HashSet<String>();
             for (Group group: toSite.getGroups()){
                 String wsetupProp = group.getProperties().getProperty(Group.GROUP_PROP_WSETUP_CREATED);
@@ -174,7 +168,12 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
                     sectionList.add(group.getId());
                 }
             }
-            syllabusCopy.setSections(sectionList);
+
+            //copy common
+            commonSyllabus = syllabusService.getCommonSyllabus(fromContext);
+            syllabusCopy = syllabusService.transferCopySyllabus(fromContext, toContext, commonSyllabus.getId(), commonSyllabus.getTitle(),
+                    commonSyllabus.getCommon(), commonSyllabus.getTemplateId(), commonSyllabus.getLocale(),toSite.getTitle(),
+                    sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew, copiedCitationsMap, sectionList);
 
             syllabiToCopy.remove(commonSyllabus);
 
@@ -182,7 +181,7 @@ public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityP
             for(Syllabus syllabus: syllabiToCopy){
                 syllabusCopy = syllabusService.transferCopySyllabus(fromContext, toContext, syllabus.getId(), syllabus.getTitle(),
                         syllabus.getCommon(), syllabus.getTemplateId(), syllabus.getLocale(),toSite.getTitle(),
-                        sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew, copiedCitationsMap);
+                        sakaiProxy.getCurrentUserId(), sakaiProxy.getCurrentUserName(), mappingCommonSyllabusOldNew, copiedCitationsMap, null);
             }
         } catch (DeniedAccessException e) {
             e.printStackTrace();

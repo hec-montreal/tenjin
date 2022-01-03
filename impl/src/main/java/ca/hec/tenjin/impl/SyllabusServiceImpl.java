@@ -404,7 +404,7 @@ public class SyllabusServiceImpl implements SyllabusService {
 	@Override
 	public Syllabus transferCopySyllabus(String fromSiteId, String toSiteId, Long syllabusId, String title, boolean common, Long templateId,
 										 String locale, String courseTitle, String createdBy,
-										 String createdByName, Map<Long, AbstractSyllabusElement> commonCopyMapping, Map<String, String> copiedCitationsMap) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException{
+										 String createdByName, Map<Long, AbstractSyllabusElement> commonCopyMapping, Map<String, String> copiedCitationsMap, Set<String> sections) throws DeniedAccessException, IdUnusedException, NoSyllabusException, StructureSyllabusException{
 		Syllabus syllabus = syllabusDao.getStructuredSyllabus(syllabusId);
 
 		if (!securityService.canRead(sakaiProxy.getCurrentUserId(), syllabus)) {
@@ -428,6 +428,10 @@ public class SyllabusServiceImpl implements SyllabusService {
 		copy.setDeleted(false);
 		copy.setPublishedDate(null);
 		copy.setPublishedBy(null);
+
+		if (sections != null) {
+			copy.setSections(sections);
+		}
 
 		// Create
 		syllabusDao.save(copy);
