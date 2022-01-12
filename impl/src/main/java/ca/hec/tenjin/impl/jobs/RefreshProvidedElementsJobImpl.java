@@ -11,7 +11,8 @@ import ca.hec.tenjin.api.model.template.TemplateStructure;
 import ca.hec.tenjin.api.provider.ExternalDataProvider;
 import ca.hec.tenjin.impl.SakaiProxyImpl;
 import lombok.Setter;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -36,7 +37,7 @@ import java.util.Arrays;
 
 public class RefreshProvidedElementsJobImpl implements RefreshProvidedElementsJob, ApplicationContextAware {
 
-    private static final Logger log = Logger.getLogger(RefreshProvidedElementsJobImpl.class);
+    private static final Log log = LogFactory.getLog(RefreshProvidedElementsJobImpl.class);
 
     @Setter
     SyllabusService syllabusService;

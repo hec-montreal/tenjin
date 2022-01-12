@@ -6,7 +6,8 @@ import ca.hec.tenjin.api.exception.NoSyllabusException;
 import ca.hec.tenjin.api.jobs.SyncSectionsInTenjin;
 import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import lombok.Setter;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.sakaiproject.coursemanagement.api.CourseManagementService;
@@ -26,7 +27,7 @@ import java.util.*;
  */
 public class SyncSectionsInTenjinImpl implements SyncSectionsInTenjin {
 
-    private static final Logger log = Logger.getLogger(SyncSectionsInTenjinImpl.class);
+    private static final Log log = LogFactory.getLog(SyncSectionsInTenjinImpl.class);
 
     @Setter
     protected CourseManagementService cmService;

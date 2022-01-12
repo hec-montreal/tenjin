@@ -8,7 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.content.api.providers.SiteContentAdvisor;
 import org.sakaiproject.content.api.providers.SiteContentAdvisorProvider;
 import org.sakaiproject.content.api.providers.SiteContentAdvisorTypeRegistry;
@@ -44,7 +45,7 @@ import lombok.Setter;
 public class SyllabusServiceEntityProviderImpl implements SyllabusServiceEntityProvider, ContextObserver, EntityTransferrer,
         SiteContentAdvisorProvider, SiteContentAdvisorTypeRegistry, HardDeleteAware {
 
-    private static final Logger log = Logger.getLogger("SyllabusServiceEntityProviderImpl");
+    private static final Log log = LogFactory.getLog("SyllabusServiceEntityProviderImpl");
 
     private Map<String, SiteContentAdvisorProvider> siteContentAdvisorsProviders = new HashMap<String, SiteContentAdvisorProvider>();
 

@@ -11,7 +11,8 @@ import ca.hec.tenjin.api.model.template.Template;
 import ca.hec.tenjin.api.model.template.TemplateStructure;
 import ca.hec.tenjin.api.provider.ExternalDataProvider;
 import lombok.Setter;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.sakaiproject.exception.IdUnusedException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -20,7 +21,7 @@ import java.util.*;
 
 public class TemplateServiceImpl implements TemplateService, ApplicationContextAware {
 
-	private static final Logger log = Logger.getLogger(TemplateServiceImpl.class);
+	private static final Log log = LogFactory.getLog(TemplateServiceImpl.class);
 
     @Setter
 	private TemplateDao templateDao;

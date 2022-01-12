@@ -47,11 +47,12 @@ import ca.hec.tenjin.impl.export.template.IfEqTemplateHelper;
 import ca.hec.tenjin.impl.export.template.StringTemplateHelper;
 import ca.hec.tenjin.impl.export.template.UnescapeHtmlTemplateHelper;
 import lombok.Setter;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class SyllabusExportServiceImpl implements SyllabusExportService {
 
-	private static final Logger log = Logger.getLogger(SyllabusExportServiceImpl.class);
+	private static final Log log = LogFactory.getLog(SyllabusExportServiceImpl.class);
 
 	@Setter
 	private SakaiProxy sakaiProxy;

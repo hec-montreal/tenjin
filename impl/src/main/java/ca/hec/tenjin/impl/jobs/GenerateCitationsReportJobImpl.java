@@ -6,7 +6,8 @@ import ca.hec.tenjin.api.model.syllabus.Syllabus;
 import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusCitationElement;
 import lombok.Setter;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.*;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -36,7 +37,7 @@ import java.util.List;
 
 public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJob {
 
-    private static final Logger log = Logger.getLogger(GenerateCitationsReportJobImpl.class);
+    private static final Log log = LogFactory.getLog(GenerateCitationsReportJobImpl.class);
     private static final String REPORTS_SITE_PROPERTY = "tenjin.citations-report.siteId";
 
     @Setter
