@@ -1,7 +1,7 @@
 <!-- Node renderer -->
 <script type="text/ng-template" id="node-renderer.html">
 	<!-- Display items composite, evaluation, exam, lecture and tutorial -->
-	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" data-ng-class="['menu-item', {'item-selected': item.$selected, 'menu-item-selected': item.$selected, 'menu-item-parent': syllabusService.itemHasChildInMenu(item), 'menu-item-toplevel': !syllabusService.itemHasParentInMenu(item), 'menu-item-drop': acceptDrop === item.id}]">
+	<div data-ng-if="syllabusService.template[item.templateStructureId].displayInMenu" data-ng-class="['menu-item', {'item-selected': item.$selected, 'menu-item-selected': item.$selected, 'menu-item-parent': syllabusService.itemHasChildInMenu(item), 'menu-item-toplevel': !syllabusService.itemHasParentInMenu(item), 'menu-item-drop': acceptDrop === item.id, 'menu-item': acceptDrop != item.id}]">
 		<a tabindex="0" data-nodrag data-ng-click="treeService.selectElement(item)" data-ng-keyup="$event.keyCode == 13 && treeService.selectElement(item)" class="select-item" data-ng-class="{'item-selected': item.$selected, 'item-composite': item.type === 'composite' }">
 			<div ng-class="{'numbered-title': isTitleNumbered(item.type)}" style=" display:inline-block;">
  			<table>
