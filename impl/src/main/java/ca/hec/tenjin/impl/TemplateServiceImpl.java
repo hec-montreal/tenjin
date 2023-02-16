@@ -71,7 +71,7 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 				}
 				
 				if (element != null) {
-					String title = "";
+					String title = null;
 					element.setDisplayOrder(i);
 					if (templateStructure.getProvider() == null) {
 						if (templateStructure.getTemplateElement().getLabels().containsKey(locale)) {
@@ -80,7 +80,9 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 							title = templateStructure.getTemplateElement().getLabels().get("en_US");
 						}
 					}
-					element.setTitle(title);
+					if (title != null) {
+						element.setTitle(title);
+					}
 					element.setTemplateStructureId(templateStructure.getId());
 					long idElement = level*1000 - i;
 					element.setId(idElement);
