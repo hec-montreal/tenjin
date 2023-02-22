@@ -26,7 +26,11 @@ public interface TemplateService {
 
 	public AbstractSyllabusElement getProvidedElement (Long providerId, String siteId, String locale);
 
-		/**
+	public boolean refreshProvidedElementOnCopy(Long providerId);
+
+	public boolean copyProvidedElementOnCopy(Long providerId, String siteId);
+
+	/**
 	 * Retrieves the template
 	 * @param templateId
 	 * @return

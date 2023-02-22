@@ -13,5 +13,6 @@
 		<property name="beanName" column="BEAN_NAME" type="string" not-null="true"/>
 		<property name="title" type="string" column="TITLE" length="255"/>
 		<property name="description" type="materialized_clob" column="DESCRIPTION"/>
+		<property name="refreshOnCopy" type="boolean" column="REFRESH_ON_COPY"/>
      </class>
 </hibernate-mapping>

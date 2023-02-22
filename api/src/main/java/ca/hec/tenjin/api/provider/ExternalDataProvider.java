@@ -13,4 +13,7 @@ public interface ExternalDataProvider {
 
 	AbstractSyllabusElement getAbstractSyllabusElement(String siteId, String locale);
 
+	// should the element be copied during site copy (does it apply to the destination site)
+	boolean copyElementOnSiteCopy(String destinationSiteId);
+
 }

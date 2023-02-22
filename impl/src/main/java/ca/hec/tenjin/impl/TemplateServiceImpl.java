@@ -119,6 +119,30 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 	}
 
 
+	@Override
+	public boolean refreshProvidedElementOnCopy(Long providerId) {
+		try {
+			ExternalDataProviderDefinition dataProvider = templateDao.getExternalDataProviderDefinition(providerId);
+			if (dataProvider.getRefreshOnCopy()==null) return false;
+			return dataProvider.getRefreshOnCopy();
+		} catch (IdUnusedException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean copyProvidedElementOnCopy(Long providerId, String siteId) {
+		try {
+			ExternalDataProviderDefinition dataProvider = templateDao.getExternalDataProviderDefinition(providerId);
+			ExternalDataProvider provider = (ExternalDataProvider)applicationContext.getBean(dataProvider.getBeanName());
+			
+			return provider.copyElementOnSiteCopy(siteId);
+		} catch (IdUnusedException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	private void recursiveAddElements(TemplateStructure root, AbstractSyllabusElement element, String locale, long idElement, String siteId) {
 		

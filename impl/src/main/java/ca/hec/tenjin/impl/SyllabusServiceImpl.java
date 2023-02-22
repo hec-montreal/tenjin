@@ -845,13 +845,20 @@ public class SyllabusServiceImpl implements SyllabusService {
 		AbstractSyllabusElement newElement = null;
 
 		try {
-			if (element.getProviderId() != null && element.getTemplateStructureId() == -1 )
-				return ;
 			//copy provided element
-			if (element.getProviderId() != null ) {
+			Long providerId = element.getProviderId();
+
+			if (providerId != null && !templateService.copyProvidedElementOnCopy(providerId, forSyllabus.getSiteId())) {
+				return;
+			}
+
+			if (providerId != null && templateService.refreshProvidedElementOnCopy(providerId)) {
 				newElement = templateService.getProvidedElement(element.getProviderId(), forSyllabus.getSiteId(), forSyllabus.getLocale());
-				if ( newElement == null)
-					newElement = (AbstractSyllabusElement) element.getClass().newInstance();;
+
+				if ( newElement == null) {
+					return;
+				}
+
 				newElement.setTemplateStructureId(element.getTemplateStructureId());
 				newElement.setCommon(element.getCommon());
 				newElement.setPublicElement(element.getPublicElement());

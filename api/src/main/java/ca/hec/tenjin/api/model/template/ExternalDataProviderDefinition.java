@@ -20,7 +20,6 @@
  ******************************************************************************/
 package ca.hec.tenjin.api.model.template;
 
-import ca.hec.tenjin.api.model.syllabus.AbstractSyllabusElement;
 import lombok.Data;
 
 /**
@@ -35,5 +34,6 @@ public class ExternalDataProviderDefinition {
     private String beanName;
     private String title;
     private String description;
+    private Boolean refreshOnCopy;
 }
 
