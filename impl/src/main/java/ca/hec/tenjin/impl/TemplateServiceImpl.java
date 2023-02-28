@@ -89,8 +89,10 @@ public class TemplateServiceImpl implements TemplateService, ApplicationContextA
 					element.setImportant(false);
 					element.setCommon(true);
 
-					// recursion on the children
-					recursiveAddElements(templateStructure, element, locale, idElement, siteId);
+					// recursion on the children (if the element is not provided)
+					if (templateStructure.getProvider() == null) {
+						recursiveAddElements(templateStructure, element, locale, idElement, siteId);
+					}
 					
 					elements.add(element);
 				}
