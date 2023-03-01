@@ -56,6 +56,7 @@ import ca.hec.tenjin.api.model.syllabus.SyllabusCompositeElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusDocumentElement;
 import ca.hec.tenjin.api.model.syllabus.SyllabusElementMapping;
 import ca.hec.tenjin.api.model.syllabus.SyllabusImageElement;
+import ca.hec.tenjin.api.model.template.TemplateStructure;
 import ca.hec.tenjin.api.provider.CourseOutlineProvider;
 import lombok.Setter;
 
@@ -845,45 +846,55 @@ public class SyllabusServiceImpl implements SyllabusService {
 		AbstractSyllabusElement newElement = null;
 
 		try {
-			//copy provided element
-			Long providerId = element.getProviderId();
-
-			if (providerId != null && !templateService.copyProvidedElementOnCopy(providerId, forSyllabus.getSiteId())) {
-				return;
+			Long providerId = null; 
+			Long templateStructureId = element.getTemplateStructureId();
+			if (templateStructureId > 0) {
+				TemplateStructure ts = templateService.getTemplateStructure(element.getTemplateStructureId());
+				if (ts.getProvider() != null) {
+					providerId = ts.getProvider().getProviderId();
+				}	
 			}
 
-			if (providerId != null && templateService.refreshProvidedElementOnCopy(providerId)) {
-				newElement = templateService.getProvidedElement(element.getProviderId(), forSyllabus.getSiteId(), forSyllabus.getLocale());
+			if (providerId != null) {
+				// refresh provided element if the provider says to
+				if (templateService.refreshProvidedElementOnCopy(providerId)) {
+					newElement = templateService.getProvidedElement(element.getProviderId(), forSyllabus.getSiteId(), forSyllabus.getLocale());
 
-				if ( newElement == null) {
+					if ( newElement == null) {
+						return;
+					}
+	
+					newElement.setTemplateStructureId(element.getTemplateStructureId());
+					newElement.setCommon(element.getCommon());
+					newElement.setPublicElement(element.getPublicElement());
+					newElement.setImportant(element.getImportant());
+					newElement.setDisplayOrder(element.getDisplayOrder());
+					newElement.setHidden(element.getHidden());
+					newElement.setAvailabilityStartDate(element.getAvailabilityStartDate());
+					newElement.setAvailabilityEndDate(element.getAvailabilityEndDate());
+					newElement.setLastModifiedDate(element.getLastModifiedDate());
+					newElement.setLastModifiedBy(element.getLastModifiedBy());
+					newElement.setHasDatesInterval(element.getHasDatesInterval());
+					newElement.setProviderId(element.getProviderId());
+					newElement.setId(null);
+					newElement.setSiteId(forSyllabus.getSiteId());
+					newElement.setParentId(parent == null ? null : parent.getId());
+					newElement.setPublishedId(null);
+					newElement.setEqualsPublished(false);
+					newElement.setCreatedBy(userId);
+					newElement.setCreatedDate(new Date());
+					if (element.getAttributes() != null) {
+						newElement.setAttributes(new HashMap<String, String>(element.getAttributes()));
+					}
+				}
+				else if (!templateService.copyProvidedElementOnCopy(providerId, forSyllabus.getSiteId())) {
+					// return without copying if provider says not to copy
 					return;
 				}
-
-				newElement.setTemplateStructureId(element.getTemplateStructureId());
-				newElement.setCommon(element.getCommon());
-				newElement.setPublicElement(element.getPublicElement());
-				newElement.setImportant(element.getImportant());
-				newElement.setDisplayOrder(element.getDisplayOrder());
-				newElement.setHidden(element.getHidden());
-				newElement.setAvailabilityStartDate(element.getAvailabilityStartDate());
-				newElement.setAvailabilityEndDate(element.getAvailabilityEndDate());
-				newElement.setLastModifiedDate(element.getLastModifiedDate());
-				newElement.setLastModifiedBy(element.getLastModifiedBy());
-				newElement.setHasDatesInterval(element.getHasDatesInterval());
-				newElement.setProviderId(element.getProviderId());
-				newElement.setId(null);
-				newElement.setSiteId(forSyllabus.getSiteId());
-				newElement.setParentId(parent == null ? null : parent.getId());
-				newElement.setPublishedId(null);
-				newElement.setEqualsPublished(false);
-				newElement.setCreatedBy(userId);
-				newElement.setCreatedDate(new Date());
-				if (element.getAttributes() != null) {
-					newElement.setAttributes(new HashMap<String, String>(element.getAttributes()));
-				}
 			}
-			//Copy not provided element
-			else {
+
+			// if newElement is still null, copy old element
+			if (newElement == null) {
 				newElement = (AbstractSyllabusElement) element.getClass().newInstance();
 				newElement.copyFrom(element);
 				newElement.setId(null);
@@ -897,16 +908,14 @@ public class SyllabusServiceImpl implements SyllabusService {
 
 			updateLinks(newElement, fromSiteId, toSiteId, copiedCitationsMap);
 		} catch (IllegalAccessException e) {
-		// Should never happen
-		e.printStackTrace();
-
-		return ;
-	} catch (InstantiationException e) {
-		// Should never happen
-		e.printStackTrace();
-
-		return ;
-	}
+			// Should never happen
+			e.printStackTrace();
+			return ;
+		} catch (InstantiationException | IdUnusedException e) {
+			// Should never happen
+			e.printStackTrace();
+			return ;
+		}
 
 		//if common syllabus and common element, save element and mapping
 		//if not common syllabus and not common element, save element and mapping
