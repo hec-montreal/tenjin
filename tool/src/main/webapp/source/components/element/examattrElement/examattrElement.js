@@ -14,6 +14,12 @@ tenjinApp.directive('examattrElement', ['SyllabusService',  '$translate', functi
 		controller: function($scope) {
 			var currentLanguage = $translate.use();
 			$translate.use(SyllabusService.syllabus.locale).then(function() {
+				 $scope.EXAM_DATE_TRANSLATE = $translate.instant('EXAM_DATE', null, null, SyllabusService.syllabus.locale);
+				 $scope.EXAM_DATE_VALUE_TRANSLATE = $translate.instant('EXAM_DATE_VALUE', null, null, SyllabusService.syllabus.locale);
+
+				 $scope.EXAM_DOCUMENTATION_TRANSLATE = $translate.instant('EXAM_DOCUMENTATION', null, null, SyllabusService.syllabus.locale);
+				 $scope.EXAM_DURATION_TRANSLATE = $translate.instant('EXAM_DURATION', null, null, SyllabusService.syllabus.locale);
+
 				 $scope.EXAM_LOCATION_TRANSLATE = $translate.instant('EXAM_LOCATION', null, null, SyllabusService.syllabus.locale);
 				 $scope.EXAM_INCLASS_TRANSLATE = $translate.instant('EXAM_INCLASS', null, null, SyllabusService.syllabus.locale);
 				 $scope.EXAM_ATHOME_TRANSLATE = $translate.instant('EXAM_ATHOME', null, null, SyllabusService.syllabus.locale);

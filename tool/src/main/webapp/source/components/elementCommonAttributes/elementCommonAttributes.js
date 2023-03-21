@@ -7,6 +7,7 @@ tenjinApp.directive('elementCommonAttributes', ['$anchorScroll', '$location', 'M
 			resource: '=',
 			noedit: '=',
 			noimportant: '=',
+			noannotation: '=',
 			novisible: '=',
 			nodate: '=',
 			nocopyright: '='

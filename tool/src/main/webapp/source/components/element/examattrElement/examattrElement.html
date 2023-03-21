@@ -1,5 +1,17 @@
 <div class="element-examattr">
 	<ul>
+		<li>
+			{{EXAM_DATE_TRANSLATE}}&nbsp;:
+			<span>{{EXAM_DATE_VALUE_TRANSLATE}}</span>
+		</li>
+		<li data-ng-if="element.attributes.examDuration">
+			{{EXAM_DURATION_TRANSLATE}}&nbsp;:
+			<span>{{element.attributes.examDuration}}</span>
+		</li>
+		<li data-ng-if="element.attributes.examDocumentation">
+			{{EXAM_DOCUMENTATION_TRANSLATE}}&nbsp;:
+			<span>{{element.attributes.examDocumentation}}</span>
+		</li>
 		<li data-ng-if="element.attributes.examInClass === 'true' || element.attributes.examAtHome === 'true'">
 			{{EXAM_LOCATION_TRANSLATE}}&nbsp;:
 			<span data-ng-if="element.attributes.examInClass === 'true' " >{{EXAM_INCLASS_TRANSLATE}} </span>
