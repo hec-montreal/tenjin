@@ -5,6 +5,22 @@
 
 	<div class="details">
 		<ul>
+			<li>
+				<span class="label">{{str 'EXAM_DATE'}}:</span>
+				{{str 'EXAM_DATE_VALUE'}}
+			</li>
+			{{#if element.attributes.examDuration}}
+				<li>
+					<span class="label">{{str 'EXAM_DURATION'}}:</span>
+					{{element.attributes.examDuration}}
+				</li>
+			{{/if}}
+			{{#if element.attributes.examDocumentation}}
+				<li>
+					<span class="label">{{str 'EXAM_DOCUMENTATION'}}:</span>
+					{{element.attributes.examDocumentation}}
+				</li>
+			{{/if}}
 			{{#attr-cond this 'or' 'examInClass' 'examAtHome'}}
 				<li>
 					<span class="label">{{str 'EXAM_LOCATION'}}:</span>
