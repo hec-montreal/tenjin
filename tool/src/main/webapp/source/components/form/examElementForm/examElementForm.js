@@ -13,6 +13,7 @@ tenjinApp.directive('examElementForm', ['SyllabusService', function(SyllabusServ
 
 		controller: function($scope) {
 			var templateType = SyllabusService.template[$scope.element.templateStructureId];
+			var disableDocumentationTextbox = false;
 
             // Validation
 			$scope.element.validate = function() {
@@ -33,6 +34,16 @@ tenjinApp.directive('examElementForm', ['SyllabusService', function(SyllabusServ
 
 			$scope.element.preSave = function() {
 				this.composite = true;
+			};
+
+			$scope.submissionTypeChanged = function() {
+				if ($scope.element.attributes.examElectronic==='true' && $scope.element.attributes.examPaper==='false') {
+					$scope.element.attributes.examDocumentation = "";
+					this.disableDocumentationTextbox = true;
+				}
+				else {
+					this.disableDocumentationTextbox = false;
+				}
 			};
 		},
 

@@ -65,33 +65,33 @@
 	<br>
 	<div class="row">
 		<div class="col-md-4">
-			<label class="label-text-title">{{ 'EXAM_DOCUMENTATION' | translate }}</label>
-		</div>
-		<div class="col-md-4">
-			<input type="text" name="examDocumentation" data-ng-model="element.attributes.examDocumentation" />
-		</div>
-		<div class="col-md-4"></div>
-	</div>
-	<br>
-	<div class="row">
-		<div class="col-md-4">
 			<label class="label-text-title">{{ 'EXAM_SUBMISSION_TYPE' | translate }}</label>
 		</div>
 		<div class="col-md-4">
 			<table>
 				<tr>
 					<td>
-						<input type="checkbox" name="evalPaper" data-ng-model="element.attributes.examPaper"
+						<input type="checkbox" name="evalPaper" data-ng-model="element.attributes.examPaper" data-ng-change="submissionTypeChanged()"
 						ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_PAPER' | translate }}
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" name="evalElectronic" data-ng-model="element.attributes.examElectronic"
+						<input type="checkbox" name="evalElectronic" data-ng-model="element.attributes.examElectronic" data-ng-change="submissionTypeChanged()"
 						ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_ELECTRONIC' | translate }}
 					</td>
 				</tr>
 			</table>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-4">
+			<label class="label-text-title">{{ 'EXAM_DOCUMENTATION' | translate }}</label>
+		</div>
+		<div class="col-md-4">
+			<input type="text" name="examDocumentation" data-ng-model="element.attributes.examDocumentation" data-ng-disabled="disableDocumentationTextbox" />
 		</div>
 		<div class="col-md-4"></div>
 	</div>
