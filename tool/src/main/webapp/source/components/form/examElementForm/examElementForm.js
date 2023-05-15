@@ -37,7 +37,9 @@ tenjinApp.directive('examElementForm', ['SyllabusService', function(SyllabusServ
 			};
 
 			$scope.submissionTypeChanged = function() {
-				if ($scope.element.attributes.examElectronic==='true' && $scope.element.attributes.examPaper==='false') {
+				if ($scope.element.attributes.examElectronic==='true' && 
+					($scope.element.attributes.examPaper==='false' || !$scope.element.attributes.examPaper)) {
+
 					$scope.element.attributes.examDocumentation = "";
 					this.disableDocumentationTextbox = true;
 				}
