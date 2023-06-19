@@ -63,12 +63,11 @@
 		}
 	}
 
-	.element-host {
-		margin-bottom: 10px;
+	.element-wrapper {
+		margin-top: 10px;
 	}
-
-	.element-host.no-buttons {
-		margin: 20px 0 20px 0;
+	.rubric {
+		margin-top: 20px;
 	}
 
 	.element-wrapper.important {
@@ -102,13 +101,8 @@
 		clear: both;
 		display: table;
 	}
-    .panel-element {  
-        padding-right: 10px;
-		padding-bottom: 20px;
-        padding-top: 20px;
-	}
  	.notice {
-		padding-bottom: 5px;
+		margin: 10px 0;
 		h3 {
 			display: inline-block;
 			padding: 0 3px 0 3px;
