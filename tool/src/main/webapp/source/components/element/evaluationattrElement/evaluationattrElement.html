@@ -30,5 +30,12 @@
 			<span data-ng-if="element.attributes.evaluationMode === 'team' ">{{EVALUATION_TEAM_TRANSLATE}} </span>
 			<span data-ng-if="element.attributes.evaluationMode === 'individual'">{{EVALUATION_INDIVIDUAL_TRANSLATE}} </span>
 		</li>
+
+		<li data-ng-if="element.attributes.evaluationAiAllowed">
+			{{EVALUATION_AI_TRANSLATE}}&nbsp;:
+			<span data-ng-if="element.attributes.evaluationAiAllowed === 'permitted' " >{{EVALUATION_AI_PERMITTED_TRANSLATE}} </span>
+			<span data-ng-if="element.attributes.evaluationAiAllowed === 'prohibited'" >{{EVALUATION_AI_PROHIBITED_TRANSLATE}} </span>
+		</li>
+
 	</ul>
 </div>

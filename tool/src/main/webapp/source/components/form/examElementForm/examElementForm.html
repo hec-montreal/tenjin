@@ -87,6 +87,24 @@
 	</div>
 	<br>
 	<div class="row">
+	   <div class="col-md-4">
+		   <label class="label-text-title">{{ 'EXAM_AI' | translate }}</label>
+	   </div>
+	   <div class="col-md-8">
+		   <div class="row exam-ai-option">
+				   <div class="col-md-12">
+					   <input id="aiModePermitted" type="radio" name="aiMode" data-ng-model="element.attributes.examAiAllowed" value="permitted"> <label for="examAiPermitted">{{ 'EXAM_AI_PERMITTED' | translate }}</label>
+				   </div>
+
+				   <div class="col-md-12">
+					   <input id="aiModeProhibited" type="radio" name="aiMode" data-ng-model="element.attributes.examAiAllowed" value="prohibited"> <label for="examAiProhibited">{{ 'EXAM_AI_PROHIBITED' | translate }}</label>
+				   </div>
+			   </div>
+	   </div>
+	   <div class="col-md-4"></div>
+	</div>	
+	<br>
+	<div class="row">
 		<div class="col-md-4">
 			<label class="label-text-title">{{ 'EXAM_DOCUMENTATION' | translate }}</label>
 		</div>

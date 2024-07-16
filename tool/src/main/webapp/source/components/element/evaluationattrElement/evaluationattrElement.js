@@ -31,7 +31,11 @@ tenjinApp.directive('evaluationattrElement', ['$translate', 'SyllabusService', f
 			 $scope.EVALUATION_ASSESSMENT_TYPE_TRANSLATE = $translate.instant('EVALUATION_ASSESSMENT_TYPE', null, null, SyllabusService.syllabus.locale);
 			 $scope.EVALUATION_TEAM_TRANSLATE = $translate.instant('EVALUATION_TEAM', null, null, SyllabusService.syllabus.locale);
 			 $scope.EVALUATION_INDIVIDUAL_TRANSLATE = $translate.instant('EVALUATION_INDIVIDUAL', null, null, SyllabusService.syllabus.locale);
-			 
+
+			 $scope.EVALUATION_AI_PERMITTED_TRANSLATE = $translate.instant('EVALUATION_AI_PERMITTED', null, null, SyllabusService.syllabus.locale);
+			 $scope.EVALUATION_AI_TRANSLATE = $translate.instant('EVALUATION_AI', null, null, SyllabusService.syllabus.locale);
+			 $scope.EVALUATION_AI_PROHIBITED_TRANSLATE = $translate.instant('EVALUATION_AI_PROHIBITED', null, null, SyllabusService.syllabus.locale);
+
 			});
 			$translate.use(currentLanguage);
 

@@ -35,7 +35,10 @@ tenjinApp.directive('examattrElement', ['SyllabusService',  '$translate', functi
 				 $scope.EXAM_TEAM_TRANSLATE = $translate.instant('EXAM_TEAM', null, null, SyllabusService.syllabus.locale);
 				 $scope.EXAM_ASSESSMENT_TYPE_TRANSLATE = $translate.instant('EXAM_ASSESSMENT_TYPE', null, null, SyllabusService.syllabus.locale);
 				 $scope.EXAM_INDIVIDUAL_TRANSLATE = $translate.instant('EXAM_INDIVIDUAL', null, null, SyllabusService.syllabus.locale);
-				 
+
+				 $scope.EXAM_AI_PERMITTED_TRANSLATE = $translate.instant('EXAM_AI_PERMITTED', null, null, SyllabusService.syllabus.locale);
+				 $scope.EXAM_AI_TRANSLATE = $translate.instant('EXAM_AI', null, null, SyllabusService.syllabus.locale);
+				 $scope.EXAM_AI_PROHIBITED_TRANSLATE = $translate.instant('EXAM_AI_PROHIBITED', null, null, SyllabusService.syllabus.locale);
 			});
 			$translate.use(currentLanguage);
 		   

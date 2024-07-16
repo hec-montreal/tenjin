@@ -38,5 +38,12 @@
 			<span data-ng-if="element.attributes.examMode === 'team' " >{{EXAM_TEAM_TRANSLATE}} </span>
 			<span data-ng-if="element.attributes.examMode === 'individual'" >{{EXAM_INDIVIDUAL_TRANSLATE}} </span>
 		</li>
+
+		<li data-ng-if="element.attributes.examAiAllowed">
+			{{EXAM_AI_TRANSLATE}}&nbsp;:
+			<span data-ng-if="element.attributes.examAiAllowed === 'permitted' " >{{EXAM_AI_PERMITTED_TRANSLATE}} </span>
+			<span data-ng-if="element.attributes.examAiAllowed === 'prohibited'" >{{EXAM_AI_PROHIBITED_TRANSLATE}} </span>
+		</li>
+
 	</ul>
 </div>
