@@ -38,14 +38,14 @@
 			<table>
 				<tr>
 					<td>
-						<input type="checkbox" name="evalInClass" data-ng-model="element.attributes.examInClass" 
-						ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_INCLASS' | translate }}
+						<input type="checkbox" id="evalInClass" name="evalInClass" data-ng-model="element.attributes.examInClass" ng-true-value="'true'" ng-false-value="'false'">
+						<label for="evalInClass">{{ 'EXAM_INCLASS' | translate }}</label>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" name="evalAtHome" data-ng-model="element.attributes.examAtHome"
-						ng-true-value="'true'" ng-false-value="'false'"> {{ 'EXAM_ATHOME' | translate }}
+						<input type="checkbox" id="evalAtHome" name="evalAtHome" data-ng-model="element.attributes.examAtHome" ng-true-value="'true'" ng-false-value="'false'">
+						<label for="evalAtHome">{{ 'EXAM_ATHOME' | translate }}</label>
 					</td>
 				</tr>
 			</table>
@@ -71,14 +71,14 @@
 			<table>
 				<tr>
 					<td>
-						<input type="checkbox" name="evalPaper" data-ng-model="element.attributes.examPaper" ng-true-value="'true'" ng-false-value="'false'">
-						{{ 'EXAM_PAPER' | translate }}
+						<input type="checkbox" id="evalPaper" name="evalPaper" data-ng-model="element.attributes.examPaper" ng-true-value="'true'" ng-false-value="'false'">
+						<label for="evalPaper"></label>{{ 'EXAM_PAPER' | translate }}
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="checkbox" name="evalElectronic" data-ng-model="element.attributes.examElectronic" ng-true-value="'true'" ng-false-value="'false'">
-						{{ 'EXAM_ELECTRONIC' | translate }}
+						<input id="evalElectronic" type="checkbox" name="evalElectronic" data-ng-model="element.attributes.examElectronic" ng-true-value="'true'" ng-false-value="'false'">
+						<label for="evalElectronic">{{ 'EXAM_ELECTRONIC' | translate }}</label>
 					</td>
 				</tr>
 			</table>
@@ -93,7 +93,7 @@
 	   <div class="col-md-8">
 		   <div class="row exam-ai-option">
 				   <div class="col-md-12">
-					   <input id="aiModePermitted" type="radio" name="aiMode" data-ng-model="element.attributes.examAiAllowed" value="permitted"> <label for="examAiPermitted">{{ 'EXAM_AI_PERMITTED' | translate }}</label>
+					   <input id="aiModePermitted" type="radio" name="aiMode" data-ng-model="element.attributes.examAiAllowed" value="permitted"> <label for="aiModePermitted">{{ 'EXAM_AI_PERMITTED' | translate }}</label>
 				   </div>
 
 				   <div class="col-md-12">
@@ -101,7 +101,7 @@
 				   </div>
 
 				   <div class="col-md-12">
-					   <input id="aiModeProhibited" type="radio" name="aiMode" data-ng-model="element.attributes.examAiAllowed" value="prohibited"> <label for="examAiProhibited">{{ 'EXAM_AI_PROHIBITED' | translate }}</label>
+					   <input id="aiModeProhibited" type="radio" name="aiMode" data-ng-model="element.attributes.examAiAllowed" value="prohibited"> <label for="aiModeProhibited">{{ 'EXAM_AI_PROHIBITED' | translate }}</label>
 				   </div>
 			   </div>
 	   </div>
