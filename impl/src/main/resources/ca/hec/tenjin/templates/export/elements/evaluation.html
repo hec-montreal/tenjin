@@ -68,15 +68,35 @@
 			{{/attr-cond}}
 
 			{{#if element.attributes.evaluationMode}}
-				<span class="label">{{str 'EVALUATION_ASSESSMENT_TYPE'}}&nbsp;:</span>
+				<li>
+					<span class="label">{{str 'EVALUATION_ASSESSMENT_TYPE'}}&nbsp;:</span>
 
-				{{#if-eq element.attributes.evaluationMode 'team'}}
-					{{str 'EVALUATION_TEAM'}}
-				{{/if-eq}}
+					{{#if-eq element.attributes.evaluationMode 'team'}}
+						{{str 'EVALUATION_TEAM'}}
+					{{/if-eq}}
 
-				{{#if-eq element.attributes.evaluationMode 'individual'}}
-					{{str 'EVALUATION_INDIVIDUAL'}}
-				{{/if-eq}}
+					{{#if-eq element.attributes.evaluationMode 'individual'}}
+						{{str 'EVALUATION_INDIVIDUAL'}}
+					{{/if-eq}}
+				</li>
+			{{/if}}
+
+			{{#if element.attributes.evaluationAiAllowed}}
+				<li>
+					<span class="label">{{str 'EVALUATION_AI'}}:</span>
+
+					{{#if-eq element.attributes.evaluationAiAllowed 'permitted'}}
+						{{str 'EVALUATION_AI_PERMITTED'}}
+					{{/if-eq}}
+
+					{{#if-eq element.attributes.evaluationAiAllowed 'prohibited'}}
+						{{str 'EVALUATION_AI_PROHIBITED'}}
+					{{/if-eq}}
+
+					{{#if-eq element.attributes.evaluationAiAllowed 'prohibited_w_exceptions'}}
+						{{str 'EVALUATION_AI_PROHIBITED_W_EXCEPTIONS'}}
+					{{/if-eq}}
+				</li>
 			{{/if}}
 		</ul>
 	</div>

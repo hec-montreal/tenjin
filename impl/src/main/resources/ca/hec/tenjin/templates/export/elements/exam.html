@@ -76,15 +76,35 @@
 			{{/attr-cond}}
 
 			{{#if element.attributes.examMode}}
-				<span class="label">{{str 'EXAM_ASSESSMENT_TYPE'}}:</span>
+				<li>
+					<span class="label">{{str 'EXAM_ASSESSMENT_TYPE'}}:</span>
 
-				{{#if-eq element.attributes.examMode 'team'}}
-					{{str 'EXAM_TEAM'}}
-				{{/if-eq}}
+					{{#if-eq element.attributes.examMode 'team'}}
+						{{str 'EXAM_TEAM'}}
+					{{/if-eq}}
 
-				{{#if-eq element.attributes.examMode 'individual'}}
-					{{str 'EXAM_INDIVIDUAL'}}
-				{{/if-eq}}
+					{{#if-eq element.attributes.examMode 'individual'}}
+						{{str 'EXAM_INDIVIDUAL'}}
+					{{/if-eq}}
+				</li>
+			{{/if}}
+
+			{{#if element.attributes.examAiAllowed}}
+				<li>
+					<span class="label">{{str 'EXAM_AI'}}:</span>
+
+					{{#if-eq element.attributes.examAiAllowed 'permitted'}}
+						{{str 'EXAM_AI_PERMITTED'}}
+					{{/if-eq}}
+
+					{{#if-eq element.attributes.examAiAllowed 'prohibited'}}
+						{{str 'EXAM_AI_PROHIBITED'}}
+					{{/if-eq}}
+
+					{{#if-eq element.attributes.examAiAllowed 'prohibited_w_exceptions'}}
+						{{str 'EXAM_AI_PROHIBITED_W_EXCEPTIONS'}}
+					{{/if-eq}}
+				</li>
 			{{/if}}
 		</ul>
 	</div>
