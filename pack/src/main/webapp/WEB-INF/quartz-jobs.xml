@@ -117,8 +117,14 @@
             <set>
                 <bean class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobProperty">
                     <property name="required" value="false"/>
-                    <property name="labelResourceKey" value="lastModifiedDate"/>
-                    <property name="descriptionResourceKey" value="lastModifiedDate.description"/>
+                    <property name="labelResourceKey" value="lastModifiedDateAfter"/>
+                    <property name="descriptionResourceKey" value="lastModifiedDateAfter.description"/>
+                    <property name="defaultValue" value="2017/10/23"/>
+                </bean>
+                <bean class="org.sakaiproject.component.app.scheduler.jobs.SpringConfigurableJobProperty">
+                    <property name="required" value="false"/>
+                    <property name="labelResourceKey" value="lastModifiedDateBefore"/>
+                    <property name="descriptionResourceKey" value="lastModifiedDateBefore.description"/>
                     <property name="defaultValue" value="2017/10/23"/>
                 </bean>
             </set>

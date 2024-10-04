@@ -28,4 +28,9 @@ public class ReportingServiceImpl implements ReportingService {
     public List<SyllabusCitationElement> getCitationsModifiedSince(Date date) {
         return reportingDao.getCitationsModifiedSince(date);
     }
+
+    @Override
+    public List<SyllabusCitationElement> getCitationsModifiedBetween(Date startDate, Date endDate) {
+        return reportingDao.getCitationsModifiedBetween(startDate, endDate);
+    }
 }

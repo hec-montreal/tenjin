@@ -61,7 +61,8 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
         session.setUserId("admin");
 
         List<SyllabusCitationElement> citations = null;
-        Date d = null;
+        Date startDate = null;
+        Date endDate = null;
 
         String reportsDestinationFolder =
                 "/group/" + ServerConfigurationService.getString(REPORTS_SITE_PROPERTY) + "/";
@@ -71,15 +72,27 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
             return;
         }
 
-        String lastModifiedDateString = context.getMergedJobDataMap().getString("lastModifiedDate");
-        if (!lastModifiedDateString.isEmpty()) {
-            d = getDate(lastModifiedDateString);
+        String lastModifiedDateAfterString = context.getMergedJobDataMap().getString("lastModifiedDateAfter");
+        String lastModifiedDateBeforeString = context.getMergedJobDataMap().getString("lastModifiedDateBefore");
+
+        if (!lastModifiedDateAfterString.isEmpty()) {
+            startDate = getDate(lastModifiedDateAfterString);
         }
-        if (d == null) {
-            d = new Date();
-            d.setDate(d.getDate()-7);
+        if (!lastModifiedDateBeforeString.isEmpty()) {
+            endDate = getDate(lastModifiedDateBeforeString);
         }
-        citations = reportingService.getCitationsModifiedSince(d);
+
+
+        if (startDate == null || endDate == null) {
+            log.info("Get citations for the last week");
+            Date d = new Date();
+            d.setDate(d.getDate() - 7);
+            citations = reportingService.getCitationsModifiedSince(d);
+        }
+        else {
+            log.info("Get citations between " + startDate + " and " + endDate);
+            citations = reportingService.getCitationsModifiedBetween(startDate, endDate);
+        }
 
         // init excel file
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -120,6 +133,45 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
         c.setCellValue("URL");
         c = r.createCell(cellnum++);
         c.setCellValue("URL manuel");
+
+        c = r.createCell(cellnum++);
+        c.setCellValue("title");
+        c = r.createCell(cellnum++);
+        c.setCellValue("saka:mediatype");
+        c = r.createCell(cellnum++);
+        c.setCellValue("year");
+        c = r.createCell(cellnum++);
+        c.setCellValue("sourceTitle");
+        c = r.createCell(cellnum++);
+        c.setCellValue("volume");
+        c = r.createCell(cellnum++);
+        c.setCellValue("issue");
+        c = r.createCell(cellnum++);
+        c.setCellValue("isnidentifier");
+        c = r.createCell(cellnum++);
+        c.setCellValue("startPage");
+        c = r.createCell(cellnum++);
+        c.setCellValue("endPage");
+        c = r.createCell(cellnum++);
+        c.setCellValue("hecUrl");
+        c = r.createCell(cellnum++);
+        c.setCellValue("publisher");
+        c = r.createCell(cellnum++);
+        c.setCellValue("pages");
+        c = r.createCell(cellnum++);
+        c.setCellValue("url");
+        c = r.createCell(cellnum++);
+        c.setCellValue("bookstoreUrl");
+        c = r.createCell(cellnum++);
+        c.setCellValue("publicationLocation");
+        c = r.createCell(cellnum++);
+        c.setCellValue("inf:dol/");
+        c = r.createCell(cellnum++);
+        c.setCellValue("edition");
+        c = r.createCell(cellnum++);
+        c.setCellValue("saka:has_preferred_url");
+        c = r.createCell(cellnum++);
+        c.setCellValue("preferredUrl");
 
         for (int i = 0; i < citations.size(); i++) {
             try {
@@ -204,6 +256,46 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
                         c = r.createCell(cellnum++);
                         c.setCellValue(citation.getAttributes().get("otherLinkurl"));
                     }
+                    
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("title"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("sakai:mediatype"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("year"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("sourceTitle"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("volume"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("issue"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("isnidentifier"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("startPage"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("endPage"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("hecUrl"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("publisher"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("pages"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("url"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("bookstoreUrl"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("publicationLocation"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("info:dol/"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("edition"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("sakai:has_preferred_url"));
+                    c = r.createCell(cellnum++);
+                    c.setCellValue((String)citationResource.getCitationProperty("preferredUrl"));
+
                 } else {
                     c = r.createCell(cellnum++);
                     c.setCellValue("La citation n'existe pas dans l'outil ressources");
