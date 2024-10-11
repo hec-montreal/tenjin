@@ -230,6 +230,9 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
                     type = type.toLowerCase();
                     c.setCellValue(type.startsWith("reference_type_") ? type.substring(15) : type);
                 }
+                else {
+                    c.setCellValue("");
+                }
 
                 c = r.createCell(cellnum++);
                 if (citation.getImportant() != null && citation.getImportant())
@@ -246,16 +249,23 @@ public class GenerateCitationsReportJobImpl implements GenerateCitationsReportJo
                     c.setCellValue(citationResource.getDisplayName());
                     c = r.createCell(cellnum++);
                     c.setCellValue((String) citationResource.getCitationProperty("isnIdentifier"));
+                    c = r.createCell(cellnum++);
                     if (citation.getAttributes().get("activateLibraryLink") != null &&
                             citation.getAttributes().get("activateLibraryLink").equals("true")) {
-                        c = r.createCell(cellnum++);
                         c.setCellValue(citationResource.getOpenurl());
                     }
+                    else {
+                        c.setCellValue("");
+                    }
+
+                    c = r.createCell(cellnum++);
                     if (citation.getAttributes().get("activateOtherLink") != null &&
                             citation.getAttributes().get("activateOtherLink").equals("true")) {
-                        c = r.createCell(cellnum++);
                         c.setCellValue(citation.getAttributes().get("otherLinkurl"));
                     }
+                    else {
+                        c.setCellValue("");
+                    }	
                     
                     c = r.createCell(cellnum++);
                     c.setCellValue((String)citationResource.getCitationProperty("title"));
