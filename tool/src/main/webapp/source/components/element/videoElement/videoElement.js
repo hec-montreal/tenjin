@@ -41,7 +41,7 @@ tenjinApp.directive('videoElement', ['$sce', function($sce) {
 					}
 				}
 
-				$scope.videoEmbedHtml = $sce.trustAsHtml('<iframe height="220" src="'+videoEmbedUrl+'" frameborder="0" allowfullscreen class="col-sm-3 col-xs-12"></iframe>');
+				$scope.videoEmbedHtml = $sce.trustAsHtml('<iframe height="220" src="'+videoEmbedUrl+'" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="col-sm-3 col-xs-12"></iframe>');
 			} else if ($scope.element.attributes.embedCode) {
 				$scope.videoEmbedHtml = $sce.trustAsHtml($scope.element.attributes.embedCode);
 			}
